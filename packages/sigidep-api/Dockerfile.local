@@ -1,0 +1,21 @@
+FROM node:12-alpine as build-stage
+
+RUN mkdir -p /usr/src/app
+
+RUN npm i -g @nestjs/cli
+
+ARG NODE_ENV
+ARG PORT
+
+WORKDIR /usr/src/app
+
+COPY package.json .
+#COPY yarn.lock .
+
+RUN yarn
+
+COPY . .
+
+EXPOSE $PORT
+
+ENTRYPOINT ["/bin/sh", "-c" , "yarn start:dev"]
