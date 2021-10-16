@@ -19,7 +19,19 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@entities/*": ["./entities/*"],
+      "@helpers/*": ["./helpers/*"],
+      "@modules/*": ["./modules/*"],
+      "@pipes/*": ["./pipes/*"],
+      "@cron/*": ["./cron/*"],
+      "@subscribers/*": ["./subscribers/*"],
+      "@decorators/*": ["./decorators/*"],
+      "@guards/*": ["./guards/*"],
+      "@reducers/*": ["./store/reducers/*"],
+      "@environments/*": ["./environments/*"],
+    },
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

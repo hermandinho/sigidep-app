@@ -11,6 +11,16 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@entities/*": ["./entities/*"],
+      "@helpers/*": ["./helpers/*"],
+      "@modules/*": ["./modules/*"],
+      "@pipes/*": ["./pipes/*"],
+      "@cron/*": ["./cron/*"],
+      "@subscribers/*": ["./subscribers/*"],
+      "@decorators/*": ["./decorators/*"],
+      "@guards/*": ["./guards/*"]
+    }
   }
 }
