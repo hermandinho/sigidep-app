@@ -1,0 +1,39 @@
+<div class="header-content p-d-flex p-justify-between p-align-center p-autocomplete-input-token">
+  <div class="menu" (click)="toggleSideBar()">
+    <i class="pi pi-align-justify"></i>
+  </div>
+  <div class="header-content">
+    <!-- <div class="p-mx-5 p-my-auto">
+      <i class="far fa-bell" style="font-size: 1.5rem" pBadge></i>
+    </div> -->
+    <div class="information-card p-d-flex" (click)="toggleDropdown()" #informationCard>
+      <p-avatar
+        *ngIf="!me?.profilePicture"
+        [label]="me?.firstName[0]?.toUpperCase() + me?.lastName[0]?.toUpperCase()"
+        [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px', 'color': '#fff', 'font-size': '1.2rem'}"
+        shape="circle"
+        size="large">
+      </p-avatar>
+      <p-avatar
+        *ngIf="me?.profilePicture"
+        [image]="me?.profilePicture"
+        [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px'}"
+        shape="circle"
+        size="large">
+      </p-avatar>
+
+      <div class="p-d-flex p-flex-column">
+        <p class="full-name">{{ me?.firstName + ' ' + me?.lastName }}</p>
+        <p class="role">{{me?.role?.label?.toUpperCase()}}</p>
+      </div>
+
+      <div class="dropdown-content" [ngClass]="{'open': dropdownOpened}">
+        <div class="dropdown-menu">
+          <div class="dropdown-item" routerLink="settings/profile">Mon Compte</div>
+          <a class="dropdown-item p-d-block" routerLink="/docs" target="_blank">Documentation</a>
+          <div class="dropdown-item" (click)="logout()">Déconnexion</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

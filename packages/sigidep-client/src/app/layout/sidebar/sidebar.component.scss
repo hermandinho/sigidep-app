@@ -1,0 +1,67 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
+.sidebar-content {
+  padding: 3rem 0;
+  background-color: var(--blue-500);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .logo {
+    color: white;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    p-divider {
+      width: 94%;
+      &::ng-deep {
+        .p-divider-content {
+          background-color: var(--blue-500) !important;
+          .app-name {
+            font: normal normal 600 22px/27px Montserrat;
+          }
+        }
+      }
+      //opacity: 0.3;
+    }
+  }
+  .p-panelmenu {
+    .p-panelmenu-header {
+      > a {
+        background-color: unset;
+        border: unset;
+      }
+    }
+  }
+
+  .footer {
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    .langs {
+      list-style-type: none;
+      text-transform: capitalize;
+      font-size: 1.8rem;
+      display: flex;
+      color: #ffffff;
+      li {
+        margin: 0 0.3rem;
+        &:first-child {
+          &::after {
+            content: ' | '
+          }
+        }
+
+        &.active {
+          font-weight: bold;
+          border-bottom: 3px solid #fff;
+        }
+      }
+    }
+  }
+}

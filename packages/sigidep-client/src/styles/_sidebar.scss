@@ -1,0 +1,47 @@
+.p-panelmenu {
+  .p-panelmenu-header {
+    > * {
+      border: unset !important;
+      background-color: var(--blue-500) !important;
+      font: normal normal normal 12px/15px Montserrat !important;
+      letter-spacing: 0px !important;
+      color: #FFFFFF !important;
+      opacity: .5;
+
+      &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: unset !important;
+      }
+    }
+    >.p-menuitem-link-active {
+      opacity: 1;
+      border-left: 3px solid #FFFFFF !important;
+      * {
+        opacity: 1;
+      }
+    }
+  }
+  .p-panelmenu-content {
+    border: unset !important;
+    background-color: rgb(25 31 40 / 10%);
+
+    .p-menuitem-link {
+      font: normal normal normal 12px/15px Montserrat !important;
+
+      &.p-menuitem-link-active .p-menuitem-text {
+        color: white;
+      }
+
+      &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: unset !important;
+      }
+    }
+  }
+  .p-panelmenu-icon {
+    order: 3;
+    margin-left: auto;
+  }
+}

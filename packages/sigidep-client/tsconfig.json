@@ -21,16 +21,26 @@
       "dom"
     ],
     "paths": {
-      "@entities/*": ["./entities/*"],
-      "@helpers/*": ["./helpers/*"],
-      "@modules/*": ["./modules/*"],
-      "@pipes/*": ["./pipes/*"],
-      "@cron/*": ["./cron/*"],
-      "@subscribers/*": ["./subscribers/*"],
-      "@decorators/*": ["./decorators/*"],
-      "@guards/*": ["./guards/*"],
-      "@reducers/*": ["./store/reducers/*"],
       "@environments/*": ["./environments/*"],
+
+      "@pipes/*": ["./app/shared/pipes/*"],
+      "@utils/*": ["./app/shared/utils/*"],
+      "@classes/*": ["./app/shared/classes/*"],
+      "@configs/*": ["./app/shared/configs/*"],
+      "@directives/*": ["./app/shared/directives/*"],
+      "@interfaces/*": ["./app/shared/interfaces/*"],
+      "@components/*": ["./app/shared/components/*"],
+      "@animations/*": ["./app/shared/animations/*"],
+
+      "@guards/*": ["./app/core/guards/*"],
+      "@services/*": ["./app/core/services/*"],
+      "@interceptors/*": ["./app/core/interceptors/*"],
+
+      "@reducers/*": ["./app/store/reducers/*"],
+      "@effects/*": ["./app/store/effects/*"],
+      "@actions/*": ["./app/store/actions/*"],
+      "@pages/*": ["./app/pages/*"],
+      "@shared/*": ["./app/shared/*"]
     },
   },
   "angularCompilerOptions": {

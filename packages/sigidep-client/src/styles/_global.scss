@@ -1,0 +1,80 @@
+@charset "UTF-8";
+$fontFamily: 'Montserrat',
+sans-serif;
+
+:root {
+  --surface-a: #ffffff;
+  --surface-b: #f8f9fa;
+  --surface-c: #e9ecef;
+  --surface-d: #dee2e6;
+  --surface-e: #ffffff;
+  --surface-f: #ffffff;
+  --text-color: #272D3B;
+  --primary-color: #2D62ED;
+  --primary-color-text: #ffffff;
+  --text-color-secondary: #EFF1F3;
+  --font-family:#{inspect($fontFamily)};
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 768px;
+  background-color: #FAFBFC;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.p-text-primary {
+  color: var(--primary-color);
+}
+
+.p-component {
+  // display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  font-family: $fontFamily;
+}
+
+.p-disabled,
+.p-component:disabled {
+  opacity: 0.6;
+}
+
+.p-error,
+.p-invalid {
+  color: #F20025;
+}
+
+.p-error {
+  font-size: 0.9rem;
+  display: block;
+}
+
+.p-text-secondary {
+  color: var(--text-color-secondary);
+}
+
+.pi {
+  font-size: 1rem;
+}
+
+.p-link {
+  font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  border-radius: 3px;
+
+  &:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #a6d5fa;
+  }
+}

@@ -1,0 +1,18 @@
+<div class="sidebar-content p-d-flex">
+  <div class="">
+    <div class="logo p-grid p-jc-around p-align-center" *ngIf="true">
+      <!--    <p-avatar *ngIf="logo" [image]="logo" [size]="'xlarge'" shape="square"></p-avatar>-->
+      <p-divider [type]="'dashed'" align="center">
+        <h4 class="app-name _p-p-0 _p-mb-0">SIGIDEP</h4>
+      </p-divider>
+    </div>
+    <p-panelMenu [model]="items" [multiple]="false"></p-panelMenu>
+  </div>
+
+  <div class="footer">
+    <ul class="langs p-0">
+      <li (click)="appService.switchLanguages(lang)" *ngFor="let lang of translateService.getLangs()"
+          [class.active]="translateService?.currentLang === lang" class="p-text-upper cursor-pointer">{{lang}}</li>
+    </ul>
+  </div>
+</div>

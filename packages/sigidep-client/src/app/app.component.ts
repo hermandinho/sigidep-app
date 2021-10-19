@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
+import {LocalStorageService} from "./services/local-storage.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'sigidep-client';
+  constructor(
+    private translateService: TranslateService,
+    private localStorageService: LocalStorageService,
+  ) {
+    translateService.addLangs(['en', 'fr']);
+    translateService.setDefaultLang('fr');
+    const browserLang = translateService.getBrowserLang()?.match(/en|fr/) ? translateService.getBrowserLang() : 'fr';
+    translateService.use(localStorageService.getLang() ?? browserLang);
+  }
 }

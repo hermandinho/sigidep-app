@@ -1,0 +1,13 @@
+<div class="layout" [ngClass]="{ 'sidebar-minimized': sideBarMinimized }">
+  <div class="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="content">
+    <div class="header">
+      <app-header></app-header>
+    </div>
+    <p-scrollPanel [style]="{ height: 'calc(100vh - 60px)' }" styleClass="main">
+      <router-outlet></router-outlet>
+    </p-scrollPanel>
+  </div>
+</div>
