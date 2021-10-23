@@ -4,9 +4,8 @@ import {Store} from '@ngrx/store';
 import {Subject} from "rxjs";
 import {AppState} from "../../store/reducers";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {Actions} from "@ngrx/store-devtools/src/reducer";
 import {filter, startWith, takeUntil} from "rxjs/operators";
-import { MENU } from './menu';
+import {MENU} from './menu';
 import {TranslateService} from "@ngx-translate/core";
 import {AppService} from "../../services/app.service";
 
