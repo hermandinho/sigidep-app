@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HomeComponent} from './home.component';
-import {SharedModule} from "../../modules/shared.module";
+import {SharedModule} from "@modules/shared.module";
 import {CardModule} from "primeng/card";
 
 
@@ -10,7 +10,7 @@ import {CardModule} from "primeng/card";
     ],
     imports: [
         SharedModule,
-        CardModule,
+        // CardModule,
     ]
 })
 export class HomeModule { }

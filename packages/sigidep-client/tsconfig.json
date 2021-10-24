@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -23,24 +23,16 @@
     "paths": {
       "@environments/*": ["./environments/*"],
 
-      "@pipes/*": ["./app/shared/pipes/*"],
-      "@utils/*": ["./app/shared/utils/*"],
-      "@classes/*": ["./app/shared/classes/*"],
-      "@configs/*": ["./app/shared/configs/*"],
-      "@directives/*": ["./app/shared/directives/*"],
-      "@interfaces/*": ["./app/shared/interfaces/*"],
-      "@components/*": ["./app/shared/components/*"],
-      "@animations/*": ["./app/shared/animations/*"],
-
-      "@guards/*": ["./app/core/guards/*"],
-      "@services/*": ["./app/core/services/*"],
-      "@interceptors/*": ["./app/core/interceptors/*"],
-
       "@reducers/*": ["./app/store/reducers/*"],
       "@effects/*": ["./app/store/effects/*"],
       "@actions/*": ["./app/store/actions/*"],
       "@pages/*": ["./app/pages/*"],
-      "@shared/*": ["./app/shared/*"]
+      "@shared/*": ["./app/shared/*"],
+      "@services/*": ["./app/services/*"],
+      "@components/*": ["./app/components/*"],
+      "@store/*": ["./app/store/*"],
+      "@models/*": ["./app/models/*"],
+      "@modules/*": ["./app/modules/*"],
     },
   },
   "angularCompilerOptions": {

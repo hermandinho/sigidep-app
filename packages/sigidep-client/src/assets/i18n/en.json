@@ -1,3 +1,19 @@
 {
-  "hello": "Hello world!"
+  "hello": "Hello world!",
+  "sidebar": {
+    "dashboard": "Dashbord",
+    "exercices": "Exercices",
+    "structure": "Structure",
+    "settings": "Settings",
+    "financialSources": "Financial Sources",
+    "technicalSupervision": "Technical Supervisions",
+    "deliverables": "Physical deliverables",
+    "paragraphs": "Paragraphs",
+    "addresses": "Addresses",
+    "regions": "Regions",
+    "arrondissements": "Arrondissements",
+    "departements": "Departements",
+    "system": "System",
+    "elaboration": "Elaboration"
+  }
 }

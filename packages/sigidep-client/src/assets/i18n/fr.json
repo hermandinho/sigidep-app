@@ -1,3 +1,39 @@
 {
-  "hello": "En version"
+  "hello": "En version",
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "exercices": "Exercices",
+    "structure": "Structure",
+    "settings": "Paramètres",
+    "financialSources": "Sources de financement",
+    "technicalSupervision": "Tutelle Techniques",
+    "deliverables": "Unités physiques",
+    "paragraphs": "Paragraphs",
+    "addresses": "Addresses",
+    "regions": "Régions",
+    "arrondissements": "Arrondissements",
+    "departements": "Départements",
+    "system": "Système",
+    "elaboration": "Elaboration"
+  },
+  "buttons": {
+    "save": "Enregistrer",
+    "busy": "En cours ..."
+  },
+  "install": {
+    "title": "Installation"
+  },
+  "labels": {
+    "structureCode": "Code Structure",
+    "labelFr": "Nom de structure(FR)",
+    "labelEn": "Nom de structure(EN)",
+    "structureDescriptionFr": "Présentation de structure(FR)",
+    "structureDescriptionEn": "Présentation de structure(EN)",
+    "structureMissionFr": "Mission de structure(FR)",
+    "structureMissionEn": "Mission de structure(EN)",
+    "structureAddress": "Addresse"
+  },
+  "hints": {
+    "structureCode": "Ce code doit être composé de 2 caractères."
+  }
 }

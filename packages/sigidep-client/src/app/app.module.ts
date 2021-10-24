@@ -5,13 +5,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from '@ngrx/store';
-import {metaReducers, reducers} from './store/reducers';
+import {metaReducers, reducers} from '@reducers/index';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {environment} from '../environments/environment';
+import {environment} from '@environments/environment';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {HomeModule} from "./pages/home/home.module";
+import {HomeModule} from "@pages/home/home.module";
+import {InstallModule} from "@pages/install/install.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'fr',
     }),
     HomeModule,
+    InstallModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

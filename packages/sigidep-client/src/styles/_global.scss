@@ -78,3 +78,13 @@ body {
     box-shadow: 0 0 0 0.2rem #a6d5fa;
   }
 }
+
+
+label {
+  &.required {
+    &:after {
+      content: " * ";
+      color: red;
+    }
+  }
+}

@@ -4,29 +4,40 @@ import {AvatarModule} from "primeng/avatar";
 import {DividerModule} from "primeng/divider";
 import {PanelMenuModule} from "primeng/panelmenu";
 import {ScrollPanelModule} from "primeng/scrollpanel";
-import {AppService} from "../services/app.service";
-import {BaseComponent} from "../components/base.component";
+import {AppService} from "@services/app.service";
+import {BaseComponent} from "@components/base.component";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {HttpClient} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {HttpLoaderFactory} from "../app.module";
-import {LocalStorageService} from "../services/local-storage.service";
+import {LocalStorageService} from "@services/local-storage.service";
+import {AuthInterceptor} from "../interceptors";
+import {CardModule} from "primeng/card";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const declarations = [
   BaseComponent,
 ];
 
 const shared = [
+  CommonModule,
   AvatarModule,
   DividerModule,
   PanelMenuModule,
   ScrollPanelModule,
+  ButtonModule,
+  CardModule,
+  InputTextModule,
+  InputTextareaModule,
+  ReactiveFormsModule,
 ];
 @NgModule({
   declarations: [
     ...declarations,
   ],
   imports: [
-    CommonModule,
     ...shared,
     TranslateModule.forChild({
       loader: {
@@ -37,15 +48,21 @@ const shared = [
       defaultLanguage: 'fr',
       // isolate: true,
       // extend: true,
-    })
+    }),
+    CardModule,
   ],
   exports: [
     ...shared,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [
     AppService,
     LocalStorageService,
+    {
+      multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+    },
   ],
 })
 export class SharedModule { }

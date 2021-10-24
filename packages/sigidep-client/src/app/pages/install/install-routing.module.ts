@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {InstallComponent} from "@pages/install/install.component";
 
 const routes: Routes = [
   /*{
@@ -11,7 +10,10 @@ const routes: Routes = [
   {
     path: 'install',
     // canActivate: [AuthGuard],
-    component: InstallComponent,
+    loadChildren: () =>
+      import('./pages/install/install.module').then(
+        (m) => m.InstallModule,
+      ),
   }, {
     path: '',
     // canActivate: [AuthGuard],
