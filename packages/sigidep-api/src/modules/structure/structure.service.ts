@@ -11,6 +11,10 @@ export class StructureService {
     private readonly structureRepository: Repository<StructureEntity>,
   ) {}
 
+  public async structureInstalled(): Promise<StructureEntity> {
+    return this.structureRepository.findOne();
+  }
+
   public async store(params: CreateStructureDto): Promise<StructureEntity> {
     const check = await this.structureRepository.findOne();
 
