@@ -12,7 +12,7 @@ import { StructureModule } from './modules/structure/structure.module';
         // tslint:disable-next-line:no-console
         console.log(
           '******* Server running on Port : ' +
-            process.env.API_PORT +
+            (process.env.PORT ?? process.env.API_PORT) +
             ' on ' +
             env +
             ' Environment ********',
