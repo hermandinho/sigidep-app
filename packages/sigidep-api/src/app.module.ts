@@ -34,6 +34,11 @@ import { StructureModule } from './modules/structure/structure.module';
           // cli: {
           //   migrationsDir: 'migration',
           // },
+          extra: {
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          },
         } as TypeOrmModuleOptions;
       },
     }),
