@@ -13,6 +13,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HomeModule} from "@pages/home/home.module";
 import {InstallModule} from "@pages/install/install.module";
+import {AppInstallCheckGuard} from "./guards/app-install-check.guard";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -50,7 +51,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeModule,
     InstallModule,
   ],
-  providers: [],
+  providers: [
+    AppInstallCheckGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

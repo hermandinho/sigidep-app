@@ -16,6 +16,10 @@ export class StructuresService {
     this.client = http;
   }
 
+  public check(): Promise<StructureModel> {
+    return this.client.get<StructureModel>(environment.API_URL + '/structure/check').toPromise();
+  }
+
   public create(
     payload: StructureModel,
   ): Observable<StructureModel> {

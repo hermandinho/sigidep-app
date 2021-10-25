@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {InstallComponent} from "@pages/install/install.component";
+import {AppInstallCheckGuard} from "./guards/app-install-check.guard";
 
 const routes: Routes = [
   /*{
@@ -10,7 +11,7 @@ const routes: Routes = [
   },*/
   {
     path: 'install',
-    // canActivate: [AuthGuard],
+    canActivate: [AppInstallCheckGuard],
     component: InstallComponent,
   }, {
     path: '',
