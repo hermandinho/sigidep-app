@@ -26,7 +26,7 @@ import { StructureModule } from './modules/structure/structure.module';
           // subscribers: ['dist/subscribers/*.subscriber.js'],
           synchronize: true,
           type: 'postgres',
-          port: +config.get('DB_PORT'),
+          port: +process.env.DB_PORT,
           // dropSchema: true,
           // logging: true,
           // migrationsTableName: 'migrations',
