@@ -12,6 +12,7 @@ import { UserEntity } from '@entities/user.entity';
 import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import {PermissionsGuard} from "@guards/permissions.guard";
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -29,6 +30,14 @@ export class AuthController {
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   public getMe(@GetCurrentUser() user: UserEntity): Promise<UserEntity> {
+    return Promise.resolve(user);
+  }
+
+  @Get('/test')
+  @UseGuards(new PermissionsGuard(['users.create']))
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  public test(@GetCurrentUser() user: UserEntity): Promise<UserEntity> {
     return Promise.resolve(user);
   }
 }

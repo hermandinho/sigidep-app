@@ -21,6 +21,9 @@ export class AuthService {
   public async findUserById(id: number): Promise<UserEntity> {
     return this.usersRepository
       .createQueryBuilder('u')
+      .leftJoinAndSelect('u.role', 'role')
+      .leftJoinAndSelect('role.permissions', 'permissions')
+      .leftJoinAndSelect('permissions.permission', 'permission')
       .where('u.id = :id', { id })
       .getOne();
   }
