@@ -9,14 +9,14 @@
     <div class="p-fluid p-grid p-jc-center" [formGroup]="form">
       <div class="p-field p-col-12 p-md-9">
         <span class="p-float-label">
-            <input formControlName="email" pInputText type="email">
+            <input formControlName="username" pInputText type="text">
             <label class="required">{{ 'labels.emailOrUserName' | translate }}</label>
         </span>
       </div>
 
       <div class="p-field p-col-12 p-md-9">
         <span class="p-float-label">
-            <input type="text" formControlName="password" pInputText>
+            <input type="password" formControlName="password" pInputText>
             <label class="required">{{ 'labels.password' | translate }}</label>
         </span>
       </div>

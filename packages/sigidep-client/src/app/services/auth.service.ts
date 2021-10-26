@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "@environments/environment";
 import {Observable} from "rxjs";
-import {AuthModel, LoginModel} from "@models/auth.model";
+import {LoginModel, LoginSuccessModel} from "@models/auth.model";
+import {UserModel} from "@models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,11 @@ export class AuthService {
 
   public login(
     payload: LoginModel,
-  ): Observable<AuthModel> {
-    return this.client.post<AuthModel>(environment.API_URL + '/auth/login', payload);
+  ): Observable<LoginSuccessModel> {
+    return this.client.post<LoginSuccessModel>(environment.API_URL + '/auth/login', payload);
+  }
+
+  public me(): Observable<UserModel> {
+    return this.client.get<UserModel>(environment.API_URL + '/auth/me');
   }
 }

@@ -34,12 +34,22 @@
     "structureMissionEn": "Mission de structure(EN)",
     "structureAddress": "Addresse",
     "emailOrUserName": "Email / Nom d'utilisateur",
-    "password": "Mot de passe"
+    "password": "Mot de passe",
+    "welcome": "Bienvenue",
+    "welcomeMessage": "Bienvenue à bord {{name}}"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
   },
   "auth": {
     "loginTitle": "Se connecter"
+  },
+  "errors": {
+    "error": "Erreur",
+    "auth": {
+      "invalidCredentials": "Compte utilisateur introuvable",
+      "accountInactive": "Ce compte est désactivé",
+      "error": "Une erreur est survenue lors de l'opération"
+    }
   }
 }

@@ -17,6 +17,8 @@ import {AppInstallCheckGuard} from "./guards/app-install-check.guard";
 import {AuthModule} from "@pages/auth/auth.module";
 import {AuthGuard} from "./guards/auth.guard";
 import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
+import {Effects} from "@effects/index";
+import { EffectsModule } from '@ngrx/effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -38,6 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         strictStateImmutability: true,
       },
     }),
+    EffectsModule.forRoot(Effects),
     StoreDevtoolsModule.instrument({
       name: 'SIGIDEP Store',
       maxAge: 25,

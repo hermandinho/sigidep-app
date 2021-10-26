@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {UserModel} from "@models/user.model";
 const BASE_KEY = 'SIGIDEP_';
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,25 @@ export class LocalStorageService {
     return this.getItem( '_lang');
   }
 
+  public setAuthToken(token: string): void {
+    this.setItem('_authToken', token);
+  }
+
   public getAuthToken(): any {
     return this.getItem('_authToken');
+  }
+
+
+  public setUser(user: UserModel): void {
+    this.setItem('_authUser', JSON.stringify(user));
+  }
+
+  public getUser(): UserModel | undefined {
+    const user = this.getItem('_authUser');
+    if (!!user) {
+      return JSON.parse(user);
+    }
+    return;
   }
 
   public logout(): void {

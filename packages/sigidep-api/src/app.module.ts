@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { StructureModule } from './modules/structure/structure.module';
+import { StructureModule } from '@modules/structure/structure.module';
+import { AuthModule } from '@modules/auth/auth.module';
+import { UsersModule } from '@modules/users/users.module';
+import { SeederModule } from '@modules/seeder/seeder.module';
 
 @Module({
   imports: [
@@ -23,10 +26,12 @@ import { StructureModule } from './modules/structure/structure.module';
           password: process.env.DB_PASSWORD,
           username: process.env.DB_USER,
           entities: ['dist/**/*.entity.js'],
+          // entities: [__dirname + '/**/*.entity.{ts,js}'],
           // subscribers: ['dist/subscribers/*.subscriber.js'],
           synchronize: true,
           type: 'postgres',
           port: +process.env.DB_PORT,
+          // autoLoadEntities: true,
           // dropSchema: true,
           // logging: true,
           // migrationsTableName: 'migrations',
@@ -34,15 +39,22 @@ import { StructureModule } from './modules/structure/structure.module';
           // cli: {
           //   migrationsDir: 'migration',
           // },
-          extra: {
-            ssl: {
-              rejectUnauthorized: false,
-            },
-          },
+          ...(process.env.NODE_ENV !== 'production'
+            ? {}
+            : {
+                extra: {
+                  ssl: {
+                    rejectUnauthorized: false,
+                  },
+                },
+              }),
         } as TypeOrmModuleOptions;
       },
     }),
+    SeederModule,
+    AuthModule,
     StructureModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
