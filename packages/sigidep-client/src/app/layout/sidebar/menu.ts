@@ -1,6 +1,10 @@
 import { MenuItem } from 'primeng/api';
 import {TranslateService} from "@ngx-translate/core";
 
+export const MenuPermissions = {
+  'exercises_menu': ['exercises.create', 'exercises.read', 'exercises.update', 'exercises.delete'],
+};
+
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
   return [
     {
@@ -14,12 +18,12 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
     },
     { separator: true, label:   `------ ${translate.instant('sidebar.elaboration')} --------`},
     {
-      routerLink: 'offices',
+      routerLink: 'exercises',
       icon: 'pi pi-calendar',
-      label: translate.instant('sidebar.exercices'),
+      label: translate.instant('sidebar.exercises'),
       routerLinkActiveOptions: { exact: true },
       state: {
-        permissions: [],
+        permissions: [...MenuPermissions.exercises_menu],
       },
     },
     { separator: true, label:   `------ ${translate.instant('sidebar.system')} --------`},

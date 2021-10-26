@@ -2,7 +2,7 @@
   "hello": "En version",
   "sidebar": {
     "dashboard": "Tableau de bord",
-    "exercices": "Exercices",
+    "exercises": "Exercices",
     "structure": "Structure",
     "settings": "Paramètres",
     "financialSources": "Sources de financement",
@@ -19,7 +19,9 @@
   "buttons": {
     "save": "Enregistrer",
     "busy": "En cours ...",
-    "login": "Connexion"
+    "login": "Connexion",
+    "create": "Créer",
+    "delete": "Supprimer"
   },
   "install": {
     "title": "Installation"
@@ -51,5 +53,9 @@
       "accountInactive": "Ce compte est désactivé",
       "error": "Une erreur est survenue lors de l'opération"
     }
+  },
+  "menus": {
+    "profile": "Mon profile",
+    "logout": "Déconnexion"
   }
 }

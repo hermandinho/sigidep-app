@@ -18,9 +18,16 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {MessagesModule} from "primeng/messages";
+import {UserService} from "@services/user.service";
+import {ToolbarModule} from "primeng/toolbar";
+import {RippleModule} from "primeng/ripple";
+import {TableModule} from "primeng/table";
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {CheckPermissionsDirective} from "../directives/check-permissions.directive";
 
 const declarations = [
   BaseComponent,
+  CheckPermissionsDirective,
 ];
 
 const shared = [
@@ -35,6 +42,10 @@ const shared = [
   InputTextareaModule,
   ReactiveFormsModule,
   MessagesModule,
+  ToolbarModule,
+  RippleModule,
+  TableModule,
+  BreadcrumbModule,
 ];
 @NgModule({
   declarations: [
@@ -56,6 +67,7 @@ const shared = [
   ],
   exports: [
     ...shared,
+    ...declarations,
     TranslateModule,
   ],
   providers: [
@@ -67,6 +79,7 @@ const shared = [
       useClass: AuthInterceptor,
     },
     MessageService,
+    UserService,
   ],
 })
 export class SharedModule { }

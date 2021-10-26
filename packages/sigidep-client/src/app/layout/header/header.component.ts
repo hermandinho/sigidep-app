@@ -1,23 +1,36 @@
 import {Component, HostListener, OnInit,} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from "../../store/reducers";
-import {Go} from "../../store/actions";
-import {AppService} from "../../services/app.service";
+import {select, Store} from '@ngrx/store';
+import {AppState} from "@reducers/index";
+import {Go} from "@store/actions";
+import {AppService} from "@services/app.service";
+import * as fromAuth from "@reducers/auth.reducer";
+import {BaseComponent} from "@components/base.component";
+import {UserModel} from "@models/user.model";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent extends BaseComponent implements OnInit {
   public dropdownOpened = false;
   public sideBarMinimized = false;
 
-  public me: any | undefined;
+  public user?: UserModel;
   constructor(
     private readonly store: Store<AppState>,
     public readonly appService: AppService,
-  ) {}
+  ) {
+    super();
+    this.store
+      .pipe(
+        select(fromAuth.getAuthUserSelector),
+        this.takeUntilDestroy,
+      )
+      .subscribe(user => {
+        this.user = user;
+      });
+  }
 
   ngOnInit(): void {}
 

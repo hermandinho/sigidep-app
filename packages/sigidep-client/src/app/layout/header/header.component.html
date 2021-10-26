@@ -7,31 +7,33 @@
       <i class="far fa-bell" style="font-size: 1.5rem" pBadge></i>
     </div> -->
     <div class="information-card p-d-flex" (click)="toggleDropdown()" #informationCard>
-      <p-avatar
-        *ngIf="!me?.profilePicture"
-        [label]="me?.firstName[0]?.toUpperCase() + me?.lastName[0]?.toUpperCase()"
-        [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px', 'color': '#fff', 'font-size': '1.2rem'}"
-        shape="circle"
-        size="large">
-      </p-avatar>
-      <p-avatar
-        *ngIf="me?.profilePicture"
-        [image]="me?.profilePicture"
-        [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px'}"
-        shape="circle"
-        size="large">
-      </p-avatar>
+      <ng-container *ngIf="user">
+        <p-avatar
+          [label]="user.initials"
+          [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px', 'color': '#fff', 'font-size': '1.2rem'}"
+          shape="circle"
+          size="large">
+        </p-avatar>
+      </ng-container>
+
+      <!--<ng-container *ngIf="user?.picture">
+        <p-avatar
+          [image]="user.picture"
+          [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px'}"
+          shape="circle"
+          size="large">
+        </p-avatar>
+      </ng-container>-->
 
       <div class="p-d-flex p-flex-column">
-        <p class="full-name">{{ me?.firstName + ' ' + me?.lastName }}</p>
-        <p class="role">{{me?.role?.label?.toUpperCase()}}</p>
+        <p class="full-name">{{ user?.fullName}}</p>
+        <p class="role">{{user?.role?.label?.toUpperCase()}}</p>
       </div>
 
       <div class="dropdown-content" [ngClass]="{'open': dropdownOpened}">
         <div class="dropdown-menu">
-          <div class="dropdown-item" routerLink="settings/profile">Mon Compte</div>
-          <a class="dropdown-item p-d-block" routerLink="/docs" target="_blank">Documentation</a>
-          <div class="dropdown-item" (click)="logout()">Déconnexion</div>
+          <div class="dropdown-item" routerLink="settings/profile">{{ 'menus.profile' | translate }}</div>
+          <div class="dropdown-item" (click)="logout()">{{ 'menus.logout' | translate }}</div>
         </div>
       </div>
     </div>

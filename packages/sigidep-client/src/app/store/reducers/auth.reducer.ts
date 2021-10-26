@@ -9,7 +9,7 @@ import {UserModel} from "@models/user.model";
 import {GetCurrentAuthSuccess, Login, LoginFailure, LoginSuccess} from "@actions/auth.actions";
 
 export interface State {
-  user: UserModel | undefined;
+  user?: UserModel;
   loading: boolean;
   error: any;
 }

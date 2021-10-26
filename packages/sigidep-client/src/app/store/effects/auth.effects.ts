@@ -17,8 +17,7 @@ import {AuthService} from "@services/auth.service";
 import {LocalStorageService} from "@services/local-storage.service";
 import {LoginSuccessModel} from "@models/auth.model";
 import {UserModel} from "@models/user.model";
-import {Go, ShowToast} from "@store/actions";
-import {AppService} from "@services/app.service";
+import {Go} from "@store/actions";
 
 @Injectable()
 export class AuthEffects {
@@ -58,7 +57,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(GetCurrentAuthSuccess),
       mergeMap((action) => {
-        return [new Go({path: ['/', 'home']})]; // TODO init store
+        return [new Go({path: [window.location.pathname ?? '/home']})]; // TODO init store
       })
     )
   );

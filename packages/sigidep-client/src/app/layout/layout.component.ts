@@ -1,7 +1,7 @@
-import {ConfirmationService} from 'primeng/api';
+import {MenuItem} from 'primeng/api';
 import {Component, OnInit} from '@angular/core';
-import {BaseComponent} from "../components/base.component";
-import {AppService} from "../services/app.service";
+import {BaseComponent} from "@components/base.component";
+import {AppService} from "@services/app.service";
 
 @Component({
   selector: 'app-layout',
@@ -10,11 +10,16 @@ import {AppService} from "../services/app.service";
 })
 export class LayoutComponent extends BaseComponent implements OnInit {
   public sideBarMinimized = false;
-
+  breadcrumb: MenuItem[] = [];
   constructor(
     public readonly appService: AppService,
   ) {
     super();
+    this.appService.appBreadcrumb.pipe(
+      this.takeUntilDestroy
+    ).subscribe(items => {
+      this.breadcrumb = items;
+    })
   }
 
   ngOnInit(): void {
