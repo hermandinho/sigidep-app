@@ -2,39 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  /*{
-    path: 'auth',
-    loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule),
-  },*/
   {
     path: 'install',
     // canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./pages/install/install.module').then(
+      import('../../pages/install/install.module').then(
         (m) => m.InstallModule,
       ),
-  }, {
-    path: '',
-    // canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./layout/layout.module').then(
-        (m) => m.LayoutModule,
-      ),
-  },
-  /*{
-    path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full'
-  },*/
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {
-      anchorScrolling: 'enabled',
-    })
+    RouterModule.forChild(routes),
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class InstallRoutingModule { }

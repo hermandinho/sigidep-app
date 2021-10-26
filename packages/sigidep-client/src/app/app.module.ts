@@ -14,6 +14,9 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HomeModule} from "@pages/home/home.module";
 import {InstallModule} from "@pages/install/install.module";
 import {AppInstallCheckGuard} from "./guards/app-install-check.guard";
+import {AuthModule} from "@pages/auth/auth.module";
+import {AuthGuard} from "./guards/auth.guard";
+import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -50,9 +53,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     HomeModule,
     InstallModule,
+    AuthModule,
   ],
   providers: [
     AppInstallCheckGuard,
+    AuthGuard,
+    IsAuthenticatedGuard,
   ],
   bootstrap: [AppComponent]
 })

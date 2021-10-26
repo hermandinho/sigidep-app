@@ -3,6 +3,7 @@ import {InstallComponent} from '@pages/install/install.component';
 import {SharedModule} from "@modules/shared.module";
 import {StructuresService} from "@services/structures.service";
 import {ToastModule} from "primeng/toast";
+import {InstallRoutingModule} from "@pages/install/install-routing.module";
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import {ToastModule} from "primeng/toast";
   imports: [
     SharedModule,
     ToastModule,
+    InstallRoutingModule,
   ],
   providers: [
     StructuresService,
