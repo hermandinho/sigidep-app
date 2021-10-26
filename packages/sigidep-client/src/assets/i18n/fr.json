@@ -18,7 +18,8 @@
   },
   "buttons": {
     "save": "Enregistrer",
-    "busy": "En cours ..."
+    "busy": "En cours ...",
+    "login": "Connexion"
   },
   "install": {
     "title": "Installation"
@@ -31,9 +32,14 @@
     "structureDescriptionEn": "Présentation de structure(EN)",
     "structureMissionFr": "Mission de structure(FR)",
     "structureMissionEn": "Mission de structure(EN)",
-    "structureAddress": "Addresse"
+    "structureAddress": "Addresse",
+    "emailOrUserName": "Email / Nom d'utilisateur",
+    "password": "Mot de passe"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
+  },
+  "auth": {
+    "loginTitle": "Se connecter"
   }
 }

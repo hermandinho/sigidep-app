@@ -16,6 +16,8 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MessageService} from "primeng/api";
+import {MessagesModule} from "primeng/messages";
 
 const declarations = [
   BaseComponent,
@@ -32,6 +34,7 @@ const shared = [
   InputTextModule,
   InputTextareaModule,
   ReactiveFormsModule,
+  MessagesModule,
 ];
 @NgModule({
   declarations: [
@@ -63,6 +66,7 @@ const shared = [
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
     },
+    MessageService,
   ],
 })
 export class SharedModule { }

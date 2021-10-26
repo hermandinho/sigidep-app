@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="page p-d-flex p-jc-center p-ai-center p-flex-column">
+  <p-messages></p-messages>
+  <p-card [style]="{'width': '30vw', 'min-height': '40vh'}">
+
+    <ng-template pTemplate="header">
+      <h2 class="p-text-primary p-d-flex p-flex-column p-jc-around p-ai-center p-pt-6">{{ 'auth.loginTitle' | translate }}</h2>
+    </ng-template>
+
+    <div class="p-fluid p-grid p-jc-center" [formGroup]="form">
+      <div class="p-field p-col-12 p-md-9">
+        <span class="p-float-label">
+            <input formControlName="email" pInputText type="email">
+            <label class="required">{{ 'labels.emailOrUserName' | translate }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-9">
+        <span class="p-float-label">
+            <input type="text" formControlName="password" pInputText>
+            <label class="required">{{ 'labels.password' | translate }}</label>
+        </span>
+      </div>
+
+      <p-divider class="p-col-12"></p-divider>
+
+      <div class="p-field p-col-12 p-md-9">
+        <p-button [label]="('buttons.' + (busy ? 'busy' : 'login')) | translate" [disabled]="!form?.valid || busy" (click)="submit()"></p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <div class="footer">
+    <p class="p-terminal p-text-bold p-mt-6">SIGIDEP V.0.1</p>
+  </div>
+</div>

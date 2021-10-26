@@ -67,22 +67,6 @@ export class InstallComponent extends BaseComponent implements OnInit {
         ({error}) => {
           this.busy = false;
           this.error = error;
-          /*
-          * {
-    severity?: string;
-    summary?: string;
-    detail?: string;
-    id?: any;
-    key?: string;
-    life?: number;
-    sticky?: boolean;
-    closable?: boolean;
-    data?: any;
-    icon?: string;
-    contentStyleClass?: string;
-    styleClass?: string;
-}
-          * */
           this.messageService.add({
             severity: 'error',
             summary: 'Erreur',
