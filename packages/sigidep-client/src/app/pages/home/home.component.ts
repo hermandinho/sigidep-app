@@ -39,6 +39,11 @@ export class HomeComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._appService.setAppBreadcrumb([
+      {
+        label: 'breadcrumb.dashboard'
+      }
+    ])
   }
 
 }

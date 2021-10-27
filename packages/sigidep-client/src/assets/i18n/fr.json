@@ -57,5 +57,9 @@
   "menus": {
     "profile": "Mon profile",
     "logout": "Déconnexion"
+  },
+  "breadcrumb": {
+    "exercises": "Exercices",
+    "dashboard": "Tableau de bord"
   }
 }

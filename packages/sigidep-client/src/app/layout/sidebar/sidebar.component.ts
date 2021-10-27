@@ -63,7 +63,7 @@ export class SidebarComponent extends BaseComponent implements OnInit {
           const url = e.routerState?.snapshot?.url?.split('/');
           const path = url[url.length - 1];
           if (path) {
-            this.items = this.items ?? I18NMenus(this.translateService);
+            this.items = I18NMenus(this.translateService);
             const menu = this.items.find(m => {
               // Since we only have one level of sub menus for now, this should be fine
               if (m.items) {

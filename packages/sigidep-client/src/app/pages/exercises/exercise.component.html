@@ -3,10 +3,10 @@
     <ng-template pTemplate="left">
       <button *appCheckPermissions="['exercises.create']" (click)="openForm()" [label]="'buttons.create' | translate" class="p-button-success p-mr-2" icon="pi pi-plus" pButton
               pRipple></button>
-      <ng-container *ngIf="selectedItems.length">
-        <button *appCheckPermissions="['exercises.delete']" [label]="'buttons.delete' | translate"
-                 class="p-button-danger" icon="pi pi-trash"
-                 pButton pRipple></button>
+      <ng-container>
+        <button *appCheckPermissions="['exercises.delete']" [disabled]="!selectedItems?.length"
+                class="p-button-danger" icon="pi pi-trash"
+                pButton pRipple></button>
       </ng-container>
 
     </ng-template>

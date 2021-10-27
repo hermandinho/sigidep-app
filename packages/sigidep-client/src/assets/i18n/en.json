@@ -1,8 +1,8 @@
 {
   "hello": "Hello world!",
   "sidebar": {
-    "dashboard": "Dashbord",
-    "exercices": "Exercices",
+    "dashboard": "Dashboard",
+    "exercices": "Exercises",
     "structure": "Structure",
     "settings": "Settings",
     "financialSources": "Financial Sources",
@@ -15,5 +15,9 @@
     "departements": "Departements",
     "system": "System",
     "elaboration": "Elaboration"
+  },
+  "breadcrumb": {
+    "exercises": "Exercises",
+    "dashboard": "Dashboard"
   }
 }

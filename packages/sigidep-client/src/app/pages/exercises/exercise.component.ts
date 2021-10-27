@@ -16,8 +16,8 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     this._appService.setAppBreadcrumb([
       {
-        label: 'CCCC'
-      }
+        label: 'breadcrumb.exercises'
+      },
     ])
   }
 

@@ -8,7 +8,7 @@
       <app-header></app-header>
     </div>
     <p-scrollPanel [style]="{ height: 'calc(100vh - 60px)' }" styleClass="main">
-      <p-breadcrumb [home]="{icon: 'pi pi-home'}" class="p-mb-6" [model]="breadcrumb"></p-breadcrumb>
+      <p-breadcrumb [home]="{icon: 'pi pi-home', routerLink: '/home'}" class="p-mb-6" [model]="breadcrumb"></p-breadcrumb>
       <br>
       <router-outlet></router-outlet>
     </p-scrollPanel>
