@@ -48,7 +48,7 @@ export class LocalStorageService {
   }
 
   public logout(): void {
-    localStorage.removeItem('_authToken');
-    localStorage.removeItem('_authUser');
+    this.removeItem('_authToken');
+    this.removeItem('_authUser');
   }
 }

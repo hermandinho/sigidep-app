@@ -10,6 +10,7 @@ export class AppService {
   // Observable to activate/desactivate sidebar
   public sideBarMinimized = new BehaviorSubject<boolean>(false);
   public appBreadcrumb = new BehaviorSubject<MenuItem[]>([]);
+  private breadcrumb: MenuItem[] = [];
 
   constructor(
     private translateService: TranslateService,
@@ -23,10 +24,19 @@ export class AppService {
   }
 
   public showToast(payload: Message) {
-    this._messageService.add(payload);
+    this._messageService.add({
+      ...payload,
+      detail: payload.detail?.includes('.') ? this.translateService.instant(payload.detail) : payload.detail,
+      summary: payload.summary?.includes('.') ? this.translateService.instant(payload.summary) : payload.summary,
+    });
   }
 
   public setAppBreadcrumb(items: MenuItem[]) {
-    this.appBreadcrumb.next(items);
+    this.breadcrumb = items;
+    this.appBreadcrumb.next(this.breadcrumb);
+  }
+
+  public getAppBreadcrumb(): MenuItem[] {
+    return this.breadcrumb;
   }
 }

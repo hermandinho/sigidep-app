@@ -6,31 +6,44 @@ import { StructureModule } from '@modules/structure/structure.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { UsersModule } from '@modules/users/users.module';
 import { SeederModule } from '@modules/seeder/seeder.module';
+import { ExercisesModule } from '@modules/exercises/exercises.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env'],
+      isGlobal: true,
+    }),
     TypeOrmModule.forRootAsync({
-      useFactory: () => {
-        const env = process.env.NODE_ENV || 'local';
+      inject: [ConfigService],
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => {
+        const env = config.get('NODE_ENV') ?? process.env.NODE_ENV ?? 'local';
+        const database = config.get('DB_NAME') ?? process.env.DB_NAME;
+        const host = config.get('DB_HOST') ?? process.env.DB_HOST;
+        const password = config.get('DB_PASSWORD') ?? process.env.DB_PASSWORD;
+        const username = config.get('DB_USER') ?? process.env.DB_USER;
         // tslint:disable-next-line:no-console
         console.log(
           '******* Server running on Port : ' +
-            (process.env.PORT ?? process.env.API_PORT) +
+            (config.get('API_PORT') ??
+              process.env.PORT ??
+              process.env.API_PORT) +
             ' on ' +
             env +
             ' Environment ********',
         );
         return {
-          database: process.env.DB_NAME,
-          host: process.env.DB_HOST,
-          password: process.env.DB_PASSWORD,
-          username: process.env.DB_USER,
+          database,
+          host,
+          password,
+          username,
           entities: ['dist/**/*.entity.js'],
-          // entities: [__dirname + '/**/*.entity.{ts,js}'],
           // subscribers: ['dist/subscribers/*.subscriber.js'],
           synchronize: true,
           type: 'postgres',
-          port: +process.env.DB_PORT,
+          port: 5432,
           // autoLoadEntities: true,
           // dropSchema: true,
           // logging: true,
@@ -39,7 +52,7 @@ import { SeederModule } from '@modules/seeder/seeder.module';
           // cli: {
           //   migrationsDir: 'migration',
           // },
-          ...(process.env.NODE_ENV !== 'production'
+          ...(env !== 'production'
             ? {}
             : {
                 extra: {
@@ -55,6 +68,7 @@ import { SeederModule } from '@modules/seeder/seeder.module';
     AuthModule,
     StructureModule,
     UsersModule,
+    ExercisesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

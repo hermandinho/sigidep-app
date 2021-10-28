@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from "./layout.component";
 import {HomeComponent} from "@pages/home/home.component";
-import {ExerciseComponent} from "@pages/exercises/exercise.component";
+import {ExercisesComponent} from "@pages/exercises/exercises.component";
 import {PermissionsGuard} from "../guards/permissions.guard";
 import {MenuPermissions} from "./sidebar/menu";
 
@@ -25,7 +25,7 @@ const routes: Routes = [
         }
       }, {
         path: 'exercises',
-        component: ExerciseComponent,
+        component: ExercisesComponent,
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.exercises_menu],

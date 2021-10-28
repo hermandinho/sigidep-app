@@ -39,7 +39,7 @@ export class LayoutComponent extends BaseComponent implements OnInit {
       )
     );
 
-    this._translate.stream('breadcrumb')
+    /*this._translate.stream('breadcrumb')
       .pipe(
         this.takeUntilDestroy
       ).subscribe(res => {
@@ -52,7 +52,7 @@ export class LayoutComponent extends BaseComponent implements OnInit {
           return item;
         })
       }
-    })
+    })*/
   }
 }
 

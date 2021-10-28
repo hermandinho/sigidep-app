@@ -6,6 +6,7 @@ import { UserEntity } from '@entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '@modules/auth/jwt.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   providers: [AuthService, JwtStrategy],
@@ -15,10 +16,17 @@ import { JwtStrategy } from '@modules/auth/jwt.strategy';
     PassportModule.register({
       defaultStrategy: 'jwt',
     }),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: process.env.JWT_EXPIRES_IN,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          secret: config.get('JWT_SECRET') ?? process.env.JWT_SECRET,
+          signOptions: {
+            expiresIn:
+              config.get('JWT_EXPIRES_IN') ?? process.env.JWT_EXPIRES_IN,
+          },
+        };
       },
     }),
   ],

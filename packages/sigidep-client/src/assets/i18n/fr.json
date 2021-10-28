@@ -21,7 +21,8 @@
     "busy": "En cours ...",
     "login": "Connexion",
     "create": "Créer",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "cancel": "Annuler"
   },
   "install": {
     "title": "Installation"
@@ -38,7 +39,11 @@
     "emailOrUserName": "Email / Nom d'utilisateur",
     "password": "Mot de passe",
     "welcome": "Bienvenue",
-    "welcomeMessage": "Bienvenue à bord {{name}}"
+    "welcomeMessage": "Bienvenue à bord {{name}}",
+    "search": "Rechercher...",
+    "startDate": "Date de debut",
+    "endDate": "Date de fin",
+    "exerciseInProgress": "Exercice en cours?"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -48,10 +53,19 @@
   },
   "errors": {
     "error": "Erreur",
+    "unknown": "Une erreur est survenue lors de cette opération",
     "auth": {
       "invalidCredentials": "Compte utilisateur introuvable",
       "accountInactive": "Ce compte est désactivé",
       "error": "Une erreur est survenue lors de l'opération"
+    },
+    "exercises": {
+      "conflict": "Cette plage de date n'est plus disponible."
+    }
+  },
+  "messages": {
+    "exercises": {
+      "createSuccess": "Exercices créer avec succès."
     }
   },
   "menus": {
@@ -61,5 +75,19 @@
   "breadcrumb": {
     "exercises": "Exercices",
     "dashboard": "Tableau de bord"
+  },
+  "tables": {
+    "titles": {
+      "exercises": "Liste des exercises"
+    },
+    "headers": {
+      "exerciseCode": "Code",
+      "startDate": "Date début",
+      "endDate": "Date fin",
+      "status": "Status"
+    }
+  },
+  "dialogs": {
+    "createExercise": "Céer un exercice"
   }
 }

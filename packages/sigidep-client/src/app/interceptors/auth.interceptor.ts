@@ -40,6 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
+        console.log(err?.error);
         if (err?.error?.statusCode === 401) {
           this.localStorageService.logout();
           this.store.dispatch(new Go({ path: ['/auth/login'] }));

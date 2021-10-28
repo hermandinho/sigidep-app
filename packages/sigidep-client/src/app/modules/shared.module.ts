@@ -24,6 +24,12 @@ import {RippleModule} from "primeng/ripple";
 import {TableModule} from "primeng/table";
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {CheckPermissionsDirective} from "../directives/check-permissions.directive";
+import {DialogService} from "primeng/dynamicdialog";
+import {DialogsService} from "@services/dialogs.service";
+import {CalendarModule} from "primeng/calendar";
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {ApisService} from "@services/apis.service";
+import {TagModule} from "primeng/tag";
 
 const declarations = [
   BaseComponent,
@@ -46,6 +52,9 @@ const shared = [
   RippleModule,
   TableModule,
   BreadcrumbModule,
+  CalendarModule,
+  InputSwitchModule,
+  TagModule,
 ];
 @NgModule({
   declarations: [
@@ -80,6 +89,9 @@ const shared = [
     },
     MessageService,
     UserService,
+    DialogService,
+    DialogsService,
+    ApisService,
   ],
 })
 export class SharedModule { }

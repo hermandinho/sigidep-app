@@ -1,5 +1,6 @@
-import { Column, Entity, Generated } from 'typeorm';
+import { Column, Entity, Generated, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { UserEntity } from '@entities/user.entity';
 
 export enum ExerciseStatusEnum {
   HIDDEN = 'hidden', // Used when creating an Exercise automatically
@@ -11,7 +12,7 @@ export enum ExerciseStatusEnum {
 @Entity({
   name: 'exercices',
   orderBy: {
-    code: 'ASC',
+    code: 'DESC',
   },
 })
 export class ExerciseEntity extends BaseEntity {
@@ -32,4 +33,9 @@ export class ExerciseEntity extends BaseEntity {
     default: ExerciseStatusEnum.PREPARING,
   })
   public status: ExerciseStatusEnum;
+
+  // Relations
+  @ManyToOne(() => UserEntity, (object) => object.id, { onDelete: 'SET NULL', nullable: true })
+  @JoinColumn({ name: 'owner_id' })
+  public createdBy!: UserEntity;
 }
