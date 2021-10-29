@@ -3,6 +3,7 @@ import {TranslateService} from "@ngx-translate/core";
 
 export const MenuPermissions = {
   'exercises_menu': ['exercises.create', 'exercises.read', 'exercises.update', 'exercises.delete'],
+  'roles_menu': ['roles.create', 'roles.read', 'roles.update', 'roles.delete', 'permissions.manage'],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -94,6 +95,14 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
         },
       ],
+    }, {
+      routerLink: 'roles',
+      icon: 'pi pi-lock',
+      label: translate.instant('sidebar.roles'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [...MenuPermissions.roles_menu],
+      },
     },
   ];
 };

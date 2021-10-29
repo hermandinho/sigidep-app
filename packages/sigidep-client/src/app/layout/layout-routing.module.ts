@@ -5,6 +5,7 @@ import {HomeComponent} from "@pages/home/home.component";
 import {ExercisesComponent} from "@pages/exercises/exercises.component";
 import {PermissionsGuard} from "../guards/permissions.guard";
 import {MenuPermissions} from "./sidebar/menu";
+import {RolesComponent} from "@pages/roles/roles.component";
 
 const routes: Routes = [
   {
@@ -29,6 +30,13 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.exercises_menu],
+        }
+      }, {
+        path: 'roles',
+        component: RolesComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.roles_menu],
         }
       },
       /*{

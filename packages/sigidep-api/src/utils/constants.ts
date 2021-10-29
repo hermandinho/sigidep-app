@@ -9,6 +9,7 @@ export enum PermissionContextsEnum {
   STRUCTURE = 'structures',
   TECHNICAL_SUPERVISION = 'technicalSupervisions',
   PARAGRAPHS = 'paragraphs',
+  ROLES = 'roles',
 }
 
 export enum UserAccountStatusEnum {

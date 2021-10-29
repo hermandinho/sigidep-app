@@ -14,7 +14,8 @@
     "arrondissements": "Arrondissements",
     "departements": "Départements",
     "system": "Système",
-    "elaboration": "Elaboration"
+    "elaboration": "Elaboration",
+    "roles": "Rôles"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -24,7 +25,8 @@
     "delete": "Supprimer",
     "cancel": "Annuler",
     "confirm": "Confirmer",
-    "update": "Modifier"
+    "update": "Modifier",
+    "apply": "Appliquer"
   },
   "install": {
     "title": "Installation"
@@ -45,7 +47,8 @@
     "search": "Rechercher...",
     "startDate": "Date de debut",
     "endDate": "Date de fin",
-    "exerciseInProgress": "Exercice en cours?"
+    "exerciseInProgress": "Exercice en cours?",
+    "label": "Libellé"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -65,13 +68,28 @@
     },
     "exercises": {
       "conflict": "Cette plage de date n'est plus disponible."
+    },
+    "permissions": {
+      "apply": "Une erreur est survenue lors de la modification des permissions."
+    },
+    "roles": {
+      "delete": "Une erreur est survenue lors de la suppression de ce rôle.",
+      "conflict": "Un rôle avec ce nom existe déjà."
     }
   },
   "messages": {
     "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "success": "Succès",
     "exercises": {
-      "createSuccess": "Exercices créer avec succès.",
+      "createSuccess": "Exercices crée avec succès.",
       "deleteSuccess": "Exercice(s) supprimés avec succès."
+    },
+    "permissions": {
+      "applySuccess": "Permissions appliquées avec succès."
+    },
+    "roles": {
+      "deleteSuccess": "Rôle supprimé avec succès.",
+      "createSuccess": "Rôle crée avec succès."
     }
   },
   "menus": {
@@ -80,7 +98,8 @@
   },
   "breadcrumb": {
     "exercises": "Exercices",
-    "dashboard": "Tableau de bord"
+    "dashboard": "Tableau de bord",
+    "roles": "Rôles"
   },
   "tables": {
     "titles": {
@@ -90,23 +109,93 @@
       "exerciseCode": "Code",
       "startDate": "Date début",
       "endDate": "Date fin",
-      "status": "Status"
+      "status": "Status",
+      "label": "Libellé"
     }
   },
   "dialogs": {
     "headers": {
       "createExercise": "Céer un exercice",
       "editExercise": "Modifier un exercice",
-      "confirm": "Confirmez-vous cette action?"
+      "confirm": "Confirmez-vous cette action?",
+      "createRole": "Céer un rôle",
+      "editRole": "Modifier un rôle"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
-      "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible."
+      "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible.",
+      "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {
     "active": "En cours",
     "archived": "Archivé",
     "preparing": "Préparation"
+  },
+  "permissions": {
+    "structures": {
+      "title": "Gestion des la structure",
+      "update": {
+        "title": "Modifier la structure",
+        "description": "Modifier les paramètres de la structure."
+      }
+    },
+    "users": {
+      "title": "Gestion d'utilisateurs",
+      "create": {
+        "title": "Créer des utilisateurs",
+        "description": "Créer des utilisateurs"
+      },
+      "read": {
+        "title": "Lister des utilisateurs",
+        "description": "Consulter la liste des utilisateurs"
+      },
+      "delete": {
+        "title": "Supprimer un utilisateur",
+        "description": "Supprimer des utilisateurs"
+      },
+      "update": {
+        "title": "Modifier un utilisateur",
+        "description": "Modifier les informations d'un utilisateur."
+      }
+    },
+    "exercises": {
+      "title": "Gestion des années budgetaires",
+      "create": {
+        "title": "Créer une année budgetaire",
+        "description": "Créer des années budgetaires"
+      },
+      "read": {
+        "title": "Lister les années budgetaire",
+        "description": "Consulter la liste des années budgétaires"
+      },
+      "delete": {
+        "title": "Supprimer une année budgétaire",
+        "description": "Supprimer les années budgétaires"
+      },
+      "update": {
+        "title": "Modifier une année budgétaire",
+        "description": "Modifier une années budgétaires."
+      }
+    },
+    "programs": {
+      "title": "Gestion des sous programs",
+      "create": {
+        "title": "Créer un sous program",
+        "description": "Créer des sous programs"
+      },
+      "read": {
+        "title": "Lister les sous programs",
+        "description": "Consulter la liste des sous programs"
+      },
+      "delete": {
+        "title": "Supprimer un sous program",
+        "description": "Supprimer les sous programs"
+      },
+      "update": {
+        "title": "Modifier un sous programs",
+        "description": "Modifier un sous program."
+      }
+    }
   }
 }

@@ -8,15 +8,8 @@ import * as fromExercises from '@reducers/exercise.reducer';
 import {ExerciseModel, ExerciseStatusType} from "@models/exercise.model";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
-import {
-  DeleteExercises,
-  DeleteExercisesFailure,
-  DeleteExercisesSuccess,
-  GetExercises
-} from "@actions/exercises.actions";
+import {DeleteExercises, DeleteExercisesFailure, DeleteExercisesSuccess} from "@actions/exercises.actions";
 import {Actions, ofType} from "@ngrx/effects";
-import {LoginFailure, LoginSuccess} from "@actions/auth.actions";
-import {Go} from "@store/actions";
 
 @Component({
   selector: 'app-erercise',
@@ -51,7 +44,7 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
       {
         label: 'breadcrumb.exercises'
       },
-    ])
+    ]);
   }
 
   async openForm() {
@@ -111,7 +104,7 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
           } else {
             this._appService.showToast({
               severity: 'error',
-              summary: 'errors.errors',
+              summary: 'errors.error',
               detail: 'errors.error',
               closable: true,
             });

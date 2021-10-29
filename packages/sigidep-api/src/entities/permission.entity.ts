@@ -31,4 +31,11 @@ export class PermissionEntity extends BaseEntity {
     eager: false,
   })
   public roles: RolePermissionEntity[];
+
+  constructor(param?: Partial<PermissionEntity>) {
+    super();
+    if (param) {
+      Object.assign(this, param);
+    }
+  }
 }

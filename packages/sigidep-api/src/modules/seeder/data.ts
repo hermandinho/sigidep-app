@@ -6,7 +6,7 @@ import { PermissionContextsEnum } from '@utils/constants';
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
   description:
-    "Ceci est le rôle du super admin du Système. Il ne sera jamais visible sur l'interface.",
+    "Ceci est le rôle du super admin du Système. Il ne sera jamais visible sur l'interface.", // TODO do we really need descriptions for roles? If yes how to i18n them?
 };
 
 export const ROOT_USER: Partial<UserEntity> = {
@@ -46,4 +46,10 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.ADDRESSES),
   ...simpleCrudGenerator(C.PARAGRAPHS),
   ...simpleCrudGenerator(C.STRUCTURE, ['create', 'read', 'delete']),
+  ...simpleCrudGenerator(C.ROLES),
+  {
+    context: C.ROLES,
+    label: 'permissions.manage',
+    description: 'permissions.manage',
+  },
 ];

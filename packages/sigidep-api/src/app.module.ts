@@ -8,6 +8,7 @@ import { UsersModule } from '@modules/users/users.module';
 import { SeederModule } from '@modules/seeder/seeder.module';
 import { ExercisesModule } from '@modules/exercises/exercises.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RolesModule } from '@modules/roles/roles.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     StructureModule,
     UsersModule,
     ExercisesModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

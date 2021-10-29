@@ -1,21 +1,21 @@
 import {Component, OnInit} from '@angular/core';
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AppService} from "@services/app.service";
 import {ApisService} from "@services/apis.service";
-import {ExerciseModel} from "@models/exercise.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "@reducers/index";
-import {GetExercises} from "@actions/exercises.actions";
-import * as moment from 'moment';
 import {BaseComponent} from "@components/base.component";
+import {RoleModel} from "@models/role.model";
+import {ExerciseModel} from "@models/exercise.model";
+import {GetRoles} from "@store/actions";
 
 @Component({
-  selector: 'app-create-exercise-form',
-  templateUrl: './create-exercise-form.component.html',
-  styleUrls: ['./create-exercise-form.component.scss']
+  selector: 'app-create-role-form',
+  templateUrl: './create-role-form.component.html',
+  styleUrls: ['./create-role-form.component.scss']
 })
-export class CreateExerciseFormComponent extends BaseComponent implements OnInit {
+export class CreateRoleFormComponent extends BaseComponent implements OnInit {
 
   public form: FormGroup;
   public busy = false;
@@ -31,42 +31,29 @@ export class CreateExerciseFormComponent extends BaseComponent implements OnInit
   ) {
     super();
     this.form = this._fb.group({
-      startDate: [undefined, [Validators.required]],
-      endDate: [undefined, [Validators.required]],
-      isActive: [false, []],
+      label: [undefined, [Validators.required]],
       id: [undefined, []],
     });
-  }
-
-  ngOnInit(): void {
-    // TODO I thing we should enable exercise creation only within a certain period of time.
-    this.form.get('startDate')?.valueChanges?.pipe(
-      this.takeUntilDestroy,
-    ).subscribe(val => {
-      if (val) {
-        const endDate = moment(val)/*.add(1, 'y')*/.endOf('y').toDate();
-        this.form.get('endDate')?.patchValue(endDate);
-      }
-    });
-
-    if (this.config.data?.item) {
-      const { startDate, id, endDate, status } = this.config.data?.item as ExerciseModel;
-      this.form.patchValue({
-        id,
-        startDate: moment(startDate).toDate(),
-        endDate: moment(endDate).toDate(),
-        isActive: status === 'active',
-      });
-    }
   }
 
   get isUpdateForm(): boolean {
     return !!this.form?.value?.id;
   }
 
+  ngOnInit(): void {
+    if (this.config.data?.item) {
+      const { id, label } = this.config.data?.item as RoleModel;
+      this.form.patchValue({
+        id,
+        label,
+      });
+    }
+  }
+
   close() {
     this.ref.close();
   }
+
 
   submit() {
     this.busy = true;
@@ -75,16 +62,16 @@ export class CreateExerciseFormComponent extends BaseComponent implements OnInit
       this.busy = false; // TODO
       return;
     }
-    this._apisService.post<ExerciseModel>('/exercises', {
+    this._apisService.post<ExerciseModel>('/roles', {
       ...this.form.value,
     }).subscribe(res => {
       this.busy = false;
       this.ref.close(res);
-      this._store.dispatch(GetExercises({}))
+      this._store.dispatch(GetRoles())
 
       this._appService.showToast({
-        detail: 'messages.success',
-        summary: 'messages.exercises.createSuccess',
+        summary: 'messages.success',
+        detail: 'messages.roles.createSuccess',
         severity: 'success',
         life: 3000,
         closable: true,
@@ -93,7 +80,7 @@ export class CreateExerciseFormComponent extends BaseComponent implements OnInit
       console.log(error);
       let err = 'errors.exercises.conflict';
       if (error?.statusCode === 409) {
-        err = 'errors.exercises.conflict';
+        err = 'errors.roles.conflict';
       } else {
         err = 'errors.unknown'
       }

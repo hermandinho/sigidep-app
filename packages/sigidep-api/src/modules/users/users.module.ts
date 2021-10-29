@@ -18,6 +18,6 @@ import { AuthModule } from '@modules/auth/auth.module';
       RolePermissionEntity,
     ]),
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, AuthModule],
 })
 export class UsersModule {}

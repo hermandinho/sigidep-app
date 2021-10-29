@@ -20,6 +20,7 @@ import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
 import {Effects} from "@effects/index";
 import { EffectsModule } from '@ngrx/effects';
 import {ExercisesModule} from "@pages/exercises/exercises.module";
+import {RolesModule} from "@pages/roles/roles.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     InstallModule,
     AuthModule,
     ExercisesModule,
+    RolesModule,
   ],
   providers: [
     AppInstallCheckGuard,

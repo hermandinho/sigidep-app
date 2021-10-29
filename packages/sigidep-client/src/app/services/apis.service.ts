@@ -30,4 +30,10 @@ export class ApisService {
       params: query,
     })
   }
+
+  public patch<T>(url: string, body: any, query?: any): Observable<T> {
+    return this.http.patch<T>(url, body,{
+      params: query,
+    })
+  }
 }
