@@ -12,7 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env'],
+      envFilePath: ['.env', '../../.env'],
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
@@ -25,6 +25,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         const password = config.get('DB_PASSWORD') ?? process.env.DB_PASSWORD;
         const username = config.get('DB_USER') ?? process.env.DB_USER;
         // tslint:disable-next-line:no-console
+	console.log(database,host ,password,username   );
         console.log(
           '******* Server running on Port : ' +
             (config.get('API_PORT') ??
