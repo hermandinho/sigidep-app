@@ -5,7 +5,13 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, mergeMap, switchMap} from 'rxjs/operators';
 import {LoginFailure} from "@actions/auth.actions";
-import {GetExercises, GetExercisesSuccess} from "@actions/exercises.actions";
+import {
+  DeleteExercises,
+  DeleteExercisesFailure,
+  DeleteExercisesSuccess,
+  GetExercises,
+  GetExercisesSuccess
+} from "@actions/exercises.actions";
 import {ApisService} from "@services/apis.service";
 import {ExerciseModel} from "@models/exercise.model";
 
@@ -20,6 +26,20 @@ export class ExercisesEffects {
             return [GetExercisesSuccess({payload})];
           }),
           catchError((err: HttpErrorResponse) => of(LoginFailure(err)))
+        )
+      )
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DeleteExercises),
+      mergeMap((action) =>
+        this.apisService.delete<void>('/exercises', {ids: action.ids?.join(',')}).pipe(
+          switchMap(() => {
+            return [DeleteExercisesSuccess({ ids: action.ids }), GetExercises({})];
+          }),
+          catchError((err: HttpErrorResponse) => of(DeleteExercisesFailure(err)))
         )
       )
     )

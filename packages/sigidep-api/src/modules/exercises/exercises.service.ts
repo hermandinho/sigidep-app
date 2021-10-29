@@ -1,11 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExerciseEntity, ExerciseStatusEnum } from '@entities/exercise.entity';
-import { Not, Repository } from 'typeorm';
-import {
-  _formatDate,
-  CreateExerciseDto,
-} from '@modules/exercises/dto/create-exercise.dto';
+import { In, Not, Repository } from 'typeorm';
+import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
 import { UserEntity } from '@entities/user.entity';
 
 @Injectable()
@@ -68,5 +65,21 @@ export class ExercisesService {
       .createQueryBuilder('e')
       .where('e.id = :id', { id: entity.id })
       .getOne();
+  }
+
+  public async deleteMany(ids: number[]): Promise<void> {
+    const check = await this.exerciseRepository
+      .createQueryBuilder('e')
+      .where('id IN (:...ids)', { ids })
+      .andWhere('e.status = :status', { status: ExerciseStatusEnum.ACTIVE })
+      .getOne();
+
+    if (check) {
+      throw new ConflictException();
+    }
+
+    this.exerciseRepository.delete({
+      id: In(ids),
+    });
   }
 }

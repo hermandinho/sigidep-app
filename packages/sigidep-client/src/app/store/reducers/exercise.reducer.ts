@@ -1,6 +1,12 @@
 import {Action, createFeatureSelector, createReducer, createSelector, on,} from '@ngrx/store';
 import {ExerciseModel} from "@models/exercise.model";
-import {GetExercises, GetExercisesFailure, GetExercisesSuccess} from "@actions/exercises.actions";
+import {
+  DeleteExercises, DeleteExercisesFailure,
+  DeleteExercisesSuccess,
+  GetExercises,
+  GetExercisesFailure,
+  GetExercisesSuccess
+} from "@actions/exercises.actions";
 
 export interface State {
   data: ExerciseModel[];
@@ -29,6 +35,13 @@ const authReducer = createReducer(
   }),
   on(GetExercisesFailure, (state, { error }) => {
     return { ...state, loading: false, error };
+  }),
+
+  on(DeleteExercises, (state, { ids }) => {
+    return { ...state, loading: true };
+  }),
+  on(DeleteExercisesSuccess, DeleteExercisesFailure, (state, {}) => {
+    return { ...state, loading: false };
   }),
 );
 

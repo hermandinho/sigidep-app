@@ -16,7 +16,7 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ReactiveFormsModule} from "@angular/forms";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {MessagesModule} from "primeng/messages";
 import {UserService} from "@services/user.service";
 import {ToolbarModule} from "primeng/toolbar";
@@ -30,6 +30,7 @@ import {CalendarModule} from "primeng/calendar";
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {ApisService} from "@services/apis.service";
 import {TagModule} from "primeng/tag";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 const declarations = [
   BaseComponent,
@@ -55,6 +56,7 @@ const shared = [
   CalendarModule,
   InputSwitchModule,
   TagModule,
+  ConfirmDialogModule,
 ];
 @NgModule({
   declarations: [
@@ -92,6 +94,7 @@ const shared = [
     DialogService,
     DialogsService,
     ApisService,
+    ConfirmationService,
   ],
 })
 export class SharedModule { }

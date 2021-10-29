@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Query,
@@ -45,5 +46,18 @@ export class ExercisesController {
     @GetCurrentUser() user: UserEntity,
   ): Promise<ExerciseEntity> {
     return this.service.create(payload, user);
+  }
+
+  @Delete('/')
+  @UseGuards(new PermissionsGuard(['exercises.delete']))
+  @ApiQuery({ name: 'ids', type: 'string' })
+  public async deleteMany(
+    @Query('ids') ids: string,
+    @GetCurrentUser() user: UserEntity,
+  ): Promise<void> {
+    if (!ids?.length) {
+      return Promise.resolve();
+    }
+    return this.service.deleteMany(ids?.split(',').map((item) => +item));
   }
 }

@@ -1,10 +1,12 @@
 <p-card>
   <p-toolbar styleClass="p-mb-4" *appCheckPermissions="['exercises.create', 'exercises.delete']">
     <ng-template pTemplate="left">
-      <button *appCheckPermissions="['exercises.create']" (click)="openForm()" [label]="'buttons.create' | translate" class="p-button-success p-mr-2" icon="pi pi-plus" pButton
+      <button (click)="openForm()" *appCheckPermissions="['exercises.create']" [label]="'buttons.create' | translate"
+              class="p-button-success p-mr-2" icon="pi pi-plus" pButton
               pRipple></button>
       <ng-container>
-        <button *appCheckPermissions="['exercises.delete']" [disabled]="!selectedItems?.length"
+        <button (click)="deleteSelectedItems()" *appCheckPermissions="['exercises.delete']"
+                [disabled]="!selectedItems?.length"
                 class="p-button-danger" icon="pi pi-trash"
                 pButton pRipple></button>
       </ng-container>
@@ -14,9 +16,9 @@
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [(selection)]="selectedItems" [globalFilterFields]="['startDate', 'endDate']" [loading]="(loading$ | async) || false"
+  <p-table #dt [(selection)]="selectedItems" [globalFilterFields]="['startDate', 'endDate', 'status']" [loading]="(loading$ | async) || false"
            [paginator]="true" [rowHover]="true"
-           [rows]="10"
+           [rows]="10" [sortMode]="'single'"
            [showCurrentPageReport]="true" [value]="data"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
            dataKey="id"
@@ -35,7 +37,7 @@
         <th style="width: 3rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <ng-container *ngFor="let column of tableColumns">
+        <ng-container *ngFor="let column of tableColumns; trackBy: trackByIndex">
             <th *ngIf="column.sortable" [pSortableColumn]="column.field">{{ column.title | translate }}
               <p-sortIcon [field]="column.field"></p-sortIcon>
             </th>
@@ -47,12 +49,13 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td>
-          <p-tableCheckbox [value]="item"></p-tableCheckbox>
+          <p-tableCheckbox [value]="item" *ngIf="item?.status !== 'active'"></p-tableCheckbox>
+          <p-checkbox [disabled]="true" *ngIf="item?.status === 'active'" ></p-checkbox>
         </td>
 
         <td *ngFor="let column of tableColumns">
           <span *ngIf="column.field === 'status'">
-            <p-tag [severity]="getTagSeverity(item.status)" [value]="('labels.statuses.' + item[column.field]) | translate"></p-tag>
+            <p-tag [severity]="getTagSeverity(item.status)" [value]="('exerciseStatuses.' + item[column.field]) | translate"></p-tag>
           </span>
           <span *ngIf="column.field !== 'status'">
               {{item[column.field]}}
@@ -67,7 +70,9 @@
         <td>
           <button (click)="edit(item)" *appCheckPermissions="['exercises.update']" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
                   pButton pRipple></button>
-          <button (click)="delete(item)" *appCheckPermissions="['exercises.delete']" class="p-button-rounded p-button-warning" icon="pi pi-trash"
+          <button (click)="delete(item)" *appCheckPermissions="['exercises.delete']"
+                  [disabled]="item?.status === 'active'" class="p-button-rounded p-button-warning"
+                  icon="pi pi-trash"
                   pButton pRipple></button>
         </td>
       </tr>

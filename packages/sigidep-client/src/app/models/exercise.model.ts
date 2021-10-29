@@ -1,4 +1,5 @@
 export interface ExerciseModel {
+  id: number;
   startDate: Date;
   endDate: Date;
   status: ExerciseStatusType;

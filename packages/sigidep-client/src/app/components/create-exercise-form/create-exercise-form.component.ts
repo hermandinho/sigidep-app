@@ -7,13 +7,15 @@ import {ExerciseModel} from "@models/exercise.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "@reducers/index";
 import {GetExercises} from "@actions/exercises.actions";
+import * as moment from 'moment';
+import {BaseComponent} from "@components/base.component";
 
 @Component({
   selector: 'app-create-exercise-form',
   templateUrl: './create-exercise-form.component.html',
   styleUrls: ['./create-exercise-form.component.scss']
 })
-export class CreateExerciseFormComponent implements OnInit {
+export class CreateExerciseFormComponent extends BaseComponent implements OnInit {
 
 
   public form: FormGroup;
@@ -28,15 +30,39 @@ export class CreateExerciseFormComponent implements OnInit {
     private _apisService: ApisService,
     private _store: Store<AppState>,
   ) {
+    super();
     this.form = this._fb.group({
       startDate: [undefined, [Validators.required]],
       endDate: [undefined, [Validators.required]],
       isActive: [false, []],
+      id: [undefined, []],
     });
   }
 
   ngOnInit(): void {
     // TODO I thing we should enable exercise creation only within a certain period of time.
+    this.form.get('startDate')?.valueChanges?.pipe(
+      this.takeUntilDestroy,
+    ).subscribe(val => {
+      if (val) {
+        const endDate = moment(val)/*.add(1, 'y')*/.endOf('y').toDate();
+        this.form.get('endDate')?.patchValue(endDate);
+      }
+    });
+
+    if (this.config.data?.item) {
+      const { startDate, id, endDate, status } = this.config.data?.item as ExerciseModel;
+      this.form.patchValue({
+        id,
+        startDate: moment(startDate).toDate(),
+        endDate: moment(endDate).toDate(),
+        isActive: status === 'active',
+      });
+    }
+  }
+
+  get isUpdateForm(): boolean {
+    return !!this.form?.value?.id;
   }
 
   close() {
@@ -45,6 +71,11 @@ export class CreateExerciseFormComponent implements OnInit {
 
   submit() {
     this.busy = true;
+
+    if (this.isUpdateForm) {
+      this.busy = false; // TODO
+      return;
+    }
     this._apisService.post<ExerciseModel>('/exercises', {
       ...this.form.value,
     }).subscribe(res => {
@@ -77,5 +108,4 @@ export class CreateExerciseFormComponent implements OnInit {
       });
     })
   }
-
 }

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DialogService} from "primeng/dynamicdialog";
 import {TranslateService} from "@ngx-translate/core";
+import {ExerciseModel} from "@models/exercise.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class DialogsService {
     private readonly _translateService: TranslateService,
   ) { }
 
-  public async launchExerciseCreateDialog(): Promise<any> {
+  public async launchExerciseCreateDialog(
+    item?: ExerciseModel,
+  ): Promise<any> {
     if (!this.exerciseCreateComponent) {
       const { CreateExerciseFormComponent } = await import(
         '@components/create-exercise-form/create-exercise-form.component'
@@ -21,11 +24,13 @@ export class DialogsService {
     }
 
     return this._dialogService.open(this.exerciseCreateComponent, {
-      header: this._translateService.instant('dialogs.createExercise'),
+      header: this._translateService.instant('dialogs.headers.' + (item ? 'editExercise' : 'createExercise')),
       width: '50vw',
       height: '30vh',
       modal: true,
-      data: {},
+      data: {
+        item,
+      },
     });
   }
 }

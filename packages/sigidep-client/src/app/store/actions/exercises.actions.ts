@@ -10,6 +10,19 @@ export const GetExercisesSuccess = createAction(
     props<{ payload: ExerciseModel[] }>(),
 );
 export const GetExercisesFailure = createAction(
-    '[Exercises] Filter success',
+    '[Exercises] Filter failure',
+    props<{ error?: any }>(), // TODO defile errors global model here
+);
+
+export const DeleteExercises = createAction(
+    '[Exercises] Delete',
+  props<{ ids: number[]}>(),
+);
+export const DeleteExercisesSuccess = createAction(
+    '[Exercises] Delete success',
+  props<{ ids: number[]}>(),
+);
+export const DeleteExercisesFailure = createAction(
+    '[Exercises] Delete failure',
     props<{ error?: any }>(), // TODO defile errors global model here
 );

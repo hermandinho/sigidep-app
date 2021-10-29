@@ -25,7 +25,7 @@
     <button pButton class="p-mr-3 p-button-warning" (click)="close()">
       {{ 'buttons.cancel' | translate }}
     </button>
-    <button (click)="submit()" [disabled]="!form?.valid || busy" [label]="('buttons.' + (busy ? 'busy' : 'save')) | translate"
+    <button (click)="submit()" [disabled]="!form?.valid || busy" [label]="('buttons.' + (busy ? 'busy' : (isUpdateForm ? 'update' : 'save'))) | translate"
             pButton></button>
   </div>
 </div>

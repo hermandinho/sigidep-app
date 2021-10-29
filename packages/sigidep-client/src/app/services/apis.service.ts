@@ -24,4 +24,10 @@ export class ApisService {
       params: query,
     })
   }
+
+  public delete<T>(url: string, query: any): Observable<T> {
+    return this.http.delete<T>(url, {
+      params: query,
+    })
+  }
 }

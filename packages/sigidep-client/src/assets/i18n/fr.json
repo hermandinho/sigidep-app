@@ -22,7 +22,9 @@
     "login": "Connexion",
     "create": "Créer",
     "delete": "Supprimer",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "update": "Modifier"
   },
   "install": {
     "title": "Installation"
@@ -53,6 +55,8 @@
   },
   "errors": {
     "error": "Erreur",
+    "success": "Succès",
+    "unauthorized": "Oups!",
     "unknown": "Une erreur est survenue lors de cette opération",
     "auth": {
       "invalidCredentials": "Compte utilisateur introuvable",
@@ -64,8 +68,10 @@
     }
   },
   "messages": {
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
     "exercises": {
-      "createSuccess": "Exercices créer avec succès."
+      "createSuccess": "Exercices créer avec succès.",
+      "deleteSuccess": "Exercice(s) supprimés avec succès."
     }
   },
   "menus": {
@@ -88,6 +94,19 @@
     }
   },
   "dialogs": {
-    "createExercise": "Céer un exercice"
+    "headers": {
+      "createExercise": "Céer un exercice",
+      "editExercise": "Modifier un exercice",
+      "confirm": "Confirmez-vous cette action?"
+    },
+    "messages": {
+      "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
+      "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible."
+    }
+  },
+  "exerciseStatuses": {
+    "active": "En cours",
+    "archived": "Archivé",
+    "preparing": "Préparation"
   }
 }
