@@ -91,7 +91,6 @@ export class RolesComponent extends BaseComponent implements OnInit {
       .filter(v => v.value)
       .map(v => v.id);
 
-    this.busy = false;
     this._store.dispatch(UpdateRolePermissions({ids, roleId: role.id}));
   }
 
@@ -219,7 +218,6 @@ export class RolesComponent extends BaseComponent implements OnInit {
         )
       )
       .subscribe((action) => {
-        this.busy = false;
         if (action.type === DeleteRoleFailure.type) {
           if (action.error?.statusCode === 403) {
             this._appService.showUnauthorizedActionToast();
