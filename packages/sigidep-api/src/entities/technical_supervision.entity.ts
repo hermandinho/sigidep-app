@@ -14,4 +14,10 @@ export class TechnicalSupervisionEntity extends BaseEntity {
 
   @Column({ name: 'label', nullable: false })
   public label: string;
+
+  @Column({ name: 'abbreviation_fr', nullable: true })
+  public abbreviationFr: string;
+
+  @Column({ name: 'abbreviation_en', nullable: true })
+  public abbreviationeEn: string;
 }

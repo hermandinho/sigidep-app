@@ -20,6 +20,9 @@ export class ExerciseEntity extends BaseEntity {
   @Generated('increment')
   public code?: number;
 
+  @Column({ name: 'year', type: 'int', default: new Date().getFullYear() })
+  public year: Date;
+
   @Column({ name: 'start_date', type: 'date', nullable: false })
   public startDate: Date;
 

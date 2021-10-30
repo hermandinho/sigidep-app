@@ -3,9 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { RoleEntity } from '@entities/role.entity';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
-import { PERMISSIONS_DATA, ROOT_ROLE, ROOT_USER } from '@modules/seeder/data';
+import {
+  FINANCIAL_SOURCES_DATE,
+  PERMISSIONS_DATA,
+  ROOT_ROLE,
+  ROOT_USER,
+} from '@modules/seeder/data';
 import { PermissionEntity } from '@entities/permission.entity';
 import { RolePermissionEntity } from '@entities/role-permission.entity';
+import { FinancialSourceEntity } from '@entities/financial-source.entity';
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -19,6 +25,8 @@ export class SeederService implements OnModuleInit {
     private readonly permissionsRepository: Repository<PermissionEntity>,
     @InjectRepository(RolePermissionEntity)
     private readonly rolePermissionsRepository: Repository<RolePermissionEntity>,
+    @InjectRepository(FinancialSourceEntity)
+    private readonly financialSourcesRepository: Repository<FinancialSourceEntity>,
   ) {}
 
   private async _initRoot(): Promise<{ role: RoleEntity; user: UserEntity }> {
@@ -92,8 +100,25 @@ export class SeederService implements OnModuleInit {
     );
   }
 
+  private async _initFinancialSources(): Promise<void> {
+    let count = 0;
+
+    for (const source of FINANCIAL_SOURCES_DATE) {
+      const check = await this.financialSourcesRepository.findOne(source, {
+        loadEagerRelations: false,
+      });
+      if (!check) {
+        await this.financialSourcesRepository.save(source);
+        count += 1;
+      }
+    }
+
+    this.logger.warn(`Synced ${count} financial sources`);
+  }
+
   async onModuleInit(): Promise<any> {
     const { role } = await this._initRoot();
     this._initPermissions(role);
+    this._initFinancialSources();
   }
 }

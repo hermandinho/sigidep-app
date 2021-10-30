@@ -21,6 +21,7 @@ import {Effects} from "@effects/index";
 import { EffectsModule } from '@ngrx/effects';
 import {ExercisesModule} from "@pages/exercises/exercises.module";
 import {RolesModule} from "@pages/roles/roles.module";
+import {FinancialSourcesModule} from "@pages/financial-sources/financial-sources.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -61,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthModule,
     ExercisesModule,
     RolesModule,
+    FinancialSourcesModule,
   ],
   providers: [
     AppInstallCheckGuard,

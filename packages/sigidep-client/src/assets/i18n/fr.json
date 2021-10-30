@@ -33,8 +33,8 @@
   },
   "labels": {
     "structureCode": "Code Structure",
-    "labelFr": "Nom de structure(FR)",
-    "labelEn": "Nom de structure(EN)",
+    "structureNameFr": "Nom de structure(FR)",
+    "structureNameEn": "Nom de structure(EN)",
     "structureDescriptionFr": "Présentation de structure(FR)",
     "structureDescriptionEn": "Présentation de structure(EN)",
     "structureMissionFr": "Mission de structure(FR)",
@@ -48,7 +48,15 @@
     "startDate": "Date de debut",
     "endDate": "Date de fin",
     "exerciseInProgress": "Exercice en cours?",
-    "label": "Libellé"
+    "label": "Libellé",
+    "labelFr": "Libellé (FR)",
+    "labelEn": "Libellé (EN)",
+    "code": "Code",
+    "abbreviationFr": "Abréviation (FR)",
+    "abbreviationEn": "Abréviation (EN)",
+    "financialSourcesAcceptsDeliverables": "Nécessite des unités physiques?",
+    "yes": "Oui",
+    "no": "Non"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -75,6 +83,10 @@
     "roles": {
       "delete": "Une erreur est survenue lors de la suppression de ce rôle.",
       "conflict": "Un rôle avec ce nom existe déjà."
+    },
+    "financialSources": {
+      "delete": "Une erreur est survenue lors de la suppression de cette source de finnancement.",
+      "conflict": "Une source de finnancement avec ce code existe déjà."
     }
   },
   "messages": {
@@ -90,6 +102,10 @@
     "roles": {
       "deleteSuccess": "Rôle supprimé avec succès.",
       "createSuccess": "Rôle crée avec succès."
+    },
+    "financialSources": {
+      "deleteSuccess": "Source de financement supprimé avec succès.",
+      "createSuccess": "Source de financement crée avec succès."
     }
   },
   "menus": {
@@ -99,18 +115,29 @@
   "breadcrumb": {
     "exercises": "Exercices",
     "dashboard": "Tableau de bord",
-    "roles": "Rôles"
+    "roles": "Rôles",
+    "financialsources": "Sources de financement"
   },
   "tables": {
     "titles": {
-      "exercises": "Liste des exercises"
+      "exercises": "Liste des exercises",
+      "financialSources": "Sources de financements"
     },
     "headers": {
       "exerciseCode": "Code",
       "startDate": "Date début",
       "endDate": "Date fin",
       "status": "Status",
-      "label": "Libellé"
+      "label": "Libellé",
+      "labelFr": "Libellé (FR)",
+      "labelEn": "Libellé (EN)",
+      "abbreviationFr": "Abréviation (FR)",
+      "abbreviationEn": "Abréviation (EN)",
+      "acceptsDeliverables": "Nécessite des unités physiques"
+    },
+    "stats": {
+      "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
+      "pagerEnVersion juste to keep 😂": "Showing {first} to {last} of {totalRecords} entries"
     }
   },
   "dialogs": {
@@ -119,12 +146,15 @@
       "editExercise": "Modifier un exercice",
       "confirm": "Confirmez-vous cette action?",
       "createRole": "Céer un rôle",
-      "editRole": "Modifier un rôle"
+      "editRole": "Modifier un rôle",
+      "createFinancialSource": "Céer une source de financement",
+      "editFinancialSource": "Modifier une source de financement"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
       "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible.",
-      "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible."
+      "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible.",
+      "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

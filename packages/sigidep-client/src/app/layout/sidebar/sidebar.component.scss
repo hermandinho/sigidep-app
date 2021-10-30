@@ -29,10 +29,25 @@
     }
   }
   .p-panelmenu {
+    background-color: rebeccapurple;
     .p-panelmenu-header {
       > a {
         background-color: unset;
         border: unset;
+        &.p-menuitem-link-active {
+          background-color: var(--gray-500)
+        }
+      }
+    }
+  }
+
+  p-panelmenu {
+    &::ng-deep {
+      .p-submenu-list {
+
+        .p-menuitem-link-active {
+          background-color: var(--gray-300)
+        }
       }
     }
   }

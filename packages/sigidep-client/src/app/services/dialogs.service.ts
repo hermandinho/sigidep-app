@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DialogService} from "primeng/dynamicdialog";
 import {TranslateService} from "@ngx-translate/core";
-import {ExerciseModel} from "@models/exercise.model";
-import {RoleModel} from "@models/role.model";
+import {FinancialSourceModel, RoleModel, ExerciseModel} from "@models/index";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +9,7 @@ import {RoleModel} from "@models/role.model";
 export class DialogsService {
   private exerciseCreateComponent: any;
   private rolesCreateComponent: any;
+  private financialSourcesCreateComponent: any;
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService,
@@ -50,6 +50,27 @@ export class DialogsService {
       header: this._translateService.instant('dialogs.headers.' + (item ? 'editRole' : 'createRole')),
       width: '50vw',
       height: '30vh',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchFinancialSourcesCreateDialog(
+    item?: FinancialSourceModel,
+  ): Promise<any> {
+    if (!this.financialSourcesCreateComponent) {
+      const { CreateFinancialSourceFormComponent } = await import(
+        '@components/create-financial-source-form/create-financial-source-form.component'
+        );
+      this.financialSourcesCreateComponent = CreateFinancialSourceFormComponent;
+    }
+
+    return this._dialogService.open(this.financialSourcesCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.' + (item ? 'editFinancialSource' : 'createFinancialSource')),
+      width: '50vw',
+      height: 'auto',
       modal: true,
       data: {
         item,

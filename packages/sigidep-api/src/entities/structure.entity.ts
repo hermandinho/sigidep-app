@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { CreateStructureDto } from '../modules/structure/dto/create-structure.dto';
+import { CreateStructureDto } from '@modules/structure/dto/create-structure.dto';
 
 @Entity({
   name: 'structures',
@@ -17,6 +17,14 @@ export class StructureEntity extends BaseEntity {
 
   @Column({ name: 'label_en', nullable: false })
   public labelEn: string;
+
+  // TODO Add to install form
+  @Column({ name: 'abbreviation_fr', nullable: true })
+  public abbreviationFr: string;
+
+  // TODO Add to install form
+  @Column({ name: 'abbreviation_en', nullable: true })
+  public abbreviationEn: string;
 
   @Column({ name: 'description_fr', nullable: false, type: 'text' })
   public descriptionFr: string;

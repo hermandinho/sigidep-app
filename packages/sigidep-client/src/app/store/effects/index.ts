@@ -3,6 +3,7 @@ import { RouterEffects } from './router.effects';
 import {AppEffects} from "@effects/app.effects";
 import {ExercisesEffects} from "@effects/exercises.effects";
 import {RolesEffects} from "@effects/roles.effects";
+import {FinancialSourcesEffects} from "@effects/financial-sources.effects";
 
 export const Effects = [
   AuthEffects,
@@ -10,4 +11,5 @@ export const Effects = [
   AppEffects,
   ExercisesEffects,
   RolesEffects,
+  FinancialSourcesEffects,
 ];

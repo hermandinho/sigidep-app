@@ -4,6 +4,7 @@ import {TranslateService} from "@ngx-translate/core";
 export const MenuPermissions = {
   'exercises_menu': ['exercises.create', 'exercises.read', 'exercises.update', 'exercises.delete'],
   'roles_menu': ['roles.create', 'roles.read', 'roles.update', 'roles.delete', 'permissions.manage'],
+  'financial_sources': ['financialSources.create', 'financialSources.read', 'financialSources.update', 'financialSources.delete'],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -43,10 +44,13 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           label: translate.instant('sidebar.settings'),
           routerLinkActiveOptions: { exact: true },
         }, {
-          routerLink: 'paragraphs',
+          routerLink: 'financial-sources',
           icon: 'pi pi-euro',
           label: translate.instant('sidebar.financialSources'),
           routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.financial_sources]
+          }
         }, {
           routerLink: 'paragraphs',
           icon: 'pi pi-sitemap',

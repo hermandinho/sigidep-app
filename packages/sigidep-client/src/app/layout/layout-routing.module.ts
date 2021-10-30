@@ -6,6 +6,7 @@ import {ExercisesComponent} from "@pages/exercises/exercises.component";
 import {PermissionsGuard} from "../guards/permissions.guard";
 import {MenuPermissions} from "./sidebar/menu";
 import {RolesComponent} from "@pages/roles/roles.component";
+import {FinancialSourcesComponent} from "@pages/financial-sources/financial-sources.component";
 
 const routes: Routes = [
   {
@@ -37,6 +38,13 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.roles_menu],
+        }
+      }, {
+        path: 'financial-sources',
+        component: FinancialSourcesComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.financial_sources],
         }
       },
       /*{

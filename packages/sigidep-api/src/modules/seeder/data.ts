@@ -2,6 +2,7 @@ import { UserEntity } from '@entities/user.entity';
 import { RoleEntity } from '@entities/role.entity';
 import { PermissionEntity } from '@entities/permission.entity';
 import { PermissionContextsEnum } from '@utils/constants';
+import { FinancialSourceEntity } from '@entities/financial-source.entity';
 
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
@@ -51,5 +52,32 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
     context: C.ROLES,
     label: 'permissions.manage',
     description: 'permissions.manage',
+  },
+];
+
+export const FINANCIAL_SOURCES_DATE: Partial<FinancialSourceEntity>[] = [
+  {
+    code: '01',
+    labelFr: 'Budget de Fonctionnement',
+    labelEn: 'Operating budget',
+    abbreviationFr: 'BF',
+    abbreviationEn: 'OB',
+    acceptsDeliverables: false,
+  },
+  {
+    code: '02',
+    labelFr: "Budget d'investissement Public",
+    labelEn: 'Public investment budget',
+    abbreviationFr: 'BIP',
+    abbreviationEn: 'PIB',
+    acceptsDeliverables: true,
+  },
+  {
+    code: '03',
+    labelFr: 'Financement Extérieur',
+    labelEn: 'External financing',
+    abbreviationFr: 'FINEX',
+    abbreviationEn: 'FINEX',
+    acceptsDeliverables: false,
   },
 ];

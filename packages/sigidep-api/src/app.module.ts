@@ -9,6 +9,7 @@ import { SeederModule } from '@modules/seeder/seeder.module';
 import { ExercisesModule } from '@modules/exercises/exercises.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesModule } from '@modules/roles/roles.module';
+import { FinancialSourcesModule } from '@modules/financial-sources/financial-sources.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { RolesModule } from '@modules/roles/roles.module';
         const password = config.get('DB_PASSWORD') ?? process.env.DB_PASSWORD;
         const username = config.get('DB_USER') ?? process.env.DB_USER;
         // tslint:disable-next-line:no-console
-	console.log(database,host ,password,username   );
+        console.log(database, host, password, username);
         console.log(
           '******* Server running on Port : ' +
             (config.get('API_PORT') ??
@@ -72,6 +73,7 @@ import { RolesModule } from '@modules/roles/roles.module';
     UsersModule,
     ExercisesModule,
     RolesModule,
+    FinancialSourcesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

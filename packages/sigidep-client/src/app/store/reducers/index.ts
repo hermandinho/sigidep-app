@@ -5,13 +5,14 @@ import {routerReducer, RouterReducerState} from '@ngrx/router-store';
 import * as fromAuth from './auth.reducer';
 import * as fromExercises from './exercise.reducer';
 import * as fromRoles from './roles.reducer';
-
+import * as fromFinancialSources from './financila-sources.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
   auth: fromAuth.State;
   exercises: fromExercises.State;
   roles: fromRoles.State;
+  financialSources: fromFinancialSources.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -19,6 +20,7 @@ export const reducers: ActionReducerMap<AppState> = {
   auth: fromAuth.reducer,
   exercises: fromExercises.reducer,
   roles: fromRoles.reducer,
+  financialSources: fromFinancialSources.reducer,
 };
 
 
