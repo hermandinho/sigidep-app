@@ -32,6 +32,8 @@ import {ApisService} from "@services/apis.service";
 import {TagModule} from "primeng/tag";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {CheckboxModule} from "primeng/checkbox";
+import {DropdownModule} from 'primeng/dropdown';
+
 
 const declarations = [
   BaseComponent,
@@ -59,6 +61,7 @@ const shared = [
   TagModule,
   ConfirmDialogModule,
   CheckboxModule,
+  DropdownModule,
 ];
 @NgModule({
   declarations: [

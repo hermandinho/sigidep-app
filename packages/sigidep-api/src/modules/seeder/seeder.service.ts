@@ -4,14 +4,19 @@ import { RoleEntity } from '@entities/role.entity';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import {
-  FINANCIAL_SOURCES_DATE,
+  CATEGORIES_DATA,
+  FINANCIAL_SOURCES_DATA,
   PERMISSIONS_DATA,
+  REGIONS_DATA,
   ROOT_ROLE,
-  ROOT_USER,
+  ROOT_USER, SECTORS_DATA,
 } from '@modules/seeder/data';
 import { PermissionEntity } from '@entities/permission.entity';
 import { RolePermissionEntity } from '@entities/role-permission.entity';
 import { FinancialSourceEntity } from '@entities/financial-source.entity';
+import { CategoriesEntity } from '@entities/categories.entity';
+import { RegionEntity } from '@entities/region.entity';
+import { SectorEntity } from '@entities/sector.entity';
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -27,6 +32,12 @@ export class SeederService implements OnModuleInit {
     private readonly rolePermissionsRepository: Repository<RolePermissionEntity>,
     @InjectRepository(FinancialSourceEntity)
     private readonly financialSourcesRepository: Repository<FinancialSourceEntity>,
+    @InjectRepository(CategoriesEntity)
+    private readonly categoriesRepository: Repository<CategoriesEntity>,
+    @InjectRepository(RegionEntity)
+    private readonly regionsRepository: Repository<RegionEntity>,
+    @InjectRepository(SectorEntity)
+    private readonly sectorsRepository: Repository<SectorEntity>,
   ) {}
 
   private async _initRoot(): Promise<{ role: RoleEntity; user: UserEntity }> {
@@ -96,14 +107,14 @@ export class SeederService implements OnModuleInit {
     }
 
     this.logger.warn(
-      `${count} new permissions creted and assigned to root user`,
+      `${count} new permissions created and assigned to root user`,
     );
   }
 
   private async _initFinancialSources(): Promise<void> {
     let count = 0;
 
-    for (const source of FINANCIAL_SOURCES_DATE) {
+    for (const source of FINANCIAL_SOURCES_DATA) {
       const check = await this.financialSourcesRepository.findOne(source, {
         loadEagerRelations: false,
       });
@@ -116,9 +127,69 @@ export class SeederService implements OnModuleInit {
     this.logger.warn(`Synced ${count} financial sources`);
   }
 
+  private async _initCategories(): Promise<void> {
+    let count = 0;
+    for (const cat of CATEGORIES_DATA) {
+      const exists = await this.categoriesRepository.findOne(
+        { code: cat.code },
+        { loadEagerRelations: false },
+      );
+      if (!exists) {
+        await this.categoriesRepository.save(
+          new CategoriesEntity({
+            ...cat,
+          }),
+        );
+        count += 1;
+      }
+    }
+    this.logger.warn(`Synced ${count} categories`);
+  }
+
+  private async _initLocations(): Promise<void> {
+    let regionsCount = 0;
+    for (const item of REGIONS_DATA) {
+      const exists = await this.regionsRepository.findOne(
+        { code: item.code },
+        { loadEagerRelations: false },
+      );
+      if (!exists) {
+        await this.regionsRepository.save(
+          new RegionEntity({
+            ...item,
+          }),
+        );
+        regionsCount += 1;
+      }
+    }
+    this.logger.warn(`Synced ${regionsCount} regions.`);
+  }
+
+  private async _initSectors(): Promise<void> {
+    let count = 0;
+    for (const item of SECTORS_DATA) {
+      const exists = await this.sectorsRepository.findOne(
+        { code: item.code },
+        { loadEagerRelations: false },
+      );
+      if (!exists) {
+        await this.sectorsRepository.save(
+          new SectorEntity({
+            ...item,
+          }),
+        );
+        count += 1;
+      }
+    }
+    this.logger.warn(`Synced ${count} sectors.`);
+  }
+
   async onModuleInit(): Promise<any> {
     const { role } = await this._initRoot();
     this._initPermissions(role);
     this._initFinancialSources();
+    this._initCategories();
+    this._initLocations();
+    this._initSectors();
   }
 }

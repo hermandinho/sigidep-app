@@ -3,6 +3,9 @@ import { RoleEntity } from '@entities/role.entity';
 import { PermissionEntity } from '@entities/permission.entity';
 import { PermissionContextsEnum } from '@utils/constants';
 import { FinancialSourceEntity } from '@entities/financial-source.entity';
+import { CategoriesEntity } from '@entities/categories.entity';
+import { RegionEntity } from '@entities/region.entity';
+import { SectorEntity } from '@entities/sector.entity';
 
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
@@ -53,9 +56,11 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
     label: 'permissions.manage',
     description: 'permissions.manage',
   },
+  ...simpleCrudGenerator(C.ADMINISTRATIVE_UNITS),
+  ...simpleCrudGenerator(C.FUNCTIONS),
 ];
 
-export const FINANCIAL_SOURCES_DATE: Partial<FinancialSourceEntity>[] = [
+export const FINANCIAL_SOURCES_DATA: Partial<FinancialSourceEntity>[] = [
   {
     code: '01',
     labelFr: 'Budget de Fonctionnement',
@@ -80,4 +85,41 @@ export const FINANCIAL_SOURCES_DATE: Partial<FinancialSourceEntity>[] = [
     abbreviationEn: 'FINEX',
     acceptsDeliverables: false,
   },
+];
+
+export const CATEGORIES_DATA: Partial<CategoriesEntity>[] = [
+  { code: '22', label: 'Cabinet' },
+  { code: '28', label: 'Dépenses communes du Cabinet' },
+  { code: '32', label: 'Secretariat Général' },
+  { code: '33', label: 'Directiond Techniques' },
+  { code: '34', label: 'Directions des Moyens' },
+  { code: '39', label: 'Dépenses Communes' },
+  { code: '44', label: 'Délégations Régionales' },
+  { code: '45', label: 'Délégations Régionales' },
+  { code: '45', label: 'Délégations Déparmentales' },
+  { code: '78', label: 'FINEX' },
+];
+
+export const REGIONS_DATA: Partial<RegionEntity>[] = [
+  { code: '00', label: 'Administration Centrale' },
+  { code: '10', label: 'Adamaoua' },
+  { code: '11', label: 'Centre' },
+  { code: '12', label: 'Est' },
+  { code: '13', label: 'Extême-Nord' },
+  { code: '14', label: 'Littotal' },
+  { code: '15', label: 'Nord' },
+  { code: '16', label: 'Nord-Ouest' },
+  { code: '17', label: 'Ouest' },
+  { code: '18', label: 'Sud' },
+  { code: '19', label: 'Sud-Ouest' },
+];
+
+export const SECTORS_DATA: Partial<SectorEntity>[] = [
+  {
+    code: '0',
+    labelFr: 'ADMINISTRATION GÉNÉRALE',
+    labelEn: 'GENERAL ADMINISTRATION',
+  },
+  { code: '1', labelFr: 'SOUVERAINETÉ', labelEn: 'SOVEREIGNTY' },
+  { code: '8', labelFr: 'INFRASTRUCTURES', labelEn: 'INFRASTRUCTURE' },
 ];

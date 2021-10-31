@@ -1,0 +1,33 @@
+.container {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 50px;
+
+  .footer {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+
+  p-inputmask {
+    width: 100%;
+    &::ng-deep {
+      input {
+        width: 100%;
+      }
+    }
+  }
+
+  .p-inputgroup {
+    .p-field  {
+      margin: 0;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+    .code {
+      width: 41%;
+    }
+  }
+}

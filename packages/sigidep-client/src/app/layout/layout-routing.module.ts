@@ -7,6 +7,7 @@ import {PermissionsGuard} from "../guards/permissions.guard";
 import {MenuPermissions} from "./sidebar/menu";
 import {RolesComponent} from "@pages/roles/roles.component";
 import {FinancialSourcesComponent} from "@pages/financial-sources/financial-sources.component";
+import { AdministrativeUnitsComponent } from '@pages/administrative-units/administrative-units.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,13 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.financial_sources],
+        }
+      }, {
+        path: 'administrative-units',
+        component: AdministrativeUnitsComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.administrative_units],
         }
       },
       /*{

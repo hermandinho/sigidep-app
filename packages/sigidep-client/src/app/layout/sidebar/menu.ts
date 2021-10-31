@@ -5,6 +5,7 @@ export const MenuPermissions = {
   'exercises_menu': ['exercises.create', 'exercises.read', 'exercises.update', 'exercises.delete'],
   'roles_menu': ['roles.create', 'roles.read', 'roles.update', 'roles.delete', 'permissions.manage'],
   'financial_sources': ['financialSources.create', 'financialSources.read', 'financialSources.update', 'financialSources.delete'],
+  'administrative_units': ['administrativeUnits.create', 'administrativeUnits.read', 'administrativeUnits.update', 'administrativeUnits.delete'],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -44,12 +45,17 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           label: translate.instant('sidebar.settings'),
           routerLinkActiveOptions: { exact: true },
         }, {
+          routerLink: 'administrative-units',
+          icon: 'pi pi-filter',
+          label: translate.instant('sidebar.administrativeUnits'),
+          routerLinkActiveOptions: { exact: true },
+        }, {
           routerLink: 'financial-sources',
           icon: 'pi pi-euro',
           label: translate.instant('sidebar.financialSources'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [...MenuPermissions.financial_sources]
+            permissions: [...MenuPermissions.administrative_units]
           }
         }, {
           routerLink: 'paragraphs',

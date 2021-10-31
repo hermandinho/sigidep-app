@@ -1,12 +1,20 @@
 import { BaseEntity } from '@entities/base.entity';
-import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  Unique,
+} from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
+import { AdministrativeUnitEntity } from '@entities/administrative-unit.entity';
 
 @Entity({
-  name: 'financial_sources',
+  name: 'sectors',
 })
-@Unique('UQ_FINANCIAL_STATUS_CODE', ['code'])
-export class FinancialSourceEntity extends BaseEntity {
+@Unique('UQ_SECTOR_CODE', ['code'])
+export class SectorEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;
 
@@ -16,16 +24,10 @@ export class FinancialSourceEntity extends BaseEntity {
   @Column({ name: 'label_en', nullable: false })
   public labelEn: string;
 
-  @Column({ name: 'abbreviation_fr', nullable: false })
-  public abbreviationFr: string;
-
-  @Column({ name: 'abbreviation_en', nullable: false })
-  public abbreviationEn: string;
-
-  @Column({ name: 'accepts_deliverables', default: false })
-  public acceptsDeliverables: boolean;
-
   // RELATIONS
+  @OneToMany(() => AdministrativeUnitEntity, (object) => object.sector, {})
+  public administrativeUnits: AdministrativeUnitEntity[];
+
   @ManyToOne(() => UserEntity, (object) => object.id, {
     eager: false,
     onDelete: 'SET NULL',
@@ -34,7 +36,7 @@ export class FinancialSourceEntity extends BaseEntity {
   @JoinColumn({ name: 'created_by' })
   public createdBy: UserEntity;
 
-  constructor(param?: Partial<FinancialSourceEntity>) {
+  constructor(param?: Partial<SectorEntity>) {
     super();
     if (param) {
       Object.assign(this, param);

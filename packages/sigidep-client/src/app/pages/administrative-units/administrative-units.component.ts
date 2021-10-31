@@ -1,31 +1,31 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable, of} from "rxjs";
 import {AppService} from "@services/app.service";
 import {DialogsService} from "@services/dialogs.service";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "@reducers/index";
 import {Actions, ofType} from "@ngrx/effects";
 import {BaseComponent} from "@components/base.component";
-import {FinancialSourceModel} from "@models/index";
-import {Observable, of} from "rxjs";
 import {
   DeleteFinancialSource,
   DeleteFinancialSourceFailure,
   DeleteFinancialSourceSuccess,
-  GetFinancialSources
+  GetAdministrativeUnites
 } from "@store/actions";
+import {getDataSelector, getLoadingSelector} from "@reducers/administrative-units.reducer";
 import {map} from "rxjs/operators";
-import {getDataSelector, getLoadingSelector} from "@reducers/financial-sources.reducer";
+import {AdministrativeUnitModel, CategoryModel, FunctionModel, RegionsModel, SectorModel} from "@models/index";
 
 @Component({
-  selector: 'app-financial-sources',
-  templateUrl: './financial-sources.component.html',
-  styleUrls: ['./financial-sources.component.scss']
+  selector: 'app-administrative-units',
+  templateUrl: './administrative-units.component.html',
+  styleUrls: ['./administrative-units.component.scss']
 })
-export class FinancialSourcesComponent extends BaseComponent implements OnInit {
+export class AdministrativeUnitsComponent extends BaseComponent implements OnInit {
 
   selectedItems: any[] = [];
   tableColumns: any[] = [];
-  data: FinancialSourceModel[] = [];
+  data: AdministrativeUnitModel[] = [];
   loading$: Observable<boolean> = of(true);
 
   constructor(
@@ -36,34 +36,36 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.tableColumns = [
-      { field: 'code', title: 'tables.headers.exerciseCode' },
-      { field: 'labelFr', title: 'tables.headers.labelFr' },
-      { field: 'labelEn', title: 'tables.headers.labelEn' },
-      { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr' },
-      { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn' },
-      { field: 'acceptsDeliverables', title: 'tables.headers.acceptsDeliverables' },
+      { field: 'code', title: 'tables.headers.code' },
+      // { field: 'labelFr', title: 'tables.headers.labelFr' },
+      // { field: 'labelEn', title: 'tables.headers.labelEn' },
+      // { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr' },
+      // { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn' },
+      // { field: 'category.formattedLabel', title: 'tables.headers.category' },
+      // { field: 'region.formattedLabel', title: 'tables.headers.region' },
+      // { field: 'sector.formattedLabel', title: 'tables.headers.sector' },
     ];
     this._initListeners();
   }
 
   ngOnInit(): void {
-    this._store.dispatch(GetFinancialSources());
+    this._store.dispatch(GetAdministrativeUnites());
     this._appService.setAppBreadcrumb([
       {
-        label: 'breadcrumb.financialsources'
+        label: 'breadcrumb.administrativeunits'
       },
     ]);
   }
 
   async openForm() {
-    this._dialogService.launchFinancialSourcesCreateDialog();
+    this._dialogService.launchAdministrativeUnitCreateDialog();
   }
 
-  edit(item: FinancialSourceModel) {
-    this._dialogService.launchFinancialSourcesCreateDialog(item);
+  edit(item: AdministrativeUnitModel) {
+    this._dialogService.launchAdministrativeUnitCreateDialog(item);
   }
 
-  delete(item: FinancialSourceModel) {
+  delete(item: AdministrativeUnitModel) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteFinancialSource',
       accept: () => {
@@ -76,7 +78,21 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
     this._store.pipe(
       this.takeUntilDestroy,
       select(getDataSelector)
-    ).subscribe(data => this.data = data);
+    ).subscribe(data => {
+      this.data = (data || []).map(d => {
+        d = {...d};
+        if (d.category)
+          d.category = new CategoryModel(d.category);
+        if (d.sector)
+          d.sector = new SectorModel(d.sector);
+        if (d.function)
+          d.function = new FunctionModel(d.function);
+        if (d.region)
+          d.region = new RegionsModel(d.region);
+        return d;
+      });
+      console.log(this.data);
+    });
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
@@ -106,12 +122,11 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
         } else if (action.type === DeleteFinancialSourceSuccess.type) {
           this._appService.showToast({
             severity: 'success',
-            detail: 'messages.financialSources.deleteSuccess',
+            detail: 'messages.administrativeSources.deleteSuccess',
             summary: 'errors.success',
             closable: true,
           });
         }
       })
   }
-
 }

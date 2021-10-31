@@ -15,7 +15,8 @@
     "departements": "Départements",
     "system": "Système",
     "elaboration": "Elaboration",
-    "roles": "Rôles"
+    "roles": "Rôles",
+    "administrativeUnits": "Unités administratives"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -56,7 +57,12 @@
     "abbreviationEn": "Abréviation (EN)",
     "financialSourcesAcceptsDeliverables": "Nécessite des unités physiques?",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "primaryFunction": "Fonction principale",
+    "secondaryFunction": "Fonction secondaire",
+    "category": "Catégorie",
+    "sector": "Secteur",
+    "region": "Région"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -87,6 +93,10 @@
     "financialSources": {
       "delete": "Une erreur est survenue lors de la suppression de cette source de finnancement.",
       "conflict": "Une source de finnancement avec ce code existe déjà."
+    },
+    "administrativeUnits": {
+      "delete": "Une erreur est survenue lors de la suppression de cette unité administrative.",
+      "conflict": "Une unité administrative avec ce code existe déjà."
     }
   },
   "messages": {
@@ -106,6 +116,10 @@
     "financialSources": {
       "deleteSuccess": "Source de financement supprimé avec succès.",
       "createSuccess": "Source de financement crée avec succès."
+    },
+    "administrativeSources": {
+      "deleteSuccess": "Unité administrative supprimé avec succès.",
+      "createSuccess": "Unité administrative crée avec succès."
     }
   },
   "menus": {
@@ -116,15 +130,18 @@
     "exercises": "Exercices",
     "dashboard": "Tableau de bord",
     "roles": "Rôles",
-    "financialsources": "Sources de financement"
+    "financialsources": "Sources de financement",
+    "administrativeunits": "Unités administratives"
   },
   "tables": {
     "titles": {
       "exercises": "Liste des exercises",
-      "financialSources": "Sources de financements"
+      "financialSources": "Sources de financements",
+      "administrativeUnits": "Unités administratives"
     },
     "headers": {
       "exerciseCode": "Code",
+      "code": "Code",
       "startDate": "Date début",
       "endDate": "Date fin",
       "status": "Status",
@@ -133,7 +150,11 @@
       "labelEn": "Libellé (EN)",
       "abbreviationFr": "Abréviation (FR)",
       "abbreviationEn": "Abréviation (EN)",
-      "acceptsDeliverables": "Nécessite des unités physiques"
+      "acceptsDeliverables": "Nécessite des unités physiques",
+      "section": "Section",
+      "category": "Catégorie",
+      "sector": "Secteur",
+      "region": "Région"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -148,7 +169,9 @@
       "createRole": "Céer un rôle",
       "editRole": "Modifier un rôle",
       "createFinancialSource": "Céer une source de financement",
-      "editFinancialSource": "Modifier une source de financement"
+      "editFinancialSource": "Modifier une source de financement",
+      "createAdministrativeUnit": "Céer une unité administrative",
+      "editAdministrativeUnit": "Modifier une unité administrative"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

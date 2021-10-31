@@ -5,7 +5,8 @@ import {routerReducer, RouterReducerState} from '@ngrx/router-store';
 import * as fromAuth from './auth.reducer';
 import * as fromExercises from './exercise.reducer';
 import * as fromRoles from './roles.reducer';
-import * as fromFinancialSources from './financila-sources.reducer';
+import * as fromFinancialSources from './financial-sources.reducer';
+import * as fromAdministrativeUnits from './administrative-units.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -13,6 +14,7 @@ export interface AppState {
   exercises: fromExercises.State;
   roles: fromRoles.State;
   financialSources: fromFinancialSources.State;
+  administrativeUnits: fromAdministrativeUnits.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -21,6 +23,7 @@ export const reducers: ActionReducerMap<AppState> = {
   exercises: fromExercises.reducer,
   roles: fromRoles.reducer,
   financialSources: fromFinancialSources.reducer,
+  administrativeUnits: fromAdministrativeUnits.reducer,
 };
 
 

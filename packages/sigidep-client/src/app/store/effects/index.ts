@@ -4,6 +4,7 @@ import {AppEffects} from "@effects/app.effects";
 import {ExercisesEffects} from "@effects/exercises.effects";
 import {RolesEffects} from "@effects/roles.effects";
 import {FinancialSourcesEffects} from "@effects/financial-sources.effects";
+import {AdministrativeUnitsEffects} from "@effects/administrative-units.effects";
 
 export const Effects = [
   AuthEffects,
@@ -12,4 +13,5 @@ export const Effects = [
   ExercisesEffects,
   RolesEffects,
   FinancialSourcesEffects,
+  AdministrativeUnitsEffects,
 ];

@@ -10,6 +10,8 @@ import { ExercisesModule } from '@modules/exercises/exercises.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesModule } from '@modules/roles/roles.module';
 import { FinancialSourcesModule } from '@modules/financial-sources/financial-sources.module';
+import { AdministrativeUnitsModule } from '@modules/administrative-units/administrative-units.module';
+import { AddressesModule } from '@modules/addresses/addresses.module';
 
 @Module({
   imports: [
@@ -74,6 +76,8 @@ import { FinancialSourcesModule } from '@modules/financial-sources/financial-sou
     ExercisesModule,
     RolesModule,
     FinancialSourcesModule,
+    AdministrativeUnitsModule,
+    AddressesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
