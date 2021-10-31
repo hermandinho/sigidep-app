@@ -29,7 +29,7 @@ export class DialogsService {
     return this._dialogService.open(this.exerciseCreateComponent, {
       header: this._translateService.instant('dialogs.headers.' + (item ? 'editExercise' : 'createExercise')),
       width: '50vw',
-      height: '30vh',
+      height: 'auto',
       modal: true,
       data: {
         item,
