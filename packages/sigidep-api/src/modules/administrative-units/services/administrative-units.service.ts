@@ -40,6 +40,7 @@ export class AdministrativeUnitsService {
       .leftJoinAndSelect('f.category', 'c')
       .leftJoinAndSelect('f.sector', 's')
       .leftJoinAndSelect('f.function', 'func')
+      .leftJoinAndSelect('func.parent', 'parent')
       .leftJoinAndSelect('f.region', 'r')
       .getMany();
   }

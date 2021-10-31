@@ -21,6 +21,7 @@ export class FunctionModel {
   labelFr!: string;
   labelEn!: string;
   children?: FunctionModel[];
+  parent?: FunctionModel;
   sector?: SectorModel;
 
   constructor(param?: Partial<FunctionModel>) {

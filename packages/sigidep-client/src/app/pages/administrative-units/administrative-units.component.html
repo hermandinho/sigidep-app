@@ -38,12 +38,12 @@
     <ng-template pTemplate="header">
       <tr>
         <ng-container *ngFor="let column of tableColumns; trackBy: trackByIndex">
-          <th>{{ column.title | translate }}</th>
+          <th pSortableColumn="code">{{ column.title | translate }} <p-sortIcon field="code"></p-sortIcon></th>
         </ng-container>
-        <th>{{ 'tables.headers.labelFr' | translate }}</th>
-        <th>{{ 'tables.headers.labelEn' | translate }}</th>
-        <th>{{ 'tables.headers.category' | translate }}</th>
-        <th>{{ 'tables.headers.region' | translate }}</th>
+        <th pSortableColumn="labelFr">{{ 'tables.headers.labelFr' | translate }} <p-sortIcon field="labelFr"></p-sortIcon> </th>
+        <th pSortableColumn="labelEn">{{ 'tables.headers.labelEn' | translate }} <p-sortIcon field="labelEn"></p-sortIcon> </th>
+        <th pSortableColumn="category.formattedLabel">{{ 'tables.headers.category' | translate }} <p-sortIcon field="category.formattedLabel"></p-sortIcon> </th>
+        <th pSortableColumn="region.formattedLabel">{{ 'tables.headers.region' | translate }} <p-sortIcon field="region.formattedLabel"></p-sortIcon> </th>
         <th>{{ 'tables.headers.sector' | translate }}</th>
         <th></th>
       </tr>

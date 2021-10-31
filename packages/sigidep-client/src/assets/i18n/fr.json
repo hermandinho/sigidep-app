@@ -177,7 +177,8 @@
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
       "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible.",
       "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible.",
-      "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible."
+      "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible.",
+      "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

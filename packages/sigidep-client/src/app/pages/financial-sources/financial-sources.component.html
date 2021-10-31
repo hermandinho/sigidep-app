@@ -35,8 +35,9 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <ng-container *ngFor="let column of tableColumns; trackBy: trackByIndex">
-          <th>{{ column.title | translate }}</th>
+        <ng-container *ngFor="let column of tableColumns;">
+          <th *ngIf="column.sortable" [pSortableColumn]="column.field">{{ column.title | translate }} <p-sortIcon field="code"></p-sortIcon></th>
+          <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
         </ng-container>
         <th></th>
       </tr>

@@ -36,11 +36,11 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.tableColumns = [
-      { field: 'code', title: 'tables.headers.exerciseCode' },
-      { field: 'labelFr', title: 'tables.headers.labelFr' },
-      { field: 'labelEn', title: 'tables.headers.labelEn' },
-      { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr' },
-      { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn' },
+      { field: 'code', title: 'tables.headers.exerciseCode', sortable: true, },
+      { field: 'labelFr', title: 'tables.headers.labelFr', sortable: true, },
+      { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true, },
+      { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr', sortable: true, },
+      { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn', sortable: true, },
       { field: 'acceptsDeliverables', title: 'tables.headers.acceptsDeliverables' },
     ];
     this._initListeners();
@@ -76,7 +76,7 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
     this._store.pipe(
       this.takeUntilDestroy,
       select(getDataSelector)
-    ).subscribe(data => this.data = data);
+    ).subscribe(data => this.data = [...data]);
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),

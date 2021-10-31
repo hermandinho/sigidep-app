@@ -68,7 +68,7 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
 
   delete(item: AdministrativeUnitModel) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteFinancialSource',
+      message: 'dialogs.messages.deleteAdministrativeUnit',
       accept: () => {
         this._store.dispatch(DeleteAdministrativeUnit({ id: item.id}));
       },

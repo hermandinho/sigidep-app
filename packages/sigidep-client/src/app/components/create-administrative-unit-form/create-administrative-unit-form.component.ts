@@ -78,24 +78,6 @@ export class CreateAdministrativeUnitFormComponent extends BaseComponent impleme
 
   ngOnInit(): void {
     // this._store.dispatch(GetFunctions({ _type: 'primary' }));
-    if (this.config.data?.item) {
-      const {
-        id,
-        labelFr,
-        labelEn,
-        abbreviationFr,
-        abbreviationEn,
-        code,
-      } = this.config.data?.item as AdministrativeUnitModel;
-      this.form.patchValue({
-        id,
-        labelFr,
-        labelEn,
-        abbreviationFr,
-        abbreviationEn,
-        code,
-      });
-    }
 
     forkJoin([
       this._apisService.get<FunctionModel[]>('/administrative-units/functions', { type: 'primary' }),
@@ -109,6 +91,35 @@ export class CreateAdministrativeUnitFormComponent extends BaseComponent impleme
       this.regions = (array[1] ?? []).map(item => new RegionsModel(item));
       this.categories = (array[2] ?? []).map(item => new CategoryModel(item));
       this.sectors = (array[3] ?? []).map(item => new SectorModel(item));
+
+      if (this.config.data?.item) {
+        // console.log(this.config.data?.item);
+        const {
+          id,
+          labelFr,
+          labelEn,
+          abbreviationFr,
+          abbreviationEn,
+          code,
+          sector,
+          category,
+          region,
+        } = this.config.data?.item as AdministrativeUnitModel;
+        const func = this.config.data?.item?.function as FunctionModel;
+        this.form.patchValue({
+          id,
+          labelFr,
+          labelEn,
+          abbreviationFr,
+          abbreviationEn,
+          code,
+          sectorId: sector?.id,
+          categoryId: category?.id,
+          primaryFunction: this.functions.find(f => f.id === func?.parent?.id),
+          secondaryFunction: func?.id,
+          regionId: region?.id,
+        });
+      }
     });
 
     this.form.get('primaryFunction')
