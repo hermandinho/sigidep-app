@@ -70,6 +70,12 @@ export class CreateAdministrativeUnitFormComponent extends BaseComponent impleme
     return this.secondaryFunction ?? [];
   }
 
+  get primaryFunctions(): FunctionModel[] {
+    const selectedSector = this.form?.value?.sectorId;
+    if (!selectedSector) return [];
+    return this.functions.filter(f => f.sector?.id === selectedSector);
+  }
+
   ngOnInit(): void {
     // this._store.dispatch(GetFunctions({ _type: 'primary' }));
     if (this.config.data?.item) {

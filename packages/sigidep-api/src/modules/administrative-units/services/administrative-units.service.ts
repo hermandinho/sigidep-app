@@ -15,6 +15,7 @@ import { CreateSecondaryFunctionDto } from '@modules/administrative-units/dto/cr
 import { CategoriesService } from '@modules/administrative-units/services/categories.service';
 import { SectorsService } from '@modules/administrative-units/services/sectors.service';
 import { AddressesService } from '@modules/addresses/addresses.service';
+import { SectorEntity } from '@entities/sector.entity';
 
 @Injectable()
 export class AdministrativeUnitsService {
@@ -150,13 +151,24 @@ export class AdministrativeUnitsService {
     }
 
     if (type === 'secondary' && !parent) {
-      throw new NotFoundException();
+      throw new NotFoundException('parent');
+    }
+
+    let sector: SectorEntity;
+    if (type === 'primary') {
+      sector = await this.sectorsService
+        .getRepository()
+        .findOne({ id: payload.sectorId }, { loadEagerRelations: false });
+      if (!sector) {
+        throw new NotFoundException('sector');
+      }
     }
 
     return type === 'primary'
       ? this.primaryFunctionsRepository.save({
           ...(payload as CreatePrimaryFunctionDto),
           createdBy: user,
+          sector,
         })
       : this.secondaryFunctionsRepository.save({
           ...payload,
@@ -172,6 +184,7 @@ export class AdministrativeUnitsService {
       return this.primaryFunctionsRepository
         .createQueryBuilder('f')
         .leftJoinAndSelect('f.children', 'c')
+        .leftJoinAndSelect('f.sector', 's')
         .getMany();
     else
       return this.secondaryFunctionsRepository

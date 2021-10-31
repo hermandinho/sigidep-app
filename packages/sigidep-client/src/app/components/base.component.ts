@@ -50,4 +50,8 @@ export class BaseComponent implements OnDestroy {
   public trackById(index: number, item: any): number {
     return item.id;
   }
+
+  public getTableGlobalSearchValue(e: any): string {
+    return e?.target?.value;
+  }
 }

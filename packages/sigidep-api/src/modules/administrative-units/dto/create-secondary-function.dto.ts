@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { CreatePrimaryFunctionDto } from '@modules/administrative-units/dto/create-primary-function.dto';
 
 export class CreateSecondaryFunctionDto extends CreatePrimaryFunctionDto {
-  @ApiProperty({ example: '221122', required: true })
+  @ApiProperty({ example: '333', required: true })
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(3)

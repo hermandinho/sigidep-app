@@ -36,10 +36,17 @@ export class ExercisesService {
     if (check) {
       throw new ConflictException();
     }
+
+    const latest = await this.exerciseRepository
+      .createQueryBuilder('e')
+      .orderBy('e.code', 'DESC')
+      .getOne();
+
     let entity = this.exerciseRepository.create({
       startDate: payload.startDate,
       endDate: payload.endDate,
       createdBy: user,
+      ...(latest && { code: latest.code + 1 }),
     });
 
     if (payload.isActive) {

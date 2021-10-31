@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { SecondaryFunctionsEntity } from '@entities/secondary-functions.entity';
+import { SectorEntity } from '@entities/sector.entity';
 
 @Entity({
   name: 'primary_functions',
@@ -27,6 +28,10 @@ export class PrimaryFunctionsEntity extends BaseEntity {
   // RELATIONS
   @OneToMany(() => SecondaryFunctionsEntity, (object) => object.parent)
   public children: SecondaryFunctionsEntity[];
+
+  @ManyToOne(() => SectorEntity, (object) => object.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'sector_id' })
+  public sector: SectorEntity;
 
   @ManyToOne(() => UserEntity, (object) => object.id, {
     eager: false,

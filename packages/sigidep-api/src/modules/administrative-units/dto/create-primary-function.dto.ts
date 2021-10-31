@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePrimaryFunctionDto {
-  @ApiProperty({ example: '221122', required: true })
+  @ApiProperty({ example: '10', required: true })
   @IsNotEmpty()
   @MinLength(2)
   @MaxLength(2)
@@ -15,4 +15,8 @@ export class CreatePrimaryFunctionDto {
   @ApiProperty({ example: 'Great function', required: true })
   @IsNotEmpty()
   public labelEn: string;
+
+  @ApiProperty({ example: 1, required: true })
+  @IsNotEmpty()
+  public sectorId: number;
 }

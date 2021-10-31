@@ -7,6 +7,7 @@ import {AppState} from "@reducers/index";
 import {Actions, ofType} from "@ngrx/effects";
 import {BaseComponent} from "@components/base.component";
 import {
+  DeleteAdministrativeUnit,
   DeleteFinancialSource,
   DeleteFinancialSourceFailure,
   DeleteFinancialSourceSuccess,
@@ -69,7 +70,7 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteFinancialSource',
       accept: () => {
-        this._store.dispatch(DeleteFinancialSource({ id: item.id}))
+        this._store.dispatch(DeleteAdministrativeUnit({ id: item.id}));
       },
     })
   }
@@ -91,7 +92,6 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
           d.region = new RegionsModel(d.region);
         return d;
       });
-      console.log(this.data);
     });
 
     this.loading$ = this._store.pipe(

@@ -73,7 +73,7 @@
         <p-dropdown [filterBy]="_translate?.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'"
                     [filter]="true"
                     [optionLabel]="_translate?.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'"
-                    [options]="functions"
+                    [options]="primaryFunctions"
                     [placeholder]="'labels.primaryFunction' | translate"
                     [showClear]="true"
                     appendTo="body"

@@ -16,12 +16,13 @@
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [globalFilterFields]="['labelFr', 'labelEn', 'abbreviationFr', 'abbreviationEn']"
-           [loading]="(loading$ | async) || false"
-           [paginator]="true" [rowHover]="true"
-           [rows]="10" [showCurrentPageReport]="true"
-           [sortMode]="'single'" [value]="data"
+  <p-table #dt
            [currentPageReportTemplate]="'tables.stats.pager' | translate"
+           [globalFilterFields]="['labelFr', 'labelEn', 'abbreviationFr', 'abbreviationEn', 'code', 'sector.formattedLabelFr', 'sector.formattedLabelEn']"
+           [loading]="(loading$ | async) || false" [paginator]="true"
+           [rowHover]="true" [rows]="10"
+           [showCurrentPageReport]="true" [sortMode]="'single'"
+           [value]="data"
            dataKey="id"
            responsiveLayout="scroll">
     <ng-template pTemplate="caption">
@@ -29,7 +30,8 @@
         <h5 class="p-m-0">{{'tables.titles.administrativeUnits' | translate }}</h5>
         <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" [placeholder]="'labels.search' | translate" />
+                    <input (input)="dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')" [placeholder]="'labels.search' | translate" pInputText
+                           type="text"/>
                 </span>
       </div>
     </ng-template>
