@@ -61,7 +61,8 @@
     "secondaryFunction": "Fonction secondaire",
     "category": "Catégorie",
     "sector": "Secteur",
-    "region": "Région"
+    "region": "Région",
+    "status": "Status"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
