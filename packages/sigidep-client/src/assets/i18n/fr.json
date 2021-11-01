@@ -48,7 +48,6 @@
     "search": "Rechercher...",
     "startDate": "Date de debut",
     "endDate": "Date de fin",
-    "exerciseInProgress": "Exercice en cours?",
     "label": "Libellé",
     "labelFr": "Libellé (FR)",
     "labelEn": "Libellé (EN)",
@@ -182,9 +181,10 @@
     }
   },
   "exerciseStatuses": {
-    "active": "En cours",
+    "in_progress": "En cours",
     "archived": "Archivé",
-    "preparing": "Préparation"
+    "preparing": "Préparation",
+    "following": "Suivi"
   },
   "permissions": {
     "structures": {

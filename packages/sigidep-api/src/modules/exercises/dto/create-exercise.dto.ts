@@ -1,5 +1,6 @@
-import { IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsDateString, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ExerciseStatusEnum } from '@entities/exercise.entity';
 
 export const _formatDate = (date: string): Date => {
   const parts = date.split('/');
@@ -19,7 +20,11 @@ export class CreateExerciseDto {
   @IsDateString()
   public endDate: Date | string;
 
-  @ApiProperty({ example: false })
-  @IsOptional()
-  public isActive!: boolean;
+  @ApiProperty({
+    example: ExerciseStatusEnum.PREPARING,
+    type: 'enum',
+    enum: ExerciseStatusEnum,
+  })
+  @IsNotEmpty()
+  public status: ExerciseStatusEnum;
 }

@@ -15,8 +15,22 @@
       </div>
 
       <div class="p-field p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center">
-        <label class="required">{{ 'labels.exerciseInProgress' | translate }}</label>
-        <p-inputSwitch formControlName="isActive"></p-inputSwitch>
+        <label class="required">{{ 'labels.status' | translate }}</label>
+        <p-dropdown [autoDisplayFirst]="false" [options]="statuses" [placeholder]="'labels.status' | translate"
+                    class="p-col-6" formControlName="status"
+                    optionLabel="label"
+                    optionValue="status">
+          <ng-template let-option pTemplate="selectedItem">
+            <div>
+              <div>{{ option.label | translate }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-option pTemplate="item">
+            <div>
+              <div>{{ option.label | translate }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
       </div>
     </div>
   </div>

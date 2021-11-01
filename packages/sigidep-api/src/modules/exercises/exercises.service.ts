@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExerciseEntity, ExerciseStatusEnum } from '@entities/exercise.entity';
-import { In, Not, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
 import { UserEntity } from '@entities/user.entity';
 
@@ -46,27 +46,48 @@ export class ExercisesService {
       startDate: payload.startDate,
       endDate: payload.endDate,
       createdBy: user,
-      ...(latest && { code: latest.code + 1 }),
+      // ...(latest && { code: latest.code + 1 }),
+      code: latest?.code ? latest.code + 1 : 55, // we are starting in 2021 which has code 55
+      status: payload.status,
     });
 
-    if (payload.isActive) {
-      entity.status = ExerciseStatusEnum.ACTIVE;
-    }
-
-    entity = await this.exerciseRepository.save(entity);
-
-    if (payload.isActive) {
-      // Archive all previous active items
+    if (payload.status === ExerciseStatusEnum.PREPARING) {
       await this.exerciseRepository.update(
         {
-          id: Not(entity.id),
-          status: ExerciseStatusEnum.ACTIVE,
+          status: ExerciseStatusEnum.PREPARING,
+        },
+        {
+          status: ExerciseStatusEnum.IN_PROGRESS,
+        },
+      );
+    } else if (payload.status === ExerciseStatusEnum.IN_PROGRESS) {
+      await this.exerciseRepository.update(
+        {
+          status: ExerciseStatusEnum.PREPARING,
+        },
+        {
+          status: ExerciseStatusEnum.FOLLOWING,
+        },
+      );
+    } else if (payload.status === ExerciseStatusEnum.FOLLOWING) {
+      await this.exerciseRepository.update(
+        {
+          status: ExerciseStatusEnum.FOLLOWING,
         },
         {
           status: ExerciseStatusEnum.ARCHIVED,
         },
       );
+    } else {
+      await this.exerciseRepository.update(
+        {},
+        {
+          status: ExerciseStatusEnum.ARCHIVED,
+        },
+      );
     }
+
+    entity = await this.exerciseRepository.save(entity);
 
     return this.exerciseRepository
       .createQueryBuilder('e')
@@ -78,7 +99,9 @@ export class ExercisesService {
     const check = await this.exerciseRepository
       .createQueryBuilder('e')
       .where('id IN (:...ids)', { ids })
-      .andWhere('e.status = :status', { status: ExerciseStatusEnum.ACTIVE })
+      .andWhere('e.status = :status', {
+        status: ExerciseStatusEnum.IN_PROGRESS,
+      })
       .getOne();
 
     if (check) {

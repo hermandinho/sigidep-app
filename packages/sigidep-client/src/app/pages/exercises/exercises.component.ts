@@ -55,8 +55,10 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
     switch (status) {
       case "hidden":
         return 'warning';
-      case "active":
+      case "in_progress":
         return 'success';
+      case "following":
+        return 'default';
       case "archived":
         return 'danger';
       case "preparing":

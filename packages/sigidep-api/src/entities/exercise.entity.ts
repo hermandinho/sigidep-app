@@ -1,11 +1,12 @@
-import { Column, Entity, Generated, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { UserEntity } from '@entities/user.entity';
 
 export enum ExerciseStatusEnum {
   HIDDEN = 'hidden', // Used when creating an Exercise automatically
   PREPARING = 'preparing',
-  ACTIVE = 'active',
+  IN_PROGRESS = 'in_progress',
+  FOLLOWING = 'following',
   ARCHIVED = 'archived',
 }
 
@@ -17,7 +18,7 @@ export enum ExerciseStatusEnum {
 })
 export class ExerciseEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
-  @Generated('increment')
+  // @Generated('increment')
   public code?: number;
 
   @Column({ name: 'year', type: 'int', default: new Date().getFullYear() })
@@ -38,7 +39,10 @@ export class ExerciseEntity extends BaseEntity {
   public status: ExerciseStatusEnum;
 
   // Relations
-  @ManyToOne(() => UserEntity, (object) => object.id, { onDelete: 'SET NULL', nullable: true })
+  @ManyToOne(() => UserEntity, (object) => object.id, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   @JoinColumn({ name: 'owner_id' })
   public createdBy!: UserEntity;
 }

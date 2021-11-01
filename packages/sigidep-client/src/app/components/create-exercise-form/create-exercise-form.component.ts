@@ -19,6 +19,11 @@ export class CreateExerciseFormComponent extends BaseComponent implements OnInit
 
   public form: FormGroup;
   public busy = false;
+  public statuses = [
+    { status: 'preparing', label: 'exerciseStatuses.preparing' },
+    { status: 'in_progress', label: 'exerciseStatuses.in_progress' },
+    { status: 'following', label: 'exerciseStatuses.following' },
+  ];
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -33,7 +38,7 @@ export class CreateExerciseFormComponent extends BaseComponent implements OnInit
     this.form = this._fb.group({
       startDate: [undefined, [Validators.required]],
       endDate: [undefined, [Validators.required]],
-      isActive: [false, []],
+      status: [undefined, [Validators.required]],
       id: [undefined, []],
     });
   }
@@ -55,7 +60,10 @@ export class CreateExerciseFormComponent extends BaseComponent implements OnInit
         id,
         startDate: moment(startDate).toDate(),
         endDate: moment(endDate).toDate(),
-        isActive: status === 'active',
+        status: status && {
+          code: status,
+          label: `exerciseStatuses.${status}`,
+        },
       });
     }
   }
