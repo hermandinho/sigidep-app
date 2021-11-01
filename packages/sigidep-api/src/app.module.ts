@@ -12,6 +12,7 @@ import { RolesModule } from '@modules/roles/roles.module';
 import { FinancialSourcesModule } from '@modules/financial-sources/financial-sources.module';
 import { AdministrativeUnitsModule } from '@modules/administrative-units/administrative-units.module';
 import { AddressesModule } from '@modules/addresses/addresses.module';
+import { TechnicalSupervisorsModule } from '@modules/technical-supervisors/technical-supervisors.module';
 
 @Module({
   imports: [
@@ -78,6 +79,7 @@ import { AddressesModule } from '@modules/addresses/addresses.module';
     FinancialSourcesModule,
     AdministrativeUnitsModule,
     AddressesModule,
+    TechnicalSupervisorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

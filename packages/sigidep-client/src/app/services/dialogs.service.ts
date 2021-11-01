@@ -1,7 +1,13 @@
 import {Injectable} from '@angular/core';
 import {DialogService} from "primeng/dynamicdialog";
 import {TranslateService} from "@ngx-translate/core";
-import {FinancialSourceModel, RoleModel, ExerciseModel, AdministrativeUnitModel} from "@models/index";
+import {
+  FinancialSourceModel,
+  RoleModel,
+  ExerciseModel,
+  AdministrativeUnitModel,
+  TechnicalSupervisorModel
+} from "@models/index";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +17,8 @@ export class DialogsService {
   private rolesCreateComponent: any;
   private financialSourcesCreateComponent: any;
   private administrativeUnitCreateComponent: any;
+  private technicalSupervisorCreateComponent: any;
+
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService,
@@ -91,6 +99,27 @@ export class DialogsService {
 
     return this._dialogService.open(this.administrativeUnitCreateComponent, {
       header: this._translateService.instant('dialogs.headers.' + (item ? 'editAdministrativeUnit' : 'createAdministrativeUnit')),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchTechnicalSupervisorCreateDialog(
+    item?: TechnicalSupervisorModel,
+  ): Promise<any> {
+    if (!this.administrativeUnitCreateComponent) {
+      const { CreateTechnicalSupervisorFormComponent } = await import(
+        '@components/create-technical-supervisor-form/create-technical-supervisor-form.component'
+        );
+      this.administrativeUnitCreateComponent = CreateTechnicalSupervisorFormComponent;
+    }
+
+    return this._dialogService.open(this.administrativeUnitCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.' + (item ? 'editTechnicalSupervisor' : 'createTechnicalSupervisor')),
       width: '50vw',
       height: 'auto',
       modal: true,

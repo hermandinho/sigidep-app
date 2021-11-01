@@ -7,6 +7,7 @@ import * as fromExercises from './exercise.reducer';
 import * as fromRoles from './roles.reducer';
 import * as fromFinancialSources from './financial-sources.reducer';
 import * as fromAdministrativeUnits from './administrative-units.reducer';
+import * as fromTechnicalSupervisors from './technical-supervisors.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -15,6 +16,7 @@ export interface AppState {
   roles: fromRoles.State;
   financialSources: fromFinancialSources.State;
   administrativeUnits: fromAdministrativeUnits.State;
+  technicalSupervisors: fromTechnicalSupervisors.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -24,6 +26,7 @@ export const reducers: ActionReducerMap<AppState> = {
   roles: fromRoles.reducer,
   financialSources: fromFinancialSources.reducer,
   administrativeUnits: fromAdministrativeUnits.reducer,
+  technicalSupervisors: fromTechnicalSupervisors.reducer,
 };
 
 

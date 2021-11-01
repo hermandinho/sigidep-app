@@ -6,6 +6,7 @@ export const MenuPermissions = {
   'roles_menu': ['roles.create', 'roles.read', 'roles.update', 'roles.delete', 'permissions.manage'],
   'financial_sources': ['financialSources.create', 'financialSources.read', 'financialSources.update', 'financialSources.delete'],
   'administrative_units': ['administrativeUnits.create', 'administrativeUnits.read', 'administrativeUnits.update', 'administrativeUnits.delete'],
+  'technical_supervisor': ['technicalSupervisions.create', 'technicalSupervisions.read', 'technicalSupervisions.update', 'technicalSupervisions.delete'],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -63,10 +64,13 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           label: 'Sous programmes',
           routerLinkActiveOptions: { exact: true },
         }, {
-          routerLink: 'offices',
+          routerLink: 'technical-supervisors',
           icon: 'pi pi-shield',
           label: translate.instant('sidebar.technicalSupervision'),
           routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.technical_supervisor],
+          }
         }, {
           routerLink: 'offices',
           icon: 'pi pi-book',

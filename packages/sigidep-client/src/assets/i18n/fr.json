@@ -97,6 +97,10 @@
     "administrativeUnits": {
       "delete": "Une erreur est survenue lors de la suppression de cette unité administrative.",
       "conflict": "Une unité administrative avec ce code existe déjà."
+    },
+    "technicalSupervisions": {
+      "delete": "Une erreur est survenue lors de la suppression de cette tutelle technique.",
+      "conflict": "Une tutelle technique avec ce code existe déjà."
     }
   },
   "messages": {
@@ -120,6 +124,10 @@
     "administrativeSources": {
       "deleteSuccess": "Unité administrative supprimé avec succès.",
       "createSuccess": "Unité administrative crée avec succès."
+    },
+    "technicalSupervisions": {
+      "deleteSuccess": "Tutelle Technique supprimé avec succès.",
+      "createSuccess": "Tutelle Technique crée avec succès."
     }
   },
   "menus": {
@@ -131,13 +139,15 @@
     "dashboard": "Tableau de bord",
     "roles": "Rôles",
     "financialsources": "Sources de financement",
-    "administrativeunits": "Unités administratives"
+    "administrativeunits": "Unités administratives",
+    "technicalsupervisors": "Tutelle Techniques"
   },
   "tables": {
     "titles": {
       "exercises": "Liste des exercises",
       "financialSources": "Sources de financements",
-      "administrativeUnits": "Unités administratives"
+      "administrativeUnits": "Unités administratives",
+      "technicalSupervisions": "Tutelle Techniques"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -171,14 +181,17 @@
       "createFinancialSource": "Céer une source de financement",
       "editFinancialSource": "Modifier une source de financement",
       "createAdministrativeUnit": "Céer une unité administrative",
-      "editAdministrativeUnit": "Modifier une unité administrative"
+      "editAdministrativeUnit": "Modifier une unité administrative",
+      "createTechnicalSupervisor": "Modifier une tutelle technique",
+      "editTechnicalSupervisor": "Modifier une tutelle technique"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
       "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible.",
       "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible.",
       "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible.",
-      "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible."
+      "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible.",
+      "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

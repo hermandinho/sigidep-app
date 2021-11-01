@@ -5,6 +5,7 @@ import {ExercisesEffects} from "@effects/exercises.effects";
 import {RolesEffects} from "@effects/roles.effects";
 import {FinancialSourcesEffects} from "@effects/financial-sources.effects";
 import {AdministrativeUnitsEffects} from "@effects/administrative-units.effects";
+import {TechnicalSupervisorEffects} from "@effects/technical-supervisor.effects";
 
 export const Effects = [
   AuthEffects,
@@ -14,4 +15,5 @@ export const Effects = [
   RolesEffects,
   FinancialSourcesEffects,
   AdministrativeUnitsEffects,
+  TechnicalSupervisorEffects,
 ];
