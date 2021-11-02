@@ -34,7 +34,26 @@
 
       <div class="p-field p-col-12 p-md-12">
         <label class="required">{{ 'labels.nature' | translate }}</label>
-        <textarea [placeholder]="'labels.nature' | translate " formControlName="nature" pInputTextarea rows="5"></textarea>
+        <p-dropdown [filterBy]="_translateService.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'"
+                    [filter]="true"
+                    [optionLabel]="_translateService.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'"
+                    [options]="natures"
+                    [placeholder]="'labels.nature' | translate"
+                    [showClear]="false"
+                    optionValue="id"
+                    appendTo="body"
+                    formControlName="financialSourceId">
+          <ng-template let-item pTemplate="selectedItem">
+            <div>
+              <div>{{ item[_translateService.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'] }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            <div>
+              <div>{{ item[_translateService.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'] }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
       </div>
 
     </div>

@@ -12,6 +12,10 @@ export class FinancialSourcesService {
     private readonly financialSourcesRepository: Repository<FinancialSourceEntity>,
   ) {}
 
+  public getRepository(): Repository<FinancialSourceEntity> {
+    return this.financialSourcesRepository;
+  }
+
   public async filter(): Promise<FinancialSourceEntity[]> {
     return this.financialSourcesRepository.createQueryBuilder('f').getMany();
   }

@@ -175,7 +175,8 @@
       "section": "Section",
       "category": "Catégorie",
       "sector": "Secteur",
-      "region": "Région"
+      "region": "Région",
+      "nature": "Nature"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

@@ -4,11 +4,16 @@ import { ParagraphsService } from './paragraphs.service';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ParagraphEntity } from '@entities/paragraph.entity';
+import { FinancialSourcesModule } from '@modules/financial-sources/financial-sources.module';
 
 @Module({
   controllers: [ParagraphsController],
   providers: [ParagraphsService],
-  imports: [AuthModule, TypeOrmModule.forFeature([ParagraphEntity])],
+  imports: [
+    AuthModule,
+    TypeOrmModule.forFeature([ParagraphEntity]),
+    FinancialSourcesModule,
+  ],
   exports: [TypeOrmModule],
 })
 export class ParagraphsModule {}

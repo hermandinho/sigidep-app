@@ -24,7 +24,7 @@ export class CreateParagraphDto {
   @IsNotEmpty()
   public abbreviationEn: string;
 
-  @ApiProperty({ example: 'La description de la nature', required: true })
+  @ApiProperty({ example: 1, required: true })
   @IsNotEmpty()
-  public nature: string;
+  public financialSourceId: number;
 }

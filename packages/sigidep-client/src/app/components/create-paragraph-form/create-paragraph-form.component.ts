@@ -3,11 +3,14 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AppService} from "@services/app.service";
 import {ApisService} from "@services/apis.service";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {AppState} from "@reducers/index";
-import {GetParagraphs} from "@store/actions";
+import {getDataSelector as financialSourcesSelector} from "@reducers/financial-sources.reducer";
+import {GetFinancialSources, GetParagraphs} from "@store/actions";
 import {BaseComponent} from "@components/base.component";
 import {ParagraphModel} from "@models/paragraph.model";
+import {FinancialSourceModel} from "@models/financial-source.model";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-create-paragraph-form',
@@ -17,6 +20,7 @@ import {ParagraphModel} from "@models/paragraph.model";
 export class CreateParagraphFormComponent extends BaseComponent implements OnInit {
 
   public form: FormGroup;
+  public natures!: FinancialSourceModel[];
   public busy = false;
 
   constructor(
@@ -27,6 +31,7 @@ export class CreateParagraphFormComponent extends BaseComponent implements OnIni
     private _appService: AppService,
     private _apisService: ApisService,
     private _store: Store<AppState>,
+    public _translateService: TranslateService,
   ) {
     super();
     this.form = this._fb.group({
@@ -36,7 +41,7 @@ export class CreateParagraphFormComponent extends BaseComponent implements OnIni
       abbreviationFr: [undefined, [Validators.required]],
       abbreviationEn: [undefined, [Validators.required]],
       id: [undefined, []],
-      nature: [undefined, [Validators.required]],
+      financialSourceId: [undefined, [Validators.required]],
     });
   }
 
@@ -45,6 +50,7 @@ export class CreateParagraphFormComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit(): void {
+    this._store.dispatch(GetFinancialSources());
     if (this.config.data?.item) {
       const { id, labelFr, labelEn, abbreviationFr, abbreviationEn, nature, code } = this.config.data?.item as ParagraphModel;
       this.form.patchValue({
@@ -53,10 +59,17 @@ export class CreateParagraphFormComponent extends BaseComponent implements OnIni
         labelEn,
         abbreviationFr,
         abbreviationEn,
-        nature,
+        financialSourceId: nature && nature.id,
         code,
       });
     }
+
+    this._store.pipe(
+      this.takeUntilDestroy,
+      select(financialSourcesSelector),
+    ).subscribe(data => {
+      this.natures = (data ?? []).map(item => new FinancialSourceModel(item)) ;
+    })
   }
 
   close() {

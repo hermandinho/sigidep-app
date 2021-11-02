@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { AdministrativeUnitEntity } from '@entities/administrative-unit.entity';
+import { PrimaryFunctionsEntity } from '@entities/primary-functions.entity';
 
 @Entity({
   name: 'sectors',
@@ -27,6 +28,9 @@ export class SectorEntity extends BaseEntity {
   // RELATIONS
   @OneToMany(() => AdministrativeUnitEntity, (object) => object.sector, {})
   public administrativeUnits: AdministrativeUnitEntity[];
+
+  @OneToMany(() => PrimaryFunctionsEntity, (object) => object.sector, {})
+  public functions: PrimaryFunctionsEntity[];
 
   @ManyToOne(() => UserEntity, (object) => object.id, {
     eager: false,

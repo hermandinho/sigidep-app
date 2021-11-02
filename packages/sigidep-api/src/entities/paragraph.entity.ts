@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { FinancialSourceEntity } from '@entities/financial-source.entity';
 
 @Entity({
   name: 'paragraphs',
@@ -23,8 +24,12 @@ export class ParagraphEntity extends BaseEntity {
   @Column({ name: 'abbreviation_en', nullable: false })
   public abbreviationEn: string;
 
-  @Column({ name: 'nature', nullable: true })
-  public nature: string;
+  // RELATIONS
+  @ManyToOne(() => FinancialSourceEntity, (object) => object.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'financial_source_id' })
+  public nature: FinancialSourceEntity;
 
   constructor(params?: ParagraphEntity) {
     super();

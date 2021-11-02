@@ -29,7 +29,9 @@ export class PrimaryFunctionsEntity extends BaseEntity {
   @OneToMany(() => SecondaryFunctionsEntity, (object) => object.parent)
   public children: SecondaryFunctionsEntity[];
 
-  @ManyToOne(() => SectorEntity, (object) => object.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => SectorEntity, (object) => object.functions, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'sector_id' })
   public sector: SectorEntity;
 

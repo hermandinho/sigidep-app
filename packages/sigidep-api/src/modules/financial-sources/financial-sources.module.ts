@@ -9,6 +9,6 @@ import { AuthModule } from '@modules/auth/auth.module';
   providers: [FinancialSourcesService],
   controllers: [FinancialSourcesController],
   imports: [AuthModule, TypeOrmModule.forFeature([FinancialSourceEntity])],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, FinancialSourcesService],
 })
 export class FinancialSourcesModule {}

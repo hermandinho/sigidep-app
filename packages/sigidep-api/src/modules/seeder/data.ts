@@ -114,12 +114,49 @@ export const REGIONS_DATA: Partial<RegionEntity>[] = [
   { code: '19', label: 'Sud-Ouest' },
 ];
 
+// Secteur 1 : SOUVERAINETE
+// Secteur 2 : DEFENSE ET SECURITE
+// Secteur 3 : ADMINISTRATION GENERALE ET FINANCIERE
+// Secteur 4 : ENSEIGNEMENT, FORMATION ET RECHERCHE
+// Secteur 5 : COMMUNICATION, CULTURE, SPORTS ET LOISIRS
+// Secteur 6 : SANTE
+// Secteur 7 : AFFAIRES SOCIALES
+// Secteur 8 : INFRASTRUCTURES
+// Secteur 9 : PRODUCTION ET COMMERCE
+// Secteur 0 : ACTIVITES NON REPARTIES PAR FONCTIONS
 export const SECTORS_DATA: Partial<SectorEntity>[] = [
   {
     code: '0',
-    labelFr: 'ADMINISTRATION GÉNÉRALE',
-    labelEn: 'GENERAL ADMINISTRATION',
+    labelFr: 'ACTIVITÉS NON RÉPARTIES PAR FONCTIONS',
+    labelEn: 'ACTIVITIES NOT DISTRIBUTED BY FUNCTIONS',
   },
   { code: '1', labelFr: 'SOUVERAINETÉ', labelEn: 'SOVEREIGNTY' },
+  {
+    code: '2',
+    labelFr: 'DÉFENSE ET SÉCURITÉ',
+    labelEn: 'DEFENSE AND SECURITY',
+  },
+  {
+    code: '3',
+    labelFr: 'ADMINISTRATION GÉNÉRALE ET FINANCIÈRE',
+    labelEn: 'GENERAL AND FINANCIAL ADMINISTRATION',
+  },
+  {
+    code: '4',
+    labelFr: 'ENSEIGNEMENT, FORMATION ET RECHERCHE',
+    labelEn: 'TEACHING, TRAINING AND RESEARCH',
+  },
+  {
+    code: '5',
+    labelFr: 'COMMUNICATION, CULTURE, SPORTS ET LOISIRS',
+    labelEn: 'COMMUNICATION, CULTURE, SPORTS AND LEISURE',
+  },
+  { code: '6', labelFr: 'SANTÉ', labelEn: 'HEALTH' },
+  { code: '7', labelFr: 'AFFAIRES SOCIALES', labelEn: 'SOCIAL AFFAIRS' },
   { code: '8', labelFr: 'INFRASTRUCTURES', labelEn: 'INFRASTRUCTURE' },
+  {
+    code: '9',
+    labelFr: 'PRODUCTION ET COMMERCE',
+    labelEn: 'PRODUCTION AND TRADE',
+  },
 ];

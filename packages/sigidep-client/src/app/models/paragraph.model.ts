@@ -1,3 +1,5 @@
+import {FinancialSourceModel} from "@models/financial-source.model";
+
 export class ParagraphModel {
   id!: number;
   code!: string;
@@ -5,5 +7,5 @@ export class ParagraphModel {
   labelEn!: string;
   abbreviationFr!: string;
   abbreviationEn!: string;
-  nature!: string;
+  nature!: FinancialSourceModel;
 }

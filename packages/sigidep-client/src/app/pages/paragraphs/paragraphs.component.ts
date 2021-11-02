@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ParagraphModel} from "@models/index";
+import {FinancialSourceModel, ParagraphModel} from "@models/index";
 import {Observable, of} from "rxjs";
 import {AppService} from "@services/app.service";
 import {DialogsService} from "@services/dialogs.service";
@@ -15,6 +15,7 @@ import {
 import {getDataSelector, getLoadingSelector} from "@reducers/paragraphs.reducer";
 import {map} from "rxjs/operators";
 import {BaseComponent} from "@components/base.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-paragraphs',
@@ -33,6 +34,7 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
+    public translate: TranslateService,
   ) {
     super();
     this.tableColumns = [
@@ -41,7 +43,7 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
       { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true, },
       { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr', sortable: true, },
       { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn', sortable: true, },
-      // { field: 'nature', title: 'tables.headers.nature' },
+      { field: 'nature', title: 'tables.headers.nature' },
     ];
     this._initListeners();
   }
@@ -76,7 +78,13 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
     this._store.pipe(
       this.takeUntilDestroy,
       select(getDataSelector)
-    ).subscribe(data => this.data = [...data]);
+    ).subscribe(data => {
+      this.data = [...data.map(item => {
+        const tmp = {...item};
+        tmp.nature = tmp.nature && new FinancialSourceModel(tmp.nature);
+        return tmp;
+      })];
+    });
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
