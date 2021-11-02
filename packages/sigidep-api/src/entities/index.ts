@@ -14,3 +14,4 @@ export * from './sector.entity';
 export * from './administrative-unit.entity';
 export * from './financial-source.entity';
 export * from './primary-functions.entity';
+export * from './paragraph.entity';

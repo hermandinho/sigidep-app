@@ -2,9 +2,12 @@ import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
 @Entity({
-  name: 'technical_supervisors',
+  name: 'paragraphs',
+  orderBy: {
+    code: 'ASC',
+  },
 })
-export class TechnicalSupervisionEntity extends BaseEntity {
+export class ParagraphEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;
 
@@ -20,7 +23,10 @@ export class TechnicalSupervisionEntity extends BaseEntity {
   @Column({ name: 'abbreviation_en', nullable: false })
   public abbreviationEn: string;
 
-  constructor(params?: TechnicalSupervisionEntity) {
+  @Column({ name: 'nature', nullable: true })
+  public nature: string;
+
+  constructor(params?: ParagraphEntity) {
     super();
     if (params) {
       Object.assign(this, params);

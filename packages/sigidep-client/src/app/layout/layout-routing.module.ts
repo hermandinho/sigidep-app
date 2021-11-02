@@ -9,6 +9,7 @@ import {RolesComponent} from "@pages/roles/roles.component";
 import {FinancialSourcesComponent} from "@pages/financial-sources/financial-sources.component";
 import { AdministrativeUnitsComponent } from '@pages/administrative-units/administrative-units.component';
 import {TechnicalSupervisorsComponent} from "@pages/technical-supervisors/technical-supervisors.component";
+import {ParagraphsComponent} from "@pages/paragraphs/paragraphs.component";
 
 const routes: Routes = [
   {
@@ -61,6 +62,13 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.technical_supervisor],
+        }
+      }, {
+        path: 'paragraphs',
+        component: ParagraphsComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.paragraphs],
         }
       },
       /*{

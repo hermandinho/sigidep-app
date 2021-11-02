@@ -13,6 +13,7 @@ import { FinancialSourcesModule } from '@modules/financial-sources/financial-sou
 import { AdministrativeUnitsModule } from '@modules/administrative-units/administrative-units.module';
 import { AddressesModule } from '@modules/addresses/addresses.module';
 import { TechnicalSupervisorsModule } from '@modules/technical-supervisors/technical-supervisors.module';
+import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
 
 @Module({
   imports: [
@@ -80,6 +81,7 @@ import { TechnicalSupervisorsModule } from '@modules/technical-supervisors/techn
     AdministrativeUnitsModule,
     AddressesModule,
     TechnicalSupervisorsModule,
+    ParagraphsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

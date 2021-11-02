@@ -6,3 +6,4 @@ export * from './financial-source.actions';
 export * from './administrative-units.actions';
 export * from './technical-supervisor.actions';
 export * from './exercises.actions';
+export * from './paragraph.actions';

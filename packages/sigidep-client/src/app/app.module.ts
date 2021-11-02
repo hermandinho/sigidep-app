@@ -24,6 +24,7 @@ import {RolesModule} from "@pages/roles/roles.module";
 import {FinancialSourcesModule} from "@pages/financial-sources/financial-sources.module";
 import {AdministrativeUnitsModule} from "@pages/administrative-units/administrative-units.module";
 import {TechnicalSupervisorsModule} from "@pages/technical-supervisors/technical-supervisors.module";
+import {ParagraphsModule} from "@pages/paragraphs/paragraphs.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -67,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FinancialSourcesModule,
     AdministrativeUnitsModule,
     TechnicalSupervisorsModule,
+    ParagraphsModule,
   ],
   providers: [
     AppInstallCheckGuard,

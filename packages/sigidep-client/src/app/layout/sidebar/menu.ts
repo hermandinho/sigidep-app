@@ -1,12 +1,15 @@
 import { MenuItem } from 'primeng/api';
 import {TranslateService} from "@ngx-translate/core";
 
+const simpleCrudPermissions = (key: string) => ['create', 'read', 'update', 'delete'].map(op => `${key}.${op}`);
+
 export const MenuPermissions = {
-  'exercises_menu': ['exercises.create', 'exercises.read', 'exercises.update', 'exercises.delete'],
-  'roles_menu': ['roles.create', 'roles.read', 'roles.update', 'roles.delete', 'permissions.manage'],
-  'financial_sources': ['financialSources.create', 'financialSources.read', 'financialSources.update', 'financialSources.delete'],
-  'administrative_units': ['administrativeUnits.create', 'administrativeUnits.read', 'administrativeUnits.update', 'administrativeUnits.delete'],
-  'technical_supervisor': ['technicalSupervisions.create', 'technicalSupervisions.read', 'technicalSupervisions.update', 'technicalSupervisions.delete'],
+  'exercises_menu': [...simpleCrudPermissions('exercises')],
+  'roles_menu': [...simpleCrudPermissions('roles')],
+  'financial_sources': [...simpleCrudPermissions('financialSources')],
+  'administrative_units': [...simpleCrudPermissions('administrativeUnits')],
+  'technical_supervisor': [...simpleCrudPermissions('technicalSupervisions')],
+  'paragraphs': [...simpleCrudPermissions('paragraphs')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -59,10 +62,13 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             permissions: [...MenuPermissions.administrative_units]
           }
         }, {
-          routerLink: 'paragraphs',
+          routerLink: 'programmes',
           icon: 'pi pi-sitemap',
           label: 'Sous programmes',
           routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.paragraphs],
+          }
         }, {
           routerLink: 'technical-supervisors',
           icon: 'pi pi-shield',

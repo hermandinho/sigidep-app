@@ -6,7 +6,7 @@ import {
   RoleModel,
   ExerciseModel,
   AdministrativeUnitModel,
-  TechnicalSupervisorModel
+  TechnicalSupervisorModel, ParagraphModel
 } from "@models/index";
 
 @Injectable({
@@ -18,6 +18,7 @@ export class DialogsService {
   private financialSourcesCreateComponent: any;
   private administrativeUnitCreateComponent: any;
   private technicalSupervisorCreateComponent: any;
+  private paragraphCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -111,15 +112,36 @@ export class DialogsService {
   public async launchTechnicalSupervisorCreateDialog(
     item?: TechnicalSupervisorModel,
   ): Promise<any> {
-    if (!this.administrativeUnitCreateComponent) {
+    if (!this.technicalSupervisorCreateComponent) {
       const { CreateTechnicalSupervisorFormComponent } = await import(
         '@components/create-technical-supervisor-form/create-technical-supervisor-form.component'
         );
-      this.administrativeUnitCreateComponent = CreateTechnicalSupervisorFormComponent;
+      this.technicalSupervisorCreateComponent = CreateTechnicalSupervisorFormComponent;
     }
 
-    return this._dialogService.open(this.administrativeUnitCreateComponent, {
+    return this._dialogService.open(this.technicalSupervisorCreateComponent, {
       header: this._translateService.instant('dialogs.headers.' + (item ? 'editTechnicalSupervisor' : 'createTechnicalSupervisor')),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchParagraphCreateDialog(
+    item?: ParagraphModel,
+  ): Promise<any> {
+    if (!this.paragraphCreateComponent) {
+      const { CreateParagraphFormComponent } = await import(
+        '@components/create-paragraph-form/create-paragraph-form.component'
+        );
+      this.paragraphCreateComponent = CreateParagraphFormComponent;
+    }
+
+    return this._dialogService.open(this.paragraphCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.' + (item ? 'editParagraph' : 'createParagraph')),
       width: '50vw',
       height: 'auto',
       modal: true,

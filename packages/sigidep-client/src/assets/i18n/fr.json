@@ -62,7 +62,8 @@
     "category": "Catégorie",
     "sector": "Secteur",
     "region": "Région",
-    "status": "Status"
+    "status": "Status",
+    "nature": "Nature du paragraphe"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -101,6 +102,10 @@
     "technicalSupervisions": {
       "delete": "Une erreur est survenue lors de la suppression de cette tutelle technique.",
       "conflict": "Une tutelle technique avec ce code existe déjà."
+    },
+    "paragraphs": {
+      "delete": "Une erreur est survenue lors de la suppression de ce paragraphe.",
+      "conflict": "Un paragraphe avec ce code existe déjà."
     }
   },
   "messages": {
@@ -128,6 +133,10 @@
     "technicalSupervisions": {
       "deleteSuccess": "Tutelle Technique supprimé avec succès.",
       "createSuccess": "Tutelle Technique crée avec succès."
+    },
+    "paragraphs": {
+      "deleteSuccess": "Paragraphe supprimé avec succès.",
+      "createSuccess": "Paragraphe crée avec succès."
     }
   },
   "menus": {
@@ -140,14 +149,16 @@
     "roles": "Rôles",
     "financialsources": "Sources de financement",
     "administrativeunits": "Unités administratives",
-    "technicalsupervisors": "Tutelle Techniques"
+    "technicalsupervisors": "Tutelle Techniques",
+    "paragraphs": "Paragraphes"
   },
   "tables": {
     "titles": {
       "exercises": "Liste des exercises",
       "financialSources": "Sources de financements",
       "administrativeUnits": "Unités administratives",
-      "technicalSupervisions": "Tutelle Techniques"
+      "technicalSupervisions": "Tutelle Techniques",
+      "paragraphs": "Paragraphes"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -183,7 +194,9 @@
       "createAdministrativeUnit": "Céer une unité administrative",
       "editAdministrativeUnit": "Modifier une unité administrative",
       "createTechnicalSupervisor": "Modifier une tutelle technique",
-      "editTechnicalSupervisor": "Modifier une tutelle technique"
+      "editTechnicalSupervisor": "Modifier une tutelle technique",
+      "createParagraph": "Céer un paragraphe",
+      "editParagraph": "Modifier un paragraphe"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -191,7 +204,8 @@
       "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible.",
       "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible.",
       "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible.",
-      "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible."
+      "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
+      "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {
