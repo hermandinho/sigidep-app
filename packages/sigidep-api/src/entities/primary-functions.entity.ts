@@ -27,7 +27,9 @@ export class PrimaryFunctionsEntity extends BaseEntity {
 
   // RELATIONS
   @OneToMany(() => SecondaryFunctionsEntity, (object) => object.parent)
-  public children: SecondaryFunctionsEntity[];
+  public children:
+    | SecondaryFunctionsEntity[]
+    | Partial<SecondaryFunctionsEntity>[];
 
   @ManyToOne(() => SectorEntity, (object) => object.functions, {
     onDelete: 'CASCADE',

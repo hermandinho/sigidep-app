@@ -9,7 +9,8 @@ import {
   PERMISSIONS_DATA,
   REGIONS_DATA,
   ROOT_ROLE,
-  ROOT_USER, SECTORS_DATA,
+  ROOT_USER,
+  SECTORS_DATA,
 } from '@modules/seeder/data';
 import { PermissionEntity } from '@entities/permission.entity';
 import { RolePermissionEntity } from '@entities/role-permission.entity';
@@ -17,6 +18,8 @@ import { FinancialSourceEntity } from '@entities/financial-source.entity';
 import { CategoriesEntity } from '@entities/categories.entity';
 import { RegionEntity } from '@entities/region.entity';
 import { SectorEntity } from '@entities/sector.entity';
+import { PrimaryFunctionsEntity } from '@entities/primary-functions.entity';
+import { SecondaryFunctionsEntity } from '@entities/secondary-functions.entity';
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -38,6 +41,10 @@ export class SeederService implements OnModuleInit {
     private readonly regionsRepository: Repository<RegionEntity>,
     @InjectRepository(SectorEntity)
     private readonly sectorsRepository: Repository<SectorEntity>,
+    @InjectRepository(PrimaryFunctionsEntity)
+    private readonly primaryFunctionsRepository: Repository<PrimaryFunctionsEntity>,
+    @InjectRepository(SecondaryFunctionsEntity)
+    private readonly secondaryFunctionsRepository: Repository<SecondaryFunctionsEntity>,
   ) {}
 
   private async _initRoot(): Promise<{ role: RoleEntity; user: UserEntity }> {
@@ -166,22 +173,71 @@ export class SeederService implements OnModuleInit {
   }
 
   private async _initSectors(): Promise<void> {
-    let count = 0;
+    let sectorsCount = 0;
+    let pFunctionsCount = 0;
+    let sFunctionsCount = 0;
     for (const item of SECTORS_DATA) {
-      const exists = await this.sectorsRepository.findOne(
+      let sector = await this.sectorsRepository.findOne(
         { code: item.code },
         { loadEagerRelations: false },
       );
-      if (!exists) {
-        await this.sectorsRepository.save(
+      if (!sector) {
+        sector = await this.sectorsRepository.save(
           new SectorEntity({
             ...item,
           }),
         );
-        count += 1;
+        sectorsCount += 1;
+      }
+
+      if (item.functions?.length) {
+        for (const pFunc of item.functions) {
+          let pFuncton = await this.primaryFunctionsRepository.findOne(
+            { code: pFunc.code },
+            { loadEagerRelations: false },
+          );
+          if (!pFuncton) {
+            pFuncton = await this.primaryFunctionsRepository.save(
+              new PrimaryFunctionsEntity({
+                code: pFunc.code,
+                labelFr: pFunc.labelFr,
+                labelEn: pFunc.labelEn,
+                sector,
+              }),
+            );
+            pFunctionsCount += 1;
+          }
+
+          // Handle Secondary functions
+          if (pFunc.children?.length) {
+            try {
+              const existingCodes = (
+                await this.secondaryFunctionsRepository.find({
+                  loadEagerRelations: false,
+                })
+              )?.map((i) => i.code);
+              const bulk = await this.secondaryFunctionsRepository.insert(
+                pFunc.children
+                  .filter((item) => !existingCodes.includes(item.code))
+                  .map((sFunc) => {
+                    return new SecondaryFunctionsEntity({
+                      ...sFunc,
+                      parent: pFuncton,
+                    });
+                  }),
+              );
+              sFunctionsCount += bulk.generatedMaps?.length;
+            } catch (e) {
+              console.log('OUpps');
+              console.log(e);
+            }
+          }
+        }
       }
     }
-    this.logger.warn(`Synced ${count} sectors.`);
+    this.logger.warn(`Synced ${sectorsCount} sectors.`);
+    this.logger.warn(`Synced ${pFunctionsCount} primary functions.`);
+    this.logger.warn(`Synced ${sFunctionsCount} secondary functions.`);
   }
 
   async onModuleInit(): Promise<any> {
