@@ -88,16 +88,125 @@ export const FINANCIAL_SOURCES_DATA: Partial<FinancialSourceEntity>[] = [
 ];
 
 export const CATEGORIES_DATA: Partial<CategoriesEntity>[] = [
-  { code: '22', label: 'Cabinet' },
-  { code: '28', label: 'Dépenses communes du Cabinet' },
-  { code: '32', label: 'Secretariat Général' },
-  { code: '33', label: 'Directiond Techniques' },
-  { code: '34', label: 'Directions des Moyens' },
-  { code: '39', label: 'Dépenses Communes' },
-  { code: '44', label: 'Délégations Régionales' },
-  { code: '45', label: 'Délégations Régionales' },
-  { code: '45', label: 'Délégations Déparmentales' },
-  { code: '78', label: 'FINEX' },
+  {
+    code: '21',
+    label: 'Secrétariats Particuliers des Cabinets des grandes institutions',
+  },
+  { code: '22', label: 'Secrétariats Particuliers des Cabinets ministériels' },
+  { code: '23', label: 'Inspections Générales' },
+  { code: '24', label: 'Conseillers des Cabinets' },
+  {
+    code: '25',
+    label: 'Commissions, Conseils ou Comités rattachés aux Cabinets',
+  },
+  {
+    code: '26',
+    label: 'Activités et Services techniques rattachés aux cabinets',
+  },
+  {
+    code: '27',
+    label: 'Activités et Services techniques rattachés aux cabinets',
+  },
+  {
+    code: '28',
+    label: 'Activités et Services techniques rattachés aux cabinets',
+  },
+  { code: '29', label: 'Dépenses non réparties des Cabinets' },
+  {
+    code: '31',
+    label: "Services d'Administration Générale des Grandes Institutions",
+  },
+  {
+    code: '32',
+    label: 'Secrétariats Généraux, Divisions et cellules rattachées',
+  },
+  { code: '33', label: 'Directions centrales techniques, les états-majors' },
+  { code: '34', label: 'Directions et divisions centrales de moyens' },
+  {
+    code: '35',
+    label: 'Commissions, conseils, comités rattachés au Secrétariat Général',
+  },
+  {
+    code: '36',
+    label: 'Activités et services rattachés aux Directions Techniques',
+  },
+  {
+    code: '37',
+    label: 'Activités et services rattachés aux Directions Techniques',
+  },
+  {
+    code: '38',
+    label: 'Activités et services rattachés aux Directions Techniques',
+  },
+  { code: '39', label: "Dépenses non réparties de l'administration centrale" },
+  {
+    code: '41',
+    label:
+      "Ambassades et autres représentations au niveau d'un pays ou d'une organisation internationale",
+  },
+  {
+    code: '42',
+    label:
+      "Représentations de grandes institutions au niveau provincial : gouvernorats, cours d'appel, tribunaux de grande instance",
+  },
+  { code: '43', label: "Préfectures, les tribunaux d'instance, les consulats" },
+  {
+    code: '44',
+    label: 'Représentations régionales des ministères et services rattachés',
+  },
+  { code: '45', label: 'Représentations départementales des ministères' },
+  {
+    code: '46',
+    label:
+      "Autres représentations en province ou à l'étranger : districts de santé ou autres",
+  },
+  {
+    code: '47',
+    label: "Sous-préfectures et les services d'arrondissement des ministères",
+  },
+  {
+    code: '48',
+    label:
+      'Services districts et les autres services administratifs en province',
+  },
+  { code: '49', label: 'Dépenses non réparties en province' },
+  { code: '51', label: 'Unités Administratives opérationnelles' },
+  { code: '52', label: 'Unités Administratives opérationnelles' },
+  { code: '53', label: 'Unités Administratives opérationnelles' },
+  { code: '54', label: 'Unités Administratives opérationnelles' },
+  { code: '55', label: 'Unités Administratives opérationnelles' },
+  { code: '56', label: 'Unités Administratives opérationnelles' },
+  { code: '57', label: 'Unités Administratives opérationnelles' },
+  { code: '58', label: 'Unités Administratives opérationnelles' },
+  { code: '59', label: 'Unités Administratives opérationnelles' },
+  { code: '61', label: "Agences d'exécution de Projets plurisectoriels" },
+  { code: '62', label: "Agences d'exécutions de projets intégrés" },
+  {
+    code: '63',
+    label: "Agences d'exécutions de projets d'organisation ou de recherche",
+  },
+  { code: '64', label: "Agences d'exécution de projets d'infrastructure" },
+  {
+    code: '65',
+    label:
+      "Agences d'exécution de projets de construction ou de réhabilitation",
+  },
+  {
+    code: '66',
+    label: "Agences d'exécution de projets de rénovation et d'équipement",
+  },
+  {
+    code: '67',
+    label: "Agences d'exécution de projets de formation et d'encadrement",
+  },
+  { code: '68', label: "Autres agences d'exécution" },
+  { code: '71', label: 'Les fonds spéciaux' },
+  { code: '72', label: 'Les budgets annexes' },
+  { code: '73', label: 'Les Etablissements Publics Administratifs (EPA)' },
+  { code: '75', label: 'Sociétés à capital public' },
+  { code: '76', label: "Sociétés d'économie mixte" },
+  { code: '77', label: 'Collectivités locales' },
+  { code: '79', label: 'Autres organismes nationaux' },
 ];
 
 export const REGIONS_DATA: Partial<RegionEntity>[] = [
