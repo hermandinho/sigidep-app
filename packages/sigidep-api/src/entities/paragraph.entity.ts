@@ -31,7 +31,7 @@ export class ParagraphEntity extends BaseEntity {
   @JoinColumn({ name: 'financial_source_id' })
   public nature: FinancialSourceEntity;
 
-  constructor(params?: ParagraphEntity) {
+  constructor(params?: Partial<ParagraphEntity>) {
     super();
     if (params) {
       Object.assign(this, params);

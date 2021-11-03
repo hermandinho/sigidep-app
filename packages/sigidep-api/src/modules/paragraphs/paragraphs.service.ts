@@ -9,6 +9,7 @@ import { UserEntity } from '@entities/user.entity';
 import { ParagraphEntity } from '@entities/paragraph.entity';
 import { CreateParagraphDto } from '@modules/paragraphs/dto/create-paragraph.dto';
 import { FinancialSourcesService } from '@modules/financial-sources/financial-sources.service';
+import { CreateBulkParagraphsDto } from '@modules/paragraphs/dto/create-bulk-paragraphs.dto';
 
 @Injectable()
 export class ParagraphsService {
@@ -55,5 +56,35 @@ export class ParagraphsService {
       createdBy: user,
       nature,
     });
+  }
+
+  public async insertBulk({ data }: CreateBulkParagraphsDto) {
+    const natures = await this.financialSourcesService
+      .getRepository()
+      .createQueryBuilder('f')
+      .getMany();
+    const entities: ParagraphEntity[] = [];
+    for (const datum of data) {
+      const nature = natures.find((n) => n.id === datum.financialSourceId);
+      if (nature) {
+        entities.push(
+          new ParagraphEntity({
+            labelFr: datum.labelFr,
+            labelEn: datum.labelEn,
+            abbreviationFr: datum.abbreviationFr,
+            abbreviationEn: datum.abbreviationEn,
+            code: datum.code,
+            nature,
+          }),
+        );
+      }
+    }
+    if (entities.length) {
+      await this.repository.insert(entities);
+    }
+
+    return {
+      success: entities.length,
+    };
   }
 }

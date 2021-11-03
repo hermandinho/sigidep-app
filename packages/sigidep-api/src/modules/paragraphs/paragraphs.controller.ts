@@ -15,6 +15,7 @@ import { ParagraphsService } from '@modules/paragraphs/paragraphs.service';
 import { CreateParagraphDto } from '@modules/paragraphs/dto/create-paragraph.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateBulkParagraphsDto } from '@modules/paragraphs/dto/create-bulk-paragraphs.dto';
 
 @Controller('paragraphs')
 @ApiTags('Paragraphs')
@@ -36,6 +37,15 @@ export class ParagraphsController {
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.create(payload, user);
+  }
+
+  @Post('/bulk')
+  @UseGuards(new PermissionsGuard(['paragraphs.create']))
+  public async createBulk(
+    @Body(ValidationPipe) payload: CreateBulkParagraphsDto,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    return this.services.insertBulk(payload);
   }
 
   @Delete('/:id')
