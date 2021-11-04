@@ -30,7 +30,9 @@ export class SectorEntity extends BaseEntity {
   public administrativeUnits: AdministrativeUnitEntity[];
 
   @OneToMany(() => PrimaryFunctionsEntity, (object) => object.sector, {})
-  public functions: PrimaryFunctionsEntity[] | Partial<PrimaryFunctionsEntity>[];
+  public functions:
+    | PrimaryFunctionsEntity[]
+    | Partial<PrimaryFunctionsEntity>[];
 
   @ManyToOne(() => UserEntity, (object) => object.id, {
     eager: false,

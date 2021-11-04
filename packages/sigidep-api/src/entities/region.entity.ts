@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { DepartmentEntity } from './department.entity';
-import {AdministrativeUnitEntity} from "@entities/administrative-unit.entity";
+import { AdministrativeUnitEntity } from '@entities/administrative-unit.entity';
 
 @Entity({
   name: 'regions',

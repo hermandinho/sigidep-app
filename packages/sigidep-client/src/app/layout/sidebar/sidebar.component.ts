@@ -32,9 +32,8 @@ export class SidebarComponent extends BaseComponent implements OnInit {
     public translateService: TranslateService,
     public appService: AppService,
     public userService: UserService,
-    private _store: Store<AppState>
-  ) // private readonly dispatcher: Actions,
-  {
+    private _store: Store<AppState> // private readonly dispatcher: Actions,
+  ) {
     super();
     this.store
       .pipe(select(fromAuth.getAuthUserSelector), this.takeUntilDestroy)

@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   sigidep-api:
@@ -59,7 +59,7 @@ services:
       - sigidep-network
     command: -p $DB_PORT
 
-# ================= ADMIN =================
+  # ================= ADMIN =================
   sigidep-pgadmin:
     image: dpage/pgadmin4
     restart: unless-stopped
