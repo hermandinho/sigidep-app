@@ -1,0 +1,18 @@
+{
+  "name": "sigidep-app",
+  "version": "0.0.0",
+  "scripts": {
+    "lint": "prettier --check packages",
+    "format": "prettier --write packages"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write . && git add -A ."
+    }
+  },
+  "private": true,
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "prettier": "^2.4.1"
+  }
+}
