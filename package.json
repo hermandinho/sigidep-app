@@ -7,7 +7,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "prettier --write . && git add -A ."
+      "pre-commit": "echo 'Pre committing ...' && prettier --write . && git add -A ."
     }
   },
   "private": true,
