@@ -1,6 +1,16 @@
-import {Action, createFeatureSelector, createReducer, createSelector, on,} from '@ngrx/store';
-import {GetFinancialSources, GetFinancialSourcesFailure, GetFinancialSourcesSuccess} from "@store/actions";
-import {FinancialSourceModel} from "@models/financial-source.model";
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
+import {
+  GetFinancialSources,
+  GetFinancialSourcesFailure,
+  GetFinancialSourcesSuccess,
+} from '@store/actions';
+import { FinancialSourceModel } from '@models/financial-source.model';
 
 export interface State {
   data: FinancialSourceModel[];
@@ -29,7 +39,7 @@ const authReducer = createReducer(
   }),
   on(GetFinancialSourcesFailure, (state, { error }) => {
     return { ...state, loading: false, error };
-  }),
+  })
 );
 
 export function reducer(state: State | undefined, action: Action): State {
@@ -40,5 +50,8 @@ export const FeatureKey = 'financialSources';
 
 const userState = createFeatureSelector<State>(FeatureKey);
 
-export const getLoadingSelector = createSelector(userState, (state) => state.loading);
+export const getLoadingSelector = createSelector(
+  userState,
+  (state) => state.loading
+);
 export const getDataSelector = createSelector(userState, (state) => state.data);

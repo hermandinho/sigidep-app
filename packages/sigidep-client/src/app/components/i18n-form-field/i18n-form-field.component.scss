@@ -1,0 +1,13 @@
+.lang {
+  cursor: pointer;
+  font-size: 14px;
+  &:first-child {
+    &:after {
+      content: " | ";
+    }
+  }
+  &.active {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}

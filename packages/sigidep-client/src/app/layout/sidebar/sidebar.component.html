@@ -11,8 +11,14 @@
 
   <div class="footer">
     <ul class="langs p-0">
-      <li (click)="appService.switchLanguages(lang)" *ngFor="let lang of translateService.getLangs()"
-          [class.active]="translateService?.currentLang === lang" class="p-text-upper cursor-pointer">{{lang}}</li>
+      <li
+        (click)="appService.switchLanguages(lang)"
+        *ngFor="let lang of translateService.getLangs()"
+        [class.active]="translateService?.currentLang === lang"
+        class="p-text-upper cursor-pointer"
+      >
+        {{ lang }}
+      </li>
     </ul>
   </div>
 </div>

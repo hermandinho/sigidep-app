@@ -1,26 +1,39 @@
 <p-card>
-  <p-toolbar styleClass="p-mb-4" *appCheckPermissions="['roles.create', 'roles.delete']">
+  <p-toolbar
+    styleClass="p-mb-4"
+    *appCheckPermissions="['roles.create', 'roles.delete']"
+  >
     <ng-template pTemplate="left">
-      <button (click)="create()" *appCheckPermissions="['roles.create']" [label]="'buttons.create' | translate"
-              class="p-button-success p-mr-2" icon="pi pi-plus" pButton
-              pRipple></button>
+      <button
+        (click)="create()"
+        *appCheckPermissions="['roles.create']"
+        [label]="'buttons.create' | translate"
+        class="p-button-success p-mr-2"
+        icon="pi pi-plus"
+        pButton
+        pRipple
+      ></button>
       <!--<ng-container>
         <button *appCheckPermissions="['roles.delete']"
                 class="p-button-danger" icon="pi pi-trash"
                 pButton pRipple></button>
       </ng-container>-->
-
     </ng-template>
-    <ng-template pTemplate="right">
-    </ng-template>
+    <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
 
-  <p-table [value]="data" dataKey="label" [loading]="(loading$ | async) || false">
+  <p-table
+    [value]="data"
+    dataKey="label"
+    [loading]="(loading$ | async) || false"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem"></th>
-        <ng-container *ngFor="let column of tableColumns; trackBy: trackByIndex">
-          <th>{{ 'tables.headers.' + column.field | translate }}</th>
+        <ng-container
+          *ngFor="let column of tableColumns; trackBy: trackByIndex"
+        >
+          <th>{{ "tables.headers." + column.field | translate }}</th>
         </ng-container>
         <th style="width: 8rem"></th>
       </tr>
@@ -28,49 +41,125 @@
     <ng-template pTemplate="body" let-item let-expanded="expanded">
       <tr>
         <td>
-          <button type="button" pButton pRipple [pRowToggler]="item" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="item"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
         </td>
         <td *ngFor="let column of tableColumns">
-          {{item[column.field]}}
+          {{ item[column.field] }}
         </td>
         <td>
-          <button (click)="edit(item)" *appCheckPermissions="['roles.update']" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                  pButton pRipple></button>
-          <button (click)="delete(item)" *appCheckPermissions="['roles.delete']"
-                  [disabled]="item?.status === 'active'" class="p-button-rounded p-button-warning"
-                  icon="pi pi-trash"
-                  pButton pRipple></button>
+          <button
+            (click)="edit(item)"
+            *appCheckPermissions="['roles.update']"
+            class="p-button-rounded p-button-success p-mr-2"
+            icon="pi pi-pencil"
+            pButton
+            pRipple
+          ></button>
+          <button
+            (click)="delete(item)"
+            *appCheckPermissions="['roles.delete']"
+            [disabled]="item?.status === 'active'"
+            class="p-button-rounded p-button-warning"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="rowexpansion" let-item>
       <tr *ngIf="form">
-        <td [attr.colspan]="tableColumns.length + 2" *ngIf="getRoleFormGroup(item)">
+        <td
+          [attr.colspan]="tableColumns.length + 2"
+          *ngIf="getRoleFormGroup(item)"
+        >
           <div class="p-p-3" [formGroup]="getRoleFormGroup(item)">
             <p-accordion [multiple]="false">
-              <p-accordionTab *ngFor="let context of KEYS(getRoleFormGroup(item)?.value); trackBy: trackByIndex"
-                              [formGroupName]="context">
+              <p-accordionTab
+                *ngFor="
+                  let context of KEYS(getRoleFormGroup(item)?.value);
+                  trackBy: trackByIndex
+                "
+                [formGroupName]="context"
+              >
                 <ng-template pTemplate="header">
-                  <div class="p-d-flex p-jc-between p-ai-center" style="width: 100%">
-                    <h4>{{('permissions.' + context + '.title') | translate}}</h4>
+                  <div
+                    class="p-d-flex p-jc-between p-ai-center"
+                    style="width: 100%"
+                  >
+                    <h4>
+                      {{ "permissions." + context + ".title" | translate }}
+                    </h4>
                     <div (click)="$event.stopPropagation()">
                       <p-triStateCheckbox
-                        (onChange)="handleGroupPermissionsGlobalClick($event, item, context)"
-                        [checkboxFalseIcon]="'pi pi-minus'" [ngModelOptions]="{standalone: true}"
-                        [ngModel]="getGroupPermissionGlobalCheckState(item, context)"></p-triStateCheckbox>
+                        (onChange)="
+                          handleGroupPermissionsGlobalClick(
+                            $event,
+                            item,
+                            context
+                          )
+                        "
+                        [checkboxFalseIcon]="'pi pi-minus'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="
+                          getGroupPermissionGlobalCheckState(item, context)
+                        "
+                      ></p-triStateCheckbox>
                     </div>
                   </div>
                 </ng-template>
                 <div class="p-grid">
-                  <div class="p-field-checkbox p-col-4" *ngFor="let col of KEYS(getRoleFormGroup(item)?.value[context])" [formGroupName]="col">
-                    <p-checkbox [formControl]="getPermissionControl(item.id, context, col, 'value')"
-                                [inputId]="item.id + '-' +context + '-' + getRoleFormGroup(item)?.value[context][col].id" [binary]="true"></p-checkbox>
-                    <label [for]="item.id + '-' +context + '-' + getRoleFormGroup(item)?.value[context][col].id">
-                      {{ ('permissions.' + getRoleFormGroup(item)?.value[context][col].label + '.title') | translate }}
+                  <div
+                    class="p-field-checkbox p-col-4"
+                    *ngFor="
+                      let col of KEYS(getRoleFormGroup(item)?.value[context])
+                    "
+                    [formGroupName]="col"
+                  >
+                    <p-checkbox
+                      [formControl]="
+                        getPermissionControl(item.id, context, col, 'value')
+                      "
+                      [inputId]="
+                        item.id +
+                        '-' +
+                        context +
+                        '-' +
+                        getRoleFormGroup(item)?.value[context][col].id
+                      "
+                      [binary]="true"
+                    ></p-checkbox>
+                    <label
+                      [for]="
+                        item.id +
+                        '-' +
+                        context +
+                        '-' +
+                        getRoleFormGroup(item)?.value[context][col].id
+                      "
+                    >
+                      {{
+                        "permissions." +
+                          getRoleFormGroup(item)?.value[context][col].label +
+                          ".title" | translate
+                      }}
                       <i
-                        [pTooltip]="('permissions.' + getRoleFormGroup(item)?.value[context][col].description + '.description') | translate"
+                        [pTooltip]="
+                          'permissions.' +
+                            getRoleFormGroup(item)?.value[context][col]
+                              .description +
+                            '.description' | translate
+                        "
                         class="pi pi-question-circle"
-                        tooltipPosition="top"></i>
+                        tooltipPosition="top"
+                      ></i>
                     </label>
                   </div>
                 </div>
@@ -80,11 +169,14 @@
 
           <p-divider></p-divider>
           <div class="p-d-flex p-jc-end">
-            <p-button (click)="submit(item)" [disabled]="!form?.valid || busy || !form?.dirty"
-                      [label]="('buttons.' + (busy ? 'busy' : 'apply')) | translate"></p-button>
+            <p-button
+              (click)="submit(item)"
+              [disabled]="!form?.valid || busy || !form?.dirty"
+              [label]="'buttons.' + (busy ? 'busy' : 'apply') | translate"
+            ></p-button>
           </div>
         </td>
       </tr>
-  </ng-template>
+    </ng-template>
   </p-table>
 </p-card>

@@ -1,15 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import {AppService} from "@services/app.service";
-import {DialogsService} from "@services/dialogs.service";
-import {AppState} from "@reducers/index";
-import {BaseComponent} from "@components/base.component";
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { AppService } from '@services/app.service';
+import { DialogsService } from '@services/dialogs.service';
+import { AppState } from '@reducers/index';
+import { BaseComponent } from '@components/base.component';
 import * as fromExercises from '@reducers/exercise.reducer';
-import {ExerciseModel, ExerciseStatusType} from "@models/exercise.model";
-import {Observable, of} from "rxjs";
-import {map} from "rxjs/operators";
-import {DeleteExercises, DeleteExercisesFailure, DeleteExercisesSuccess} from "@actions/exercises.actions";
-import {Actions, ofType} from "@ngrx/effects";
+import { ExerciseModel, ExerciseStatusType } from '@models/exercise.model';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import {
+  DeleteExercises,
+  DeleteExercisesFailure,
+  DeleteExercisesSuccess,
+} from '@actions/exercises.actions';
+import { Actions, ofType } from '@ngrx/effects';
+import { SetAppBreadcrumb } from '@store/actions';
 
 @Component({
   selector: 'app-erercise',
@@ -17,7 +22,6 @@ import {Actions, ofType} from "@ngrx/effects";
   styleUrls: ['./exercises.component.scss'],
 })
 export class ExercisesComponent extends BaseComponent implements OnInit {
-
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: ExerciseModel[] = [];
@@ -27,7 +31,7 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions,
+    private readonly dispatcher: Actions
   ) {
     super();
     this.tableColumns = [
@@ -40,11 +44,15 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._appService.setAppBreadcrumb([
-      {
-        label: 'breadcrumb.exercises'
-      },
-    ]);
+    this._store.dispatch(
+      SetAppBreadcrumb({
+        breadcrumb: [
+          {
+            label: 'breadcrumb.exercises',
+          },
+        ],
+      })
+    );
   }
 
   async openForm() {
@@ -53,15 +61,15 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
 
   getTagSeverity(status: ExerciseStatusType): string {
     switch (status) {
-      case "hidden":
+      case 'hidden':
         return 'warning';
-      case "in_progress":
+      case 'in_progress':
         return 'success';
-      case "following":
+      case 'following':
         return 'default';
-      case "archived":
+      case 'archived':
         return 'danger';
-      case "preparing":
+      case 'preparing':
         return 'indo';
       default:
         return 'info';
@@ -77,27 +85,25 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
   }
 
   deleteSelectedItems() {
-    const canDelete = this.selectedItems?.filter(item => item.status !== 'active');
+    const canDelete = this.selectedItems?.filter(
+      (item) => item.status !== 'active'
+    );
     this._handleDelete([...canDelete], canDelete?.length > 1);
   }
 
   private _initListeners() {
-    this._store.pipe(
-      this.takeUntilDestroy,
-      select(fromExercises.getDataSelector)
-    ).subscribe(data => this.data = data);
+    this._store
+      .pipe(this.takeUntilDestroy, select(fromExercises.getDataSelector))
+      .subscribe((data) => (this.data = data));
 
     this.loading$ = this._store.pipe(
       select(fromExercises.getLoadingSelector),
-      map(status => status)
+      map((status) => status)
     );
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
-        ofType(
-          DeleteExercisesSuccess,
-          DeleteExercisesFailure,
-        )
+        ofType(DeleteExercisesSuccess, DeleteExercisesFailure)
       )
       .subscribe((action) => {
         if (action.type === DeleteExercisesFailure.type) {
@@ -111,7 +117,6 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
               closable: true,
             });
           }
-
         } else if (action.type === DeleteExercisesSuccess.type) {
           this._appService.showToast({
             severity: 'success',
@@ -120,15 +125,18 @@ export class ExercisesComponent extends BaseComponent implements OnInit {
             closable: true,
           });
         }
-      })
+      });
   }
 
   private _handleDelete(items: ExerciseModel[], multi = false) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.' + (multi ? 'deleteExercises' : 'deleteExercise'),
+      message:
+        'dialogs.messages.' + (multi ? 'deleteExercises' : 'deleteExercise'),
       accept: () => {
-        this._store.dispatch(DeleteExercises({ ids: items.map(item => item.id)}))
+        this._store.dispatch(
+          DeleteExercises({ ids: items.map((item) => item.id) })
+        );
       },
-    })
+    });
   }
 }

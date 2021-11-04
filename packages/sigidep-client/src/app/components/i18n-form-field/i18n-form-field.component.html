@@ -1,0 +1,29 @@
+<div class="" [formGroup]="form">
+  <ng-container *ngFor="let lang of languages">
+    <input
+      *ngIf="['text'].includes(type) && currentLang === lang"
+      [formControlName]="getFormControlNameForLang"
+      [placeholder]="placeholder ?? getFormControlNameForLang"
+      pInputText
+    />
+
+    <textarea
+      *ngIf="type === 'textarea' && currentLang === lang"
+      [formControlName]="getFormControlNameForLang"
+      [placeholder]="placeholder"
+      pInputTextarea
+      rows="3"
+    ></textarea>
+  </ng-container>
+
+  <div class="">
+    <span
+      (click)="currentLang = lng"
+      *ngFor="let lng of ['fr', 'en']"
+      [class.active]="currentLang === lng"
+      class="p-text-capitalize lang"
+    >
+      {{ lng }}
+    </span>
+  </div>
+</div>

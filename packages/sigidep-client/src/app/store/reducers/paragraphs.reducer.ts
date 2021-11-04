@@ -1,6 +1,16 @@
-import {Action, createFeatureSelector, createReducer, createSelector, on,} from '@ngrx/store';
-import {GetParagraphs, GetParagraphsFailure, GetParagraphsSuccess} from "@store/actions";
-import {ParagraphModel} from "@models/index";
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
+import {
+  GetParagraphs,
+  GetParagraphsFailure,
+  GetParagraphsSuccess,
+} from '@store/actions';
+import { ParagraphModel } from '@models/index';
 
 export interface State {
   data: ParagraphModel[];
@@ -29,7 +39,7 @@ const authReducer = createReducer(
   }),
   on(GetParagraphsFailure, (state, { error }) => {
     return { ...state, loading: false, error };
-  }),
+  })
 );
 
 export function reducer(state: State | undefined, action: Action): State {
@@ -40,5 +50,8 @@ export const FeatureKey = 'paragraphs';
 
 const userState = createFeatureSelector<State>(FeatureKey);
 
-export const getLoadingSelector = createSelector(userState, (state) => state.loading);
+export const getLoadingSelector = createSelector(
+  userState,
+  (state) => state.loading
+);
 export const getDataSelector = createSelector(userState, (state) => state.data);

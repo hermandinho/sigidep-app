@@ -1,4 +1,9 @@
-<div class="header-content p-d-flex p-justify-between p-align-center p-autocomplete-input-token">
+<div
+  class="
+    header-content
+    p-d-flex p-justify-between p-align-center p-autocomplete-input-token
+  "
+>
   <div class="menu" (click)="toggleSideBar()">
     <i class="pi pi-align-justify"></i>
   </div>
@@ -6,13 +11,24 @@
     <!-- <div class="p-mx-5 p-my-auto">
       <i class="far fa-bell" style="font-size: 1.5rem" pBadge></i>
     </div> -->
-    <div class="information-card p-d-flex" (click)="toggleDropdown()" #informationCard>
+    <div
+      class="information-card p-d-flex"
+      (click)="toggleDropdown()"
+      #informationCard
+    >
       <ng-container *ngIf="user">
         <p-avatar
           [label]="user.initials"
-          [style]="{'border-radius':'50%', 'overflow': 'hidden', 'margin-right': '5px', 'color': '#fff', 'font-size': '1.2rem'}"
+          [style]="{
+            'border-radius': '50%',
+            overflow: 'hidden',
+            'margin-right': '5px',
+            color: '#fff',
+            'font-size': '1.2rem'
+          }"
           shape="circle"
-          size="large">
+          size="large"
+        >
         </p-avatar>
       </ng-container>
 
@@ -26,14 +42,18 @@
       </ng-container>-->
 
       <div class="p-d-flex p-flex-column">
-        <p class="full-name">{{ user?.fullName}}</p>
-        <p class="role">{{user?.role?.label?.toUpperCase()}}</p>
+        <p class="full-name">{{ user?.fullName }}</p>
+        <p class="role">{{ user?.role?.label?.toUpperCase() }}</p>
       </div>
 
-      <div class="dropdown-content" [ngClass]="{'open': dropdownOpened}">
+      <div class="dropdown-content" [ngClass]="{ open: dropdownOpened }">
         <div class="dropdown-menu">
-          <div class="dropdown-item" routerLink="settings/profile">{{ 'menus.profile' | translate }}</div>
-          <div class="dropdown-item" (click)="logout()">{{ 'menus.logout' | translate }}</div>
+          <div class="dropdown-item" routerLink="settings/profile">
+            {{ "menus.profile" | translate }}
+          </div>
+          <div class="dropdown-item" (click)="logout()">
+            {{ "menus.logout" | translate }}
+          </div>
         </div>
       </div>
     </div>

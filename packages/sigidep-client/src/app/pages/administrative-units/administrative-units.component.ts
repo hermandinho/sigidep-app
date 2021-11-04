@@ -1,29 +1,41 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {AppService} from "@services/app.service";
-import {DialogsService} from "@services/dialogs.service";
-import {select, Store} from "@ngrx/store";
-import {AppState} from "@reducers/index";
-import {Actions, ofType} from "@ngrx/effects";
-import {BaseComponent} from "@components/base.component";
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AppService } from '@services/app.service';
+import { DialogsService } from '@services/dialogs.service';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@reducers/index';
+import { Actions, ofType } from '@ngrx/effects';
+import { BaseComponent } from '@components/base.component';
 import {
   DeleteAdministrativeUnit,
   DeleteFinancialSource,
   DeleteFinancialSourceFailure,
   DeleteFinancialSourceSuccess,
-  GetAdministrativeUnites
-} from "@store/actions";
-import {getDataSelector, getLoadingSelector} from "@reducers/administrative-units.reducer";
-import {map} from "rxjs/operators";
-import {AdministrativeUnitModel, CategoryModel, FunctionModel, RegionsModel, SectorModel} from "@models/index";
+  GetAdministrativeUnites,
+  SetAppBreadcrumb,
+} from '@store/actions';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/administrative-units.reducer';
+import { map } from 'rxjs/operators';
+import {
+  AdministrativeUnitModel,
+  CategoryModel,
+  FunctionModel,
+  RegionsModel,
+  SectorModel,
+} from '@models/index';
 
 @Component({
   selector: 'app-administrative-units',
   templateUrl: './administrative-units.component.html',
-  styleUrls: ['./administrative-units.component.scss']
+  styleUrls: ['./administrative-units.component.scss'],
 })
-export class AdministrativeUnitsComponent extends BaseComponent implements OnInit {
-
+export class AdministrativeUnitsComponent
+  extends BaseComponent
+  implements OnInit
+{
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: AdministrativeUnitModel[] = [];
@@ -33,7 +45,7 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions,
+    private readonly dispatcher: Actions
   ) {
     super();
     this.tableColumns = [
@@ -51,11 +63,15 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
 
   ngOnInit(): void {
     this._store.dispatch(GetAdministrativeUnites());
-    this._appService.setAppBreadcrumb([
-      {
-        label: 'breadcrumb.administrativeunits'
-      },
-    ]);
+    this._store.dispatch(
+      SetAppBreadcrumb({
+        breadcrumb: [
+          {
+            label: 'breadcrumb.administrativeunits',
+          },
+        ],
+      })
+    );
   }
 
   async openForm() {
@@ -70,41 +86,33 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteAdministrativeUnit',
       accept: () => {
-        this._store.dispatch(DeleteAdministrativeUnit({ id: item.id}));
+        this._store.dispatch(DeleteAdministrativeUnit({ id: item.id }));
       },
-    })
+    });
   }
 
   private _initListeners() {
-    this._store.pipe(
-      this.takeUntilDestroy,
-      select(getDataSelector)
-    ).subscribe(data => {
-      this.data = (data || []).map(d => {
-        d = {...d};
-        if (d.category)
-          d.category = new CategoryModel(d.category);
-        if (d.sector)
-          d.sector = new SectorModel(d.sector);
-        if (d.function)
-          d.function = new FunctionModel(d.function);
-        if (d.region)
-          d.region = new RegionsModel(d.region);
-        return d;
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => {
+        this.data = (data || []).map((d) => {
+          d = { ...d };
+          if (d.category) d.category = new CategoryModel(d.category);
+          if (d.sector) d.sector = new SectorModel(d.sector);
+          if (d.function) d.function = new FunctionModel(d.function);
+          if (d.region) d.region = new RegionsModel(d.region);
+          return d;
+        });
       });
-    });
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
-      map(status => status)
+      map((status) => status)
     );
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
-        ofType(
-          DeleteFinancialSourceSuccess,
-          DeleteFinancialSourceFailure,
-        )
+        ofType(DeleteFinancialSourceSuccess, DeleteFinancialSourceFailure)
       )
       .subscribe((action) => {
         if (action.type === DeleteFinancialSourceFailure.type) {
@@ -118,7 +126,6 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
               closable: true,
             });
           }
-
         } else if (action.type === DeleteFinancialSourceSuccess.type) {
           this._appService.showToast({
             severity: 'success',
@@ -127,6 +134,6 @@ export class AdministrativeUnitsComponent extends BaseComponent implements OnIni
             closable: true,
           });
         }
-      })
+      });
   }
 }

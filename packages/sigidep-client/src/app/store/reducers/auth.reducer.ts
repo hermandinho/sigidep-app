@@ -5,8 +5,13 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import {UserModel} from "@models/user.model";
-import {GetCurrentAuthSuccess, Login, LoginFailure, LoginSuccess} from "@actions/auth.actions";
+import { UserModel } from '@models/user.model';
+import {
+  GetCurrentAuthSuccess,
+  Login,
+  LoginFailure,
+  LoginSuccess,
+} from '@actions/auth.actions';
 
 export interface State {
   user?: UserModel;
@@ -55,4 +60,7 @@ export const getAuthLoading = createSelector(
 );
 
 export const getAuthError = createSelector(userState, (state) => state.error);
-export const getAuthUserSelector = createSelector(userState, (state) => state.user);
+export const getAuthUserSelector = createSelector(
+  userState,
+  (state) => state.user
+);

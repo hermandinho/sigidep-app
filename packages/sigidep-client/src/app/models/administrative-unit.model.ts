@@ -1,6 +1,6 @@
-import {SectorModel} from "@models/sector.model";
-import {CategoryModel} from "@models/categories.model";
-import {RegionsModel} from "@models/regions.model";
+import { SectorModel } from '@models/sector.model';
+import { CategoryModel } from '@models/categories.model';
+import { RegionsModel } from '@models/regions.model';
 
 export class AdministrativeUnitModel {
   id!: number;

@@ -40,8 +40,8 @@
       display: block;
       // position: fixed;
       // width: calc(100% - 240px);
-      box-shadow: 0px 3px 6px #272D3B33;
-      background: #FFFFFF 0% 0% no-repeat padding-box;
+      box-shadow: 0px 3px 6px #272d3b33;
+      background: #ffffff 0% 0% no-repeat padding-box;
     }
   }
 }
@@ -67,7 +67,7 @@ p-scrollpanel {
 
     .p-scrollpanel-bar {
       opacity: 1;
-      transition: background-color .2s !important;
+      transition: background-color 0.2s !important;
       background-color: var(--primary-color) !important;
 
       &:hover {
@@ -83,7 +83,7 @@ p-scrollpanel {
   }
 }
 
-::ng-deep router-outlet+* {
+::ng-deep router-outlet + * {
   display: block;
   animation: fade 1s;
 

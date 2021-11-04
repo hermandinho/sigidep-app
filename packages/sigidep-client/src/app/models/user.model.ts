@@ -1,4 +1,4 @@
-import {RoleModel} from "@models/role.model";
+import { RoleModel } from '@models/role.model';
 export class UserModel {
   firstName: string | undefined;
   lastName: string | undefined;

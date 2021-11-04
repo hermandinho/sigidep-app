@@ -1,19 +1,19 @@
-import {of} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+import { of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, mergeMap, switchMap} from 'rxjs/operators';
-import {ApisService} from "@services/apis.service";
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
+import { ApisService } from '@services/apis.service';
 import {
   DeleteParagraph,
   DeleteParagraphFailure,
   DeleteParagraphSuccess,
   GetParagraphs,
   GetParagraphsFailure,
-  GetParagraphsSuccess
-} from "@store/actions";
-import {ParagraphModel} from "@models/index";
+  GetParagraphsSuccess,
+} from '@store/actions';
+import { ParagraphModel } from '@models/index';
 
 @Injectable()
 export class ParagraphEffects {
@@ -23,7 +23,7 @@ export class ParagraphEffects {
       mergeMap((action) =>
         this.apisService.get<ParagraphModel[]>('/paragraphs').pipe(
           switchMap((payload) => {
-            return [GetParagraphsSuccess({payload})];
+            return [GetParagraphsSuccess({ payload })];
           }),
           catchError((err: HttpErrorResponse) => of(GetParagraphsFailure(err)))
         )
@@ -39,14 +39,13 @@ export class ParagraphEffects {
           switchMap((payload) => {
             return [DeleteParagraphSuccess(), GetParagraphs()];
           }),
-          catchError((err: HttpErrorResponse) => of(DeleteParagraphFailure(err)))
+          catchError((err: HttpErrorResponse) =>
+            of(DeleteParagraphFailure(err))
+          )
         )
       )
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private apisService: ApisService,
-  ) {}
+  constructor(private actions$: Actions, private apisService: ApisService) {}
 }

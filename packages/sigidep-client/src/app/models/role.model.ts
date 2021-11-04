@@ -1,4 +1,4 @@
-export class RoleModel{
+export class RoleModel {
   id!: number;
   label!: string;
   description!: string;
@@ -12,7 +12,6 @@ export interface PermissionModel {
   description: string;
   context: string;
 }
-
 
 export interface RolePermissionModel {
   id: number;

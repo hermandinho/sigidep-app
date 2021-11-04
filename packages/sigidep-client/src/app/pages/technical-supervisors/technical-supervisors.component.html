@@ -1,42 +1,76 @@
 <p-card>
-  <p-toolbar styleClass="p-mb-4" *appCheckPermissions="['technicalSupervisions.create', 'technicalSupervisions.delete']">
+  <p-toolbar
+    styleClass="p-mb-4"
+    *appCheckPermissions="[
+      'technicalSupervisions.create',
+      'technicalSupervisions.delete'
+    ]"
+  >
     <ng-template pTemplate="left">
-      <button (click)="openForm()" *appCheckPermissions="['technicalSupervisions.create']" [label]="'buttons.create' | translate"
-              class="p-button-success p-mr-2" icon="pi pi-plus" pButton
-              pRipple></button>
+      <button
+        (click)="openForm()"
+        *appCheckPermissions="['technicalSupervisions.create']"
+        [label]="'buttons.create' | translate"
+        class="p-button-success p-mr-2"
+        icon="pi pi-plus"
+        pButton
+        pRipple
+      ></button>
       <!--<ng-container>
         <button (click)="delete()" *appCheckPermissions="['technicalSupervisions.delete']"
                 [disabled]="!selectedItems?.length"
                 class="p-button-danger" icon="pi pi-trash"
                 pButton pRipple></button>
       </ng-container>-->
-
     </ng-template>
-    <ng-template pTemplate="right">
-    </ng-template>
+    <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
 
-  <p-table #dt [globalFilterFields]="['labelFr', 'labelEn', 'abbreviationFr', 'abbreviationEn', 'code']"
-           [loading]="(loading$ | async) || false"
-           [paginator]="true" [rowHover]="true"
-           [rows]="10" [showCurrentPageReport]="true"
-           [sortMode]="'single'" [value]="data"
-           [currentPageReportTemplate]="'tables.stats.pager' | translate"
-           dataKey="id"
-           responsiveLayout="scroll">
+  <p-table
+    #dt
+    [globalFilterFields]="[
+      'labelFr',
+      'labelEn',
+      'abbreviationFr',
+      'abbreviationEn',
+      'code'
+    ]"
+    [loading]="(loading$ | async) || false"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [sortMode]="'single'"
+    [value]="data"
+    [currentPageReportTemplate]="'tables.stats.pager' | translate"
+    dataKey="id"
+    responsiveLayout="scroll"
+  >
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
-        <h5 class="p-m-0">{{'tables.titles.technicalSupervisions' | translate }}</h5>
+        <h5 class="p-m-0">
+          {{ "tables.titles.technicalSupervisions" | translate }}
+        </h5>
         <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')" [placeholder]="'labels.search' | translate" />
-                </span>
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+            "
+            [placeholder]="'labels.search' | translate"
+          />
+        </span>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <ng-container *ngFor="let column of tableColumns;">
-          <th *ngIf="column.sortable" [pSortableColumn]="column.field">{{ column.title | translate }} <p-sortIcon field="code"></p-sortIcon></th>
+        <ng-container *ngFor="let column of tableColumns">
+          <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+            {{ column.title | translate }}
+            <p-sortIcon field="code"></p-sortIcon>
+          </th>
           <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
         </ng-container>
         <th></th>
@@ -45,16 +79,25 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td *ngFor="let column of tableColumns">
-          {{item[column.field]}}
+          {{ item[column.field] }}
         </td>
         <td>
-          <button (click)="edit(item)" *appCheckPermissions="['technicalSupervisions.update']"
-                  class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                  pButton pRipple></button>
-          <button (click)="delete(item)" *appCheckPermissions="['technicalSupervisions.delete']"
-                  class="p-button-rounded p-button-warning"
-                  icon="pi pi-trash"
-                  pButton pRipple></button>
+          <button
+            (click)="edit(item)"
+            *appCheckPermissions="['technicalSupervisions.update']"
+            class="p-button-rounded p-button-success p-mr-2"
+            icon="pi pi-pencil"
+            pButton
+            pRipple
+          ></button>
+          <button
+            (click)="delete(item)"
+            *appCheckPermissions="['technicalSupervisions.delete']"
+            class="p-button-rounded p-button-warning"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
         </td>
       </tr>
     </ng-template>
@@ -64,5 +107,4 @@
       </div>
     </ng-template>
   </p-table>
-
 </p-card>

@@ -1,9 +1,14 @@
-import {of} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+import { of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import {Actions, createEffect, ofType, ROOT_EFFECTS_INIT} from '@ngrx/effects';
-import {catchError, mergeMap, switchMap} from 'rxjs/operators';
+import {
+  Actions,
+  createEffect,
+  ofType,
+  ROOT_EFFECTS_INIT,
+} from '@ngrx/effects';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import {
   GetCurrentAuth,
   GetCurrentAuthFailure,
@@ -11,14 +16,14 @@ import {
   InitAuthFromLocalStorage,
   Login,
   LoginFailure,
-  LoginSuccess
-} from "@actions/auth.actions";
-import {AuthService} from "@services/auth.service";
-import {LocalStorageService} from "@services/local-storage.service";
-import {LoginSuccessModel} from "@models/auth.model";
-import {UserModel} from "@models/user.model";
-import {Go} from "@store/actions";
-import {GetExercises} from "@actions/exercises.actions";
+  LoginSuccess,
+} from '@actions/auth.actions';
+import { AuthService } from '@services/auth.service';
+import { LocalStorageService } from '@services/local-storage.service';
+import { LoginSuccessModel } from '@models/auth.model';
+import { UserModel } from '@models/user.model';
+import { Go } from '@store/actions';
+import { GetExercises } from '@actions/exercises.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -59,8 +64,8 @@ export class AuthEffects {
       ofType(GetCurrentAuthSuccess),
       mergeMap((action) => {
         return [
-          new Go({path: [window.location.pathname ?? '/home']}),
-          GetExercises({})
+          new Go({ path: [window.location.pathname ?? '/home'] }),
+          GetExercises({}),
         ]; // TODO init store
       })
     )
@@ -90,6 +95,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private localStorageService: LocalStorageService,
+    private localStorageService: LocalStorageService
   ) {}
 }

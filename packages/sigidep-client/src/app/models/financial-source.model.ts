@@ -7,9 +7,7 @@ export class FinancialSourceModel {
   abbreviationEn!: string;
   acceptsDeliverables!: boolean;
 
-  constructor(
-    param?: Partial<FinancialSourceModel>
-  ) {
+  constructor(param?: Partial<FinancialSourceModel>) {
     if (param) {
       Object.assign(this, param);
     }

@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MessageService} from "primeng/api";
-import {AuthService} from "@services/auth.service";
-import {TranslateService} from "@ngx-translate/core";
-import {LocalStorageService} from "@services/local-storage.service";
-import {Store} from "@ngrx/store";
-import {AppState} from "@reducers/index";
-import {Login, LoginFailure, LoginSuccess} from "@actions/auth.actions";
-import {Actions, ofType} from "@ngrx/effects";
-import {Go} from "@store/actions";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { AuthService } from '@services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '@services/local-storage.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '@reducers/index';
+import { Login, LoginFailure, LoginSuccess } from '@actions/auth.actions';
+import { Actions, ofType } from '@ngrx/effects';
+import { Go } from '@store/actions';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   public form!: FormGroup;
   busy = false;
 
@@ -27,22 +26,17 @@ export class LoginComponent implements OnInit {
     private _translateService: TranslateService,
     private _localStorageService: LocalStorageService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions,
+    private readonly dispatcher: Actions
   ) {
     this.dispatcher
-      .pipe(
-        ofType(
-          LoginFailure,
-          LoginSuccess
-        )
-      )
+      .pipe(ofType(LoginFailure, LoginSuccess))
       .subscribe((action) => {
         this.busy = false;
         if (action.type === LoginFailure.type) {
           const error = action.error;
           let message = '';
           if (error?.statusCode === 404) {
-            message = 'errors.auth.invalidCredentials'
+            message = 'errors.auth.invalidCredentials';
           } else if (error?.statusCode === 403) {
             message = 'errors.auth.accountInactive';
           } else {
@@ -63,7 +57,7 @@ export class LoginComponent implements OnInit {
           }
           this._store.dispatch(new Go({ path: [to] }));
         }
-      })
+      });
   }
 
   ngOnInit(): void {
@@ -80,6 +74,5 @@ export class LoginComponent implements OnInit {
     this._store.dispatch(Login({ payload: this.form.value }));
 
     // TODO add Welcome XX toast after login success
-
   }
 }

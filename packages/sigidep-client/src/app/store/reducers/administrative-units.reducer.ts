@@ -1,11 +1,21 @@
-import {Action, createFeatureSelector, createReducer, createSelector, on,} from '@ngrx/store';
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
 import {
   GetAdministrativeUnites,
   GetAdministrativeUnitesFailure,
   GetAdministrativeUnitesSuccess,
-  GetFunctions, GetFunctionsSuccess
-} from "@store/actions";
-import {AdministrativeUnitModel, FunctionModel} from "@models/administrative-unit.model";
+  GetFunctions,
+  GetFunctionsSuccess,
+} from '@store/actions';
+import {
+  AdministrativeUnitModel,
+  FunctionModel,
+} from '@models/administrative-unit.model';
 
 export interface State {
   data: AdministrativeUnitModel[];
@@ -40,7 +50,7 @@ const authReducer = createReducer(
 
   on(GetFunctionsSuccess, (state, { payload }) => {
     return { ...state, functions: payload };
-  }),
+  })
 );
 
 export function reducer(state: State | undefined, action: Action): State {
@@ -51,6 +61,12 @@ export const FeatureKey = 'administrativeUnits';
 
 const userState = createFeatureSelector<State>(FeatureKey);
 
-export const getLoadingSelector = createSelector(userState, (state) => state.loading);
+export const getLoadingSelector = createSelector(
+  userState,
+  (state) => state.loading
+);
 export const getDataSelector = createSelector(userState, (state) => state.data);
-export const getFunctionsDataSelector = createSelector(userState, (state) => state.functions);
+export const getFunctionsDataSelector = createSelector(
+  userState,
+  (state) => state.functions
+);

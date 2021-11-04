@@ -1,28 +1,34 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {AppService} from "@services/app.service";
-import {DialogsService} from "@services/dialogs.service";
-import {select, Store} from "@ngrx/store";
-import {AppState} from "@reducers/index";
-import {Actions, ofType} from "@ngrx/effects";
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AppService } from '@services/app.service';
+import { DialogsService } from '@services/dialogs.service';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@reducers/index';
+import { Actions, ofType } from '@ngrx/effects';
 import {
   DeleteTechnicalSupervisor,
   DeleteTechnicalSupervisorFailure,
   DeleteTechnicalSupervisorSuccess,
-  GetTechnicalSupervisors
-} from "@store/actions";
-import {TechnicalSupervisorModel} from "@models/technical-supervisor.model";
-import {getDataSelector, getLoadingSelector} from "@reducers/technical-supervisors.reducer";
-import {map} from "rxjs/operators";
-import {BaseComponent} from "@components/base.component";
+  GetTechnicalSupervisors,
+  SetAppBreadcrumb,
+} from '@store/actions';
+import { TechnicalSupervisorModel } from '@models/technical-supervisor.model';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/technical-supervisors.reducer';
+import { map } from 'rxjs/operators';
+import { BaseComponent } from '@components/base.component';
 
 @Component({
   selector: 'app-technical-supervisors',
   templateUrl: './technical-supervisors.component.html',
-  styleUrls: ['./technical-supervisors.component.scss']
+  styleUrls: ['./technical-supervisors.component.scss'],
 })
-export class TechnicalSupervisorsComponent extends BaseComponent implements OnInit {
-
+export class TechnicalSupervisorsComponent
+  extends BaseComponent
+  implements OnInit
+{
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: TechnicalSupervisorModel[] = [];
@@ -32,26 +38,38 @@ export class TechnicalSupervisorsComponent extends BaseComponent implements OnIn
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions,
+    private readonly dispatcher: Actions
   ) {
     super();
     this.tableColumns = [
-      { field: 'code', title: 'tables.headers.exerciseCode', sortable: true, },
-      { field: 'labelFr', title: 'tables.headers.labelFr', sortable: true, },
-      { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true, },
-      { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr', sortable: true, },
-      { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn', sortable: true, },
+      { field: 'code', title: 'tables.headers.exerciseCode', sortable: true },
+      { field: 'labelFr', title: 'tables.headers.labelFr', sortable: true },
+      { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true },
+      {
+        field: 'abbreviationFr',
+        title: 'tables.headers.abbreviationFr',
+        sortable: true,
+      },
+      {
+        field: 'abbreviationEn',
+        title: 'tables.headers.abbreviationEn',
+        sortable: true,
+      },
     ];
     this._initListeners();
   }
 
   ngOnInit(): void {
     this._store.dispatch(GetTechnicalSupervisors());
-    this._appService.setAppBreadcrumb([
-      {
-        label: 'breadcrumb.technicalSupervisors'
-      },
-    ]);
+    this._store.dispatch(
+      SetAppBreadcrumb({
+        breadcrumb: [
+          {
+            label: 'breadcrumb.technicalSupervisors',
+          },
+        ],
+      })
+    );
   }
 
   async openForm() {
@@ -66,27 +84,26 @@ export class TechnicalSupervisorsComponent extends BaseComponent implements OnIn
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteTechnicalAdvisor',
       accept: () => {
-        this._store.dispatch(DeleteTechnicalSupervisor({ id: item.id}))
+        this._store.dispatch(DeleteTechnicalSupervisor({ id: item.id }));
       },
     });
   }
 
   private _initListeners() {
-    this._store.pipe(
-      this.takeUntilDestroy,
-      select(getDataSelector)
-    ).subscribe(data => this.data = [...data]);
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => (this.data = [...data]));
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
-      map(status => status)
+      map((status) => status)
     );
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
         ofType(
           DeleteTechnicalSupervisorSuccess,
-          DeleteTechnicalSupervisorFailure,
+          DeleteTechnicalSupervisorFailure
         )
       )
       .subscribe((action) => {
@@ -101,7 +118,6 @@ export class TechnicalSupervisorsComponent extends BaseComponent implements OnIn
               closable: true,
             });
           }
-
         } else if (action.type === DeleteTechnicalSupervisorSuccess.type) {
           this._appService.showToast({
             severity: 'success',
@@ -110,7 +126,6 @@ export class TechnicalSupervisorsComponent extends BaseComponent implements OnIn
             closable: true,
           });
         }
-      })
+      });
   }
-
 }

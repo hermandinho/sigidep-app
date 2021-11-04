@@ -1,8 +1,13 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot,} from '@angular/router';
-import {LocalStorageService} from "@services/local-storage.service";
-import {HttpClient} from "@angular/common/http";
-import {StructuresService} from "@services/structures.service";
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { LocalStorageService } from '@services/local-storage.service';
+import { HttpClient } from '@angular/common/http';
+import { StructuresService } from '@services/structures.service';
 
 @Injectable()
 export class AppInstallCheckGuard implements CanActivate {

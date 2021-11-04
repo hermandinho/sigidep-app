@@ -20,6 +20,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write . && git add -A ."
+    }
+  },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.0.3",
@@ -54,6 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",
+    "husky": "^7.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "27.0.6",
@@ -83,6 +89,6 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "12.x"
+    "node": "^12.x || 14.x"
   }
 }

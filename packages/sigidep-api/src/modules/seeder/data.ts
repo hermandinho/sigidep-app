@@ -51,6 +51,7 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.PARAGRAPHS),
   ...simpleCrudGenerator(C.STRUCTURE, ['create', 'read', 'delete']),
   ...simpleCrudGenerator(C.ROLES),
+  ...simpleCrudGenerator(C.SUB_PROGRAMS),
   {
     context: C.ROLES,
     label: 'permissions.manage',

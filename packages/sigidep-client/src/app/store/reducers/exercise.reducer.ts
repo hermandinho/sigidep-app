@@ -1,12 +1,19 @@
-import {Action, createFeatureSelector, createReducer, createSelector, on,} from '@ngrx/store';
-import {ExerciseModel} from "@models/exercise.model";
 import {
-  DeleteExercises, DeleteExercisesFailure,
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
+import { ExerciseModel } from '@models/exercise.model';
+import {
+  DeleteExercises,
+  DeleteExercisesFailure,
   DeleteExercisesSuccess,
   GetExercises,
   GetExercisesFailure,
-  GetExercisesSuccess
-} from "@actions/exercises.actions";
+  GetExercisesSuccess,
+} from '@actions/exercises.actions';
 
 export interface State {
   data: ExerciseModel[];
@@ -42,7 +49,7 @@ const authReducer = createReducer(
   }),
   on(DeleteExercisesSuccess, DeleteExercisesFailure, (state, {}) => {
     return { ...state, loading: false };
-  }),
+  })
 );
 
 export function reducer(state: State | undefined, action: Action): State {
@@ -53,5 +60,8 @@ export const FeatureKey = 'exercises';
 
 const userState = createFeatureSelector<State>(FeatureKey);
 
-export const getLoadingSelector = createSelector(userState, (state) => state.loading);
+export const getLoadingSelector = createSelector(
+  userState,
+  (state) => state.loading
+);
 export const getDataSelector = createSelector(userState, (state) => state.data);

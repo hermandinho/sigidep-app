@@ -1,7 +1,7 @@
-import {ActionReducerMap, MetaReducer} from '@ngrx/store';
-import {environment} from '@environments/environment';
+import { ActionReducerMap, MetaReducer } from '@ngrx/store';
+import { environment } from '@environments/environment';
 import * as fromRouter from './router.reducer';
-import {routerReducer, RouterReducerState} from '@ngrx/router-store';
+import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import * as fromAuth from './auth.reducer';
 import * as fromExercises from './exercise.reducer';
 import * as fromRoles from './roles.reducer';
@@ -9,6 +9,7 @@ import * as fromFinancialSources from './financial-sources.reducer';
 import * as fromAdministrativeUnits from './administrative-units.reducer';
 import * as fromTechnicalSupervisors from './technical-supervisors.reducer';
 import * as fromParagraphs from './paragraphs.reducer';
+import * as fromApp from './app.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -19,6 +20,7 @@ export interface AppState {
   administrativeUnits: fromAdministrativeUnits.State;
   technicalSupervisors: fromTechnicalSupervisors.State;
   paragraphs: fromParagraphs.State;
+  app: fromApp.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -30,7 +32,9 @@ export const reducers: ActionReducerMap<AppState> = {
   administrativeUnits: fromAdministrativeUnits.reducer,
   technicalSupervisors: fromTechnicalSupervisors.reducer,
   paragraphs: fromParagraphs.reducer,
+  app: fromApp.reducer,
 };
 
-
-export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<AppState>[] = !environment.production
+  ? []
+  : [];

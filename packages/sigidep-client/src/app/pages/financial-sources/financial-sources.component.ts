@@ -1,28 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-import {AppService} from "@services/app.service";
-import {DialogsService} from "@services/dialogs.service";
-import {select, Store} from "@ngrx/store";
-import {AppState} from "@reducers/index";
-import {Actions, ofType} from "@ngrx/effects";
-import {BaseComponent} from "@components/base.component";
-import {FinancialSourceModel} from "@models/index";
-import {Observable, of} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { AppService } from '@services/app.service';
+import { DialogsService } from '@services/dialogs.service';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@reducers/index';
+import { Actions, ofType } from '@ngrx/effects';
+import { BaseComponent } from '@components/base.component';
+import { FinancialSourceModel } from '@models/index';
+import { Observable, of } from 'rxjs';
 import {
   DeleteFinancialSource,
   DeleteFinancialSourceFailure,
   DeleteFinancialSourceSuccess,
-  GetFinancialSources
-} from "@store/actions";
-import {map} from "rxjs/operators";
-import {getDataSelector, getLoadingSelector} from "@reducers/financial-sources.reducer";
+  GetFinancialSources,
+  SetAppBreadcrumb,
+} from '@store/actions';
+import { map } from 'rxjs/operators';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/financial-sources.reducer';
 
 @Component({
   selector: 'app-financial-sources',
   templateUrl: './financial-sources.component.html',
-  styleUrls: ['./financial-sources.component.scss']
+  styleUrls: ['./financial-sources.component.scss'],
 })
 export class FinancialSourcesComponent extends BaseComponent implements OnInit {
-
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: FinancialSourceModel[] = [];
@@ -32,27 +35,42 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions,
+    private readonly dispatcher: Actions
   ) {
     super();
     this.tableColumns = [
-      { field: 'code', title: 'tables.headers.exerciseCode', sortable: true, },
-      { field: 'labelFr', title: 'tables.headers.labelFr', sortable: true, },
-      { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true, },
-      { field: 'abbreviationFr', title: 'tables.headers.abbreviationFr', sortable: true, },
-      { field: 'abbreviationEn', title: 'tables.headers.abbreviationEn', sortable: true, },
-      { field: 'acceptsDeliverables', title: 'tables.headers.acceptsDeliverables' },
+      { field: 'code', title: 'tables.headers.exerciseCode', sortable: true },
+      { field: 'labelFr', title: 'tables.headers.labelFr', sortable: true },
+      { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true },
+      {
+        field: 'abbreviationFr',
+        title: 'tables.headers.abbreviationFr',
+        sortable: true,
+      },
+      {
+        field: 'abbreviationEn',
+        title: 'tables.headers.abbreviationEn',
+        sortable: true,
+      },
+      {
+        field: 'acceptsDeliverables',
+        title: 'tables.headers.acceptsDeliverables',
+      },
     ];
     this._initListeners();
   }
 
   ngOnInit(): void {
     this._store.dispatch(GetFinancialSources());
-    this._appService.setAppBreadcrumb([
-      {
-        label: 'breadcrumb.financialsources'
-      },
-    ]);
+    this._store.dispatch(
+      SetAppBreadcrumb({
+        breadcrumb: [
+          {
+            label: 'breadcrumb.financialsources',
+          },
+        ],
+      })
+    );
   }
 
   async openForm() {
@@ -67,28 +85,24 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteFinancialSource',
       accept: () => {
-        this._store.dispatch(DeleteFinancialSource({ id: item.id}))
+        this._store.dispatch(DeleteFinancialSource({ id: item.id }));
       },
-    })
+    });
   }
 
   private _initListeners() {
-    this._store.pipe(
-      this.takeUntilDestroy,
-      select(getDataSelector)
-    ).subscribe(data => this.data = [...data]);
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => (this.data = [...data]));
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
-      map(status => status)
+      map((status) => status)
     );
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
-        ofType(
-          DeleteFinancialSourceSuccess,
-          DeleteFinancialSourceFailure,
-        )
+        ofType(DeleteFinancialSourceSuccess, DeleteFinancialSourceFailure)
       )
       .subscribe((action) => {
         if (action.type === DeleteFinancialSourceFailure.type) {
@@ -102,7 +116,6 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
               closable: true,
             });
           }
-
         } else if (action.type === DeleteFinancialSourceSuccess.type) {
           this._appService.showToast({
             severity: 'success',
@@ -111,7 +124,6 @@ export class FinancialSourcesComponent extends BaseComponent implements OnInit {
             closable: true,
           });
         }
-      })
+      });
   }
-
 }

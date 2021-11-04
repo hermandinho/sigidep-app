@@ -35,7 +35,7 @@
         background-color: unset;
         border: unset;
         &.p-menuitem-link-active {
-          background-color: var(--gray-500)
+          background-color: var(--gray-500);
         }
       }
     }
@@ -44,9 +44,8 @@
   p-panelmenu {
     &::ng-deep {
       .p-submenu-list {
-
         .p-menuitem-link-active {
-          background-color: var(--gray-300)
+          background-color: var(--gray-300);
         }
       }
     }
@@ -68,7 +67,7 @@
         margin: 0 0.3rem;
         &:first-child {
           &::after {
-            content: ' | '
+            content: " | ";
           }
         }
 

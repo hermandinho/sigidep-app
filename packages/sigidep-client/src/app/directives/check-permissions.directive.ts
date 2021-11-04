@@ -1,9 +1,16 @@
-import {Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
-import {Subject} from 'rxjs';
-import {UserService} from '@services/user.service';
-import {select, Store} from '@ngrx/store';
-import {AppState} from '@reducers/index';
-import {takeUntil} from 'rxjs/operators';
+import {
+  Directive,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { UserService } from '@services/user.service';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@reducers/index';
+import { takeUntil } from 'rxjs/operators';
 import * as fromAuth from '@reducers/auth.reducer';
 
 @Directive({
@@ -19,16 +26,16 @@ export class CheckPermissionsDirective implements OnInit, OnDestroy {
     private userService: UserService,
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.store
-      .pipe(
-        select(fromAuth.getAuthUserSelector),
-        takeUntil(this.onDestroy$),
-      )
-      .subscribe(user => {
-        if (!!user && this.userService.checkPermission(user, this.appCheckPermissions)) {
+      .pipe(select(fromAuth.getAuthUserSelector), takeUntil(this.onDestroy$))
+      .subscribe((user) => {
+        if (
+          !!user &&
+          this.userService.checkPermission(user, this.appCheckPermissions)
+        ) {
           this.viewContainer.createEmbeddedView(this.templateRef);
         } else {
           this.viewContainer.clear();
@@ -40,6 +47,4 @@ export class CheckPermissionsDirective implements OnInit, OnDestroy {
     this.onDestroy$.next(true);
     this.onDestroy$.unsubscribe();
   }
-
-
 }

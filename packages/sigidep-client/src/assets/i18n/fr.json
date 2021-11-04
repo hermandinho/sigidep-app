@@ -16,7 +16,8 @@
     "system": "Système",
     "elaboration": "Elaboration",
     "roles": "Rôles",
-    "administrativeUnits": "Unités administratives"
+    "administrativeUnits": "Unités administratives",
+    "subPrograms": "Sous programmes"
   },
   "buttons": {
     "save": "Enregistrer",

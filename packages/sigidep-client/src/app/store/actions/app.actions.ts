@@ -1,7 +1,7 @@
-import {createAction, props} from '@ngrx/store';
-import {Message} from "primeng/api/message";
+import { createAction, props } from '@ngrx/store';
+import { MenuItem } from 'primeng/api';
 
-export const ShowToast = createAction(
-    '[APP] Show Toast',
-    props<{ payload: Message }>()
+export const SetAppBreadcrumb = createAction(
+  '[APP] Set breadcrumb',
+  props<{ breadcrumb: MenuItem[] }>()
 );

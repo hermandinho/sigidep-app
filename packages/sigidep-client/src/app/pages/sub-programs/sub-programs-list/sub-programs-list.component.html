@@ -1,0 +1,49 @@
+<p-card>
+  <p-toolbar
+    styleClass="p-mb-4"
+    *appCheckPermissions="['subPrograms.create', 'subPrograms.delete']"
+  >
+    <ng-template pTemplate="left">
+      <!--<button (click)="openForm()" *appCheckPermissions="['technicalSupervisions.create']" [label]="'buttons.create' | translate"
+              class="p-button-success p-mr-2" icon="pi pi-plus" pButton
+              pRipple></button>-->
+      <!--<ng-container>
+        <button (click)="delete()" *appCheckPermissions="['technicalSupervisions.delete']"
+                [disabled]="!selectedItems?.length"
+                class="p-button-danger" icon="pi pi-trash"
+                pButton pRipple></button>
+      </ng-container>-->
+    </ng-template>
+    <ng-template pTemplate="right">
+      <a
+        [routerLink]="['/', 'sub-programs', 'new']"
+        *appCheckPermissions="['technicalSupervisions.create']"
+        [label]="'buttons.new' | translate"
+        class="p-button-success p-mr-2"
+        icon="pi pi-plus"
+        pButton
+        pRipple
+      ></a>
+    </ng-template>
+  </p-toolbar>
+
+  <p-treeTable [value]="nodes">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Type</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+      <tr [ttRow]="rowNode">
+        <td>
+          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          {{ rowData.name }}
+        </td>
+        <td>{{ rowData.size }}</td>
+        <td>{{ rowData.type }}</td>
+      </tr>
+    </ng-template>
+  </p-treeTable>
+</p-card>

@@ -1,28 +1,29 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {StructureModel} from "@models/structure.model";
-import {environment} from "@environments/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { StructureModel } from '@models/structure.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StructuresService {
   // @ts-ignore
   private readonly client: HttpClient;
-  constructor(
-    private readonly http: HttpClient,
-  ) {
+  constructor(private readonly http: HttpClient) {
     this.client = http;
   }
 
   public check(): Promise<StructureModel> {
-    return this.client.get<StructureModel>(environment.API_URL + '/structure/check').toPromise();
+    return this.client
+      .get<StructureModel>(environment.API_URL + '/structure/check')
+      .toPromise();
   }
 
-  public create(
-    payload: StructureModel,
-  ): Observable<StructureModel> {
-    return this.client.post<StructureModel>(environment.API_URL + '/structure', payload);
+  public create(payload: StructureModel): Observable<StructureModel> {
+    return this.client.post<StructureModel>(
+      environment.API_URL + '/structure',
+      payload
+    );
   }
 }

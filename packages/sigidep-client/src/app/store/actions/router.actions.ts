@@ -7,23 +7,23 @@ export const FORWARD = '[Router] Forward';
 
 // tslint:disable:max-classes-per-file
 export class Go implements Action {
-    public readonly type = GO;
+  public readonly type = GO;
 
-    constructor(
-        public payload: {
-            path: any[];
-            query?: object;
-            extras?: NavigationExtras;
-        },
-    ) {}
+  constructor(
+    public payload: {
+      path: any[];
+      query?: object;
+      extras?: NavigationExtras;
+    }
+  ) {}
 }
 
 export class Back implements Action {
-    public readonly type = BACK;
+  public readonly type = BACK;
 }
 
 export class Forward implements Action {
-    public readonly type = FORWARD;
+  public readonly type = FORWARD;
 }
 
 export type RouterActionsUnion = Go | Back | Forward;

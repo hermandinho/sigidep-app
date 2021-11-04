@@ -12,6 +12,7 @@ export enum PermissionContextsEnum {
   ROLES = 'roles',
   ADMINISTRATIVE_UNITS = 'administrativeUnits',
   FUNCTIONS = 'functions',
+  SUB_PROGRAMS = 'subPrograms',
 }
 
 export enum UserAccountStatusEnum {

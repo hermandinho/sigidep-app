@@ -1,0 +1,89 @@
+<p-card>
+  <p-toolbar
+    styleClass="p-mb-4"
+    *appCheckPermissions="[
+      'financialSources.create',
+      'financialSources.delete'
+    ]"
+  >
+    <ng-template pTemplate="left"> </ng-template>
+    <ng-template pTemplate="right"> </ng-template>
+  </p-toolbar>
+
+  <form
+    action="javascript:void(0)"
+    class="p-fluid p-grid"
+    *ngIf="form"
+    [formGroup]="form"
+  >
+    <app-i18n-form-field
+      [baseFormControlName]="'label'"
+      [form]="form"
+      type="text"
+    ></app-i18n-form-field>
+    <div
+      class="p-field p-col-12 p-md-6"
+      *ngFor="let column of formElements; trackBy: trackByIndex"
+    >
+      <label [class.required]="column?.required">{{
+        "labels." + column.label | translate
+      }}</label>
+
+      <p-dropdown
+        *ngIf="column.type === 'dropdown'"
+        [filterBy]="'code'"
+        [filter]="false"
+        [optionLabel]="column?.dropdownOptionsLabel || 'label'"
+        [options]="[]"
+        [placeholder]="'labels.' + column.label | translate"
+        [showClear]="false"
+        appendTo="body"
+        formControlName="categoryId"
+        optionValue="id"
+      >
+        <ng-template let-category pTemplate="item">
+          <div>
+            <div>{{ category?.formattedLabel }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+
+      <input
+        *ngIf="['text', 'number'].includes(column.type)"
+        [formControlName]="column.formControl"
+        [placeholder]="column.label | translate"
+        [type]="column.type"
+        pInputText
+      />
+
+      <p-inputMask
+        *ngIf="column.type === 'mask'"
+        [formControlName]="column.formControl"
+        [mask]="column.mask || '99'"
+        [placeholder]="'column.mask'"
+      ></p-inputMask>
+
+      <textarea
+        *ngIf="column.type === 'textarea'"
+        rows="3"
+        [formArrayName]="column.formControl"
+        [placeholder]="column.label | translate"
+        pInputTextarea
+      ></textarea>
+
+      <p-calendar
+        *ngIf="column.type === 'date'"
+        [showIcon]="true"
+        appendTo="body"
+        dateFormat="dd/mm/yy"
+        [formControlName]="column.formControl"
+        placeholder="01/01/2021"
+      ></p-calendar>
+    </div>
+
+    <!--<div class="p-field p-col-12 p-md-6">
+      <label class="required">{{ 'labels.code' | translate }}</label>
+      <input class="" type="text" pInputText [placeholder]="'labels.code'" >
+    </div>-->
+  </form>
+</p-card>

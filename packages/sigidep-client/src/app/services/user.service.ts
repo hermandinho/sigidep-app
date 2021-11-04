@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '@services/local-storage.service';
-import {UserModel} from "@models/user.model";
+import { UserModel } from '@models/user.model';
 
 @Injectable()
 export class UserService {
@@ -17,7 +17,7 @@ export class UserService {
     if (!keys?.length || !permissions?.length) {
       return false;
     }
-    return permissions.some(p => keys.includes(p));
+    return permissions.some((p) => keys.includes(p));
   }
 
   public simpleCheckPermission(permissions: string[]): boolean {

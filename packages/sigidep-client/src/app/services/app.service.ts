@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {TranslateService} from "@ngx-translate/core";
-import {LocalStorageService} from "./local-storage.service";
-import {Message} from "primeng/api/message";
-import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
-import {Confirmation} from "primeng/api/confirmation";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from './local-storage.service';
+import { Message } from 'primeng/api/message';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Confirmation } from 'primeng/api/confirmation';
 
 @Injectable()
 export class AppService {
@@ -17,7 +17,7 @@ export class AppService {
     private translateService: TranslateService,
     private localStorageService: LocalStorageService,
     private _messageService: MessageService,
-    private _confirmationService: ConfirmationService,
+    private _confirmationService: ConfirmationService
   ) {}
 
   public switchLanguages(language: string) {
@@ -28,8 +28,12 @@ export class AppService {
   public showToast(payload: Message) {
     this._messageService.add({
       ...payload,
-      detail: payload.detail?.includes('.') ? this.translateService.instant(payload.detail) : payload.detail,
-      summary: payload.summary?.includes('.') ? this.translateService.instant(payload.summary) : payload.summary,
+      detail: payload.detail?.includes('.')
+        ? this.translateService.instant(payload.detail)
+        : payload.detail,
+      summary: payload.summary?.includes('.')
+        ? this.translateService.instant(payload.summary)
+        : payload.summary,
     });
   }
 

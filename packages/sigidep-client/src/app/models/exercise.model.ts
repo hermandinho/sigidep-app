@@ -5,4 +5,9 @@ export interface ExerciseModel {
   status: ExerciseStatusType;
 }
 
-export type ExerciseStatusType = 'hidden' | 'in_progress' | 'archived' | 'preparing' | 'following';
+export type ExerciseStatusType =
+  | 'hidden'
+  | 'in_progress'
+  | 'archived'
+  | 'preparing'
+  | 'following';

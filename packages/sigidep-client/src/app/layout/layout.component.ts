@@ -1,9 +1,12 @@
-import {MenuItem} from 'primeng/api';
-import {Component, OnInit} from '@angular/core';
-import {BaseComponent} from "@components/base.component";
-import {AppService} from "@services/app.service";
-import {TranslateService} from "@ngx-translate/core";
-import {startWith} from "rxjs/operators";
+import { MenuItem } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '@components/base.component';
+import { AppService } from '@services/app.service';
+import { TranslateService } from '@ngx-translate/core';
+import { startWith } from 'rxjs/operators';
+import { getBreadcrumbSelector } from '@reducers/app.reducer';
+import { AppState } from '@reducers/index';
+import { select, Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-layout',
@@ -15,21 +18,23 @@ export class LayoutComponent extends BaseComponent implements OnInit {
   breadcrumb: MenuItem[] = [];
   constructor(
     public readonly appService: AppService,
-    private readonly _translate: TranslateService
+    private readonly _translate: TranslateService,
+    private readonly _store: Store<AppState>
   ) {
     super();
-    this.appService.appBreadcrumb.pipe(
-      this.takeUntilDestroy
-    ).subscribe(items => {
-      this.breadcrumb = (items || []).map(item => {
-        const key = item.label;
-        if (item.label) {
-          item.label = this._translate.instant(item.label.toLowerCase());
-          item.id = key;
-        }
-        return item;
+    this._store
+      .pipe(this.takeUntilDestroy, select(getBreadcrumbSelector))
+      .subscribe((breadcrumb) => {
+        this.breadcrumb = (breadcrumb || []).map((elt) => {
+          const item = { ...elt };
+          const key = item.label;
+          if (item.label) {
+            item.label = this._translate.instant(item.label.toLowerCase());
+            item.id = key;
+          }
+          return item;
+        });
       });
-    });
   }
 
   ngOnInit(): void {
@@ -55,4 +60,3 @@ export class LayoutComponent extends BaseComponent implements OnInit {
     })*/
   }
 }
-

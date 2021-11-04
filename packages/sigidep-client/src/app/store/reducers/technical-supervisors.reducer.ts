@@ -1,6 +1,16 @@
-import {Action, createFeatureSelector, createReducer, createSelector, on,} from '@ngrx/store';
-import {GetTechnicalSupervisors, GetTechnicalSupervisorsFailure, GetTechnicalSupervisorsSuccess} from "@store/actions";
-import {TechnicalSupervisorModel} from "@models/technical-supervisor.model";
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
+import {
+  GetTechnicalSupervisors,
+  GetTechnicalSupervisorsFailure,
+  GetTechnicalSupervisorsSuccess,
+} from '@store/actions';
+import { TechnicalSupervisorModel } from '@models/technical-supervisor.model';
 
 export interface State {
   data: TechnicalSupervisorModel[];
@@ -29,7 +39,7 @@ const authReducer = createReducer(
   }),
   on(GetTechnicalSupervisorsFailure, (state, { error }) => {
     return { ...state, loading: false, error };
-  }),
+  })
 );
 
 export function reducer(state: State | undefined, action: Action): State {
@@ -40,5 +50,8 @@ export const FeatureKey = 'technicalSupervisors';
 
 const userState = createFeatureSelector<State>(FeatureKey);
 
-export const getLoadingSelector = createSelector(userState, (state) => state.loading);
+export const getLoadingSelector = createSelector(
+  userState,
+  (state) => state.loading
+);
 export const getDataSelector = createSelector(userState, (state) => state.data);

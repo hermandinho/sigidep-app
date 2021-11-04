@@ -1,4 +1,4 @@
-import {FinancialSourceModel} from "@models/financial-source.model";
+import { FinancialSourceModel } from '@models/financial-source.model';
 
 export class ParagraphModel {
   id!: number;

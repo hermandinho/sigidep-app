@@ -1,38 +1,38 @@
-import {createAction, props} from '@ngrx/store';
-import {TechnicalSupervisorModel} from "@models/index";
+import { createAction, props } from '@ngrx/store';
+import { TechnicalSupervisorModel } from '@models/index';
 
 export const GetTechnicalSupervisors = createAction(
-    '[TechnicalSupervisors] Filter',
+  '[TechnicalSupervisors] Filter'
 );
 export const GetTechnicalSupervisorsSuccess = createAction(
-    '[TechnicalSupervisors] Filter success',
-    props<{ payload: TechnicalSupervisorModel[] }>(),
+  '[TechnicalSupervisors] Filter success',
+  props<{ payload: TechnicalSupervisorModel[] }>()
 );
 export const GetTechnicalSupervisorsFailure = createAction(
-    '[TechnicalSupervisors] Filter failure',
-    props<{ error?: any }>(), // TODO defile errors global model here
+  '[TechnicalSupervisors] Filter failure',
+  props<{ error?: any }>() // TODO defile errors global model here
 );
 
 export const UpdateTechnicalSupervisor = createAction(
-    '[TechnicalSupervisors] Update',
-    props<{ id: number}>(),
+  '[TechnicalSupervisors] Update',
+  props<{ id: number }>()
 );
 export const UpdateTechnicalSupervisorSuccess = createAction(
-    '[TechnicalSupervisors] Update success',
+  '[TechnicalSupervisors] Update success'
 );
 export const UpdateTechnicalSupervisorFailure = createAction(
-    '[TechnicalSupervisors] Update failure',
-    props<{ error?: any }>(), // TODO defile errors global model here
+  '[TechnicalSupervisors] Update failure',
+  props<{ error?: any }>() // TODO defile errors global model here
 );
 
 export const DeleteTechnicalSupervisor = createAction(
-    '[TechnicalSupervisors] Delete',
-    props<{ id: number}>(),
+  '[TechnicalSupervisors] Delete',
+  props<{ id: number }>()
 );
 export const DeleteTechnicalSupervisorSuccess = createAction(
-    '[TechnicalSupervisors] Delete success',
+  '[TechnicalSupervisors] Delete success'
 );
 export const DeleteTechnicalSupervisorFailure = createAction(
-    '[TechnicalSupervisors] Delete failure',
-    props<{ error?: any }>(), // TODO defile errors global model here
+  '[TechnicalSupervisors] Delete failure',
+  props<{ error?: any }>() // TODO defile errors global model here
 );

@@ -2,24 +2,39 @@
   <div class="form" [formGroup]="form">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ 'labels.startDate' | translate }}</label>
-        <p-calendar [showIcon]="true" appendTo="body" dateFormat="dd/mm/yy" formControlName="startDate"
-                    placeholder="01/01/2021"></p-calendar>
+        <label class="required">{{ "labels.startDate" | translate }}</label>
+        <p-calendar
+          [showIcon]="true"
+          appendTo="body"
+          dateFormat="dd/mm/yy"
+          formControlName="startDate"
+          placeholder="01/01/2021"
+        ></p-calendar>
       </div>
 
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ 'labels.endDate' | translate }}</label>
-        <p-calendar [minDate]="form?.get('startDate')?.value" [showIcon]="true" appendTo="body" dateFormat="dd/mm/yy"
-                    formControlName="endDate"
-                    placeholder="31/12/2021"></p-calendar>
+        <label class="required">{{ "labels.endDate" | translate }}</label>
+        <p-calendar
+          [minDate]="form?.get('startDate')?.value"
+          [showIcon]="true"
+          appendTo="body"
+          dateFormat="dd/mm/yy"
+          formControlName="endDate"
+          placeholder="31/12/2021"
+        ></p-calendar>
       </div>
 
       <div class="p-field p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center">
-        <label class="required">{{ 'labels.status' | translate }}</label>
-        <p-dropdown [autoDisplayFirst]="false" [options]="statuses" [placeholder]="'labels.status' | translate"
-                    class="p-col-6" formControlName="status"
-                    optionLabel="label"
-                    optionValue="status">
+        <label class="required">{{ "labels.status" | translate }}</label>
+        <p-dropdown
+          [autoDisplayFirst]="false"
+          [options]="statuses"
+          [placeholder]="'labels.status' | translate"
+          class="p-col-6"
+          formControlName="status"
+          optionLabel="label"
+          optionValue="status"
+        >
           <ng-template let-option pTemplate="selectedItem">
             <div>
               <div>{{ option.label | translate }}</div>
@@ -37,9 +52,16 @@
 
   <div class="footer">
     <button pButton class="p-mr-3 p-button-warning" (click)="close()">
-      {{ 'buttons.cancel' | translate }}
+      {{ "buttons.cancel" | translate }}
     </button>
-    <button (click)="submit()" [disabled]="!form?.valid || busy" [label]="('buttons.' + (busy ? 'busy' : (isUpdateForm ? 'update' : 'save'))) | translate"
-            pButton></button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
   </div>
 </div>
