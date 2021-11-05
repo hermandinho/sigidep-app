@@ -11,13 +11,19 @@ export class I18nFormFieldComponent implements OnInit {
   public form!: FormGroup;
 
   @Input()
-  public type: 'text' | 'textarea' = 'text';
+  public type: 'text' | 'textarea' | string = 'text';
 
   @Input()
-  public placeholder: string = '';
+  public required: boolean | undefined = false;
+
+  @Input()
+  public placeholder!: string;
 
   @Input()
   public baseFormControlName!: string;
+
+  @Input()
+  public editorHeight: number = 170;
 
   currentLang: string = 'fr';
 

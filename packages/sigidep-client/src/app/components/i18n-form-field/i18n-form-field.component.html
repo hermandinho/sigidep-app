@@ -1,19 +1,44 @@
 <div class="" [formGroup]="form">
   <ng-container *ngFor="let lang of languages">
-    <input
-      *ngIf="['text'].includes(type) && currentLang === lang"
-      [formControlName]="getFormControlNameForLang"
-      [placeholder]="placeholder ?? getFormControlNameForLang"
-      pInputText
-    />
+    <ng-container *ngIf="['text'].includes(type) && currentLang === lang">
+      <label [class.required]="required">{{
+        "labels." + getFormControlNameForLang | translate
+      }}</label>
 
-    <textarea
-      *ngIf="type === 'textarea' && currentLang === lang"
-      [formControlName]="getFormControlNameForLang"
-      [placeholder]="placeholder"
-      pInputTextarea
-      rows="3"
-    ></textarea>
+      <input
+        [formControlName]="getFormControlNameForLang"
+        [placeholder]="
+          'labels.' + (placeholder ?? getFormControlNameForLang) | translate
+        "
+        pInputText
+      />
+    </ng-container>
+
+    <ng-container *ngIf="type === 'textarea' && currentLang === lang">
+      <label [class.required]="required">{{
+        "labels." + getFormControlNameForLang | translate
+      }}</label>
+
+      <textarea
+        *ngIf="type === 'textarea' && currentLang === lang"
+        [formControlName]="getFormControlNameForLang"
+        [placeholder]="
+          'labels.' + (placeholder ?? getFormControlNameForLang) | translate
+        "
+        pInputTextarea
+        rows="5"
+      ></textarea>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'editor' && currentLang === lang">
+      <label [class.required]="required">{{
+        "labels." + getFormControlNameForLang | translate
+      }}</label>
+      <p-editor
+        [formControlName]="getFormControlNameForLang"
+        [style]="{ height: editorHeight + 'px' }"
+      ></p-editor>
+    </ng-container>
   </ng-container>
 
   <div class="">

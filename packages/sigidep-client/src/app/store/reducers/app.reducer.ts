@@ -5,21 +5,31 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import { SetAppBreadcrumb } from '@store/actions';
+import {
+  GetStructure,
+  GetStructureSuccess,
+  SetAppBreadcrumb,
+} from '@store/actions';
 import { MenuItem } from 'primeng/api';
+import { StructureModel } from '@models/structure.model';
 
 export interface State {
   breadcrumb: MenuItem[];
+  structure: StructureModel | undefined;
 }
 
 export const initialState: State = {
   breadcrumb: [],
+  structure: undefined,
 };
 
 const authReducer = createReducer(
   initialState,
   on(SetAppBreadcrumb, (state, { breadcrumb }) => {
     return { ...state, breadcrumb };
+  }),
+  on(GetStructureSuccess, (state, { payload }) => {
+    return { ...state, structure: payload };
   })
 );
 
@@ -34,4 +44,9 @@ const userState = createFeatureSelector<State>(FeatureKey);
 export const getBreadcrumbSelector = createSelector(
   userState,
   (state) => state.breadcrumb
+);
+
+export const getStructureSelector = createSelector(
+  userState,
+  (state) => state.structure
 );

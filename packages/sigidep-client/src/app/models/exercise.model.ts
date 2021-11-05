@@ -1,8 +1,20 @@
-export interface ExerciseModel {
-  id: number;
-  startDate: Date;
-  endDate: Date;
-  status: ExerciseStatusType;
+export class ExerciseModel {
+  id!: number;
+  code!: number;
+  year!: number;
+  startDate!: Date;
+  endDate!: Date;
+  status!: ExerciseStatusType;
+
+  constructor(params?: Partial<ExerciseModel>) {
+    if (params) {
+      Object.assign(this, params);
+    }
+  }
+
+  get formattedLabel(): string {
+    return `${this.code} - ${this.year}`;
+  }
 }
 
 export type ExerciseStatusType =

@@ -20,6 +20,8 @@ export class DialogsService {
   private administrativeUnitCreateComponent: any;
   private technicalSupervisorCreateComponent: any;
   private paragraphCreateComponent: any;
+  private subProgramObjectiveCreateComponent: any;
+  private subProgramObjectiveIndicatorCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -163,5 +165,53 @@ export class DialogsService {
         item,
       },
     });
+  }
+
+  public async launchSubProgramObjectiveCreateDialog(item?: any) {
+    if (!this.subProgramObjectiveCreateComponent) {
+      const { CreateSubProgramObjectiveFormComponent } = await import(
+        '@components/create-sub-program-objective-form/create-sub-program-objective-form.component'
+      );
+      this.subProgramObjectiveCreateComponent =
+        CreateSubProgramObjectiveFormComponent;
+    }
+
+    return this._dialogService.open(this.subProgramObjectiveCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editObjective' : 'createObjective')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchSubProgramObjectiveIndicatorCreateDialog(item?: any) {
+    if (!this.subProgramObjectiveIndicatorCreateComponent) {
+      const { CreateSubProgramObjectiveIndicatorFormComponent } = await import(
+        '@components/create-sub-program-objective-indicator-form/create-sub-program-objective-indicator-form.component'
+      );
+      this.subProgramObjectiveIndicatorCreateComponent =
+        CreateSubProgramObjectiveIndicatorFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.subProgramObjectiveIndicatorCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item ? 'editObjectiveIndicator' : 'createObjectiveIndicator')
+        ),
+        width: '50vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+        },
+      }
+    );
   }
 }

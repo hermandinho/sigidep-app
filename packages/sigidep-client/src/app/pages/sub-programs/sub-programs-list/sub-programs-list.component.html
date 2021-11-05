@@ -15,7 +15,7 @@
       </ng-container>-->
     </ng-template>
     <ng-template pTemplate="right">
-      <a
+      <button
         [routerLink]="['/', 'sub-programs', 'new']"
         *appCheckPermissions="['technicalSupervisions.create']"
         [label]="'buttons.new' | translate"
@@ -23,7 +23,7 @@
         icon="pi pi-plus"
         pButton
         pRipple
-      ></a>
+      ></button>
     </ng-template>
   </p-toolbar>
 
