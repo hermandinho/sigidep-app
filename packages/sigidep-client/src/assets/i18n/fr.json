@@ -28,7 +28,12 @@
     "cancel": "Annuler",
     "confirm": "Confirmer",
     "update": "Modifier",
-    "apply": "Appliquer"
+    "apply": "Appliquer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "addObjective": "Ajouter un objectif",
+    "addIndicator": "Ajouter un indicateur",
+    "new": "Ajouter"
   },
   "install": {
     "title": "Installation"
@@ -64,7 +69,11 @@
     "sector": "Secteur",
     "region": "Région",
     "status": "Status",
-    "nature": "Nature du paragraphe"
+    "nature": "Nature du paragraphe",
+    "presentationFr": "Présentation (FR)",
+    "presentationEn": "Présentation (EN)",
+    "exercise": "Exercice",
+    "chapter": "Chapitre"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -151,9 +160,13 @@
     "financialsources": "Sources de financement",
     "administrativeunits": "Unités administratives",
     "technicalsupervisors": "Tutelle Techniques",
-    "paragraphs": "Paragraphes"
+    "paragraphs": "Paragraphes",
+    "subprograms": "Sous programs",
+    "list": "Liste",
+    "create": "Nouveau"
   },
   "tables": {
+    "emptyMessage": "Aucun élément",
     "titles": {
       "exercises": "Liste des exercises",
       "financialSources": "Sources de financements",
@@ -177,7 +190,12 @@
       "category": "Catégorie",
       "sector": "Secteur",
       "region": "Région",
-      "nature": "Nature"
+      "nature": "Nature",
+      "referenceValue": "Valeur référence",
+      "referenceYear": "Année référence",
+      "targetValue": "Valeur cible",
+      "targetYear": "Année cible",
+      "measurementUnit": "Unité de mesure"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -198,7 +216,11 @@
       "createTechnicalSupervisor": "Modifier une tutelle technique",
       "editTechnicalSupervisor": "Modifier une tutelle technique",
       "createParagraph": "Céer un paragraphe",
-      "editParagraph": "Modifier un paragraphe"
+      "editParagraph": "Modifier un paragraphe",
+      "createObjective": "Céer un objectif",
+      "editObjective": "Modifier un objectif",
+      "updateObjectiveIndicator": "Modifier un indicateur",
+      "createObjectiveIndicator": "Céer un indicateur"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -281,5 +303,26 @@
         "description": "Modifier un sous program."
       }
     }
+  },
+  "steps": {
+    "identification": "Identification",
+    "identificationSubTitle": "Identification du sous program",
+    "objectives": "Objectifs",
+    "objectivesSubTitle": "Objectifs du sous program",
+    "strategies": "Statégies",
+    "strategiesSubTitle": "Statégies du sous program"
+  },
+  "measurementUnits": {
+    "unit": "Unité",
+    "tonnes": "Tonnes",
+    "day": "Jours",
+    "month": "Mois",
+    "year": "Année",
+    "kg": "Kg",
+    "m": "M",
+    "%": "%",
+    "number": "Nombre",
+    "ha": "HA",
+    "ml": "ML"
   }
 }

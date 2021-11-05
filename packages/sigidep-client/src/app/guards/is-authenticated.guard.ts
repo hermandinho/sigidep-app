@@ -6,22 +6,30 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { LocalStorageService } from '@services/local-storage.service';
+import { StructuresService } from '@services/structures.service';
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {
   constructor(
     private readonly router: Router,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
+    private structuresService: StructuresService
   ) {}
-  canActivate(
+  async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
+  ): Promise<boolean> {
     if (!!this.localStorageService.getAuthToken()) {
       this.router.navigate(['/home']);
       return false;
     } else {
-      return true;
+      const check = await this.structuresService.check();
+      if (!check) {
+        this.router.navigate(['/install']);
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 }

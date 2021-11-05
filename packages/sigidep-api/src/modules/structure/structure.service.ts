@@ -11,7 +11,7 @@ export class StructureService {
     private readonly structureRepository: Repository<StructureEntity>,
   ) {}
 
-  public async structureInstalled(): Promise<StructureEntity> {
+  public async getStructure(): Promise<StructureEntity> {
     return this.structureRepository.findOne();
   }
 

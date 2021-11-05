@@ -34,6 +34,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { I18nFormFieldComponent } from '@components/i18n-form-field/i18n-form-field.component';
+import { StepsModule } from 'primeng/steps';
+import { EditorModule } from 'primeng/editor';
 
 const declarations = [
   BaseComponent,
@@ -63,6 +65,8 @@ const shared = [
   ConfirmDialogModule,
   CheckboxModule,
   DropdownModule,
+  StepsModule,
+  EditorModule,
 ];
 @NgModule({
   declarations: [...declarations],

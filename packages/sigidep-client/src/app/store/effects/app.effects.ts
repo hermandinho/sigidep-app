@@ -1,16 +1,32 @@
 import { Injectable } from '@angular/core';
 
-import { Actions } from '@ngrx/effects';
-import { AuthService } from '@services/auth.service';
-import { MessageService } from 'primeng/api';
-import { AppService } from '@services/app.service';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
+import {
+  GetStructure,
+  GetStructureFailure,
+  GetStructureSuccess,
+} from '@store/actions';
+import { ApisService } from '@services/apis.service';
+import { StructureModel } from '@models/structure.model';
 
 @Injectable()
 export class AppEffects {
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService,
-    private _messageService: MessageService,
-    private _appService: AppService
-  ) {}
+  fetchStructure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GetStructure),
+      mergeMap((action) =>
+        this.apisService.get<StructureModel>('/structure').pipe(
+          switchMap((payload: StructureModel) => {
+            return [GetStructureSuccess({ payload })];
+          }),
+          catchError((err: HttpErrorResponse) => of(GetStructureFailure(err)))
+        )
+      )
+    )
+  );
+
+  constructor(private actions$: Actions, private apisService: ApisService) {}
 }

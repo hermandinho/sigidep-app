@@ -1,89 +1,402 @@
-<p-card>
-  <p-toolbar
-    styleClass="p-mb-4"
-    *appCheckPermissions="[
-      'financialSources.create',
-      'financialSources.delete'
-    ]"
-  >
-    <ng-template pTemplate="left"> </ng-template>
-    <ng-template pTemplate="right"> </ng-template>
-  </p-toolbar>
-
-  <form
-    action="javascript:void(0)"
-    class="p-fluid p-grid"
-    *ngIf="form"
-    [formGroup]="form"
-  >
-    <app-i18n-form-field
-      [baseFormControlName]="'label'"
-      [form]="form"
-      type="text"
-    ></app-i18n-form-field>
-    <div
-      class="p-field p-col-12 p-md-6"
-      *ngFor="let column of formElements; trackBy: trackByIndex"
-    >
-      <label [class.required]="column?.required">{{
-        "labels." + column.label | translate
-      }}</label>
-
+<p-card [formGroup]="form">
+  <!--  <pre>{{ form?.value | json }}</pre>-->
+  <div class="header p-fluid p-grid" formGroupName="common">
+    <div class="p-field p-col-12 p-md-6">
+      <label class="required"> {{ "labels.exercise" | translate }} </label>
       <p-dropdown
-        *ngIf="column.type === 'dropdown'"
         [filterBy]="'code'"
         [filter]="false"
-        [optionLabel]="column?.dropdownOptionsLabel || 'label'"
-        [options]="[]"
-        [placeholder]="'labels.' + column.label | translate"
+        [optionLabel]="'formattedLabel'"
+        [options]="exercises"
+        [placeholder]="'labels.exercise' | translate"
         [showClear]="false"
         appendTo="body"
-        formControlName="categoryId"
+        formControlName="exerciseId"
         optionValue="id"
       >
-        <ng-template let-category pTemplate="item">
+        <ng-template let-item pTemplate="selectedItem">
           <div>
-            <div>{{ category?.formattedLabel }}</div>
+            <div>{{ item?.formattedLabel }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-item pTemplate="item">
+          <div>
+            <div>{{ item?.formattedLabel }}</div>
           </div>
         </ng-template>
       </p-dropdown>
-
-      <input
-        *ngIf="['text', 'number'].includes(column.type)"
-        [formControlName]="column.formControl"
-        [placeholder]="column.label | translate"
-        [type]="column.type"
-        pInputText
-      />
-
-      <p-inputMask
-        *ngIf="column.type === 'mask'"
-        [formControlName]="column.formControl"
-        [mask]="column.mask || '99'"
-        [placeholder]="'column.mask'"
-      ></p-inputMask>
-
-      <textarea
-        *ngIf="column.type === 'textarea'"
-        rows="3"
-        [formArrayName]="column.formControl"
-        [placeholder]="column.label | translate"
-        pInputTextarea
-      ></textarea>
-
-      <p-calendar
-        *ngIf="column.type === 'date'"
-        [showIcon]="true"
-        appendTo="body"
-        dateFormat="dd/mm/yy"
-        [formControlName]="column.formControl"
-        placeholder="01/01/2021"
-      ></p-calendar>
     </div>
+    <div class="p-field p-col-12 p-md-6">
+      <label class="required"> {{ "labels.chapter" | translate }} </label>
+      <p-dropdown
+        [filterBy]="'code'"
+        [filter]="false"
+        [optionLabel]="
+          translate?.currentLang === 'fr'
+            ? 'formattedLabelFr'
+            : 'formattedLabelEn'
+        "
+        [options]="structures"
+        [placeholder]="'labels.chapter' | translate"
+        [showClear]="false"
+        appendTo="body"
+        formControlName="structureId"
+        optionValue="id"
+      >
+        <ng-template let-item pTemplate="selectedItem">
+          <div>
+            <div>
+              {{
+                item[
+                  translate?.currentLang === "fr"
+                    ? "formattedLabelFr"
+                    : "formattedLabelEn"
+                ]
+              }}
+            </div>
+          </div>
+        </ng-template>
+        <ng-template let-item pTemplate="item">
+          <div>
+            <div>
+              {{
+                item[
+                  translate?.currentLang === "fr"
+                    ? "formattedLabelFr"
+                    : "formattedLabelEn"
+                ]
+              }}
+            </div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+  </div>
 
-    <!--<div class="p-field p-col-12 p-md-6">
-      <label class="required">{{ 'labels.code' | translate }}</label>
-      <input class="" type="text" pInputText [placeholder]="'labels.code'" >
-    </div>-->
-  </form>
+  <p-divider></p-divider>
+
+  <div class="">
+    <p-steps
+      [model]="steps"
+      [readonly]="true"
+      [activeIndex]="activeStep"
+    ></p-steps>
+  </div>
+
+  <div
+    class="identifications-step"
+    *ngIf="activeStep === 0"
+    formGroupName="identification"
+  >
+    <p-card class="p-mt-5">
+      <ng-template pTemplate="title">
+        {{ "steps.identification" | translate }}
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        {{ "steps.identificationSubTitle" | translate }}
+      </ng-template>
+
+      <div class="p-fluid p-grid">
+        <div
+          class="p-field p-col-12"
+          [ngClass]="{
+            'p-md-6': column?.size === 6,
+            'p-md-12': column.size === 12
+          }"
+          *ngFor="
+            let column of formElements?.identification;
+            trackBy: trackByIndex
+          "
+        >
+          <label *ngIf="!column.i18n" [class.required]="column?.required">{{
+            "labels." + column.label | translate
+          }}</label>
+
+          <p-dropdown
+            *ngIf="column.type === 'dropdown'"
+            [filterBy]="'code'"
+            [filter]="false"
+            [optionLabel]="column?.dropdownOptionsLabel || 'label'"
+            [options]="[]"
+            [placeholder]="'labels.' + column.label | translate"
+            [showClear]="false"
+            appendTo="body"
+            formControlName="categoryId"
+            optionValue="id"
+          >
+            <ng-template let-category pTemplate="item">
+              <div>
+                <div>{{ category?.formattedLabel }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+          <input
+            *ngIf="['text', 'number'].includes(column.type) && !column.i18n"
+            [formControlName]="column.formControl"
+            [placeholder]="column.label | translate"
+            [type]="column.type"
+            pInputText
+          />
+
+          <p-inputMask
+            *ngIf="column.type === 'mask'"
+            [formControlName]="column.formControl"
+            [mask]="column.mask || '99'"
+            [placeholder]="'labels.' + column.label | translate"
+          ></p-inputMask>
+
+          <textarea
+            *ngIf="column.type === 'textarea' && !column.i18n"
+            rows="3"
+            [formArrayName]="column.formControl"
+            [placeholder]="column.label | translate"
+            pInputTextarea
+          ></textarea>
+
+          <app-i18n-form-field
+            *ngIf="
+              ['text', 'textarea', 'editor'].includes(column.type) &&
+              column.i18n
+            "
+            [baseFormControlName]="column.formControl"
+            [form]="identificationFormGroup"
+            [type]="column.type"
+            [required]="column.required"
+          ></app-i18n-form-field>
+
+          <p-calendar
+            *ngIf="column.type === 'date'"
+            [showIcon]="true"
+            appendTo="body"
+            dateFormat="dd/mm/yy"
+            [formControlName]="column.formControl"
+            placeholder="01/01/2021"
+          ></p-calendar>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+
+      <ng-container *ngIf="false; else footerButtons"></ng-container>
+    </p-card>
+  </div>
+
+  <!-- Objectives Step -->
+  <div
+    class="objectives-step"
+    *ngIf="activeStep === 1"
+    formArrayName="objectives"
+  >
+    <p-card class="p-mt-5">
+      <ng-template pTemplate="title">
+        {{ "steps.objectives" | translate }}
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        {{ "steps.objectivesSubTitle" | translate }}
+      </ng-template>
+      <p-toolbar
+        styleClass="p-mb-4"
+        *appCheckPermissions="['subPrograms.create', 'subPrograms.delete']"
+      >
+        <ng-template pTemplate="left"></ng-template>
+        <ng-template pTemplate="right">
+          <button
+            (click)="addObjectiveItem()"
+            *appCheckPermissions="['subPrograms.create']"
+            [label]="'buttons.addObjective' | translate"
+            class="p-button-success p-mr-2"
+            icon="pi pi-plus"
+            pButton
+            pRipple
+          ></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table
+        [value]="objectivesFormGroup?.value"
+        dataKey="index"
+        responsiveLayout="stack"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem"></th>
+            <th style="width: 3rem">N°</th>
+            <th>{{ "tables.headers.labelFr" | translate }}</th>
+            <th>{{ "tables.headers.labelEn" | translate }}</th>
+            <th style="width: 8rem"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="p-text-center p-text-secondary">
+              {{ "tables.emptyMessage" | translate }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-expanded="expanded">
+          <tr>
+            <td>
+              <button
+                type="button"
+                pButton
+                pRipple
+                [pRowToggler]="item"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              ></button>
+            </td>
+            <td>{{ item.index + 1 }}</td>
+            <td>{{ item.labelFr }}</td>
+            <td>{{ item.labelEn }}</td>
+            <td>
+              <button
+                (click)="editObjectiveItem(item)"
+                *appCheckPermissions="['subPrograms.create']"
+                class="p-button-rounded p-button-info p-mr-2"
+                icon="pi pi-pencil"
+                pButton
+                pRipple
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-item>
+          <tr>
+            <td [attr.colspan]="5">
+              <div class="p-p-3 p-d-flex p-jc-end">
+                <button
+                  (click)="addObjectiveIndicatorItem(item.index)"
+                  pButton
+                  [label]="'buttons.addIndicator' | translate"
+                ></button>
+              </div>
+
+              <p-table
+                [value]="item?.indicators ?? []"
+                dataKey="index"
+                responsiveLayout="stack"
+              >
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="9" class="p-text-center p-text-secondary">
+                      {{ "tables.emptyMessage" | translate }}
+                    </td>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 3rem">N°</th>
+                    <th>{{ "tables.headers.labelFr" | translate }}</th>
+                    <th>{{ "tables.headers.labelEn" | translate }}</th>
+                    <th style="width: 3rem">
+                      {{ "tables.headers.referenceValue" | translate }}
+                    </th>
+                    <th style="width: 3rem">
+                      {{ "tables.headers.referenceYear" | translate }}
+                    </th>
+                    <th style="width: 3rem">
+                      {{ "tables.headers.targetValue" | translate }}
+                    </th>
+                    <th style="width: 3rem">
+                      {{ "tables.headers.targetYear" | translate }}
+                    </th>
+                    <th style="width: 3rem">
+                      {{ "tables.headers.measurementUnit" | translate }}
+                    </th>
+                    <th style="width: 8rem"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-expanded="expanded">
+                  <tr>
+                    <td>{{ item.index + 1 }}</td>
+                    <td>{{ item.labelFr }}</td>
+                    <td>{{ item.labelEn }}</td>
+                    <td>{{ item.referenceValue }}</td>
+                    <td>{{ item.referenceYear }}</td>
+                    <td>{{ item.targetValue }}</td>
+                    <td>{{ item.targetYear }}</td>
+                    <!--<td>{{ ('measurementUnits.' + item.measurementUnit) | translate }}</td>-->
+                    <td class="p-text-capitalize">
+                      {{ item.measurementUnit }}
+                    </td>
+                    <td>
+                      <button
+                        (click)="editObjectiveIndicatorItem(item.index, item)"
+                        *appCheckPermissions="['subPrograms.create']"
+                        class="p-button-rounded p-button-info p-mr-2"
+                        icon="pi pi-pencil"
+                        pButton
+                        pRipple
+                      ></button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <p-divider></p-divider>
+
+      <ng-container *ngIf="false; else footerButtons"></ng-container>
+    </p-card>
+  </div>
+
+  <!-- Strategies Step -->
+  <div
+    formGroupName="strategies"
+    class="strategies-step"
+    *ngIf="activeStep === 2"
+  >
+    <p-card>
+      <ng-template pTemplate="title">
+        {{ "steps.strategies" | translate }}
+      </ng-template>
+      <ng-template pTemplate="subtitle">
+        {{ "steps.strategiesSubTitle" | translate }}
+      </ng-template>
+
+      <app-i18n-form-field
+        [form]="strategiesFormGroup"
+        [baseFormControlName]="'strategy'"
+        [type]="'editor'"
+        [required]="true"
+        [editorHeight]="200"
+      ></app-i18n-form-field>
+
+      <p-divider></p-divider>
+
+      <ng-container *ngIf="false; else footerButtons"></ng-container>
+    </p-card>
+  </div>
 </p-card>
+
+<ng-template #footerButtons>
+  <div class="footer p-d-flex p-jc-between">
+    <span *ngIf="!stepButtons[activeStep.toString()].back"></span>
+    <button
+      (click)="goBack()"
+      *ngIf="stepButtons[activeStep.toString()].back"
+      [label]="'buttons.previous' | translate"
+      pButton
+    ></button>
+
+    <button
+      (click)="goForward()"
+      *ngIf="stepButtons[activeStep.toString()].forward"
+      [disabled]="!currentStepFormValid"
+      [label]="'buttons.next' | translate"
+      pButton
+    ></button>
+
+    <button
+      *ngIf="stepButtons[activeStep.toString()].submit"
+      pButton
+      [label]="'buttons.save' | translate"
+      [disabled]="!currentStepFormValid"
+    ></button>
+  </div>
+</ng-template>
