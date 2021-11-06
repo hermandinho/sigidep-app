@@ -9,7 +9,6 @@ services:
     volumes:
       - ./certbot/conf/:/etc/letsencrypt
       - ./certbot/logs/:/var/log/letsencrypt
-      - ./certbot/www:/var/www/certbot
 
   sigidep-api:
     container_name: sigidep-api
@@ -45,7 +44,7 @@ services:
     volumes:
       - "./nginx/dev:/etc/nginx/conf.d"
       - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - ./certbot/www:/var/www/html
       - ./packages/sigidep-client/src:/usr/src/app/src
     networks:
       - sigidep-network
