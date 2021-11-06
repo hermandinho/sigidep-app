@@ -20,10 +20,12 @@ services:
         - NODE_ENV=production
     restart: always
     ports:
-      - 80
-      - 443
+      - 80:80
+      - 443:443
     volumes:
       - "./nginx/prod:/etc/nginx/conf.d"
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
       - ./packages/sigidep-client/src:/usr/src/app/src
     environment:
       - NODE_ENV=production
