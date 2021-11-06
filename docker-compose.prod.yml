@@ -22,7 +22,7 @@ services:
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - "./nginx/prod:/etc/nginx/conf.d"
+    #    volumes:
+    #      - "./nginx/prod:/etc/nginx/conf.d"
     environment:
       - NODE_ENV=production
