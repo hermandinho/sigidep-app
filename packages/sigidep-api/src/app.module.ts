@@ -59,7 +59,7 @@ import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
           // cli: {
           //   migrationsDir: 'migration',
           // },
-          ...(env !== 'production'
+          /*...(env !== 'production'
             ? {}
             : {
                 extra: {
@@ -67,7 +67,7 @@ import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
                     rejectUnauthorized: false,
                   },
                 },
-              }),
+              }),*/
         } as TypeOrmModuleOptions;
       },
     }),
