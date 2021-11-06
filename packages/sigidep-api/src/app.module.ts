@@ -31,7 +31,7 @@ import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
         const password = config.get('DB_PASSWORD') ?? process.env.DB_PASSWORD;
         const username = config.get('DB_USER') ?? process.env.DB_USER;
         // tslint:disable-next-line:no-console
-        console.log(database, host, password, username);
+        // console.log(database, host, password, username);
         console.log(
           '******* Server running on Port : ' +
             (config.get('API_PORT') ??
@@ -59,7 +59,7 @@ import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
           // cli: {
           //   migrationsDir: 'migration',
           // },
-          /*...(env !== 'production'
+          ...(env !== 'production'
             ? {}
             : {
                 extra: {
@@ -67,7 +67,7 @@ import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
                     rejectUnauthorized: false,
                   },
                 },
-              }),*/
+              }),
         } as TypeOrmModuleOptions;
       },
     }),
