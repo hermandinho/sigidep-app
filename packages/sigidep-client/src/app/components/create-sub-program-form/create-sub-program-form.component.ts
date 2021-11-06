@@ -229,6 +229,7 @@ export class CreateSubProgramFormComponent
     ret.onClose
       .pipe(this.takeUntilDestroy)
       .subscribe((data: { labelEn: string; labelFr: string; id?: number }) => {
+        console.log(data);
         if (data) {
           if (item && item.hasOwnProperty('index')) {
             (this.objectivesFormGroup?.at(item.index) as FormGroup)?.patchValue(

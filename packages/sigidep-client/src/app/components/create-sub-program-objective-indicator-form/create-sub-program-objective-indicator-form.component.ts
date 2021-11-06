@@ -61,6 +61,6 @@ export class CreateSubProgramObjectiveIndicatorFormComponent
   }
 
   close() {
-    this.ref.close(this.form.value);
+    this.ref.close(this.form.valid && this.form.value);
   }
 }
