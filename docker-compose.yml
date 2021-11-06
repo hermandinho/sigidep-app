@@ -1,6 +1,16 @@
 version: "3.4"
 
 services:
+  sigidep-certbot:
+    container_name: sigidep-certbot
+    image: certbot/certbot:latest
+    restart: unless-stopped
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./certbot/conf/:/etc/letsencrypt
+      - ./certbot/logs/:/var/log/letsencrypt
+      - ./certbot/data:/var/www/certbot
+
   sigidep-api:
     container_name: sigidep-api
     build:
