@@ -43,8 +43,10 @@ services:
     environment:
       - NODE_ENV=$ENV
     volumes:
-      - ./packages/sigidep-client/src:/usr/src/app/src
       - "./nginx/dev:/etc/nginx/conf.d"
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - ./packages/sigidep-client/src:/usr/src/app/src
     networks:
       - sigidep-network
     ports:
