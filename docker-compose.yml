@@ -10,6 +10,8 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/:rw
       - ./certbot/logs/:/var/log/letsencrypt/:rw
       - ./certbot/www/:/var/www/certbot/:rw
+    networks:
+      - sigidep-network
 
   sigidep-api:
     container_name: sigidep-api
@@ -40,6 +42,8 @@ services:
         NODE_ENV: ${ENV}
     restart: unless-stopped
     env_file: .env
+    depends_on:
+      - sigidep-certbot
     environment:
       - NODE_ENV=$ENV
     volumes:
