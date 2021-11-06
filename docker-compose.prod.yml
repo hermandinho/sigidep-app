@@ -1,0 +1,39 @@
+---
+version: "3.4"
+
+services:
+  sigidep-api:
+    build:
+      context: packages/sigidep-api
+      dockerfile: Dockerfile.prod
+      args:
+        - NODE_ENV=production
+    environment:
+      - API_PORT=$API_PORT
+      - NODE_ENV=production
+
+  sigidep-client:
+    build:
+      context: packages/sigidep-client
+      dockerfile: Dockerfile.prod
+      args:
+        - NODE_ENV=production
+    restart: always
+    ports:
+      - 80
+      - 443
+    volumes:
+      - "./nginx/prod:/etc/nginx/conf.d"
+      - ./packages/sigidep-client/src:/usr/src/app/src
+    environment:
+      - NODE_ENV=production
+
+    sigidep-certbot:
+      container_name: sigidep-certbot
+      image: certbot/certbot:latest
+      restart: unless-stopped
+      entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      volumes:
+        - ./certbot/conf/:/etc/letsencrypt
+        - ./certbot/logs/:/var/log/letsencrypt
+        - ./certbot/data:/var/www/certbot
