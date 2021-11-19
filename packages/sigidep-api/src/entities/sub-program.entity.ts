@@ -1,5 +1,33 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { UserEntity } from '@entities/user.entity';
+import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-program.dto';
+import { ExerciseEntity } from '@entities/exercise.entity';
+import { StructureEntity } from '@entities/structure.entity';
+import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
+
+interface ISubProgramStrategy {
+  labelFr: string;
+  labelEn: string;
+}
+
+interface ISubProgramObjectiveIndicator {
+  measurementUnit: string;
+  labelFr: string;
+  labelEn: string;
+  referenceValue: number;
+  referenceYear: number;
+  targetValue: number;
+  targetYear: number;
+  verificationSourceFr: string;
+  verificationSourceEn: string;
+}
+
+interface ISubProgramObjective {
+  labelFr: string;
+  labelEn: string;
+  indicators: ISubProgramObjectiveIndicator[];
+}
 
 @Entity({
   name: 'sub_programs',
@@ -20,80 +48,98 @@ export class SubProgramEntity extends BaseEntity {
   public labelEn: string;
 
   @Column({ name: 'description_fr', nullable: false, type: 'text' })
-  public descriptionFr: string;
+  public presentationFr: string;
 
   @Column({ name: 'description_en', nullable: false, type: 'text' })
-  public descriptionEn: string;
-
-  @Column({ name: 'objectives_fr', nullable: false, type: 'text' })
-  public objectivesFr: string;
-
-  @Column({ name: 'objectives_en', nullable: false, type: 'text' })
-  public objectivesEn: string;
-
-  @Column({ name: 'indicators_fr', nullable: false, type: 'text' })
-  public indicatorsFr: string;
-
-  @Column({ name: 'indicators_en', nullable: false, type: 'text' })
-  public indicatorsEn: string;
-
-  @Column({ name: 'indicators_ref_value', nullable: false })
-  public indicatorsRefValue: number;
-
-  @Column({ name: 'indicators_target_value', nullable: false })
-  public indicatorsTargetValue: number;
-
-  @Column({ name: 'indicators_ref_year', nullable: false, type: 'date' })
-  public indicatorsRefYear: Date;
-
-  @Column({ name: 'indicators_target_year', nullable: false, type: 'date' })
-  public indicatorsTargetYear: Date;
-
-  @Column({ name: 'engagement_authorization', nullable: false })
-  public engagementAuthorization: number;
+  public presentationEn: string;
 
   @Column({
-    name: 'indicators_paymentCredit_n1',
+    name: 'objectives',
     nullable: false,
+    type: 'jsonb',
+    array: false,
+    default: () => "'[]'",
+  })
+  public objectives: ISubProgramObjective[];
+
+  @Column({
+    name: 'strategies',
+    nullable: false,
+    type: 'jsonb',
+    array: false,
+    default: () => "'[]'",
+  })
+  public strategies: ISubProgramStrategy;
+
+  @Column({ name: 'engagement_authorization', nullable: true })
+  public engagementAuthorization?: number;
+
+  @Column({
+    name: 'indicators_payment_credit_n1',
+    nullable: true,
     comment:
       'Crédits de Paiement de l’indicateur du Sous-Programme à l’Exercice N+1',
   })
-  public indicatorsPaymentCreditN1: number;
+  public indicatorsPaymentCreditN1?: number;
 
   @Column({
-    name: 'indicators_paymentCredit_n2',
-    nullable: false,
+    name: 'indicators_payment_credit_n2',
+    nullable: true,
     comment:
       'Crédits de Paiement de l’indicateur du Sous-Programme à l’Exercice N+2',
   })
-  public indicatorsPaymentCreditN2: number;
+  public indicatorsPaymentCreditN2?: number;
 
   @Column({
-    name: 'indicators_paymentCredit_n3',
-    nullable: false,
+    name: 'indicators_payment_credit_n3',
+    nullable: true,
     comment:
       'Crédits de Paiement de l’indicateur du Sous-Programme à l’Exercice N+3',
   })
-  public indicatorsPaymentCreditN3: number;
-
-  @Column({ name: 'strategies_fr', nullable: false })
-  public strategiesFr: string;
-
-  @Column({ name: 'strategies_en', nullable: false })
-  public strategiesEn: string;
-
-  @Column({ name: 'verification_source_fr', nullable: false })
-  public verificationSourceFr: string;
-
-  @Column({ name: 'verification_source_en', nullable: false })
-  public verificationSourceEn: string;
-
-  @Column({ name: 'measurement_unit', nullable: false })
-  public measurementUnit: string;
+  public indicatorsPaymentCreditN3?: number;
 
   @Column({ name: 'start_date', nullable: false, type: 'date' })
   public startDate: Date;
 
   @Column({ name: 'end_date', nullable: false, type: 'date' })
   public endDate: Date;
+
+  // RELATIONS
+  @ManyToOne(() => UserEntity, (object) => object.id, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'owner_id' })
+  owner?: UserEntity;
+
+  @ManyToOne(() => UserEntity, (object) => object.id, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'created_by' })
+  createdBy?: UserEntity;
+
+  @ManyToOne(() => ExerciseEntity, (object) => object.subPrograms, {
+    onDelete: 'SET NULL',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'exercise_id' })
+  exercise: ExerciseEntity;
+
+  @ManyToOne(() => StructureEntity, (object) => object.subPrograms, {
+    onDelete: 'SET NULL',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'structure_id' })
+  structure: StructureEntity;
+
+  @OneToMany(() => SubProgramActivityEntity, (object) => object.subProgram)
+  activities: SubProgramActivityEntity[];
+
+  constructor(params?: Partial<SubProgramEntity | CreateSubProgramDto>) {
+    super();
+    if (params) {
+      Object.assign(this, params);
+    }
+  }
 }

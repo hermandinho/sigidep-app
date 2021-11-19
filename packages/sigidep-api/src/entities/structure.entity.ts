@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { CreateStructureDto } from '@modules/structure/dto/create-structure.dto';
+import { SubProgramEntity } from '@entities/sub-program.entity';
 
 @Entity({
   name: 'structures',
@@ -40,6 +41,10 @@ export class StructureEntity extends BaseEntity {
 
   @Column({ name: 'address', nullable: false })
   public address: string;
+
+  // RELATIONS
+  @OneToMany(() => SubProgramEntity, (object) => object.exercise)
+  subPrograms: SubProgramEntity[];
 
   constructor(params?: CreateStructureDto) {
     super();

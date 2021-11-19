@@ -1,13 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { TreeNode } from 'primeng/api';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { Actions } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@components/base.component';
-import { SetAppBreadcrumb } from '@store/actions';
+import { GetSubPrograms, SetAppBreadcrumb } from '@store/actions';
+import {
+  SubProgramActivityModel,
+  SubProgramModel,
+} from '@models/sub-program.model';
+import { Observable, of } from 'rxjs';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/sub-programs.reducer';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sub-programs-list',
@@ -15,8 +24,9 @@ import { SetAppBreadcrumb } from '@store/actions';
   styleUrls: ['./sub-programs-list.component.scss'],
 })
 export class SubProgramsListComponent extends BaseComponent implements OnInit {
-  public nodes!: TreeNode[];
   public columns: any = [];
+  public data!: SubProgramModel[];
+  loading$: Observable<boolean> = of(true);
 
   constructor(
     private readonly _appService: AppService,
@@ -26,9 +36,16 @@ export class SubProgramsListComponent extends BaseComponent implements OnInit {
     public translate: TranslateService
   ) {
     super();
+
+    this._initSubscriptions();
+  }
+
+  get currentLang() {
+    return this.translate.currentLang;
   }
 
   ngOnInit(): void {
+    this._store.dispatch(GetSubPrograms());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -43,5 +60,30 @@ export class SubProgramsListComponent extends BaseComponent implements OnInit {
       })
     );
     this.columns = [{ field: 'F 1' }, { field: 'F 2' }];
+  }
+
+  public async addActivity(sp: SubProgramModel): Promise<void> {
+    const ret = await this._dialogService.launchSubProgramActivityCreateDialog(
+      sp
+    );
+  }
+
+  private _initSubscriptions() {
+    this.loading$ = this._store.pipe(
+      select(getLoadingSelector),
+      map((status) => status)
+    );
+
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => {
+        this.data = (data || []).map((d) => {
+          const obj = new SubProgramModel(d);
+          obj.activities = (obj.activities || []).map(
+            (a) => new SubProgramActivityModel(a)
+          );
+          return obj;
+        });
+      });
   }
 }

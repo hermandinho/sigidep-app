@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 50px;
+
+  .p-field {
+    &.flex-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+}

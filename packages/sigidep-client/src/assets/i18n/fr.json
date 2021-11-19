@@ -33,7 +33,8 @@
     "previous": "Précédent",
     "addObjective": "Ajouter un objectif",
     "addIndicator": "Ajouter un indicateur",
-    "new": "Ajouter"
+    "new": "Ajouter",
+    "save&quit": "Enregistrer & quitter"
   },
   "install": {
     "title": "Installation"
@@ -73,7 +74,26 @@
     "presentationFr": "Présentation (FR)",
     "presentationEn": "Présentation (EN)",
     "exercise": "Exercice",
-    "chapter": "Chapitre"
+    "chapter": "Chapitre",
+    "strategiesFr": "Strategies (FR)",
+    "strategiesEn": "Strategies (EN)",
+    "measurementUnit": "Unité de mesure",
+    "referenceValue": "Valuer de reference",
+    "referenceYear": "Année de reference",
+    "targetYear": "Année cible",
+    "targetValue": "Valuer cible",
+    "isMultiYear": "Pluriannuelle",
+    "verificationSourceFr": "Source de verification(FR)",
+    "verificationSourceEn": "Source de verification(EN)",
+    "engagementAuthorization": "Autorisations d'engagement",
+    "objectivesFr": "Objectifs(FR)",
+    "objectivesEn": "Objectifs(EN)",
+    "stakeHoldersFr": "Parties Prenantes(FR)",
+    "stakeHoldersEn": "Parties Prenantes(EN)",
+    "resultsFr": "Résultats(FR)",
+    "resultsEn": "Résultats(EN)",
+    "indicatorsFr": "Indicateurs(FR)",
+    "indicatorsEn": "Indicateurs(EN)"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -116,6 +136,12 @@
     "paragraphs": {
       "delete": "Une erreur est survenue lors de la suppression de ce paragraphe.",
       "conflict": "Un paragraphe avec ce code existe déjà."
+    },
+    "subPrograms": {
+      "delete": "Une erreur est survenue lors de la suppression de ce sous program.",
+      "conflict": "Un sous program avec ce code existe déjà.",
+      "activityConflict": "Une activité avec ce code existe déjà dans ce sous program.",
+      "activityTaskConflict": "Une tâche avec ce code existe déjà dans cette activité."
     }
   },
   "messages": {
@@ -147,6 +173,12 @@
     "paragraphs": {
       "deleteSuccess": "Paragraphe supprimé avec succès.",
       "createSuccess": "Paragraphe crée avec succès."
+    },
+    "subPrograms": {
+      "deleteSuccess": "Sous program supprimé avec succès.",
+      "createSuccess": "Sous program crée avec succès.",
+      "createActivitySuccess": "Activité crée avec succès.",
+      "createActivityTaskSuccess": "Tâche créée avec succès."
     }
   },
   "menus": {
@@ -195,7 +227,12 @@
       "referenceYear": "Année référence",
       "targetValue": "Valeur cible",
       "targetYear": "Année cible",
-      "measurementUnit": "Unité de mesure"
+      "measurementUnit": "Unité de mesure",
+      "administrativeUnit": "Unité de administrative",
+      "financialSource": "Source fin.",
+      "yearN1": "Année N + 1",
+      "yearN2": "Année N + 2",
+      "yearN3": "Année N + 3"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -220,7 +257,9 @@
       "createObjective": "Céer un objectif",
       "editObjective": "Modifier un objectif",
       "updateObjectiveIndicator": "Modifier un indicateur",
-      "createObjectiveIndicator": "Céer un indicateur"
+      "createObjectiveIndicator": "Céer un indicateur",
+      "createActivityTask": "Céer une tâche",
+      "editActivityTask": "Modifier une tâche"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -229,7 +268,8 @@
       "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible.",
       "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible.",
       "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
-      "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible."
+      "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
+      "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

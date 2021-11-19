@@ -1,13 +1,4 @@
 td {
-  &.paragraph {
-    span {
-      color: var(--ah-success);
-      -webkit-text-stroke-width: 2px;
-      .pi-plus {
-        margin-right: 0.5rem;
-      }
-    }
-  }
   &.activity {
     span {
       color: var(--ah-blue-200);

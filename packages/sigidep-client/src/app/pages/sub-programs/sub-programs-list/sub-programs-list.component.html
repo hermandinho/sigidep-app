@@ -27,23 +27,128 @@
     </ng-template>
   </p-toolbar>
 
-  <p-treeTable [value]="nodes">
+  <!--  <p-treeTable [value]="dataAsNodes" [loading]="(loading$ | async) || false">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem"></th>
+          <th class="p-text-center" style="width: 3rem">{{ 'tables.headers.code' | translate }}</th>
+          <th class="p-text-center">{{ 'tables.headers.label' | translate }}</th>
+          <th class="p-text-center" style="width: 20%">{{ 'tables.headers.administrativeUnit' | translate }}</th>
+          <th class="p-text-center" style="width: 5rem">{{ 'tables.headers.financialSource' | translate }}</th>
+          <th class="p-text-center" style="width: 5rem">{{ 'tables.headers.yearN1' | translate }}</th>
+          <th class="p-text-center" style="width: 5rem">{{ 'tables.headers.yearN2' | translate }}</th>
+          <th class="p-text-center" style="width: 5rem">{{ 'tables.headers.yearN3' | translate }}</th>
+          <th class="p-text-center" style="width: 3rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td>
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          </td>
+
+          <td colspan="6">
+            {{ rowData | json }}
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-treeTable>-->
+  <p-table
+    [value]="data"
+    dataKey="id"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="tableRowsPerPageOptions"
+    responsiveLayout="stack"
+  >
     <ng-template pTemplate="header">
       <tr>
-        <th>Name</th>
-        <th>Size</th>
-        <th>Type</th>
+        <th style="width: 3rem"></th>
+        <!--        <th class="p-text-center" style="width: 3rem">{{ 'tables.headers.code' | translate }}</th>-->
+        <th class="p-text-left">{{ "tables.headers.label" | translate }}</th>
+        <th class="p-text-center" style="width: 20%">
+          {{ "tables.headers.administrativeUnit" | translate }}
+        </th>
+        <th class="p-text-center" style="width: 5rem">
+          {{ "tables.headers.financialSource" | translate }}
+        </th>
+        <th class="p-text-center" style="width: 5rem">
+          {{ "tables.headers.yearN1" | translate }}
+        </th>
+        <th class="p-text-center" style="width: 5rem">
+          {{ "tables.headers.yearN2" | translate }}
+        </th>
+        <th class="p-text-center" style="width: 5rem">
+          {{ "tables.headers.yearN3" | translate }}
+        </th>
+        <th class="p-text-center" style=""></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-      <tr [ttRow]="rowNode">
-        <td>
-          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-          {{ rowData.name }}
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9" class="p-text-center p-text-secondary">
+          {{ "tables.emptyMessage" | translate }}
         </td>
-        <td>{{ rowData.size }}</td>
-        <td>{{ rowData.type }}</td>
       </tr>
     </ng-template>
-  </p-treeTable>
+    <ng-template pTemplate="body" let-item let-expanded="expanded">
+      <tr>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="item"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
+        </td>
+        <!--<td>
+          <i class="pi pi-plus-circle"></i> {{ item.code }}
+        </td>-->
+        <td class="paragraph">
+          <span><i class="pi pi-plus"></i>SP </span>
+          {{
+            currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
+          }}
+        </td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>
+          <button
+            (click)="addActivity(item)"
+            *appCheckPermissions="['subPrograms.create']"
+            [pTooltip]="'hints.addActivity' | translate"
+            class="p-button-rounded p-button-success p-mr-2"
+            icon="pi pi-plus"
+            pButton
+            pRipple
+            tooltipPosition="top"
+          ></button>
+
+          <button
+            *appCheckPermissions="['subPrograms.delete']"
+            class="p-button-rounded p-button-danger p-mr-2"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-item>
+      <tr>
+        <td [attr.colspan]="9">
+          <app-sub-program-activities-view
+            [activities]="item?.activities ?? []"
+            [subProgram]="item"
+          ></app-sub-program-activities-view>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </p-card>

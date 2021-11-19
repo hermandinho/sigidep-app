@@ -10,6 +10,7 @@ import * as fromAdministrativeUnits from './administrative-units.reducer';
 import * as fromTechnicalSupervisors from './technical-supervisors.reducer';
 import * as fromParagraphs from './paragraphs.reducer';
 import * as fromApp from './app.reducer';
+import * as fromSubPrograms from './sub-programs.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -21,6 +22,7 @@ export interface AppState {
   technicalSupervisors: fromTechnicalSupervisors.State;
   paragraphs: fromParagraphs.State;
   app: fromApp.State;
+  subPrograms: fromSubPrograms.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -33,6 +35,7 @@ export const reducers: ActionReducerMap<AppState> = {
   technicalSupervisors: fromTechnicalSupervisors.reducer,
   paragraphs: fromParagraphs.reducer,
   app: fromApp.reducer,
+  subPrograms: fromSubPrograms.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

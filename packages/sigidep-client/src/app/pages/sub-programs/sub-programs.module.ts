@@ -9,6 +9,10 @@ import { SubProgramsListComponent } from './sub-programs-list/sub-programs-list.
 import { InputMaskModule } from 'primeng/inputmask';
 import { CreateSubProgramObjectiveFormComponent } from '../../components/create-sub-program-objective-form/create-sub-program-objective-form.component';
 import { CreateSubProgramObjectiveIndicatorFormComponent } from '../../components/create-sub-program-objective-indicator-form/create-sub-program-objective-indicator-form.component';
+import { ToastModule } from 'primeng/toast';
+import { CreateSubProgramActivityFormComponent } from '../../components/create-sub-program-activity-form/create-sub-program-activity-form.component';
+import { SubProgramActivitiesViewComponent } from '../../views/sub-program-activities-view/sub-program-activities-view.component';
+import { CreateSubProgramActivityTaskFormComponent } from '../../components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +21,16 @@ import { CreateSubProgramObjectiveIndicatorFormComponent } from '../../component
     SubProgramsListComponent,
     CreateSubProgramObjectiveFormComponent,
     CreateSubProgramObjectiveIndicatorFormComponent,
+    CreateSubProgramActivityFormComponent,
+    SubProgramActivitiesViewComponent,
+    CreateSubProgramActivityTaskFormComponent,
   ],
   imports: [
     SharedModule,
     SubProgramsRoutingModule,
     TreeTableModule,
     InputMaskModule,
+    ToastModule,
   ],
 })
 export class SubProgramsModule {}

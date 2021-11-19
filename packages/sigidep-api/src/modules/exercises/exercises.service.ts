@@ -12,6 +12,10 @@ export class ExercisesService {
     private readonly exerciseRepository: Repository<ExerciseEntity>,
   ) {}
 
+  public getRepository(): Repository<ExerciseEntity> {
+    return this.exerciseRepository;
+  }
+
   public async filter(
     user: UserEntity,
     status?: ExerciseStatusEnum,

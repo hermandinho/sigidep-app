@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { UserEntity } from '@entities/user.entity';
+import { SubProgramEntity } from '@entities/sub-program.entity';
 
 export enum ExerciseStatusEnum {
   HIDDEN = 'hidden', // Used when creating an Exercise automatically
@@ -45,4 +46,7 @@ export class ExerciseEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'owner_id' })
   public createdBy!: UserEntity;
+
+  @OneToMany(() => SubProgramEntity, (object) => object.exercise)
+  subPrograms: SubProgramEntity[];
 }

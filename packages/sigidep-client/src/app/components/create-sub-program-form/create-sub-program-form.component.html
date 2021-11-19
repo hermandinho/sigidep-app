@@ -392,11 +392,22 @@
       pButton
     ></button>
 
-    <button
-      *ngIf="stepButtons[activeStep.toString()].submit"
-      pButton
-      [label]="'buttons.save' | translate"
-      [disabled]="!currentStepFormValid"
-    ></button>
+    <div class="" *ngIf="stepButtons[activeStep.toString()].submit">
+      <button
+        (click)="submit()"
+        [disabled]="!currentStepFormValid || busy"
+        [label]="'buttons.' + (busy ? 'busy' : 'save') | translate"
+        pButton
+      ></button>
+
+      <button
+        (click)="submit(true)"
+        [disabled]="!currentStepFormValid || busy"
+        [label]="'buttons.' + (busy ? 'busy' : 'save&quit') | translate"
+        pButton
+        class="p-ml-3 p-button-help"
+      ></button>
+    </div>
   </div>
 </ng-template>
+<p-toast></p-toast>

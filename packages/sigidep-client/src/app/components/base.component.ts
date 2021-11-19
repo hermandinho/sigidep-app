@@ -14,6 +14,7 @@ export class BaseComponent implements OnDestroy {
   public subscriptions: Subscription[] = [];
   public pageTitle$ = new Subject();
   private _destroy$?: Subject<void>;
+  public tableRowsPerPageOptions = [5, 10, 15, 20, 50];
 
   constructor(public appService?: AppService) {
     this.pageTitle$.pipe(takeUntil(this.ngDestroyed$)).subscribe((title) => {

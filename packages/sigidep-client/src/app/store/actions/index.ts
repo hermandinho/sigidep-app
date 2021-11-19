@@ -7,3 +7,4 @@ export * from './administrative-units.actions';
 export * from './technical-supervisor.actions';
 export * from './exercises.actions';
 export * from './paragraph.actions';
+export * from './sub-programs.actions';

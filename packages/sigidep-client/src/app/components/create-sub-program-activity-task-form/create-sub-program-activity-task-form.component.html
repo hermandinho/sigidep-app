@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div
+        class="p-field p-col-12"
+        [ngClass]="{
+          'p-md-6': column?.size === 6,
+          'p-md-12': column.size === 12,
+          'flex-row': column.flexRow
+        }"
+        *ngFor="let column of formElements; trackBy: trackByIndex"
+      >
+        <label *ngIf="!column.i18n" [class.required]="column?.required">{{
+          "labels." + column.label | translate
+        }}</label>
+
+        <p-dropdown
+          *ngIf="column.type === 'dropdown'"
+          [filterBy]="'code'"
+          [filter]="false"
+          [optionLabel]="column?.dropdownOptionsLabel || 'label'"
+          [options]="column.dropdownOptions ?? []"
+          [placeholder]="'labels.' + column.label | translate"
+          [showClear]="false"
+          appendTo="body"
+          [formControlName]="column.formControl"
+          [optionValue]="column?.dropdownValueKey ?? 'id'"
+        >
+          <ng-template let-option pTemplate="item">
+            <div>
+              <div>{{ option[column?.dropdownOptionsLabel || "label"] }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <input
+          *ngIf="['text', 'number'].includes(column.type) && !column.i18n"
+          [formControlName]="column.formControl"
+          [placeholder]="column.label | translate"
+          [type]="column.type"
+          pInputText
+        />
+
+        <p-inputMask
+          *ngIf="column.type === 'mask'"
+          [formControlName]="column.formControl"
+          [mask]="column.mask || '99'"
+          [placeholder]="'labels.' + column.label | translate"
+        ></p-inputMask>
+
+        <textarea
+          *ngIf="column.type === 'textarea' && !column.i18n"
+          rows="3"
+          [formArrayName]="column.formControl"
+          [placeholder]="column.label | translate"
+          pInputTextarea
+        ></textarea>
+
+        <app-i18n-form-field
+          *ngIf="
+            ['text', 'textarea', 'editor'].includes(column.type) && column.i18n
+          "
+          [baseFormControlName]="column.formControl"
+          [form]="form"
+          [type]="column.type"
+          [required]="column.required"
+        ></app-i18n-form-field>
+
+        <p-calendar
+          *ngIf="column.type === 'date'"
+          [showIcon]="true"
+          appendTo="body"
+          dateFormat="dd/mm/yy"
+          [formControlName]="column.formControl"
+          placeholder="01/01/2021"
+        ></p-calendar>
+
+        <p-inputSwitch
+          *ngIf="column.type === 'switch'"
+          [formControlName]="column.formControl"
+        ></p-inputSwitch>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

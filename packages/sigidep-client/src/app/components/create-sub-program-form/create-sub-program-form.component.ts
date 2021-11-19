@@ -6,15 +6,17 @@ import { AppState } from '@reducers/index';
 import { Actions } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@components/base.component';
-import { SetAppBreadcrumb } from '@store/actions';
+import { GetSubPrograms, Go, GO, SetAppBreadcrumb } from '@store/actions';
 import { ExerciseModel } from '@models/exercise.model';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import * as fromExercises from '@reducers/exercise.reducer';
 import { StructureModel } from '@models/structure.model';
 import { getStructureSelector } from '@reducers/app.reducer';
+import { ApisService } from '@services/apis.service';
+import { SubProgramModel } from '@models/sub-program.model';
 
-interface IFormFiledElt {
+export interface IFormFiledElt {
   label: string;
   type:
     | 'dropdown'
@@ -23,6 +25,7 @@ interface IFormFiledElt {
     | 'textarea'
     | 'number'
     | 'date'
+    | 'switch'
     | 'editor';
   mask?: string;
   formControl: string;
@@ -30,8 +33,10 @@ interface IFormFiledElt {
   size: number;
   dropdownOptions?: any[];
   dropdownOptionsLabel?: string;
+  dropdownValueKey?: string;
   required?: boolean;
   i18n?: boolean;
+  flexRow?: boolean;
 }
 
 @Component({
@@ -44,6 +49,7 @@ export class CreateSubProgramFormComponent
   implements OnInit
 {
   public form: FormGroup;
+  public busy = false;
 
   public formElements: {
     [key: string]: IFormFiledElt[];
@@ -71,7 +77,8 @@ export class CreateSubProgramFormComponent
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
     public translate: TranslateService,
-    private readonly _fb: FormBuilder
+    private readonly _fb: FormBuilder,
+    private _apisService: ApisService
   ) {
     super();
     // TODO subscribe to language changes
@@ -117,7 +124,10 @@ export class CreateSubProgramFormComponent
         presentationFr: [undefined, [Validators.required]],
         presentationEn: [undefined, [Validators.required]],
       }),
-      objectives: this._fb.array([], []),
+      objectives: this._fb.array(
+        [],
+        [Validators.required, Validators.minLength(1)]
+      ),
       strategies: this._fb.group({
         strategyFr: [undefined, [Validators.required]],
         strategyEn: [undefined, [Validators.required]],
@@ -229,7 +239,6 @@ export class CreateSubProgramFormComponent
     ret.onClose
       .pipe(this.takeUntilDestroy)
       .subscribe((data: { labelEn: string; labelFr: string; id?: number }) => {
-        console.log(data);
         if (data) {
           if (item && item.hasOwnProperty('index')) {
             (this.objectivesFormGroup?.at(item.index) as FormGroup)?.patchValue(
@@ -242,7 +251,10 @@ export class CreateSubProgramFormComponent
                 labelFr: [data.labelFr],
                 labelEn: [data.labelEn],
                 index: this.objectivesFormGroup?.controls?.length,
-                indicators: this._fb.array([]),
+                indicators: this._fb.array(
+                  [],
+                  [Validators.required, Validators.minLength(1)]
+                ),
               })
             );
           }
@@ -317,6 +329,59 @@ export class CreateSubProgramFormComponent
     this.addObjectiveIndicatorItem(item.parentIndex, item);
   }
 
+  public async submit(quiteOnSuccess = false) {
+    if (!this.form.valid) return;
+    this.busy = true;
+    const values = { ...this.form.value };
+    const payload = {
+      ...values.common,
+      identification: values.identification,
+      objectives: values.objectives,
+      strategies: values.strategies,
+    };
+
+    this._apisService
+      .post<SubProgramModel>('/sub-programs', {
+        ...payload,
+      })
+      .subscribe(
+        (res) => {
+          this.busy = false;
+          this._store.dispatch(GetSubPrograms());
+
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail: 'messages.subPrograms.createSuccess',
+            severity: 'success',
+            life: 5000,
+            closable: true,
+          });
+
+          if (quiteOnSuccess) {
+            this._store.dispatch(new Go({ path: ['/', 'sub-programs'] }));
+          } else {
+            this.resetFormAndSteps();
+          }
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.subPrograms.conflict';
+          } else {
+            err = 'errors.unknown';
+          }
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
+  }
+
   private _initListeners() {
     this.subscriptions.push(
       this._store
@@ -343,5 +408,17 @@ export class CreateSubProgramFormComponent
           }
         })
     );
+  }
+
+  private resetFormAndSteps() {
+    this.activeStep = 0;
+    this.form.reset({
+      common: {
+        exerciseId: this.form?.value?.common?.exerciseId,
+        structureId: this.form?.value?.common?.structureId,
+      },
+    });
+
+    this.objectivesFormGroup?.clear();
   }
 }

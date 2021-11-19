@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { IFormFiledElt } from '@components/create-sub-program-form/create-sub-program-form.component';
 
-const measurementUnits = [
+export const measurementUnits = [
   { value: '%', label: '%' },
   { value: 'm', label: 'm' },
   { value: 'unit', label: 'unit' },
@@ -28,6 +29,7 @@ export class CreateSubProgramObjectiveIndicatorFormComponent
 {
   public form: FormGroup;
   public measurementUnits = measurementUnits;
+  public formElements: IFormFiledElt[] = [];
 
   constructor(
     public ref: DynamicDialogRef,
@@ -55,6 +57,50 @@ export class CreateSubProgramObjectiveIndicatorFormComponent
   }
 
   ngOnInit(): void {
+    this.formElements = [
+      {
+        label: 'label',
+        formControl: 'label',
+        type: 'text',
+        i18n: true,
+        size: 6,
+      },
+      {
+        label: 'referenceValue',
+        formControl: 'referenceValue',
+        type: 'number',
+        size: 6,
+      },
+      {
+        label: 'referenceYear',
+        formControl: 'referenceYear',
+        type: 'date',
+        size: 6,
+      },
+      {
+        label: 'targetValue',
+        formControl: 'targetValue',
+        type: 'number',
+        size: 6,
+      },
+      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },
+      {
+        label: 'measurementUnit',
+        formControl: 'measurementUnit',
+        type: 'dropdown',
+        size: 6,
+        dropdownOptions: measurementUnits,
+        dropdownOptionsLabel: 'label',
+        dropdownValueKey: 'value',
+      },
+      {
+        label: 'verificationSource',
+        formControl: 'verificationSource',
+        type: 'editor',
+        i18n: true,
+        size: 12,
+      },
+    ];
     if (this.config.data?.item) {
       this.form.patchValue(this.config.data.item);
     }

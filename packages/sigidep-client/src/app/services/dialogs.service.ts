@@ -8,7 +8,10 @@ import {
   AdministrativeUnitModel,
   TechnicalSupervisorModel,
   ParagraphModel,
+  SubProgramModel,
+  SubProgramActivityModel,
 } from '@models/index';
+import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +25,8 @@ export class DialogsService {
   private paragraphCreateComponent: any;
   private subProgramObjectiveCreateComponent: any;
   private subProgramObjectiveIndicatorCreateComponent: any;
+  private subProgramActivityCreateComponent: any;
+  private subProgramActivityTaskCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -210,6 +215,64 @@ export class DialogsService {
         modal: true,
         data: {
           item,
+        },
+      }
+    );
+  }
+
+  public async launchSubProgramActivityCreateDialog(
+    sp: SubProgramModel,
+    item?: any
+  ) {
+    if (!this.subProgramActivityCreateComponent) {
+      const { CreateSubProgramActivityFormComponent } = await import(
+        '@components/create-sub-program-activity-form/create-sub-program-activity-form.component'
+      );
+      this.subProgramActivityCreateComponent =
+        CreateSubProgramActivityFormComponent;
+    }
+
+    return this._dialogService.open(this.subProgramActivityCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editActivity' : 'createActivity')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        subProgram: sp,
+      },
+    });
+  }
+
+  public async launchSubProgramActivityTaskCreateDialog(
+    sp: SubProgramModel,
+    act: SubProgramActivityModel,
+    item?: any
+  ) {
+    if (!this.subProgramActivityTaskCreateComponent) {
+      const { CreateSubProgramActivityTaskFormComponent } = await import(
+        '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component'
+      );
+      this.subProgramActivityTaskCreateComponent =
+        CreateSubProgramActivityTaskFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.subProgramActivityTaskCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item ? 'editActivityTask' : 'createActivityTask')
+        ),
+        width: '50vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          subProgram: sp,
+          activity: act,
         },
       }
     );
