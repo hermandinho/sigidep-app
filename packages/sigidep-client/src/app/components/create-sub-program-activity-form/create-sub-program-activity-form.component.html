@@ -51,7 +51,7 @@
           *ngIf="column.type === 'textarea' && !column.i18n"
           rows="3"
           [formArrayName]="column.formControl"
-          [placeholder]="column.label | translate"
+          [placeholder]="'labels.' + column.label | translate"
           pInputTextarea
         ></textarea>
 

@@ -1,0 +1,11 @@
+td {
+  &.task {
+    span {
+      color: var(--indigo-500);
+      -webkit-text-stroke-width: 2px;
+      .pi-plus {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

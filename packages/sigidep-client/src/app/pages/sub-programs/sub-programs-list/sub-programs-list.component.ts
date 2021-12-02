@@ -9,6 +9,7 @@ import { BaseComponent } from '@components/base.component';
 import { GetSubPrograms, SetAppBreadcrumb } from '@store/actions';
 import {
   SubProgramActivityModel,
+  SubProgramActivityTaskModel,
   SubProgramModel,
 } from '@models/sub-program.model';
 import { Observable, of } from 'rxjs';
@@ -80,7 +81,13 @@ export class SubProgramsListComponent extends BaseComponent implements OnInit {
         this.data = (data || []).map((d) => {
           const obj = new SubProgramModel(d);
           obj.activities = (obj.activities || []).map(
-            (a) => new SubProgramActivityModel(a)
+            (a) =>
+              new SubProgramActivityModel({
+                ...a,
+                tasks: (a.tasks || []).map(
+                  (t) => new SubProgramActivityTaskModel(t)
+                ),
+              })
           );
           return obj;
         });

@@ -13,6 +13,7 @@ import { ToastModule } from 'primeng/toast';
 import { CreateSubProgramActivityFormComponent } from '../../components/create-sub-program-activity-form/create-sub-program-activity-form.component';
 import { SubProgramActivitiesViewComponent } from '../../views/sub-program-activities-view/sub-program-activities-view.component';
 import { CreateSubProgramActivityTaskFormComponent } from '../../components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
+import { SubProgramActivityTasksViewComponent } from '../../views/sub-program-activity-tasks-view/sub-program-activity-tasks-view.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CreateSubProgramActivityTaskFormComponent } from '../../components/crea
     CreateSubProgramActivityFormComponent,
     SubProgramActivitiesViewComponent,
     CreateSubProgramActivityTaskFormComponent,
+    SubProgramActivityTasksViewComponent,
   ],
   imports: [
     SharedModule,
