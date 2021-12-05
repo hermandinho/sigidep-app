@@ -212,7 +212,17 @@ export const CATEGORIES_DATA: Partial<CategoriesEntity>[] = [
 
 export const REGIONS_DATA: Partial<RegionEntity>[] = [
   { code: '00', label: 'Administration Centrale' },
-  { code: '10', label: 'Adamaoua' },
+  {
+    code: '10',
+    label: 'Adamaoua',
+    departments: [
+      {
+        code: '00',
+        label: 'Department 1',
+        arrondissements: [{ code: '00', label: 'Arrondissement 1' }],
+      },
+    ],
+  },
   { code: '11', label: 'Centre' },
   { code: '12', label: 'Est' },
   { code: '13', label: 'Extême-Nord' },

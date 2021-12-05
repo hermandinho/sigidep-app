@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
   SubProgramActivityModel,
+  SubProgramActivityTaskModel,
   SubProgramModel,
 } from '@models/sub-program.model';
 import { BaseComponent } from '@components/base.component';
@@ -31,4 +32,16 @@ export class SubProgramActivityTasksViewComponent
   }
 
   ngOnInit(): void {}
+
+  public async addOperation(item: SubProgramActivityTaskModel): Promise<void> {
+    if (!this.activity || !item || !this.subProgram) {
+      return;
+    }
+    const ret =
+      await this._dialogService.launchSubProgramActivityTaskOperationCreateDialog(
+        this.subProgram,
+        this.activity,
+        item
+      );
+  }
 }

@@ -21,5 +21,5 @@ export class ArrondissementEntity extends BaseEntity {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'department_id' })
-  public region: DepartmentEntity;
+  public department: DepartmentEntity;
 }

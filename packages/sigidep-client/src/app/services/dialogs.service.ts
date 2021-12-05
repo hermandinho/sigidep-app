@@ -10,6 +10,7 @@ import {
   ParagraphModel,
   SubProgramModel,
   SubProgramActivityModel,
+  SubProgramActivityTaskModel,
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 
@@ -27,6 +28,7 @@ export class DialogsService {
   private subProgramObjectiveIndicatorCreateComponent: any;
   private subProgramActivityCreateComponent: any;
   private subProgramActivityTaskCreateComponent: any;
+  private subProgramActivityTaskOperationCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -273,6 +275,44 @@ export class DialogsService {
           item,
           subProgram: sp,
           activity: act,
+        },
+      }
+    );
+  }
+
+  public async launchSubProgramActivityTaskOperationCreateDialog(
+    sp: SubProgramModel,
+    act: SubProgramActivityModel,
+    task: SubProgramActivityTaskModel,
+    item?: any
+  ) {
+    if (!this.subProgramActivityTaskOperationCreateComponent) {
+      const { CreateSubProgramActivityTaskOperationFormComponent } =
+        await import(
+          '@components/create-sub-program-activity-task-operation-form/create-sub-program-activity-task-operation-form.component'
+        );
+      this.subProgramActivityTaskOperationCreateComponent =
+        CreateSubProgramActivityTaskOperationFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.subProgramActivityTaskOperationCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item ? 'editActivityTaskOperation' : 'createActivityTaskOperation')
+        ),
+        width: '100%',
+        height: '100%',
+        style: {
+          maxHeight: '100%',
+        },
+        modal: true,
+        data: {
+          item,
+          subProgram: sp,
+          activity: act,
+          task,
         },
       }
     );

@@ -8,6 +8,7 @@ import { AdministrativeUnitsEffects } from '@effects/administrative-units.effect
 import { TechnicalSupervisorEffects } from '@effects/technical-supervisor.effects';
 import { ParagraphEffects } from '@effects/paragraph.effects';
 import { SubProgramsEffects } from '@effects/sub-programs.effects';
+import { AddressesEffects } from '@effects/addresses.effects';
 
 export const Effects = [
   AuthEffects,
@@ -20,4 +21,5 @@ export const Effects = [
   TechnicalSupervisorEffects,
   ParagraphEffects,
   SubProgramsEffects,
+  AddressesEffects,
 ];

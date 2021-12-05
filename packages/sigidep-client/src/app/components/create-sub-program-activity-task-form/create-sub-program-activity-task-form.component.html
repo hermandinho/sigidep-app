@@ -16,7 +16,7 @@
 
         <p-dropdown
           *ngIf="column.type === 'dropdown'"
-          [filterBy]="'code'"
+          [filterBy]="'label'"
           [filter]="false"
           [optionLabel]="column?.dropdownOptionsLabel || 'label'"
           [options]="column.dropdownOptions ?? []"

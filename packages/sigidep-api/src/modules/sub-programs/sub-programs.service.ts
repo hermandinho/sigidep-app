@@ -14,6 +14,8 @@ import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-su
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
 import { SubProgramActivityTaskEntity } from '@entities/sub-program-activity-task.entity';
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
+import { FinancialSourcesService } from '@modules/financial-sources/financial-sources.service';
+import { AdministrativeUnitsService } from '@modules/administrative-units/services/administrative-units.service';
 
 @Injectable()
 export class SubProgramsService {
@@ -27,6 +29,8 @@ export class SubProgramsService {
 
     private exercisesService: ExercisesService,
     private structuresService: StructureService,
+    private financialSourcesService: FinancialSourcesService,
+    private administrativeUnitsService: AdministrativeUnitsService,
   ) {}
 
   public async filter() {
@@ -35,6 +39,10 @@ export class SubProgramsService {
       .leftJoinAndSelect('s.owner', 'o')
       .leftJoinAndSelect('s.activities', 'a')
       .leftJoinAndSelect('a.tasks', 't')
+      .leftJoinAndSelect('t.financialSource', 'fs')
+      .leftJoinAndSelect('s.exercise', 'e')
+      .leftJoinAndSelect('t.administrativeUnit', 'au')
+      .leftJoinAndSelect('au.function', 'f')
       .getMany();
   }
 
@@ -139,10 +147,27 @@ export class SubProgramsService {
     });
     if (!actCheck) throw new NotFoundException('activity_not_found');
 
+    const administrativeUnitCheck = await this.administrativeUnitsService
+      .getRepository()
+      .findOne(payload.administrativeUnitId, {
+        loadEagerRelations: false,
+      });
+    if (!administrativeUnitCheck)
+      throw new NotFoundException('administrative_unit_not_found');
+
+    const sourceCheck = await this.financialSourcesService
+      .getRepository()
+      .findOne(payload.financialSourceId, {
+        loadEagerRelations: false,
+      });
+    if (!sourceCheck) throw new NotFoundException('financial_source_not_found');
+
     return this.activityTasksRepository.save(
       new SubProgramActivityTaskEntity({
         ...payload,
         activity: actCheck,
+        financialSource: sourceCheck,
+        administrativeUnit: administrativeUnitCheck,
         ...(user && { createdBy: user }),
       }),
     );

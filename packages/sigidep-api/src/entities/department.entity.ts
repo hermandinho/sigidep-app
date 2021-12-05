@@ -22,10 +22,11 @@ export class DepartmentEntity extends BaseEntity {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'region_id' })
-  public region: RegionEntity;
+  public region?: RegionEntity;
 
-  @OneToMany(() => ArrondissementEntity, (object) => object.region, {
+  @OneToMany(() => ArrondissementEntity, (object) => object.department, {
     eager: true,
+    cascade: ['insert'],
   })
-  public arrondissements: ArrondissementEntity[];
+  public arrondissements?: Partial<ArrondissementEntity>[];
 }

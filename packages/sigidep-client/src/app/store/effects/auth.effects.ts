@@ -22,7 +22,13 @@ import { AuthService } from '@services/auth.service';
 import { LocalStorageService } from '@services/local-storage.service';
 import { LoginSuccessModel } from '@models/auth.model';
 import { UserModel } from '@models/user.model';
-import { GetStructure, Go } from '@store/actions';
+import {
+  GetAdministrativeUnites,
+  GetFinancialSources,
+  GetRegions,
+  GetStructure,
+  Go,
+} from '@store/actions';
 import { GetExercises } from '@actions/exercises.actions';
 
 @Injectable()
@@ -67,6 +73,9 @@ export class AuthEffects {
           new Go({ path: [window.location.pathname ?? '/home'] }),
           GetExercises({}),
           GetStructure(),
+          GetFinancialSources(),
+          GetRegions(),
+          GetAdministrativeUnites(),
         ]; // TODO init store
       })
     )

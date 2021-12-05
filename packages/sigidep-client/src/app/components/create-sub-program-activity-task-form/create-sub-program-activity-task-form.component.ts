@@ -3,16 +3,18 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { BaseComponent } from '@components/base.component';
 import { IFormFiledElt } from '@components/create-sub-program-form/create-sub-program-form.component';
 import { measurementUnits } from '@components/create-sub-program-objective-indicator-form/create-sub-program-objective-indicator-form.component';
-import {
-  SubProgramActivityModel,
-  SubProgramActivityTaskModel,
-} from '@models/sub-program.model';
+import { SubProgramActivityTaskModel } from '@models/sub-program.model';
 import { GetSubPrograms } from '@store/actions';
+import { getDataSelector as getFinancialSources } from '@store/reducers/financial-sources.reducer';
+import { FinancialSourceModel } from '@models/financial-source.model';
+import { TranslateService } from '@ngx-translate/core';
+import { getDataSelector as getAdministrativeUnitesSelector } from '@reducers/administrative-units.reducer';
+import { AdministrativeUnitModel } from '@models/administrative-unit.model';
 
 @Component({
   selector: 'app-create-sub-program-activity-task-form',
@@ -26,6 +28,8 @@ export class CreateSubProgramActivityTaskFormComponent
   public form: FormGroup;
   public formElements: IFormFiledElt[] = [];
   public busy = false;
+  public financialSources: FinancialSourceModel[] = [];
+  public administrativeUnits: AdministrativeUnitModel[] = [];
 
   constructor(
     public ref: DynamicDialogRef,
@@ -33,7 +37,8 @@ export class CreateSubProgramActivityTaskFormComponent
     private _fb: FormBuilder,
     private _apisService: ApisService,
     private _appService: AppService,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    public translate: TranslateService
   ) {
     super();
     this.form = this._fb.group({
@@ -55,6 +60,7 @@ export class CreateSubProgramActivityTaskFormComponent
       verificationSourceFr: [undefined, [Validators.required]],
       verificationSourceEn: [undefined, [Validators.required]],
       referenceValue: [undefined, [Validators.required]],
+      financialSourceId: [undefined, [Validators.required]],
       referenceYear: [
         undefined,
         [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
@@ -69,7 +75,30 @@ export class CreateSubProgramActivityTaskFormComponent
       endDate: [undefined, [Validators.required]],
       isMultiYear: [false, []],
       engagementAuthorization: [undefined, []],
+      administrativeUnitId: [undefined, [Validators.required]],
     });
+
+    this._store
+      .pipe(select(getFinancialSources), this.takeUntilDestroy)
+      .subscribe(
+        (data) =>
+          (this.financialSources = (data || []).map(
+            (item) => new FinancialSourceModel(item)
+          ))
+      );
+
+    this._store
+      .pipe(select(getAdministrativeUnitesSelector), this.takeUntilDestroy)
+      .subscribe(
+        (data) =>
+          (this.administrativeUnits = (data || []).map(
+            (item) => new AdministrativeUnitModel(item)
+          ))
+      );
+  }
+
+  get currentLang() {
+    return this.translate.currentLang;
   }
 
   ngOnInit(): void {
@@ -84,6 +113,17 @@ export class CreateSubProgramActivityTaskFormComponent
         dropdownOptions: measurementUnits,
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
+      },
+      {
+        label: 'financialSource',
+        formControl: 'financialSourceId',
+        type: 'dropdown',
+        size: 6,
+        dropdownOptions: this.financialSources,
+        dropdownOptionsLabel:
+          this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
+        dropdownValueKey: 'id',
+        required: true,
       },
       {
         label: 'label',
@@ -116,6 +156,17 @@ export class CreateSubProgramActivityTaskFormComponent
         formControl: 'engagementAuthorization',
         type: 'number',
         size: 6,
+      },
+      {
+        label: 'administrativeUnit',
+        formControl: 'administrativeUnitId',
+        type: 'dropdown',
+        size: 6,
+        dropdownOptions: this.administrativeUnits,
+        dropdownOptionsLabel:
+          this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
+        dropdownValueKey: 'id',
+        required: true,
       },
       {
         label: 'stakeHolders',

@@ -1,8 +1,12 @@
 import { UserModel } from '@models/user.model';
+import { FinancialSourceModel } from '@models/financial-source.model';
+import { ExerciseModel } from '@models/exercise.model';
+import { AdministrativeUnitModel } from '@models/administrative-unit.model';
 
 class SubProgramBaseModel {
   id!: number;
   code!: string;
+  exercise!: ExerciseModel;
   labelFr!: string;
   labelEn!: string;
   presentationEn!: string;
@@ -92,4 +96,6 @@ export class SubProgramActivityModel extends SubProgramBaseModel {
 export class SubProgramActivityTaskModel extends SubProgramActivityModel {
   isMultiYear!: boolean;
   engagementAuthorization?: number;
+  financialSource!: FinancialSourceModel;
+  administrativeUnit!: AdministrativeUnitModel;
 }

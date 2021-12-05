@@ -15,6 +15,10 @@ export class AddressesService {
   }
 
   public async filter(): Promise<RegionEntity[]> {
-    return this.regionsRepository.createQueryBuilder('c').getMany();
+    return this.regionsRepository
+      .createQueryBuilder('r')
+      .leftJoinAndSelect('r.departments', 'd')
+      .leftJoinAndSelect('d.arrondissements', 'a')
+      .getMany();
   }
 }

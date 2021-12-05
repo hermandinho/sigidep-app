@@ -34,6 +34,10 @@ export class AdministrativeUnitsService {
     private readonly addressesService: AddressesService,
   ) {}
 
+  public getRepository() {
+    return this.administrativeUnitRepository;
+  }
+
   public async filter(): Promise<AdministrativeUnitEntity[]> {
     return this.administrativeUnitRepository
       .createQueryBuilder('f')

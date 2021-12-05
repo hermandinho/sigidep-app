@@ -31,7 +31,8 @@ export interface IFormFiledElt {
   formControl: string;
   placeholder?: string;
   size: number;
-  dropdownOptions?: any[];
+  dropdownOptions?: any;
+  dropdownOptionsFunc?: () => any;
   dropdownOptionsLabel?: string;
   dropdownValueKey?: string;
   required?: boolean;

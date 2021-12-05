@@ -93,7 +93,13 @@
     "resultsFr": "Résultats(FR)",
     "resultsEn": "Résultats(EN)",
     "indicatorsFr": "Indicateurs(FR)",
-    "indicatorsEn": "Indicateurs(EN)"
+    "indicatorsEn": "Indicateurs(EN)",
+    "managementMode": "Mode de Gestion",
+    "managerName": "Gestionaire",
+    "department": "Département",
+    "arrondissement": "Arrondissement",
+    "locality": "Localité",
+    "localization": "Localisation géographique"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères."
@@ -350,7 +356,13 @@
     "objectives": "Objectifs",
     "objectivesSubTitle": "Objectifs du sous program",
     "strategies": "Statégies",
-    "strategiesSubTitle": "Statégies du sous program"
+    "strategiesSubTitle": "Statégies du sous program",
+    "managementMode": "Mode de Gestion - Localisation",
+    "costs": "Coûts",
+    "deliverables": "Livrables",
+    "chronogram": "Chronogramme",
+    "physicalUnits": "Unités physiques",
+    "codofication": "Codofication"
   },
   "measurementUnits": {
     "unit": "Unité",
@@ -364,5 +376,10 @@
     "number": "Nombre",
     "ha": "HA",
     "ml": "ML"
+  },
+  "managementModes": {
+    "gc": "Gestion Centrale",
+    "cd": "Crédits Délégués",
+    "rt": "Ressources Transférées"
   }
 }

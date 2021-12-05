@@ -10,7 +10,7 @@ import { AddressesService } from '@modules/addresses/addresses.service';
 export class AddressesController {
   constructor(private readonly services: AddressesService) {}
 
-  @Get('/regions')
+  @Get('/')
   // @UseGuards(new PermissionsGuard([]))
   public async filter() {
     return this.services.filter();

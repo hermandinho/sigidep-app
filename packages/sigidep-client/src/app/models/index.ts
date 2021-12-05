@@ -6,7 +6,7 @@ export * from './financial-source.model';
 export * from './exercise.model';
 export * from './administrative-unit.model';
 export * from './categories.model';
-export * from './regions.model';
+export * from './addresses.model';
 export * from './sector.model';
 export * from './technical-supervisor.model';
 export * from './paragraph.model';

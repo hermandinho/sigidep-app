@@ -1,0 +1,17 @@
+.top {
+}
+
+.steps {
+  margin-top: 5rem;
+  div[class^="step-"] {
+    width: 60%;
+  }
+
+  .footer {
+    &.multiple-buttons {
+      button {
+        width: 35%;
+      }
+    }
+  }
+}

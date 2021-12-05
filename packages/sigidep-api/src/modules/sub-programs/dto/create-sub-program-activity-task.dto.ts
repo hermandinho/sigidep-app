@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsDateString,
   IsNotEmpty,
+  IsNumber,
   IsNumberString,
   MaxLength,
   MinLength,
@@ -104,6 +105,14 @@ export class CreateSubProgramActivityTaskDto {
   @ApiProperty({ example: 1290000000, required: false })
   @IsNumberString()
   public engagementAuthorization?: number;
+
+  @ApiProperty({ example: 1, required: true })
+  @IsNumber()
+  public financialSourceId: number;
+
+  @ApiProperty({ example: 1, required: true })
+  @IsNumber()
+  public administrativeUnitId: number;
 
   @ApiProperty({ example: false, required: false })
   @IsBoolean()

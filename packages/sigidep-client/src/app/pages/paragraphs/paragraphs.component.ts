@@ -93,13 +93,20 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
-        this.data = [
+        /*this.data = [
           ...data.map((item) => {
             const tmp = { ...item };
             tmp.nature = tmp.nature && new FinancialSourceModel(tmp.nature);
             return tmp;
           }),
-        ];
+        ];*/
+        this.data = (data || []).map(
+          (d) =>
+            new ParagraphModel({
+              ...d,
+              nature: new FinancialSourceModel(d.nature),
+            })
+        );
       });
 
     this.loading$ = this._store.pipe(

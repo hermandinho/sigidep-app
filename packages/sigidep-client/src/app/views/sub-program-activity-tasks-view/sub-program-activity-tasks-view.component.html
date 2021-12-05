@@ -55,8 +55,9 @@
       <td></td>
       <td>
         <button
-          [pTooltip]="'hints.addOperation' | translate"
+          (click)="addOperation(item)"
           *appCheckPermissions="['subPrograms.create']"
+          [pTooltip]="'hints.addOperation' | translate"
           class="p-button-rounded p-button-info p-mr-2"
           icon="pi pi-plus"
           pButton

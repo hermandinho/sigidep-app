@@ -5,6 +5,8 @@ import { SubProgramEntity } from '@entities/sub-program.entity';
 import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
+import { FinancialSourceEntity } from '@entities/financial-source.entity';
+import { AdministrativeUnitEntity } from '@entities/administrative-unit.entity';
 
 @Entity({
   name: 'sub_program_activity_tasks',
@@ -95,6 +97,20 @@ export class SubProgramActivityTaskEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'activity_id' })
   activity: SubProgramActivityEntity;
+
+  @ManyToOne(() => FinancialSourceEntity, (object) => object.id, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'financial_source_id' })
+  financialSource: FinancialSourceEntity;
+
+  @ManyToOne(() => AdministrativeUnitEntity, (object) => object.id, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'administrative_unit_id' })
+  administrativeUnit: AdministrativeUnitEntity;
 
   constructor(
     params?: Partial<

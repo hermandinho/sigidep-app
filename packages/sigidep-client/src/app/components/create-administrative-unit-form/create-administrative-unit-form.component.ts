@@ -101,7 +101,7 @@ export class CreateAdministrativeUnitFormComponent
         '/administrative-units/functions',
         { type: 'primary' }
       ),
-      this._apisService.get<RegionsModel[]>('/addresses/regions'),
+      this._apisService.get<RegionsModel[]>('/addresses'),
       this._apisService.get<CategoryModel[]>('/categories'),
       this._apisService.get<SectorModel[]>('/sectors'),
     ])

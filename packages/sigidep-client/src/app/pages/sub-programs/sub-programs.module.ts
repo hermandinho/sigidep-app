@@ -14,6 +14,8 @@ import { CreateSubProgramActivityFormComponent } from '../../components/create-s
 import { SubProgramActivitiesViewComponent } from '../../views/sub-program-activities-view/sub-program-activities-view.component';
 import { CreateSubProgramActivityTaskFormComponent } from '../../components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 import { SubProgramActivityTasksViewComponent } from '../../views/sub-program-activity-tasks-view/sub-program-activity-tasks-view.component';
+import { CreateSubProgramActivityTaskOperationFormComponent } from '../../components/create-sub-program-activity-task-operation-form/create-sub-program-activity-task-operation-form.component';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { SubProgramActivityTasksViewComponent } from '../../views/sub-program-ac
     SubProgramActivitiesViewComponent,
     CreateSubProgramActivityTaskFormComponent,
     SubProgramActivityTasksViewComponent,
+    CreateSubProgramActivityTaskOperationFormComponent,
   ],
   imports: [
     SharedModule,
@@ -33,6 +36,7 @@ import { SubProgramActivityTasksViewComponent } from '../../views/sub-program-ac
     TreeTableModule,
     InputMaskModule,
     ToastModule,
+    FieldsetModule,
   ],
 })
 export class SubProgramsModule {}

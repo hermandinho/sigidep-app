@@ -32,6 +32,6 @@ import { AddressesModule } from '@modules/addresses/addresses.module';
     ]),
     AddressesModule,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, AdministrativeUnitsService],
 })
 export class AdministrativeUnitsModule {}

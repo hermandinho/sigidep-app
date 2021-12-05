@@ -96,7 +96,7 @@ export class AdministrativeUnitsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = (data || []).map((d) => {
-          d = { ...d };
+          d = new AdministrativeUnitModel(d);
           if (d.category) d.category = new CategoryModel(d.category);
           if (d.sector) d.sector = new SectorModel(d.sector);
           if (d.function) d.function = new FunctionModel(d.function);

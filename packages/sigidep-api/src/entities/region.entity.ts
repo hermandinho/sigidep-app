@@ -23,8 +23,9 @@ export class RegionEntity extends BaseEntity {
 
   @OneToMany(() => DepartmentEntity, (object) => object.region, {
     eager: true,
+    cascade: ['insert'],
   })
-  public departments: DepartmentEntity[];
+  public departments: Partial<DepartmentEntity>[];
 
   constructor(params?: Partial<RegionEntity>) {
     super();

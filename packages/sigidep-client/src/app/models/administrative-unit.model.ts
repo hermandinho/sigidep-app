@@ -1,6 +1,6 @@
 import { SectorModel } from '@models/sector.model';
 import { CategoryModel } from '@models/categories.model';
-import { RegionsModel } from '@models/regions.model';
+import { RegionsModel } from '@models/addresses.model';
 
 export class AdministrativeUnitModel {
   id!: number;
@@ -13,6 +13,20 @@ export class AdministrativeUnitModel {
   category?: CategoryModel;
   function?: FunctionModel;
   region?: RegionsModel;
+
+  constructor(param?: Partial<AdministrativeUnitModel>) {
+    if (param) {
+      Object.assign(this, param);
+    }
+  }
+
+  get formattedLabelFr(): string {
+    return `${this.code} - ${this.labelFr}`;
+  }
+
+  get formattedLabelEn(): string {
+    return `${this.code} - ${this.labelEn}`;
+  }
 }
 
 export class FunctionModel {
