@@ -11,3 +11,4 @@ export * from './sector.model';
 export * from './technical-supervisor.model';
 export * from './paragraph.model';
 export * from './sub-program.model';
+export * from './reference-physical-unit.model';

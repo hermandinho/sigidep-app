@@ -7,6 +7,22 @@
     width: 60%;
   }
 
+  .step-3 {
+    .row {
+      display: flex;
+      justify-content: space-between;
+      .p-field {
+        width: 30%;
+      }
+    }
+
+    .buttons {
+      button {
+        width: 30%;
+      }
+    }
+  }
+
   .footer {
     &.multiple-buttons {
       button {

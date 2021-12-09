@@ -20,6 +20,10 @@ export class ParagraphsService {
     private financialSourcesService: FinancialSourcesService,
   ) {}
 
+  public getRepository(): Repository<ParagraphEntity> {
+    return this.repository;
+  }
+
   public async filter(): Promise<ParagraphEntity[]> {
     return this.repository
       .createQueryBuilder('f')

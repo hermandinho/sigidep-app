@@ -58,7 +58,7 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
     description: 'permissions.manage',
   },
   ...simpleCrudGenerator(C.ADMINISTRATIVE_UNITS),
-  ...simpleCrudGenerator(C.FUNCTIONS),
+  ...simpleCrudGenerator(C.REFERENCE_PHYSICAL_UNITS),
 ];
 
 export const FINANCIAL_SOURCES_DATA: Partial<FinancialSourceEntity>[] = [

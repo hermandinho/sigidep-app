@@ -1,35 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { FinancialSourceModel, ParagraphModel } from '@models/index';
-import { Observable, of } from 'rxjs';
+import { BaseComponent } from '@components/base.component';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { Actions, ofType } from '@ngrx/effects';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
+import { ReferencePhysicalUnitModel } from '@models/reference-physical-unit.model';
 import {
   DeleteFinancialSourceFailure,
   DeleteFinancialSourceSuccess,
   DeleteParagraph,
-  GetParagraphs,
+  GetReferencePhysicalUnits,
   SetAppBreadcrumb,
 } from '@store/actions';
+import { ParagraphModel } from '@models/paragraph.model';
 import {
   getDataSelector,
   getLoadingSelector,
-} from '@reducers/paragraphs.reducer';
+} from '@reducers/reference-physical-units.reducer';
 import { map } from 'rxjs/operators';
-import { BaseComponent } from '@components/base.component';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-paragraphs',
-  templateUrl: './paragraphs.component.html',
-  styleUrls: ['./paragraphs.component.scss'],
+  selector: 'app-reference-physical-units',
+  templateUrl: './reference-physical-units.component.html',
+  styleUrls: ['./reference-physical-units.component.scss'],
 })
-export class ParagraphsComponent extends BaseComponent implements OnInit {
+export class ReferencePhysicalUnitsComponent
+  extends BaseComponent
+  implements OnInit
+{
   selectedItems: any[] = [];
   tableColumns: any[] = [];
-  data: ParagraphModel[] = [];
+  data: ReferencePhysicalUnitModel[] = [];
   loading$: Observable<boolean> = of(true);
 
   constructor(
@@ -44,28 +48,19 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
       { field: 'code', title: 'tables.headers.exerciseCode', sortable: true },
       { field: 'labelFr', title: 'tables.headers.labelFr', sortable: true },
       { field: 'labelEn', title: 'tables.headers.labelEn', sortable: true },
-      {
-        field: 'abbreviationFr',
-        title: 'tables.headers.abbreviationFr',
-        sortable: true,
-      },
-      {
-        field: 'abbreviationEn',
-        title: 'tables.headers.abbreviationEn',
-        sortable: true,
-      },
-      { field: 'nature', title: 'tables.headers.nature' },
+      { field: 'paragraph', title: 'tables.headers.paragraph' },
     ];
     this._initListeners();
   }
 
   ngOnInit(): void {
-    this._store.dispatch(GetParagraphs());
+    this._store.dispatch(GetReferencePhysicalUnits());
+    // this._store.dispatch(GetParagraphs());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.paragraphs',
+            label: 'breadcrumb.referencePhysicalUnits',
           },
         ],
       })
@@ -73,16 +68,16 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
   }
 
   async openForm() {
-    this._dialogService.launchParagraphCreateDialog();
+    this._dialogService.referencePhysicalUnitCreateDialog();
   }
 
-  edit(item: ParagraphModel) {
-    this._dialogService.launchParagraphCreateDialog(item);
+  edit(item: ReferencePhysicalUnitModel) {
+    this._dialogService.referencePhysicalUnitCreateDialog(item);
   }
 
   delete(item: ParagraphModel) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteParagraph',
+      message: 'dialogs.messages.referencePhysicalUnits',
       accept: () => {
         this._store.dispatch(DeleteParagraph({ id: item.id }));
       },
@@ -95,9 +90,9 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
       .subscribe((data) => {
         this.data = (data || []).map(
           (d) =>
-            new ParagraphModel({
+            new ReferencePhysicalUnitModel({
               ...d,
-              nature: new FinancialSourceModel(d.nature),
+              paragraph: new ParagraphModel(d?.paragraph),
             })
         );
       });
@@ -126,7 +121,7 @@ export class ParagraphsComponent extends BaseComponent implements OnInit {
         } else if (action.type === DeleteFinancialSourceSuccess.type) {
           this._appService.showToast({
             severity: 'success',
-            detail: 'messages.paragraphs.deleteSuccess',
+            detail: 'messages.referencePhysicalUnits.deleteSuccess',
             summary: 'errors.success',
             closable: true,
           });

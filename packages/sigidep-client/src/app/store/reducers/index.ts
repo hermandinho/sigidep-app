@@ -12,6 +12,7 @@ import * as fromParagraphs from './paragraphs.reducer';
 import * as fromApp from './app.reducer';
 import * as fromSubPrograms from './sub-programs.reducer';
 import * as fromAddresses from './addresses.reducer';
+import * as fromRefPhysicalUnits from './reference-physical-units.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -25,6 +26,7 @@ export interface AppState {
   app: fromApp.State;
   subPrograms: fromSubPrograms.State;
   addresses: fromAddresses.State;
+  refPhysicalUnits: fromRefPhysicalUnits.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -39,6 +41,7 @@ export const reducers: ActionReducerMap<AppState> = {
   app: fromApp.reducer,
   subPrograms: fromSubPrograms.reducer,
   addresses: fromAddresses.reducer,
+  refPhysicalUnits: fromRefPhysicalUnits.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

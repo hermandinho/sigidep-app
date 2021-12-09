@@ -12,6 +12,7 @@ import { TechnicalSupervisorsComponent } from '@pages/technical-supervisors/tech
 import { ParagraphsComponent } from '@pages/paragraphs/paragraphs.component';
 import { SubProgramsComponent } from '@pages/sub-programs/sub-programs.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units/reference-physical-units.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,14 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.paragraphs],
+        },
+      },
+      {
+        path: 'reference-physical-units',
+        component: ReferencePhysicalUnitsComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.referencePhysicalUnits],
         },
       },
       /*{

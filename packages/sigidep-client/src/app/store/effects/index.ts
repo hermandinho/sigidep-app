@@ -9,6 +9,7 @@ import { TechnicalSupervisorEffects } from '@effects/technical-supervisor.effect
 import { ParagraphEffects } from '@effects/paragraph.effects';
 import { SubProgramsEffects } from '@effects/sub-programs.effects';
 import { AddressesEffects } from '@effects/addresses.effects';
+import { ReferencePhysicalUnitsEffects } from '@effects/reference-physical-units.effects';
 
 export const Effects = [
   AuthEffects,
@@ -22,4 +23,5 @@ export const Effects = [
   ParagraphEffects,
   SubProgramsEffects,
   AddressesEffects,
+  ReferencePhysicalUnitsEffects,
 ];

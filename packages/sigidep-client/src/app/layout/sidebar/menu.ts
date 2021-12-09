@@ -12,6 +12,7 @@ export const MenuPermissions = {
   technical_supervisor: [...simpleCrudPermissions('technicalSupervisions')],
   paragraphs: [...simpleCrudPermissions('paragraphs')],
   sub_programs: [...simpleCrudPermissions('subPrograms')],
+  referencePhysicalUnits: [...simpleCrudPermissions('referencePhysicalUnits')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -90,10 +91,13 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           },
         },
         {
-          routerLink: 'offices',
+          routerLink: 'reference-physical-units',
           icon: 'pi pi-book',
           label: translate.instant('sidebar.deliverables'),
           routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.referencePhysicalUnits],
+          },
         },
         {
           routerLink: 'paragraphs',

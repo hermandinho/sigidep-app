@@ -34,7 +34,10 @@
     "addObjective": "Ajouter un objectif",
     "addIndicator": "Ajouter un indicateur",
     "new": "Ajouter",
-    "save&quit": "Enregistrer & quitter"
+    "save&quit": "Enregistrer & quitter",
+    "monthlyBreakdown": "Ventilation mensuelle",
+    "quarterlyBreakdown": "Ventilation trimestrielle",
+    "halfYearlyBreakdown": "Ventilation semestrielle"
   },
   "install": {
     "title": "Installation"
@@ -201,7 +204,8 @@
     "paragraphs": "Paragraphes",
     "subprograms": "Sous programs",
     "list": "Liste",
-    "create": "Nouveau"
+    "create": "Nouveau",
+    "referencePhysicalUnits": "Unités physiques de référence"
   },
   "tables": {
     "emptyMessage": "Aucun élément",

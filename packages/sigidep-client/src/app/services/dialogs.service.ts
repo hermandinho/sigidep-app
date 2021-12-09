@@ -11,6 +11,7 @@ import {
   SubProgramModel,
   SubProgramActivityModel,
   SubProgramActivityTaskModel,
+  ReferencePhysicalUnitModel,
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 
@@ -29,6 +30,7 @@ export class DialogsService {
   private subProgramActivityCreateComponent: any;
   private subProgramActivityTaskCreateComponent: any;
   private subProgramActivityTaskOperationCreateComponent: any;
+  private referencePhysicalUnitComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -278,6 +280,31 @@ export class DialogsService {
         },
       }
     );
+  }
+
+  public async referencePhysicalUnitCreateDialog(
+    item?: ReferencePhysicalUnitModel
+  ) {
+    if (!this.referencePhysicalUnitComponent) {
+      const { CreateReferencePhysicalUnitsFormComponent } = await import(
+        '@components/create-reference-physical-units-form/create-reference-physical-units-form.component'
+      );
+      this.referencePhysicalUnitComponent =
+        CreateReferencePhysicalUnitsFormComponent;
+    }
+
+    return this._dialogService.open(this.referencePhysicalUnitComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' +
+          (item ? 'editReferencePhysicalUnit' : 'createReferencePhysicalUnit')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
   }
 
   public async launchSubProgramActivityTaskOperationCreateDialog(

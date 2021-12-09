@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -28,6 +28,7 @@ import { ExerciseModel } from '@models/exercise.model';
 import { getDataSelector as getParagraphsSelector } from '@reducers/paragraphs.reducer';
 import { ParagraphModel } from '@models/paragraph.model';
 import { GetParagraphs } from '@store/actions';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-create-sub-program-activity-task-operation-form',
@@ -64,13 +65,20 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     '2': { back: true, forward: true, submit: false },
     '3': { back: true, forward: true, submit: false },
     '4': { back: true, forward: true, submit: false },
-    '5': { back: true, forward: false, submit: true },
   };
 
   public managementModes = [
     { value: 'gc', label: 'managementModes.gc' },
     { value: 'cd', label: 'managementModes.cd' },
     { value: 'rt', label: 'managementModes.rt' },
+  ];
+
+  private stepsArray = [
+    'codofication',
+    'costs',
+    'managementMode',
+    'deliverables',
+    'chronogram',
   ];
 
   constructor(
@@ -81,14 +89,36 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     public translate: TranslateService
   ) {
     super();
-    this.steps = [
-      'codofication',
-      'costs',
-      'managementMode',
-      'deliverables',
-      'chronogram',
-      'physicalUnits',
-    ].map((step, idx) => {
+    console.log(this.config.data);
+    moment.locale(translate.currentLang);
+    if (
+      (this.config.data?.task as SubProgramActivityTaskModel)?.financialSource
+        ?.acceptsDeliverables
+    ) {
+      this.stepButtons = {
+        ...this.stepButtons,
+        '4': {
+          ...this.stepButtons['4'],
+          submit: false,
+        },
+        '5': {
+          back: true,
+          forward: false,
+          submit: true,
+        },
+      };
+      this.stepsArray.push('physicalUnits');
+    } else {
+      this.stepButtons = {
+        ...this.stepButtons,
+        '4': {
+          ...this.stepButtons['4'],
+          submit: true,
+          forward: false,
+        },
+      };
+    }
+    this.steps = this.stepsArray.map((step, idx) => {
       return {
         label: translate.instant(`steps.${step}`),
         command: (event) => {
@@ -128,24 +158,6 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   public get isUpdateForm() {
     return !!this.form?.value?.id;
   }
-
-  /*  get regionsSelectData() {
-    return (this.regions || []).map(r => ({
-      id: r.id,
-      label: r.formattedLabel || r.label,
-    })) || [];
-  }*/
-  /*
-  get departmentsSelectData() {
-    const {regionId} = this.form?.value;
-    if (!regionId) {
-      return [];
-    }
-    return (this.regions || []).find(r => r.id === +regionId)?.departments?.map(d => ({
-      id: d.id,
-      label: d.formattedLabel,
-    })) || [];
-  }*/
 
   get exercisesSelectData() {
     const exercise: ExerciseModel = new ExerciseModel(
@@ -206,18 +218,6 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     return this.translate?.currentLang;
   }
 
-  /*get arrondissementsSelectData() {
-    const {departmentId, regionId} = this.form?.value;
-    if (!departmentId || !regionId) {
-      return [];
-    }
-    return (this.regions || []).find(r => r.id === +regionId)?.departments?.find(d => d.id === +departmentId)
-      ?.arrondissements?.map(a => ({
-        id: a.id,
-        label: a.formattedLabel,
-      })) || [];
-  }*/
-
   get currentStepFormValid(): boolean {
     const step = this.activeStep;
     const f = this.form;
@@ -236,11 +236,38 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         f?.get('arrondissementId'),
         f?.get('locality'),
       ],
+      3: [
+        f?.get('deliverablesFr'),
+        f?.get('deliverablesEn'),
+        f?.get('verificationSourceFr'),
+        f?.get('verificationSourceEn'),
+      ],
+      4: [f?.get('chronogram')],
     };
     return (
       stepFormControls[step]?.filter((s: AbstractControl) => s?.valid)
         ?.length === stepFormControls[step]?.length
     );
+  }
+
+  get chronogramFormArray(): FormArray {
+    return this.form.get('chronogram') as FormArray;
+  }
+
+  public get calculateSpacing() {
+    return (
+      +this.form.get('paymentCreditN1')?.value -
+      (this.chronogramFormArray?.value || []).reduce(
+        (acc: number, item: { value: number }) => {
+          return acc + item.value;
+        },
+        0
+      )
+    );
+  }
+
+  public getChronogramControlAtIndex(idx: number) {
+    return this.chronogramFormArray.at(idx) as FormGroup;
   }
 
   public goBack(): void {
@@ -249,7 +276,7 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   }
 
   public goForward(): void {
-    if (this.activeStep === 2) return;
+    if (this.activeStep === this.steps?.length) return;
     this.activeStep = this.activeStep + 1;
   }
 
@@ -260,6 +287,7 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     administrativeUnit: string;
     paragraph: string;
     section: string;
+    paragraphCode?: string;
   } {
     const sp: SubProgramModel = this.config?.data?.subProgram;
     const act: SubProgramActivityModel = this.config?.data?.activity;
@@ -269,11 +297,15 @@ export class CreateSubProgramActivityTaskOperationFormComponent
 
     return {
       activity: act?.code || 'XX',
-      administrativeUnit: '',
+      administrativeUnit: task?.administrativeUnit?.code || 'XX',
       exercise: sp?.exercise?.code?.toString() || 'XX',
       paragraph: paragraph?.code || 'XX',
       section: task?.administrativeUnit?.function?.code || 'XX',
       subProgram: sp?.code || 'XX',
+      paragraphCode:
+        this.currentLang === 'fr'
+          ? paragraph?.abbreviationFr
+          : paragraph?.abbreviationEn,
     };
   }
 
@@ -290,13 +322,15 @@ export class CreateSubProgramActivityTaskOperationFormComponent
       administrativeUnit,
       paragraph,
       section,
+      paragraphCode,
     } = this.imputationParts;
     // CODE-EXERCICE{2} CODE-SP{2} CODE-ACTIVITE{2} CODE-UNITE-ADMINISTRATIVE{6} CODE-PARAGRAPH{6} CODE-SECTION{3}
-    return `${exercise} ${subProgram} ${activity} ${administrativeUnit} ${paragraph} ${section}`;
+    return `${exercise} ${subProgram} ${activity} ${administrativeUnit} ${paragraph} ${section} ${
+      paragraphCode ? ' - ' + paragraphCode : ''
+    }`;
   }
 
   ngOnInit(): void {
-    console.log(this.config);
     this._store.dispatch(GetParagraphs());
 
     const sp: SubProgramModel =
@@ -337,9 +371,11 @@ export class CreateSubProgramActivityTaskOperationFormComponent
       ],
       labelFr: [undefined, [Validators.required]],
       labelEn: [undefined, [Validators.required]],
+      deliverablesFr: [undefined, [Validators.required]],
+      deliverablesEn: [undefined, [Validators.required]],
+      verificationSourceFr: [undefined, [Validators.required]],
+      verificationSourceEn: [undefined, [Validators.required]],
       paragraphId: [undefined, [Validators.required]],
-      // descriptionFr: [undefined, [Validators.required]],
-      // descriptionEn: [undefined, [Validators.required]],
       imputation: [
         {
           value: undefined,
@@ -365,7 +401,10 @@ export class CreateSubProgramActivityTaskOperationFormComponent
       departmentId: [undefined, [Validators.required]],
       arrondissementId: [undefined, [Validators.required]],
       locality: [undefined, [Validators.required]],
+      chronogram: this._fb.array([], []),
     });
+    this.generateChronogram();
+
     this.formElements = [
       {
         label: 'imputation',
@@ -445,7 +484,6 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         required: true,
       },
     ];
-
     this.initSubscriptions();
   }
 
@@ -458,6 +496,32 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   }
 
   submit(v?: boolean) {}
+
+  public monthlyBreakDown(type: 'month' | 'trimester' | 'semester') {
+    const baseValue = +(this.form?.get('paymentCreditN1')?.value || 0);
+    if (!baseValue) return;
+
+    let indexesToUpdate: number[] = [];
+    const allIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    if (type === 'month') {
+      indexesToUpdate = allIndexes;
+    } else if (type === 'trimester') {
+      indexesToUpdate = [2, 5, 8, 11];
+    } else if (type === 'semester') {
+      indexesToUpdate = [5, 11];
+    }
+    allIndexes.forEach((idx) => {
+      this.chronogramFormArray
+        .at(idx)
+        ?.get('value')
+        ?.patchValue(
+          indexesToUpdate.includes(idx)
+            ? Math.floor(baseValue / indexesToUpdate.length)
+            : 0
+        );
+    });
+  }
 
   private initSubscriptions() {
     this.form
@@ -512,5 +576,17 @@ export class CreateSubProgramActivityTaskOperationFormComponent
           label: a.formattedLabel,
         })) || [];
     this.form.get('arrondissementId')?.patchValue(undefined);
+  }
+
+  private generateChronogram() {
+    const array = this.chronogramFormArray;
+    return moment.monthsShort().map((month) => {
+      array.push(
+        this._fb.group({
+          label: [month?.toUpperCase()],
+          value: [0, [Validators.required]],
+        })
+      );
+    });
   }
 }

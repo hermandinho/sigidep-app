@@ -16,6 +16,8 @@ import { CreateSubProgramActivityTaskFormComponent } from '../../components/crea
 import { SubProgramActivityTasksViewComponent } from '../../views/sub-program-activity-tasks-view/sub-program-activity-tasks-view.component';
 import { CreateSubProgramActivityTaskOperationFormComponent } from '../../components/create-sub-program-activity-task-operation-form/create-sub-program-activity-task-operation-form.component';
 import { FieldsetModule } from 'primeng/fieldset';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     InputMaskModule,
     ToastModule,
     FieldsetModule,
+    InputNumberModule,
+    FormsModule,
   ],
 })
 export class SubProgramsModule {}

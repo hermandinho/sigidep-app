@@ -15,6 +15,7 @@ import { AddressesModule } from '@modules/addresses/addresses.module';
 import { TechnicalSupervisorsModule } from '@modules/technical-supervisors/technical-supervisors.module';
 import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
 import { SubProgramsModule } from './modules/sub-programs/sub-programs.module';
+import { ReferencePhysicalUnitsModule } from './modules/reference-physical-units/reference-physical-units.module';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import { SubProgramsModule } from './modules/sub-programs/sub-programs.module';
     TechnicalSupervisorsModule,
     ParagraphsModule,
     SubProgramsModule,
+    ReferencePhysicalUnitsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

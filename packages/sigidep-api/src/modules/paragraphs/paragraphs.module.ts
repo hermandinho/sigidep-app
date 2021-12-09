@@ -14,6 +14,6 @@ import { FinancialSourcesModule } from '@modules/financial-sources/financial-sou
     TypeOrmModule.forFeature([ParagraphEntity]),
     FinancialSourcesModule,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, ParagraphsService],
 })
 export class ParagraphsModule {}

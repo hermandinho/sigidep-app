@@ -26,6 +26,7 @@ import { AdministrativeUnitsModule } from '@pages/administrative-units/administr
 import { TechnicalSupervisorsModule } from '@pages/technical-supervisors/technical-supervisors.module';
 import { ParagraphsModule } from '@pages/paragraphs/paragraphs.module';
 import { SubProgramsModule } from '@pages/sub-programs/sub-programs.module';
+import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/reference-physical-units.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -69,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TechnicalSupervisorsModule,
     ParagraphsModule,
     SubProgramsModule,
+    ReferencePhysicalUnitsModule,
   ],
   providers: [AppInstallCheckGuard, AuthGuard, IsAuthenticatedGuard],
   bootstrap: [AppComponent],

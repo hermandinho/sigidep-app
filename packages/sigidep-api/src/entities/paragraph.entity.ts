@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { FinancialSourceEntity } from '@entities/financial-source.entity';
+import { ReferencePhysicalUnitEntity } from '@entities/reference-physical-unit.entity';
 
 @Entity({
   name: 'paragraphs',
@@ -30,6 +31,9 @@ export class ParagraphEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'financial_source_id' })
   public nature: FinancialSourceEntity;
+
+  @OneToMany(() => ReferencePhysicalUnitEntity, (object) => object.paragraph)
+  referencePhysicalUnits: ReferencePhysicalUnitEntity[];
 
   constructor(params?: Partial<ParagraphEntity>) {
     super();
