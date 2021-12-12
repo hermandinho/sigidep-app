@@ -1,0 +1,52 @@
+//.p-datatable .p-datatable-tbody > tr > td
+
+p-table {
+  &::ng-deep {
+    .p-datatable {
+      .p-datatable-tbody {
+        & > tr {
+          &:hover {
+            .action {
+              visibility: visible;
+            }
+          }
+          & > td {
+            padding: 5px 15px;
+          }
+        }
+
+        /*tr {
+         &:hover {
+           .action {
+             visibility: visible;
+           }
+         }
+       }*/
+
+        .action {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+}
+td {
+  &.paragraph {
+    span {
+      color: var(--ah-success);
+      -webkit-text-stroke-width: 2px;
+      .pi-plus {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+  &.activity {
+    span {
+      color: var(--ah-blue-200);
+      -webkit-text-stroke-width: 2px;
+      .pi-plus {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

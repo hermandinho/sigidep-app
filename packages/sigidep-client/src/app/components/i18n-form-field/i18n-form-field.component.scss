@@ -1,0 +1,24 @@
+.lang {
+  cursor: pointer;
+  font-size: 14px;
+  &:first-child {
+    &:after {
+      content: " | ";
+    }
+  }
+  &.active {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}
+
+input,
+textarea,
+p-editor {
+  margin-top: 0.5rem;
+  &::ng-deep {
+    .p-editor-container {
+      margin-top: inherit;
+    }
+  }
+}

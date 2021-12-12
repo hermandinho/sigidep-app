@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.labelFr" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="labelFr"
+          [placeholder]="'labels.labelFr' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.labelEn" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="labelEn"
+          [placeholder]="'labels.labelEn' | translate"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="close()"
+      [disabled]="!form?.valid"
+      [label]="'buttons.save' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

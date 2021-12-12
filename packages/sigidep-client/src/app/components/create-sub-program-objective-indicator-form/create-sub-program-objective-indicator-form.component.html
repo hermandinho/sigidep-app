@@ -1,0 +1,174 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <!--<div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <app-i18n-form-field
+          [form]="form"
+          [baseFormControlName]="'label'"
+          type="text"
+          [required]="true"
+        ></app-i18n-form-field>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "tables.headers.measurementUnit" | translate
+        }}</label>
+        <p-dropdown
+          [editable]="true"
+          [filterBy]="'label'"
+          [filter]="true"
+          [optionLabel]="'label'"
+          [options]="measurementUnits"
+          [placeholder]="'tables.headers.measurementUnit' | translate"
+          [showClear]="false"
+          appendTo="body"
+          formControlName="measurementUnit"
+          optionValue="value"
+        >
+          <ng-template let-item pTemplate="selectedItem">
+            <div>
+              <div>{{ "measurementUnits." + item?.label | translate }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            <div>
+              <div>{{ "measurementUnits." + item?.label | translate }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "tables.headers.referenceValue" | translate
+        }}</label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="referenceValue"
+          [placeholder]="'tables.headers.referenceValue' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "tables.headers.referenceYear" | translate
+        }}</label>
+        <p-inputMask
+          class=""
+          formControlName="referenceYear"
+          mask="9999"
+          [placeholder]="'YYYY'"
+        ></p-inputMask>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "tables.headers.targetValue" | translate
+        }}</label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="targetValue"
+          [placeholder]="'tables.headers.targetValue' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "tables.headers.targetYear" | translate
+        }}</label>
+        <p-inputMask
+          class=""
+          formControlName="targetYear"
+          mask="9999"
+          [placeholder]="'YYYY'"
+        ></p-inputMask>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <app-i18n-form-field
+          [form]="form"
+          [baseFormControlName]="'verificationSource'"
+          type="editor"
+        ></app-i18n-form-field>
+      </div>
+    </div>-->
+
+    <div class="p-fluid p-grid">
+      <div
+        class="p-field p-col-12"
+        [ngClass]="{
+          'p-md-6': column?.size === 6,
+          'p-md-12': column.size === 12
+        }"
+        *ngFor="let column of formElements; trackBy: trackByIndex"
+      >
+        <label *ngIf="!column.i18n" [class.required]="column?.required">{{
+          "labels." + column.label | translate
+        }}</label>
+
+        <p-dropdown
+          *ngIf="column.type === 'dropdown'"
+          [filterBy]="'code'"
+          [filter]="false"
+          [optionLabel]="column?.dropdownOptionsLabel || 'label'"
+          [options]="column.dropdownOptions ?? []"
+          [placeholder]="'labels.' + column.label | translate"
+          [showClear]="false"
+          appendTo="body"
+          [formControlName]="column.formControl"
+          [optionValue]="column.dropdownValueKey ?? 'id'"
+        >
+          <ng-template let-option pTemplate="item">
+            <div>
+              <div>{{ option?.formattedLabel }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <input
+          *ngIf="['text', 'number'].includes(column.type) && !column.i18n"
+          [formControlName]="column.formControl"
+          [placeholder]="column.label | translate"
+          [type]="column.type"
+          pInputText
+        />
+
+        <app-i18n-form-field
+          *ngIf="
+            ['text', 'textarea', 'editor'].includes(column.type) && column.i18n
+          "
+          [baseFormControlName]="column.formControl"
+          [form]="form"
+          [type]="column.type"
+          [required]="column.required"
+        ></app-i18n-form-field>
+
+        <p-calendar
+          *ngIf="column.type === 'date'"
+          [showIcon]="true"
+          appendTo="body"
+          dateFormat="dd/mm/yy"
+          [formControlName]="column.formControl"
+          placeholder="01/01/2021"
+        ></p-calendar>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="close()"
+      [disabled]="!form?.valid"
+      [label]="'buttons.save' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

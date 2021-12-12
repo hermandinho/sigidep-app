@@ -1,0 +1,66 @@
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <!--      <td *ngFor="let c of [1,2,3,4,5,6,7,8,9,10]"></td>-->
+        <th class="p-text-center" style="width: 40%">
+          {{ "tables.headers.label" | translate }}
+        </th>
+        <th class="p-text-center" style="width: 20%">
+          {{ "tables.headers.administrativeUnit" | translate }}
+        </th>
+        <th class="p-text-center" style="">
+          {{ "tables.headers.financialSource" | translate }}
+        </th>
+        <th class="p-text-center" style="">
+          {{ "tables.headers.yearN1" | translate }}
+        </th>
+        <th class="p-text-center" style="">
+          {{ "tables.headers.yearN2" | translate }}
+        </th>
+        <th class="p-text-center" style="">
+          {{ "tables.headers.yearN3" | translate }}
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let op of task?.operations || []">
+        <td>
+          {{ op.paragraph?.code }} -
+          {{ currentLang === "fr" ? op.labelFr : op.labelEn }}
+        </td>
+        <td>
+          {{ task?.administrativeUnit?.code }} -
+          {{
+            currentLang === "fr"
+              ? task?.administrativeUnit?.abbreviationFr
+              : task?.administrativeUnit?.abbreviationEn
+          }}
+        </td>
+        <td>
+          {{
+            currentLang === "fr"
+              ? task?.financialSource?.abbreviationFr
+              : task?.financialSource?.abbreviationEn
+          }}
+        </td>
+        <td>
+          {{
+            op.paymentCreditN1 | currency: "":"":"":currentLangCurrencyFormat
+          }}
+        </td>
+        <td>
+          {{
+            op.paymentCreditN2 | currency: "":"":"":currentLangCurrencyFormat
+          }}
+        </td>
+        <td>
+          {{
+            op.paymentCreditN3 | currency: "":"":"":currentLangCurrencyFormat
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

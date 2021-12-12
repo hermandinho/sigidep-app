@@ -1,0 +1,243 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.category" | translate }}</label>
+        <p-dropdown
+          [filterBy]="'formattedLabel'"
+          [filter]="true"
+          [optionLabel]="'formattedLabel'"
+          [options]="categories"
+          [placeholder]="'labels.category' | translate"
+          [showClear]="false"
+          optionValue="id"
+          appendTo="body"
+          formControlName="categoryId"
+        >
+          <ng-template let-category pTemplate="item">
+            <div>
+              <div>{{ category?.formattedLabel }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.region" | translate }}</label>
+        <p-dropdown
+          [filterBy]="'formattedLabel'"
+          [filter]="true"
+          [optionLabel]="'formattedLabel'"
+          [options]="regions"
+          [placeholder]="'labels.region' | translate"
+          [showClear]="false"
+          optionValue="id"
+          appendTo="body"
+          formControlName="regionId"
+        >
+          <ng-template let-region pTemplate="item">
+            <div>
+              <div>{{ region?.formattedLabel }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.sector" | translate }}</label>
+        <p-dropdown
+          [filterBy]="
+            _translate?.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [filter]="true"
+          [optionLabel]="
+            _translate?.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [options]="sectors"
+          [placeholder]="'labels.sector' | translate"
+          [showClear]="false"
+          optionValue="id"
+          appendTo="body"
+          formControlName="sectorId"
+        >
+          <ng-template let-sector pTemplate="item">
+            <div>
+              <div>
+                {{
+                  sector[
+                    _translate?.currentLang === "fr"
+                      ? "formattedLabelFr"
+                      : "formattedLabelEn"
+                  ]
+                }}
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.code" | translate }}</label>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">{{ codeBase }}</span>
+          <p-inputMask
+            class=""
+            formControlName="code"
+            mask="99"
+            [placeholder]="'labels.code' | translate"
+          ></p-inputMask>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.primaryFunction" | translate
+        }}</label>
+        <p-dropdown
+          [filterBy]="
+            _translate?.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [filter]="true"
+          [optionLabel]="
+            _translate?.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [options]="primaryFunctions"
+          [placeholder]="'labels.primaryFunction' | translate"
+          [showClear]="true"
+          appendTo="body"
+          formControlName="primaryFunction"
+        >
+          <ng-template let-function pTemplate="item">
+            <div>
+              <div>
+                {{
+                  function[
+                    _translate?.currentLang === "fr"
+                      ? "formattedLabelFr"
+                      : "formattedLabelEn"
+                  ]
+                }}
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.secondaryFunction" | translate
+        }}</label>
+        <p-dropdown
+          [filterBy]="
+            _translate?.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [filter]="true"
+          [optionLabel]="
+            _translate?.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [options]="secondaryFunctions"
+          [placeholder]="'labels.secondaryFunction' | translate"
+          [showClear]="true"
+          optionValue="id"
+          appendTo="body"
+          formControlName="secondaryFunction"
+        >
+          <ng-template let-func pTemplate="item">
+            <div>
+              <div>
+                {{
+                  func[
+                    _translate?.currentLang === "fr"
+                      ? "formattedLabelFr"
+                      : "formattedLabelEn"
+                  ]
+                }}
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-inputgroup">
+          <div class="p-field">
+            <label class="required">{{ "labels.labelFr" | translate }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.labelFr' | translate"
+              formControlName="labelFr"
+            />
+          </div>
+          <div class="p-field code">
+            <label class="required">{{
+              "labels.abbreviationFr" | translate
+            }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.abbreviationFr' | translate"
+              formControlName="abbreviationFr"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-inputgroup">
+          <div class="p-field">
+            <label class="required">{{ "labels.labelEn" | translate }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.labelEn' | translate"
+              formControlName="labelEn"
+            />
+          </div>
+          <div class="p-field code">
+            <label class="required">{{
+              "labels.abbreviationEn" | translate
+            }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.abbreviationEn' | translate"
+              formControlName="abbreviationEn"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

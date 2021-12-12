@@ -1,0 +1,28 @@
+---
+version: "3.4"
+
+services:
+  sigidep-api:
+    build:
+      context: packages/sigidep-api
+      dockerfile: Dockerfile.prod
+      args:
+        - NODE_ENV=production
+    environment:
+      - API_PORT=$API_PORT
+      - NODE_ENV=production
+
+  sigidep-client:
+    build:
+      context: packages/sigidep-client
+      dockerfile: Dockerfile.prod
+      args:
+        - NODE_ENV=production
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    #    volumes:
+    #      - "./nginx/prod:/etc/nginx/conf.d"
+    environment:
+      - NODE_ENV=production

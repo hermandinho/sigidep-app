@@ -1,0 +1,135 @@
+<div class="page p-d-flex p-flex-column p-jc-around p-ai-center p-mb-6">
+  <p-card
+    [style]="{ width: '60vw', 'margin-bottom': '2em', 'min-height': '60vh' }"
+    class="p-d-flex p-flex-column p-jc-around p-ai-center"
+    header=""
+  >
+    <ng-template pTemplate="header">
+      <h2 class="p-text-primary p-d-flex p-flex-column p-jc-around p-ai-center">
+        {{ "install.title" | translate }}
+      </h2>
+    </ng-template>
+
+    <div class="p-fluid p-grid" [formGroup]="form">
+      <div class="p-field p-col-12 p-md-6">
+        <span class="p-float-label">
+          <input type="text" id="code" formControlName="code" pInputText />
+          <label for="code" class="required">{{
+            "labels.structureCode" | translate
+          }}</label>
+          <small class="p-warn text-black-alpha-40"
+            >NB: {{ "hints.structureCode" | translate }}</small
+          >
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <span class="p-float-label">
+          <input type="text" formControlName="address" pInputText />
+          <label class="required">{{
+            "labels.structureAddress" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="labelFr"
+            formControlName="labelFr"
+            pInputText
+          />
+          <label class="required" for="labelFr">{{
+            "labels.structureNameFr" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="labelEn"
+            formControlName="labelEn"
+            pInputText
+          />
+          <label for="labelEn" class="required">{{
+            "labels.structureNameEn" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <span class="p-float-label">
+          <textarea
+            cols="30"
+            rows="5"
+            formControlName="descriptionFr"
+            pInputTextarea
+          ></textarea>
+          <label class="required">{{
+            "labels.structureDescriptionFr" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <span class="p-float-label">
+          <textarea
+            cols="30"
+            rows="5"
+            formControlName="descriptionEn"
+            pInputTextarea
+          ></textarea>
+          <label class="required">{{
+            "labels.structureDescriptionEn" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <span class="p-float-label">
+          <textarea
+            cols="30"
+            rows="5"
+            formControlName="missionsFr"
+            pInputTextarea
+          ></textarea>
+          <label class="required">{{
+            "labels.structureMissionFr" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <span class="p-float-label">
+          <textarea
+            cols="30"
+            rows="5"
+            formControlName="missionsEn"
+            pInputTextarea
+          ></textarea>
+          <label class="required">{{
+            "labels.structureMissionEn" | translate
+          }}</label>
+        </span>
+      </div>
+
+      <p-divider class="full-width"></p-divider>
+
+      <div class="full-width p-ai-center p-d-flex p-jc-center p-d-flex">
+        <p-button
+          [label]="'buttons.' + (busy ? 'busy' : 'save') | translate"
+          [disabled]="!form?.valid || busy"
+          (click)="submit()"
+        ></p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <div class="footer">
+    <p class="text-black-alpha-40">SIGIDEP &copy;{{ year }}</p>
+  </div>
+  <p-toast></p-toast>
+</div>

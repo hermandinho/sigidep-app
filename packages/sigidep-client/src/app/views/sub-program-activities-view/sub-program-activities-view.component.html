@@ -1,0 +1,64 @@
+<p-table [value]="activities ?? []" dataKey="id" responsiveLayout="stack">
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="10" class="p-text-center p-text-secondary">
+        {{ "tables.emptyMessage" | translate }}
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-item let-expanded="expanded">
+    <tr [class.expanded]="expanded">
+      <td style="width: 1rem">
+        <button
+          type="button"
+          pButton
+          pRipple
+          [pRowToggler]="item"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+        ></button>
+      </td>
+      <td class="activity">
+        <span><i class="pi pi-play"></i> Act</span>
+        {{
+          currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
+        }}
+      </td>
+      <td style="width: 15%">
+        <button
+          (click)="addTask(item)"
+          *appCheckPermissions="['subPrograms.create']"
+          [pTooltip]="'hints.addTask' | translate"
+          class="p-button-rounded p-button-warning p-mr-2 action"
+          icon="pi pi-plus"
+          pButton
+          pRipple
+          tooltipPosition="top"
+        ></button>
+
+        <button
+          *appCheckPermissions="['subPrograms.create']"
+          class="p-button-rounded p-button-info p-mr-2 action"
+          icon="pi pi-pencil"
+          pButton
+          pRipple
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="rowexpansion" let-activity>
+    <tr>
+      <!--      <td style="width: 1rem"></td>-->
+      <td [colSpan]="10">
+        <!--{{ activity | json }}-->
+        <app-sub-program-activity-tasks-view
+          [activity]="activity"
+          [subProgram]="subProgram"
+        ></app-sub-program-activity-tasks-view>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-toast [autoZIndex]="true" [baseZIndex]="999999999"></p-toast>

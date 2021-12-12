@@ -1,0 +1,9 @@
+p-accordion {
+  p-accordionTab {
+    &::ng-deep {
+      .p-accordion-header-link {
+        padding: 0 10px;
+      }
+    }
+  }
+}

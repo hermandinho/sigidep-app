@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.code" | translate }}</label>
+        <p-inputMask
+          class=""
+          formControlName="code"
+          mask="99"
+          [placeholder]="'labels.code' | translate"
+        ></p-inputMask>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-inputgroup">
+          <div class="p-field">
+            <label class="required">{{ "labels.labelFr" | translate }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.labelFr' | translate"
+              formControlName="labelFr"
+            />
+          </div>
+          <div class="p-field code">
+            <label class="required">{{
+              "labels.abbreviationFr" | translate
+            }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.abbreviationFr' | translate"
+              formControlName="abbreviationFr"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-inputgroup">
+          <div class="p-field">
+            <label class="required">{{ "labels.labelEn" | translate }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.labelEn' | translate"
+              formControlName="labelEn"
+            />
+          </div>
+          <div class="p-field code">
+            <label class="required">{{
+              "labels.abbreviationEn" | translate
+            }}</label>
+            <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="'labels.abbreviationEn' | translate"
+              formControlName="abbreviationEn"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center">
+        <label class="required">{{
+          "labels.financialSourcesAcceptsDeliverables" | translate
+        }}</label>
+        <p-inputSwitch formControlName="acceptsDeliverables"></p-inputSwitch>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+.container {
+  width: 90%;
+  margin: auto;
+  table {
+    width: 100%;
+    tr {
+      th {
+        background-color: lightgray;
+        font-size: 14px;
+        text-align: left !important;
+      }
+    }
+  }
+}

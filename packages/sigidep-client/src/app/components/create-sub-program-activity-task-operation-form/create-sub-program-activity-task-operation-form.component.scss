@@ -1,0 +1,66 @@
+.top {
+}
+
+.steps {
+  margin-top: 5rem;
+  div[class^="step-"] {
+    width: 60%;
+  }
+
+  .step-4 {
+    .row {
+      display: flex;
+      justify-content: space-between;
+      .p-field {
+        width: 30%;
+      }
+    }
+
+    .buttons {
+      button {
+        width: 30%;
+      }
+    }
+  }
+
+  .step-5 {
+    p-fieldset {
+      &::ng-deep {
+        .as-flex {
+          display: flex;
+          justify-content: space-between;
+          button {
+            width: 30%;
+          }
+        }
+        table {
+          width: 100%;
+
+          thead {
+            tr {
+              background-color: lightgray;
+              font-weight: bold;
+            }
+          }
+          tbody {
+            tr {
+              &.editing {
+                td {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    &.multiple-buttons {
+      button {
+        width: 35%;
+      }
+    }
+  }
+}

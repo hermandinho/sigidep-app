@@ -1,0 +1,56 @@
+<p-table [value]="activity?.tasks ?? []" dataKey="id" responsiveLayout="stack">
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="10" class="p-text-center p-text-secondary">
+        {{ "tables.emptyMessage" | translate }}
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-item let-expanded="expanded">
+    <tr [class.expanded]="expanded">
+      <td style="width: 1rem">
+        <button
+          type="button"
+          pButton
+          pRipple
+          [pRowToggler]="item"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+        ></button>
+      </td>
+      <td class="task">
+        <span>ta</span>
+        {{
+          currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
+        }}
+      </td>
+
+      <td style="width: 15%">
+        <button
+          (click)="addOperation(item)"
+          *appCheckPermissions="['subPrograms.create']"
+          [pTooltip]="'hints.addOperation' | translate"
+          class="p-button-rounded p-button-info p-mr-2 action"
+          icon="pi pi-plus"
+          pButton
+          pRipple
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="rowexpansion" let-task>
+    <tr>
+      <!--<td style="width: 1rem"></td>-->
+      <td [colSpan]="10">
+        <!--        {{ task?.operations | json }}-->
+        <app-sub-program-activity-tasks-operations-view
+          [task]="task"
+        ></app-sub-program-activity-tasks-operations-view>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-toast></p-toast>

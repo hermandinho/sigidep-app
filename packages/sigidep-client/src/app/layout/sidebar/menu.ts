@@ -1,38 +1,149 @@
 import { MenuItem } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
-export const MENU: MenuItem[] = [
-  {
-    label: 'Tableau de bord',
-    icon: 'fa fa-home',
-    routerLink: 'home',
-    routerLinkActiveOptions: { exact: true },
-    state: {
-      permissions: [],
-    }
-  },
-  {
-    label: 'Paramètres',
-    icon: 'fas fa-boxes',
-    // routerLink: 'offices',
-    // routerLinkActiveOptions: { exact: true },
-    state: {
-      permissions: [
+const simpleCrudPermissions = (key: string) =>
+  ['create', 'read', 'update', 'delete'].map((op) => `${key}.${op}`);
+
+export const MenuPermissions = {
+  exercises_menu: [...simpleCrudPermissions('exercises')],
+  roles_menu: [...simpleCrudPermissions('roles')],
+  financial_sources: [...simpleCrudPermissions('financialSources')],
+  administrative_units: [...simpleCrudPermissions('administrativeUnits')],
+  technical_supervisor: [...simpleCrudPermissions('technicalSupervisions')],
+  paragraphs: [...simpleCrudPermissions('paragraphs')],
+  sub_programs: [...simpleCrudPermissions('subPrograms')],
+  referencePhysicalUnits: [...simpleCrudPermissions('referencePhysicalUnits')],
+};
+
+export const I18NMenus = (translate: TranslateService): MenuItem[] => {
+  return [
+    {
+      label: translate.instant('sidebar.dashboard'),
+      icon: 'pi pi-th-large',
+      routerLink: 'home',
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+    },
+    {
+      separator: true,
+      label: `------ ${translate.instant('sidebar.elaboration')} --------`,
+    },
+    {
+      routerLink: 'exercises',
+      icon: 'pi pi-calendar',
+      label: translate.instant('sidebar.exercises'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [...MenuPermissions.exercises_menu],
+      },
+    },
+    {
+      separator: true,
+      label: `------ ${translate.instant('sidebar.system')} --------`,
+    },
+    {
+      icon: 'pi pi-briefcase',
+      label: translate.instant('sidebar.structure'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [
+        {
+          routerLink: 'offices',
+          icon: 'pi pi-cog',
+          label: translate.instant('sidebar.settings'),
+          routerLinkActiveOptions: { exact: true },
+        },
+        {
+          routerLink: 'administrative-units',
+          icon: 'pi pi-filter',
+          label: translate.instant('sidebar.administrativeUnits'),
+          routerLinkActiveOptions: { exact: true },
+        },
+        {
+          routerLink: 'financial-sources',
+          icon: 'pi pi-euro',
+          label: translate.instant('sidebar.financialSources'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.administrative_units],
+          },
+        },
+        {
+          routerLink: 'sub-programs',
+          icon: 'pi pi-sitemap',
+          label: translate.instant('sidebar.subPrograms'),
+          routerLinkActiveOptions: { exact: false },
+          state: {
+            permissions: [...MenuPermissions.sub_programs],
+          },
+        },
+        {
+          routerLink: 'technical-supervisors',
+          icon: 'pi pi-shield',
+          label: translate.instant('sidebar.technicalSupervision'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.technical_supervisor],
+          },
+        },
+        {
+          routerLink: 'reference-physical-units',
+          icon: 'pi pi-book',
+          label: translate.instant('sidebar.deliverables'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.referencePhysicalUnits],
+          },
+        },
+        {
+          routerLink: 'paragraphs',
+          icon: 'pi pi-list',
+          label: translate.instant('sidebar.paragraphs'),
+          routerLinkActiveOptions: { exact: true },
+        },
       ],
     },
-    items: [
-      {
-        routerLink: 'offices',
-        label: 'Param 1',
-        routerLinkActiveOptions: { exact: true },
+    {
+      label: translate.instant('sidebar.addresses'),
+      icon: 'pi pi-globe',
+      // routerLink: 'offices',
+      // routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
       },
-      {
-        routerLink: 'installations',
-        label: 'Params 2',
-        routerLinkActiveOptions: { exact: true },
-        state: {
-          permissions: [],
+      items: [
+        {
+          routerLink: 'offices',
+          icon: 'pi pi-globe',
+          label: translate.instant('sidebar.regions'),
+          routerLinkActiveOptions: { exact: true },
         },
+        {
+          routerLink: 'offices',
+          icon: 'pi pi-globe',
+          label: translate.instant('sidebar.arrondissements'),
+          routerLinkActiveOptions: { exact: true },
+        },
+        {
+          routerLink: 'offices',
+          icon: 'pi pi-globe',
+          label: translate.instant('sidebar.departements'),
+          routerLinkActiveOptions: { exact: true },
+        },
+      ],
+    },
+    {
+      routerLink: 'roles',
+      icon: 'pi pi-lock',
+      label: translate.instant('sidebar.roles'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [...MenuPermissions.roles_menu],
       },
-    ],
-  },
-];
+    },
+  ];
+};

@@ -1,0 +1,128 @@
+<p-card>
+  <p-toolbar
+    styleClass="p-mb-4"
+    *appCheckPermissions="['exercises.create', 'exercises.delete']"
+  >
+    <ng-template pTemplate="left">
+      <button
+        (click)="openForm()"
+        *appCheckPermissions="['exercises.create']"
+        [label]="'buttons.create' | translate"
+        class="p-button-success p-mr-2"
+        icon="pi pi-plus"
+        pButton
+        pRipple
+      ></button>
+      <ng-container>
+        <button
+          (click)="deleteSelectedItems()"
+          *appCheckPermissions="['exercises.delete']"
+          [disabled]="!selectedItems?.length"
+          class="p-button-danger"
+          icon="pi pi-trash"
+          pButton
+          pRipple
+        ></button>
+      </ng-container>
+    </ng-template>
+    <ng-template pTemplate="right"> </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [(selection)]="selectedItems"
+    [globalFilterFields]="['startDate', 'endDate', 'status']"
+    [loading]="(loading$ | async) || false"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="10"
+    [sortMode]="'single'"
+    [showCurrentPageReport]="true"
+    [value]="data"
+    [currentPageReportTemplate]="'tables.stats.pager' | translate"
+    dataKey="id"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-m-0">{{ "tables.titles.exercises" | translate }}</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target, 'contains')"
+            [placeholder]="'labels.search' | translate"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <ng-container
+          *ngFor="let column of tableColumns; trackBy: trackByIndex"
+        >
+          <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+            {{ column.title | translate }}
+            <p-sortIcon [field]="column.field"></p-sortIcon>
+          </th>
+          <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+        </ng-container>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          <p-tableCheckbox
+            [value]="item"
+            *ngIf="item?.status !== 'active'"
+          ></p-tableCheckbox>
+          <p-checkbox
+            [disabled]="true"
+            *ngIf="item?.status === 'active'"
+          ></p-checkbox>
+        </td>
+
+        <td *ngFor="let column of tableColumns">
+          <span *ngIf="column.field === 'status'">
+            <p-tag
+              [severity]="getTagSeverity(item.status)"
+              [value]="'exerciseStatuses.' + item[column.field] | translate"
+            ></p-tag>
+          </span>
+          <span *ngIf="column.field !== 'status'">
+            {{ item[column.field] }}
+          </span>
+        </td>
+        <td>
+          <button
+            (click)="edit(item)"
+            *appCheckPermissions="['exercises.update']"
+            class="p-button-rounded p-button-success p-mr-2"
+            icon="pi pi-pencil"
+            pButton
+            pRipple
+          ></button>
+          <button
+            (click)="delete(item)"
+            *appCheckPermissions="['exercises.delete']"
+            [disabled]="item?.status === 'active'"
+            class="p-button-rounded p-button-warning"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <!--          In total there are {{products ? products.length : 0 }} products.-->
+      </div>
+    </ng-template>
+  </p-table>
+</p-card>

@@ -1,3 +1,414 @@
 {
-  "hello": "En version"
+  "hello": "En version",
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "exercises": "Exercices",
+    "structure": "Structure",
+    "settings": "Paramètres",
+    "financialSources": "Sources de financement",
+    "technicalSupervision": "Tutelle Techniques",
+    "deliverables": "Unités physiques",
+    "paragraphs": "Paragraphs",
+    "addresses": "Addresses",
+    "regions": "Régions",
+    "arrondissements": "Arrondissements",
+    "departements": "Départements",
+    "system": "Système",
+    "elaboration": "Elaboration",
+    "roles": "Rôles",
+    "administrativeUnits": "Unités administratives",
+    "subPrograms": "Sous programmes"
+  },
+  "buttons": {
+    "save": "Enregistrer",
+    "busy": "En cours ...",
+    "login": "Connexion",
+    "create": "Créer",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "update": "Modifier",
+    "apply": "Appliquer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "addObjective": "Ajouter un objectif",
+    "addIndicator": "Ajouter un indicateur",
+    "new": "Ajouter",
+    "save&quit": "Enregistrer & quitter",
+    "monthlyBreakdown": "Ventilation mensuelle",
+    "quarterlyBreakdown": "Ventilation trimestrielle",
+    "halfYearlyBreakdown": "Ventilation semestrielle",
+    "program": "Programmer"
+  },
+  "install": {
+    "title": "Installation"
+  },
+  "labels": {
+    "structureCode": "Code Structure",
+    "structureNameFr": "Nom de structure(FR)",
+    "structureNameEn": "Nom de structure(EN)",
+    "structureDescriptionFr": "Présentation de structure(FR)",
+    "structureDescriptionEn": "Présentation de structure(EN)",
+    "structureMissionFr": "Mission de structure(FR)",
+    "structureMissionEn": "Mission de structure(EN)",
+    "structureAddress": "Addresse",
+    "emailOrUserName": "Email / Nom d'utilisateur",
+    "password": "Mot de passe",
+    "welcome": "Bienvenue",
+    "welcomeMessage": "Bienvenue à bord {{name}}",
+    "search": "Rechercher...",
+    "startDate": "Date de debut",
+    "endDate": "Date de fin",
+    "label": "Libellé",
+    "labelFr": "Libellé (FR)",
+    "labelEn": "Libellé (EN)",
+    "code": "Code",
+    "abbreviationFr": "Abréviation (FR)",
+    "abbreviationEn": "Abréviation (EN)",
+    "financialSourcesAcceptsDeliverables": "Nécessite des unités physiques?",
+    "yes": "Oui",
+    "no": "Non",
+    "primaryFunction": "Fonction principale",
+    "secondaryFunction": "Fonction secondaire",
+    "category": "Catégorie",
+    "sector": "Secteur",
+    "region": "Région",
+    "status": "Status",
+    "nature": "Nature du paragraphe",
+    "presentationFr": "Présentation (FR)",
+    "presentationEn": "Présentation (EN)",
+    "exercise": "Exercice",
+    "chapter": "Chapitre",
+    "strategiesFr": "Strategies (FR)",
+    "strategiesEn": "Strategies (EN)",
+    "measurementUnit": "Unité de mesure",
+    "referenceValue": "Valuer de reference",
+    "referenceYear": "Année de reference",
+    "targetYear": "Année cible",
+    "targetValue": "Valuer cible",
+    "isMultiYear": "Pluriannuelle",
+    "verificationSourceFr": "Source de verification(FR)",
+    "verificationSourceEn": "Source de verification(EN)",
+    "engagementAuthorization": "Autorisations d'engagement",
+    "objectivesFr": "Objectifs(FR)",
+    "objectivesEn": "Objectifs(EN)",
+    "stakeHoldersFr": "Parties Prenantes(FR)",
+    "stakeHoldersEn": "Parties Prenantes(EN)",
+    "resultsFr": "Résultats(FR)",
+    "resultsEn": "Résultats(EN)",
+    "indicatorsFr": "Indicateurs(FR)",
+    "indicatorsEn": "Indicateurs(EN)",
+    "managementMode": "Mode de Gestion",
+    "managerName": "Gestionaire",
+    "department": "Département",
+    "arrondissement": "Arrondissement",
+    "locality": "Localité",
+    "localization": "Localisation géographique",
+    "codification": "Codification",
+    "quantity": "Qté",
+    "unitPrice": "P.U",
+    "totalPrice": "Montant Total",
+    "subProgram": "Sous programme",
+    "task": "Tâche",
+    "activity": "Activité",
+    "imputation": "Imputation",
+    "paragraph": "Paragraphe",
+    "paymentCreditN1": "Crédits de Paiement N+1",
+    "paymentCreditN2": "Crédits de Paiement N+2",
+    "paymentCreditN3": "Crédits de Paiement N+3",
+    "deliverablesFr": "Livrables (FR)",
+    "deliverablesEn": "Livrables (EN)",
+    "spacing": "Ecart",
+    "referencePhysicalUnit": "Unité physique de référence",
+    "programmedReferencePhysicalUnit": "Unités physique de programmées",
+    "addReferencePhysicalUnit": "Programmer une unités physique"
+  },
+  "hints": {
+    "structureCode": "Ce code doit être composé de 2 caractères.",
+    "deletePhysicalReferencesOnParagraphChange": "Toutes les unités physiques programmées seront supprimées suite à la modification de ce paragraphe.",
+    "addTask": "Ajouter une tâche",
+    "addActivity": "Ajouter une activité",
+    "addOperation": "Ajouter une opération"
+  },
+  "auth": {
+    "loginTitle": "Se connecter"
+  },
+  "errors": {
+    "error": "Erreur",
+    "success": "Succès",
+    "unauthorized": "Oups!",
+    "unknown": "Une erreur est survenue lors de cette opération",
+    "auth": {
+      "invalidCredentials": "Compte utilisateur introuvable",
+      "accountInactive": "Ce compte est désactivé",
+      "error": "Une erreur est survenue lors de l'opération"
+    },
+    "exercises": {
+      "conflict": "Cette plage de date n'est plus disponible."
+    },
+    "permissions": {
+      "apply": "Une erreur est survenue lors de la modification des permissions."
+    },
+    "roles": {
+      "delete": "Une erreur est survenue lors de la suppression de ce rôle.",
+      "conflict": "Un rôle avec ce nom existe déjà."
+    },
+    "financialSources": {
+      "delete": "Une erreur est survenue lors de la suppression de cette source de finnancement.",
+      "conflict": "Une source de finnancement avec ce code existe déjà."
+    },
+    "administrativeUnits": {
+      "delete": "Une erreur est survenue lors de la suppression de cette unité administrative.",
+      "conflict": "Une unité administrative avec ce code existe déjà."
+    },
+    "technicalSupervisions": {
+      "delete": "Une erreur est survenue lors de la suppression de cette tutelle technique.",
+      "conflict": "Une tutelle technique avec ce code existe déjà."
+    },
+    "paragraphs": {
+      "delete": "Une erreur est survenue lors de la suppression de ce paragraphe.",
+      "conflict": "Un paragraphe avec ce code existe déjà."
+    },
+    "subPrograms": {
+      "delete": "Une erreur est survenue lors de la suppression de ce sous program.",
+      "conflict": "Un sous program avec ce code existe déjà.",
+      "activityConflict": "Une activité avec ce code existe déjà dans ce sous program.",
+      "activityTaskConflict": "Une tâche avec ce code existe déjà dans cette activité."
+    }
+  },
+  "messages": {
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "success": "Succès",
+    "exercises": {
+      "createSuccess": "Exercices crée avec succès.",
+      "deleteSuccess": "Exercice(s) supprimés avec succès."
+    },
+    "permissions": {
+      "applySuccess": "Permissions appliquées avec succès."
+    },
+    "roles": {
+      "deleteSuccess": "Rôle supprimé avec succès.",
+      "createSuccess": "Rôle crée avec succès."
+    },
+    "financialSources": {
+      "deleteSuccess": "Source de financement supprimé avec succès.",
+      "createSuccess": "Source de financement crée avec succès."
+    },
+    "administrativeSources": {
+      "deleteSuccess": "Unité administrative supprimé avec succès.",
+      "createSuccess": "Unité administrative crée avec succès."
+    },
+    "technicalSupervisions": {
+      "deleteSuccess": "Tutelle Technique supprimé avec succès.",
+      "createSuccess": "Tutelle Technique crée avec succès."
+    },
+    "paragraphs": {
+      "deleteSuccess": "Paragraphe supprimé avec succès.",
+      "createSuccess": "Paragraphe crée avec succès."
+    },
+    "subPrograms": {
+      "deleteSuccess": "Sous program supprimé avec succès.",
+      "createSuccess": "Sous program crée avec succès.",
+      "createActivitySuccess": "Activité crée avec succès.",
+      "createActivityTaskSuccess": "Tâche créée avec succès."
+    }
+  },
+  "menus": {
+    "profile": "Mon profile",
+    "logout": "Déconnexion"
+  },
+  "breadcrumb": {
+    "exercises": "Exercices",
+    "dashboard": "Tableau de bord",
+    "roles": "Rôles",
+    "financialsources": "Sources de financement",
+    "administrativeunits": "Unités administratives",
+    "technicalsupervisors": "Tutelle Techniques",
+    "paragraphs": "Paragraphes",
+    "subprograms": "Sous programs",
+    "list": "Liste",
+    "create": "Nouveau",
+    "referencePhysicalUnits": "Unités physiques de référence"
+  },
+  "tables": {
+    "emptyMessage": "Aucun élément",
+    "titles": {
+      "exercises": "Liste des exercises",
+      "financialSources": "Sources de financements",
+      "administrativeUnits": "Unités administratives",
+      "technicalSupervisions": "Tutelle Techniques",
+      "paragraphs": "Paragraphes"
+    },
+    "headers": {
+      "exerciseCode": "Code",
+      "code": "Code",
+      "startDate": "Date début",
+      "endDate": "Date fin",
+      "status": "Status",
+      "label": "Libellé",
+      "labelFr": "Libellé (FR)",
+      "labelEn": "Libellé (EN)",
+      "abbreviationFr": "Abréviation (FR)",
+      "abbreviationEn": "Abréviation (EN)",
+      "acceptsDeliverables": "Nécessite des unités physiques",
+      "section": "Section",
+      "category": "Catégorie",
+      "sector": "Secteur",
+      "region": "Région",
+      "nature": "Nature",
+      "referenceValue": "Valeur référence",
+      "referenceYear": "Année référence",
+      "targetValue": "Valeur cible",
+      "targetYear": "Année cible",
+      "measurementUnit": "Unité de mesure",
+      "administrativeUnit": "Unité de administrative",
+      "financialSource": "Source fin.",
+      "yearN1": "Année N + 1",
+      "yearN2": "Année N + 2",
+      "yearN3": "Année N + 3"
+    },
+    "stats": {
+      "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
+      "pagerEnVersion juste to keep 😂": "Showing {first} to {last} of {totalRecords} entries"
+    }
+  },
+  "dialogs": {
+    "headers": {
+      "createExercise": "Céer un exercice",
+      "editExercise": "Modifier un exercice",
+      "confirm": "Confirmez-vous cette action?",
+      "createRole": "Céer un rôle",
+      "editRole": "Modifier un rôle",
+      "createFinancialSource": "Céer une source de financement",
+      "editFinancialSource": "Modifier une source de financement",
+      "createAdministrativeUnit": "Céer une unité administrative",
+      "editAdministrativeUnit": "Modifier une unité administrative",
+      "createTechnicalSupervisor": "Modifier une tutelle technique",
+      "editTechnicalSupervisor": "Modifier une tutelle technique",
+      "createParagraph": "Céer un paragraphe",
+      "editParagraph": "Modifier un paragraphe",
+      "createObjective": "Céer un objectif",
+      "editObjective": "Modifier un objectif",
+      "updateObjectiveIndicator": "Modifier un indicateur",
+      "createObjectiveIndicator": "Céer un indicateur",
+      "createActivityTask": "Céer une tâche",
+      "editActivityTask": "Modifier une tâche",
+      "createActivityTaskOperation": "Céer une opération",
+      "updateActivityTaskOperation": "Modifier une opération"
+    },
+    "messages": {
+      "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
+      "deleteExercises": "Voulez-vous vraiment supprimer ces exercises? Cette action est irréversible.",
+      "deleteRole": "Voulez-vous vraiment supprimer ce rôle? Cette action est irréversible.",
+      "deleteFinancialSource": "Voulez-vous vraiment supprimer cette source de financement? Cette action est irréversible.",
+      "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible.",
+      "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
+      "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
+      "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible."
+    }
+  },
+  "exerciseStatuses": {
+    "in_progress": "En cours",
+    "archived": "Archivé",
+    "preparing": "Préparation",
+    "following": "Suivi"
+  },
+  "permissions": {
+    "structures": {
+      "title": "Gestion des la structure",
+      "update": {
+        "title": "Modifier la structure",
+        "description": "Modifier les paramètres de la structure."
+      }
+    },
+    "users": {
+      "title": "Gestion d'utilisateurs",
+      "create": {
+        "title": "Créer des utilisateurs",
+        "description": "Créer des utilisateurs"
+      },
+      "read": {
+        "title": "Lister des utilisateurs",
+        "description": "Consulter la liste des utilisateurs"
+      },
+      "delete": {
+        "title": "Supprimer un utilisateur",
+        "description": "Supprimer des utilisateurs"
+      },
+      "update": {
+        "title": "Modifier un utilisateur",
+        "description": "Modifier les informations d'un utilisateur."
+      }
+    },
+    "exercises": {
+      "title": "Gestion des années budgetaires",
+      "create": {
+        "title": "Créer une année budgetaire",
+        "description": "Créer des années budgetaires"
+      },
+      "read": {
+        "title": "Lister les années budgetaire",
+        "description": "Consulter la liste des années budgétaires"
+      },
+      "delete": {
+        "title": "Supprimer une année budgétaire",
+        "description": "Supprimer les années budgétaires"
+      },
+      "update": {
+        "title": "Modifier une année budgétaire",
+        "description": "Modifier une années budgétaires."
+      }
+    },
+    "programs": {
+      "title": "Gestion des sous programs",
+      "create": {
+        "title": "Créer un sous program",
+        "description": "Créer des sous programs"
+      },
+      "read": {
+        "title": "Lister les sous programs",
+        "description": "Consulter la liste des sous programs"
+      },
+      "delete": {
+        "title": "Supprimer un sous program",
+        "description": "Supprimer les sous programs"
+      },
+      "update": {
+        "title": "Modifier un sous programs",
+        "description": "Modifier un sous program."
+      }
+    }
+  },
+  "steps": {
+    "identification": "Identification",
+    "identificationSubTitle": "Identification du sous program",
+    "objectives": "Objectifs",
+    "objectivesSubTitle": "Objectifs du sous program",
+    "strategies": "Statégies",
+    "strategiesSubTitle": "Statégies du sous program",
+    "managementMode": "Mode de Gestion - Localisation",
+    "costs": "Coûts",
+    "deliverables": "Livrables",
+    "chronogram": "Chronogramme",
+    "physicalUnits": "Unités physiques",
+    "codofication": "Codofication"
+  },
+  "measurementUnits": {
+    "unit": "Unité",
+    "tonnes": "Tonnes",
+    "day": "Jours",
+    "month": "Mois",
+    "year": "Année",
+    "kg": "Kg",
+    "m": "M",
+    "%": "%",
+    "number": "Nombre",
+    "ha": "HA",
+    "ml": "ML"
+  },
+  "managementModes": {
+    "gc": "Gestion Centrale",
+    "cd": "Crédits Délégués",
+    "rt": "Ressources Transférées"
+  }
 }

@@ -1,7 +1,16 @@
-import { AfterLoad, Column, Entity, Unique } from 'typeorm';
+import {
+  AfterLoad,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  Unique,
+} from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from './base.entity';
 import * as bcrypt from 'bcrypt';
+import { RoleEntity } from '@entities/role.entity';
+import { UserAccountStatusEnum } from '@utils/constants';
 
 @Entity({
   name: 'users',
@@ -10,7 +19,7 @@ import * as bcrypt from 'bcrypt';
     lastName: 'ASC',
   },
 })
-@Unique('UQ_EMAIL', ['email'])
+@Unique('UQ_USERNAME', ['username'])
 export class UserEntity extends BaseEntity {
   @Column({ name: 'first_name', nullable: true })
   public firstName: string;
@@ -25,9 +34,6 @@ export class UserEntity extends BaseEntity {
   //   enum: CivilityEnum,
   // })
   // public civility: CivilityEnum;
-
-  @Column({ name: 'email', nullable: false })
-  public email: string;
 
   @Column({ name: 'user_name', nullable: false })
   public username: string;
@@ -50,6 +56,22 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'last_logged_in_at', nullable: true, type: 'timestamptz' })
   public lastConnectedAt?: string;
 
+  @Column({
+    name: 'status',
+    type: 'enum',
+    default: UserAccountStatusEnum.ACTIVE,
+    enum: UserAccountStatusEnum,
+  })
+  public status?: UserAccountStatusEnum;
+
+  // Relations
+  @ManyToOne(() => RoleEntity, (object) => object.users, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'role_id' })
+  public role: RoleEntity;
+
   public async validatePassword(
     pwd: string,
     salt: string,
@@ -57,6 +79,14 @@ export class UserEntity extends BaseEntity {
   ): Promise<boolean> {
     const hash = await bcrypt.hash(pwd, salt);
     return hash === hashPwd;
+  }
+
+  public hashPassword(pwd?: string, salt?: string): Promise<string> {
+    if (!salt && !this.salt) {
+      salt = bcrypt.genSaltSync();
+      this.salt = salt;
+    }
+    return bcrypt.hash(pwd ?? this.password, salt ?? this.salt);
   }
 
   @AfterLoad()

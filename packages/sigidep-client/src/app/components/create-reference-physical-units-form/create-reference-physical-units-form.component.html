@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12" *ngIf="isUpdateForm">
+        <label class="required">{{ "labels.code" | translate }}</label>
+        <p-inputMask
+          class=""
+          formControlName="code"
+          mask="99999999"
+          [placeholder]="'99999999'"
+        ></p-inputMask>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.paragraph" | translate }}</label>
+        <p-dropdown
+          [filterBy]="
+            _translateService.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [filter]="true"
+          [optionLabel]="
+            _translateService.currentLang === 'fr'
+              ? 'formattedLabelFr'
+              : 'formattedLabelEn'
+          "
+          [options]="paragraphs"
+          [placeholder]="'labels.paragraph' | translate"
+          [showClear]="false"
+          optionValue="id"
+          appendTo="body"
+          formControlName="paragraphId"
+        >
+          <ng-template let-item pTemplate="selectedItem">
+            <div>
+              <div>
+                {{
+                  item[
+                    _translateService.currentLang === "fr"
+                      ? "formattedLabelFr"
+                      : "formattedLabelEn"
+                  ]
+                }}
+              </div>
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            <div>
+              <div>
+                {{
+                  item[
+                    _translateService.currentLang === "fr"
+                      ? "formattedLabelFr"
+                      : "formattedLabelEn"
+                  ]
+                }}
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{ "labels.labelFr" | translate }}</label>
+          <input
+            [placeholder]="'labels.labelFr' | translate"
+            class=""
+            formControlName="labelFr"
+            pInputText
+            type="text"
+          />
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{ "labels.labelEn" | translate }}</label>
+          <input
+            [placeholder]="'labels.labelEn' | translate"
+            class=""
+            formControlName="labelEn"
+            pInputText
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

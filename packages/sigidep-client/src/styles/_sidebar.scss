@@ -3,10 +3,10 @@
     > * {
       border: unset !important;
       background-color: var(--blue-500) !important;
-      font: normal normal normal 12px/15px Montserrat !important;
+      font: normal normal normal 16px/15px Montserrat !important;
       letter-spacing: 0px !important;
-      color: #FFFFFF !important;
-      opacity: .5;
+      color: #ffffff !important;
+      opacity: 0.5;
 
       &:focus {
         outline: 0 none;
@@ -14,11 +14,19 @@
         box-shadow: unset !important;
       }
     }
-    >.p-menuitem-link-active {
+    > .p-menuitem-link-active {
       opacity: 1;
-      border-left: 3px solid #FFFFFF !important;
+      border-left: 3px solid #ffffff !important;
       * {
         opacity: 1;
+      }
+    }
+  }
+  .p-panelmenu-panel {
+    &:last-child {
+      .p-panelmenu-content {
+        border-bottom-right-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
       }
     }
   }
@@ -27,7 +35,7 @@
     background-color: rgb(25 31 40 / 10%);
 
     .p-menuitem-link {
-      font: normal normal normal 12px/15px Montserrat !important;
+      font: normal normal normal 16px/15px Montserrat !important;
 
       &.p-menuitem-link-active .p-menuitem-text {
         color: white;
