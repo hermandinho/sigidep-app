@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -16,6 +17,11 @@ import { SubProgramActivityTaskEntity } from '@entities/sub-program-activity-tas
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
 import { FinancialSourcesService } from '@modules/financial-sources/financial-sources.service';
 import { AdministrativeUnitsService } from '@modules/administrative-units/services/administrative-units.service';
+import { SubProgramActivityTaskOperationPhysicalUnitEntity } from '@entities/sub-program-activity-task-operation-physical-unit.entity';
+import { SubProgramActivityTaskOperationEntity } from '@entities/sub-program-activity-task-operation.entity';
+import { CreateSubProgramActivityTaskOperationDto } from '@modules/sub-programs/dto/create-sub-program-activity-task-operation.dto';
+import { AddressesService } from '@modules/addresses/addresses.service';
+import { ParagraphsService } from '@modules/paragraphs/paragraphs.service';
 
 @Injectable()
 export class SubProgramsService {
@@ -26,11 +32,17 @@ export class SubProgramsService {
     private readonly activitiesRepository: Repository<SubProgramActivityEntity>,
     @InjectRepository(SubProgramActivityTaskEntity)
     private readonly activityTasksRepository: Repository<SubProgramActivityTaskEntity>,
+    @InjectRepository(SubProgramActivityTaskOperationEntity)
+    private readonly operationRepository: Repository<SubProgramActivityTaskOperationEntity>,
+    @InjectRepository(SubProgramActivityTaskOperationPhysicalUnitEntity)
+    private readonly operationPhysicalUnitRepository: Repository<SubProgramActivityTaskOperationPhysicalUnitEntity>,
 
     private exercisesService: ExercisesService,
     private structuresService: StructureService,
     private financialSourcesService: FinancialSourcesService,
     private administrativeUnitsService: AdministrativeUnitsService,
+    private addressesService: AddressesService,
+    private paragraphsService: ParagraphsService,
   ) {}
 
   public async filter() {
@@ -39,6 +51,13 @@ export class SubProgramsService {
       .leftJoinAndSelect('s.owner', 'o')
       .leftJoinAndSelect('s.activities', 'a')
       .leftJoinAndSelect('a.tasks', 't')
+      .leftJoinAndSelect('t.operations', 'op')
+      .leftJoinAndSelect('op.arrondissement', 'ar')
+      .leftJoinAndSelect('op.region', 're')
+      .leftJoinAndSelect('op.department', 'dep')
+      .leftJoinAndSelect('op.paragraph', 'par')
+      .leftJoinAndSelect('op.physicalUnits', 'units')
+      .leftJoinAndSelect('units.referencePhysicalUnit', 'ref')
       .leftJoinAndSelect('t.financialSource', 'fs')
       .leftJoinAndSelect('s.exercise', 'e')
       .leftJoinAndSelect('t.administrativeUnit', 'au')
@@ -86,6 +105,7 @@ export class SubProgramsService {
         endDate: identification.endDate,
         objectives,
         strategies,
+        createdBy: user,
       }),
     );
   }
@@ -171,5 +191,122 @@ export class SubProgramsService {
         ...(user && { createdBy: user }),
       }),
     );
+  }
+
+  public async createActivityTaskOperation(
+    taskId: number,
+    param: CreateSubProgramActivityTaskOperationDto,
+    user?: UserEntity,
+  ) {
+    const task = await this.activityTasksRepository.findOne(taskId, {
+      loadEagerRelations: false,
+    });
+
+    if (!task) {
+      throw new NotFoundException('task not found');
+    }
+
+    const paragraph = await this.paragraphsService
+      .getRepository()
+      .findOne(param.paragraphId, {
+        loadEagerRelations: false,
+      });
+
+    if (!paragraph) {
+      throw new NotFoundException('paragraph not found');
+    }
+
+    const check = await this.operationRepository.findOne(
+      {
+        imputation: param.imputation,
+        task,
+        paragraph,
+      },
+      { loadEagerRelations: false },
+    );
+
+    if (check) {
+      throw new ConflictException();
+    }
+
+    const region = await this.addressesService
+      .getRegionsRepository()
+      .findOne(param.regionId, {
+        loadEagerRelations: false,
+      });
+
+    if (!region) {
+      throw new NotFoundException('region not found');
+    }
+
+    const department = await this.addressesService
+      .getDepartmentsRepository()
+      .findOne(param.departmentId, {
+        loadEagerRelations: false,
+      });
+
+    if (!department) {
+      throw new NotFoundException('region not found');
+    }
+
+    const arrondissement = await this.addressesService
+      .getArrondissementsRepository()
+      .findOne(param.arrondissementId, {
+        loadEagerRelations: false,
+      });
+
+    if (!arrondissement) {
+      throw new NotFoundException('region not found');
+    }
+
+    const operation = await this.operationRepository.save(
+      new SubProgramActivityTaskOperationEntity({
+        labelEn: param.labelEn,
+        labelFr: param.labelFr,
+        deliverablesEn: param.deliverablesEn,
+        deliverablesFr: param.deliverablesFr,
+        chronogram: param.chronogram,
+        imputation: param.imputation,
+        locality: param.locality,
+        managementMode: param.managementMode,
+        managerName: param.managerName,
+        paymentCreditN1: param.paymentCreditN1 || 0,
+        paymentCreditN2: param.paymentCreditN2 || 0,
+        paymentCreditN3: param.paymentCreditN3 || 0,
+        engagementAuthorization: param.engagementAuthorization || 0,
+        verificationSourceEn: param.verificationSourceEn,
+        verificationSourceFr: param.verificationSourceFr,
+        task,
+        paragraph,
+        region,
+        department,
+        arrondissement,
+        createdBy: user,
+      }),
+    );
+
+    if (param.physicalUnits?.length && operation) {
+      try {
+        await this.operationPhysicalUnitRepository.insert(
+          param.physicalUnits.map((item) => {
+            return new SubProgramActivityTaskOperationPhysicalUnitEntity({
+              referencePhysicalUnit: { id: item.id },
+              unitPrice: item.unitPrice,
+              quantity: item.quantity,
+              totalPrice: item.totalPrice || item.unitPrice * item.quantity,
+              operation,
+              createdBy: user,
+            });
+          }),
+        );
+      } catch (e) {
+        await this.operationRepository.remove(operation);
+      }
+    }
+
+    if (!operation) {
+      throw new BadRequestException();
+    }
+    return operation;
   }
 }

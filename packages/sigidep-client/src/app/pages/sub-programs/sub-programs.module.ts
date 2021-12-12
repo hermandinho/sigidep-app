@@ -18,6 +18,7 @@ import { CreateSubProgramActivityTaskOperationFormComponent } from '../../compon
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
+import { SubProgramActivityTasksOperationsViewComponent } from '../../views/sub-program-activity-tasks-operations-view/sub-program-activity-tasks-operations-view.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     CreateSubProgramActivityTaskFormComponent,
     SubProgramActivityTasksViewComponent,
     CreateSubProgramActivityTaskOperationFormComponent,
+    SubProgramActivityTasksOperationsViewComponent,
   ],
   imports: [
     SharedModule,

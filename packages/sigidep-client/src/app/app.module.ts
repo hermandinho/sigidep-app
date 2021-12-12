@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,9 @@ import { TechnicalSupervisorsModule } from '@pages/technical-supervisors/technic
 import { ParagraphsModule } from '@pages/paragraphs/paragraphs.module';
 import { SubProgramsModule } from '@pages/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/reference-physical-units.module';
+import localeFr from '@angular/common/locales/fr';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeFr);
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -72,7 +75,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubProgramsModule,
     ReferencePhysicalUnitsModule,
   ],
-  providers: [AppInstallCheckGuard, AuthGuard, IsAuthenticatedGuard],
+  providers: [
+    AppInstallCheckGuard,
+    AuthGuard,
+    IsAuthenticatedGuard,
+    { provide: LOCALE_ID, useValue: 'fr-FR' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

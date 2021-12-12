@@ -2,6 +2,12 @@ import { UserModel } from '@models/user.model';
 import { FinancialSourceModel } from '@models/financial-source.model';
 import { ExerciseModel } from '@models/exercise.model';
 import { AdministrativeUnitModel } from '@models/administrative-unit.model';
+import { ParagraphModel } from '@models/paragraph.model';
+import {
+  ArrondissementModel,
+  DepartmentModel,
+  RegionsModel,
+} from '@models/addresses.model';
 
 class SubProgramBaseModel {
   id!: number;
@@ -98,4 +104,39 @@ export class SubProgramActivityTaskModel extends SubProgramActivityModel {
   engagementAuthorization?: number;
   financialSource!: FinancialSourceModel;
   administrativeUnit!: AdministrativeUnitModel;
+  operations!: SubProgramActivityTaskOperationModel[];
+}
+
+export class SubProgramActivityTaskOperationModel {
+  labelFr!: string;
+  labelEn!: string;
+  deliverablesFr!: string;
+  deliverablesEn!: string;
+  imputation!: string;
+  verificationSourceFr!: string;
+  verificationSourceEn!: string;
+  engagementAuthorization!: number;
+  paymentCreditN1!: number;
+  paymentCreditN2!: number;
+  paymentCreditN3!: number;
+  managementMode!: string;
+  managerName!: string;
+  locality!: string;
+  chronogram!: { label: string; value: number }[];
+  physicalUnits!: {
+    id: number;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+  }[];
+  paragraph!: ParagraphModel;
+  region!: RegionsModel;
+  department!: DepartmentModel;
+  arrondissementId!: ArrondissementModel;
+
+  constructor(params?: Partial<SubProgramActivityTaskOperationModel>) {
+    if (params) {
+      Object.assign(this, params);
+    }
+  }
 }

@@ -7,29 +7,6 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="header">
-    <!--<tr>
-      <th style="width: 3rem">N°</th>
-      <th>{{ "tables.headers.labelFr" | translate }}</th>
-      <th>{{ "tables.headers.labelEn" | translate }}</th>
-      <th style="width: 3rem">
-        {{ "tables.headers.referenceValue" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.referenceYear" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.targetValue" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.targetYear" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.measurementUnit" | translate }}
-      </th>
-      <th style="width: 8rem"></th>
-    </tr>-->
-  </ng-template>
   <ng-template pTemplate="body" let-item let-expanded="expanded">
     <tr [class.expanded]="expanded">
       <td style="width: 1rem">
@@ -48,17 +25,12 @@
           currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
         }}
       </td>
-      <td>------</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
+      <td style="width: 15%">
         <button
           (click)="addTask(item)"
           *appCheckPermissions="['subPrograms.create']"
           [pTooltip]="'hints.addTask' | translate"
-          class="p-button-rounded p-button-warning p-mr-2"
+          class="p-button-rounded p-button-warning p-mr-2 action"
           icon="pi pi-plus"
           pButton
           pRipple
@@ -67,7 +39,7 @@
 
         <button
           *appCheckPermissions="['subPrograms.create']"
-          class="p-button-rounded p-button-info p-mr-2"
+          class="p-button-rounded p-button-info p-mr-2 action"
           icon="pi pi-pencil"
           pButton
           pRipple
@@ -78,7 +50,7 @@
 
   <ng-template pTemplate="rowexpansion" let-activity>
     <tr>
-      <td style="width: 1rem"></td>
+      <!--      <td style="width: 1rem"></td>-->
       <td [colSpan]="10">
         <!--{{ activity | json }}-->
         <app-sub-program-activity-tasks-view

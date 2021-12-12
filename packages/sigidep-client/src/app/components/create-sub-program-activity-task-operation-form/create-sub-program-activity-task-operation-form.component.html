@@ -259,6 +259,13 @@
             </div>
           </ng-template>
         </p-dropdown>
+        <small
+          class="p-error"
+          *ngIf="stepButtons['5'] && physicalUnitsFormArray?.controls?.length"
+          >{{
+            "hints.deletePhysicalReferencesOnParagraphChange" | translate
+          }}</small
+        >
       </div>
 
       <div class="p-field">
@@ -295,15 +302,11 @@
         "
       >
         <label class="required">{{ "labels." + item | translate }}</label>
-        <div class="p-inputgroup">
-          <input
-            type="number"
-            pInputText
-            [placeholder]="'labels.' + item | translate"
-            [formControlName]="item"
-          />
-          <span class="p-inputgroup-addon">CFA</span>
-        </div>
+        <p-inputNumber
+          [minFractionDigits]="2"
+          [formControlName]="item"
+          locale="fr-FR"
+        ></p-inputNumber>
       </div>
 
       <p-footer>
@@ -463,7 +466,7 @@
     </div>
 
     <div
-      class="step-3 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
+      class="step-4 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
       *ngIf="activeStep === 4 && chronogramFormArray"
     >
       <!--<pre>
@@ -515,19 +518,19 @@
 
       <div class="buttons p-d-flex p-jc-evenly">
         <button
-          (click)="monthlyBreakDown('month')"
+          (click)="budgetBreakDown('month')"
           [label]="'buttons.monthlyBreakdown' | translate"
           class="p-button-rounded p-button-warning"
           pButton
         ></button>
         <button
-          (click)="monthlyBreakDown('trimester')"
+          (click)="budgetBreakDown('trimester')"
           [label]="'buttons.quarterlyBreakdown' | translate"
           class="p-button-rounded p-button-help"
           pButton
         ></button>
         <button
-          (click)="monthlyBreakDown('semester')"
+          (click)="budgetBreakDown('semester')"
           [label]="'buttons.halfYearlyBreakdown' | translate"
           class="p-button-rounded p-button-danger"
           pButton
@@ -542,10 +545,192 @@
     </div>
 
     <div
-      class="step-3 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
+      class="step-5 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
       *ngIf="activeStep === 5"
     >
-      {{ stepButtons | json }}
+      <p-fieldset [legend]="'labels.addReferencePhysicalUnit' | translate">
+        <div class="p-grid">
+          <div class="p-field p-col-12">
+            <label class="required">{{
+              "labels.referencePhysicalUnit" | translate
+            }}</label>
+
+            <p-dropdown
+              [(ngModel)]="
+                addReferencePhysicalUnitFormItems.referencePhysicalUnitId
+              "
+              [ngModelOptions]="{ standalone: true }"
+              [optionLabel]="
+                currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
+              "
+              [options]="referencePhysicalUnitsSelectData"
+              [placeholder]="'labels.referencePhysicalUnit' | translate"
+              [showClear]="false"
+              appendTo="body"
+              optionValue="id"
+            >
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>
+                    {{
+                      option[
+                        currentLang === "fr"
+                          ? "formattedLabelFr"
+                          : "formattedLabelEn"
+                      ]
+                    }}
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>
+                    {{
+                      option[
+                        currentLang === "fr"
+                          ? "formattedLabelFr"
+                          : "formattedLabelEn"
+                      ]
+                    }}
+                  </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+
+          <ng-container
+            *ngIf="addReferencePhysicalUnitFormItems.referencePhysicalUnitId"
+          >
+            <div class="p-field p-col-4">
+              <label class="required">{{
+                "labels.quantity" | translate
+              }}</label>
+              <input
+                [(ngModel)]="addReferencePhysicalUnitFormItems.quantity"
+                [ngModelOptions]="{ standalone: true }"
+                [placeholder]="'labels.quantity' | translate"
+                min="0"
+                pInputText
+                type="number"
+              />
+            </div>
+
+            <div class="p-field p-col-4">
+              <label class="required">{{
+                "labels.unitPrice" | translate
+              }}</label>
+              <p-inputNumber
+                [minFractionDigits]="2"
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="addReferencePhysicalUnitFormItems.unitPrice"
+                locale="fr-FR"
+              ></p-inputNumber>
+            </div>
+
+            <div class="p-field p-col-4">
+              <label class="required">{{
+                "labels.totalPrice" | translate
+              }}</label>
+              <p-inputNumber
+                [minFractionDigits]="2"
+                [ngModelOptions]="{ standalone: true }"
+                [ngModel]="referencePhysicalUnitAddTotalPrice"
+                locale="fr-FR"
+              ></p-inputNumber>
+            </div>
+
+            <div
+              class="p-col-12"
+              [class.as-flex]="addReferencePhysicalUnitFormItems.editItem"
+            >
+              <button
+                (click)="cancelPhysicalUnitUpdate()"
+                *ngIf="addReferencePhysicalUnitFormItems.editItem"
+                [disabled]="
+                  !addReferencePhysicalUnitFormItems.quantity ||
+                  !addReferencePhysicalUnitFormItems.unitPrice
+                "
+                [label]="'buttons.cancel' | translate"
+                class="p-button-warning"
+                pButton
+              ></button>
+              <button
+                (click)="addOrUpdatePhysicalUnitItem()"
+                [disabled]="
+                  !addReferencePhysicalUnitFormItems.quantity ||
+                  !addReferencePhysicalUnitFormItems.unitPrice
+                "
+                [label]="
+                  'buttons.' +
+                    (addReferencePhysicalUnitFormItems.editItem
+                      ? 'update'
+                      : 'program') | translate
+                "
+                class="p-button-success"
+                pButton
+              ></button>
+            </div>
+          </ng-container>
+        </div>
+      </p-fieldset>
+
+      <p-fieldset
+        [legend]="'labels.programmedReferencePhysicalUnit' | translate"
+        class="p-mt-5"
+      >
+        <table>
+          <thead>
+            <tr>
+              <td>#</td>
+              <td style="width: 50%">
+                {{ "labels.codification" | translate }}
+              </td>
+              <td>{{ "labels.quantity" | translate }}</td>
+              <td>{{ "labels.unitPrice" | translate }}</td>
+              <td>{{ "labels.totalPrice" | translate }}</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of physicalUnitsFormArray?.getRawValue();
+                index as i;
+                trackBy: trackByIndex
+              "
+              [class.editing]="
+                addReferencePhysicalUnitFormItems.editItem?.id === item.id
+              "
+            >
+              <td>{{ i + 1 }}</td>
+              <td>
+                {{
+                  currentLang === "fr"
+                    ? item.formattedLabelFr
+                    : item.formattedLabelEn
+                }}
+              </td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unitPrice | currency: "":"":"":"fr-FR" }}</td>
+              <td>{{ item.totalPrice | currency: "":"":"":"fr-FR" }}</td>
+              <td>
+                <button
+                  (click)="editProgrammedPhysicalUnit(item)"
+                  class="p-button-info p-mr-2"
+                  icon="pi pi-pencil"
+                  pButton
+                ></button>
+                <button
+                  (click)="removeProgrammedPhysicalUnit(i)"
+                  class="p-button-danger"
+                  icon="pi pi-trash"
+                  pButton
+                ></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </p-fieldset>
 
       <p-footer>
         <p-divider></p-divider>
@@ -581,7 +766,7 @@
     <button
       (click)="submit()"
       *ngIf="stepButtons[activeStep.toString()].submit"
-      [disabled]="!currentStepFormValid || busy"
+      [disabled]="!currentStepFormValid || busy || !form?.valid"
       [label]="'buttons.' + (busy ? 'busy' : 'save') | translate"
       class="p-button-success"
       pButton

@@ -1,3 +1,10 @@
+/*
+ * Built with ❣️ by El Manifico
+ *
+ * Email: hdemsongtsamo@gmail.com
+ * Date: 12/11/21, 1:28 PM
+ */
+
 import {
   ArrayMinSize,
   IsArray,

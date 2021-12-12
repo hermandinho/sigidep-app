@@ -37,7 +37,8 @@
     "save&quit": "Enregistrer & quitter",
     "monthlyBreakdown": "Ventilation mensuelle",
     "quarterlyBreakdown": "Ventilation trimestrielle",
-    "halfYearlyBreakdown": "Ventilation semestrielle"
+    "halfYearlyBreakdown": "Ventilation semestrielle",
+    "program": "Programmer"
   },
   "install": {
     "title": "Installation"
@@ -102,10 +103,32 @@
     "department": "Département",
     "arrondissement": "Arrondissement",
     "locality": "Localité",
-    "localization": "Localisation géographique"
+    "localization": "Localisation géographique",
+    "codification": "Codification",
+    "quantity": "Qté",
+    "unitPrice": "P.U",
+    "totalPrice": "Montant Total",
+    "subProgram": "Sous programme",
+    "task": "Tâche",
+    "activity": "Activité",
+    "imputation": "Imputation",
+    "paragraph": "Paragraphe",
+    "paymentCreditN1": "Crédits de Paiement N+1",
+    "paymentCreditN2": "Crédits de Paiement N+2",
+    "paymentCreditN3": "Crédits de Paiement N+3",
+    "deliverablesFr": "Livrables (FR)",
+    "deliverablesEn": "Livrables (EN)",
+    "spacing": "Ecart",
+    "referencePhysicalUnit": "Unité physique de référence",
+    "programmedReferencePhysicalUnit": "Unités physique de programmées",
+    "addReferencePhysicalUnit": "Programmer une unités physique"
   },
   "hints": {
-    "structureCode": "Ce code doit être composé de 2 caractères."
+    "structureCode": "Ce code doit être composé de 2 caractères.",
+    "deletePhysicalReferencesOnParagraphChange": "Toutes les unités physiques programmées seront supprimées suite à la modification de ce paragraphe.",
+    "addTask": "Ajouter une tâche",
+    "addActivity": "Ajouter une activité",
+    "addOperation": "Ajouter une opération"
   },
   "auth": {
     "loginTitle": "Se connecter"
@@ -269,7 +292,9 @@
       "updateObjectiveIndicator": "Modifier un indicateur",
       "createObjectiveIndicator": "Céer un indicateur",
       "createActivityTask": "Céer une tâche",
-      "editActivityTask": "Modifier une tâche"
+      "editActivityTask": "Modifier une tâche",
+      "createActivityTaskOperation": "Céer une opération",
+      "updateActivityTaskOperation": "Modifier une opération"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

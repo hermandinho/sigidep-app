@@ -37,11 +37,16 @@ export class SubProgramActivityTasksViewComponent
     if (!this.activity || !item || !this.subProgram) {
       return;
     }
+    let invalidParagraphIds: number[] = [];
+    for (let op of item.operations || []) {
+      invalidParagraphIds = invalidParagraphIds.concat(op.paragraph.id);
+    }
     const ret =
       await this._dialogService.launchSubProgramActivityTaskOperationCreateDialog(
         this.subProgram,
         this.activity,
-        item
+        item,
+        invalidParagraphIds
       );
   }
 }

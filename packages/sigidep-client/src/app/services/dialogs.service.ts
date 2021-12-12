@@ -311,6 +311,7 @@ export class DialogsService {
     sp: SubProgramModel,
     act: SubProgramActivityModel,
     task: SubProgramActivityTaskModel,
+    ignoreParagraphIds?: number[],
     item?: any
   ) {
     if (!this.subProgramActivityTaskOperationCreateComponent) {
@@ -340,6 +341,7 @@ export class DialogsService {
           subProgram: sp,
           activity: act,
           task,
+          ignoreParagraphIds,
         },
       }
     );

@@ -1,12 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { UserEntity } from '@entities/user.entity';
-import { SubProgramEntity } from '@entities/sub-program.entity';
-import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
 import { FinancialSourceEntity } from '@entities/financial-source.entity';
 import { AdministrativeUnitEntity } from '@entities/administrative-unit.entity';
+import { SubProgramActivityTaskOperationEntity } from '@entities/sub-program-activity-task-operation.entity';
 
 @Entity({
   name: 'sub_program_activity_tasks',
@@ -111,6 +110,12 @@ export class SubProgramActivityTaskEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'administrative_unit_id' })
   administrativeUnit: AdministrativeUnitEntity;
+
+  @OneToMany(
+    () => SubProgramActivityTaskOperationEntity,
+    (object) => object.task,
+  )
+  operations: SubProgramActivityTaskOperationEntity[];
 
   constructor(
     params?: Partial<

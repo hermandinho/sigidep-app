@@ -16,6 +16,7 @@ import { UserEntity } from '@entities/user.entity';
 import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-program.dto';
 import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
+import { CreateSubProgramActivityTaskOperationDto } from '@modules/sub-programs/dto/create-sub-program-activity-task-operation.dto';
 
 @Controller('sub-programs')
 @ApiTags('Sub programs')
@@ -58,5 +59,15 @@ export class SubProgramsController {
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.createActivityTask(id, actId, payload, user);
+  }
+
+  @Post('/:id/activity/:actId/task/:taskId/operation')
+  @UseGuards(new PermissionsGuard(['subPrograms.create']))
+  public async createActivityTaskOperation(
+    @Param('taskId') taskId: number,
+    @Body(ValidationPipe) payload: CreateSubProgramActivityTaskOperationDto,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    return this.services.createActivityTaskOperation(taskId, payload, user);
   }
 }

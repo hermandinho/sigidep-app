@@ -7,29 +7,6 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="header">
-    <!--<tr>
-      <th style="width: 3rem">N°</th>
-      <th>{{ "tables.headers.labelFr" | translate }}</th>
-      <th>{{ "tables.headers.labelEn" | translate }}</th>
-      <th style="width: 3rem">
-        {{ "tables.headers.referenceValue" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.referenceYear" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.targetValue" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.targetYear" | translate }}
-      </th>
-      <th style="width: 3rem">
-        {{ "tables.headers.measurementUnit" | translate }}
-      </th>
-      <th style="width: 8rem"></th>
-    </tr>-->
-  </ng-template>
   <ng-template pTemplate="body" let-item let-expanded="expanded">
     <tr [class.expanded]="expanded">
       <td style="width: 1rem">
@@ -48,17 +25,13 @@
           currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
         }}
       </td>
-      <td>------</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
+
+      <td style="width: 15%">
         <button
           (click)="addOperation(item)"
           *appCheckPermissions="['subPrograms.create']"
           [pTooltip]="'hints.addOperation' | translate"
-          class="p-button-rounded p-button-info p-mr-2"
+          class="p-button-rounded p-button-info p-mr-2 action"
           icon="pi pi-plus"
           pButton
           pRipple
@@ -67,15 +40,14 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="rowexpansion" let-activity>
+  <ng-template pTemplate="rowexpansion" let-task>
     <tr>
-      <td style="width: 1rem"></td>
+      <!--<td style="width: 1rem"></td>-->
       <td [colSpan]="10">
-        <!--{{ activity | json }}-->
-        <app-sub-program-activity-tasks-view
-          [activity]="activity"
-          [subProgram]="subProgram"
-        ></app-sub-program-activity-tasks-view>
+        <!--        {{ task?.operations | json }}-->
+        <app-sub-program-activity-tasks-operations-view
+          [task]="task"
+        ></app-sub-program-activity-tasks-operations-view>
       </td>
     </tr>
   </ng-template>

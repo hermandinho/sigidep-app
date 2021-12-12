@@ -7,7 +7,7 @@
     width: 60%;
   }
 
-  .step-3 {
+  .step-4 {
     .row {
       display: flex;
       justify-content: space-between;
@@ -19,6 +19,39 @@
     .buttons {
       button {
         width: 30%;
+      }
+    }
+  }
+
+  .step-5 {
+    p-fieldset {
+      &::ng-deep {
+        .as-flex {
+          display: flex;
+          justify-content: space-between;
+          button {
+            width: 30%;
+          }
+        }
+        table {
+          width: 100%;
+
+          thead {
+            tr {
+              background-color: lightgray;
+              font-weight: bold;
+            }
+          }
+          tbody {
+            tr {
+              &.editing {
+                td {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

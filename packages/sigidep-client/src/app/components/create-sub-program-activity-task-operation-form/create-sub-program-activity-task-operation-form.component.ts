@@ -22,13 +22,22 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   SubProgramActivityModel,
   SubProgramActivityTaskModel,
+  SubProgramActivityTaskOperationModel,
   SubProgramModel,
 } from '@models/sub-program.model';
 import { ExerciseModel } from '@models/exercise.model';
 import { getDataSelector as getParagraphsSelector } from '@reducers/paragraphs.reducer';
+import { getDataSelector as getReferencePhysicalUnitsSelector } from '@reducers/reference-physical-units.reducer';
 import { ParagraphModel } from '@models/paragraph.model';
-import { GetParagraphs } from '@store/actions';
+import {
+  GetParagraphs,
+  GetReferencePhysicalUnits,
+  GetSubPrograms,
+} from '@store/actions';
 import * as moment from 'moment';
+import { ReferencePhysicalUnitModel } from '@models/reference-physical-unit.model';
+import { AppService } from '@services/app.service';
+import { ApisService } from '@services/apis.service';
 
 @Component({
   selector: 'app-create-sub-program-activity-task-operation-form',
@@ -50,8 +59,21 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   public activeStep = 0;
   public steps: MenuItem[] = [];
   public paragraphs!: ParagraphModel[];
+  public referencePhysicalUnits!: ReferencePhysicalUnitModel[];
   public departmentsSelectData!: { label: string; id: number }[];
   public arrondissementsSelectData!: { label: string; id: number }[];
+  public addReferencePhysicalUnitFormItems: {
+    referencePhysicalUnitId: number | undefined;
+    quantity: number;
+    unitPrice: number;
+    editItem: ReferencePhysicalUnitModel | undefined;
+  } = {
+    referencePhysicalUnitId: undefined,
+    quantity: 1,
+    unitPrice: 0,
+    editItem: undefined,
+  };
+  // editProgrammedPhysicalUnit: any;
 
   public stepButtons: {
     [key: string]: {
@@ -86,10 +108,12 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     private _store: Store<AppState>,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private _appService: AppService,
+    private _apisService: ApisService
   ) {
     super();
-    console.log(this.config.data);
+    // console.log(this.config.data);
     moment.locale(translate.currentLang);
     if (
       (this.config.data?.task as SubProgramActivityTaskModel)?.financialSource
@@ -146,13 +170,50 @@ export class CreateSubProgramActivityTaskOperationFormComponent
               })
           ))
       );
+    this._store
+      .pipe(select(getReferencePhysicalUnitsSelector), this.takeUntilDestroy)
+      .subscribe(
+        (data) =>
+          (this.referencePhysicalUnits = (data || []).map(
+            (r) =>
+              new ReferencePhysicalUnitModel({
+                ...r,
+                paragraph: new ParagraphModel(r.paragraph),
+              })
+          ))
+      );
 
     this._store
       .pipe(select(getParagraphsSelector), this.takeUntilDestroy)
-      .subscribe(
-        (data) =>
-          (this.paragraphs = (data || []).map((p) => new ParagraphModel(p)))
-      );
+      .subscribe((data) => {
+        const shouldIgnore = this.config?.data?.ignoreParagraphIds || [];
+        this.paragraphs = (data || [])
+          .filter((p) => !shouldIgnore.includes(p.id))
+          .map((p) => new ParagraphModel(p));
+      });
+  }
+
+  public get referencePhysicalUnitsSelectData() {
+    const pId = this.form?.get('paragraphId')?.value;
+    if (!pId) {
+      return [];
+    }
+    const paragraph = this.paragraphs?.find((p) => +p.id === +pId);
+    const invalidIds = (this.physicalUnitsFormArray?.value || [])?.map(
+      (p: any) => +p.id
+    );
+    let filtered = (this.referencePhysicalUnits || [])
+      .filter(
+        (p) =>
+          +p.paragraph?.id === +this.form?.get('paragraphId')?.value ||
+          p.code?.startsWith(paragraph?.code as string)
+      )
+      .filter((p) => !invalidIds.includes(p.id));
+
+    if (this.addReferencePhysicalUnitFormItems.editItem) {
+      filtered.unshift(this.addReferencePhysicalUnitFormItems.editItem);
+    }
+    return filtered;
   }
 
   public get isUpdateForm() {
@@ -222,27 +283,28 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     const step = this.activeStep;
     const f = this.form;
     const stepFormControls: { [key: string]: any } = {
-      0: [f?.get('labelFr'), f?.get('labelEn'), f?.get('paragraphId')],
-      1: [
+      '0': [f?.get('labelFr'), f?.get('labelEn'), f?.get('paragraphId')],
+      '1': [
         f?.get('paymentCreditN1'),
         f?.get('paymentCreditN2'),
         f?.get('paymentCreditN3'),
-        f?.get('engagementAuthorization'),
+        // f?.get('engagementAuthorization'),
       ],
-      2: [
+      '2': [
         f?.get('managerName'),
         f?.get('regionId'),
         f?.get('departmentId'),
         f?.get('arrondissementId'),
         f?.get('locality'),
       ],
-      3: [
+      '3': [
         f?.get('deliverablesFr'),
         f?.get('deliverablesEn'),
         f?.get('verificationSourceFr'),
         f?.get('verificationSourceEn'),
       ],
-      4: [f?.get('chronogram')],
+      '4': [f?.get('chronogram')],
+      '5': [f?.get('physicalUnits')],
     };
     return (
       stepFormControls[step]?.filter((s: AbstractControl) => s?.valid)
@@ -332,6 +394,7 @@ export class CreateSubProgramActivityTaskOperationFormComponent
 
   ngOnInit(): void {
     this._store.dispatch(GetParagraphs());
+    this._store.dispatch(GetReferencePhysicalUnits());
 
     const sp: SubProgramModel =
       this.config?.data?.subProgram &&
@@ -390,8 +453,8 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         },
         [Validators.required],
       ],
-      bfEngagementAuthorization: [0, [Validators.required]],
-      bipEngagementAuthorization: [0, [Validators.required]],
+      // bfEngagementAuthorization: [0, [Validators.required]],
+      // bipEngagementAuthorization: [0, [Validators.required]],
       paymentCreditN1: [0, [Validators.required]],
       paymentCreditN2: [0, [Validators.required]],
       paymentCreditN3: [0, [Validators.required]],
@@ -402,89 +465,20 @@ export class CreateSubProgramActivityTaskOperationFormComponent
       arrondissementId: [undefined, [Validators.required]],
       locality: [undefined, [Validators.required]],
       chronogram: this._fb.array([], []),
+      physicalUnits: this._fb.array(
+        [],
+        (this.config.data?.task as SubProgramActivityTaskModel)?.financialSource
+          ?.acceptsDeliverables
+          ? [Validators.required, Validators.min(1)]
+          : []
+      ),
     });
     this.generateChronogram();
-
-    this.formElements = [
-      {
-        label: 'imputation',
-        formControl: 'imputation',
-        type: 'textarea',
-        size: 12,
-        required: true,
-      },
-      {
-        label: 'engagementAuthorization',
-        formControl: 'engagementAuthorization',
-        type: 'number',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'bfEngagementAuthorization',
-        formControl: 'bfEngagementAuthorization',
-        type: 'number',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'bipEngagementAuthorization',
-        formControl: 'bipEngagementAuthorization',
-        type: 'number',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'paymentCreditN1',
-        formControl: 'paymentCreditN1',
-        type: 'number',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'paymentCreditN2',
-        formControl: 'paymentCreditN2',
-        type: 'number',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'paymentCreditN3',
-        formControl: 'paymentCreditN3',
-        type: 'number',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'managementMode',
-        formControl: 'managementMode',
-        type: 'dropdown',
-        size: 6,
-        required: true,
-        dropdownOptions: [
-          { label: 'managementModeGC', value: 'GC' },
-          { label: 'managementModeCD', value: 'CD' },
-          { label: 'managementModeRT', value: 'RT' },
-        ],
-        dropdownOptionsLabel: 'label',
-        dropdownValueKey: 'value',
-      },
-      {
-        label: 'managerName',
-        formControl: 'managerName',
-        type: 'text',
-        size: 6,
-        required: true,
-      },
-      {
-        label: 'locality',
-        formControl: 'locality',
-        type: 'text',
-        size: 6,
-        required: true,
-      },
-    ];
     this.initSubscriptions();
+  }
+
+  public get physicalUnitsFormArray(): FormArray {
+    return this.form.get('physicalUnits') as FormArray;
   }
 
   /*public getDropdownOptions(key?: 'departmentsSelectData' | 'arrondissementsSelectData' | 'regionsSelectData') {
@@ -495,9 +489,133 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     this.ref.close();
   }
 
-  submit(v?: boolean) {}
+  addOrUpdatePhysicalUnitItem() {
+    const ref = this.referencePhysicalUnits?.find(
+      (r) =>
+        r.id === this.addReferencePhysicalUnitFormItems?.referencePhysicalUnitId
+    );
+    if (!this.addReferencePhysicalUnitFormItems?.editItem) {
+      this.physicalUnitsFormArray?.push(
+        this._fb.group({
+          id: [this.addReferencePhysicalUnitFormItems.referencePhysicalUnitId],
+          quantity: [this.addReferencePhysicalUnitFormItems.quantity],
+          unitPrice: [this.addReferencePhysicalUnitFormItems.unitPrice],
+          totalPrice: [this.referencePhysicalUnitAddTotalPrice],
+          formattedLabelFr: [{ value: ref?.formattedLabelFr, disabled: true }],
+          formattedLabelEn: [{ value: ref?.formattedLabelEn, disabled: true }],
+        })
+      );
+    } else {
+      const idx = this.physicalUnitsFormArray?.value?.findIndex(
+        (item: any) =>
+          item.id === this.addReferencePhysicalUnitFormItems?.editItem?.id
+      );
+      const { quantity, unitPrice, referencePhysicalUnitId } = JSON.parse(
+        JSON.stringify(this.addReferencePhysicalUnitFormItems)
+      );
+      if (idx !== -1) {
+        this.physicalUnitsFormArray.at(idx)?.patchValue({
+          id: referencePhysicalUnitId,
+          quantity,
+          unitPrice,
+          totalPrice: this.referencePhysicalUnitAddTotalPrice,
+          formattedLabelFr: ref?.formattedLabelFr,
+          formattedLabelEn: ref?.formattedLabelEn,
+        });
+      }
+    }
+    this.addReferencePhysicalUnitFormItems = {
+      referencePhysicalUnitId: undefined,
+      quantity: 1,
+      unitPrice: 0,
+      editItem: undefined,
+    };
+  }
 
-  public monthlyBreakDown(type: 'month' | 'trimester' | 'semester') {
+  public removeProgrammedPhysicalUnit(i: number) {
+    this.physicalUnitsFormArray?.removeAt(i);
+  }
+
+  public cancelPhysicalUnitUpdate() {
+    this.addReferencePhysicalUnitFormItems = {
+      referencePhysicalUnitId: undefined,
+      quantity: 1,
+      unitPrice: 0,
+      editItem: undefined,
+    };
+  }
+
+  public editProgrammedPhysicalUnit({
+    id,
+    quantity,
+    unitPrice,
+    totalPrice,
+  }: any) {
+    const unit = this.referencePhysicalUnits.find((u) => u.id === +id);
+    console.log({ id, quantity, unitPrice, totalPrice });
+    console.log(unit);
+    this.addReferencePhysicalUnitFormItems = {
+      referencePhysicalUnitId: id,
+      quantity,
+      unitPrice,
+      editItem: unit,
+    };
+  }
+
+  public submit() {
+    const { task, engagementAuthorization } = this.form.getRawValue();
+    const payload = {
+      ...this.form.value,
+      imputation: this.imputation,
+      engagementAuthorization,
+      // taskId: task,
+    };
+    // console.log('FORM: ', this.form.value);
+    // console.log('DISABLED: ', this.form.getRawValue());
+    // console.log('PAYLOAD: ', payload);
+
+    this._apisService
+      .post<SubProgramActivityTaskOperationModel>(
+        `/sub-programs/${this.config.data?.subProgram?.id}/activity/${this.config.data?.activity?.id}/task/${this.config.data?.task?.id}/operation`,
+        {
+          ...payload,
+        }
+      )
+      .subscribe(
+        (res) => {
+          this.busy = false;
+          this._store.dispatch(GetSubPrograms()); // TODO optimize this by just fetching operations?
+          this.ref.close(res);
+
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail: 'messages.subPrograms.createActivityTaskOperationSuccess',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          console.log(error);
+          if (error?.statusCode === 409) {
+            err = 'errors.subPrograms.createActivityTaskOperationSuccess';
+          } else {
+            err = 'errors.unknown';
+          }
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
+  }
+
+  public budgetBreakDown(type: 'month' | 'trimester' | 'semester') {
     const baseValue = +(this.form?.get('paymentCreditN1')?.value || 0);
     if (!baseValue) return;
 
@@ -523,6 +641,11 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     });
   }
 
+  public get referencePhysicalUnitAddTotalPrice() {
+    const { quantity, unitPrice } = this.addReferencePhysicalUnitFormItems;
+    return (quantity || 1) * (unitPrice || 0) || 0;
+  }
+
   private initSubscriptions() {
     this.form
       .get('paymentCreditN1')
@@ -543,6 +666,13 @@ export class CreateSubProgramActivityTaskOperationFormComponent
       ?.valueChanges?.pipe(this.takeUntilDestroy)
       ?.subscribe((val) => {
         this.calculateAE();
+      });
+
+    this.form
+      .get('paragraphId')
+      ?.valueChanges?.pipe(this.takeUntilDestroy)
+      ?.subscribe((val) => {
+        this.physicalUnitsFormArray?.clear();
       });
   }
 
