@@ -69,8 +69,36 @@ export class CreateSubProgramActivityFormComponent
   }
 
   ngOnInit(): void {
+    // En réalité quand on parle des Valeurs de référence et cible, on se réfère aux indicateurs...
+    // Or on ne peut parler d'indicateurs que si on a au préalable énoncé des Objectifs🙏
+    // Donc logiquement, les
+    // Unités des mesure,  valeurs de référence, valeurs cibles, année de référence et Année cible n'interviennent qu'en-dessous des indicateurs.
+    // Et les indicateurs eux-mêmes n'interviennent que sous des objectifs🙏
     this.formElements = [
       { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
+      {
+        label: 'label',
+        formControl: 'label',
+        type: 'text',
+        i18n: true,
+        size: 6,
+      },
+      { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
+      { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
+      {
+        label: 'objectives',
+        formControl: 'objectives',
+        type: 'editor',
+        i18n: true,
+        size: 12,
+      },
+      {
+        label: 'indicators',
+        formControl: 'indicators',
+        type: 'editor',
+        i18n: true,
+        size: 12,
+      },
       {
         label: 'measurementUnit',
         formControl: 'measurementUnit',
@@ -79,13 +107,6 @@ export class CreateSubProgramActivityFormComponent
         dropdownOptions: measurementUnits,
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
-      },
-      {
-        label: 'label',
-        formControl: 'label',
-        type: 'text',
-        i18n: true,
-        size: 6,
       },
       {
         label: 'referenceValue',
@@ -114,8 +135,8 @@ export class CreateSubProgramActivityFormComponent
         size: 12,
       },
       {
-        label: 'objectives',
-        formControl: 'objectives',
+        label: 'verificationSource',
+        formControl: 'verificationSource',
         type: 'editor',
         i18n: true,
         size: 12,
@@ -127,22 +148,6 @@ export class CreateSubProgramActivityFormComponent
         i18n: true,
         size: 12,
       },
-      {
-        label: 'indicators',
-        formControl: 'indicators',
-        type: 'editor',
-        i18n: true,
-        size: 12,
-      },
-      {
-        label: 'verificationSource',
-        formControl: 'verificationSource',
-        type: 'editor',
-        i18n: true,
-        size: 12,
-      },
-      { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
-      { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
     ];
   }
 
