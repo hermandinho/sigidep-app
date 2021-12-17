@@ -103,10 +103,11 @@ export class CreateSubProgramActivityFormComponent
         label: 'measurementUnit',
         formControl: 'measurementUnit',
         type: 'dropdown',
-        size: 6,
+        size: 12,
         dropdownOptions: measurementUnits,
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
+        editable: true,
       },
       {
         label: 'referenceValue',

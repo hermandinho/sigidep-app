@@ -113,6 +113,7 @@ export class CreateSubProgramActivityTaskFormComponent
         dropdownOptions: measurementUnits,
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
+        editable: true,
       },
       {
         label: 'financialSource',

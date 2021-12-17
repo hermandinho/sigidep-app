@@ -15,15 +15,16 @@
 
         <p-dropdown
           *ngIf="column.type === 'dropdown'"
+          [editable]="column.editable || false"
           [filterBy]="'code'"
           [filter]="false"
+          [formControlName]="column.formControl"
           [optionLabel]="column?.dropdownOptionsLabel || 'label'"
+          [optionValue]="column?.dropdownValueKey ?? 'id'"
           [options]="column.dropdownOptions ?? []"
           [placeholder]="'labels.' + column.label | translate"
           [showClear]="false"
           appendTo="body"
-          [formControlName]="column.formControl"
-          [optionValue]="column?.dropdownValueKey ?? 'id'"
         >
           <ng-template let-option pTemplate="item">
             <div>

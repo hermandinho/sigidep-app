@@ -38,6 +38,7 @@ export interface IFormFiledElt {
   required?: boolean;
   i18n?: boolean;
   flexRow?: boolean;
+  editable?: boolean;
 }
 
 @Component({
