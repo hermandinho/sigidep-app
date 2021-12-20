@@ -10,11 +10,11 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSubProgramActivityTaskDto {
-  @ApiProperty({ example: '22', required: true })
+  /*@ApiProperty({ example: '22', required: true })
   @IsNotEmpty()
   @MinLength(2)
   @MaxLength(2)
-  public code: string;
+  public code: string;*/
 
   @ApiProperty({ example: 'Super tâche', required: true })
   @IsNotEmpty()

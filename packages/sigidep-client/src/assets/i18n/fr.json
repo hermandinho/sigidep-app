@@ -294,7 +294,9 @@
       "createActivityTask": "Céer une tâche",
       "editActivityTask": "Modifier une tâche",
       "createActivityTaskOperation": "Céer une opération",
-      "updateActivityTaskOperation": "Modifier une opération"
+      "updateActivityTaskOperation": "Modifier une opération",
+      "createActivity": "Céer une Activitée",
+      "updateActivity": "Modifier une Activitée"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

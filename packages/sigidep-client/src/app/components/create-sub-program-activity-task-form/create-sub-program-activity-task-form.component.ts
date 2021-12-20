@@ -43,10 +43,10 @@ export class CreateSubProgramActivityTaskFormComponent
     super();
     this.form = this._fb.group({
       id: [undefined, []],
-      code: [
-        undefined,
-        [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
-      ],
+      // code: [
+      //   undefined,
+      //   [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+      // ],
       labelFr: [undefined, [Validators.required]],
       labelEn: [undefined, [Validators.required]],
       stakeHoldersFr: [undefined, [Validators.required]],
@@ -104,7 +104,7 @@ export class CreateSubProgramActivityTaskFormComponent
   ngOnInit(): void {
     // console.log(this.config.data);
     this.formElements = [
-      { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
+      // { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
       {
         label: 'measurementUnit',
         formControl: 'measurementUnit',

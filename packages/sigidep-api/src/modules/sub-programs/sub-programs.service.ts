@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { SubProgramEntity } from '@entities/sub-program.entity';
 import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-program.dto';
 import { UserEntity } from '@entities/user.entity';
@@ -119,7 +119,15 @@ export class SubProgramsService {
       .createQueryBuilder('a')
       .leftJoin('a.subProgram', 'sp')
       .where('sp.id = :id', { id: subProgramId })
-      .andWhere('a.code = :code', { code: payload.code })
+      // .andWhere('a.code = :code', { code: payload.code })
+      .andWhere(
+        new Brackets((sq) => {
+          sq.where('a.labelFr = :lfr', { lfr: payload.labelFr }).andWhere(
+            'a.labelEn = :len',
+            { len: payload.labelEn },
+          );
+        }),
+      )
       .getOne();
     if (check) {
       throw new ConflictException();
@@ -132,9 +140,22 @@ export class SubProgramsService {
       throw new NotFoundException();
     }
 
+    const latest = await this.activitiesRepository.findOne(
+      {
+        subProgram: sp,
+      },
+      { loadEagerRelations: false, order: { id: -1 } },
+    );
+
+    const nextCode =
+      +(latest && !isNaN(+latest?.code?.slice(-2))
+        ? +latest?.code?.slice(-2) || 0
+        : 0) + 1;
+
     return this.activitiesRepository.save(
       new SubProgramActivityEntity({
         ...payload,
+        code: `${nextCode < 9 ? '0' + nextCode : nextCode}`,
         subProgram: sp,
         createdBy: user,
       }),
@@ -151,7 +172,15 @@ export class SubProgramsService {
       .createQueryBuilder('t')
       .leftJoin('t.activity', 'act')
       .where('act.id = :id', { id: activityId })
-      .andWhere('t.code = :code', { code: payload.code })
+      // .andWhere('t.code = :code', { code: payload.code })
+      .andWhere(
+        new Brackets((sq) => {
+          sq.where('t.labelFr = :lfr', { lfr: payload.labelFr }).andWhere(
+            't.labelEn = :len',
+            { len: payload.labelEn },
+          );
+        }),
+      )
       .getOne();
     if (check) {
       throw new ConflictException();
@@ -182,9 +211,22 @@ export class SubProgramsService {
       });
     if (!sourceCheck) throw new NotFoundException('financial_source_not_found');
 
+    const latest = await this.activityTasksRepository.findOne(
+      {
+        activity: actCheck,
+      },
+      { loadEagerRelations: false, order: { id: -1 } },
+    );
+
+    const nextCode =
+      +(latest && !isNaN(+latest?.code?.slice(-2))
+        ? +latest?.code?.slice(-2) || 0
+        : 0) + 1;
+
     return this.activityTasksRepository.save(
       new SubProgramActivityTaskEntity({
         ...payload,
+        code: `${nextCode < 9 ? '0' + nextCode : nextCode}`,
         activity: actCheck,
         financialSource: sourceCheck,
         administrativeUnit: administrativeUnitCheck,

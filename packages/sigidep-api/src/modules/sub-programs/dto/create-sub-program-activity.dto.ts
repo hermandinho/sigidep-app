@@ -7,11 +7,11 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateSubProgramActivityDto {
-  @ApiProperty({ example: '22', required: true })
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(2)
-  public code: string;
+  // @ApiProperty({ example: '22', required: true })
+  // @IsNotEmpty()
+  // @MinLength(2)
+  // @MaxLength(2)
+  // public code: string;
 
   @ApiProperty({ example: 'Super activité', required: true })
   @IsNotEmpty()

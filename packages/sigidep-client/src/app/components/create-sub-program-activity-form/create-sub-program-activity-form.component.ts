@@ -36,10 +36,10 @@ export class CreateSubProgramActivityFormComponent
     super();
     this.form = this._fb.group({
       id: [undefined, []],
-      code: [
+      /*code: [
         undefined,
         [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
-      ],
+      ],*/
       labelFr: [undefined, [Validators.required]],
       labelEn: [undefined, [Validators.required]],
       presentationFr: [undefined, [Validators.required]],
@@ -68,6 +68,15 @@ export class CreateSubProgramActivityFormComponent
     });
   }
 
+  /*public x() {
+    this._appService.showToast({
+      summary: 'messages.success',
+      detail: 'messages.subPrograms.createActivitySuccess',
+      severity: 'success',
+      life: 3000000000000000000000000,
+      closable: true,
+    });
+  }*/
   ngOnInit(): void {
     // En réalité quand on parle des Valeurs de référence et cible, on se réfère aux indicateurs...
     // Or on ne peut parler d'indicateurs que si on a au préalable énoncé des Objectifs🙏
@@ -75,13 +84,13 @@ export class CreateSubProgramActivityFormComponent
     // Unités des mesure,  valeurs de référence, valeurs cibles, année de référence et Année cible n'interviennent qu'en-dessous des indicateurs.
     // Et les indicateurs eux-mêmes n'interviennent que sous des objectifs🙏
     this.formElements = [
-      { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
+      // { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
       {
         label: 'label',
         formControl: 'label',
         type: 'text',
         i18n: true,
-        size: 6,
+        size: 12,
       },
       { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
       { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
