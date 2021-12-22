@@ -368,7 +368,9 @@
 
             <p-dropdown
               (ngModelChange)="handleRegionChange($event)"
-              [optionLabel]="'formattedLabel'"
+              [optionLabel]="
+                currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
+              "
               [options]="regions"
               [placeholder]="'labels.region' | translate"
               [showClear]="false"
@@ -407,6 +409,7 @@
             }}</label>
 
             <p-dropdown
+              (ngModelChange)="handleArrondissementChange($event)"
               [optionLabel]="'label'"
               [options]="arrondissementsSelectData"
               [placeholder]="'labels.arrondissement' | translate"

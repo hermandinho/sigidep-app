@@ -61,7 +61,11 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   public paragraphs!: ParagraphModel[];
   public referencePhysicalUnits!: ReferencePhysicalUnitModel[];
   public departmentsSelectData!: { label: string; id: number }[];
-  public arrondissementsSelectData!: { label: string; id: number }[];
+  public arrondissementsSelectData!: {
+    label: string;
+    id: number;
+    chiefTown?: string;
+  }[];
   public addReferencePhysicalUnitFormItems: {
     referencePhysicalUnitId: number | undefined;
     quantity: number;
@@ -690,7 +694,8 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         .find((r) => r.id === +id)
         ?.departments?.map((d) => ({
           id: d.id,
-          label: d.formattedLabel,
+          label:
+            this.currentLang === 'fr' ? d.formattedLabelFr : d.formattedLabelEn,
         })) || [];
     this.form.get('departmentId')?.patchValue(undefined);
   }
@@ -703,9 +708,16 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         ?.departments?.find((d) => d.id === +id)
         ?.arrondissements?.map((a) => ({
           id: a.id,
-          label: a.formattedLabel,
+          label:
+            this.currentLang === 'fr' ? a.formattedLabelFr : a.formattedLabelEn,
+          chiefTown: a.chiefTown,
         })) || [];
     this.form.get('arrondissementId')?.patchValue(undefined);
+  }
+
+  handleArrondissementChange(id: any) {
+    const item = this.arrondissementsSelectData.find((a) => a.id === id);
+    this.form.get('locality')?.patchValue(item?.chiefTown || undefined);
   }
 
   private generateChronogram() {
