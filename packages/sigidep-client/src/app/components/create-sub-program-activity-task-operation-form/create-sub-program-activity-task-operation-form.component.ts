@@ -717,7 +717,7 @@ export class CreateSubProgramActivityTaskOperationFormComponent
 
   handleArrondissementChange(id: any) {
     const item = this.arrondissementsSelectData.find((a) => a.id === id);
-    this.form.get('locality')?.patchValue(item?.chiefTown || undefined);
+    this.form.get('locality')?.patchValue(item?.chiefTown);
   }
 
   private generateChronogram() {

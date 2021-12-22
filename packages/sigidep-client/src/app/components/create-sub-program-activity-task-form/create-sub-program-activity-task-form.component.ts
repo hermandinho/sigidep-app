@@ -102,60 +102,32 @@ export class CreateSubProgramActivityTaskFormComponent
   }
 
   ngOnInit(): void {
+    /*
+    * Donc logiquement,
+    * les Unités des mesure,  valeurs de référence, valeurs cibles, année de référence et Année cible n'interviennent qu'en-dessous des indicateurs.
+    * Et les indicateurs eux-mêmes n'interviennent que sous des objectifs🙏
+    *
+    * Libellé
+Unité Administrative
+Présentation
+Parties prenantes
+Objectifs
+Indicateurs
+Unité de mesure
+Valeurs de référence
+Année de référence
+Valeur cible
+Année cible.
+Résultats attendus
+    * **/
     // console.log(this.config.data);
     this.formElements = [
       // { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
-      {
-        label: 'measurementUnit',
-        formControl: 'measurementUnit',
-        type: 'dropdown',
-        size: 6,
-        dropdownOptions: measurementUnits,
-        dropdownOptionsLabel: 'label',
-        dropdownValueKey: 'value',
-        editable: true,
-      },
-      {
-        label: 'financialSource',
-        formControl: 'financialSourceId',
-        type: 'dropdown',
-        size: 6,
-        dropdownOptions: this.financialSources,
-        dropdownOptionsLabel:
-          this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
-        dropdownValueKey: 'id',
-        required: true,
-      },
       {
         label: 'label',
         formControl: 'label',
         type: 'text',
         i18n: true,
-        size: 6,
-      },
-      {
-        label: 'referenceValue',
-        formControl: 'referenceValue',
-        type: 'number',
-        size: 6,
-      },
-      {
-        label: 'referenceYear',
-        formControl: 'referenceYear',
-        type: 'date',
-        size: 6,
-      },
-      {
-        label: 'targetValue',
-        formControl: 'targetValue',
-        type: 'number',
-        size: 6,
-      },
-      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },
-      {
-        label: 'engagementAuthorization',
-        formControl: 'engagementAuthorization',
-        type: 'number',
         size: 6,
       },
       {
@@ -184,18 +156,57 @@ export class CreateSubProgramActivityTaskFormComponent
         size: 12,
       },
       {
-        label: 'results',
-        formControl: 'results',
-        type: 'editor',
-        i18n: true,
-        size: 12,
-      },
-      {
         label: 'indicators',
         formControl: 'indicators',
         type: 'editor',
         i18n: true,
         size: 12,
+      },
+      {
+        label: 'measurementUnit',
+        formControl: 'measurementUnit',
+        type: 'dropdown',
+        size: 6,
+        dropdownOptions: measurementUnits,
+        dropdownOptionsLabel: 'label',
+        dropdownValueKey: 'value',
+        editable: true,
+      },
+      {
+        label: 'referenceValue',
+        formControl: 'referenceValue',
+        type: 'number',
+        size: 6,
+      },
+      {
+        label: 'referenceYear',
+        formControl: 'referenceYear',
+        type: 'date',
+        size: 6,
+      },
+      {
+        label: 'targetValue',
+        formControl: 'targetValue',
+        type: 'number',
+        size: 6,
+      },
+      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },
+      {
+        label: 'financialSource',
+        formControl: 'financialSourceId',
+        type: 'dropdown',
+        size: 6,
+        dropdownOptions: this.financialSources,
+        dropdownOptionsLabel:
+          this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
+        dropdownValueKey: 'id',
+        required: true,
+      },
+      {
+        label: 'engagementAuthorization',
+        formControl: 'engagementAuthorization',
+        type: 'number',
+        size: 6,
       },
       {
         label: 'verificationSource',
@@ -212,6 +223,13 @@ export class CreateSubProgramActivityTaskFormComponent
         type: 'switch',
         size: 12,
         flexRow: true,
+      },
+      {
+        label: 'results',
+        formControl: 'results',
+        type: 'editor',
+        i18n: true,
+        size: 12,
       },
     ];
   }
