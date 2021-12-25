@@ -8,9 +8,7 @@ import { SubProgramActivityTaskEntity } from '@entities/sub-program-activity-tas
 @Entity({
   name: 'sub_program_activities',
   orderBy: {
-    code: 'ASC',
-    labelFr: 'ASC',
-    labelEn: 'ASC',
+    id: 'ASC',
   },
 })
 export class SubProgramActivityEntity extends BaseEntity {

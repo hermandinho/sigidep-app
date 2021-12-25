@@ -32,9 +32,7 @@ interface ISubProgramObjective {
 @Entity({
   name: 'sub_programs',
   orderBy: {
-    code: 'ASC',
-    labelFr: 'ASC',
-    labelEn: 'ASC',
+    id: 'ASC',
   },
 })
 export class SubProgramEntity extends BaseEntity {
