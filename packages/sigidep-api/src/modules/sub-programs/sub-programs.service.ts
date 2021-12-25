@@ -281,14 +281,18 @@ export class SubProgramsService {
       throw new NotFoundException('region not found');
     }
 
+    console.log('HERE WE ARE');
     const department = await this.addressesService
       .getDepartmentsRepository()
-      .findOne(param.departmentId, {
+      .createQueryBuilder('d')
+      .where('d.id = :id', { id: param.departmentId })
+      .getOne();
+    /*.findOne(param.departmentId, {
         loadEagerRelations: false,
-      });
+      });*/
 
     if (!department) {
-      throw new NotFoundException('region not found');
+      throw new NotFoundException('department not found');
     }
 
     const arrondissement = await this.addressesService

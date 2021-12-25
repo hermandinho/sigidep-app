@@ -102,24 +102,6 @@ export class CreateSubProgramActivityTaskFormComponent
   }
 
   ngOnInit(): void {
-    /*
-    * Donc logiquement,
-    * les Unités des mesure,  valeurs de référence, valeurs cibles, année de référence et Année cible n'interviennent qu'en-dessous des indicateurs.
-    * Et les indicateurs eux-mêmes n'interviennent que sous des objectifs🙏
-    *
-    * Libellé
-Unité Administrative
-Présentation
-Parties prenantes
-Objectifs
-Indicateurs
-Unité de mesure
-Valeurs de référence
-Année de référence
-Valeur cible
-Année cible.
-Résultats attendus
-    * **/
     // console.log(this.config.data);
     this.formElements = [
       // { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },

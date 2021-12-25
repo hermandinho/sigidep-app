@@ -6,7 +6,6 @@ import { DepartmentEntity } from './department.entity';
   name: 'arrondissements',
   orderBy: {
     code: 'ASC',
-    label: 'ASC',
   },
 })
 export class ArrondissementEntity extends BaseEntity {
