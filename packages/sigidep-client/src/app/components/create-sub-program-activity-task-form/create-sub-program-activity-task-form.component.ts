@@ -51,30 +51,30 @@ export class CreateSubProgramActivityTaskFormComponent
       labelEn: [undefined, [Validators.required]],
       stakeHoldersFr: [undefined, [Validators.required]],
       stakeHoldersEn: [undefined, [Validators.required]],
-      objectivesFr: [undefined, [Validators.required]],
-      objectivesEn: [undefined, [Validators.required]],
+      // objectivesFr: [undefined, [Validators.required]],
+      // objectivesEn: [undefined, [Validators.required]],
       resultsFr: [undefined, [Validators.required]],
       resultsEn: [undefined, [Validators.required]],
-      indicatorsFr: [undefined, [Validators.required]],
-      indicatorsEn: [undefined, [Validators.required]],
+      // indicatorsFr: [undefined, [Validators.required]],
+      // indicatorsEn: [undefined, [Validators.required]],
       verificationSourceFr: [undefined, [Validators.required]],
       verificationSourceEn: [undefined, [Validators.required]],
-      referenceValue: [undefined, [Validators.required]],
+      // referenceValue: [undefined, [Validators.required]],
       financialSourceId: [undefined, [Validators.required]],
-      referenceYear: [
-        undefined,
-        [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
-      ],
-      targetValue: [undefined, [Validators.required]],
-      targetYear: [
-        undefined,
-        [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
-      ],
-      measurementUnit: [undefined, [Validators.required]],
-      startDate: [undefined, [Validators.required]],
-      endDate: [undefined, [Validators.required]],
-      isMultiYear: [false, []],
-      engagementAuthorization: [undefined, []],
+      // referenceYear: [
+      //   undefined,
+      //   [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
+      // ],
+      // targetValue: [undefined, [Validators.required]],
+      // targetYear: [
+      //   undefined,
+      //   [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
+      // ],
+      // measurementUnit: [undefined, [Validators.required]],
+      // startDate: [undefined, [Validators.required]],
+      // endDate: [undefined, [Validators.required]],
+      // isMultiYear: [false, []],
+      // engagementAuthorization: [undefined, []],
       administrativeUnitId: [undefined, [Validators.required]],
     });
 
@@ -130,21 +130,21 @@ export class CreateSubProgramActivityTaskFormComponent
         i18n: true,
         size: 12,
       },
-      {
+      /*{
         label: 'objectives',
         formControl: 'objectives',
         type: 'editor',
         i18n: true,
         size: 12,
-      },
-      {
+      },*/
+      /*{
         label: 'indicators',
         formControl: 'indicators',
         type: 'editor',
         i18n: true,
         size: 12,
-      },
-      {
+      },*/
+      /*{
         label: 'measurementUnit',
         formControl: 'measurementUnit',
         type: 'dropdown',
@@ -153,8 +153,8 @@ export class CreateSubProgramActivityTaskFormComponent
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
         editable: true,
-      },
-      {
+      },*/
+      /*{
         label: 'referenceValue',
         formControl: 'referenceValue',
         type: 'number',
@@ -172,23 +172,30 @@ export class CreateSubProgramActivityTaskFormComponent
         type: 'number',
         size: 6,
       },
-      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },
+      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },*/
       {
         label: 'financialSource',
         formControl: 'financialSourceId',
         type: 'dropdown',
-        size: 6,
+        size: 12,
         dropdownOptions: this.financialSources,
         dropdownOptionsLabel:
           this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
         dropdownValueKey: 'id',
         required: true,
       },
-      {
+      /*{
         label: 'engagementAuthorization',
         formControl: 'engagementAuthorization',
         type: 'number',
         size: 6,
+      },*/
+      {
+        label: 'results',
+        formControl: 'results',
+        type: 'editor',
+        i18n: true,
+        size: 12,
       },
       {
         label: 'verificationSource',
@@ -197,22 +204,15 @@ export class CreateSubProgramActivityTaskFormComponent
         i18n: true,
         size: 12,
       },
-      { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
-      { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
-      {
+      // { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
+      // { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
+      /*{
         label: 'isMultiYear',
         formControl: 'isMultiYear',
         type: 'switch',
         size: 12,
         flexRow: true,
-      },
-      {
-        label: 'results',
-        formControl: 'results',
-        type: 'editor',
-        i18n: true,
-        size: 12,
-      },
+      },*/
     ];
   }
 

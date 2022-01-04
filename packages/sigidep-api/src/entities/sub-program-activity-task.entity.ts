@@ -29,11 +29,11 @@ export class SubProgramActivityTaskEntity extends BaseEntity {
   @Column({ name: 'stakeHolders_en', nullable: false, type: 'text' })
   public stakeHoldersEn: string;
 
-  @Column({ name: 'objectives_fr', nullable: false, type: 'text' })
-  public objectivesFr: string;
-
-  @Column({ name: 'objectives_en', nullable: false, type: 'text' })
-  public objectivesEn: string;
+  // @Column({ name: 'objectives_fr', nullable: false, type: 'text' })
+  // public objectivesFr: string;
+  //
+  // @Column({ name: 'objectives_en', nullable: false, type: 'text' })
+  // public objectivesEn: string;
 
   @Column({ name: 'results_fr', nullable: false, type: 'text' })
   public resultsFr: string;
@@ -41,11 +41,11 @@ export class SubProgramActivityTaskEntity extends BaseEntity {
   @Column({ name: 'results_en', nullable: false, type: 'text' })
   public resultsEn: string;
 
-  @Column({ name: 'indicators_fr', nullable: false, type: 'text' })
-  public indicatorsFr: string;
-
-  @Column({ name: 'indicators_en', nullable: false, type: 'text' })
-  public indicatorsEn: string;
+  // @Column({ name: 'indicators_fr', nullable: false, type: 'text' })
+  // public indicatorsFr: string;
+  //
+  // @Column({ name: 'indicators_en', nullable: false, type: 'text' })
+  // public indicatorsEn: string;
 
   @Column({ name: 'verification_source_fr', nullable: false })
   public verificationSourceFr: string;
@@ -53,32 +53,32 @@ export class SubProgramActivityTaskEntity extends BaseEntity {
   @Column({ name: 'verification_source_en', nullable: false })
   public verificationSourceEn: string;
 
-  @Column({ name: 'reference_value', nullable: false })
-  public referenceValue: number;
+  // @Column({ name: 'reference_value', nullable: false })
+  // public referenceValue: number;
+  //
+  // @Column({ name: 'reference_date', type: 'date', nullable: false })
+  // public referenceYear: Date;
+  //
+  // @Column({ name: 'target_value', nullable: false })
+  // public targetValue: number;
+  //
+  // @Column({ name: 'target_date', type: 'date', nullable: false })
+  // public targetYear: Date;
+  //
+  // @Column({ name: 'measurement_unit', nullable: false })
+  // public measurementUnit: string;
 
-  @Column({ name: 'reference_date', type: 'date', nullable: false })
-  public referenceYear: Date;
+  // @Column({ name: 'is_multi_year', default: false })
+  // public isMultiYear?: boolean;
 
-  @Column({ name: 'target_value', nullable: false })
-  public targetValue: number;
+  // @Column({ name: 'engagement_authorization', nullable: true })
+  // public engagementAuthorization?: number;
 
-  @Column({ name: 'target_date', type: 'date', nullable: false })
-  public targetYear: Date;
-
-  @Column({ name: 'measurement_unit', nullable: false })
-  public measurementUnit: string;
-
-  @Column({ name: 'is_multi_year', default: false })
-  public isMultiYear?: boolean;
-
-  @Column({ name: 'engagement_authorization', nullable: true })
-  public engagementAuthorization?: number;
-
-  @Column({ name: 'start_date', nullable: false, type: 'date' })
-  public startDate: Date;
-
-  @Column({ name: 'end_date', nullable: false, type: 'date' })
-  public endDate: Date;
+  // @Column({ name: 'start_date', nullable: false, type: 'date' })
+  // public startDate: Date;
+  //
+  // @Column({ name: 'end_date', nullable: false, type: 'date' })
+  // public endDate: Date;
 
   // RELATIONS
   @ManyToOne(() => UserEntity, (object) => object.id, {

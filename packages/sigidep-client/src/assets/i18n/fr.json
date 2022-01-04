@@ -126,7 +126,9 @@
     "spacing": "Ecart",
     "referencePhysicalUnit": "Unité physique de référence",
     "programmedReferencePhysicalUnit": "Unités physique de programmées",
-    "addReferencePhysicalUnit": "Programmer une unités physique"
+    "addReferencePhysicalUnit": "Programmer une unités physique",
+    "administrativeUnit": "Unité administrative",
+    "financialSource": "Source de financement"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
