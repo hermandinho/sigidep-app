@@ -45,7 +45,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
     },
     {
       icon: 'pi pi-briefcase',
-      label: translate.instant('sidebar.structure'),
+      label: translate.instant('sidebar.elaboration'),
       routerLinkActiveOptions: { exact: true },
       state: {
         permissions: [],
