@@ -108,6 +108,51 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
       ],
     },
     {
+      icon: 'pi pi-copy',
+      label: translate.instant('sidebar.publicExpenses'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-file',
+      label: translate.instant('sidebar.accountRendering'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-tags',
+      label: translate.instant('sidebar.recipeTracking'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-users',
+      label: translate.instant('sidebar.rhManager'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-book',
+      label: translate.instant('sidebar.accounting'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
       label: translate.instant('sidebar.addresses'),
       icon: 'pi pi-globe',
       // routerLink: 'offices',

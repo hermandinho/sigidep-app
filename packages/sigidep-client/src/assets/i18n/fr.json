@@ -17,7 +17,12 @@
     "elaboration": "Elaboration",
     "roles": "Rôles",
     "administrativeUnits": "Unités administratives",
-    "subPrograms": "Sous programmes"
+    "subPrograms": "Sous programmes",
+    "publicExpenses": "Dépenses publique",
+    "accountRendering": "Reddition de comptes",
+    "recipeTracking": "Suivi des recettes",
+    "rhManager": "Gestion RH",
+    "accounting": "Comptabilité"
   },
   "buttons": {
     "save": "Enregistrer",
