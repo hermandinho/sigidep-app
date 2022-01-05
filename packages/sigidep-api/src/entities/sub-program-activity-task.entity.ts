@@ -10,7 +10,7 @@ import { SubProgramActivityTaskOperationEntity } from '@entities/sub-program-act
 @Entity({
   name: 'sub_program_activity_tasks',
   orderBy: {
-    id: 'ASC',
+    id: 'DESC',
   },
 })
 export class SubProgramActivityTaskEntity extends BaseEntity {

@@ -1,4 +1,8 @@
-<p-table [value]="activities ?? []" dataKey="id" responsiveLayout="stack">
+<p-table
+  [value]="activities ?? [] | orderBy: 'id'"
+  dataKey="id"
+  responsiveLayout="stack"
+>
   <ng-template pTemplate="emptymessage">
     <tr>
       <td colspan="10" class="p-text-center p-text-secondary">

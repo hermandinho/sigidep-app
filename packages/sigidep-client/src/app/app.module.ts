@@ -82,5 +82,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     { provide: LOCALE_ID, useValue: 'fr-FR' },
   ],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}
