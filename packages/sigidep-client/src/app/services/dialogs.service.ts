@@ -12,8 +12,10 @@ import {
   SubProgramActivityModel,
   SubProgramActivityTaskModel,
   ReferencePhysicalUnitModel,
+  SubProgramActionModel,
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
+import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +29,7 @@ export class DialogsService {
   private paragraphCreateComponent: any;
   private subProgramObjectiveCreateComponent: any;
   private subProgramObjectiveIndicatorCreateComponent: any;
+  private subProgramActionCreateComponent: any;
   private subProgramActivityCreateComponent: any;
   private subProgramActivityTaskCreateComponent: any;
   private subProgramActivityTaskOperationCreateComponent: any;
@@ -224,8 +227,35 @@ export class DialogsService {
     );
   }
 
+  public async launchSubProgramActionCreateDialog(
+    sp: SubProgramModel,
+    item?: any
+  ) {
+    if (!this.subProgramActionCreateComponent) {
+      const { CreateSubProgramActionFormComponent } = await import(
+        '@components/create-sub-program-action-form/create-sub-program-action-form.component'
+      );
+      this.subProgramActionCreateComponent =
+        CreateSubProgramActionFormComponent;
+    }
+
+    return this._dialogService.open(this.subProgramActionCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editAction' : 'createAction')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        subProgram: sp,
+      },
+    });
+  }
+
   public async launchSubProgramActivityCreateDialog(
     sp: SubProgramModel,
+    action: SubProgramActionModel,
     item?: any
   ) {
     if (!this.subProgramActivityCreateComponent) {
@@ -246,6 +276,7 @@ export class DialogsService {
       data: {
         item,
         subProgram: sp,
+        action,
       },
     });
   }
@@ -253,6 +284,7 @@ export class DialogsService {
   public async launchSubProgramActivityTaskCreateDialog(
     sp: SubProgramModel,
     act: SubProgramActivityModel,
+    action: SubProgramActionModel,
     item?: any
   ) {
     if (!this.subProgramActivityTaskCreateComponent) {
@@ -277,6 +309,7 @@ export class DialogsService {
           item,
           subProgram: sp,
           activity: act,
+          action,
         },
       }
     );
@@ -310,6 +343,7 @@ export class DialogsService {
   public async launchSubProgramActivityTaskOperationCreateDialog(
     sp: SubProgramModel,
     act: SubProgramActivityModel,
+    action: SubProgramActionModel,
     task: SubProgramActivityTaskModel,
     ignoreParagraphIds?: number[],
     item?: any
@@ -342,6 +376,7 @@ export class DialogsService {
           activity: act,
           task,
           ignoreParagraphIds,
+          action,
         },
       }
     );

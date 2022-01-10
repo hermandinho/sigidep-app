@@ -1,5 +1,5 @@
 <p-table
-  [value]="action?.activities ?? [] | orderBy: 'id'"
+  [value]="subProgram?.actions ?? [] | orderBy: 'id'"
   dataKey="id"
   responsiveLayout="stack"
 >
@@ -23,17 +23,17 @@
           [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
         ></button>
       </td>
-      <td class="activity">
-        <span><i class="pi pi-play"></i> Act</span>
+      <td class="action-item">
+        <span><i class="pi pi-play"></i> Ac</span>
         {{
           currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
         }}
       </td>
       <td style="width: 15%">
         <button
-          (click)="addTask(item)"
+          (click)="addActivity(item)"
           *appCheckPermissions="['subPrograms.create']"
-          [pTooltip]="'hints.addTask' | translate"
+          [pTooltip]="'hints.addActivity' | translate"
           class="p-button-rounded p-button-warning p-mr-2 action"
           icon="pi pi-plus"
           pButton
@@ -52,16 +52,15 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="rowexpansion" let-activity>
+  <ng-template pTemplate="rowexpansion" let-action>
     <tr>
       <!--      <td style="width: 1rem"></td>-->
       <td [colSpan]="10">
         <!--{{ activity | json }}-->
-        <app-sub-program-activity-tasks-view
-          [activity]="activity"
-          [subProgram]="subProgram"
+        <app-sub-program-activities-view
           [action]="action"
-        ></app-sub-program-activity-tasks-view>
+          [subProgram]="subProgram"
+        ></app-sub-program-activities-view>
       </td>
     </tr>
   </ng-template>

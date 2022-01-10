@@ -22,6 +22,8 @@ import { SubProgramActivityTaskOperationEntity } from '@entities/sub-program-act
 import { CreateSubProgramActivityTaskOperationDto } from '@modules/sub-programs/dto/create-sub-program-activity-task-operation.dto';
 import { AddressesService } from '@modules/addresses/addresses.service';
 import { ParagraphsService } from '@modules/paragraphs/paragraphs.service';
+import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
+import { CreateSubProgramActionDto } from '@modules/sub-programs/dto/create-sub-program-action.dto';
 
 @Injectable()
 export class SubProgramsService {
@@ -36,6 +38,8 @@ export class SubProgramsService {
     private readonly operationRepository: Repository<SubProgramActivityTaskOperationEntity>,
     @InjectRepository(SubProgramActivityTaskOperationPhysicalUnitEntity)
     private readonly operationPhysicalUnitRepository: Repository<SubProgramActivityTaskOperationPhysicalUnitEntity>,
+    @InjectRepository(SubProgramActionEntity)
+    private readonly subProgramActionRepository: Repository<SubProgramActionEntity>,
 
     private exercisesService: ExercisesService,
     private structuresService: StructureService,
@@ -49,7 +53,8 @@ export class SubProgramsService {
     return this.repository
       .createQueryBuilder('s')
       .leftJoinAndSelect('s.owner', 'o')
-      .leftJoinAndSelect('s.activities', 'a')
+      .leftJoinAndSelect('s.actions', 'ac')
+      .leftJoinAndSelect('ac.activities', 'a')
       .leftJoinAndSelect('a.tasks', 't')
       .leftJoinAndSelect('t.operations', 'op')
       .leftJoinAndSelect('op.arrondissement', 'ar')
@@ -110,12 +115,12 @@ export class SubProgramsService {
     );
   }
 
-  public async createActivity(
+  public async createAction(
     subProgramId: number,
-    payload: CreateSubProgramActivityDto,
+    payload: CreateSubProgramActionDto,
     user: UserEntity,
   ) {
-    const check = await this.activitiesRepository
+    const check = await this.subProgramActionRepository
       .createQueryBuilder('a')
       .leftJoin('a.subProgram', 'sp')
       .where('sp.id = :id', { id: subProgramId })
@@ -140,9 +145,63 @@ export class SubProgramsService {
       throw new NotFoundException();
     }
 
-    const latest = await this.activitiesRepository.findOne(
+    const latest = await this.subProgramActionRepository.findOne(
       {
         subProgram: sp,
+      },
+      { loadEagerRelations: false, order: { id: -1 } },
+    );
+
+    const nextCode =
+      +(latest && !isNaN(+latest?.code?.slice(-2))
+        ? +latest?.code?.slice(-2) || 0
+        : 0) + 1;
+
+    return this.subProgramActionRepository.save(
+      new SubProgramActionEntity({
+        ...payload,
+        code: `${nextCode < 9 ? '0' + nextCode : nextCode}`,
+        subProgram: sp,
+        createdBy: user,
+      }),
+    );
+  }
+
+  public async createActivity(
+    subProgramId: number,
+    actionId: number,
+    payload: CreateSubProgramActivityDto,
+    user: UserEntity,
+  ) {
+    const check = await this.activitiesRepository
+      .createQueryBuilder('a')
+      .leftJoin('a.action', 'ac')
+      .where('ac.id = :id', { id: actionId })
+      // .andWhere('a.code = :code', { code: payload.code })
+      .andWhere(
+        new Brackets((sq) => {
+          sq.where('a.labelFr = :lfr', { lfr: payload.labelFr }).andWhere(
+            'a.labelEn = :len',
+            { len: payload.labelEn },
+          );
+        }),
+      )
+      .getOne();
+    if (check) {
+      throw new ConflictException();
+    }
+
+    const action = await this.subProgramActionRepository.findOne(actionId, {
+      loadEagerRelations: false,
+    });
+
+    if (!action) {
+      throw new NotFoundException();
+    }
+
+    const latest = await this.activitiesRepository.findOne(
+      {
+        action,
       },
       { loadEagerRelations: false, order: { id: -1 } },
     );
@@ -156,7 +215,7 @@ export class SubProgramsService {
       new SubProgramActivityEntity({
         ...payload,
         code: `${nextCode < 9 ? '0' + nextCode : nextCode}`,
-        subProgram: sp,
+        action,
         createdBy: user,
       }),
     );
@@ -237,9 +296,20 @@ export class SubProgramsService {
 
   public async createActivityTaskOperation(
     taskId: number,
+    actId: number,
     param: CreateSubProgramActivityTaskOperationDto,
     user?: UserEntity,
   ) {
+    const activity = await this.activitiesRepository
+      .createQueryBuilder('a')
+      .leftJoinAndSelect('a.action', 'ac')
+      .where('a.id = :id', { id: actId })
+      .getOne();
+
+    if (!activity) {
+      throw new NotFoundException('activity not found');
+    }
+
     const task = await this.activityTasksRepository.findOne(taskId, {
       loadEagerRelations: false,
     });
@@ -281,7 +351,6 @@ export class SubProgramsService {
       throw new NotFoundException('region not found');
     }
 
-    console.log('HERE WE ARE');
     const department = await this.addressesService
       .getDepartmentsRepository()
       .createQueryBuilder('d')
@@ -352,6 +421,23 @@ export class SubProgramsService {
 
     if (!operation) {
       throw new BadRequestException();
+    }
+
+    const action = await this.subProgramActionRepository.findOne(
+      activity.action?.id,
+      { loadEagerRelations: false },
+    );
+    if (action) {
+      action.cpN1 = (action.cpN1 || 0) + operation.paymentCreditN1;
+      action.cpN2 = (action.cpN2 || 0) + operation.paymentCreditN2;
+      action.cpN3 = (action.cpN3 || 0) + operation.paymentCreditN3;
+      action.engagementAuthorization =
+        (action.engagementAuthorization || 0) +
+        (operation.paymentCreditN1 +
+          operation.paymentCreditN2 +
+          operation.paymentCreditN3);
+
+      await action.save();
     }
     return operation;
   }

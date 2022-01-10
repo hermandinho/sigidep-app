@@ -5,6 +5,7 @@ import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-progra
 import { ExerciseEntity } from '@entities/exercise.entity';
 import { StructureEntity } from '@entities/structure.entity';
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
+import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
 
 interface ISubProgramStrategy {
   labelFr: string;
@@ -131,8 +132,8 @@ export class SubProgramEntity extends BaseEntity {
   @JoinColumn({ name: 'structure_id' })
   structure: StructureEntity;
 
-  @OneToMany(() => SubProgramActivityEntity, (object) => object.subProgram)
-  activities: SubProgramActivityEntity[];
+  @OneToMany(() => SubProgramActionEntity, (object) => object.subProgram)
+  actions: SubProgramActionEntity[];
 
   constructor(params?: Partial<SubProgramEntity | CreateSubProgramDto>) {
     super();

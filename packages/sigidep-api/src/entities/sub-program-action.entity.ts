@@ -1,18 +1,24 @@
+/*
+ * Built with ❣️ by El Manifico
+ *
+ * Email: hdemsongtsamo@gmail.com
+ * Date: 1/7/22, 11:31 AM
+ */
+
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { UserEntity } from '@entities/user.entity';
 import { SubProgramEntity } from '@entities/sub-program.entity';
-import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
-import { SubProgramActivityTaskEntity } from '@entities/sub-program-activity-task.entity';
-import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
+import { CreateSubProgramActionDto } from '@modules/sub-programs/dto/create-sub-program-action.dto';
+import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
 
 @Entity({
-  name: 'sub_program_activities',
+  name: 'sub_program_actions',
   orderBy: {
     id: 'ASC',
   },
 })
-export class SubProgramActivityEntity extends BaseEntity {
+export class SubProgramActionEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;
 
@@ -22,23 +28,14 @@ export class SubProgramActivityEntity extends BaseEntity {
   @Column({ name: 'label_en', nullable: false })
   public labelEn: string;
 
-  @Column({ name: 'description_fr', nullable: false, type: 'text' })
-  public presentationFr: string;
-
-  @Column({ name: 'description_en', nullable: false, type: 'text' })
-  public presentationEn: string;
+  @Column({ name: 'owner', nullable: false, comment: 'Responsable' })
+  public owner: string;
 
   @Column({ name: 'objectives_fr', nullable: false, type: 'text' })
   public objectivesFr: string;
 
   @Column({ name: 'objectives_en', nullable: false, type: 'text' })
   public objectivesEn: string;
-
-  @Column({ name: 'results_fr', nullable: false, type: 'text' })
-  public resultsFr: string;
-
-  @Column({ name: 'results_en', nullable: false, type: 'text' })
-  public resultsEn: string;
 
   @Column({ name: 'indicators_fr', nullable: false, type: 'text' })
   public indicatorsFr: string;
@@ -67,6 +64,18 @@ export class SubProgramActivityEntity extends BaseEntity {
   @Column({ name: 'measurement_unit', nullable: false })
   public measurementUnit: string;
 
+  @Column({ name: 'engagement_authorization', default: 0 })
+  public engagementAuthorization: number;
+
+  @Column({ name: 'cp_n1', default: 0 })
+  public cpN1: number;
+
+  @Column({ name: 'cp_n2', default: 0 })
+  public cpN2: number;
+
+  @Column({ name: 'cp_n3', default: 0 })
+  public cpN3: number;
+
   @Column({ name: 'start_date', nullable: false, type: 'date' })
   public startDate: Date;
 
@@ -81,18 +90,18 @@ export class SubProgramActivityEntity extends BaseEntity {
   @JoinColumn({ name: 'created_by' })
   createdBy?: UserEntity;
 
-  @ManyToOne(() => SubProgramActionEntity, (object) => object.activities, {
+  @ManyToOne(() => SubProgramEntity, (object) => object.actions, {
     onDelete: 'CASCADE',
     nullable: false,
   })
-  @JoinColumn({ name: 'action_id' })
-  action: SubProgramActionEntity;
+  @JoinColumn({ name: 'sub_program_id' })
+  subProgram: SubProgramEntity;
 
-  @OneToMany(() => SubProgramActivityTaskEntity, (object) => object.activity)
-  public tasks: SubProgramActivityTaskEntity[];
+  @OneToMany(() => SubProgramActivityEntity, (object) => object.action)
+  activities: SubProgramActivityEntity[];
 
   constructor(
-    params?: Partial<SubProgramActivityEntity | CreateSubProgramActivityDto>,
+    params?: Partial<SubProgramActionEntity | CreateSubProgramActionDto>,
   ) {
     super();
     if (params) {

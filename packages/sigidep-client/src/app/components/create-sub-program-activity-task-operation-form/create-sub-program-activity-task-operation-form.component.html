@@ -152,6 +152,28 @@
       <div class="p-col-12 p-grid">
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{
+            "labels.action" | translate
+          }}</label>
+
+          <p-dropdown
+            [filter]="false"
+            [optionLabel]="'label'"
+            [options]="actionsSelectData"
+            [placeholder]="'labels.action' | translate"
+            [showClear]="false"
+            appendTo="body"
+            [formControlName]="'action'"
+            [optionValue]="'id'"
+          >
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.label }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="p-col-6 p-m-auto">
+          <label [class.required]="true">{{
             "labels.activity" | translate
           }}</label>
 
@@ -172,6 +194,9 @@
             </ng-template>
           </p-dropdown>
         </div>
+      </div>
+
+      <div class="p-col-12 p-grid">
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{ "labels.task" | translate }}</label>
 
@@ -192,6 +217,7 @@
             </ng-template>
           </p-dropdown>
         </div>
+        <div class="p-col-6 p-m-auto"></div>
       </div>
     </div>
   </div>

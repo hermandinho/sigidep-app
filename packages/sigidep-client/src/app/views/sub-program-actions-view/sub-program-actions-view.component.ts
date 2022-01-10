@@ -9,16 +9,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { DialogsService } from '@services/dialogs.service';
 
 @Component({
-  selector: 'app-sub-program-activities-view',
-  templateUrl: './sub-program-activities-view.component.html',
-  styleUrls: ['./sub-program-activities-view.component.scss'],
+  selector: 'app-sub-program-actions-view',
+  templateUrl: './sub-program-actions-view.component.html',
+  styleUrls: ['./sub-program-actions-view.component.scss'],
 })
-export class SubProgramActivitiesViewComponent
+export class SubProgramActionsViewComponent
   extends BaseComponent
   implements OnInit
 {
   @Input() subProgram?: SubProgramModel;
-  @Input() action?: SubProgramActionModel;
 
   constructor(
     public translate: TranslateService,
@@ -33,15 +32,13 @@ export class SubProgramActivitiesViewComponent
 
   ngOnInit(): void {}
 
-  public async addTask(item: SubProgramActivityModel): Promise<void> {
-    if (!this.subProgram || !item || !this.action) {
+  public async addActivity(item: SubProgramActionModel): Promise<void> {
+    if (!this.subProgram || !item) {
       return;
     }
-    const ret =
-      await this._dialogService.launchSubProgramActivityTaskCreateDialog(
-        this.subProgram,
-        item,
-        this.action
-      );
+    const ret = await this._dialogService.launchSubProgramActivityCreateDialog(
+      this.subProgram,
+      item
+    );
   }
 }

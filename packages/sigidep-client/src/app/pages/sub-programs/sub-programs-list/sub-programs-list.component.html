@@ -115,9 +115,9 @@
         </td>
         <td>
           <button
-            (click)="addActivity(item)"
+            (click)="addAction(item)"
             *appCheckPermissions="['subPrograms.create']"
-            [pTooltip]="'hints.addActivity' | translate"
+            [pTooltip]="'hints.addAction' | translate"
             class="p-button-rounded p-button-success p-mr-2 action"
             icon="pi pi-plus"
             pButton
@@ -138,10 +138,9 @@
     <ng-template pTemplate="rowexpansion" let-item>
       <tr>
         <td [attr.colspan]="9">
-          <app-sub-program-activities-view
-            [activities]="item?.activities ?? []"
+          <app-sub-program-actions-view
             [subProgram]="item"
-          ></app-sub-program-activities-view>
+          ></app-sub-program-actions-view>
         </td>
       </tr>
     </ng-template>

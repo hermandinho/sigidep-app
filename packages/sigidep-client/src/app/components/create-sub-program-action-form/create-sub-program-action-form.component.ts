@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { BaseComponent } from '@components/base.component';
 import { IFormFiledElt } from '@components/create-sub-program-form/create-sub-program-form.component';
-import { measurementUnits } from '@components/create-sub-program-objective-indicator-form/create-sub-program-objective-indicator-form.component';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ApisService } from '@services/apis.service';
-import { SubProgramActivityModel } from '@models/sub-program.model';
 import { AppService } from '@services/app.service';
-import { GetSubPrograms } from '@store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
+import {
+  SubProgramActionModel,
+  SubProgramActivityModel,
+} from '@models/sub-program.model';
+import { GetSubPrograms } from '@store/actions';
+import { BaseComponent } from '@components/base.component';
+import { measurementUnits } from '@components/create-sub-program-objective-indicator-form/create-sub-program-objective-indicator-form.component';
 
 @Component({
-  selector: 'app-create-sub-program-activity-form',
-  templateUrl: './create-sub-program-activity-form.component.html',
-  styleUrls: ['./create-sub-program-activity-form.component.scss'],
+  selector: 'app-create-sub-program-action-form',
+  templateUrl: './create-sub-program-action-form.component.html',
+  styleUrls: ['./create-sub-program-action-form.component.scss'],
 })
-export class CreateSubProgramActivityFormComponent
+export class CreateSubProgramActionFormComponent
   extends BaseComponent
   implements OnInit
 {
@@ -36,70 +39,68 @@ export class CreateSubProgramActivityFormComponent
     super();
     this.form = this._fb.group({
       id: [undefined, []],
-      /*code: [
+      code: [
         undefined,
         [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
-      ],*/
+      ],
       labelFr: [undefined, [Validators.required]],
       labelEn: [undefined, [Validators.required]],
-      presentationFr: [undefined, [Validators.required]],
-      presentationEn: [undefined, [Validators.required]],
       objectivesFr: [undefined, [Validators.required]],
       objectivesEn: [undefined, [Validators.required]],
-      resultsFr: [undefined, [Validators.required]],
-      resultsEn: [undefined, [Validators.required]],
       indicatorsFr: [undefined, [Validators.required]],
       indicatorsEn: [undefined, [Validators.required]],
       verificationSourceFr: [undefined, [Validators.required]],
       verificationSourceEn: [undefined, [Validators.required]],
       referenceValue: [undefined, [Validators.required]],
-      referenceYear: [
-        undefined,
-        [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
-      ],
+      referenceYear: [undefined, [Validators.required]],
       targetValue: [undefined, [Validators.required]],
-      targetYear: [
-        undefined,
-        [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
-      ],
+      targetYear: [undefined, [Validators.required]],
       measurementUnit: [undefined, [Validators.required]],
+      owner: [undefined, [Validators.required]],
       startDate: [undefined, [Validators.required]],
       endDate: [undefined, [Validators.required]],
     });
   }
 
-  /*public x() {
-    this._appService.showToast({
-      summary: 'messages.success',
-      detail: 'messages.subPrograms.createActivitySuccess',
-      severity: 'success',
-      life: 3000000000000000000000000,
-      closable: true,
-    });
-  }*/
   ngOnInit(): void {
-    // En réalité quand on parle des Valeurs de référence et cible, on se réfère aux indicateurs...
-    // Or on ne peut parler d'indicateurs que si on a au préalable énoncé des Objectifs🙏
-    // Donc logiquement, les
-    // Unités des mesure,  valeurs de référence, valeurs cibles, année de référence et Année cible n'interviennent qu'en-dessous des indicateurs.
-    // Et les indicateurs eux-mêmes n'interviennent que sous des objectifs🙏
     this.formElements = [
-      // { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
+      {
+        label: 'code',
+        formControl: 'code',
+        type: 'mask',
+        mask: '99',
+        size: 6,
+        required: true,
+      },
       {
         label: 'label',
         formControl: 'label',
         type: 'text',
         i18n: true,
-        size: 12,
+        size: 6,
+        required: true,
       },
-      { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
-      { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
+      {
+        label: 'startDate',
+        formControl: 'startDate',
+        type: 'date',
+        size: 6,
+        required: true,
+      },
+      {
+        label: 'endDate',
+        formControl: 'endDate',
+        type: 'date',
+        size: 6,
+        required: true,
+      },
       {
         label: 'objectives',
         formControl: 'objectives',
         type: 'editor',
         i18n: true,
         size: 12,
+        required: true,
       },
       {
         label: 'indicators',
@@ -107,42 +108,53 @@ export class CreateSubProgramActivityFormComponent
         type: 'editor',
         i18n: true,
         size: 12,
+        required: true,
       },
       {
         label: 'measurementUnit',
         formControl: 'measurementUnit',
         type: 'dropdown',
-        size: 12,
+        size: 6,
         dropdownOptions: measurementUnits,
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
         editable: true,
+        required: true,
+      },
+      {
+        label: 'owner',
+        formControl: 'owner',
+        type: 'text',
+        size: 6,
+        required: true,
       },
       {
         label: 'referenceValue',
         formControl: 'referenceValue',
         type: 'number',
         size: 6,
+        required: true,
       },
       {
         label: 'referenceYear',
         formControl: 'referenceYear',
         type: 'date',
         size: 6,
+        required: true,
       },
       {
         label: 'targetValue',
         formControl: 'targetValue',
         type: 'number',
         size: 6,
+        required: true,
       },
-      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },
       {
-        label: 'presentation',
-        formControl: 'presentation',
-        type: 'editor',
-        i18n: true,
-        size: 12,
+        label: 'targetYear',
+        formControl: 'targetYear',
+        type: 'date',
+        size: 6,
+        required: true,
       },
       {
         label: 'verificationSource',
@@ -150,13 +162,7 @@ export class CreateSubProgramActivityFormComponent
         type: 'editor',
         i18n: true,
         size: 12,
-      },
-      {
-        label: 'results',
-        formControl: 'results',
-        type: 'editor',
-        i18n: true,
-        size: 12,
+        required: true,
       },
     ];
   }
@@ -170,17 +176,12 @@ export class CreateSubProgramActivityFormComponent
   }
 
   submit() {
-    if (
-      !this.form.valid ||
-      !this.config.data?.subProgram?.id ||
-      !this.config.data?.action?.id
-    )
-      return;
+    if (!this.form.valid || !this.config.data?.subProgram?.id) return;
     this.busy = true;
 
     this._apisService
-      .post<SubProgramActivityModel>(
-        `/sub-programs/${this.config.data?.subProgram?.id}/action/${this.config.data?.action?.id}`,
+      .post<SubProgramActionModel>(
+        `/sub-programs/${this.config.data?.subProgram?.id}/action`,
         {
           ...this.form.value,
         }
@@ -193,7 +194,7 @@ export class CreateSubProgramActivityFormComponent
 
           this._appService.showToast({
             summary: 'messages.success',
-            detail: 'messages.subPrograms.createActivitySuccess',
+            detail: 'messages.subPrograms.createActionSuccess',
             severity: 'success',
             life: 3000,
             closable: true,
@@ -202,7 +203,7 @@ export class CreateSubProgramActivityFormComponent
         ({ error }) => {
           let err = '';
           if (error?.statusCode === 409) {
-            err = 'errors.subPrograms.activityConflict';
+            err = 'errors.subPrograms.actionConflict';
           } else {
             err = 'errors.unknown';
           }

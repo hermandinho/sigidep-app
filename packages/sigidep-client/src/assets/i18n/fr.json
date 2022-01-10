@@ -128,12 +128,15 @@
     "programmedReferencePhysicalUnit": "Unités physique de programmées",
     "addReferencePhysicalUnit": "Programmer une unités physique",
     "administrativeUnit": "Unité administrative",
-    "financialSource": "Source de financement"
+    "financialSource": "Source de financement",
+    "owner": "Responsable",
+    "action": "Action"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
     "deletePhysicalReferencesOnParagraphChange": "Toutes les unités physiques programmées seront supprimées suite à la modification de ce paragraphe.",
     "addTask": "Ajouter une tâche",
+    "addAction": "Ajouter une action",
     "addActivity": "Ajouter une activité",
     "addOperation": "Ajouter une opération"
   },
@@ -179,7 +182,8 @@
     "subPrograms": {
       "delete": "Une erreur est survenue lors de la suppression de ce sous program.",
       "conflict": "Un sous program avec ce code existe déjà.",
-      "activityConflict": "Une activité avec ce code existe déjà dans ce sous program.",
+      "activityConflict": "Une activité avec ce code existe déjà dans cette action.",
+      "actionConflict": "Une action avec ce code existe déjà dans ce sous program.",
       "activityTaskConflict": "Une tâche avec ce code existe déjà dans cette activité."
     }
   },
@@ -216,6 +220,7 @@
     "subPrograms": {
       "deleteSuccess": "Sous program supprimé avec succès.",
       "createSuccess": "Sous program crée avec succès.",
+      "createActionSuccess": "Action crée avec succès.",
       "createActivitySuccess": "Activité crée avec succès.",
       "createActivityTaskSuccess": "Tâche créée avec succès."
     }
@@ -303,7 +308,9 @@
       "createActivityTaskOperation": "Céer une opération",
       "updateActivityTaskOperation": "Modifier une opération",
       "createActivity": "Céer une Activitée",
-      "updateActivity": "Modifier une Activitée"
+      "updateActivity": "Modifier une Activitée",
+      "createAction": "Céer une Action",
+      "editAction": "Modifier une Action"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
