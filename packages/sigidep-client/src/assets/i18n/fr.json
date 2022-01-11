@@ -130,7 +130,9 @@
     "administrativeUnit": "Unité administrative",
     "financialSource": "Source de financement",
     "owner": "Responsable",
-    "action": "Action"
+    "action": "Action",
+    "coordinator": "Coordonateur",
+    "followUpOwner": "Responsable de suivi de l'évaluation"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

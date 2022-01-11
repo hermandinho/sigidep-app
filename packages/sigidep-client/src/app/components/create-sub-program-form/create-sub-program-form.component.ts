@@ -15,6 +15,7 @@ import { StructureModel } from '@models/structure.model';
 import { getStructureSelector } from '@reducers/app.reducer';
 import { ApisService } from '@services/apis.service';
 import { SubProgramModel } from '@models/sub-program.model';
+import * as moment from 'moment';
 
 export interface IFormFiledElt {
   label: string;
@@ -83,6 +84,7 @@ export class CreateSubProgramFormComponent
     private _apisService: ApisService
   ) {
     super();
+    moment.locale(translate.currentLang);
     // TODO subscribe to language changes
     this.steps = [
       {
@@ -120,6 +122,9 @@ export class CreateSubProgramFormComponent
         ],
         labelFr: [undefined, [Validators.required]],
         labelEn: [undefined, [Validators.required]],
+        coordinator: [undefined, [Validators.required]],
+        owner: [undefined, [Validators.required]],
+        followUpOwner: [undefined, [Validators.required]],
         startDate: [undefined, [Validators.required]],
         endDate: [undefined, [Validators.required]],
         ownerId: [undefined, []],
@@ -163,6 +168,10 @@ export class CreateSubProgramFormComponent
     else return this.commonFormGroup?.valid && this.strategiesFormGroup?.valid;
   }
 
+  get currentLang() {
+    return this.translate.currentLang;
+  }
+
   ngOnInit(): void {
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -195,6 +204,27 @@ export class CreateSubProgramFormComponent
           size: 6,
           required: true,
           i18n: true,
+        },
+        {
+          label: 'coordinator',
+          type: 'text',
+          formControl: 'coordinator',
+          size: 6,
+          required: true,
+        },
+        {
+          label: 'owner',
+          type: 'text',
+          formControl: 'owner',
+          size: 6,
+          required: true,
+        },
+        {
+          label: 'followUpOwner',
+          type: 'text',
+          formControl: 'followUpOwner',
+          size: 6,
+          required: true,
         },
         {
           label: 'startDate',
@@ -309,7 +339,7 @@ export class CreateSubProgramFormComponent
                       labelFr: [data.labelFr],
                       labelEn: [data.labelEn],
                       referenceValue: [data.referenceValue],
-                      referenceYear: [data.referenceYear],
+                      referenceYear: [new Date(data.referenceYear)],
                       targetValue: [data.targetValue],
                       targetYear: [data.targetYear],
                       measurementUnit: [data.measurementUnit],

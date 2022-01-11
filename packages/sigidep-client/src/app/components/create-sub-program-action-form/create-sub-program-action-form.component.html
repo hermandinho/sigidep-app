@@ -36,7 +36,7 @@
         <input
           *ngIf="['text', 'number'].includes(column.type) && !column.i18n"
           [formControlName]="column.formControl"
-          [placeholder]="column.label | translate"
+          [placeholder]="'labels.' + column.label | translate"
           [type]="column.type"
           pInputText
         />

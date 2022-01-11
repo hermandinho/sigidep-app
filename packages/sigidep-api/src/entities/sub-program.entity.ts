@@ -46,6 +46,15 @@ export class SubProgramEntity extends BaseEntity {
   @Column({ name: 'label_en', nullable: false })
   public labelEn: string;
 
+  @Column({ name: 'coordinator', nullable: true })
+  public coordinator: string;
+
+  @Column({ name: 'owner', nullable: true })
+  public owner: string;
+
+  @Column({ name: 'follow_up_owner', nullable: true })
+  public followUpOwner: string;
+
   @Column({ name: 'description_fr', nullable: false, type: 'text' })
   public presentationFr: string;
 
@@ -104,12 +113,12 @@ export class SubProgramEntity extends BaseEntity {
   public endDate: Date;
 
   // RELATIONS
-  @ManyToOne(() => UserEntity, (object) => object.id, {
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'owner_id' })
-  owner?: UserEntity;
+  // @ManyToOne(() => UserEntity, (object) => object.id, {
+  //   onDelete: 'SET NULL',
+  //   nullable: true,
+  // })
+  // @JoinColumn({ name: 'owner_id' })
+  // owner?: UserEntity;
 
   @ManyToOne(() => UserEntity, (object) => object.id, {
     onDelete: 'SET NULL',

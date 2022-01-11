@@ -50,24 +50,26 @@ export class SubProgramsService {
   ) {}
 
   public async filter() {
-    return this.repository
-      .createQueryBuilder('s')
-      .leftJoinAndSelect('s.owner', 'o')
-      .leftJoinAndSelect('s.actions', 'ac')
-      .leftJoinAndSelect('ac.activities', 'a')
-      .leftJoinAndSelect('a.tasks', 't')
-      .leftJoinAndSelect('t.operations', 'op')
-      .leftJoinAndSelect('op.arrondissement', 'ar')
-      .leftJoinAndSelect('op.region', 're')
-      .leftJoinAndSelect('op.department', 'dep')
-      .leftJoinAndSelect('op.paragraph', 'par')
-      .leftJoinAndSelect('op.physicalUnits', 'units')
-      .leftJoinAndSelect('units.referencePhysicalUnit', 'ref')
-      .leftJoinAndSelect('t.financialSource', 'fs')
-      .leftJoinAndSelect('s.exercise', 'e')
-      .leftJoinAndSelect('t.administrativeUnit', 'au')
-      .leftJoinAndSelect('au.function', 'f')
-      .getMany();
+    return (
+      this.repository
+        .createQueryBuilder('s')
+        // .leftJoinAndSelect('s.owner', 'o')
+        .leftJoinAndSelect('s.actions', 'ac')
+        .leftJoinAndSelect('ac.activities', 'a')
+        .leftJoinAndSelect('a.tasks', 't')
+        .leftJoinAndSelect('t.operations', 'op')
+        .leftJoinAndSelect('op.arrondissement', 'ar')
+        .leftJoinAndSelect('op.region', 're')
+        .leftJoinAndSelect('op.department', 'dep')
+        .leftJoinAndSelect('op.paragraph', 'par')
+        .leftJoinAndSelect('op.physicalUnits', 'units')
+        .leftJoinAndSelect('units.referencePhysicalUnit', 'ref')
+        .leftJoinAndSelect('t.financialSource', 'fs')
+        .leftJoinAndSelect('s.exercise', 'e')
+        .leftJoinAndSelect('t.administrativeUnit', 'au')
+        .leftJoinAndSelect('au.function', 'f')
+        .getMany()
+    );
   }
 
   public async create(payload: CreateSubProgramDto, user: UserEntity) {
@@ -108,6 +110,9 @@ export class SubProgramsService {
         presentationEn: identification.presentationEn,
         startDate: identification.startDate,
         endDate: identification.endDate,
+        owner: identification.owner,
+        coordinator: identification.coordinator,
+        followUpOwner: identification.followUpOwner,
         objectives,
         strategies,
         createdBy: user,

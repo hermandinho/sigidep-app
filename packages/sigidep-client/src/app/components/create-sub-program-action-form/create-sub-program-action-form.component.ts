@@ -39,10 +39,10 @@ export class CreateSubProgramActionFormComponent
     super();
     this.form = this._fb.group({
       id: [undefined, []],
-      code: [
-        undefined,
-        [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
-      ],
+      // code: [
+      //   undefined,
+      //   [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+      // ],
       labelFr: [undefined, [Validators.required]],
       labelEn: [undefined, [Validators.required]],
       objectivesFr: [undefined, [Validators.required]],
@@ -64,14 +64,14 @@ export class CreateSubProgramActionFormComponent
 
   ngOnInit(): void {
     this.formElements = [
-      {
-        label: 'code',
-        formControl: 'code',
-        type: 'mask',
-        mask: '99',
-        size: 6,
-        required: true,
-      },
+      // {
+      //   label: 'code',
+      //   formControl: 'code',
+      //   type: 'mask',
+      //   mask: '99',
+      //   size: 6,
+      //   required: true,
+      // },
       {
         label: 'label',
         formControl: 'label',

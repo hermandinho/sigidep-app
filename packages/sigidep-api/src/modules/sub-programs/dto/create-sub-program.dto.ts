@@ -38,6 +38,18 @@ class Identification {
   @IsNotEmpty()
   public labelEn: string;
 
+  @ApiProperty({ example: 'John Doe', required: true })
+  @IsNotEmpty()
+  public coordinator: string;
+
+  @ApiProperty({ example: 'John Doe', required: true })
+  @IsNotEmpty()
+  public owner: string;
+
+  @ApiProperty({ example: 'Jack Daniel', required: true })
+  @IsNotEmpty()
+  public followUpOwner: string;
+
   @ApiProperty({ example: 'Super présentation', required: true })
   @IsNotEmpty()
   public presentationFr: string;
