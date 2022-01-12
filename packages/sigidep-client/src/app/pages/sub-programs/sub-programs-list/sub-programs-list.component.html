@@ -55,11 +55,11 @@
       </ng-template>
     </p-treeTable>-->
   <p-table
-    [value]="data"
-    dataKey="id"
     [paginator]="true"
-    [rows]="5"
     [rowsPerPageOptions]="tableRowsPerPageOptions"
+    [rows]="5"
+    [value]="data | orderBy: 'id'"
+    dataKey="id"
     responsiveLayout="stack"
   >
     <ng-template pTemplate="header">
