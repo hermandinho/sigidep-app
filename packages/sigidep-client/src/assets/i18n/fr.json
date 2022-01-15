@@ -315,7 +315,8 @@
       "createActivity": "Céer une Activitée",
       "updateActivity": "Modifier une Activitée",
       "createAction": "Céer une Action",
-      "editAction": "Modifier une Action"
+      "editAction": "Modifier une Action",
+      "createContribuable": "Ajouter un contribuable"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

@@ -28,8 +28,8 @@ export class CreateContribuableFormComponent
   public form: FormGroup;
   public busy = false;
   public regimes = [
-    { regime: 'REEL', label: 'contribuables.reel' },
-    { regime: 'SIMPLIFIE', label: 'contribuables.simplifie' },
+    { regime: 'REEL', label: 'REEL' },
+    { regime: 'SIMPLIFIE', label: 'SIMPLIFIEQ' },
   ];
 
   constructor(
