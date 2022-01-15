@@ -18,11 +18,12 @@
     "roles": "Rôles",
     "administrativeUnits": "Unités administratives",
     "subPrograms": "Sous programmes",
-    "publicExpenses": "Dépenses publique",
+    "publicExpenses": "Dépenses publiques",
     "accountRendering": "Reddition de comptes",
     "recipeTracking": "Suivi des recettes",
     "rhManager": "Gestion RH",
-    "accounting": "Comptabilité"
+    "accounting": "Comptabilité",
+    "contribuables": "Contribuables"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -242,7 +243,8 @@
     "subprograms": "Sous programs",
     "list": "Liste",
     "create": "Nouveau",
-    "referencePhysicalUnits": "Unités physiques de référence"
+    "referencePhysicalUnits": "Unités physiques de référence",
+    "contribuables": "Contribuables"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -251,7 +253,8 @@
       "financialSources": "Sources de financements",
       "administrativeUnits": "Unités administratives",
       "technicalSupervisions": "Tutelle Techniques",
-      "paragraphs": "Paragraphes"
+      "paragraphs": "Paragraphes",
+      "contribuables": "Liste des contribuables"
     },
     "headers": {
       "exerciseCode": "Code",

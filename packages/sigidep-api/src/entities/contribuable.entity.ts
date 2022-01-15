@@ -1,6 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { RegimeFiscalEnum } from '@utils/regime-fiscal.enum';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { RegimeFiscalEntity } from './regime-fiscal.entity';
 
 @Entity({
   name: 'contribuable',
@@ -9,7 +9,7 @@ import { RegimeFiscalEntity } from './regime-fiscal.entity';
   },
 })
 export class ContribuableEntity extends BaseEntity {
-  @Column({ name: 'code', nullable: false })
+  @Column({ name: 'code', nullable: true })
   public code: string; //NIU
 
   @Column({ name: 'raison_sociale', nullable: false })
@@ -18,13 +18,8 @@ export class ContribuableEntity extends BaseEntity {
   @Column({ name: 'secteur_activite', nullable: false })
   public secteurActivite: string;
 
-  @ManyToOne(() => RegimeFiscalEntity, (object) => object.id, {
-    eager: false,
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'regime_fiscal' })
-  public regimeFiscal: RegimeFiscalEntity;
+  @Column({ name: 'regime_fiscal', nullable: false })
+  public regimeFiscal: RegimeFiscalEnum;
 
   @Column({ name: 'adresse', nullable: true })
   public adresse: string;

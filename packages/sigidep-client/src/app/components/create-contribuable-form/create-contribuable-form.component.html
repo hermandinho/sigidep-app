@@ -1,0 +1,159 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Code Contribuable" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="code"
+          [placeholder]="'Code Contribuable' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Raison Sociale" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="raisonSociale"
+          [placeholder]="'labels.raisonSociale' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Secteur d'Activité" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="secteurActivite"
+          [placeholder]="'Secteur Activité' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center">
+        <label class="required">{{ "labels.regimeFiscal" | translate }}</label>
+        <p-dropdown
+          [autoDisplayFirst]="false"
+          [options]="regimes"
+          [placeholder]="'labels.regimeFiscal' | translate"
+          class="p-col-6"
+          formControlName="regimeFiscal"
+          optionLabel="label"
+          optionValue="regime"
+        >
+          <ng-template let-option pTemplate="selectedItem">
+            <div>
+              <div>{{ option.label | translate }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-option pTemplate="item">
+            <div>
+              <div>{{ option.label | translate }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Adresse" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="adresse"
+          [placeholder]="'Adresse' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.quartier" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="quartier"
+          [placeholder]="'labels.quartier' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Localisation" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="localisation"
+          [placeholder]="'Localisation' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.siege" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="siege"
+          [placeholder]="'Siege' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Ville" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="ville"
+          [placeholder]="'Ville' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "Contact" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="contact"
+          [placeholder]="'Contact' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.email" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="email"
+          [placeholder]="'Email' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "RIB" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="rib"
+          [placeholder]="'RIB' | translate"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

@@ -1,5 +1,6 @@
-import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RegimeFiscalEnum } from '@utils/regime-fiscal.enum';
 
 export class CreateContribuableDTO {
   @ApiProperty({ example: 'P0145258521421M', required: true })
@@ -15,6 +16,11 @@ export class CreateContribuableDTO {
   @ApiProperty({ example: 'IT', required: true })
   @IsNotEmpty()
   public secteurActivite: string;
+
+  @ApiProperty({ example: 'REEL', required: true })
+  @IsNotEmpty()
+  @IsEnum(RegimeFiscalEnum)
+  public regimeFiscal: RegimeFiscalEnum;
 
   @ApiProperty({ example: 'Rue des banques', required: true })
   @IsNotEmpty()

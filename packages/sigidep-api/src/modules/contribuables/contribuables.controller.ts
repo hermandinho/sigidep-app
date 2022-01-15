@@ -12,13 +12,12 @@ import {
 import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { UserEntity } from '@entities/user.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 import { ContribuablesService } from './contribuables.service';
 import { CreateContribuableDTO } from './dto/create-contribuable.dto';
 
 @Controller('contribuables')
 @ApiTags('contribuables')
-@UseGuards(AuthGuard())
+//@UseGuards(AuthGuard())
 @ApiBearerAuth()
 export class ContribuablesController {
   constructor(private readonly services: ContribuablesService) {}

@@ -10,9 +10,9 @@ import { FinancialSourcesComponent } from '@pages/financial-sources/financial-so
 import { AdministrativeUnitsComponent } from '@pages/administrative-units/administrative-units.component';
 import { TechnicalSupervisorsComponent } from '@pages/technical-supervisors/technical-supervisors.component';
 import { ParagraphsComponent } from '@pages/paragraphs/paragraphs.component';
-import { SubProgramsComponent } from '@pages/sub-programs/sub-programs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units/reference-physical-units.component';
+import { ContribuablesComponent } from '@pages/contribuables/contribuables.component';
 
 const routes: Routes = [
   {
@@ -95,7 +95,8 @@ const routes: Routes = [
         data: {
           permissions: [...MenuPermissions.sub_programs],
         }
-      }*/ {
+      }*/
+      {
         path: 'sub-programs',
         canActivate: [AuthGuard],
         data: {
@@ -105,6 +106,14 @@ const routes: Routes = [
           import('../pages/sub-programs/sub-programs.module').then(
             (m) => m.SubProgramsModule
           ),
+      },
+      {
+        path: 'contribuables',
+        component: ContribuablesComponent,
+        //canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.contribuables],
+        },
       },
       /*{
         path: '**',
