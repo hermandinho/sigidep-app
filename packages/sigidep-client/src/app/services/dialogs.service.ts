@@ -12,6 +12,8 @@ import {
   SubProgramActivityModel,
   SubProgramActivityTaskModel,
   ReferencePhysicalUnitModel,
+  BankModel,
+  AgenceModel,
   SubProgramActionModel,
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
@@ -34,6 +36,9 @@ export class DialogsService {
   private subProgramActivityTaskCreateComponent: any;
   private subProgramActivityTaskOperationCreateComponent: any;
   private referencePhysicalUnitComponent: any;
+
+  private bankCreateComponent: any;
+  private agenceBankCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -380,5 +385,54 @@ export class DialogsService {
         },
       }
     );
+  }
+
+  /************************************************************************************************** */
+  /**************************************************************************************************
+   * /**************************************************************************************************/
+  public async launchBankCreateDialog(item?: BankModel): Promise<any> {
+    if (!this.bankCreateComponent) {
+      const { CreateBankFormComponent } = await import(
+        '@components/create-bank-form/create-bank-form.component'
+      );
+      this.bankCreateComponent = CreateBankFormComponent;
+    }
+
+    return this._dialogService.open(this.bankCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editBank' : 'createBank')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchAgengeBankCreateDialog(
+    bank: BankModel,
+    item?: AgenceModel
+  ): Promise<any> {
+    if (!this.agenceBankCreateComponent) {
+      const { CreateAgenceBankFormComponent } = await import(
+        '@components/create-agence-bank-form/create-agence-bank-form.component'
+      );
+      this.agenceBankCreateComponent = CreateAgenceBankFormComponent;
+    }
+
+    return this._dialogService.open(this.agenceBankCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editAgenceBank' : 'createAgenceBank')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        bank,
+      },
+    });
   }
 }

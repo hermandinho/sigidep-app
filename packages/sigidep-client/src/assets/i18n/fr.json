@@ -22,7 +22,8 @@
     "accountRendering": "Reddition de comptes",
     "recipeTracking": "Suivi des recettes",
     "rhManager": "Gestion RH",
-    "accounting": "Comptabilité"
+    "accounting": "Comptabilité",
+    "banksAgences": "Banques et Agences"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -132,7 +133,8 @@
     "owner": "Responsable",
     "action": "Action",
     "coordinator": "Coordonateur",
-    "followUpOwner": "Responsable de suivi de l'évaluation"
+    "followUpOwner": "Responsable de suivi de l'évaluation",
+    "bank": "banque"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -242,7 +244,8 @@
     "subprograms": "Sous programs",
     "list": "Liste",
     "create": "Nouveau",
-    "referencePhysicalUnits": "Unités physiques de référence"
+    "referencePhysicalUnits": "Unités physiques de référence",
+    "banksAgences": "Banques et Agences"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -312,7 +315,11 @@
       "createActivity": "Céer une Activitée",
       "updateActivity": "Modifier une Activitée",
       "createAction": "Céer une Action",
-      "editAction": "Modifier une Action"
+      "editAction": "Modifier une Action",
+      "createBank": "Créer une banque",
+      "editBank": "Modifier une banque",
+      "createAgenceBank": "Create une agence de banque",
+      "editAgenceBank": "Modifier une agence de banque"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

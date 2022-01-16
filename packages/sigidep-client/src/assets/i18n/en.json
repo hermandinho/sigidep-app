@@ -14,10 +14,12 @@
     "arrondissements": "Arrondissements",
     "departements": "Departements",
     "system": "System",
-    "elaboration": "Elaboration"
+    "elaboration": "Elaboration",
+    "banksAgences": "Banks & Agences"
   },
   "breadcrumb": {
     "exercises": "Exercises",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "banksAgences": "Banks & Agences"
   }
 }

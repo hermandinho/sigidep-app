@@ -12,3 +12,5 @@ export * from './technical-supervisor.model';
 export * from './paragraph.model';
 export * from './sub-program.model';
 export * from './reference-physical-unit.model';
+export * from './banque.model';
+export * from './agence.model';
