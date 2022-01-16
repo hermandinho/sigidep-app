@@ -36,11 +36,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { I18nFormFieldComponent } from '@components/i18n-form-field/i18n-form-field.component';
 import { StepsModule } from 'primeng/steps';
 import { EditorModule } from 'primeng/editor';
+import { OrderByPipe } from '../pipes/order-by.pipe';
 
 const declarations = [
   BaseComponent,
   CheckPermissionsDirective,
   I18nFormFieldComponent,
+  OrderByPipe,
 ];
 
 const shared = [

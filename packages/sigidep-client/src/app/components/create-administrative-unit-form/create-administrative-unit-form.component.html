@@ -25,9 +25,13 @@
       <div class="p-field p-col-12 p-md-6">
         <label class="required">{{ "labels.region" | translate }}</label>
         <p-dropdown
-          [filterBy]="'formattedLabel'"
+          [filterBy]="
+            currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
+          "
           [filter]="true"
-          [optionLabel]="'formattedLabel'"
+          [optionLabel]="
+            currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
+          "
           [options]="regions"
           [placeholder]="'labels.region' | translate"
           [showClear]="false"
@@ -37,7 +41,15 @@
         >
           <ng-template let-region pTemplate="item">
             <div>
-              <div>{{ region?.formattedLabel }}</div>
+              <div>
+                {{
+                  region[
+                    currentLang === "fr"
+                      ? "formattedLabelFr"
+                      : "formattedLabelEn"
+                  ]
+                }}
+              </div>
             </div>
           </ng-template>
         </p-dropdown>

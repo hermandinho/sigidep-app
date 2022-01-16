@@ -20,6 +20,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  SubProgramActionModel,
   SubProgramActivityModel,
   SubProgramActivityTaskModel,
   SubProgramActivityTaskOperationModel,
@@ -61,7 +62,11 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   public paragraphs!: ParagraphModel[];
   public referencePhysicalUnits!: ReferencePhysicalUnitModel[];
   public departmentsSelectData!: { label: string; id: number }[];
-  public arrondissementsSelectData!: { label: string; id: number }[];
+  public arrondissementsSelectData!: {
+    label: string;
+    id: number;
+    chiefTown?: string;
+  }[];
   public addReferencePhysicalUnitFormItems: {
     referencePhysicalUnitId: number | undefined;
     quantity: number;
@@ -260,6 +265,21 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     ];
   }
 
+  get actionsSelectData() {
+    const action: SubProgramActionModel = new SubProgramActionModel(
+      this.config?.data?.action
+    );
+    return [
+      {
+        id: action?.id,
+        label:
+          this.currentLang === 'fr'
+            ? action?.formattedLabelFr
+            : action?.formattedLabelEn,
+      },
+    ];
+  }
+
   get subProgramSelectData() {
     const item: SubProgramModel = new SubProgramModel(
       this.config?.data?.subProgram
@@ -346,6 +366,7 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     exercise: string;
     subProgram: string;
     activity: string;
+    action: string;
     administrativeUnit: string;
     paragraph: string;
     section: string;
@@ -353,12 +374,14 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   } {
     const sp: SubProgramModel = this.config?.data?.subProgram;
     const act: SubProgramActivityModel = this.config?.data?.activity;
+    const action: SubProgramActionModel = this.config?.data?.action;
     const task: SubProgramActivityTaskModel = this.config?.data?.task;
     const { paragraphId } = this.form?.value;
     const paragraph = this.paragraphs?.find((p) => p?.id === +paragraphId);
 
     return {
       activity: act?.code || 'XX',
+      action: action?.code || 'XX',
       administrativeUnit: task?.administrativeUnit?.code || 'XX',
       exercise: sp?.exercise?.code?.toString() || 'XX',
       paragraph: paragraph?.code || 'XX',
@@ -374,20 +397,21 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   get imputation() {
     /**
      * Imputations au bas de la fenêtre dans une large zone grisée prendra automatiquement en concaténation espacée :
-     Code_Exercice {2positions}  Code_S-Programme {2positions} Code Activité {2 positions} Unité Administrative(provenant de la tâche)
+     Code_Exercice {2positions}  Code_S-Programme {2positions} Code Action {2 positions} Unité Administrative(provenant de la tâche)
      {6 positions}  Paragraphe {6 positions} Section(provient de l'unité Administrative) {3 positions}
      * */
     const {
       exercise,
       activity,
+      action,
       subProgram,
       administrativeUnit,
       paragraph,
       section,
       paragraphCode,
     } = this.imputationParts;
-    // CODE-EXERCICE{2} CODE-SP{2} CODE-ACTIVITE{2} CODE-UNITE-ADMINISTRATIVE{6} CODE-PARAGRAPH{6} CODE-SECTION{3}
-    return `${exercise} ${subProgram} ${activity} ${administrativeUnit} ${paragraph} ${section} ${
+    // CODE-EXERCICE{2} CODE-SP{2} CODE-ACTION{2} CODE-UNITE-ADMINISTRATIVE{6} CODE-PARAGRAPH{6} CODE-SECTION{3}
+    return `${exercise} ${subProgram} ${action} ${administrativeUnit} ${paragraph} ${section} ${
       paragraphCode ? ' - ' + paragraphCode : ''
     }`;
   }
@@ -395,6 +419,7 @@ export class CreateSubProgramActivityTaskOperationFormComponent
   ngOnInit(): void {
     this._store.dispatch(GetParagraphs());
     this._store.dispatch(GetReferencePhysicalUnits());
+    console.log(this.config?.data);
 
     const sp: SubProgramModel =
       this.config?.data?.subProgram &&
@@ -407,6 +432,9 @@ export class CreateSubProgramActivityTaskOperationFormComponent
     const activity: SubProgramActivityModel =
       this.config?.data?.activity &&
       new SubProgramActivityModel(this.config?.data?.activity);
+    const action: SubProgramActionModel =
+      this.config?.data?.action &&
+      new SubProgramActionModel(this.config?.data?.action);
     this.form = this._fb.group({
       exercise: [
         {
@@ -429,6 +457,12 @@ export class CreateSubProgramActivityTaskOperationFormComponent
       sp: [
         {
           value: sp?.id,
+          disabled: true,
+        },
+      ],
+      action: [
+        {
+          value: action?.id,
           disabled: true,
         },
       ],
@@ -690,7 +724,8 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         .find((r) => r.id === +id)
         ?.departments?.map((d) => ({
           id: d.id,
-          label: d.formattedLabel,
+          label:
+            this.currentLang === 'fr' ? d.formattedLabelFr : d.formattedLabelEn,
         })) || [];
     this.form.get('departmentId')?.patchValue(undefined);
   }
@@ -703,9 +738,16 @@ export class CreateSubProgramActivityTaskOperationFormComponent
         ?.departments?.find((d) => d.id === +id)
         ?.arrondissements?.map((a) => ({
           id: a.id,
-          label: a.formattedLabel,
+          label:
+            this.currentLang === 'fr' ? a.formattedLabelFr : a.formattedLabelEn,
+          chiefTown: a.chiefTown,
         })) || [];
     this.form.get('arrondissementId')?.patchValue(undefined);
+  }
+
+  handleArrondissementChange(id: any) {
+    const item = this.arrondissementsSelectData.find((a) => a.id === id);
+    this.form.get('locality')?.patchValue(item?.chiefTown);
   }
 
   private generateChronogram() {

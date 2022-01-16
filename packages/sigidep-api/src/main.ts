@@ -13,6 +13,7 @@ async function bootstrap() {
   app.useGlobalFilters(new QueryExceptionsFilters());
 
   if (process.env.ENABLE_SWAGGER === 'true') {
+    console.log('Swagger API enabled');
     const document = SwaggerModule.createDocument(
       app,
       new DocumentBuilder()

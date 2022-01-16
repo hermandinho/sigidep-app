@@ -134,7 +134,7 @@
           <input
             *ngIf="['text', 'number'].includes(column.type) && !column.i18n"
             [formControlName]="column.formControl"
-            [placeholder]="column.label | translate"
+            [placeholder]="'labels.' + column.label | translate"
             [type]="column.type"
             pInputText
           />
@@ -314,9 +314,9 @@
                     <td>{{ item.labelFr }}</td>
                     <td>{{ item.labelEn }}</td>
                     <td>{{ item.referenceValue }}</td>
-                    <td>{{ item.referenceYear }}</td>
+                    <td>{{ item.referenceYear | date: "dd/MM/YYYY" }}</td>
                     <td>{{ item.targetValue }}</td>
-                    <td>{{ item.targetYear }}</td>
+                    <td>{{ item.targetYear | date: "dd/MM/YYYY" }}</td>
                     <!--<td>{{ ('measurementUnits.' + item.measurementUnit) | translate }}</td>-->
                     <td class="p-text-capitalize">
                       {{ item.measurementUnit }}

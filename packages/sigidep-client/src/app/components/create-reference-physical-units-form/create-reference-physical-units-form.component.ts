@@ -91,7 +91,13 @@ export class CreateReferencePhysicalUnitsFormComponent
     this._store
       .pipe(this.takeUntilDestroy, select(paragraphsSelector))
       .subscribe((data) => {
-        this.paragraphs = (data ?? []).map((item) => new ParagraphModel(item));
+        this.paragraphs = (data ?? [])
+          .filter(
+            (p) =>
+              p.nature.abbreviationFr?.toLowerCase()?.includes('bip') ||
+              p.nature.abbreviationEn?.toLowerCase()?.includes('pib')
+          )
+          .map((item) => new ParagraphModel(item));
       });
   }
 

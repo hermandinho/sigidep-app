@@ -19,6 +19,7 @@ import { SubProgramActivityTaskOperationEntity } from '@entities/sub-program-act
 import { SubProgramActivityTaskOperationPhysicalUnitEntity } from '@entities/sub-program-activity-task-operation-physical-unit.entity';
 import { AddressesModule } from '@modules/addresses/addresses.module';
 import { ParagraphsModule } from '@modules/paragraphs/paragraphs.module';
+import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
 
 @Module({
   controllers: [SubProgramsController],
@@ -31,6 +32,7 @@ import { ParagraphsModule } from '@modules/paragraphs/paragraphs.module';
       SubProgramActivityTaskEntity,
       SubProgramActivityTaskOperationEntity,
       SubProgramActivityTaskOperationPhysicalUnitEntity,
+      SubProgramActionEntity,
     ]),
     FinancialSourcesModule,
     AdministrativeUnitsModule,

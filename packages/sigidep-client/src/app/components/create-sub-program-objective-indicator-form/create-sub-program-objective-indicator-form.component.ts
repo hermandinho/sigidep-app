@@ -92,6 +92,7 @@ export class CreateSubProgramObjectiveIndicatorFormComponent
         dropdownOptions: measurementUnits,
         dropdownOptionsLabel: 'label',
         dropdownValueKey: 'value',
+        i18n: false,
       },
       {
         label: 'verificationSource',

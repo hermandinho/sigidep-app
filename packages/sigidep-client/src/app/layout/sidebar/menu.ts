@@ -45,7 +45,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
     },
     {
       icon: 'pi pi-briefcase',
-      label: translate.instant('sidebar.structure'),
+      label: translate.instant('sidebar.elaboration'),
       routerLinkActiveOptions: { exact: true },
       state: {
         permissions: [],
@@ -106,6 +106,51 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
         },
       ],
+    },
+    {
+      icon: 'pi pi-copy',
+      label: translate.instant('sidebar.publicExpenses'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-file',
+      label: translate.instant('sidebar.accountRendering'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-tags',
+      label: translate.instant('sidebar.recipeTracking'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-users',
+      label: translate.instant('sidebar.rhManager'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
+    },
+    {
+      icon: 'pi pi-book',
+      label: translate.instant('sidebar.accounting'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+      items: [],
     },
     {
       label: translate.instant('sidebar.addresses'),

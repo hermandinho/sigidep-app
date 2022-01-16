@@ -1,3 +1,10 @@
+/*
+ * Built with ❣️ by El Manifico
+ *
+ * Email: hdemsongtsamo@gmail.com
+ * Date: 1/7/22, 11:31 AM
+ */
+
 import {
   IsDateString,
   IsNotEmpty,
@@ -6,28 +13,20 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateSubProgramActivityDto {
+export class CreateSubProgramActionDto {
   // @ApiProperty({ example: '22', required: true })
   // @IsNotEmpty()
   // @MinLength(2)
   // @MaxLength(2)
   // public code: string;
 
-  @ApiProperty({ example: 'Super activité', required: true })
+  @ApiProperty({ example: 'Super action', required: true })
   @IsNotEmpty()
   public labelFr: string;
 
-  @ApiProperty({ example: 'Super activity', required: true })
+  @ApiProperty({ example: 'Super action', required: true })
   @IsNotEmpty()
   public labelEn: string;
-
-  @ApiProperty({ example: 'Super présentation', required: true })
-  @IsNotEmpty()
-  public presentationFr: string;
-
-  @ApiProperty({ example: 'Great presentation', required: true })
-  @IsNotEmpty()
-  public presentationEn: string;
 
   @ApiProperty({ example: 'Super Objectif', required: true })
   @IsNotEmpty()
@@ -36,14 +35,6 @@ export class CreateSubProgramActivityDto {
   @ApiProperty({ example: 'Great objectives', required: true })
   @IsNotEmpty()
   public objectivesEn: string;
-
-  @ApiProperty({ example: 'Super resultats', required: true })
-  @IsNotEmpty()
-  public resultsFr: string;
-
-  @ApiProperty({ example: 'Great results', required: true })
-  @IsNotEmpty()
-  public resultsEn: string;
 
   @ApiProperty({ example: 'Super indicateurs', required: true })
   @IsNotEmpty()

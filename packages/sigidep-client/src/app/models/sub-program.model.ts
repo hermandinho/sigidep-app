@@ -47,9 +47,42 @@ export class SubProgramModel extends SubProgramBaseModel {
   indicatorsPaymentCreditN2!: number;
   indicatorsPaymentCreditN3!: number;
   objectives!: SubProgramObjectiveModel[];
-  activities!: SubProgramActivityModel[];
+  actions!: SubProgramActionModel[];
 
   constructor(params?: Partial<SubProgramModel>) {
+    super();
+    if (params) {
+      Object.assign(this, params);
+    }
+  }
+
+  public get formattedLabelEn(): string {
+    return `${this.code} - ${this.labelEn}`;
+  }
+
+  public get formattedLabelFr(): string {
+    return `${this.code} - ${this.labelFr}`;
+  }
+}
+
+export class SubProgramActionModel extends SubProgramBaseModel {
+  objectivesFr!: string;
+  objectivesEn!: string;
+  indicatorsFr!: string;
+  indicatorsEn!: string;
+  verificationSourceFr!: string;
+  verificationSourceEn!: string;
+  referenceValue!: number;
+  referenceYear!: Date;
+  targetValue!: number;
+  targetYear!: Date;
+  measurementUnit!: string;
+  startDate!: Date;
+  endDate!: Date;
+  subProgram?: SubProgramModel;
+  activities?: SubProgramActivityModel[];
+
+  constructor(params?: Partial<SubProgramActionModel>) {
     super();
     if (params) {
       Object.assign(this, params);
@@ -81,6 +114,7 @@ export class SubProgramActivityModel extends SubProgramBaseModel {
   measurementUnit!: string;
   startDate!: Date;
   endDate!: Date;
+  action?: SubProgramActionModel;
   tasks?: SubProgramActivityTaskModel[];
 
   constructor(params?: Partial<SubProgramActivityModel>) {

@@ -43,38 +43,38 @@ export class CreateSubProgramActivityTaskFormComponent
     super();
     this.form = this._fb.group({
       id: [undefined, []],
-      code: [
-        undefined,
-        [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
-      ],
+      // code: [
+      //   undefined,
+      //   [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+      // ],
       labelFr: [undefined, [Validators.required]],
       labelEn: [undefined, [Validators.required]],
       stakeHoldersFr: [undefined, [Validators.required]],
       stakeHoldersEn: [undefined, [Validators.required]],
-      objectivesFr: [undefined, [Validators.required]],
-      objectivesEn: [undefined, [Validators.required]],
+      // objectivesFr: [undefined, [Validators.required]],
+      // objectivesEn: [undefined, [Validators.required]],
       resultsFr: [undefined, [Validators.required]],
       resultsEn: [undefined, [Validators.required]],
-      indicatorsFr: [undefined, [Validators.required]],
-      indicatorsEn: [undefined, [Validators.required]],
+      // indicatorsFr: [undefined, [Validators.required]],
+      // indicatorsEn: [undefined, [Validators.required]],
       verificationSourceFr: [undefined, [Validators.required]],
       verificationSourceEn: [undefined, [Validators.required]],
-      referenceValue: [undefined, [Validators.required]],
+      // referenceValue: [undefined, [Validators.required]],
       financialSourceId: [undefined, [Validators.required]],
-      referenceYear: [
-        undefined,
-        [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
-      ],
-      targetValue: [undefined, [Validators.required]],
-      targetYear: [
-        undefined,
-        [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
-      ],
-      measurementUnit: [undefined, [Validators.required]],
-      startDate: [undefined, [Validators.required]],
-      endDate: [undefined, [Validators.required]],
-      isMultiYear: [false, []],
-      engagementAuthorization: [undefined, []],
+      // referenceYear: [
+      //   undefined,
+      //   [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
+      // ],
+      // targetValue: [undefined, [Validators.required]],
+      // targetYear: [
+      //   undefined,
+      //   [Validators.required, Validators.maxLength(4), Validators.maxLength(4)],
+      // ],
+      // measurementUnit: [undefined, [Validators.required]],
+      // startDate: [undefined, [Validators.required]],
+      // endDate: [undefined, [Validators.required]],
+      // isMultiYear: [false, []],
+      // engagementAuthorization: [undefined, []],
       administrativeUnitId: [undefined, [Validators.required]],
     });
 
@@ -104,57 +104,12 @@ export class CreateSubProgramActivityTaskFormComponent
   ngOnInit(): void {
     // console.log(this.config.data);
     this.formElements = [
-      { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
-      {
-        label: 'measurementUnit',
-        formControl: 'measurementUnit',
-        type: 'dropdown',
-        size: 6,
-        dropdownOptions: measurementUnits,
-        dropdownOptionsLabel: 'label',
-        dropdownValueKey: 'value',
-      },
-      {
-        label: 'financialSource',
-        formControl: 'financialSourceId',
-        type: 'dropdown',
-        size: 6,
-        dropdownOptions: this.financialSources,
-        dropdownOptionsLabel:
-          this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
-        dropdownValueKey: 'id',
-        required: true,
-      },
+      // { label: 'code', formControl: 'code', type: 'mask', mask: '99', size: 6 },
       {
         label: 'label',
         formControl: 'label',
         type: 'text',
         i18n: true,
-        size: 6,
-      },
-      {
-        label: 'referenceValue',
-        formControl: 'referenceValue',
-        type: 'number',
-        size: 6,
-      },
-      {
-        label: 'referenceYear',
-        formControl: 'referenceYear',
-        type: 'date',
-        size: 6,
-      },
-      {
-        label: 'targetValue',
-        formControl: 'targetValue',
-        type: 'number',
-        size: 6,
-      },
-      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },
-      {
-        label: 'engagementAuthorization',
-        formControl: 'engagementAuthorization',
-        type: 'number',
         size: 6,
       },
       {
@@ -175,23 +130,69 @@ export class CreateSubProgramActivityTaskFormComponent
         i18n: true,
         size: 12,
       },
-      {
+      /*{
         label: 'objectives',
         formControl: 'objectives',
         type: 'editor',
         i18n: true,
         size: 12,
-      },
-      {
-        label: 'results',
-        formControl: 'results',
+      },*/
+      /*{
+        label: 'indicators',
+        formControl: 'indicators',
         type: 'editor',
         i18n: true,
         size: 12,
+      },*/
+      /*{
+        label: 'measurementUnit',
+        formControl: 'measurementUnit',
+        type: 'dropdown',
+        size: 6,
+        dropdownOptions: measurementUnits,
+        dropdownOptionsLabel: 'label',
+        dropdownValueKey: 'value',
+        editable: true,
+      },*/
+      /*{
+        label: 'referenceValue',
+        formControl: 'referenceValue',
+        type: 'number',
+        size: 6,
       },
       {
-        label: 'indicators',
-        formControl: 'indicators',
+        label: 'referenceYear',
+        formControl: 'referenceYear',
+        type: 'date',
+        size: 6,
+      },
+      {
+        label: 'targetValue',
+        formControl: 'targetValue',
+        type: 'number',
+        size: 6,
+      },
+      { label: 'targetYear', formControl: 'targetYear', type: 'date', size: 6 },*/
+      {
+        label: 'financialSource',
+        formControl: 'financialSourceId',
+        type: 'dropdown',
+        size: 12,
+        dropdownOptions: this.financialSources,
+        dropdownOptionsLabel:
+          this.currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn',
+        dropdownValueKey: 'id',
+        required: true,
+      },
+      /*{
+        label: 'engagementAuthorization',
+        formControl: 'engagementAuthorization',
+        type: 'number',
+        size: 6,
+      },*/
+      {
+        label: 'results',
+        formControl: 'results',
         type: 'editor',
         i18n: true,
         size: 12,
@@ -203,15 +204,15 @@ export class CreateSubProgramActivityTaskFormComponent
         i18n: true,
         size: 12,
       },
-      { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
-      { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
-      {
+      // { label: 'startDate', formControl: 'startDate', type: 'date', size: 6 },
+      // { label: 'endDate', formControl: 'endDate', type: 'date', size: 6 },
+      /*{
         label: 'isMultiYear',
         formControl: 'isMultiYear',
         type: 'switch',
         size: 12,
         flexRow: true,
-      },
+      },*/
     ];
   }
 

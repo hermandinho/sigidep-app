@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@components/base.component';
 import { GetSubPrograms, SetAppBreadcrumb } from '@store/actions';
 import {
+  SubProgramActionModel,
   SubProgramActivityModel,
   SubProgramActivityTaskModel,
   SubProgramModel,
@@ -63,8 +64,8 @@ export class SubProgramsListComponent extends BaseComponent implements OnInit {
     this.columns = [{ field: 'F 1' }, { field: 'F 2' }];
   }
 
-  public async addActivity(sp: SubProgramModel): Promise<void> {
-    const ret = await this._dialogService.launchSubProgramActivityCreateDialog(
+  public async addAction(sp: SubProgramModel): Promise<void> {
+    const ret = await this._dialogService.launchSubProgramActionCreateDialog(
       sp
     );
   }
@@ -80,12 +81,18 @@ export class SubProgramsListComponent extends BaseComponent implements OnInit {
       .subscribe((data) => {
         this.data = (data || []).map((d) => {
           const obj = new SubProgramModel(d);
-          obj.activities = (obj.activities || []).map(
+          obj.actions = (obj.actions || []).map(
             (a) =>
-              new SubProgramActivityModel({
+              new SubProgramActionModel({
                 ...a,
-                tasks: (a.tasks || []).map(
-                  (t) => new SubProgramActivityTaskModel(t)
+                activities: (a.activities || []).map(
+                  (act) =>
+                    new SubProgramActivityModel({
+                      ...act,
+                      tasks: (act.tasks || []).map(
+                        (t) => new SubProgramActivityTaskModel(t)
+                      ),
+                    })
                 ),
               })
           );

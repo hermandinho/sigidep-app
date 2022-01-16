@@ -152,6 +152,28 @@
       <div class="p-col-12 p-grid">
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{
+            "labels.action" | translate
+          }}</label>
+
+          <p-dropdown
+            [filter]="false"
+            [optionLabel]="'label'"
+            [options]="actionsSelectData"
+            [placeholder]="'labels.action' | translate"
+            [showClear]="false"
+            appendTo="body"
+            [formControlName]="'action'"
+            [optionValue]="'id'"
+          >
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.label }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="p-col-6 p-m-auto">
+          <label [class.required]="true">{{
             "labels.activity" | translate
           }}</label>
 
@@ -172,6 +194,9 @@
             </ng-template>
           </p-dropdown>
         </div>
+      </div>
+
+      <div class="p-col-12 p-grid">
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{ "labels.task" | translate }}</label>
 
@@ -192,6 +217,7 @@
             </ng-template>
           </p-dropdown>
         </div>
+        <div class="p-col-6 p-m-auto"></div>
       </div>
     </div>
   </div>
@@ -199,7 +225,7 @@
   <div class="steps-container">
     <p-steps
       [model]="steps"
-      [readonly]="false"
+      [readonly]="true"
       [activeIndex]="activeStep"
     ></p-steps>
   </div>
@@ -368,7 +394,9 @@
 
             <p-dropdown
               (ngModelChange)="handleRegionChange($event)"
-              [optionLabel]="'formattedLabel'"
+              [optionLabel]="
+                currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
+              "
               [options]="regions"
               [placeholder]="'labels.region' | translate"
               [showClear]="false"
@@ -407,6 +435,7 @@
             }}</label>
 
             <p-dropdown
+              (ngModelChange)="handleArrondissementChange($event)"
               [optionLabel]="'label'"
               [options]="arrondissementsSelectData"
               [placeholder]="'labels.arrondissement' | translate"
