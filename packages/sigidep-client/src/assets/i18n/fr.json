@@ -228,7 +228,8 @@
     "subprograms": "Sous programs",
     "list": "Liste",
     "create": "Nouveau",
-    "referencePhysicalUnits": "Unités physiques de référence"
+    "referencePhysicalUnits": "Unités physiques de référence",
+    "banksAgences": "Banques et Agences"
   },
   "tables": {
     "emptyMessage": "Aucun élément",

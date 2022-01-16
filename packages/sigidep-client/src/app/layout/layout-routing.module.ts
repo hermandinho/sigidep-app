@@ -13,6 +13,7 @@ import { ParagraphsComponent } from '@pages/paragraphs/paragraphs.component';
 import { SubProgramsComponent } from '@pages/sub-programs/sub-programs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units/reference-physical-units.component';
+import { BanksAgencesComponent } from '@pages/banks-agences/banks-agences.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,14 @@ const routes: Routes = [
           import('../pages/sub-programs/sub-programs.module').then(
             (m) => m.SubProgramsModule
           ),
+      },
+      {
+        path: 'banks-agences',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
+        component: BanksAgencesComponent,
       },
       /*{
         path: '**',
