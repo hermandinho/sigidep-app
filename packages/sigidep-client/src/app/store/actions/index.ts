@@ -11,3 +11,4 @@ export * from './sub-programs.actions';
 export * from './addresses.actions';
 export * from './reference-physical-units.actions';
 export * from './contribuables.actions';
+export * from './banks-agences.actions';

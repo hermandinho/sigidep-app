@@ -193,6 +193,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
       ],
     },
     {
+      routerLink: 'banks-agences',
+      icon: 'pi pi-wallet',
+      label: translate.instant('sidebar.banksAgences'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+    },
+    {
       routerLink: 'roles',
       icon: 'pi pi-lock',
       label: translate.instant('sidebar.roles'),

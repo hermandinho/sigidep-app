@@ -1,3 +1,4 @@
+import { BanksAgencesModule } from './pages/banks-agences/banks-agences.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -76,6 +77,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubProgramsModule,
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
+    BanksAgencesModule,
   ],
   providers: [
     AppInstallCheckGuard,

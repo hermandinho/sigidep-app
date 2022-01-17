@@ -17,6 +17,7 @@ import { ParagraphsModule } from './modules/paragraphs/paragraphs.module';
 import { SubProgramsModule } from './modules/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from './modules/reference-physical-units/reference-physical-units.module';
 import { ContribuablesModule } from '@modules/contribuables/contribuables.module';
+import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module';
 
 @Module({
   imports: [
@@ -88,6 +89,7 @@ import { ContribuablesModule } from '@modules/contribuables/contribuables.module
     SubProgramsModule,
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
+    BanksAgencesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

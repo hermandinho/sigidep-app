@@ -24,7 +24,6 @@ export class CreateContribuableFormComponent
   ];
   public form: FormGroup;
   public busy = false;
-
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
@@ -53,7 +52,7 @@ export class CreateContribuableFormComponent
       siege: [undefined, [Validators.required]],
       ville: [undefined, [Validators.required]],
       contact: [undefined, [Validators.required]],
-      email: [],
+      email: [undefined, [Validators.email]],
       codeBanque: [
         undefined,
         [Validators.required, Validators.minLength(5), Validators.maxLength(5)],

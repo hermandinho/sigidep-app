@@ -13,6 +13,7 @@ import { ParagraphsComponent } from '@pages/paragraphs/paragraphs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units/reference-physical-units.component';
 import { ContribuablesComponent } from '@pages/contribuables/contribuables.component';
+import { BanksAgencesComponent } from '@pages/banks-agences/banks-agences.component';
 
 const routes: Routes = [
   {
@@ -110,10 +111,18 @@ const routes: Routes = [
       {
         path: 'contribuables',
         component: ContribuablesComponent,
-        //canActivate: [PermissionsGuard],
+        canActivate: [AuthGuard, PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.contribuables],
         },
+      },
+      {
+        path: 'banks-agences',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
+        component: BanksAgencesComponent,
       },
       /*{
         path: '**',
