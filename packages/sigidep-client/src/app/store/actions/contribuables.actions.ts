@@ -13,7 +13,7 @@ export const GetContribuablesFailure = createAction(
 
 export const UpdateContribuable = createAction(
   '[Contribuables] Update',
-  props<{ payload: any }>()
+  props<{ payload: ContribuableModel }>()
 );
 export const UpdateContribuableSuccess = createAction(
   '[Contribuables] Update success',
@@ -38,7 +38,7 @@ export const DeleteContribuableFailure = createAction(
 
 export const CreateContribuable = createAction(
   '[Contribuables] Create contribuable',
-  props<{ payload: any }>()
+  props<{ payload: ContribuableModel }>()
 );
 export const CreateContribuableSuccess = createAction(
   '[Contribuables] Create contribuable',

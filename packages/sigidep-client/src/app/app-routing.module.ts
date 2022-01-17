@@ -29,13 +29,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'contribuables',
-    loadChildren: () =>
-      import('./pages/contribuables/contribuables.module').then(
-        (m) => m.ContribuablesModule
-      ),
-  },
-  {
     path: '**',
     redirectTo: 'auth',
     pathMatch: 'full',

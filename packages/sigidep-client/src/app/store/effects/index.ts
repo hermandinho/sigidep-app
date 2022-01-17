@@ -10,6 +10,7 @@ import { ParagraphEffects } from '@effects/paragraph.effects';
 import { SubProgramsEffects } from '@effects/sub-programs.effects';
 import { AddressesEffects } from '@effects/addresses.effects';
 import { ReferencePhysicalUnitsEffects } from '@effects/reference-physical-units.effects';
+import { ContribuablesEffects } from './contribuables.effects';
 
 export const Effects = [
   AuthEffects,
@@ -24,4 +25,5 @@ export const Effects = [
   SubProgramsEffects,
   AddressesEffects,
   ReferencePhysicalUnitsEffects,
+  ContribuablesEffects,
 ];

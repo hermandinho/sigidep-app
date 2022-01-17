@@ -2,44 +2,48 @@
   <div class="form" [formGroup]="form">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Code Contribuable" | translate }}</label>
+        <label class="required">{{
+          "labels.codeContribuable" | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="code"
-          [placeholder]="'Code Contribuable' | translate"
+          [placeholder]="'labels.codeContribuable' | translate"
         />
       </div>
 
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Raison Sociale" | translate }}</label>
+        <label class="required">{{ "labels.raisonSociale" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="raisonSociale"
-          [placeholder]="'Raison Sociale' | translate"
+          [placeholder]="'labels.raisonSociale' | translate"
         />
       </div>
 
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Secteur d'Activité" | translate }}</label>
+        <label class="required">{{
+          "labels.secteurActivite" | translate
+        }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="secteurActivite"
-          [placeholder]="'Secteur Activité' | translate"
+          [placeholder]="'labels.secteurActivite' | translate"
         />
       </div>
 
-      <div class="p-field p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center">
-        <label class="required">{{ "Régime Fiscal" | translate }}</label>
+      <div class="p-field p-col-12 p-md-6 p-d-flex p-jc-between p-ai-center">
+        <label class="required">{{ "labels.regimeFiscal" | translate }}</label>
         <p-dropdown
           [autoDisplayFirst]="false"
           [options]="regimes"
-          [placeholder]="'Régime Fiscal' | translate"
+          [placeholder]="'labels.regimeFiscal' | translate"
           class="p-col-6"
           formControlName="regimeFiscal"
           optionLabel="label"
@@ -59,18 +63,18 @@
       </div>
 
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Adresse" | translate }}</label>
+        <label class="required">{{ "labels.adresse" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="adresse"
-          [placeholder]="'Adresse' | translate"
+          [placeholder]="'labels.adresse' | translate"
         />
       </div>
 
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Quartier" | translate }}</label>
+        <label class="required">{{ "labels.quartier" | translate }}</label>
         <input
           type="text"
           class="form-control"
@@ -80,63 +84,100 @@
         />
       </div>
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Localisation" | translate }}</label>
+        <label class="required">{{ "labels.localisation" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="localisation"
-          [placeholder]="'Localisation' | translate"
+          [placeholder]="'labels.localisation' | translate"
         />
       </div>
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Siege" | translate }}</label>
+        <label class="required">{{ "labels.siege" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="siege"
-          [placeholder]="'Siege' | translate"
+          [placeholder]="'labels.siege' | translate"
         />
       </div>
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Ville" | translate }}</label>
+        <label class="required">{{ "labels.ville" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="ville"
-          [placeholder]="'Ville' | translate"
+          [placeholder]="'labels.ville' | translate"
         />
       </div>
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Contact" | translate }}</label>
+        <label class="required">{{ "labels.contact" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="contact"
-          [placeholder]="'Contact' | translate"
+          [placeholder]="'labels.contact' | translate"
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "Email" | translate }}</label>
+
+      <div class="p-field p-col-6 p-md-3">
+        <label class="required">{{ "labels.codeBanque" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          number
+          formControlName="codeBanque"
+          [placeholder]="'labels.codeBanque' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-6 p-md-3">
+        <label class="required">{{ "labels.codeAgence" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          number
+          formControlName="codeAgence"
+          [placeholder]="'labels.codeAgence' | translate"
+        />
+      </div>
+
+      <div class="p-field p-col-6 p-md-5">
+        <label class="required">{{ "labels.numeroCompte" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          number
+          formControlName="numeroCompte"
+          [placeholder]="'labels.numeroCompte' | translate"
+        />
+      </div>
+      <div class="p-field p-col-6 p-md-1">
+        <label class="required">{{ "labels.cle" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          number
+          formControlName="cle"
+          [placeholder]="'labels.cle' | translate"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.email" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
           formControlName="email"
-          [placeholder]="'Email' | translate"
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "RIB" | translate }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          formControlName="rib"
-          [placeholder]="'RIB' | translate"
+          [placeholder]="'labels.email' | translate"
         />
       </div>
     </div>

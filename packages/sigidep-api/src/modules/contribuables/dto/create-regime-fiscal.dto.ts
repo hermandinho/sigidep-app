@@ -8,6 +8,5 @@ export class CreateRegimeFiscalDTO {
   public code: string;
 
   @ApiProperty({ example: 'REGIME REEL', required: false })
-  @IsNotEmpty()
   public description: string;
 }

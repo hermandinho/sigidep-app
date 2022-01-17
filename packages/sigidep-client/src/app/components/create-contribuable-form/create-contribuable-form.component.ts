@@ -1,20 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import { BaseComponent } from '@components/base.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
-import { ExerciseModel } from '@models/exercise.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
-import { GetExercises } from '@actions/exercises.actions';
-import * as moment from 'moment';
-import { BaseComponent } from '@components/base.component';
-import { ContribuableModel } from '@models/contribuable.model';
-import { GetContribuables } from '@actions/contribuables.actions';
+import { ContribuableModel } from '@models/index';
+import { GetContribuables } from '@store/actions';
 
 @Component({
   selector: 'app-create-contribuable-form',
@@ -25,15 +18,14 @@ export class CreateContribuableFormComponent
   extends BaseComponent
   implements OnInit
 {
-  public form: FormGroup;
-  public busy = false;
   public regimes = [
     { regime: 'REEL', label: 'REEL' },
-    { regime: 'SIMPLIFIE', label: 'SIMPLIFIEQ' },
+    { regime: 'SIMPLIFIE', label: 'SIMPLIFIE' },
   ];
+  public form: FormGroup;
+  public busy = false;
 
   constructor(
-    private readonly _dialogService: DialogService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private _fb: FormBuilder,
@@ -44,7 +36,14 @@ export class CreateContribuableFormComponent
     super();
     this.form = this._fb.group({
       id: [undefined, []],
-      code: [undefined, [Validators.required]],
+      code: [
+        undefined,
+        [
+          Validators.required,
+          Validators.minLength(14),
+          Validators.maxLength(14),
+        ],
+      ],
       raisonSociale: [undefined, [Validators.required]],
       secteurActivite: [undefined, [Validators.required]],
       regimeFiscal: [undefined, [Validators.required]],
@@ -54,15 +53,73 @@ export class CreateContribuableFormComponent
       siege: [undefined, [Validators.required]],
       ville: [undefined, [Validators.required]],
       contact: [undefined, [Validators.required]],
-      email: [undefined, [Validators.required]],
-      rib: [undefined, [Validators.required]],
+      email: [],
+      codeBanque: [
+        undefined,
+        [Validators.required, Validators.minLength(5), Validators.maxLength(5)],
+      ],
+      codeAgence: [
+        undefined,
+        [Validators.required, Validators.minLength(5), Validators.maxLength(5)],
+      ],
+      numeroCompte: [
+        undefined,
+        [
+          Validators.required,
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
+      ],
+      cle: [
+        undefined,
+        [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+      ],
     });
   }
 
-  ngOnInit(): void {}
-
   get isUpdateForm(): boolean {
     return !!this.form?.value?.id;
+  }
+
+  ngOnInit(): void {
+    if (this.config.data?.item) {
+      const {
+        id,
+        code,
+        raisonSociale,
+        secteurActivite,
+        regimeFiscal,
+        adresse,
+        quartier,
+        localisation,
+        siege,
+        ville,
+        contact,
+        email,
+        codeBanque,
+        codeAgence,
+        numeroCompte,
+        cle,
+      } = this.config.data?.item as ContribuableModel;
+      this.form.patchValue({
+        id,
+        code,
+        raisonSociale,
+        secteurActivite,
+        regimeFiscal,
+        adresse,
+        quartier,
+        localisation,
+        siege,
+        ville,
+        contact,
+        email,
+        codeBanque,
+        codeAgence,
+        numeroCompte,
+        cle,
+      });
+    }
   }
 
   close() {
@@ -73,44 +130,77 @@ export class CreateContribuableFormComponent
     this.busy = true;
 
     if (this.isUpdateForm) {
-      this.busy = false; // TODO
-      return;
-    }
-    this._apisService
-      .post<ContribuableModel>('/contribuables', {
-        ...this.form.value,
-      })
-      .subscribe(
-        (res) => {
-          this.busy = false;
-          this.ref.close(res);
-          this._store.dispatch(GetContribuables());
+      this._apisService
+        .put<ContribuableModel>('/contribuables', {
+          ...this.form.value,
+        })
+        .subscribe(
+          (res) => {
+            this.busy = false;
+            this.ref.close(res);
+            this._store.dispatch(GetContribuables());
 
-          this._appService.showToast({
-            detail: 'messages.success',
-            summary: 'messages.contribuables.createSuccess',
-            severity: 'success',
-            life: 3000,
-            closable: true,
-          });
-        },
-        ({ error }) => {
-          console.log(error);
-          let err = 'errors.contribuables.conflict';
-          if (error?.statusCode === 409) {
-            err = 'errors.contribuables.conflict';
-          } else {
-            err = 'errors.unknown';
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.contribuables.createSuccess',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.contribuables.notfound';
+            } else {
+              err = 'errors.unknown';
+            }
+            this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
           }
-          this.busy = false;
-          this._appService.showToast({
-            detail: err,
-            summary: 'errors.error',
-            severity: 'error',
-            life: 5000,
-            closable: true,
-          });
-        }
-      );
+        );
+    } else {
+      this._apisService
+        .post<ContribuableModel>('/contribuables', {
+          ...this.form.value,
+        })
+        .subscribe(
+          (res) => {
+            this.busy = false;
+            this.ref.close(res);
+            this._store.dispatch(GetContribuables());
+
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.contribuables.createSuccess',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.contribuables.conflict';
+            } else {
+              err = 'errors.unknown';
+            }
+            this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+    }
   }
 }

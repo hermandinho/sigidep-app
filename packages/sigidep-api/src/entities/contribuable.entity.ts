@@ -36,12 +36,21 @@ export class ContribuableEntity extends BaseEntity {
   @Column({ name: 'ville', nullable: true })
   public ville: string;
 
-  @Column({ name: 'contact', nullable: true })
+  @Column({ name: 'contact', nullable: false })
   public contact: string;
 
   @Column({ name: 'email', nullable: true })
   public email: string;
 
-  @Column({ name: 'rib', nullable: true })
-  public rib: string; //RIB
+  @Column({ name: 'code_banque', nullable: false })
+  public codeBanque: string;
+
+  @Column({ name: 'code_agence', nullable: false })
+  public codeAgence: string;
+
+  @Column({ name: 'numero_compte', nullable: false })
+  public numeroCompte: string;
+
+  @Column({ name: 'cle', nullable: false })
+  public cle: string;
 }

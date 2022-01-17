@@ -12,8 +12,11 @@ export class ContribuableModel {
   siege!: string;
   ville!: string;
   contact!: string;
-  email!: string;
-  rib!: string;
+  email: string = '';
+  codeBanque!: number;
+  codeAgence!: number;
+  numeroCompte!: string;
+  cle!: number;
 
   constructor(param?: Partial<ContribuableModel>) {
     if (param) {

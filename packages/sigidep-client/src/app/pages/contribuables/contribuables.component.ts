@@ -1,20 +1,25 @@
-import { SetAppBreadcrumb } from '@actions/app.actions';
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '@components/base.component';
-import { ContribuableModel } from '@models/contribuable.model';
-import { select, Store } from '@ngrx/store';
-import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
-import { Observable, of } from 'rxjs';
-import * as fromContribuables from '@reducers/contribuables.reducer';
-import { map } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@reducers/index';
 import { Actions, ofType } from '@ngrx/effects';
+import { BaseComponent } from '@components/base.component';
+import { Observable, of } from 'rxjs';
+
+import { map } from 'rxjs/operators';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/contribuables.reducer';
+import { ContribuableModel } from '@models/index';
 import {
   DeleteContribuable,
   DeleteContribuableFailure,
   DeleteContribuableSuccess,
-} from '@actions/contribuables.actions';
+  GetContribuables,
+  SetAppBreadcrumb,
+} from '@store/actions';
 
 @Component({
   selector: 'app-contribuables',
@@ -37,39 +42,35 @@ export class ContribuablesComponent extends BaseComponent implements OnInit {
     this.tableColumns = [
       {
         field: 'code',
-        title: 'tables.headers.codeContribubale',
+        title: 'tables.headers.codeContribuable',
         sortable: true,
       },
       {
         field: 'raisonSociale',
         title: 'tables.headers.raisonSociale',
-        sortable: true,
+        sortable: false,
       },
       {
         field: 'secteurActivite',
         title: 'tables.headers.secteurActivite',
+        sortable: false,
+      },
+      {
+        field: 'regimeFiscal',
+        title: 'tables.headers.regimeFiscal',
         sortable: true,
       },
       {
-        field: 'regimeFiscal',
-        title: 'tables.headers.regimeFiscal',
-        sortable: false,
-      },
-      {
-        field: 'regimeFiscal',
-        title: 'tables.headers.regimeFiscal',
-        sortable: false,
-      },
-      {
-        field: 'rib',
-        title: 'tables.headers.rib',
-        sortable: false,
+        field: 'codeBanque',
+        title: 'tables.headers.codeBanque',
+        sortable: true,
       },
     ];
     this._initListeners();
   }
 
   ngOnInit(): void {
+    this._store.dispatch(GetContribuables());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -85,17 +86,26 @@ export class ContribuablesComponent extends BaseComponent implements OnInit {
     this._dialogService.launchContribuablesCreateDialog();
   }
 
-  edit = (item: ContribuableModel) => {
+  edit(item: ContribuableModel) {
     this._dialogService.launchContribuablesCreateDialog(item);
-  };
+  }
+
+  delete(item: ContribuableModel) {
+    this._appService.showConfirmation({
+      message: 'dialogs.messages.deleteContribuable',
+      accept: () => {
+        this._store.dispatch(DeleteContribuable({ id: item.id }));
+      },
+    });
+  }
 
   private _initListeners() {
     this._store
-      .pipe(this.takeUntilDestroy, select(fromContribuables.getDataSelector))
-      .subscribe((data) => (this.data = data));
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => (this.data = [...data]));
 
     this.loading$ = this._store.pipe(
-      select(fromContribuables.getLoadingSelector),
+      select(getLoadingSelector),
       map((status) => status)
     );
     this.dispatcher
@@ -125,13 +135,4 @@ export class ContribuablesComponent extends BaseComponent implements OnInit {
         }
       });
   }
-
-  delete = (item: ContribuableModel) => {
-    this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteContribubale',
-      accept: () => {
-        this._store.dispatch(DeleteContribuable({ id: item.id }));
-      },
-    });
-  };
 }

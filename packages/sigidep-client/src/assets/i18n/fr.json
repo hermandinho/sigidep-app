@@ -133,7 +133,23 @@
     "owner": "Responsable",
     "action": "Action",
     "coordinator": "Coordonateur",
-    "followUpOwner": "Responsable de suivi de l'évaluation"
+    "followUpOwner": "Responsable de suivi de l'évaluation",
+    "codeContribuable": "Code",
+    "raisonSociale": "Raison Sociale",
+    "secteurActivite": "Secteur Activité",
+    "regimeFiscal": "Régime Fiscal",
+    "codeBanque": "Code Banque",
+    "code Agence": "Code Agence",
+    "numeroCompte": "Numéro Compte",
+    "cle": "Clé",
+    "email": "Email",
+    "contact": "Contact",
+    "ville": "Ville",
+    "quartier": "Quartier",
+    "codeAgence": "Code Agence",
+    "localisation": "Localisation",
+    "siege": "Siège",
+    "adresse": "adresse"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -188,6 +204,10 @@
       "activityConflict": "Une activité avec ce code existe déjà dans cette action.",
       "actionConflict": "Une action avec ce code existe déjà dans ce sous program.",
       "activityTaskConflict": "Une tâche avec ce code existe déjà dans cette activité."
+    },
+    "contribuables": {
+      "delete": "Une erreur est survenue lors de la suppression de ce contribuable.",
+      "conflict": "Un Contribuable avec ce code existe déjà."
     }
   },
   "messages": {
@@ -226,6 +246,10 @@
       "createActionSuccess": "Action crée avec succès.",
       "createActivitySuccess": "Activité crée avec succès.",
       "createActivityTaskSuccess": "Tâche créée avec succès."
+    },
+    "contribuables": {
+      "deleteSuccess": "Contribuable supprimé avec succès.",
+      "createSuccess": "Contribuable crée avec succès."
     }
   },
   "menus": {
@@ -282,7 +306,19 @@
       "financialSource": "Source fin.",
       "yearN1": "Année N + 1",
       "yearN2": "Année N + 2",
-      "yearN3": "Année N + 3"
+      "yearN3": "Année N + 3",
+      "codeContribuable": "Code",
+      "raisonSociale": "Raison Sociale",
+      "secteurActivite": "Secteur Activité",
+      "regimeFiscal": "Régime Fiscal",
+      "codeBanque": "Code Banque",
+      "code Agence": "Code Agence",
+      "numeroCompte": "Numéro Compte",
+      "cle": "Clé",
+      "email": "Email",
+      "contact": "Contact",
+      "ville": "Ville",
+      "quartier": "Quartier"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -316,7 +352,7 @@
       "updateActivity": "Modifier une Activitée",
       "createAction": "Céer une Action",
       "editAction": "Modifier une Action",
-      "createContribuable": "Ajouter un contribuable"
+      "createContribuable": "Editer un contribuable"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -326,7 +362,8 @@
       "deleteAdministrativeUnit": "Voulez-vous vraiment supprimer cette unité administrative? Cette action est irréversible.",
       "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
       "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
-      "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible."
+      "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible.",
+      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

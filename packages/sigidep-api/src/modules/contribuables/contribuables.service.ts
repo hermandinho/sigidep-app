@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContribuableEntity } from '@entities/contribuable.entity';
-import { CreateContribuableDTO } from './dto/create-contribuable.dto';
+import { EditContribuableDTO } from './dto/edit-contribuable.dto';
 import { UserEntity } from '@entities/user.entity';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class ContribuablesService {
   }
 
   public async create(
-    payload: CreateContribuableDTO,
+    payload: EditContribuableDTO,
     user: UserEntity,
   ): Promise<ContribuableEntity> {
     const check = await this.repository.findOne({
@@ -47,11 +47,11 @@ export class ContribuablesService {
   }
 
   public async update(
-    payload: CreateContribuableDTO,
+    payload: EditContribuableDTO,
     user: UserEntity,
   ): Promise<ContribuableEntity> {
     const check = await this.repository.findOne({
-      code: payload.code,
+      id: payload.id,
     });
 
     if (!check) {

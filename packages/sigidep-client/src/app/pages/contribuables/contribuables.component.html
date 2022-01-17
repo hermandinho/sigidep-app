@@ -3,35 +3,30 @@
     <ng-template pTemplate="left">
       <button
         (click)="openForm()"
+        *appCheckPermissions="['contribuables.create']"
         [label]="'buttons.create' | translate"
         class="p-button-success p-mr-2"
         icon="pi pi-plus"
         pButton
         pRipple
       ></button>
-      <ng-container>
-        <button
-          [disabled]="!selectedItems?.length"
-          class="p-button-danger"
-          icon="pi pi-trash"
-          pButton
-          pRipple
-        ></button>
-      </ng-container>
     </ng-template>
     <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
-
   <p-table
     #dt
-    [(selection)]="selectedItems"
-    [globalFilterFields]="['regimeFiscal']"
+    [globalFilterFields]="[
+      'code',
+      'raisonSociale',
+      'secteurActivite',
+      'regimeFiscal'
+    ]"
     [loading]="(loading$ | async) || false"
     [paginator]="true"
     [rowHover]="true"
     [rows]="10"
-    [sortMode]="'single'"
     [showCurrentPageReport]="true"
+    [sortMode]="'single'"
     [value]="data"
     [currentPageReportTemplate]="'tables.stats.pager' | translate"
     dataKey="id"
@@ -39,13 +34,17 @@
   >
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
-        <h5 class="p-m-0">{{ "tables.titles.contribuables" | translate }}</h5>
+        <h5 class="p-m-0">
+          {{ "tables.titles.contribuables" | translate }}
+        </h5>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input
             pInputText
             type="text"
-            (input)="dt.filterGlobal($event.target, 'contains')"
+            (input)="
+              dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+            "
             [placeholder]="'labels.search' | translate"
           />
         </span>
@@ -53,36 +52,31 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
-        <ng-container
-          *ngFor="let column of tableColumns; trackBy: trackByIndex"
-        >
+        <ng-container *ngFor="let column of tableColumns">
           <th *ngIf="column.sortable" [pSortableColumn]="column.field">
-            {{ column.regimeFiscal | translate }}
-            <p-sortIcon [field]="column.field"></p-sortIcon>
+            {{ column.title | translate }}
+            <p-sortIcon field="code"></p-sortIcon>
           </th>
-          <th *ngIf="!column.sortable">
-            {{ column.regimeFiscal | translate }}
-          </th>
+          <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
         </ng-container>
         <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <tr>
-        <td>
-          <p-tableCheckbox
-            [value]="item"
-            *ngIf="item?.status !== 'active'"
-          ></p-tableCheckbox>
-          <p-checkbox
-            [disabled]="true"
-            *ngIf="item?.status === 'active'"
-          ></p-checkbox>
+        <td *ngFor="let column of tableColumns">
+          <span *ngIf="column.field !== 'acceptsDeliverables'">
+            {{ item[column.field] }}
+          </span>
+          <span *ngIf="column.field === 'acceptsDeliverables'">
+            <p-tag
+              [value]="
+                (item[column.field] ? 'labels.yes' : 'labels.no') | translate
+              "
+              [severity]="item[column.field] ? 'success' : 'warning'"
+            ></p-tag>
+          </span>
         </td>
-
         <td>
           <button
             (click)="edit(item)"

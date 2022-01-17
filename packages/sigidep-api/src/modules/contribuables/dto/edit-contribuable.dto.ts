@@ -1,12 +1,13 @@
-import { IsEnum, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { RegimeFiscalEnum } from '@utils/regime-fiscal.enum';
 
-export class CreateContribuableDTO {
+export class EditContribuableDTO {
+  public id?: number;
+
   @ApiProperty({ example: 'P0145258521421M', required: true })
   @IsNotEmpty()
-  @MinLength(14)
-  @MaxLength(14)
+  @Length(14)
   public code: string;
 
   @ApiProperty({ example: 'U2G Sarl', required: true })
@@ -46,11 +47,26 @@ export class CreateContribuableDTO {
   @IsNotEmpty()
   public contact: string;
 
-  @ApiProperty({ example: 'email@example.com', required: true })
-  @IsNotEmpty()
+  @ApiProperty({ example: 'email@example.com', required: false })
   public email: string;
 
   @ApiProperty({ example: '10005', required: true })
   @IsNotEmpty()
-  public rib: string;
+  @Length(5)
+  public codeBanque: string;
+
+  @ApiProperty({ example: '10005', required: true })
+  @IsNotEmpty()
+  @Length(5)
+  public codeAgence: string;
+
+  @ApiProperty({ example: '10005152462', required: true })
+  @IsNotEmpty()
+  @Length(11)
+  public numeroCompte: string;
+
+  @ApiProperty({ example: '10', required: true })
+  @IsNotEmpty()
+  @Length(2)
+  public cle: string;
 }

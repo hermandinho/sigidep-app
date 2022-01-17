@@ -28,7 +28,7 @@ export interface AppState {
   subPrograms: fromSubPrograms.State;
   addresses: fromAddresses.State;
   refPhysicalUnits: fromRefPhysicalUnits.State;
-  fromContribuables: fromContribuables.State;
+  contribuables: fromContribuables.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -44,7 +44,7 @@ export const reducers: ActionReducerMap<AppState> = {
   subPrograms: fromSubPrograms.reducer,
   addresses: fromAddresses.reducer,
   refPhysicalUnits: fromRefPhysicalUnits.reducer,
-  fromContribuables: fromContribuables.reducer,
+  contribuables: fromContribuables.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

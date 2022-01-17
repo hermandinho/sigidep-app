@@ -16,6 +16,9 @@ import {
   CreateContribuable,
   CreateContribuableFailure,
   CreateContribuableSuccess,
+  DeleteContribuable,
+  DeleteContribuableFailure,
+  DeleteContribuableSuccess,
   GetContribuables,
   GetContribuablesFailure,
   GetContribuablesSuccess,
@@ -74,6 +77,22 @@ export class ContribuablesEffects {
               of(UpdateContribuableFailure(err))
             )
           )
+      )
+    )
+  );
+
+  deleteRole$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DeleteContribuable),
+      mergeMap((action) =>
+        this.apisService.delete<any>(`/contribuables/${action.id}`, {}).pipe(
+          switchMap((payload) => {
+            return [DeleteContribuableSuccess(), GetContribuables()];
+          }),
+          catchError((err: HttpErrorResponse) =>
+            of(DeleteContribuableFailure(err))
+          )
+        )
       )
     )
   );
