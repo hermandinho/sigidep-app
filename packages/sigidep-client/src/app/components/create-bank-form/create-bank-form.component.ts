@@ -70,9 +70,12 @@ export class CreateBankFormComponent extends BaseComponent implements OnInit {
           ...this.form.value,
         });
       } else {
-        return this._apisService.patch<BankModel>(`/banks/${this.form.value['id']}`, {
-          ...this.form.value,
-        });
+        return this._apisService.patch<BankModel>(
+          `/banks/${this.form.value['id']}`,
+          {
+            ...this.form.value,
+          }
+        );
       }
     })().subscribe(
       (res) => {

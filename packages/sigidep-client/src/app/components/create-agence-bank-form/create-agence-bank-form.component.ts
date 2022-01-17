@@ -61,7 +61,7 @@ export class CreateAgenceBankFormComponent
     if (this.config.data?.bank) {
       this.bank = this.config.data?.bank as BankModel;
       this.form.patchValue({
-        bank: this.bank
+        bank: this.bank,
       });
     }
   }

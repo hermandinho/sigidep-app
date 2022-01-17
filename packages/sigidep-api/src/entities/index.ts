@@ -18,3 +18,4 @@ export * from './paragraph.entity';
 export * from './reference-physical-unit.entity';
 export * from './bank.entity';
 export * from './agence.entity';
+export * from './contribuable.entity';

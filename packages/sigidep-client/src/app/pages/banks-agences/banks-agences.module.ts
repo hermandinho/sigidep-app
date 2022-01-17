@@ -9,7 +9,9 @@ import { CreateBankFormComponent } from '@components/create-bank-form/create-ban
 
 @NgModule({
   declarations: [
-    BanksAgencesComponent, CreateAgenceBankFormComponent, CreateBankFormComponent
+    BanksAgencesComponent,
+    CreateAgenceBankFormComponent,
+    CreateBankFormComponent,
   ],
   imports: [SharedModule, BanksAgencesRoutingModule, InputMaskModule],
 })

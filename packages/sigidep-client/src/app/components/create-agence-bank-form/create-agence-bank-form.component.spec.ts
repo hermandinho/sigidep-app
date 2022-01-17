@@ -8,9 +8,8 @@ describe('CreateAgenceBankFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateAgenceBankFormComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateAgenceBankFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -18,6 +18,7 @@ import {
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
+import { ContribuableModel } from '@models/contribuable.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,7 @@ export class DialogsService {
   private subProgramActivityTaskCreateComponent: any;
   private subProgramActivityTaskOperationCreateComponent: any;
   private referencePhysicalUnitComponent: any;
+  private contribuableCreateComponent: any;
 
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
@@ -385,6 +387,29 @@ export class DialogsService {
         },
       }
     );
+  }
+
+  public async launchContribuablesCreateDialog(
+    item?: ContribuableModel
+  ): Promise<any> {
+    if (!this.contribuableCreateComponent) {
+      const { CreateContribuableFormComponent } = await import(
+        '@components/create-contribuable-form/create-contribuable-form.component'
+      );
+      this.contribuableCreateComponent = CreateContribuableFormComponent;
+    }
+
+    return this._dialogService.open(this.contribuableCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editContribuable' : 'createContribuable')
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
   }
 
   /************************************************************************************************** */

@@ -81,7 +81,6 @@ export class BanksAgencesComponent extends BaseComponent implements OnInit {
   }
   // -- END -- MODAL FORM FOR BANK
 
-
   // MODAL FORM FOR AGENCE
   async openAgenceForm(bank: BankModel) {
     this._dialogService.launchAgengeBankCreateDialog(bank);
@@ -100,7 +99,6 @@ export class BanksAgencesComponent extends BaseComponent implements OnInit {
     });
   }
   // -- END -- MODAL FORM FOR AGENCE
-
 
   private _initListeners() {
     this._store

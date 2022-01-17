@@ -1,15 +1,14 @@
 import { BankModel } from './banque.model';
-import { BaseModel } from "./base.model";
+import { BaseModel } from './base.model';
 
 export class AgenceModel extends BaseModel {
+  code!: string;
+  label!: string;
 
-    code!: string;
-    label!: string;
-    
-    bank!: BankModel;
+  bank!: BankModel;
 
-    constructor(param: Partial<AgenceModel>) {
-        super();
-        Object.assign(this, param);
-    }
+  constructor(param: Partial<AgenceModel>) {
+    super();
+    Object.assign(this, param);
+  }
 }

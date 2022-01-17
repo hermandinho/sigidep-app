@@ -13,6 +13,7 @@ export const MenuPermissions = {
   paragraphs: [...simpleCrudPermissions('paragraphs')],
   sub_programs: [...simpleCrudPermissions('subPrograms')],
   referencePhysicalUnits: [...simpleCrudPermissions('referencePhysicalUnits')],
+  contribuables: [...simpleCrudPermissions('contribuables')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -114,7 +115,17 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
       state: {
         permissions: [],
       },
-      items: [],
+      items: [
+        {
+          routerLink: 'contribuables',
+          icon: 'pi pi-user',
+          label: translate.instant('sidebar.contribuables'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.contribuables],
+          },
+        },
+      ],
     },
     {
       icon: 'pi pi-file',

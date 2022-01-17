@@ -30,6 +30,7 @@ import { SubProgramsModule } from '@pages/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/reference-physical-units.module';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
+import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
 registerLocaleData(localeFr);
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -75,6 +76,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ParagraphsModule,
     SubProgramsModule,
     ReferencePhysicalUnitsModule,
+    ContribuablesModule,
     BanksAgencesModule,
   ],
   providers: [
