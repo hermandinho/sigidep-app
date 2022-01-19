@@ -10,6 +10,11 @@ const routes: Routes = [
     pathMatch: 'prefix',
     component: CreateSubProgramFormComponent,
   },
+  {
+    path: ':id/edit',
+    pathMatch: 'prefix',
+    component: CreateSubProgramFormComponent,
+  },
   { path: '**', redirectTo: '' },
 ];
 

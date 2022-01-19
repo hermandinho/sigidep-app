@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { SubProgramActivityTasksOperationsViewComponent } from '../../views/sub-program-activity-tasks-operations-view/sub-program-activity-tasks-operations-view.component';
 import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
 import { SubProgramActionsViewComponent } from '../../views/sub-program-actions-view/sub-program-actions-view.component';
+import { BlockUIModule } from 'primeng/blockui';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SubProgramActionsViewComponent } from '../../views/sub-program-actions-
     FieldsetModule,
     InputNumberModule,
     FormsModule,
+    BlockUIModule,
   ],
 })
 export class SubProgramsModule {}

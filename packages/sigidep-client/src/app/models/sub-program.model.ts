@@ -8,6 +8,7 @@ import {
   DepartmentModel,
   RegionsModel,
 } from '@models/addresses.model';
+import { StructureModel } from '@models/structure.model';
 
 class SubProgramBaseModel {
   id!: number;
@@ -20,6 +21,7 @@ class SubProgramBaseModel {
 }
 
 export class SubProgramObjectiveModel {
+  id!: number;
   index!: number;
   labelEn!: string;
   labelFr!: string;
@@ -48,6 +50,16 @@ export class SubProgramModel extends SubProgramBaseModel {
   indicatorsPaymentCreditN3!: number;
   objectives!: SubProgramObjectiveModel[];
   actions!: SubProgramActionModel[];
+  structure!: StructureModel;
+  strategies!: {
+    strategyFr: string;
+    strategyEn: string;
+  };
+  coordinator!: string;
+  owner!: string;
+  followUpOwner!: string;
+  startDate!: string;
+  endDate!: string;
 
   constructor(params?: Partial<SubProgramModel>) {
     super();

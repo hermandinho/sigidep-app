@@ -159,7 +159,9 @@
     "addTask": "Ajouter une tâche",
     "addAction": "Ajouter une action",
     "addActivity": "Ajouter une activité",
-    "addOperation": "Ajouter une opération"
+    "addOperation": "Ajouter une opération",
+    "edit": "Modifier",
+    "delete": "Supprimer"
   },
   "auth": {
     "loginTitle": "Se connecter"
@@ -169,6 +171,7 @@
     "success": "Succès",
     "unauthorized": "Oups!",
     "unknown": "Une erreur est survenue lors de cette opération",
+    "subProgramNotFound": "Ce sous program n'existe pas.",
     "auth": {
       "invalidCredentials": "Compte utilisateur introuvable",
       "accountInactive": "Ce compte est désactivé",
@@ -247,7 +250,8 @@
       "createSuccess": "Sous program crée avec succès.",
       "createActionSuccess": "Action crée avec succès.",
       "createActivitySuccess": "Activité crée avec succès.",
-      "createActivityTaskSuccess": "Tâche créée avec succès."
+      "createActivityTaskSuccess": "Tâche créée avec succès.",
+      "updateSuccess": "Sous program modifié avec succès."
     },
     "contribuables": {
       "deleteSuccess": "Contribuable supprimé avec succès.",
@@ -269,6 +273,7 @@
     "subprograms": "Sous programs",
     "list": "Liste",
     "create": "Nouveau",
+    "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences"

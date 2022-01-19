@@ -65,24 +65,8 @@
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem"></th>
-        <!--        <th class="p-text-center" style="width: 3rem">{{ 'tables.headers.code' | translate }}</th>-->
         <th class="p-text-left">{{ "tables.headers.label" | translate }}</th>
-        <!--        <th class="p-text-center" style="width: 20%">
-          {{ "tables.headers.administrativeUnit" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.financialSource" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.yearN1" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.yearN2" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.yearN3" | translate }}
-        </th>-->
-        <th class="p-text-center" style="width: 15%"></th>
+        <th class="p-text-center" style="width: 25%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -113,7 +97,7 @@
             currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
           }}
         </td>
-        <td>
+        <td class="p-d-flex p-jc-end">
           <button
             (click)="addAction(item)"
             *appCheckPermissions="['subPrograms.create']"
@@ -126,11 +110,24 @@
           ></button>
 
           <button
+            *appCheckPermissions="['subPrograms.update']"
+            [pTooltip]="'hints.edit' | translate"
+            [routerLink]="['/', 'sub-programs', item.id, 'edit']"
+            class="p-button-rounded p-button-info p-mr-2 action"
+            icon="pi pi-pencil"
+            pButton
+            pRipple
+            tooltipPosition="top"
+          ></button>
+
+          <button
             *appCheckPermissions="['subPrograms.delete']"
+            [pTooltip]="'hints.delete' | translate"
             class="p-button-rounded p-button-danger p-mr-2 action"
             icon="pi pi-trash"
             pButton
             pRipple
+            tooltipPosition="top"
           ></button>
         </td>
       </tr>

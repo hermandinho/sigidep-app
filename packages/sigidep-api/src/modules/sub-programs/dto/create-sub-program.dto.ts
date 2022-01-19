@@ -65,10 +65,6 @@ class Identification {
   @ApiProperty({ example: new Date().toISOString(), required: true })
   @IsDateString()
   public endDate: Date;
-
-  @ApiProperty({ example: new Date().toISOString(), required: false })
-  @IsOptional() // TODO this should be required
-  public ownerId: number;
 }
 
 class Objective {
