@@ -1,6 +1,8 @@
 import { IsEnum, IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { RegimeFiscalEnum } from '@utils/regime-fiscal.enum';
+import { CreateRegimeFiscalDTO } from '@modules/regime-fiscal/dto/create-regime-fiscal.dto';
+import { CreateBankDto } from '@modules/banks-agences/dto/create-banks.dto';
+import { CreateAgenceDto } from '@modules/banks-agences/dto/create-agence.dto';
 
 export class EditContribuableDTO {
   public id?: number;
@@ -20,8 +22,7 @@ export class EditContribuableDTO {
 
   @ApiProperty({ example: 'REEL', required: true })
   @IsNotEmpty()
-  @IsEnum(RegimeFiscalEnum)
-  public regimeFiscal: RegimeFiscalEnum;
+  public regimeFiscal: CreateRegimeFiscalDTO;
 
   @ApiProperty({ example: 'Rue des banques', required: true })
   @IsNotEmpty()
@@ -52,13 +53,11 @@ export class EditContribuableDTO {
 
   @ApiProperty({ example: '10005', required: true })
   @IsNotEmpty()
-  @Length(5)
-  public codeBanque: string;
+  public banque: CreateBankDto;
 
   @ApiProperty({ example: '10005', required: true })
   @IsNotEmpty()
-  @Length(5)
-  public codeAgence: string;
+  public agence: CreateAgenceDto;
 
   @ApiProperty({ example: '10005152462', required: true })
   @IsNotEmpty()

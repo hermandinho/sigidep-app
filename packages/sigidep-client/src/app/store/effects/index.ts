@@ -10,8 +10,9 @@ import { ParagraphEffects } from '@effects/paragraph.effects';
 import { SubProgramsEffects } from '@effects/sub-programs.effects';
 import { AddressesEffects } from '@effects/addresses.effects';
 import { ReferencePhysicalUnitsEffects } from '@effects/reference-physical-units.effects';
-import { ContribuablesEffects } from './contribuables.effects';
+import { ContribuablesEffects } from '@effects/contribuables.effects';
 import { BanksAgencesEffects } from '@effects/banks-agences.effects';
+import { RegimesEffects } from '@effects/regimes.effects';
 
 export const Effects = [
   AuthEffects,
@@ -28,4 +29,5 @@ export const Effects = [
   ReferencePhysicalUnitsEffects,
   ContribuablesEffects,
   BanksAgencesEffects,
+  RegimesEffects,
 ];

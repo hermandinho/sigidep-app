@@ -1,3 +1,4 @@
+import { AgenceModel, BankModel } from '.';
 import { RegimeFiscalModel } from './regime-fiscal.model';
 
 export class ContribuableModel {
@@ -13,8 +14,8 @@ export class ContribuableModel {
   ville!: string;
   contact!: string;
   email: string = '';
-  codeBanque!: number;
-  codeAgence!: number;
+  banque!: BankModel;
+  agence!: AgenceModel;
   numeroCompte!: string;
   cle!: number;
 

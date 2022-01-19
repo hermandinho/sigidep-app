@@ -6,6 +6,8 @@ import { FinancialSourceEntity } from '@entities/financial-source.entity';
 import { CategoriesEntity } from '@entities/categories.entity';
 import { RegionEntity } from '@entities/region.entity';
 import { SectorEntity } from '@entities/sector.entity';
+import { ContribuableEntity } from '@entities/contribuable.entity';
+import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
 
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
@@ -52,6 +54,8 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.STRUCTURE, ['create', 'read', 'delete']),
   ...simpleCrudGenerator(C.ROLES),
   ...simpleCrudGenerator(C.SUB_PROGRAMS),
+  ...simpleCrudGenerator(C.CONTRIBUABLES),
+  ...simpleCrudGenerator(C.REGIMES),
   {
     context: C.ROLES,
     label: 'permissions.manage',
@@ -5404,5 +5408,49 @@ export const SECTORS_DATA: Partial<SectorEntity>[] = [
         ],
       },
     ],
+  },
+];
+
+export const CONTRIBUABLES_DATA: Partial<ContribuableEntity>[] = [
+  {
+    code: 'P125645231524G',
+    adresse: 'YDE, BRIQUETERIE',
+    numeroCompte: '10000002512',
+    cle: '10',
+    contact: '+237670000000',
+    email: 'example@mail.com',
+    localisation: 'YDE',
+    quartier: 'BRIQUETERIE',
+    raisonSociale: 'CAMSU SARL',
+    regimeFiscal: new RegimeFiscalEntity(2, 'SIMPLIFIE', 'REGIME SIMPLIFIE'),
+    secteurActivite: 'Energie',
+    siege: 'YDE',
+    ville: 'YDE2',
+  },
+  {
+    code: 'K100645231004F',
+    adresse: 'DLA, PORT',
+    numeroCompte: '10000000002',
+    cle: '50',
+    contact: '+237690000000',
+    email: 'example2@mail.com',
+    localisation: 'DLA',
+    quartier: 'PORT',
+    raisonSociale: 'MUMA SARL',
+    regimeFiscal: new RegimeFiscalEntity(1, 'REEL', 'REGIME REEL'),
+    secteurActivite: 'Alimentation',
+    siege: 'DLA',
+    ville: 'DLA',
+  },
+];
+
+export const REGIMES_DATA: Partial<RegimeFiscalEntity>[] = [
+  {
+    code: 'REEL',
+    description: 'REGIME REEL',
+  },
+  {
+    code: 'SIMPLIFIE',
+    description: 'REGIME SIMPLIFIE',
   },
 ];

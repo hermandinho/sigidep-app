@@ -18,6 +18,7 @@ import { SubProgramsModule } from './modules/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from './modules/reference-physical-units/reference-physical-units.module';
 import { ContribuablesModule } from '@modules/contribuables/contribuables.module';
 import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module';
+import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
 
 @Module({
   imports: [
@@ -90,6 +91,7 @@ import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
     BanksAgencesModule,
+    RegimeFiscalModule,
   ],
   controllers: [AppController],
   providers: [AppService],
