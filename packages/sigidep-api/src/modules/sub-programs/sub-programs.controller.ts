@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
   ValidationPipe,
@@ -18,6 +19,7 @@ import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-su
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
 import { CreateSubProgramActivityTaskOperationDto } from '@modules/sub-programs/dto/create-sub-program-activity-task-operation.dto';
 import { CreateSubProgramActionDto } from '@modules/sub-programs/dto/create-sub-program-action.dto';
+import { EditSubProgramDto } from '@modules/sub-programs/dto/edit-sub-program.dto';
 
 @Controller('sub-programs')
 @ApiTags('Sub programs')
@@ -32,6 +34,12 @@ export class SubProgramsController {
     return this.services.filter();
   }
 
+  @Get('/:id')
+  @UseGuards(new PermissionsGuard(['subPrograms.read']))
+  public async findOne(@Param('id') id: number) {
+    return this.services.findOne(id);
+  }
+
   @Post('/')
   @UseGuards(new PermissionsGuard(['subPrograms.create']))
   public async create(
@@ -39,6 +47,16 @@ export class SubProgramsController {
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.create(payload, user);
+  }
+
+  @Patch('/:id')
+  @UseGuards(new PermissionsGuard(['subPrograms.update']))
+  public async edit(
+    @Body(ValidationPipe) payload: EditSubProgramDto,
+    @GetCurrentUser() user: UserEntity,
+    @Param('id') id: number,
+  ) {
+    return this.services.editSp(id, payload, user);
   }
 
   @Post('/:id/action')

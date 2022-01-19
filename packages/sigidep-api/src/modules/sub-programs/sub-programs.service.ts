@@ -24,6 +24,7 @@ import { AddressesService } from '@modules/addresses/addresses.service';
 import { ParagraphsService } from '@modules/paragraphs/paragraphs.service';
 import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
 import { CreateSubProgramActionDto } from '@modules/sub-programs/dto/create-sub-program-action.dto';
+import { EditSubProgramDto } from '@modules/sub-programs/dto/edit-sub-program.dto';
 
 @Injectable()
 export class SubProgramsService {
@@ -69,6 +70,31 @@ export class SubProgramsService {
         .leftJoinAndSelect('t.administrativeUnit', 'au')
         .leftJoinAndSelect('au.function', 'f')
         .getMany()
+    );
+  }
+
+  public async findOne(id: number) {
+    return (
+      this.repository
+        .createQueryBuilder('s')
+        .where('s.id = :id', { id })
+        // .leftJoinAndSelect('s.owner', 'o')
+        .leftJoinAndSelect('s.actions', 'ac')
+        .leftJoinAndSelect('s.structure', 'st')
+        .leftJoinAndSelect('ac.activities', 'a')
+        .leftJoinAndSelect('a.tasks', 't')
+        .leftJoinAndSelect('t.operations', 'op')
+        .leftJoinAndSelect('op.arrondissement', 'ar')
+        .leftJoinAndSelect('op.region', 're')
+        .leftJoinAndSelect('op.department', 'dep')
+        .leftJoinAndSelect('op.paragraph', 'par')
+        .leftJoinAndSelect('op.physicalUnits', 'units')
+        .leftJoinAndSelect('units.referencePhysicalUnit', 'ref')
+        .leftJoinAndSelect('t.financialSource', 'fs')
+        .leftJoinAndSelect('s.exercise', 'e')
+        .leftJoinAndSelect('t.administrativeUnit', 'au')
+        .leftJoinAndSelect('au.function', 'f')
+        .getOneOrFail()
     );
   }
 
@@ -118,6 +144,54 @@ export class SubProgramsService {
         createdBy: user,
       }),
     );
+  }
+
+  public async editSp(
+    id: number,
+    payload: EditSubProgramDto,
+    user: UserEntity,
+  ) {
+    let entity = await this.repository.findOne(id, {
+      loadEagerRelations: false,
+    });
+    if (!entity) {
+      throw new NotFoundException('sub program not found');
+    }
+
+    const check = await this.repository
+      .createQueryBuilder('s')
+      .where('s.code = :code', { code: payload.identification.code })
+      .andWhere('s.id != :id', { id })
+      .getOne();
+
+    if (check) {
+      throw new ConflictException();
+    }
+
+    const structure = await this.structuresService
+      .getRepository()
+      .findOne(payload.structureId, { loadEagerRelations: false });
+
+    if (!structure) {
+      throw new NotFoundException('structure not found');
+    }
+
+    const exercise = await this.exercisesService
+      .getRepository()
+      .findOne(payload.exerciseId, { loadEagerRelations: false });
+
+    if (!exercise) {
+      throw new NotFoundException('exercise not found');
+    }
+
+    const { identification, objectives, strategies } = payload;
+    entity = this.repository.merge(entity, identification);
+    entity = new SubProgramEntity({
+      ...entity,
+      ...(objectives && { objectives: objectives as any }),
+      ...(strategies && { strategies: strategies as any }),
+    });
+    return this.repository.save(entity);
   }
 
   public async createAction(

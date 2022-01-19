@@ -6,6 +6,7 @@ import { ExerciseEntity } from '@entities/exercise.entity';
 import { StructureEntity } from '@entities/structure.entity';
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
 import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
+import { EditSubProgramDto } from '@modules/sub-programs/dto/edit-sub-program.dto';
 
 interface ISubProgramStrategy {
   labelFr: string;
@@ -144,7 +145,11 @@ export class SubProgramEntity extends BaseEntity {
   @OneToMany(() => SubProgramActionEntity, (object) => object.subProgram)
   actions: SubProgramActionEntity[];
 
-  constructor(params?: Partial<SubProgramEntity | CreateSubProgramDto>) {
+  constructor(
+    params?: Partial<
+      SubProgramEntity | CreateSubProgramDto | EditSubProgramDto
+    >,
+  ) {
     super();
     if (params) {
       Object.assign(this, params);
