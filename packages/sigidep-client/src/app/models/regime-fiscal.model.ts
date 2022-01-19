@@ -1,4 +1,5 @@
 export class RegimeFiscalModel {
+  id?: number;
   code!: string;
   description!: string;
 
@@ -8,5 +9,3 @@ export class RegimeFiscalModel {
     }
   }
 }
-
-export type RegimeFiscalType = 'REEL' | 'SIMPLIFIE';

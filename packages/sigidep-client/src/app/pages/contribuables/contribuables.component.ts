@@ -6,7 +6,6 @@ import { AppState } from '@reducers/index';
 import { Actions, ofType } from '@ngrx/effects';
 import { BaseComponent } from '@components/base.component';
 import { Observable, of } from 'rxjs';
-
 import { map } from 'rxjs/operators';
 import {
   getDataSelector,
@@ -18,6 +17,8 @@ import {
   DeleteContribuableFailure,
   DeleteContribuableSuccess,
   GetContribuables,
+  GetBanks,
+  GetRegimes,
   SetAppBreadcrumb,
 } from '@store/actions';
 
@@ -61,9 +62,14 @@ export class ContribuablesComponent extends BaseComponent implements OnInit {
         sortable: true,
       },
       {
-        field: 'codeBanque',
+        field: 'banque',
         title: 'tables.headers.codeBanque',
-        sortable: true,
+        sortable: false,
+      },
+      {
+        field: 'agence',
+        title: 'tables.headers.codeAgence',
+        sortable: false,
       },
     ];
     this._initListeners();
@@ -71,6 +77,8 @@ export class ContribuablesComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this._store.dispatch(GetContribuables());
+    this._store.dispatch(GetRegimes());
+    this._store.dispatch(GetBanks());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -102,7 +110,9 @@ export class ContribuablesComponent extends BaseComponent implements OnInit {
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
-      .subscribe((data) => (this.data = [...data]));
+      .subscribe((data) => {
+        this.data = [...data];
+      });
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),

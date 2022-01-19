@@ -13,7 +13,10 @@ export const MenuPermissions = {
   paragraphs: [...simpleCrudPermissions('paragraphs')],
   sub_programs: [...simpleCrudPermissions('subPrograms')],
   referencePhysicalUnits: [...simpleCrudPermissions('referencePhysicalUnits')],
-  contribuables: [...simpleCrudPermissions('contribuables')],
+  contribuables: [
+    ...simpleCrudPermissions('contribuables'),
+    ...simpleCrudPermissions('regimes'),
+  ],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {

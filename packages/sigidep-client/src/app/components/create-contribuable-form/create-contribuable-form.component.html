@@ -39,27 +39,31 @@
       </div>
 
       <div class="p-field p-col-12 p-md-6 p-d-flex p-jc-between p-ai-center">
-        <label class="required">{{ "labels.regimeFiscal" | translate }}</label>
-        <p-dropdown
-          [autoDisplayFirst]="false"
-          [options]="regimes"
-          [placeholder]="'labels.regimeFiscal' | translate"
-          class="p-col-6"
-          formControlName="regimeFiscal"
-          optionLabel="label"
-          optionValue="regime"
-        >
-          <ng-template let-option pTemplate="selectedItem">
-            <div>
-              <div>{{ option.label | translate }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-option pTemplate="item">
-            <div>
-              <div>{{ option.label | translate }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
+        <ng-container formGroupName="regimeFiscal">
+          <label class="required">{{
+            "labels.regimeFiscal" | translate
+          }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="regimes"
+            [placeholder]="'labels.regimeFiscal' | translate"
+            class="p-col-6"
+            formControlName="code"
+            optionLabel="code"
+            optionValue="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
       </div>
 
       <div class="p-field p-col-12 p-md-6">
@@ -120,35 +124,64 @@
           class="form-control"
           pInputText
           formControlName="contact"
-          [placeholder]="'labels.contact' | translate"
+          [placeholder]="'+237680000000'"
         />
       </div>
 
-      <div class="p-field p-col-6 p-md-3">
-        <label class="required">{{ "labels.codeBanque" | translate }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          number
-          formControlName="codeBanque"
-          [placeholder]="'00000'"
-        />
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="banque">
+          <label class="required">{{ "labels.codeBanque" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="banques"
+            [placeholder]="'Select...'"
+            class="p-col-6"
+            formControlName="code"
+            optionLabel="code"
+            optionValue="code"
+            (onChange)="onChange($event)"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
       </div>
 
-      <div class="p-field p-col-6 p-md-3">
-        <label class="required">{{ "labels.codeAgence" | translate }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          number
-          formControlName="codeAgence"
-          [placeholder]="'00000'"
-        />
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="agence">
+          <label class="required">{{ "labels.codeAgence" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="true"
+            [options]="agences"
+            [placeholder]="'Select...'"
+            class="p-col-6"
+            formControlName="code"
+            optionLabel="code"
+            optionValue="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
       </div>
 
-      <div class="p-field p-col-6 p-md-5">
+      <div class="p-field p-col-12 p-md-6">
         <label class="required">{{ "labels.numeroCompte" | translate }}</label>
         <input
           type="text"
@@ -159,7 +192,7 @@
           [placeholder]="'00000000000'"
         />
       </div>
-      <div class="p-field p-col-6 p-md-1">
+      <div class="p-field p-col-12 p-md-6">
         <label class="required">{{ "labels.cle" | translate }}</label>
         <input
           type="text"

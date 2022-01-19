@@ -6,6 +6,8 @@ import { AuthModule } from '@modules/auth/auth.module';
 import { FinancialSourcesModule } from '@modules/financial-sources/financial-sources.module';
 import { AdministrativeUnitsModule } from '@modules/administrative-units/administrative-units.module';
 import { AddressesModule } from '@modules/addresses/addresses.module';
+import { ContribuablesModule } from '@modules/contribuables/contribuables.module';
+import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
 
 @Module({
   providers: [SeederService],
@@ -16,6 +18,8 @@ import { AddressesModule } from '@modules/addresses/addresses.module';
     FinancialSourcesModule,
     AdministrativeUnitsModule,
     AddressesModule,
+    ContribuablesModule,
+    RegimeFiscalModule,
   ],
 })
 export class SeederModule {}

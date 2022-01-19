@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Post,
   Put,
@@ -12,45 +11,45 @@ import {
 } from '@nestjs/common';
 import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { UserEntity } from '@entities/user.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ContribuablesService } from './contribuables.service';
-import { EditContribuableDTO } from './dto/edit-contribuable.dto';
 import { PermissionsGuard } from '@guards/permissions.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RegimeFiscalService } from './regime-fiscal.service';
+import { CreateRegimeFiscalDTO } from './dto/create-regime-fiscal.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('contribuables')
-@ApiTags('Contribuables')
+@Controller('regimes')
+@ApiTags('regimes')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
-export class ContribuablesController {
-  constructor(private readonly services: ContribuablesService) {}
+export class RegimeFiscalController {
+  constructor(private readonly services: RegimeFiscalService) {}
 
   @Get('/')
-  @UseGuards(new PermissionsGuard(['contribuables.read']))
+  @UseGuards(new PermissionsGuard(['regimes.read']))
   public async filter() {
     return this.services.filter();
   }
 
   @Post('/')
-  @UseGuards(new PermissionsGuard(['contribuables.create']))
+  @UseGuards(new PermissionsGuard(['regimes.create']))
   public async create(
-    @Body(ValidationPipe) payload: EditContribuableDTO,
+    @Body(ValidationPipe) payload: CreateRegimeFiscalDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.create(payload, user);
   }
 
   @Put('/')
-  @UseGuards(new PermissionsGuard(['contribuables.update']))
+  @UseGuards(new PermissionsGuard(['regimes.update']))
   public async update(
-    @Body(ValidationPipe) payload: EditContribuableDTO,
+    @Body(ValidationPipe) payload: CreateRegimeFiscalDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.update(payload, user);
   }
 
   @Delete('/:id')
-  @UseGuards(new PermissionsGuard(['contribuables.delete']))
+  @UseGuards(new PermissionsGuard(['regimes.delete']))
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
   }

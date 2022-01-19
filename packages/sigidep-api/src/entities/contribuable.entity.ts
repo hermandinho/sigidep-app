@@ -1,15 +1,17 @@
-import { RegimeFiscalEnum } from '@utils/regime-fiscal.enum';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { AgencesEntity, BanksEntity } from '.';
 import { BaseEntity } from './base.entity';
+import { RegimeFiscalEntity } from './regime-fiscal.entity';
 
 @Entity({
-  name: 'contribuable',
+  name: 'contribuables',
   orderBy: {
     code: 'ASC',
   },
 })
+@Unique('UQ_CONTRIBUBALE_CODE', ['code'])
 export class ContribuableEntity extends BaseEntity {
-  @Column({ name: 'code', nullable: true })
+  @Column({ name: 'code', nullable: false })
   public code: string; //NIU
 
   @Column({ name: 'raison_sociale', nullable: false })
@@ -18,8 +20,12 @@ export class ContribuableEntity extends BaseEntity {
   @Column({ name: 'secteur_activite', nullable: false })
   public secteurActivite: string;
 
-  @Column({ name: 'regime_fiscal', nullable: false })
-  public regimeFiscal: RegimeFiscalEnum;
+  @ManyToOne(() => RegimeFiscalEntity, (object) => object.code, {
+    cascade: true,
+    eager: false,
+  })
+  @JoinColumn({ name: 'regime_fiscal' })
+  public regimeFiscal: RegimeFiscalEntity;
 
   @Column({ name: 'adresse', nullable: true })
   public adresse: string;
@@ -42,15 +48,23 @@ export class ContribuableEntity extends BaseEntity {
   @Column({ name: 'email', nullable: true })
   public email: string;
 
-  @Column({ name: 'code_banque', nullable: false })
-  public codeBanque: string;
+  @ManyToOne(() => BanksEntity, (object) => object.code, {
+    cascade: true,
+    eager: false,
+  })
+  @JoinColumn({ name: 'code_banque' })
+  public banque?: BanksEntity;
 
-  @Column({ name: 'code_agence', nullable: false })
-  public codeAgence: string;
+  @ManyToOne(() => AgencesEntity, (object) => object.code, {
+    cascade: true,
+    eager: false,
+  })
+  @JoinColumn({ name: 'code_agence' })
+  public agence?: AgencesEntity;
 
   @Column({ name: 'numero_compte', nullable: false })
-  public numeroCompte: string;
+  public numeroCompte?: string;
 
   @Column({ name: 'cle', nullable: false })
-  public cle: string;
+  public cle?: string;
 }

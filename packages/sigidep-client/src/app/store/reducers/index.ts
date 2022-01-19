@@ -16,6 +16,7 @@ import * as fromRefPhysicalUnits from './reference-physical-units.reducer';
 import * as fromContribuables from './contribuables.reducer';
 
 import * as fromBanksAgences from './banks-agences.reducers';
+import * as fromRegimes from './regimes.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -32,6 +33,7 @@ export interface AppState {
   refPhysicalUnits: fromRefPhysicalUnits.State;
   contribuables: fromContribuables.State;
   banksAgences: fromBanksAgences.State;
+  regimes: fromRegimes.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -49,6 +51,7 @@ export const reducers: ActionReducerMap<AppState> = {
   refPhysicalUnits: fromRefPhysicalUnits.reducer,
   contribuables: fromContribuables.reducer,
   banksAgences: fromBanksAgences.reducer,
+  regimes: fromRegimes.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

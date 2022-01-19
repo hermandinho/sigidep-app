@@ -1,28 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { ContribuableModel } from '@models/index';
 import { GetContribuables } from '@store/actions';
+import { Observable, of, Subject } from 'rxjs';
+import { RegimeFiscalModel } from '@models/regime-fiscal.model';
+import { BankModel } from '@models/banque.model';
+import { AgenceModel } from '@models/agence.model';
+import { getDataSelector, getLoadingSelector } from '@reducers/regimes.reducer';
+import {
+  getDataSelector as getBankDataSelector,
+  getLoadingSelector as getBankLoadingSelector,
+} from '@reducers/banks-agences.reducers';
+
+import { map } from 'rxjs/operators';
+import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
 
 @Component({
   selector: 'app-create-contribuable-form',
   templateUrl: './create-contribuable-form.component.html',
   styleUrls: ['./create-contribuable-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateContribuableFormComponent
   extends BaseComponent
   implements OnInit
 {
-  public regimes = [
-    { regime: 'REEL', label: 'REEL' },
-    { regime: 'SIMPLIFIE', label: 'SIMPLIFIE' },
-  ];
+  public regimes: RegimeFiscalModel[] = [];
+  loading$: Observable<boolean> = of(true);
+  public banques: BankModel[] = [];
+  public agences: AgenceModel[] = [];
+  public contactPattern =
+    '^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$';
+  public codePattern = '^[a-zA-Z][0-9]{12}[a-zA-Z]$';
   public form: FormGroup;
+
   public busy = false;
   constructor(
     public ref: DynamicDialogRef,
@@ -33,47 +50,55 @@ export class CreateContribuableFormComponent
     private _store: Store<AppState>
   ) {
     super();
+
     this.form = this._fb.group({
       id: [undefined, []],
       code: [
         undefined,
-        [
-          Validators.required,
-          Validators.minLength(14),
-          Validators.maxLength(14),
-        ],
+        [Validators.required, Validators.pattern(this.codePattern)],
       ],
       raisonSociale: [undefined, [Validators.required]],
       secteurActivite: [undefined, [Validators.required]],
-      regimeFiscal: [undefined, [Validators.required]],
+
       adresse: [undefined, [Validators.required]],
       quartier: [undefined, [Validators.required]],
       localisation: [undefined, [Validators.required]],
       siege: [undefined, [Validators.required]],
       ville: [undefined, [Validators.required]],
-      contact: [undefined, [Validators.required]],
+      contact: [
+        undefined,
+        [Validators.required, Validators.pattern(this.contactPattern)],
+      ],
       email: [undefined, [Validators.email]],
-      codeBanque: [
-        undefined,
-        [Validators.required, Validators.minLength(5), Validators.maxLength(5)],
-      ],
-      codeAgence: [
-        undefined,
-        [Validators.required, Validators.minLength(5), Validators.maxLength(5)],
-      ],
       numeroCompte: [
         undefined,
-        [
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ],
+        [Validators.required, Validators.pattern('[0-9]{11}')],
       ],
       cle: [
         undefined,
-        [Validators.required, Validators.minLength(2), Validators.maxLength(2)],
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.pattern('[0-9]{2}'),
+        ],
       ],
+      regimeFiscal: this._fb.group({
+        id: [],
+        code: [],
+        description: [],
+      }),
+      banque: this._fb.group({
+        id: [],
+        code: [],
+        label: [],
+      }),
+      agence: this._fb.group({
+        id: [],
+        code: [],
+        label: [],
+      }),
     });
+    this._initListeners();
   }
 
   get isUpdateForm(): boolean {
@@ -95,8 +120,8 @@ export class CreateContribuableFormComponent
         ville,
         contact,
         email,
-        codeBanque,
-        codeAgence,
+        banque,
+        agence,
         numeroCompte,
         cle,
       } = this.config.data?.item as ContribuableModel;
@@ -113,26 +138,60 @@ export class CreateContribuableFormComponent
         ville,
         contact,
         email,
-        codeBanque,
-        codeAgence,
+        banque,
+        agence,
         numeroCompte,
         cle,
       });
+      this.agences =
+        this.banques.find((item) => item.code === banque.code)?.agences ?? [];
     }
   }
 
   close() {
     this.ref.close();
   }
+  private _initListeners() {
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((payload) => {
+        this.regimes = [...payload];
+      });
+
+    this._store
+      .pipe(this.takeUntilDestroy, select(getBankDataSelector))
+      .subscribe((payload) => {
+        this.banques = [...payload];
+        this.agences =
+          this.banques.find(
+            (item) => item.code === this.form.value?.banque?.code
+          )?.agences ?? [];
+      });
+
+    this.loading$ = this._store.pipe(
+      select(getLoadingSelector),
+      map((status) => status)
+    );
+  }
 
   submit() {
     this.busy = true;
+    const editedContribuable = {
+      ...this.form.value,
+      banque: this.banques.find(
+        (item) => item.code === this.form.value?.banque?.code
+      ),
+      agence: this.agences?.find(
+        (item) => item.code === this.form.value?.agence?.code
+      ),
+      regimeFiscal: this.regimes?.find(
+        (item) => item.code === this.form.value?.regimeFiscal?.code
+      ),
+    } as ContribuableModel;
 
     if (this.isUpdateForm) {
       this._apisService
-        .put<ContribuableModel>('/contribuables', {
-          ...this.form.value,
-        })
+        .put<ContribuableModel>('/contribuables', editedContribuable)
         .subscribe(
           (res) => {
             this.busy = false;
@@ -166,9 +225,7 @@ export class CreateContribuableFormComponent
         );
     } else {
       this._apisService
-        .post<ContribuableModel>('/contribuables', {
-          ...this.form.value,
-        })
+        .post<ContribuableModel>('/contribuables', editedContribuable)
         .subscribe(
           (res) => {
             this.busy = false;
@@ -202,4 +259,8 @@ export class CreateContribuableFormComponent
         );
     }
   }
+  onChange = (event: any) => {
+    this.agences =
+      this.banques.find((item) => item.code === event.value)?.agences ?? [];
+  };
 }

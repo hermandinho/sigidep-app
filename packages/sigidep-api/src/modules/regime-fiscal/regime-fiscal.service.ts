@@ -5,28 +5,23 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ContribuableEntity } from '@entities/contribuable.entity';
-import { EditContribuableDTO } from './dto/edit-contribuable.dto';
 import { UserEntity } from '@entities/user.entity';
+import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
+import { CreateRegimeFiscalDTO } from './dto/create-regime-fiscal.dto';
 
 @Injectable()
-export class ContribuablesService {
+export class RegimeFiscalService {
   constructor(
-    @InjectRepository(ContribuableEntity)
-    private readonly repository: Repository<ContribuableEntity>,
+    @InjectRepository(RegimeFiscalEntity)
+    private readonly repository: Repository<RegimeFiscalEntity>,
   ) {}
 
-  public getRepository(): Repository<ContribuableEntity> {
+  public getRepository(): Repository<RegimeFiscalEntity> {
     return this.repository;
   }
 
-  public async filter(): Promise<ContribuableEntity[]> {
-    return this.repository
-      .createQueryBuilder('c')
-      .leftJoinAndSelect('c.regimeFiscal', 'r')
-      .leftJoinAndSelect('c.banque', 'b')
-      .leftJoinAndSelect('c.agence', 'a')
-      .getMany();
+  public async filter(): Promise<RegimeFiscalEntity[]> {
+    return this.repository.createQueryBuilder('c').getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -34,9 +29,9 @@ export class ContribuablesService {
   }
 
   public async create(
-    payload: EditContribuableDTO,
+    payload: CreateRegimeFiscalDTO,
     user: UserEntity,
-  ): Promise<ContribuableEntity> {
+  ): Promise<RegimeFiscalEntity> {
     const check = await this.repository.findOne({
       code: payload.code,
     });
@@ -52,11 +47,11 @@ export class ContribuablesService {
   }
 
   public async update(
-    payload: EditContribuableDTO,
+    payload: CreateRegimeFiscalDTO,
     user: UserEntity,
-  ): Promise<ContribuableEntity> {
+  ): Promise<RegimeFiscalEntity> {
     const check = await this.repository.findOne({
-      id: payload.id,
+      code: payload.code,
     });
 
     if (!check) {

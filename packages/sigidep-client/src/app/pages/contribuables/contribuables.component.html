@@ -65,17 +65,21 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td *ngFor="let column of tableColumns">
-          <span *ngIf="column.field !== 'acceptsDeliverables'">
+          <span
+            *ngIf="
+              column.field !== 'banque' &&
+                column.field !== 'agence' &&
+                column.field !== 'regimeFiscal';
+              else compositeField
+            "
+          >
             {{ item[column.field] }}
           </span>
-          <span *ngIf="column.field === 'acceptsDeliverables'">
-            <p-tag
-              [value]="
-                (item[column.field] ? 'labels.yes' : 'labels.no') | translate
-              "
-              [severity]="item[column.field] ? 'success' : 'warning'"
-            ></p-tag>
-          </span>
+          <ng-template #compositeField>
+            <span>
+              {{ item[column.field]?.code }}
+            </span>
+          </ng-template>
         </td>
         <td>
           <button
