@@ -11,42 +11,45 @@ import {
 } from '@nestjs/common';
 import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { UserEntity } from '@entities/user.entity';
-import { PermissionsGuard } from '@guards/permissions.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AgentsService } from './agents.service';
+import { PermissionsGuard } from '@guards/permissions.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { CategoriesAgentsService } from './categories-agents.service';
-import { CreateCategorieAgentsDTO } from './dto/create-categories-agents.dto';
+import { EditAgentDTO } from './dto/edit-agent.dto';
 
-@Controller('categories-agents')
-@ApiTags('categories-agents')
+@Controller('agents')
+@ApiTags('Agents')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
-export class CategoriesAgentsController {
-  constructor(private readonly services: CategoriesAgentsService) {}
+export class AgentsController {
+  constructor(private readonly services: AgentsService) {}
 
   @Get('/')
+  @UseGuards(new PermissionsGuard(['agents.read']))
   public async filter() {
     return this.services.filter();
   }
 
   @Post('/')
+  @UseGuards(new PermissionsGuard(['agents.create']))
   public async create(
-    @Body(ValidationPipe) payload: CreateCategorieAgentsDTO,
+    @Body(ValidationPipe) payload: EditAgentDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.create(payload, user);
   }
 
   @Put('/')
+  @UseGuards(new PermissionsGuard(['agents.update']))
   public async update(
-    @Body(ValidationPipe) payload: CreateCategorieAgentsDTO,
+    @Body(ValidationPipe) payload: EditAgentDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.update(payload, user);
   }
 
   @Delete('/:id')
-  @UseGuards(new PermissionsGuard(['categories-agents.delete']))
+  @UseGuards(new PermissionsGuard(['agents.delete']))
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
   }

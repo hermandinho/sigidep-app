@@ -24,7 +24,8 @@
     "rhManager": "Gestion RH",
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences"
+    "banksAgences": "Banques et Agences",
+    "agents": "Agents"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -151,7 +152,37 @@
     "localisation": "Localisation",
     "siege": "Siège",
     "adresse": "adresse",
-    "bank": "banque"
+    "bank": "banque",
+    "matricule": "Matricule",
+    "nom": "Nom",
+    "prenom": "Prenom",
+    "dateNaissance": "Date Naiss.",
+    "lieuNaissance": "Lieu Naiss.",
+    "refActeRecrutement": "Réf. Acte Recrut.",
+    "dateRecrutement": "Date Recrut.",
+    "signataireActeRecrutement": "Sign. Acte Recrut.",
+    "structureRattach": "Structure Rattach.",
+    "serviceRattach": "Service Rattach.",
+    "refActeAffectation": "Ref. Acte Affectation",
+    "dateSignAffectation": "Date Sign. Affectation",
+    "signataireActeAffectation": "Signataire Acte Affect.",
+    "posteTravail": "Poste Travail",
+    "fonction": "Fonction",
+    "refActeNomination": "Ref. Acte Nomination",
+    "dateNomination": "Ref. Acte Nomination",
+    "signataireNomination": "Signataire Nomin.",
+    "echelon": "Echelon",
+    "indice": "Indice",
+    "dateSignNomination": "Date Sign. Nomin.",
+    "signataireActeNomination": "Signataire Acte Nomin",
+    "grade": "Grade",
+    "categorie": "Categorie",
+    "infoPersonnel": "Info Personnelle",
+    "infoAffectation": "Info Affectation",
+    "infoNomination": "Info Nomination",
+    "infoRecrutement": "Info Recrutement",
+    "infoPoste": "Info Poste Actuel",
+    "infoStatus": "Info Status"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -213,6 +244,10 @@
     "contribuables": {
       "delete": "Une erreur est survenue lors de la suppression de ce contribuable.",
       "conflict": "Un Contribuable avec ce code existe déjà."
+    },
+    "agents": {
+      "delete": "Une erreur est survenue lors de la suppression de cet agent.",
+      "conflict": "Un agent avec ce code existe déjà."
     }
   },
   "messages": {
@@ -256,6 +291,10 @@
     "contribuables": {
       "deleteSuccess": "Contribuable supprimé avec succès.",
       "createSuccess": "Contribuable crée avec succès."
+    },
+    "agents": {
+      "deleteSuccess": "Agent supprimé avec succès.",
+      "createSuccess": "Agent crée avec succès."
     }
   },
   "menus": {
@@ -276,7 +315,8 @@
     "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences"
+    "banksAgences": "Banques et Agences",
+    "agents": "Agents"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -286,7 +326,8 @@
       "administrativeUnits": "Unités administratives",
       "technicalSupervisions": "Tutelle Techniques",
       "paragraphs": "Paragraphes",
-      "contribuables": "Liste des contribuables"
+      "contribuables": "Liste des contribuables",
+      "agents": "Liste des agents"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -326,7 +367,32 @@
       "email": "Email",
       "contact": "Contact",
       "ville": "Ville",
-      "quartier": "Quartier"
+      "quartier": "Quartier",
+      "matricule": "Matricule",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "dateNaissance": "Date Naiss.",
+      "lieuNaissance": "Lieu Naiss.",
+      "refActeRecrutement": "Réf. Acte Recrut.",
+      "dateRecrutement": "Date Recrut.",
+      "signataireActeRecrutement": "Sign. Acte Recrut.",
+      "structureRattach": "Structure Rattach.",
+      "serviceRattach": "Service Rattach.",
+      "refActeAffectation": "Ref. Acte Affectation",
+      "dateSignAffectation": "Date Sign. Affectation",
+      "signataireActeAffectation": "Signataire Acte Affect.",
+      "posteTravail": "Poste Travail",
+      "fonction": "Fonction",
+      "refActeNomination": "Ref. Acte Nomination",
+      "dateNomination": "Ref. Acte Nomination",
+      "signataireNomination": "Signataire Nomin.",
+      "echelon": "Echelon",
+      "indice": "Indice",
+      "dateSignNomination": "Date Sign. Nomin.",
+      "signataireActeNomination": "Signataire Acte Nomin",
+      "grade": "Grade",
+      "categorie": "Categorie",
+      "nomComplet": "Nom Complet"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -364,7 +430,8 @@
       "createBank": "Créer une banque",
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
-      "editAgenceBank": "Modifier une agence de banque"
+      "editAgenceBank": "Modifier une agence de banque",
+      "editAgent": "Editer un agent"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

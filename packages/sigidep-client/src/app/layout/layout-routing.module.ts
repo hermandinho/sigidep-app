@@ -14,6 +14,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units/reference-physical-units.component';
 import { ContribuablesComponent } from '@pages/contribuables/contribuables.component';
 import { BanksAgencesComponent } from '@pages/banks-agences/banks-agences.component';
+import { AgentsComponent } from '@pages/agents/agents.component';
 
 const routes: Routes = [
   {
@@ -123,6 +124,14 @@ const routes: Routes = [
           permissions: [],
         },
         component: BanksAgencesComponent,
+      },
+      {
+        path: 'agents',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
+        component: AgentsComponent,
       },
       /*{
         path: '**',

@@ -8,7 +8,9 @@ import { RegionEntity } from '@entities/region.entity';
 import { SectorEntity } from '@entities/sector.entity';
 import { ContribuableEntity } from '@entities/contribuable.entity';
 import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
-
+import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
+import { GradeEntity } from '@entities/grade.entity';
+import { AgentEntity } from '@entities/Agent.entity';
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
   description:
@@ -56,6 +58,7 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.SUB_PROGRAMS),
   ...simpleCrudGenerator(C.CONTRIBUABLES),
   ...simpleCrudGenerator(C.REGIMES),
+  ...simpleCrudGenerator(C.AGENTS),
   {
     context: C.ROLES,
     label: 'permissions.manage',
@@ -5452,5 +5455,77 @@ export const REGIMES_DATA: Partial<RegimeFiscalEntity>[] = [
   {
     code: 'SIMPLIFIE',
     description: 'REGIME SIMPLIFIE',
+  },
+];
+
+export const CATEGORIES_AGENTS_DATA: Partial<CategorieAgentEntity>[] = [
+  {
+    code: 'A1',
+  },
+  {
+    code: 'A2',
+  },
+  {
+    code: 'B1',
+  },
+  {
+    code: 'B2',
+  },
+  {
+    code: 'C',
+  },
+  {
+    code: 'D',
+  },
+  {
+    code: '1',
+  },
+  {
+    code: '2',
+  },
+  {
+    code: '3',
+  },
+  {
+    code: '4',
+  },
+  {
+    code: '5',
+  },
+  {
+    code: '6',
+  },
+  {
+    code: '7',
+  },
+  {
+    code: '8',
+  },
+  {
+    code: '9',
+  },
+  {
+    code: '10',
+  },
+  {
+    code: '11',
+  },
+  {
+    code: '12',
+  },
+  {
+    code: '13',
+  },
+];
+
+export const GRADES_DATA: Partial<GradeEntity>[] = [
+  {
+    code: 'GRADE1',
+  },
+  {
+    code: 'GRADE2',
+  },
+  {
+    code: 'GRADE3',
   },
 ];

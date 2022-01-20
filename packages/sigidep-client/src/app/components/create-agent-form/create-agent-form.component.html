@@ -1,0 +1,385 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <!-- Info personnelle -->
+    <p-fieldset
+      [legend]="'labels.infoPersonnel' | translate"
+      [toggleable]="true"
+      [collapsed]="false"
+    >
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.matricule" | translate }} </label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="matricule"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.nom" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="nom"
+            [placeholder]=""
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.prenom" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="prenom"
+            [placeholder]=""
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.dateNaissance" | translate
+          }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateNaissance"
+            [placeholder]=""
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.lieuNaissance" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="lieuNaissance"
+            [placeholder]=""
+          />
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Information Recrutement -->
+    <p-fieldset
+      [legend]="'labels.infoRecrutement' | translate"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.dateRecrutement" | translate
+          }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateRecrutement"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.refActeRecrutement" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="refActeRecrutement"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.signataireActeRecrutement" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="signataireActeRecrutement"
+            [placeholder]=""
+          />
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Information Affectation-->
+    <p-fieldset
+      [legend]="'labels.infoAffectation' | translate"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.dateSignAffectation" | translate
+          }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateSignAffectation"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.refActeAffectation" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="refActeAffectation"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.signataireActeAffectation" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="signataireActeAffectation"
+            [placeholder]=""
+          />
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Information Nomination-->
+    <p-fieldset
+      [legend]="'labels.infoNomination' | translate"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.dateNomination" | translate
+          }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateNomination"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.refActeNomination" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="refActeNomination"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.signataireNomination" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="signataireNomination"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.dateSignNomination" | translate
+          }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateSignNomination"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.signataireActeNomination" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="signataireActeNomination"
+            [placeholder]=""
+          />
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Information Status-->
+    <p-fieldset
+      [legend]="'labels.infoStatus' | translate"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.indice" | translate }}</label>
+          <input
+            min="1"
+            type="number"
+            class="form-control"
+            pInputText
+            formControlName="indice"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.echelon" | translate }}</label>
+          <input
+            min="1"
+            type="number"
+            class="form-control"
+            pInputText
+            formControlName="echelon"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <ng-container formGroupName="grade">
+            <label class="required">{{ "labels.grade" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="grades"
+              [placeholder]="'Select...'"
+              class="p-col-6"
+              formControlName="code"
+              optionLabel="code"
+              optionValue="code"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code | translate }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code | translate }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <ng-container formGroupName="categorie">
+            <label class="required">{{ "labels.categorie" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="true"
+              [options]="categories"
+              [placeholder]="'Select...'"
+              class="p-col-6"
+              formControlName="code"
+              optionLabel="code"
+              optionValue="code"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code | translate }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code | translate }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </ng-container>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Information Poste-->
+    <p-fieldset
+      [legend]="'labels.infoPoste' | translate"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.posteTravail" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="posteTravail"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.fonction" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="fonction"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.structureRattach" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="structureRattach"
+            [placeholder]=""
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{
+            "labels.serviceRattach" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="serviceRattach"
+            [placeholder]=""
+          />
+        </div>
+      </div>
+    </p-fieldset>
+
+    <div class="footer">
+      <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+        {{ "buttons.cancel" | translate }}
+      </button>
+      <button
+        (click)="submit()"
+        [disabled]="!form?.valid || busy"
+        [label]="
+          'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+            | translate
+        "
+        pButton
+      ></button>
+    </div>
+  </div>
+</div>

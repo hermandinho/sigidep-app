@@ -6,10 +6,10 @@ import { GradeEntity } from './grade.entity';
 @Entity({
   name: 'agents',
   orderBy: {
-    code: 'ASC',
+    matricule: 'ASC',
   },
 })
-@Unique('UQ_AGENT_CODE', ['code'])
+@Unique('UQ_AGENTS_MATRICULE', ['matricule'])
 export class AgentEntity extends BaseEntity {
   @Column({ name: 'matricule', nullable: false })
   public matricule: string;
@@ -20,7 +20,7 @@ export class AgentEntity extends BaseEntity {
   @Column({ name: 'prenom', nullable: false })
   public prenom: string;
 
-  @Column({ name: 'date_naissance', nullable: false })
+  @Column({ name: 'date_naissance', nullable: false, type: 'date' })
   public dateNaissance: Date;
 
   @Column({ name: 'lieu_naissance', nullable: false })
@@ -29,7 +29,7 @@ export class AgentEntity extends BaseEntity {
   @Column({ name: 'ref_acte_recrutement', nullable: false })
   public refActeRecrutement: string;
 
-  @Column({ name: 'date_recrutement', nullable: false })
+  @Column({ name: 'date_recrutement', nullable: false, type: 'date' })
   public dateRecrutement: Date;
 
   @Column({ name: 'signataire_acte_recrutement', nullable: false })
@@ -44,7 +44,7 @@ export class AgentEntity extends BaseEntity {
   @Column({ name: 'ref_acte_affectation', nullable: false })
   public refActeAffectation: string;
 
-  @Column({ name: 'date_signature_affectation', nullable: false })
+  @Column({ name: 'date_signature_affectation', nullable: false, type: 'date' })
   public dateSignAffectation: Date;
 
   @Column({ name: 'signataire_acte_affectation', nullable: false })
@@ -59,7 +59,7 @@ export class AgentEntity extends BaseEntity {
   @Column({ name: 'ref_acte_nomination', nullable: false })
   public refActeNomination: string;
 
-  @Column({ name: 'date_nomination', nullable: false })
+  @Column({ name: 'date_nomination', nullable: false, type: 'date' })
   public dateNomination: Date;
 
   @Column({ name: 'signataire_nomination', nullable: false })
@@ -71,22 +71,22 @@ export class AgentEntity extends BaseEntity {
   @Column({ name: 'indice', nullable: false })
   public indice: number;
 
-  @Column({ name: 'date_sign_Nomination', nullable: false })
+  @Column({ name: 'date_sign_Nomination', type: 'date', nullable: false })
   public dateSignNomination: Date;
 
   @Column({ name: 'signataire_acte_nomination', nullable: false })
   public signataireActeNomination: string;
 
-  @ManyToOne(() => GradeEntity, (object) => object.code, {
+  @ManyToOne(() => GradeEntity, (object) => object.id, {
     cascade: true,
-    eager: true,
+    eager: false,
   })
   @JoinColumn({ name: 'grade' })
   public grade: GradeEntity;
 
-  @ManyToOne(() => CategorieAgentEntity, (object) => object.code, {
+  @ManyToOne(() => CategorieAgentEntity, (object) => object.id, {
     cascade: true,
-    eager: true,
+    eager: false,
   })
   @JoinColumn({ name: 'categorie' })
   public categorie: CategorieAgentEntity;

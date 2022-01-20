@@ -15,10 +15,11 @@ import {
   BankModel,
   AgenceModel,
   SubProgramActionModel,
+  ContribuableModel,
+  AgentModel,
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
-import { ContribuableModel } from '@models/contribuable.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,8 @@ export class DialogsService {
 
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
+
+  private agentCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -401,7 +404,7 @@ export class DialogsService {
 
     return this._dialogService.open(this.contribuableCreateComponent, {
       header: this._translateService.instant(
-        'dialogs.headers.' + (item ? 'editContribuable' : 'createContribuable')
+        'dialogs.headers.editContribuable'
       ),
       width: '50vw',
       height: 'auto',
@@ -457,6 +460,25 @@ export class DialogsService {
       data: {
         item,
         bank,
+      },
+    });
+  }
+
+  public async launchAgentsCreateDialog(item?: AgentModel): Promise<any> {
+    if (!this.agentCreateComponent) {
+      const { CreateAgentFormComponent } = await import(
+        '@components/create-agent-form/create-agent-form.component'
+      );
+      this.agentCreateComponent = CreateAgentFormComponent;
+    }
+
+    return this._dialogService.open(this.agentCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editAgent'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
       },
     });
   }

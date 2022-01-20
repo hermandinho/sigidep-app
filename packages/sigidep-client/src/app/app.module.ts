@@ -31,6 +31,7 @@ import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/re
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
+import { AgentsModule } from '@pages/agents/agents.module';
 registerLocaleData(localeFr);
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,6 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
     BanksAgencesModule,
+    AgentsModule,
   ],
   providers: [
     AppInstallCheckGuard,

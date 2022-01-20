@@ -4,11 +4,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateGradeDTO {
   public id?: number;
 
-  @ApiProperty({ example: 'A2', required: true })
+  @ApiProperty({ example: 'GRADE1', required: true })
   @IsNotEmpty()
   @MinLength(2)
   public code: string;
 
-  @ApiProperty({ example: 'A1', required: false })
-  public description: string;
+  @ApiProperty({ example: 'GRADE2', required: false })
+  public description?: string;
 }

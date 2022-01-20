@@ -16,6 +16,7 @@ export enum PermissionContextsEnum {
   REFERENCE_PHYSICAL_UNITS = 'referencePhysicalUnits',
   CONTRIBUABLES = 'contribuables',
   REGIMES = 'regimes',
+  AGENTS = 'agents',
 }
 
 export enum UserAccountStatusEnum {

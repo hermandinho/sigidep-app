@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, Length } from 'class-validator';
+import { IsDateString, IsEnum, IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateRegimeFiscalDTO } from '@modules/regime-fiscal/dto/create-regime-fiscal.dto';
 import { CreateBankDto } from '@modules/banks-agences/dto/create-banks.dto';
@@ -20,66 +20,70 @@ export class EditAgentDTO {
   @ApiProperty({ example: 'prenom', required: false })
   public prenom: string;
 
-  @ApiProperty({ example: 'date_naissance', required: false })
-  public dateNaissance: Date;
+  @ApiProperty({ example: new Date().toISOString(), required: false })
+  @IsDateString()
+  public dateNaissance: Date | string;
 
-  @ApiProperty({ example: 'lieu_naissance', required: false })
+  @ApiProperty({ example: '', required: false })
   public lieuNaissance: string;
 
   @ApiProperty({ example: 'ref_acte_recrutement', required: false })
   public refActeRecrutement: string;
 
-  @ApiProperty({ example: 'date_recrutement', required: false })
-  public dateRecrutement: Date;
+  @ApiProperty({ example: new Date().toISOString(), required: false })
+  public dateRecrutement: Date | string;
 
-  @ApiProperty({ example: 'signataire_acte_recrutement', required: false })
+  @ApiProperty({ example: '', required: false })
   signataireActeRecrutement: string;
 
-  @ApiProperty({ example: 'structure_rattach', required: false })
+  @ApiProperty({ example: '', required: false })
   public structureRattach: string;
 
-  @ApiProperty({ example: 'service_rattach', required: false })
+  @ApiProperty({ example: '', required: false })
   public serviceRattach: string;
 
-  @ApiProperty({ example: 'ref_acte_affectation', required: false })
+  @ApiProperty({ example: '', required: false })
   public refActeAffectation: string;
 
-  @ApiProperty({ example: 'date_signature_affectation', required: false })
-  public dateSignAffectation: Date;
+  @ApiProperty({ example: new Date().toISOString(), required: false })
+  @IsDateString()
+  public dateSignAffectation: Date | string;
 
-  @ApiProperty({ example: 'signataire_acte_affectation', required: false })
+  @ApiProperty({ example: '', required: false })
   public signataireActeAffectation: string;
 
-  @ApiProperty({ example: 'poste_travail', required: false })
+  @ApiProperty({ example: '', required: false })
   public posteTravail: string;
 
-  @ApiProperty({ example: 'fonction', required: false })
+  @ApiProperty({ example: '', required: false })
   public fonction: string;
 
-  @ApiProperty({ example: 'ref_acte_nomination', required: false })
+  @ApiProperty({ example: '', required: false })
   public refActeNomination: string;
 
-  @ApiProperty({ example: 'date_nomination', required: false })
-  public dateNomination: Date;
+  @ApiProperty({ example: new Date().toISOString(), required: false })
+  @IsDateString()
+  public dateNomination: Date | string;
 
-  @ApiProperty({ example: 'signataire_nomination', required: false })
+  @ApiProperty({ example: '', required: false })
   public signataireNomination: string;
 
-  @ApiProperty({ example: 'echelon', required: false })
+  @ApiProperty({ example: '1', required: false })
   public echelon: number;
 
-  @ApiProperty({ example: 'indice', required: false })
+  @ApiProperty({ example: '2', required: false })
   public indice: number;
 
-  @ApiProperty({ example: 'date_sign_Nomination', required: false })
-  public dateSignNomination: Date;
+  @ApiProperty({ example: new Date().toISOString(), required: false })
+  @IsDateString()
+  public dateSignNomination: Date | string;
 
-  @ApiProperty({ example: 'signataire_acte_nomination', required: false })
+  @ApiProperty({ example: '', required: false })
   public signataireActeNomination: string;
 
-  @ApiProperty({ example: 'grade' })
+  @ApiProperty({ example: '' })
   public grade: CreateGradeDTO;
 
-  @ApiProperty({ example: 'categorie' })
+  @ApiProperty({ example: '' })
   public categorie: CreateCategorieAgentsDTO;
 }

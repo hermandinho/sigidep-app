@@ -9,8 +9,8 @@ export class CategorieAgentEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;
 
-  @Column({ name: 'label', nullable: false })
-  public label: string;
+  @Column({ name: 'description', nullable: true })
+  public description?: string;
 
   constructor(param?: Partial<CategorieAgentEntity>) {
     super();
