@@ -194,15 +194,21 @@ export class CreateAgentFormComponent extends BaseComponent implements OnInit {
       categorie: this.categories?.find(
         (item) => item.code === this.form.value?.categorie?.code
       ),
-      dateNaissance: new Date(this.form.value?.dateNaissance).toISOString(),
-      dateRecrutement: new Date(this.form.value?.dateRecrutement).toISOString(),
-      dateNomination: new Date(this.form.value?.dateNomination).toISOString(),
-      dateSignAffectation: new Date(
-        this.form.value?.dateSignAffectation
-      ).toISOString(),
-      dateSignNomination: new Date(
-        this.form.value?.dateSignNomination
-      ).toISOString(),
+      dateNaissance: this.form.value?.dateNaissance
+        ? new Date(this.form.value?.dateNaissance).toISOString()
+        : undefined,
+      dateRecrutement: this.form.value?.dateRecrutement
+        ? new Date(this.form.value?.dateRecrutement).toISOString()
+        : undefined,
+      dateNomination: this.form.value?.dateNomination
+        ? new Date(this.form.value?.dateNomination).toISOString()
+        : undefined,
+      dateSignAffectation: this.form.value?.dateSignAffectation
+        ? new Date(this.form.value?.dateSignAffectation).toISOString()
+        : undefined,
+      dateSignNomination: this.form.value?.dateSignNomination
+        ? new Date(this.form.value?.dateSignNomination).toISOString()
+        : undefined,
     } as AgentModel;
 
     if (this.isUpdateForm) {

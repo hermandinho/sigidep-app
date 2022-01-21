@@ -1,4 +1,11 @@
-import { IsDateString, IsEnum, IsNotEmpty, Length } from 'class-validator';
+import {
+  IsDateString,
+  IsEmpty,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  Length,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateGradeDTO } from '@modules/grades/dto/create-grade.dto';
 import { CreateCategorieAgentsDTO } from '@modules/categories-agents/dto/create-categories-agents.dto';
@@ -17,9 +24,14 @@ export class EditAgentDTO {
   @ApiProperty({ example: 'prenom', required: false })
   public prenom: string;
 
-  @ApiProperty({ example: new Date().toISOString(), required: false })
+  @ApiProperty({
+    example: new Date().toISOString(),
+    required: false,
+    nullable: true,
+  })
   @IsDateString()
-  public dateNaissance: Date | string;
+  @IsOptional()
+  public dateNaissance: Date | string | undefined;
 
   @ApiProperty({ example: '', required: false })
   public lieuNaissance: string;
@@ -28,6 +40,8 @@ export class EditAgentDTO {
   public refActeRecrutement: string;
 
   @ApiProperty({ example: new Date().toISOString(), required: false })
+  @IsDateString()
+  @IsOptional()
   public dateRecrutement: Date | string;
 
   @ApiProperty({ example: '', required: false })
@@ -44,6 +58,7 @@ export class EditAgentDTO {
 
   @ApiProperty({ example: new Date().toISOString(), required: false })
   @IsDateString()
+  @IsOptional()
   public dateSignAffectation: Date | string;
 
   @ApiProperty({ example: '', required: false })
@@ -60,6 +75,7 @@ export class EditAgentDTO {
 
   @ApiProperty({ example: new Date().toISOString(), required: false })
   @IsDateString()
+  @IsOptional()
   public dateNomination: Date | string;
 
   @ApiProperty({ example: '', required: false })
@@ -73,6 +89,7 @@ export class EditAgentDTO {
 
   @ApiProperty({ example: new Date().toISOString(), required: false })
   @IsDateString()
+  @IsOptional()
   public dateSignNomination: Date | string;
 
   @ApiProperty({ example: '', required: false })
