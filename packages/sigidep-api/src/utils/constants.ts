@@ -17,6 +17,9 @@ export enum PermissionContextsEnum {
   CONTRIBUABLES = 'contribuables',
   REGIMES = 'regimes',
   AGENTS = 'agents',
+  ARTICLES = 'articles',
+  RUBRIQUES = 'rubriques',
+  SOUS_RUBRIQUES = 'sousRubriques',
 }
 
 export enum UserAccountStatusEnum {
