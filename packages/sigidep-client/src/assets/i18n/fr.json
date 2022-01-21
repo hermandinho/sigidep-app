@@ -442,7 +442,8 @@
       "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
       "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
       "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible.",
-      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible."
+      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible.",
+      "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

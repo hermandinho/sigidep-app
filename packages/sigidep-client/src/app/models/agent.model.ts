@@ -5,40 +5,40 @@ export class AgentModel {
   id!: number;
   matricule!: string;
   nom!: string;
-  prenom!: string;
-  dateNaissance!: Date;
+  prenom?: string;
+  dateNaissance?: Date;
 
-  lieuNaissance!: string;
-  refActeRecrutement!: string;
-  dateRecrutement!: Date;
+  lieuNaissance?: string;
+  refActeRecrutement?: string;
+  dateRecrutement?: Date;
 
-  signataireActeRecrutement!: string;
-  structureRattach!: string;
+  signataireActeRecrutement?: string;
+  structureRattach?: string;
 
-  serviceRattach!: string;
-  refActeAffectation!: string;
-  dateSignAffectation!: Date;
+  serviceRattach?: string;
+  refActeAffectation?: string;
+  dateSignAffectation?: Date;
 
-  signataireActeAffectation!: string;
+  signataireActeAffectation?: string;
 
-  posteTravail!: string;
+  posteTravail?: string;
 
-  fonction!: string;
-  refActeNomination!: string;
+  fonction?: string;
+  refActeNomination?: string;
 
-  dateNomination!: Date;
-  signataireNomination!: string;
-  echelon!: number;
+  dateNomination?: Date;
+  signataireNomination?: string;
+  echelon?: number;
 
-  indice!: number;
+  indice?: number;
 
-  dateSignNomination!: Date;
+  dateSignNomination?: Date;
 
-  signataireActeNomination!: string;
+  signataireActeNomination?: string;
 
-  grade!: GradeModel;
+  grade?: GradeModel;
 
-  categorie!: CategorieAgentModel;
+  categorie?: CategorieAgentModel;
 
   constructor(params?: Partial<AgentModel>) {
     if (params) {

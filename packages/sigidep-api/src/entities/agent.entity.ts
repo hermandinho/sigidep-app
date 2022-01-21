@@ -17,64 +17,64 @@ export class AgentEntity extends BaseEntity {
   @Column({ name: 'nom', nullable: false })
   public nom: string;
 
-  @Column({ name: 'prenom', nullable: false })
+  @Column({ name: 'prenom', nullable: true })
   public prenom: string;
 
-  @Column({ name: 'date_naissance', nullable: false, type: 'date' })
+  @Column({ name: 'date_naissance', nullable: true, type: 'date' })
   public dateNaissance: Date;
 
-  @Column({ name: 'lieu_naissance', nullable: false })
+  @Column({ name: 'lieu_naissance', nullable: true })
   public lieuNaissance: string;
 
-  @Column({ name: 'ref_acte_recrutement', nullable: false })
+  @Column({ name: 'ref_acte_recrutement', nullable: true })
   public refActeRecrutement: string;
 
-  @Column({ name: 'date_recrutement', nullable: false, type: 'date' })
+  @Column({ name: 'date_recrutement', nullable: true, type: 'date' })
   public dateRecrutement: Date;
 
-  @Column({ name: 'signataire_acte_recrutement', nullable: false })
+  @Column({ name: 'signataire_acte_recrutement', nullable: true })
   signataireActeRecrutement: string;
 
-  @Column({ name: 'structure_rattach', nullable: false })
+  @Column({ name: 'structure_rattach', nullable: true })
   public structureRattach: string;
 
-  @Column({ name: 'service_rattach', nullable: false })
+  @Column({ name: 'service_rattach', nullable: true })
   public serviceRattach: string;
 
-  @Column({ name: 'ref_acte_affectation', nullable: false })
+  @Column({ name: 'ref_acte_affectation', nullable: true })
   public refActeAffectation: string;
 
-  @Column({ name: 'date_signature_affectation', nullable: false, type: 'date' })
+  @Column({ name: 'date_signature_affectation', nullable: true, type: 'date' })
   public dateSignAffectation: Date;
 
-  @Column({ name: 'signataire_acte_affectation', nullable: false })
+  @Column({ name: 'signataire_acte_affectation', nullable: true })
   public signataireActeAffectation: string;
 
-  @Column({ name: 'poste_travail', nullable: false })
+  @Column({ name: 'poste_travail', nullable: true })
   public posteTravail: string;
 
-  @Column({ name: 'fonction', nullable: false })
+  @Column({ name: 'fonction', nullable: true })
   public fonction: string;
 
-  @Column({ name: 'ref_acte_nomination', nullable: false })
+  @Column({ name: 'ref_acte_nomination', nullable: true })
   public refActeNomination: string;
 
-  @Column({ name: 'date_nomination', nullable: false, type: 'date' })
+  @Column({ name: 'date_nomination', nullable: true, type: 'date' })
   public dateNomination: Date;
 
-  @Column({ name: 'signataire_nomination', nullable: false })
+  @Column({ name: 'signataire_nomination', nullable: true })
   public signataireNomination: string;
 
-  @Column({ name: 'echelon', nullable: false })
+  @Column({ name: 'echelon', nullable: true })
   public echelon: number;
 
-  @Column({ name: 'indice', nullable: false })
+  @Column({ name: 'indice', nullable: true })
   public indice: number;
 
-  @Column({ name: 'date_sign_Nomination', type: 'date', nullable: false })
+  @Column({ name: 'date_sign_Nomination', type: 'date', nullable: true })
   public dateSignNomination: Date;
 
-  @Column({ name: 'signataire_acte_nomination', nullable: false })
+  @Column({ name: 'signataire_acte_nomination', nullable: true })
   public signataireActeNomination: string;
 
   @ManyToOne(() => GradeEntity, (object) => object.id, {

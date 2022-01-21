@@ -1,9 +1,5 @@
 import { IsDateString, IsEnum, IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateRegimeFiscalDTO } from '@modules/regime-fiscal/dto/create-regime-fiscal.dto';
-import { CreateBankDto } from '@modules/banks-agences/dto/create-banks.dto';
-import { CreateAgenceDto } from '@modules/banks-agences/dto/create-agence.dto';
-import { GradeEntity } from '@entities/grade.entity';
 import { CreateGradeDTO } from '@modules/grades/dto/create-grade.dto';
 import { CreateCategorieAgentsDTO } from '@modules/categories-agents/dto/create-categories-agents.dto';
 
@@ -12,6 +8,7 @@ export class EditAgentDTO {
 
   @ApiProperty({ example: 'P0145258521421M', required: true })
   @IsNotEmpty()
+  @Length(7, 7)
   public matricule: string;
 
   @ApiProperty({ example: 'nom', required: false })
@@ -81,9 +78,9 @@ export class EditAgentDTO {
   @ApiProperty({ example: '', required: false })
   public signataireActeNomination: string;
 
-  @ApiProperty({ example: '' })
+  @ApiProperty({ example: '', required: false })
   public grade: CreateGradeDTO;
 
-  @ApiProperty({ example: '' })
+  @ApiProperty({ example: '', required: false })
   public categorie: CreateCategorieAgentsDTO;
 }

@@ -29,7 +29,6 @@ import {
 
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-import { DEFAULT_RESIZE_TIME } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-create-agent-form',
@@ -57,34 +56,31 @@ export class CreateAgentFormComponent extends BaseComponent implements OnInit {
 
     this.form = this._fb.group({
       id: [],
-      matricule: [undefined, Validators.required],
+      matricule: [
+        undefined,
+        [Validators.required, Validators.maxLength(7), Validators.minLength(7)],
+      ],
       nom: [undefined, Validators.required],
       prenom: [],
-      dateNaissance: [undefined, [Validators.required, this.dateValidator]],
-      lieuNaissance: [undefined, Validators.required],
-      refActeRecrutement: [undefined, Validators.required],
-      dateRecrutement: [undefined, [Validators.required, this.dateValidator]],
-      signataireActeRecrutement: [undefined, Validators.required],
-      structureRattach: [undefined, Validators.required],
-      serviceRattach: [undefined, Validators.required],
-      refActeAffectation: [undefined, Validators.required],
-      dateSignAffectation: [
-        undefined,
-        [Validators.required, this.dateValidator],
-      ],
-      signataireActeAffectation: [undefined, Validators.required],
-      posteTravail: [undefined, Validators.required],
-      fonction: [undefined, Validators.required],
-      refActeNomination: [undefined, Validators.required],
-      dateNomination: [undefined, [Validators.required, this.dateValidator]],
-      signataireNomination: [undefined, Validators.required],
-      echelon: [undefined, [Validators.required, Validators.min(1)]],
-      indice: [undefined, [Validators.required, Validators.min(1)]],
-      dateSignNomination: [
-        undefined,
-        [Validators.required, this.dateValidator],
-      ],
-      signataireActeNomination: [undefined, Validators.required],
+      dateNaissance: [undefined, [this.dateValidator]],
+      lieuNaissance: [undefined],
+      refActeRecrutement: [undefined],
+      dateRecrutement: [undefined, [this.dateValidator]],
+      signataireActeRecrutement: [undefined],
+      structureRattach: [undefined],
+      serviceRattach: [undefined],
+      refActeAffectation: [undefined],
+      dateSignAffectation: [undefined, [this.dateValidator]],
+      signataireActeAffectation: [undefined],
+      posteTravail: [undefined],
+      fonction: [undefined],
+      refActeNomination: [undefined],
+      dateNomination: [undefined, [this.dateValidator]],
+      signataireNomination: [undefined],
+      echelon: [undefined, [Validators.min(1)]],
+      indice: [undefined, [Validators.min(1)]],
+      dateSignNomination: [undefined, [this.dateValidator]],
+      signataireActeNomination: [undefined],
       grade: this._fb.group({
         id: [],
         code: [],

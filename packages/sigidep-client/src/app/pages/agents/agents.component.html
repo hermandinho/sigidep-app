@@ -83,7 +83,7 @@
               {{ item[column.field]?.code }}
             </span>
             <span *ngIf="column.field === 'nomComplet'">
-              {{ item.nom + " " + item.prenom }}
+              {{ item.nom + " " + (item.prenom ?? "") }}
             </span>
             <span *ngIf="column.field === 'dateRecrutement'">{{
               item[column.field] | date: "d/M/yyyy"
