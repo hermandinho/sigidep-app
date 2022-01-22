@@ -188,7 +188,8 @@
     "sousRubrique": "Sous Rubrique",
     "designation": "Désignation",
     "conditionnement": "Conditionnement",
-    "prix": "Prix(FCFA)"
+    "prix": "Prix(FCFA)",
+    "serie": "Numéro de série"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -421,7 +422,8 @@
       "sousRubrique": "Sous Rubrique",
       "designation": "Désignation",
       "conditionnement": "Conditionnement",
-      "prix": "Prix(FCFA)"
+      "prix": "Prix(FCFA)",
+      "codeComplet": "Référence complète"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

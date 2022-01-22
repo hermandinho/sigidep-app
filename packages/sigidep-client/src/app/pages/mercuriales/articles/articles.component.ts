@@ -55,7 +55,7 @@ export class ArticlesComponent extends BaseComponent implements OnInit {
       },
       {
         field: 'code',
-        title: 'tables.headers.code',
+        title: 'tables.headers.codeComplet',
         sortable: true,
       },
       {

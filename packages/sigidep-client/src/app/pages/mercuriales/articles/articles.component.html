@@ -62,7 +62,9 @@
         <td *ngFor="let column of tableColumns">
           <span
             *ngIf="
-              column.field !== 'sousRubrique' && column.field !== 'rubrique';
+              column.field !== 'sousRubrique' &&
+                column.field !== 'rubrique' &&
+                column.field !== 'prix';
               else compositeField
             "
           >
@@ -74,6 +76,9 @@
             </span>
             <span *ngIf="column.field === 'rubrique'">
               {{ item["sousRubrique"]?.rubrique?.code }}
+            </span>
+            <span *ngIf="column.field === 'prix'">
+              {{ item[column.field] | number: "":"fr-FR" }}
             </span>
           </ng-template>
         </td>

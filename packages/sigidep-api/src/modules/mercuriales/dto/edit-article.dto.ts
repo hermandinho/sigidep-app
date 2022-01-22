@@ -6,7 +6,10 @@ export class EditArticleMercurialeDTO {
   public id?: number;
   @ApiProperty({ example: '000001', required: true })
   @IsNotEmpty()
-  //@Length(6, 6)
+  public serie: string;
+
+  @ApiProperty({ example: '01-001-000001', required: true })
+  @IsNotEmpty()
   public code: string;
 
   @ApiProperty({ example: 'MEUBLES EN CUIR VERT', required: true })

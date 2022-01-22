@@ -49,7 +49,7 @@ export class CreateArticleFormComponent
     super();
     this.form = this._fb.group({
       id: [],
-      code: [undefined, [Validators.required, Validators.pattern('[0-9]{6}')]],
+      serie: [undefined, [Validators.required, Validators.pattern('[0-9]{6}')]],
       prix: [undefined, [Validators.required, Validators.min(0)]],
       designation: [undefined, Validators.required],
       conditionnement: [],
@@ -73,11 +73,19 @@ export class CreateArticleFormComponent
 
   ngOnInit(): void {
     if (this.config.data?.item) {
-      const { id, code, prix, designation, conditionnement, sousRubrique } =
-        this.config.data?.item as ArticleModel;
+      const {
+        id,
+        code,
+        serie,
+        prix,
+        designation,
+        conditionnement,
+        sousRubrique,
+      } = this.config.data?.item as ArticleModel;
       this.form.patchValue({
         id,
         code,
+        serie,
         prix,
         designation,
         conditionnement,
@@ -116,6 +124,12 @@ export class CreateArticleFormComponent
       sousRubrique: this.sousRubriques.find(
         (item) => item.code === this.form.value?.sousRubrique?.code
       ),
+      code:
+        this.form.value?.rubrique?.code +
+        '-' +
+        this.form.value?.sousRubrique?.code +
+        '-' +
+        this.form.value?.serie,
     } as ArticleModel;
 
     if (this.isUpdateForm) {
