@@ -423,7 +423,7 @@
       "designation": "Désignation",
       "conditionnement": "Conditionnement",
       "prix": "Prix(FCFA)",
-      "codeComplet": "Référence complète"
+      "codeComplet": "Référence Mercuriale"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
