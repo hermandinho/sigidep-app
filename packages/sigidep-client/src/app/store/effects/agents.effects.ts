@@ -65,7 +65,7 @@ export class AgentsEffects {
     )
   );
 
-  deleteRole$ = createEffect(() =>
+  delete$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DeleteAgent),
       mergeMap((action) =>

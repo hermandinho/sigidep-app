@@ -18,3 +18,6 @@ export * from './agence.model';
 export * from './agent.model';
 export * from './categorie-agent.model';
 export * from './grade.model';
+export * from './article.model';
+export * from './sous-rubrique.model';
+export * from './rubrique.model';

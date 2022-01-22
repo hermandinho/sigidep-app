@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.codeArticle" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="code"
+          [placeholder]="'000000'"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.designation" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="designation"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.prix" | translate }}</label>
+        <input
+          type="number"
+          min="0"
+          class="form-control"
+          pInputText
+          formControlName="prix"
+          [placeholder]="'0000.00'"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.conditionnement" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="conditionnement"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="rubrique">
+          <label class="required">{{ "labels.rubrique" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="rubriques"
+            [placeholder]="'labels.rubrique' | translate"
+            class="p-col-6"
+            optionLabel="code"
+            (onChange)="onChange($event)"
+            optionValue="code"
+            formControlName="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="sousRubrique">
+          <label class="required">{{
+            "labels.sousRubrique" | translate
+          }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="sousRubriques"
+            [placeholder]="'labels.sousRubrique' | translate"
+            class="p-col-6"
+            formControlName="code"
+            optionLabel="code"
+            optionValue="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

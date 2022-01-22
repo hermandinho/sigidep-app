@@ -16,3 +16,6 @@ export * from '@actions/regimes.actions';
 export * from '@actions/agents.actions';
 export * from '@actions/categorie-agent.actions';
 export * from '@actions/grades.actions';
+export * from '@actions/rubriques.actions';
+export * from '@actions/sous-rubriques.actions';
+export * from '@actions/articles.actions';

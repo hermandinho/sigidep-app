@@ -4,9 +4,9 @@ import { EditSousRubriqueDTO } from '../dto';
 
 export class EditArticleMercurialeDTO {
   public id?: number;
-  @ApiProperty({ example: '12500856452', required: true })
+  @ApiProperty({ example: '000001', required: true })
   @IsNotEmpty()
-  //@Length(11, 11)
+  //@Length(6, 6)
   public code: string;
 
   @ApiProperty({ example: 'MEUBLES EN CUIR VERT', required: true })

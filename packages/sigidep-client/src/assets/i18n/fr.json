@@ -25,7 +25,8 @@
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
-    "agents": "Agents"
+    "agents": "Agents",
+    "mercuriales": "Mercuriale"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -182,7 +183,12 @@
     "infoNomination": "Info Nomination",
     "infoRecrutement": "Info Recrutement",
     "infoPoste": "Info Poste Actuel",
-    "infoStatus": "Info Status"
+    "infoStatus": "Info Status",
+    "rubrique": "Rubrique",
+    "sousRubrique": "Sous Rubrique",
+    "designation": "Désignation",
+    "conditionnement": "Conditionnement",
+    "prix": "Prix(FCFA)"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -295,6 +301,18 @@
     "agents": {
       "deleteSuccess": "Agent supprimé avec succès.",
       "createSuccess": "Agent crée avec succès."
+    },
+    "articles": {
+      "deleteSuccess": "Article supprimé avec succès.",
+      "createSuccess": "Article crée avec succès."
+    },
+    "rubriques": {
+      "deleteSuccess": "Rubrique supprimée avec succès.",
+      "createSuccess": "Rubrique créée avec succès."
+    },
+    "sousRubriques": {
+      "deleteSuccess": "Sous-rubrique supprimée avec succès.",
+      "createSuccess": "Sous-rubrique créée avec succès."
     }
   },
   "menus": {
@@ -316,7 +334,10 @@
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
-    "agents": "Agents"
+    "agents": "Agents",
+    "articles": "Articles",
+    "rubriques": "Rubriques",
+    "sous-rubriques": "Sous Rubriques"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -327,7 +348,10 @@
       "technicalSupervisions": "Tutelle Techniques",
       "paragraphs": "Paragraphes",
       "contribuables": "Liste des contribuables",
-      "agents": "Liste des agents"
+      "agents": "Liste des agents",
+      "rubriques": "Rubriques",
+      "articles": "Articles",
+      "sousRubriques": "Sous Rubriques"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -392,7 +416,12 @@
       "signataireActeNomination": "Signataire Acte Nomin",
       "grade": "Grade",
       "categorie": "Categorie",
-      "nomComplet": "Nom Complet"
+      "nomComplet": "Nom Complet",
+      "rubrique": "Rubrique",
+      "sousRubrique": "Sous Rubrique",
+      "designation": "Désignation",
+      "conditionnement": "Conditionnement",
+      "prix": "Prix(FCFA)"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -431,7 +460,10 @@
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
       "editAgenceBank": "Modifier une agence de banque",
-      "editAgent": "Editer un agent"
+      "editAgent": "Editer un agent",
+      "editArticle": "Editer un article",
+      "editRubrique": "Editer une rubrique",
+      "editSousRubrique": "Editer une sous-rubrique"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

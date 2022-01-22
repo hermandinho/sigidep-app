@@ -15,6 +15,9 @@ import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units
 import { ContribuablesComponent } from '@pages/contribuables/contribuables.component';
 import { BanksAgencesComponent } from '@pages/banks-agences/banks-agences.component';
 import { AgentsComponent } from '@pages/agents/agents.component';
+import { ArticlesComponent } from '@pages/mercuriales/articles/articles.component';
+import { RubriqueComponent } from '@pages/mercuriales/rubrique/rubrique.component';
+import { SousRubriqueComponent } from '@pages/mercuriales/sous-rubrique/sous-rubrique.component';
 
 const routes: Routes = [
   {
@@ -129,9 +132,33 @@ const routes: Routes = [
         path: 'agents',
         canActivate: [AuthGuard],
         data: {
-          permissions: [],
+          permissions: [...MenuPermissions.agents],
         },
         component: AgentsComponent,
+      },
+      {
+        path: 'articles',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.articles],
+        },
+        component: ArticlesComponent,
+      },
+      {
+        path: 'rubriques',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.articles],
+        },
+        component: RubriqueComponent,
+      },
+      {
+        path: 'sous-rubriques',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.articles],
+        },
+        component: SousRubriqueComponent,
       },
       /*{
         path: '**',

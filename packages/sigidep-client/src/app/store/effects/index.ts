@@ -16,6 +16,9 @@ import { RegimesEffects } from '@effects/regimes.effects';
 import { AgentsEffects } from './agents.effects';
 import { GradesEffects } from './grades.effects';
 import { CategoriesAgntsEffects } from './categories-agents.effects';
+import { ArticlesEffects } from './articles.effects';
+import { SousRubriquesEffects } from './sous-rubriques.effects';
+import { RubriquesEffects } from './rubriques.effects';
 
 export const Effects = [
   AuthEffects,
@@ -36,4 +39,7 @@ export const Effects = [
   AgentsEffects,
   GradesEffects,
   CategoriesAgntsEffects,
+  ArticlesEffects,
+  SousRubriquesEffects,
+  RubriquesEffects,
 ];

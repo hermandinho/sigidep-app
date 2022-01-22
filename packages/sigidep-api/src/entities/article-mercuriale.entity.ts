@@ -19,12 +19,16 @@ export class ArticleMercurialeEntity extends BaseEntity {
   @Column({ name: 'conditionnement', nullable: true })
   public conditionnement: string;
 
-  @Column({ name: 'prix', nullable: false })
+  @Column({ nullable: true, type: 'float' })
   public prix: number;
 
   @ManyToOne(
-    (type) => SousRubriqueMercurialeEntity,
-    (sousRubrique) => sousRubrique.articles,
+    () => SousRubriqueMercurialeEntity,
+    (sousRubrique) => sousRubrique.id,
+    {
+      cascade: true,
+      eager: true,
+    },
   )
   @JoinColumn({ name: 'sous_rubrique_id' })
   public sousRubrique: SousRubriqueMercurialeEntity;

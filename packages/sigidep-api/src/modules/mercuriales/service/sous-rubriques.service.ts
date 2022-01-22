@@ -24,6 +24,7 @@ export class SousRubriquesService {
     return this.repository
       .createQueryBuilder('sousRubrique')
       .leftJoinAndSelect('sousRubrique.rubrique', 'rubrique')
+      .addOrderBy('rubrique.code', 'ASC')
       .getMany();
   }
 

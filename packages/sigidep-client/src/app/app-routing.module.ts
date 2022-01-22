@@ -28,11 +28,7 @@ const routes: Routes = [
     redirectTo: 'auth',
     pathMatch: 'full',
   },
-  {
-    path: 'agents',
-    loadChildren: () =>
-      import('./pages/agents/agents.module').then((m) => m.AgentsModule),
-  },
+
   {
     path: '**',
     redirectTo: 'auth',

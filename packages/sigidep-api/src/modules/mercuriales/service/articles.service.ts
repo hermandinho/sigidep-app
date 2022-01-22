@@ -26,6 +26,9 @@ export class ArticlesMercurialesService {
     return this.repository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.sousRubrique', 'sousRubrique')
+      .leftJoinAndSelect('sousRubrique.rubrique', 'rubrique')
+      .addOrderBy('sousRubrique.code', 'ASC')
+      .addOrderBy('rubrique.code', 'ASC')
       .getMany();
   }
 
