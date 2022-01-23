@@ -19,3 +19,6 @@ export * from './reference-physical-unit.entity';
 export * from './bank.entity';
 export * from './agence.entity';
 export * from './contribuable.entity';
+export * from './article-mercuriale.entity';
+export * from './rubrique-mercuriale.entity';
+export * from './sous-rubriques-mercuriales.entity';

@@ -8,6 +8,9 @@ import { AdministrativeUnitsModule } from '@modules/administrative-units/adminis
 import { AddressesModule } from '@modules/addresses/addresses.module';
 import { ContribuablesModule } from '@modules/contribuables/contribuables.module';
 import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
+import { GradesModule } from '@modules/grades/grades.module';
+import { CategoriesAgentsModule } from '@modules/categories-agents/categories-agents.module';
+import { AgentsModule } from '@modules/agents/agents.module';
 
 @Module({
   providers: [SeederService],
@@ -20,6 +23,9 @@ import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module'
     AddressesModule,
     ContribuablesModule,
     RegimeFiscalModule,
+    GradesModule,
+    CategoriesAgentsModule,
+    AgentsModule,
   ],
 })
 export class SeederModule {}

@@ -15,10 +15,14 @@ import {
   BankModel,
   AgenceModel,
   SubProgramActionModel,
+  ContribuableModel,
+  AgentModel,
+  ArticleModel,
+  RubriqueModel,
+  SousRubriqueModel,
 } from '@models/index';
 import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
 import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
-import { ContribuableModel } from '@models/contribuable.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +45,10 @@ export class DialogsService {
 
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
+  private agentCreateComponent: any;
+  private articleCreateComponent: any;
+  private rubriqueCreateComponent: any;
+  private sousRubriqueCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -401,7 +409,7 @@ export class DialogsService {
 
     return this._dialogService.open(this.contribuableCreateComponent, {
       header: this._translateService.instant(
-        'dialogs.headers.' + (item ? 'editContribuable' : 'createContribuable')
+        'dialogs.headers.editContribuable'
       ),
       width: '50vw',
       height: 'auto',
@@ -457,6 +465,83 @@ export class DialogsService {
       data: {
         item,
         bank,
+      },
+    });
+  }
+
+  public async launchAgentsCreateDialog(item?: AgentModel): Promise<any> {
+    if (!this.agentCreateComponent) {
+      const { CreateAgentFormComponent } = await import(
+        '@components/create-agent-form/create-agent-form.component'
+      );
+      this.agentCreateComponent = CreateAgentFormComponent;
+    }
+
+    return this._dialogService.open(this.agentCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editAgent'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchArticleCreateDialog(item?: ArticleModel): Promise<any> {
+    if (!this.articleCreateComponent) {
+      const { CreateArticleFormComponent } = await import(
+        '@components/create-article-form/create-article-form.component'
+      );
+      this.articleCreateComponent = CreateArticleFormComponent;
+    }
+    return this._dialogService.open(this.articleCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editArticle'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchRubriqueCreateDialog(item?: RubriqueModel): Promise<any> {
+    if (!this.rubriqueCreateComponent) {
+      const { CreateRubriqueFormComponent } = await import(
+        '@components/create-rubrique-form/create-rubrique-form.component'
+      );
+      this.rubriqueCreateComponent = CreateRubriqueFormComponent;
+    }
+    return this._dialogService.open(this.rubriqueCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editRubrique'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchSousRubriqueCreateDialog(
+    item?: SousRubriqueModel
+  ): Promise<any> {
+    if (!this.sousRubriqueCreateComponent) {
+      const { CreateSousRubriqueFormComponent } = await import(
+        '@components/create-sous-rubrique-form/create-sous-rubrique-form.component'
+      );
+      this.sousRubriqueCreateComponent = CreateSousRubriqueFormComponent;
+    }
+    return this._dialogService.open(this.sousRubriqueCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.editSousRubrique'
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
       },
     });
   }

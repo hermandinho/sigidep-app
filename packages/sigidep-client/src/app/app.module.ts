@@ -31,6 +31,11 @@ import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/re
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
+import { AgentsModule } from '@pages/agents/agents.module';
+import { ArticlesModule } from '@pages/mercuriales/articles/articles.module';
+import { RubriquesModule } from '@pages/mercuriales/rubrique/rubriques.module';
+import { SousRubriquesModule } from '@pages/mercuriales/sous-rubrique/sous-rubriques.module';
+
 registerLocaleData(localeFr);
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,6 +83,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
     BanksAgencesModule,
+    AgentsModule,
+    ArticlesModule,
+    RubriquesModule,
+    SousRubriquesModule,
   ],
   providers: [
     AppInstallCheckGuard,

@@ -17,6 +17,8 @@ export const MenuPermissions = {
     ...simpleCrudPermissions('contribuables'),
     ...simpleCrudPermissions('regimes'),
   ],
+  agents: [...simpleCrudPermissions('agents')],
+  articles: [...simpleCrudPermissions('articles')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -126,6 +128,24 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.contribuables],
+          },
+        },
+        {
+          routerLink: 'agents',
+          icon: 'pi pi-user',
+          label: translate.instant('sidebar.agents'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.agents],
+          },
+        },
+        {
+          routerLink: 'articles',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.mercuriales'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.articles],
           },
         },
       ],

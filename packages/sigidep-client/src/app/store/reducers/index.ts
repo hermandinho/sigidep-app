@@ -17,6 +17,12 @@ import * as fromContribuables from './contribuables.reducer';
 
 import * as fromBanksAgences from './banks-agences.reducers';
 import * as fromRegimes from './regimes.reducer';
+import * as fromAgents from './agents.reducer';
+import * as fromGrades from './grades.reducer';
+import * as fromCategoriesAgents from './categories-agents.reducer';
+import * as fromArticles from './articles.reducer';
+import * as fromRubriques from './rubriques.reducer';
+import * as fromSousRubriques from './sous-rubriques.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -34,6 +40,12 @@ export interface AppState {
   contribuables: fromContribuables.State;
   banksAgences: fromBanksAgences.State;
   regimes: fromRegimes.State;
+  grades: fromGrades.State;
+  categoriesAgents: fromCategoriesAgents.State;
+  agents: fromAgents.State;
+  articles: fromArticles.State;
+  rubriques: fromRubriques.State;
+  sousRubriques: fromSousRubriques.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -52,6 +64,12 @@ export const reducers: ActionReducerMap<AppState> = {
   contribuables: fromContribuables.reducer,
   banksAgences: fromBanksAgences.reducer,
   regimes: fromRegimes.reducer,
+  grades: fromGrades.reducer,
+  categoriesAgents: fromCategoriesAgents.reducer,
+  agents: fromAgents.reducer,
+  articles: fromArticles.reducer,
+  rubriques: fromRubriques.reducer,
+  sousRubriques: fromSousRubriques.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

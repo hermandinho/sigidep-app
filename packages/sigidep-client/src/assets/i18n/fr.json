@@ -24,7 +24,9 @@
     "rhManager": "Gestion RH",
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences"
+    "banksAgences": "Banques et Agences",
+    "agents": "Agents",
+    "mercuriales": "Mercuriale"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -151,7 +153,43 @@
     "localisation": "Localisation",
     "siege": "Siège",
     "adresse": "adresse",
-    "bank": "banque"
+    "bank": "banque",
+    "matricule": "Matricule",
+    "nom": "Nom",
+    "prenom": "Prenom",
+    "dateNaissance": "Date Naiss.",
+    "lieuNaissance": "Lieu Naiss.",
+    "refActeRecrutement": "Réf. Acte Recrut.",
+    "dateRecrutement": "Date Recrut.",
+    "signataireActeRecrutement": "Sign. Acte Recrut.",
+    "structureRattach": "Structure Rattach.",
+    "serviceRattach": "Service Rattach.",
+    "refActeAffectation": "Ref. Acte Affectation",
+    "dateSignAffectation": "Date Sign. Affectation",
+    "signataireActeAffectation": "Signataire Acte Affect.",
+    "posteTravail": "Poste Travail",
+    "fonction": "Fonction",
+    "refActeNomination": "Ref. Acte Nomination",
+    "dateNomination": "Ref. Acte Nomination",
+    "signataireNomination": "Signataire Nomin.",
+    "echelon": "Echelon",
+    "indice": "Indice",
+    "dateSignNomination": "Date Sign. Nomin.",
+    "signataireActeNomination": "Signataire Acte Nomin",
+    "grade": "Grade",
+    "categorie": "Categorie",
+    "infoPersonnel": "Info Personnelle",
+    "infoAffectation": "Info Affectation",
+    "infoNomination": "Info Nomination",
+    "infoRecrutement": "Info Recrutement",
+    "infoPoste": "Info Poste Actuel",
+    "infoStatus": "Info Status",
+    "rubrique": "Rubrique",
+    "sousRubrique": "Sous Rubrique",
+    "designation": "Désignation",
+    "conditionnement": "Conditionnement",
+    "prix": "Prix(FCFA)",
+    "serie": "Numéro de série"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -213,6 +251,10 @@
     "contribuables": {
       "delete": "Une erreur est survenue lors de la suppression de ce contribuable.",
       "conflict": "Un Contribuable avec ce code existe déjà."
+    },
+    "agents": {
+      "delete": "Une erreur est survenue lors de la suppression de cet agent.",
+      "conflict": "Un agent avec ce code existe déjà."
     }
   },
   "messages": {
@@ -256,6 +298,22 @@
     "contribuables": {
       "deleteSuccess": "Contribuable supprimé avec succès.",
       "createSuccess": "Contribuable crée avec succès."
+    },
+    "agents": {
+      "deleteSuccess": "Agent supprimé avec succès.",
+      "createSuccess": "Agent crée avec succès."
+    },
+    "articles": {
+      "deleteSuccess": "Article supprimé avec succès.",
+      "createSuccess": "Article crée avec succès."
+    },
+    "rubriques": {
+      "deleteSuccess": "Rubrique supprimée avec succès.",
+      "createSuccess": "Rubrique créée avec succès."
+    },
+    "sousRubriques": {
+      "deleteSuccess": "Sous-rubrique supprimée avec succès.",
+      "createSuccess": "Sous-rubrique créée avec succès."
     }
   },
   "menus": {
@@ -276,7 +334,11 @@
     "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences"
+    "banksAgences": "Banques et Agences",
+    "agents": "Agents",
+    "articles": "Articles",
+    "rubriques": "Rubriques",
+    "sous-rubriques": "Sous Rubriques"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -286,7 +348,11 @@
       "administrativeUnits": "Unités administratives",
       "technicalSupervisions": "Tutelle Techniques",
       "paragraphs": "Paragraphes",
-      "contribuables": "Liste des contribuables"
+      "contribuables": "Liste des contribuables",
+      "agents": "Liste des agents",
+      "rubriques": "Rubriques",
+      "articles": "Articles",
+      "sousRubriques": "Sous Rubriques"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -326,7 +392,38 @@
       "email": "Email",
       "contact": "Contact",
       "ville": "Ville",
-      "quartier": "Quartier"
+      "quartier": "Quartier",
+      "matricule": "Matricule",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "dateNaissance": "Date Naiss.",
+      "lieuNaissance": "Lieu Naiss.",
+      "refActeRecrutement": "Réf. Acte Recrut.",
+      "dateRecrutement": "Date Recrut.",
+      "signataireActeRecrutement": "Sign. Acte Recrut.",
+      "structureRattach": "Structure Rattach.",
+      "serviceRattach": "Service Rattach.",
+      "refActeAffectation": "Ref. Acte Affectation",
+      "dateSignAffectation": "Date Sign. Affectation",
+      "signataireActeAffectation": "Signataire Acte Affect.",
+      "posteTravail": "Poste Travail",
+      "fonction": "Fonction",
+      "refActeNomination": "Ref. Acte Nomination",
+      "dateNomination": "Ref. Acte Nomination",
+      "signataireNomination": "Signataire Nomin.",
+      "echelon": "Echelon",
+      "indice": "Indice",
+      "dateSignNomination": "Date Sign. Nomin.",
+      "signataireActeNomination": "Signataire Acte Nomin",
+      "grade": "Grade",
+      "categorie": "Categorie",
+      "nomComplet": "Nom Complet",
+      "rubrique": "Rubrique",
+      "sousRubrique": "Sous Rubrique",
+      "designation": "Désignation",
+      "conditionnement": "Conditionnement",
+      "prix": "Prix(FCFA)",
+      "codeComplet": "Référence Mercuriale"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -364,7 +461,11 @@
       "createBank": "Créer une banque",
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
-      "editAgenceBank": "Modifier une agence de banque"
+      "editAgenceBank": "Modifier une agence de banque",
+      "editAgent": "Editer un agent",
+      "editArticle": "Editer un article",
+      "editRubrique": "Editer une rubrique",
+      "editSousRubrique": "Editer une sous-rubrique"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -375,7 +476,8 @@
       "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
       "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
       "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible.",
-      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible."
+      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible.",
+      "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {
