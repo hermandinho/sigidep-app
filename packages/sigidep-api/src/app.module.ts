@@ -21,6 +21,7 @@ import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module
 import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
+import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
 
 @Module({
   imports: [
@@ -96,6 +97,7 @@ import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
     RegimeFiscalModule,
     AgentsModule,
     MercurialeModule,
+    CarnetMandatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
