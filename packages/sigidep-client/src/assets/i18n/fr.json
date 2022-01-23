@@ -26,7 +26,8 @@
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
     "agents": "Agents",
-    "mercuriales": "Mercuriale"
+    "mercuriales": "Mercuriale",
+    "carnetsMandats": "Carnets Mandats"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -189,7 +190,18 @@
     "designation": "Désignation",
     "conditionnement": "Conditionnement",
     "prix": "Prix(FCFA)",
-    "serie": "Numéro de série"
+    "serie": "Numéro de série",
+    "numero": "Numéro",
+    "premierFeuillet": "Premier Feuillet",
+    "dernierFeuillet": "Dernier Feuillet",
+    "gestionnaire": "Gestionnaire",
+    "dateAffectation": "Date Affectation",
+    "dateRetrait": "Date Retrait",
+    "matAgentRetrait": "Mat. Agent Retrait",
+    "nomAgentRetrait": "Nom Agent Retrait",
+    "numCniAgentRetrait": "CNI Agent Retrait",
+    "dateDelivranceCni": "Date Délivrance CNI",
+    "lieuDelivranceCni": "Lieu Délivrance CNI"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -314,6 +326,21 @@
     "sousRubriques": {
       "deleteSuccess": "Sous-rubrique supprimée avec succès.",
       "createSuccess": "Sous-rubrique créée avec succès."
+    },
+    "grades": {
+      "deleteSuccess": "Grade supprimée avec succès.",
+      "createSuccess": "Grade créee avec succès.",
+      "updateSuccess": "Grade modifiée avec succès."
+    },
+    "categories": {
+      "deleteSuccess": "Catégorie supprimée avec succès.",
+      "createSuccess": "Catégorie créee avec succès.",
+      "updateSuccess": "Catégorie modifiée avec succès."
+    },
+    "carnets": {
+      "deleteSuccess": "Carnet supprimé avec succès.",
+      "createSuccess": "Carnet créé avec succès.",
+      "updateSuccess": "Carnet modifié avec succès."
     }
   },
   "menus": {
@@ -338,7 +365,11 @@
     "agents": "Agents",
     "articles": "Articles",
     "rubriques": "Rubriques",
-    "sous-rubriques": "Sous Rubriques"
+    "sous-rubriques": "Sous Rubriques",
+    "grades": "Grades",
+    "categories": "Catégories",
+    "carnets": "Carnets de Mandats",
+    "categories-agents": "Catégories"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -352,7 +383,10 @@
       "agents": "Liste des agents",
       "rubriques": "Rubriques",
       "articles": "Articles",
-      "sousRubriques": "Sous Rubriques"
+      "sousRubriques": "Sous Rubriques",
+      "grades": "Grades",
+      "categories": "Catégories",
+      "carnetsMandats": "Carnets de Mandats"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -423,7 +457,18 @@
       "designation": "Désignation",
       "conditionnement": "Conditionnement",
       "prix": "Prix(FCFA)",
-      "codeComplet": "Référence Mercuriale"
+      "codeComplet": "Référence Mercuriale",
+      "numero": "Numéro",
+      "premierFeuillet": "Premier Feuillet",
+      "dernierFeuillet": "Dernier Feuillet",
+      "gestionnaire": "Gestionnaire",
+      "dateAffectation": "Date Affectation",
+      "dateRetrait": "Date Retrait",
+      "matAgentRetrait": "Mat. Agent Retrait",
+      "nomAgentRetrait": "Nom Agent Retrait",
+      "numCniAgentRetrait": "CNI Agent Retrait",
+      "dateDelivranceCni": "Date Délivrance CNI",
+      "lieuDelivranceCni": "Lieu Délivrance CNI"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -465,7 +510,10 @@
       "editAgent": "Editer un agent",
       "editArticle": "Editer un article",
       "editRubrique": "Editer une rubrique",
-      "editSousRubrique": "Editer une sous-rubrique"
+      "editSousRubrique": "Editer une sous-rubrique",
+      "editCategorie": "Editer une catégorie",
+      "editGrade": "Editer une grade",
+      "editCarnet": "Editer un carnet"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -477,7 +525,10 @@
       "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
       "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible.",
       "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible.",
-      "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible."
+      "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible.",
+      "deleteGrade": "Voulez-vous vraiment supprimer cette grade? Cette action est irréversible.",
+      "deleteCategorie": "Voulez-vous vraiment supprimer cette catégorie? Cette action est irréversible.",
+      "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

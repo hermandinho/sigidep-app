@@ -18,15 +18,12 @@ export class CarnetMandatEntity extends BaseEntity {
   @Column({ name: 'dernier_feuillet', nullable: true })
   public dernierFeuillet: string;
 
-  @Column({ name: 'date_enreg', nullable: true, type: 'date' })
-  public dateEnreg: Date;
-
   @ManyToOne(() => AgentEntity, (object) => object.id, {
     cascade: true,
     eager: false,
   })
   @JoinColumn({ name: 'gestionnaire' })
-  /** TO BE CHANGED TO Fournisseur entity later, at least a fournisseur is an agent */
+  /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
   public gestionnaire: AgentEntity;
 
   @Column({ name: 'date_affectation', nullable: true, type: 'date' })
@@ -42,13 +39,13 @@ export class CarnetMandatEntity extends BaseEntity {
   public nomAgentRetrait: string;
 
   @Column({ name: 'num_cni_agent_retrait', nullable: true })
-  public numCNIAgentRetrait: string;
+  public numCniAgentRetrait: string;
 
   @Column({ name: 'date_delivrance_cni', nullable: true, type: 'date' })
-  public dateDelivranceCNI: Date;
+  public dateDelivranceCni: Date;
 
   @Column({ name: 'lieu_delivrance_cni', nullable: true })
-  public lieuDelivranceCNI: string;
+  public lieuDelivranceCni: string;
 
   /** TO ADD LATER WHEN MANDAT WILL BE AVAILABLE 
   @OneToMany(() => Mandat, (mandat) => mandat.carnet)

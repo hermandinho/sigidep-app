@@ -22,3 +22,26 @@ export const CreateGradeFailure = createAction(
   '[Grades] Create grade',
   props<{ error?: any }>()
 );
+
+export const UpdateGrade = createAction(
+  '[Grades] Update',
+  props<{ payload: GradeModel }>()
+);
+export const UpdateGradeSuccess = createAction(
+  '[Grades] Update success',
+  props<{ payload: GradeModel }>()
+);
+export const UpdateGradeFailure = createAction(
+  '[Grades] Update failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);
+
+export const DeleteGrade = createAction(
+  '[Grades] Delete',
+  props<{ id: number }>()
+);
+export const DeleteGradeSuccess = createAction('[Grades] Delete success');
+export const DeleteGradeFailure = createAction(
+  '[Grades] Delete failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

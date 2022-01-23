@@ -15,16 +15,7 @@ export class EditCarnetMandatDTO {
   @ApiProperty({ example: '', required: false })
   public dernierFeuillet: string;
 
-  @ApiProperty({
-    example: new Date().toISOString(),
-    nullable: true,
-    required: false,
-  })
-  @IsDateString()
-  @IsOptional()
-  public dateEnreg: Date | string;
-
-  /** TO BE CHANGED TO Fournisseur entity later, at least a fournisseur is an agent */
+  /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
   public gestionnaire: EditAgentDTO;
 
   @ApiProperty({
@@ -48,15 +39,15 @@ export class EditCarnetMandatDTO {
   public nomAgentRetrait: string;
 
   @ApiProperty({ example: '', required: false })
-  public numCNIAgentRetrait: string;
+  public numCniAgentRetrait: string;
 
   @ApiProperty({
     example: new Date().toISOString(),
     nullable: true,
     required: false,
   })
-  public dateDelivranceCNI: Date | string;
+  public dateDelivranceCni: Date | string;
 
   @ApiProperty({ example: '', required: false })
-  public lieuDelivranceCNI: string;
+  public lieuDelivranceCni: string;
 }

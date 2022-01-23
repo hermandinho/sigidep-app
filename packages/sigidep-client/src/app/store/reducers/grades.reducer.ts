@@ -1,9 +1,16 @@
 import {
   CreateGrade,
+  CreateGradeFailure,
   CreateGradeSuccess,
+  DeleteGrade,
+  DeleteGradeFailure,
+  DeleteGradeSuccess,
   GetGrades,
   GetGradesFailure,
   GetGradesSuccess,
+  UpdateGrade,
+  UpdateGradeFailure,
+  UpdateGradeSuccess,
 } from '@actions/grades.actions';
 import { GradeModel } from '@models/grade.model';
 import {
@@ -46,8 +53,20 @@ const gradesReducer = createReducer(
   on(CreateGrade, (state) => {
     return { ...state, loading: true };
   }),
-  on(CreateGradeSuccess, (state, { payload }) => {
+  on(DeleteGrade, (state, { id }) => {
+    return { ...state, loading: true };
+  }),
+  on(DeleteGradeSuccess, DeleteGradeFailure, (state, {}) => {
+    return { ...state, loading: false };
+  }),
+  on(UpdateGrade, (state) => {
+    return { ...state, loading: true };
+  }),
+  on(CreateGradeSuccess, UpdateGradeSuccess, (state, { payload }) => {
     return { ...state, loading: false, data: [payload] };
+  }),
+  on(CreateGradeFailure, UpdateGradeFailure, (state, { error }) => {
+    return { ...state, loading: false, error: error };
   })
 );
 

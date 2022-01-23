@@ -22,3 +22,28 @@ export const CreateCategorieAgentFailure = createAction(
   '[CategoriesAgents] Create fail',
   props<{ error?: any }>()
 );
+
+export const UpdateCategorieAgent = createAction(
+  '[CategoriesAgents] Update',
+  props<{ payload: CategorieAgentModel }>()
+);
+export const UpdateCategorieAgentSuccess = createAction(
+  '[CategoriesAgents] Update success',
+  props<{ payload: CategorieAgentModel }>()
+);
+export const UpdateCategorieAgentFailure = createAction(
+  '[CategoriesAgents] Update failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);
+
+export const DeleteCategorieAgent = createAction(
+  '[CategoriesAgents] Delete',
+  props<{ id: number }>()
+);
+export const DeleteCategorieAgentSuccess = createAction(
+  '[CategoriesAgents] Delete success'
+);
+export const DeleteCategorieAgentFailure = createAction(
+  '[CategoriesAgents] Delete failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

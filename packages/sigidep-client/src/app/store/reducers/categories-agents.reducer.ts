@@ -2,9 +2,15 @@ import {
   CreateCategorieAgent,
   CreateCategorieAgentFailure,
   CreateCategorieAgentSuccess,
+  DeleteCategorieAgent,
+  DeleteCategorieAgentFailure,
+  DeleteCategorieAgentSuccess,
   GetCategoriesAgents,
   GetCategoriesAgentsFailure,
   GetCategoriesAgentsSuccess,
+  UpdateCategorieAgent,
+  UpdateCategorieAgentFailure,
+  UpdateCategorieAgentSuccess,
 } from '@actions/categorie-agent.actions';
 
 import { CategorieAgentModel } from '@models/categorie-agent.model';
@@ -45,16 +51,33 @@ const categoriesAgentsReducer = createReducer(
   on(GetCategoriesAgentsFailure, (state, { error }) => {
     return { ...state, loading: false, error };
   }),
-
   on(CreateCategorieAgent, (state) => {
     return { ...state, loading: true };
   }),
-  on(CreateCategorieAgentSuccess, (state, { payload }) => {
-    return { ...state, loading: false, data: [payload] };
+  on(DeleteCategorieAgent, (state, { id }) => {
+    return { ...state, loading: true };
   }),
-  on(CreateCategorieAgentFailure, (state, { error }) => {
+  on(DeleteCategorieAgentSuccess, DeleteCategorieAgentFailure, (state, {}) => {
     return { ...state, loading: false };
-  })
+  }),
+
+  on(UpdateCategorieAgent, (state) => {
+    return { ...state, loading: true };
+  }),
+  on(
+    CreateCategorieAgentSuccess,
+    UpdateCategorieAgentSuccess,
+    (state, { payload }) => {
+      return { ...state, loading: false, data: [payload] };
+    }
+  ),
+  on(
+    CreateCategorieAgentFailure,
+    UpdateCategorieAgentFailure,
+    (state, { error }) => {
+      return { ...state, loading: false, error: error };
+    }
+  )
 );
 
 export function reducer(state: State | undefined, action: Action): State {
