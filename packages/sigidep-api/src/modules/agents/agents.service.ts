@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AgentEntity } from '@entities/Agent.entity';
 import { EditAgentDTO } from './dto/edit-Agent.dto';
 import { UserEntity } from '@entities/user.entity';
+import { AgentEntity } from '@entities/agent.entity';
 
 @Injectable()
 export class AgentsService {

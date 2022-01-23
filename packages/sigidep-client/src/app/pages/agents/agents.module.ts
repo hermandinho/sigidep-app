@@ -7,6 +7,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SharedModule } from '@modules/shared.module';
 import { CreateAgentFormComponent } from '@components/create-agent-form/create-agent-form.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [AgentsComponent, CreateAgentFormComponent],
@@ -16,6 +17,7 @@ import { CreateAgentFormComponent } from '@components/create-agent-form/create-a
     SharedModule,
     CheckboxModule,
     InputMaskModule,
+    ToastModule,
   ],
 })
 export class AgentsModule {}
