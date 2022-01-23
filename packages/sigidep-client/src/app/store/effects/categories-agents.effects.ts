@@ -9,9 +9,15 @@ import {
   CreateCategorieAgent,
   CreateCategorieAgentFailure,
   CreateCategorieAgentSuccess,
+  DeleteCategorieAgent,
+  DeleteCategorieAgentFailure,
+  DeleteCategorieAgentSuccess,
   GetCategoriesAgents,
   GetCategoriesAgentsFailure,
   GetCategoriesAgentsSuccess,
+  UpdateCategorieAgent,
+  UpdateCategorieAgentFailure,
+  UpdateCategorieAgentSuccess,
 } from '@actions/categorie-agent.actions';
 import { CategorieAgentModel } from '@models/categorie-agent.model';
 
@@ -45,6 +51,42 @@ export class CategoriesAgntsEffects {
             }),
             catchError((err: HttpErrorResponse) =>
               of(CreateCategorieAgentFailure(err))
+            )
+          )
+      )
+    )
+  );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UpdateCategorieAgent),
+      mergeMap((action) =>
+        this.apisService
+          .post<CategorieAgentModel>('/categories-agents', action.payload)
+          .pipe(
+            switchMap((payload) => {
+              return [UpdateCategorieAgentSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(UpdateCategorieAgentFailure(err))
+            )
+          )
+      )
+    )
+  );
+
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DeleteCategorieAgent),
+      mergeMap((action) =>
+        this.apisService
+          .delete<any>(`/categories-agents/${action.id}`, {})
+          .pipe(
+            switchMap((payload) => {
+              return [DeleteCategorieAgentSuccess(), GetCategoriesAgents()];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(DeleteCategorieAgentFailure(err))
             )
           )
       )

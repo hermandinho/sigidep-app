@@ -51,7 +51,7 @@ export class GradesService {
     user: UserEntity,
   ): Promise<GradeEntity> {
     const check = await this.repository.findOne({
-      code: payload.code,
+      id: payload.id,
     });
 
     if (!check) {

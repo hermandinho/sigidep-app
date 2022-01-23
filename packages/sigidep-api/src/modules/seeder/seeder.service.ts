@@ -329,7 +329,6 @@ export class SeederService implements OnModuleInit {
     this._initLocations();
     this._initSectors();
     this._initRegimesFiscaux();
-    this._initContribuables();
     this._initCategoriesAgents();
     this._initGrades();
   }

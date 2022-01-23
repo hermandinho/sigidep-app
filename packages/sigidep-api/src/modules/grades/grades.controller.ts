@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { UserEntity } from '@entities/user.entity';
-import { PermissionsGuard } from '@guards/permissions.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GradesService } from './grades.service';
 import { CreateGradeDTO } from './dto/create-grade.dto';

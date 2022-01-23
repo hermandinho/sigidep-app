@@ -51,7 +51,7 @@ export class CategoriesAgentsService {
     user: UserEntity,
   ): Promise<CategorieAgentEntity> {
     const check = await this.repository.findOne({
-      code: payload.code,
+      id: payload.id,
     });
 
     if (!check) {

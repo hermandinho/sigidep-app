@@ -1,0 +1,155 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.code" | translate }} </label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="code"
+          [placeholder]=""
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.premierFeuillet" | translate
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="premierFeuillet"
+          [placeholder]=""
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.dernierFeuillet" | translate
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="dernierFeuillet"
+          [placeholder]=""
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="gestionnaire">
+          <label>{{ "labels.gestionnaire" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="gestionnaires"
+            [placeholder]="'Select...'"
+            class="p-col-6"
+            formControlName="matricule"
+            optionLabel="matricule"
+            optionValue="matricule"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.matricule | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.matricule | translate }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.dateAffectation" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateAffectation"
+          [placeholder]=""
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.dateRetrait" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateRetrait"
+          [placeholder]=""
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.matAgentRetrait" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="matAgentRetrait"
+          [placeholder]=""
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.nomAgentRetrait" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="nomAgentRetrait"
+          [placeholder]=""
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.numCniAgentRetrait" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="numCniAgentRetrait"
+          [placeholder]=""
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.dateDelivranceCni" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateDelivranceCni"
+          [placeholder]=""
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.lieuDelivranceCni" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="lieuDelivranceCni"
+          [placeholder]=""
+        />
+      </div>
+    </div>
+
+    <div class="footer">
+      <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+        {{ "buttons.cancel" | translate }}
+      </button>
+      <button
+        (click)="submit()"
+        [disabled]="!form?.valid || busy"
+        [label]="
+          'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+            | translate
+        "
+        pButton
+      ></button>
+    </div>
+  </div>
+</div>
