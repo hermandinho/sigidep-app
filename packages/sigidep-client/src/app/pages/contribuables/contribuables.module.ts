@@ -6,6 +6,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SharedModule } from '@modules/shared.module';
 import { CreateContribuableFormComponent } from '@components/create-contribuable-form/create-contribuable-form.component';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [ContribuablesComponent, CreateContribuableFormComponent],
@@ -14,6 +15,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     CheckboxModule,
     ContribuablesRoutingModule,
     InputMaskModule,
+    ToastModule,
   ],
 })
 export class ContribuablesModule {}

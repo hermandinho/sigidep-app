@@ -10,7 +10,6 @@ import { ContribuableEntity } from '@entities/contribuable.entity';
 import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
 import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
 import { GradeEntity } from '@entities/grade.entity';
-import { AgentEntity } from '@entities/Agent.entity';
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
   description:
@@ -62,6 +61,7 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.RUBRIQUES),
   ...simpleCrudGenerator(C.SOUS_RUBRIQUES),
   ...simpleCrudGenerator(C.ARTICLES),
+  ...simpleCrudGenerator(C.CARNET_MANDATS),
   {
     context: C.ROLES,
     label: 'permissions.manage',

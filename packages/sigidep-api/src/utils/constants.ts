@@ -20,6 +20,7 @@ export enum PermissionContextsEnum {
   ARTICLES = 'articles',
   RUBRIQUES = 'rubriques',
   SOUS_RUBRIQUES = 'sousRubriques',
+  CARNET_MANDATS = 'carnetsMandats',
 }
 
 export enum UserAccountStatusEnum {

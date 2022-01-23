@@ -6,27 +6,25 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EditAgentDTO } from './dto/edit-Agent.dto';
 import { UserEntity } from '@entities/user.entity';
-import { AgentEntity } from '@entities/agent.entity';
+import { CarnetMandatEntity } from '@entities/carnet-mandat.entity';
+import { EditCarnetMandatDTO } from './dto/edit-carnet-mandat.dto';
 
 @Injectable()
-export class AgentsService {
-  private readonly logger = new Logger(AgentsService.name);
+export class CarnetMandatService {
   constructor(
-    @InjectRepository(AgentEntity)
-    private readonly repository: Repository<AgentEntity>,
+    @InjectRepository(CarnetMandatEntity)
+    private readonly repository: Repository<CarnetMandatEntity>,
   ) {}
 
-  public getRepository(): Repository<AgentEntity> {
+  public getRepository(): Repository<CarnetMandatEntity> {
     return this.repository;
   }
 
-  public async filter(): Promise<AgentEntity[]> {
+  public async filter(): Promise<CarnetMandatEntity[]> {
     return this.repository
-      .createQueryBuilder('agent')
-      .leftJoinAndSelect('agent.grade', 'grade')
-      .leftJoinAndSelect('agent.categorie', 'categorie')
+      .createQueryBuilder('carnet')
+      .leftJoinAndSelect('carnet.gestionnaire', 'gestionnaire')
       .getMany();
   }
 
@@ -35,12 +33,12 @@ export class AgentsService {
   }
 
   public async create(
-    payload: EditAgentDTO,
+    payload: EditCarnetMandatDTO,
     user: UserEntity,
-  ): Promise<AgentEntity> {
+  ): Promise<CarnetMandatEntity> {
     const check = await this.repository
-      .createQueryBuilder('agent')
-      .where('agent.matricule = :matricule', { matricule: payload.matricule })
+      .createQueryBuilder('carnet')
+      .where('carnet.code = :code', { code: payload.code })
       .getOne();
 
     if (check) {
@@ -52,15 +50,14 @@ export class AgentsService {
         createdBy: user,
       });
     } catch (error) {
-      this.logger.warn(`Error ${error.toString()} categories `);
       throw error;
     }
   }
 
   public async update(
-    payload: EditAgentDTO,
+    payload: EditCarnetMandatDTO,
     user: UserEntity,
-  ): Promise<AgentEntity> {
+  ): Promise<CarnetMandatEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
     });
