@@ -22,7 +22,7 @@ export class CarnetMandatEntity extends BaseEntity {
     cascade: true,
     eager: false,
   })
-  @JoinColumn({ name: 'gestionnaire' })
+  @JoinColumn({ name: 'gestionnaire_id' })
   /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
   public gestionnaire: AgentEntity;
 

@@ -24,7 +24,7 @@ export class CarnetMandatService {
   public async filter(): Promise<CarnetMandatEntity[]> {
     return this.repository
       .createQueryBuilder('carnet')
-      .leftJoinAndSelect('carnet.gestionnaire', 'gestionnaire')
+      .leftJoinAndSelect('carnet.gestionnaire', 'gest')
       .getMany();
   }
 
