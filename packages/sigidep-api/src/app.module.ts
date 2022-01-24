@@ -23,7 +23,6 @@ import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetai
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
-import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
 
 @Module({
   imports: [
