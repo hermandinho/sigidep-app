@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EditAgentDTO } from '@modules/agents/dto/edit-Agent.dto';
+import { EditAgentDTO } from './dto/edit-Agent.dto';
 import { UserEntity } from '@entities/user.entity';
 import { AgentEntity } from '@entities/agent.entity';
 
