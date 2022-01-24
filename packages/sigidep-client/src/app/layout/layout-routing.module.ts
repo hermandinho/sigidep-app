@@ -196,6 +196,14 @@ const routes: Routes = [
         },
         component: CategoriesAgentsComponent,
       },
+      {
+        path: 'contribuables-budgetaires',
+        component: ContribuablesBudgetairesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
+      },
       /*{
         path: '**',
         component: NotFoundComponent,

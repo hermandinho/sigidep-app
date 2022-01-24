@@ -95,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CarnetsModule,
     GradesModule,
     CategoriesAgentsModule,
+    ContribuablesBudgetairesModule,
   ],
   providers: [
     AppInstallCheckGuard,

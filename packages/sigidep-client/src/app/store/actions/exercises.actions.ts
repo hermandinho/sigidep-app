@@ -3,7 +3,9 @@ import { ExerciseModel } from '@models/exercise.model';
 
 export const GetExercises = createAction(
   '[Exercises] Filter',
-  props<{ status?: 'hidden' | 'preparing' | 'active' | 'archived' }>()
+  props<{
+    status?: 'hidden' | 'preparing' | 'active' | 'archived' | 'in_progress';
+  }>()
 );
 export const GetExercisesSuccess = createAction(
   '[Exercises] Filter success',

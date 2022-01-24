@@ -28,7 +28,8 @@
     "contribuablesBudgetaires": "contribuables Budgetaires",
     "agents": "Agents",
     "mercuriales": "Mercuriale",
-    "carnetsMandats": "Carnets Mandats"
+    "carnetsMandats": "Carnets Mandats",
+    "contribuablesBudgetaires": "Contribuables Budgetaires"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -49,7 +50,8 @@
     "monthlyBreakdown": "Ventilation mensuelle",
     "quarterlyBreakdown": "Ventilation trimestrielle",
     "halfYearlyBreakdown": "Ventilation semestrielle",
-    "program": "Programmer"
+    "program": "Programmer",
+    "assign": "Affecter"
   },
   "install": {
     "title": "Installation"
@@ -204,7 +206,11 @@
     "nomAgentRetrait": "Nom Agent Retrait",
     "numCniAgentRetrait": "CNI Agent Retrait",
     "dateDelivranceCni": "Date Délivrance CNI",
-    "lieuDelivranceCni": "Lieu Délivrance CNI"
+    "lieuDelivranceCni": "Lieu Délivrance CNI",
+    "carnet": "Carnet",
+    "affectation": "Affectation",
+    "isAssign": "Affecter?",
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -373,7 +379,8 @@
     "grades": "Grades",
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
-    "categories-agents": "Catégories"
+    "categories-agents": "Catégories",
+    "contribuablesbudgetaires": "contribuables budgetaires"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -473,7 +480,9 @@
       "nomAgentRetrait": "Nom Agent Retrait",
       "numCniAgentRetrait": "CNI Agent Retrait",
       "dateDelivranceCni": "Date Délivrance CNI",
-      "lieuDelivranceCni": "Lieu Délivrance CNI"
+      "lieuDelivranceCni": "Lieu Délivrance CNI",
+      "exercice": "Exercice",
+      "bankAgence": "banque (Agence)"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -520,7 +529,10 @@
       "editSousRubrique": "Editer une sous-rubrique",
       "editCategorie": "Editer une catégorie",
       "editGrade": "Editer une grade",
-      "editCarnet": "Editer un carnet"
+      "editCarnet": "Editer un carnet",
+      "assignCarnet": "Affecter le carnet {{code}}",
+      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
+      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

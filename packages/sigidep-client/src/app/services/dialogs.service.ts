@@ -55,6 +55,7 @@ export class DialogsService {
   private carnetCreateComponent: any;
   private gradeCreateComponent: any;
   private categorieAgentCreateComponent: any;
+  private contribuableBudgetaireCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -582,7 +583,8 @@ export class DialogsService {
   }
 
   public async launchCarnetCreateDialog(
-    item?: CarnetMandatModel
+    item?: CarnetMandatModel,
+    assignment = false
   ): Promise<any> {
     if (!this.sousRubriqueCreateComponent) {
       const { CreateCarnetFormComponent } = await import(
@@ -591,12 +593,18 @@ export class DialogsService {
       this.carnetCreateComponent = CreateCarnetFormComponent;
     }
     return this._dialogService.open(this.carnetCreateComponent, {
-      header: this._translateService.instant('dialogs.headers.editCarnet'),
+      header: this._translateService.instant(
+        !assignment
+          ? 'dialogs.headers.editCarnet'
+          : 'dialogs.headers.assignCarnet',
+        { code: item?.code }
+      ),
       width: '50vw',
       height: 'auto',
       modal: true,
       data: {
         item,
+        assignment,
       },
     });
   }
@@ -637,5 +645,35 @@ export class DialogsService {
         item,
       },
     });
+  }
+
+  public async launchContribuablesBudgetairesCreateDialog(
+    item?: ContribuableBugetaireModel
+  ): Promise<any> {
+    if (!this.contribuableBudgetaireCreateComponent) {
+      const { CreateContribuableBudgetaireFormComponent } = await import(
+        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+      );
+      this.contribuableBudgetaireCreateComponent =
+        CreateContribuableBudgetaireFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.contribuableBudgetaireCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item
+              ? 'editContribuableBudgetaire'
+              : 'createContribuableBudgetaire')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+        },
+      }
+    );
   }
 }

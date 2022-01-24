@@ -23,9 +23,18 @@ import {
 @Component({
   selector: 'app-contribuables-budgetaires',
   templateUrl: './contribuables-budgetaires.component.html',
+<<<<<<< HEAD
   styleUrls: ['./contribuables-budgetaires.component.scss']
 })
 export class ContribuablesBudgetairesComponent extends BaseComponent implements OnInit {
+=======
+  styleUrls: ['./contribuables-budgetaires.component.scss'],
+})
+export class ContribuablesBudgetairesComponent
+  extends BaseComponent
+  implements OnInit
+{
+>>>>>>> 392bb280ef2c6d1e4132657c17b43329e189982b
   data: ContribuableBugetaireModel[] = [];
   selectedItems: any[] = [];
   loading$: Observable<boolean> = of(true);
@@ -41,9 +50,21 @@ export class ContribuablesBudgetairesComponent extends BaseComponent implements 
 
     this.tableColumns = [
       { field: 'code', title: 'tables.headers.code', sortable: true },
-      { field: 'raisonSociale', title: 'tables.headers.raisonSociale', sortable: true },
-      { field: 'banque.label', title: 'tables.headers.bankAgence', sortable: true },
-      { field: 'numeroCompte', title: 'tables.headers.numeroCompte', sortable: true },
+      {
+        field: 'raisonSociale',
+        title: 'tables.headers.raisonSociale',
+        sortable: true,
+      },
+      {
+        field: 'banque.label',
+        title: 'tables.headers.bankAgence',
+        sortable: true,
+      },
+      {
+        field: 'numeroCompte',
+        title: 'tables.headers.numeroCompte',
+        sortable: true,
+      },
       { field: 'cle', title: 'tables.headers.cle', sortable: true },
     ];
 
@@ -82,8 +103,11 @@ export class ContribuablesBudgetairesComponent extends BaseComponent implements 
   }
   // -- END -- MODAL FORM FOR BANK
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 392bb280ef2c6d1e4132657c17b43329e189982b
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
@@ -104,7 +128,14 @@ export class ContribuablesBudgetairesComponent extends BaseComponent implements 
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
+<<<<<<< HEAD
         ofType(DeleteContribuableBugetaireSuccess, DeleteContribuableBugetaireFailure)
+=======
+        ofType(
+          DeleteContribuableBugetaireSuccess,
+          DeleteContribuableBugetaireFailure
+        )
+>>>>>>> 392bb280ef2c6d1e4132657c17b43329e189982b
       )
       .subscribe((action) => {
         if (action.type === DeleteContribuableBugetaireFailure.type) {

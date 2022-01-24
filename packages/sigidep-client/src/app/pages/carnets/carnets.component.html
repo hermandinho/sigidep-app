@@ -17,6 +17,7 @@
     #dt
     [globalFilterFields]="[
       'code',
+      'exercice',
       'premierFeuillet',
       'gestionnaire',
       'dernierFeuillet',
@@ -54,6 +55,7 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
+        <th>{{ "labels.isAssign" | translate }}</th>
         <ng-container *ngFor="let column of tableColumns">
           <th *ngIf="column.sortable" [pSortableColumn]="column.field">
             {{ column.title | translate }}
@@ -66,13 +68,18 @@
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <tr>
+        <td>
+          <i *ngIf="item.gestionnaire" class="pi pi-check"></i>
+          <i *ngIf="!item.gestionnaire" class="pi pi-times"></i>
+        </td>
         <td *ngFor="let column of tableColumns">
           <span
             *ngIf="
               column.field !== 'gestionnaire' &&
                 column.field !== 'dateAffectation' &&
                 column.field !== 'dateRetrait' &&
-                column.field !== 'dateDelivranceCni';
+                column.field !== 'dateDelivranceCni' &&
+                column.field !== 'exercice';
               else compositeField
             "
           >
@@ -83,17 +90,32 @@
             <span *ngIf="column.field === 'gestionnaire'">
               {{ item[column.field]?.matricule }}
             </span>
-            <span *ngIf="column.field !== 'gestionnaire'">
-              {{ item[column.field] | date: "d/M/yyyy" }}
+            <span *ngIf="column.field === 'exercice'">
+              {{
+                (item[column.field]?.code ?? "") +
+                  "-" +
+                  (item[column.field]?.year ?? "")
+              }}
+            </span>
+            <span *ngIf="column.field === 'dateAffectation'">
+              {{ item[column.field] ?? "" | date: "d/M/yyyy" }}
             </span>
           </ng-template>
         </td>
-        <td>
+        <td class="btn-action">
           <button
             (click)="edit(item)"
             *appCheckPermissions="['carnetsMandats.update']"
             class="p-button-rounded p-button-success p-mr-2"
             icon="pi pi-pencil"
+            pButton
+            pRipple
+          ></button>
+          <button
+            (click)="affect(item)"
+            *appCheckPermissions="['carnetsMandats.update']"
+            class="p-button-info p-mr-2 p-button-rounded"
+            icon="pi pi-user-edit"
             pButton
             pRipple
           ></button>

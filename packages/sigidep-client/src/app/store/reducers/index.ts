@@ -50,6 +50,7 @@ export interface AppState {
   rubriques: fromRubriques.State;
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
+  contribuablesBudgetaires: fromContribuablesBudgetaires.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -76,6 +77,7 @@ export const reducers: ActionReducerMap<AppState> = {
   rubriques: fromRubriques.reducer,
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
+  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
