@@ -25,4 +25,4 @@ export * from './categorie-agent.entity';
 export * from './article-mercuriale.entity';
 export * from './rubrique-mercuriale.entity';
 export * from './sous-rubriques-mercuriales.entity';
-//export * from './carnet-mandat.entity';
+export * from './carnet-mandat.entity';
