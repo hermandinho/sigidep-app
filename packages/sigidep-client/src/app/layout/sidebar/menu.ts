@@ -205,6 +205,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
       },
     },
     {
+      routerLink: 'contribuables-budgetaires',
+      icon: 'pi pi-wallet',
+      label: translate.instant('sidebar.contribuablesBudgetaires'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [],
+      },
+    },
+    {
       routerLink: 'roles',
       icon: 'pi pi-lock',
       label: translate.instant('sidebar.roles'),

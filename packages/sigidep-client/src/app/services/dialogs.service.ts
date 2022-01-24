@@ -1,3 +1,5 @@
+import { CreateContribuableBudgetaireFormComponent } from './../components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component';
+import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { Injectable } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,6 +43,7 @@ export class DialogsService {
 
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
+  private contribuableBudgetaireCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -457,6 +460,29 @@ export class DialogsService {
       data: {
         item,
         bank,
+      },
+    });
+  }
+
+  public async launchContribuablesBudgetairesCreateDialog(
+    item?: ContribuableBugetaireModel
+  ): Promise<any> {
+    if (!this.contribuableBudgetaireCreateComponent) {
+      const { CreateContribuableBudgetaireFormComponent } = await import(
+        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+      );
+      this.contribuableBudgetaireCreateComponent = CreateContribuableBudgetaireFormComponent;
+    }
+
+    return this._dialogService.open(this.contribuableBudgetaireCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editContribuableBudgetaire' : 'createContribuableBudgetaire')
+      ),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
       },
     });
   }

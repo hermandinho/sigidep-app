@@ -24,7 +24,8 @@
     "rhManager": "Gestion RH",
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences"
+    "banksAgences": "Banques et Agences",
+    "contribuablesBudgetaires": "contribuables Budgetaires"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -148,10 +149,12 @@
     "ville": "Ville",
     "quartier": "Quartier",
     "codeAgence": "Code Agence",
+    "agence": "Agence",
     "localisation": "Localisation",
     "siege": "Siège",
-    "adresse": "adresse",
-    "bank": "banque"
+    "adresse": "Adresse",
+    "bank": "Banque",
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -276,7 +279,8 @@
     "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences"
+    "banksagences": "Banques et Agences",
+    "contribuablesbudgetaires": "contribuables budgetaires"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -326,7 +330,8 @@
       "email": "Email",
       "contact": "Contact",
       "ville": "Ville",
-      "quartier": "Quartier"
+      "quartier": "Quartier",
+      "bankAgence": "banque (Agence)"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -364,7 +369,9 @@
       "createBank": "Créer une banque",
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
-      "editAgenceBank": "Modifier une agence de banque"
+      "editAgenceBank": "Modifier une agence de banque",
+      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
+      "editContribuableBudgetaire" : "Mettre à jour un contribuable budgetaire"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

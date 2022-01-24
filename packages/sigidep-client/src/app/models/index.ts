@@ -15,3 +15,4 @@ export * from './reference-physical-unit.model';
 export * from './contribuable.model';
 export * from './banque.model';
 export * from './agence.model';
+export * from './contribuable-budgetaire.model';

@@ -1,3 +1,4 @@
+import { ContribuablesBudgetairesComponent } from './../pages/contribuables-budgetaires/contribuables-budgetaires.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
@@ -123,6 +124,14 @@ const routes: Routes = [
           permissions: [],
         },
         component: BanksAgencesComponent,
+      },
+      {
+        path: 'contribuables-budgetaires',
+        component: ContribuablesBudgetairesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
       },
       /*{
         path: '**',

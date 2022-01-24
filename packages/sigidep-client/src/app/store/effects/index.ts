@@ -13,6 +13,7 @@ import { ReferencePhysicalUnitsEffects } from '@effects/reference-physical-units
 import { ContribuablesEffects } from '@effects/contribuables.effects';
 import { BanksAgencesEffects } from '@effects/banks-agences.effects';
 import { RegimesEffects } from '@effects/regimes.effects';
+import { ContribuablesBudgetairesEffects } from './contribuables-budgetaires.effects';
 
 export const Effects = [
   AuthEffects,
@@ -30,4 +31,5 @@ export const Effects = [
   ContribuablesEffects,
   BanksAgencesEffects,
   RegimesEffects,
+  ContribuablesBudgetairesEffects
 ];
