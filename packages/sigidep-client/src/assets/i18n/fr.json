@@ -48,7 +48,8 @@
     "monthlyBreakdown": "Ventilation mensuelle",
     "quarterlyBreakdown": "Ventilation trimestrielle",
     "halfYearlyBreakdown": "Ventilation semestrielle",
-    "program": "Programmer"
+    "program": "Programmer",
+    "assign": "Affecter"
   },
   "install": {
     "title": "Installation"
@@ -201,7 +202,10 @@
     "nomAgentRetrait": "Nom Agent Retrait",
     "numCniAgentRetrait": "CNI Agent Retrait",
     "dateDelivranceCni": "Date Délivrance CNI",
-    "lieuDelivranceCni": "Lieu Délivrance CNI"
+    "lieuDelivranceCni": "Lieu Délivrance CNI",
+    "carnet": "Carnet",
+    "affectation": "Affectation",
+    "isAssign": "Affecter?"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -468,7 +472,8 @@
       "nomAgentRetrait": "Nom Agent Retrait",
       "numCniAgentRetrait": "CNI Agent Retrait",
       "dateDelivranceCni": "Date Délivrance CNI",
-      "lieuDelivranceCni": "Lieu Délivrance CNI"
+      "lieuDelivranceCni": "Lieu Délivrance CNI",
+      "exercice": "Exercice"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -513,7 +518,8 @@
       "editSousRubrique": "Editer une sous-rubrique",
       "editCategorie": "Editer une catégorie",
       "editGrade": "Editer une grade",
-      "editCarnet": "Editer un carnet"
+      "editCarnet": "Editer un carnet",
+      "assignCarnet": "Affecter le carnet {{code}}"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

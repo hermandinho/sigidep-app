@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
-import { AgentEntity, BaseEntity } from '.';
+import { AgentEntity, BaseEntity, ExerciseEntity } from '.';
 
 @Entity({
   name: 'carnets_mandats',
@@ -46,6 +46,13 @@ export class CarnetMandatEntity extends BaseEntity {
 
   @Column({ name: 'lieu_delivrance_cni', nullable: true })
   public lieuDelivranceCni: string;
+
+  @ManyToOne(() => ExerciseEntity, (object) => object.id, {
+    cascade: true,
+    eager: false,
+  })
+  @JoinColumn({ name: 'service_id' })
+  public exercice: ExerciseEntity;
 
   /** TO ADD LATER WHEN MANDAT WILL BE AVAILABLE 
   @OneToMany(() => Mandat, (mandat) => mandat.carnet)

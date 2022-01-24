@@ -25,6 +25,7 @@ export class CarnetMandatService {
     return this.repository
       .createQueryBuilder('carnet')
       .leftJoinAndSelect('carnet.gestionnaire', 'gest')
+      .leftJoinAndSelect('carnet.exercice', 'exercice')
       .getMany();
   }
 
