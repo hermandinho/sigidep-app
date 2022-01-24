@@ -1,0 +1,158 @@
+<div class="container">
+  <form class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{
+            "labels.numeroContribuableBugetaire" | translate
+          }}</label>
+          <input
+            class=""
+            type="text"
+            pInputText
+            [placeholder]="'labels.numeroContribuableBugetaire' | translate"
+            formControlName="code"
+          />
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{ "labels.exercise" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="exercicesInprogressList"
+            formControlName="exercice"
+            optionLabel="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>
+                  {{ option.code }} / {{ option.startDate }} -
+                  {{ option.endDate }}
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>
+                  {{ option.code }} / {{ option.startDate }} -
+                  {{ option.endDate }}
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{
+            "labels.raisonSociale" | translate
+          }}</label>
+          <input
+            class=""
+            type="text"
+            pInputText
+            [placeholder]="'labels.raisonSociale' | translate"
+            formControlName="raisonSociale"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-6 p-md-6">
+        <div class="p-field">
+          <label class="required">{{ "labels.bank" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="banksList"
+            formControlName="banque"
+            optionLabel="label"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code }} - {{ option.label }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code }} - {{ option.label }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-field p-col-6 p-md-6">
+        <div class="p-field">
+          <label class="required">{{ "labels.agence" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="agencesList"
+            formControlName="agence"
+            optionLabel="label"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code }} - {{ option.label }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code }} - {{ option.label }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-6 p-md-12">
+        <div class="p-field">
+          <label class="required">{{
+            "labels.numeroCompte" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            number
+            formControlName="numeroCompte"
+            [placeholder]="'00000000000'"
+          />
+        </div>
+      </div>
+
+      <div class="p-field p-col-6 p-md-12">
+        <div class="p-field">
+          <label class="required">{{ "labels.cle" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            number
+            formControlName="cle"
+            [placeholder]="'00'"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

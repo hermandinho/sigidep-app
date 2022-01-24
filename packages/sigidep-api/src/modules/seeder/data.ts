@@ -54,6 +54,13 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.PARAGRAPHS),
   ...simpleCrudGenerator(C.STRUCTURE, ['create', 'read', 'delete']),
   ...simpleCrudGenerator(C.ROLES),
+  {
+    context: C.ROLES,
+    label: 'permissions.manage',
+    description: 'permissions.manage',
+  },
+  ...simpleCrudGenerator(C.ADMINISTRATIVE_UNITS),
+  ...simpleCrudGenerator(C.REFERENCE_PHYSICAL_UNITS),
   ...simpleCrudGenerator(C.SUB_PROGRAMS),
   ...simpleCrudGenerator(C.CONTRIBUABLES),
   ...simpleCrudGenerator(C.REGIMES),
@@ -62,13 +69,6 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.SOUS_RUBRIQUES),
   ...simpleCrudGenerator(C.ARTICLES),
   ...simpleCrudGenerator(C.CARNET_MANDATS),
-  {
-    context: C.ROLES,
-    label: 'permissions.manage',
-    description: 'permissions.manage',
-  },
-  ...simpleCrudGenerator(C.ADMINISTRATIVE_UNITS),
-  ...simpleCrudGenerator(C.REFERENCE_PHYSICAL_UNITS),
 ];
 
 export const FINANCIAL_SOURCES_DATA: Partial<FinancialSourceEntity>[] = [
@@ -5428,7 +5428,7 @@ export const CONTRIBUABLES_DATA: Partial<ContribuableEntity>[] = [
     localisation: 'YDE',
     quartier: 'BRIQUETERIE',
     raisonSociale: 'CAMSU SARL',
-    regimeFiscal: new RegimeFiscalEntity(2, 'SIMPLIFIE', 'REGIME SIMPLIFIE'),
+    regimeFiscal: new RegimeFiscalEntity(2, 'SIMPLIFIEBX', 'REGIME SIMPLIFIE'),
     secteurActivite: 'Energie',
     siege: 'YDE',
     ville: 'YDE2',
@@ -5443,7 +5443,7 @@ export const CONTRIBUABLES_DATA: Partial<ContribuableEntity>[] = [
     localisation: 'DLA',
     quartier: 'PORT',
     raisonSociale: 'MUMA SARL',
-    regimeFiscal: new RegimeFiscalEntity(1, 'REEL', 'REGIME REEL'),
+    regimeFiscal: new RegimeFiscalEntity(1, 'REELBX', 'REGIME REEL'),
     secteurActivite: 'Alimentation',
     siege: 'DLA',
     ville: 'DLA',

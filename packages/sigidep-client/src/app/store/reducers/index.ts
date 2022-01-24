@@ -14,6 +14,7 @@ import * as fromSubPrograms from './sub-programs.reducer';
 import * as fromAddresses from './addresses.reducer';
 import * as fromRefPhysicalUnits from './reference-physical-units.reducer';
 import * as fromContribuables from './contribuables.reducer';
+import * as fromContribuablesBudgetaires from './contribuables-budgetaires.reducer';
 
 import * as fromBanksAgences from './banks-agences.reducers';
 import * as fromRegimes from './regimes.reducer';
@@ -48,6 +49,7 @@ export interface AppState {
   rubriques: fromRubriques.State;
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
+  contribuablesBudgetaires: fromContribuablesBudgetaires.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -73,6 +75,7 @@ export const reducers: ActionReducerMap<AppState> = {
   rubriques: fromRubriques.reducer,
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
+  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

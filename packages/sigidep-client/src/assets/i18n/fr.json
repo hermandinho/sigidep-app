@@ -27,7 +27,8 @@
     "banksAgences": "Banques et Agences",
     "agents": "Agents",
     "mercuriales": "Mercuriale",
-    "carnetsMandats": "Carnets Mandats"
+    "carnetsMandats": "Carnets Mandats",
+    "contribuablesBudgetaires": "Contribuables Budgetaires"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -151,6 +152,7 @@
     "ville": "Ville",
     "quartier": "Quartier",
     "codeAgence": "Code Agence",
+    "agence": "Agence",
     "localisation": "Localisation",
     "siege": "Siège",
     "adresse": "adresse",
@@ -201,7 +203,10 @@
     "nomAgentRetrait": "Nom Agent Retrait",
     "numCniAgentRetrait": "CNI Agent Retrait",
     "dateDelivranceCni": "Date Délivrance CNI",
-    "lieuDelivranceCni": "Lieu Délivrance CNI"
+    "lieuDelivranceCni": "Lieu Délivrance CNI",
+    "adresse": "Adresse",
+    "bank": "Banque",
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -369,7 +374,8 @@
     "grades": "Grades",
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
-    "categories-agents": "Catégories"
+    "categories-agents": "Catégories",
+    "contribuablesbudgetaires": "contribuables budgetaires"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -468,7 +474,8 @@
       "nomAgentRetrait": "Nom Agent Retrait",
       "numCniAgentRetrait": "CNI Agent Retrait",
       "dateDelivranceCni": "Date Délivrance CNI",
-      "lieuDelivranceCni": "Lieu Délivrance CNI"
+      "lieuDelivranceCni": "Lieu Délivrance CNI",
+      "bankAgence": "banque (Agence)"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -513,7 +520,9 @@
       "editSousRubrique": "Editer une sous-rubrique",
       "editCategorie": "Editer une catégorie",
       "editGrade": "Editer une grade",
-      "editCarnet": "Editer un carnet"
+      "editCarnet": "Editer un carnet",
+      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
+      "editContribuableBudgetaire" : "Mettre à jour un contribuable budgetaire"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

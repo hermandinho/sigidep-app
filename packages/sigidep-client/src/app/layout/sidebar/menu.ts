@@ -157,6 +157,27 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           state: {
             permissions: [...MenuPermissions.carnetsMandats],
           },
+
+          
+        },
+
+        {
+          routerLink: 'banks-agences',
+          icon: 'pi pi-wallet',
+          label: translate.instant('sidebar.banksAgences'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
+        },
+        {
+          routerLink: 'contribuables-budgetaires',
+          icon: 'pi pi-wallet',
+          label: translate.instant('sidebar.contribuablesBudgetaires'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
         },
       ],
     },
@@ -224,15 +245,6 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
         },
       ],
-    },
-    {
-      routerLink: 'banks-agences',
-      icon: 'pi pi-wallet',
-      label: translate.instant('sidebar.banksAgences'),
-      routerLinkActiveOptions: { exact: true },
-      state: {
-        permissions: [],
-      },
     },
     {
       routerLink: 'roles',

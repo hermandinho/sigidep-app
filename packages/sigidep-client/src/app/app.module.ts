@@ -1,3 +1,4 @@
+import { ContribuablesBudgetairesModule } from './pages/contribuables-budgetaires/contribuables-budgetaires.module';
 import { BanksAgencesModule } from './pages/banks-agences/banks-agences.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -93,6 +94,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CarnetsModule,
     GradesModule,
     CategoriesAgentsModule,
+    ContribuablesBudgetairesModule
   ],
   providers: [
     AppInstallCheckGuard,
