@@ -19,7 +19,6 @@ import {
 } from '@reducers/banks-agences.reducers';
 
 import { map } from 'rxjs/operators';
-import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
 
 @Component({
   selector: 'app-create-contribuable-form',

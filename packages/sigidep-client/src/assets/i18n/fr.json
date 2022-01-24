@@ -25,7 +25,10 @@
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
-    "contribuablesBudgetaires": "contribuables Budgetaires"
+    "contribuablesBudgetaires": "contribuables Budgetaires",
+    "agents": "Agents",
+    "mercuriales": "Mercuriale",
+    "carnetsMandats": "Carnets Mandats"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -154,7 +157,54 @@
     "siege": "Siège",
     "adresse": "Adresse",
     "bank": "Banque",
-    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire",
+    "matricule": "Matricule",
+    "nom": "Nom",
+    "prenom": "Prenom",
+    "dateNaissance": "Date Naiss.",
+    "lieuNaissance": "Lieu Naiss.",
+    "refActeRecrutement": "Réf. Acte Recrut.",
+    "dateRecrutement": "Date Recrut.",
+    "signataireActeRecrutement": "Sign. Acte Recrut.",
+    "structureRattach": "Structure Rattach.",
+    "serviceRattach": "Service Rattach.",
+    "refActeAffectation": "Ref. Acte Affectation",
+    "dateSignAffectation": "Date Sign. Affectation",
+    "signataireActeAffectation": "Signataire Acte Affect.",
+    "posteTravail": "Poste Travail",
+    "fonction": "Fonction",
+    "refActeNomination": "Ref. Acte Nomination",
+    "dateNomination": "Ref. Acte Nomination",
+    "signataireNomination": "Signataire Nomin.",
+    "echelon": "Echelon",
+    "indice": "Indice",
+    "dateSignNomination": "Date Sign. Nomin.",
+    "signataireActeNomination": "Signataire Acte Nomin",
+    "grade": "Grade",
+    "categorie": "Categorie",
+    "infoPersonnel": "Info Personnelle",
+    "infoAffectation": "Info Affectation",
+    "infoNomination": "Info Nomination",
+    "infoRecrutement": "Info Recrutement",
+    "infoPoste": "Info Poste Actuel",
+    "infoStatus": "Info Status",
+    "rubrique": "Rubrique",
+    "sousRubrique": "Sous Rubrique",
+    "designation": "Désignation",
+    "conditionnement": "Conditionnement",
+    "prix": "Prix(FCFA)",
+    "serie": "Numéro de série",
+    "numero": "Numéro",
+    "premierFeuillet": "Premier Feuillet",
+    "dernierFeuillet": "Dernier Feuillet",
+    "gestionnaire": "Gestionnaire",
+    "dateAffectation": "Date Affectation",
+    "dateRetrait": "Date Retrait",
+    "matAgentRetrait": "Mat. Agent Retrait",
+    "nomAgentRetrait": "Nom Agent Retrait",
+    "numCniAgentRetrait": "CNI Agent Retrait",
+    "dateDelivranceCni": "Date Délivrance CNI",
+    "lieuDelivranceCni": "Lieu Délivrance CNI"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -216,6 +266,10 @@
     "contribuables": {
       "delete": "Une erreur est survenue lors de la suppression de ce contribuable.",
       "conflict": "Un Contribuable avec ce code existe déjà."
+    },
+    "agents": {
+      "delete": "Une erreur est survenue lors de la suppression de cet agent.",
+      "conflict": "Un agent avec ce code existe déjà."
     }
   },
   "messages": {
@@ -259,6 +313,37 @@
     "contribuables": {
       "deleteSuccess": "Contribuable supprimé avec succès.",
       "createSuccess": "Contribuable crée avec succès."
+    },
+    "agents": {
+      "deleteSuccess": "Agent supprimé avec succès.",
+      "createSuccess": "Agent crée avec succès."
+    },
+    "articles": {
+      "deleteSuccess": "Article supprimé avec succès.",
+      "createSuccess": "Article crée avec succès."
+    },
+    "rubriques": {
+      "deleteSuccess": "Rubrique supprimée avec succès.",
+      "createSuccess": "Rubrique créée avec succès."
+    },
+    "sousRubriques": {
+      "deleteSuccess": "Sous-rubrique supprimée avec succès.",
+      "createSuccess": "Sous-rubrique créée avec succès."
+    },
+    "grades": {
+      "deleteSuccess": "Grade supprimée avec succès.",
+      "createSuccess": "Grade créee avec succès.",
+      "updateSuccess": "Grade modifiée avec succès."
+    },
+    "categories": {
+      "deleteSuccess": "Catégorie supprimée avec succès.",
+      "createSuccess": "Catégorie créee avec succès.",
+      "updateSuccess": "Catégorie modifiée avec succès."
+    },
+    "carnets": {
+      "deleteSuccess": "Carnet supprimé avec succès.",
+      "createSuccess": "Carnet créé avec succès.",
+      "updateSuccess": "Carnet modifié avec succès."
     }
   },
   "menus": {
@@ -280,7 +365,15 @@
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
     "banksagences": "Banques et Agences",
-    "contribuablesbudgetaires": "contribuables budgetaires"
+    "contribuablesbudgetaires": "contribuables budgetaires",
+    "agents": "Agents",
+    "articles": "Articles",
+    "rubriques": "Rubriques",
+    "sous-rubriques": "Sous Rubriques",
+    "grades": "Grades",
+    "categories": "Catégories",
+    "carnets": "Carnets de Mandats",
+    "categories-agents": "Catégories"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -290,7 +383,14 @@
       "administrativeUnits": "Unités administratives",
       "technicalSupervisions": "Tutelle Techniques",
       "paragraphs": "Paragraphes",
-      "contribuables": "Liste des contribuables"
+      "contribuables": "Liste des contribuables",
+      "agents": "Liste des agents",
+      "rubriques": "Rubriques",
+      "articles": "Articles",
+      "sousRubriques": "Sous Rubriques",
+      "grades": "Grades",
+      "categories": "Catégories",
+      "carnetsMandats": "Carnets de Mandats"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -331,7 +431,49 @@
       "contact": "Contact",
       "ville": "Ville",
       "quartier": "Quartier",
-      "bankAgence": "banque (Agence)"
+      "bankAgence": "banque (Agence)",
+      "matricule": "Matricule",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "dateNaissance": "Date Naiss.",
+      "lieuNaissance": "Lieu Naiss.",
+      "refActeRecrutement": "Réf. Acte Recrut.",
+      "dateRecrutement": "Date Recrut.",
+      "signataireActeRecrutement": "Sign. Acte Recrut.",
+      "structureRattach": "Structure Rattach.",
+      "serviceRattach": "Service Rattach.",
+      "refActeAffectation": "Ref. Acte Affectation",
+      "dateSignAffectation": "Date Sign. Affectation",
+      "signataireActeAffectation": "Signataire Acte Affect.",
+      "posteTravail": "Poste Travail",
+      "fonction": "Fonction",
+      "refActeNomination": "Ref. Acte Nomination",
+      "dateNomination": "Ref. Acte Nomination",
+      "signataireNomination": "Signataire Nomin.",
+      "echelon": "Echelon",
+      "indice": "Indice",
+      "dateSignNomination": "Date Sign. Nomin.",
+      "signataireActeNomination": "Signataire Acte Nomin",
+      "grade": "Grade",
+      "categorie": "Categorie",
+      "nomComplet": "Nom Complet",
+      "rubrique": "Rubrique",
+      "sousRubrique": "Sous Rubrique",
+      "designation": "Désignation",
+      "conditionnement": "Conditionnement",
+      "prix": "Prix(FCFA)",
+      "codeComplet": "Référence Mercuriale",
+      "numero": "Numéro",
+      "premierFeuillet": "Premier Feuillet",
+      "dernierFeuillet": "Dernier Feuillet",
+      "gestionnaire": "Gestionnaire",
+      "dateAffectation": "Date Affectation",
+      "dateRetrait": "Date Retrait",
+      "matAgentRetrait": "Mat. Agent Retrait",
+      "nomAgentRetrait": "Nom Agent Retrait",
+      "numCniAgentRetrait": "CNI Agent Retrait",
+      "dateDelivranceCni": "Date Délivrance CNI",
+      "lieuDelivranceCni": "Lieu Délivrance CNI"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -371,7 +513,14 @@
       "createAgenceBank": "Create une agence de banque",
       "editAgenceBank": "Modifier une agence de banque",
       "createContribuableBudgetaire": "Creer un contribuable budgetaire",
-      "editContribuableBudgetaire" : "Mettre à jour un contribuable budgetaire"
+      "editContribuableBudgetaire" : "Mettre à jour un contribuable budgetaire",
+      "editAgent": "Editer un agent",
+      "editArticle": "Editer un article",
+      "editRubrique": "Editer une rubrique",
+      "editSousRubrique": "Editer une sous-rubrique",
+      "editCategorie": "Editer une catégorie",
+      "editGrade": "Editer une grade",
+      "editCarnet": "Editer un carnet"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -382,7 +531,11 @@
       "deleteTechnicalAdvisor": "Voulez-vous vraiment supprimer cette tutelle technique? Cette action est irréversible.",
       "deleteParagraph": "Voulez-vous vraiment supprimer ce paragraphe? Cette action est irréversible.",
       "deleteSubProgram": "Voulez-vous vraiment supprimer ce sous program? Cette action est irréversible.",
-      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible."
+      "deleteContribuable": "Voulez-vous vraiment supprimer ce contribuable? Cette action est irréversible.",
+      "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible.",
+      "deleteGrade": "Voulez-vous vraiment supprimer cette grade? Cette action est irréversible.",
+      "deleteCategorie": "Voulez-vous vraiment supprimer cette catégorie? Cette action est irréversible.",
+      "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

@@ -20,6 +20,11 @@ import { ContribuablesModule } from '@modules/contribuables/contribuables.module
 import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module';
 import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
 import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
+import { AgentsModule } from '@modules/agents/agents.module';
+import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
+import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
+import { GradesModule } from '@modules/grades/grades.module';
+import { CategoriesAgentsModule } from '@modules/categories-agents/categories-agents.module';
 
 @Module({
   imports: [
@@ -94,6 +99,11 @@ import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetai
     BanksAgencesModule,
     RegimeFiscalModule,
     ContribuablesBudgetairesModule,
+    AgentsModule,
+    MercurialeModule,
+    CarnetMandatModule,
+    GradesModule,
+    CategoriesAgentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -32,6 +32,14 @@ import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/re
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
+import { AgentsModule } from '@pages/agents/agents.module';
+import { ArticlesModule } from '@pages/mercuriales/articles/articles.module';
+import { RubriquesModule } from '@pages/mercuriales/rubrique/rubriques.module';
+import { SousRubriquesModule } from '@pages/mercuriales/sous-rubrique/sous-rubriques.module';
+import { CarnetsModule } from '@pages/carnets/carnets.module';
+import { GradesModule } from '@pages/grades/grades.module';
+import { CategoriesAgentsModule } from '@pages/categories-agents/categories-agents.module';
+
 registerLocaleData(localeFr);
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -79,7 +87,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
     BanksAgencesModule,
-    ContribuablesBudgetairesModule
+    ContribuablesBudgetairesModule,
+    AgentsModule,
+    ArticlesModule,
+    RubriquesModule,
+    SousRubriquesModule,
+    CarnetsModule,
+    GradesModule,
+    CategoriesAgentsModule,
   ],
   providers: [
     AppInstallCheckGuard,

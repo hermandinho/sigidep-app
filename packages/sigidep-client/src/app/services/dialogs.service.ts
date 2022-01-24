@@ -17,11 +17,15 @@ import {
   BankModel,
   AgenceModel,
   SubProgramActionModel,
+  ContribuableModel,
+  AgentModel,
+  ArticleModel,
+  RubriqueModel,
+  SousRubriqueModel,
+  CarnetMandatModel,
+  GradeModel,
+  CategorieAgentModel,
 } from '@models/index';
-import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
-import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
-import { ContribuableModel } from '@models/contribuable.model';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -44,6 +48,13 @@ export class DialogsService {
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
   private contribuableBudgetaireCreateComponent: any;
+  private agentCreateComponent: any;
+  private articleCreateComponent: any;
+  private rubriqueCreateComponent: any;
+  private sousRubriqueCreateComponent: any;
+  private carnetCreateComponent: any;
+  private gradeCreateComponent: any;
+  private categorieAgentCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -404,7 +415,7 @@ export class DialogsService {
 
     return this._dialogService.open(this.contribuableCreateComponent, {
       header: this._translateService.instant(
-        'dialogs.headers.' + (item ? 'editContribuable' : 'createContribuable')
+        'dialogs.headers.editContribuable'
       ),
       width: '50vw',
       height: 'auto',
@@ -471,14 +482,155 @@ export class DialogsService {
       const { CreateContribuableBudgetaireFormComponent } = await import(
         '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
       );
-      this.contribuableBudgetaireCreateComponent = CreateContribuableBudgetaireFormComponent;
+      this.contribuableBudgetaireCreateComponent =
+        CreateContribuableBudgetaireFormComponent;
     }
 
-    return this._dialogService.open(this.contribuableBudgetaireCreateComponent, {
+    return this._dialogService.open(
+      this.contribuableBudgetaireCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item
+              ? 'editContribuableBudgetaire'
+              : 'createContribuableBudgetaire')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+        },
+      }
+    );
+  }
+  public async launchAgentsCreateDialog(item?: AgentModel): Promise<any> {
+    if (!this.agentCreateComponent) {
+      const { CreateAgentFormComponent } = await import(
+        '@components/create-agent-form/create-agent-form.component'
+      );
+      this.agentCreateComponent = CreateAgentFormComponent;
+    }
+
+    return this._dialogService.open(this.agentCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editAgent'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchArticleCreateDialog(item?: ArticleModel): Promise<any> {
+    if (!this.articleCreateComponent) {
+      const { CreateArticleFormComponent } = await import(
+        '@components/create-article-form/create-article-form.component'
+      );
+      this.articleCreateComponent = CreateArticleFormComponent;
+    }
+    return this._dialogService.open(this.articleCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editArticle'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchRubriqueCreateDialog(item?: RubriqueModel): Promise<any> {
+    if (!this.rubriqueCreateComponent) {
+      const { CreateRubriqueFormComponent } = await import(
+        '@components/create-rubrique-form/create-rubrique-form.component'
+      );
+      this.rubriqueCreateComponent = CreateRubriqueFormComponent;
+    }
+    return this._dialogService.open(this.rubriqueCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editRubrique'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchSousRubriqueCreateDialog(
+    item?: SousRubriqueModel
+  ): Promise<any> {
+    if (!this.sousRubriqueCreateComponent) {
+      const { CreateSousRubriqueFormComponent } = await import(
+        '@components/create-sous-rubrique-form/create-sous-rubrique-form.component'
+      );
+      this.sousRubriqueCreateComponent = CreateSousRubriqueFormComponent;
+    }
+    return this._dialogService.open(this.sousRubriqueCreateComponent, {
       header: this._translateService.instant(
-        'dialogs.headers.' + (item ? 'editContribuableBudgetaire' : 'createContribuableBudgetaire')
+        'dialogs.headers.editSousRubrique'
       ),
-      width: '70vw',
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchCarnetCreateDialog(
+    item?: CarnetMandatModel
+  ): Promise<any> {
+    if (!this.sousRubriqueCreateComponent) {
+      const { CreateCarnetFormComponent } = await import(
+        '@components/create-carnet-form/create-carnet-form.component'
+      );
+      this.carnetCreateComponent = CreateCarnetFormComponent;
+    }
+    return this._dialogService.open(this.carnetCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editCarnet'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchGradeCreateDialog(item?: GradeModel): Promise<any> {
+    if (!this.gradeCreateComponent) {
+      const { CreateGradeFormComponent } = await import(
+        '@components/create-grade-form/create-grade-form.component'
+      );
+      this.gradeCreateComponent = CreateGradeFormComponent;
+    }
+    return this._dialogService.open(this.gradeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editGrade'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchCategorieAgentCreateDialog(
+    item?: CategorieAgentModel
+  ): Promise<any> {
+    if (!this.categorieAgentCreateComponent) {
+      const { CategorieAgentFormComponent } = await import(
+        '@components/categorie-agent-form/categorie-agent-form.component'
+      );
+      this.categorieAgentCreateComponent = CategorieAgentFormComponent;
+    }
+    return this._dialogService.open(this.categorieAgentCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editCategorie'),
+      width: '50vw',
       height: 'auto',
       modal: true,
       data: {
