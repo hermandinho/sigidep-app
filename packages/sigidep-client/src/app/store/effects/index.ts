@@ -10,6 +10,16 @@ import { ParagraphEffects } from '@effects/paragraph.effects';
 import { SubProgramsEffects } from '@effects/sub-programs.effects';
 import { AddressesEffects } from '@effects/addresses.effects';
 import { ReferencePhysicalUnitsEffects } from '@effects/reference-physical-units.effects';
+import { ContribuablesEffects } from '@effects/contribuables.effects';
+import { BanksAgencesEffects } from '@effects/banks-agences.effects';
+import { RegimesEffects } from '@effects/regimes.effects';
+import { AgentsEffects } from './agents.effects';
+import { GradesEffects } from './grades.effects';
+import { CategoriesAgntsEffects } from './categories-agents.effects';
+import { ArticlesEffects } from './articles.effects';
+import { SousRubriquesEffects } from './sous-rubriques.effects';
+import { RubriquesEffects } from './rubriques.effects';
+import { CarnetsMandatsEffects } from './carnets-mandats.effects';
 
 export const Effects = [
   AuthEffects,
@@ -24,4 +34,14 @@ export const Effects = [
   SubProgramsEffects,
   AddressesEffects,
   ReferencePhysicalUnitsEffects,
+  ContribuablesEffects,
+  BanksAgencesEffects,
+  RegimesEffects,
+  AgentsEffects,
+  GradesEffects,
+  CategoriesAgntsEffects,
+  ArticlesEffects,
+  SousRubriquesEffects,
+  RubriquesEffects,
+  CarnetsMandatsEffects,
 ];

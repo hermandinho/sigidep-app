@@ -1,3 +1,4 @@
+import { BanksAgencesModule } from './pages/banks-agences/banks-agences.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -29,6 +30,15 @@ import { SubProgramsModule } from '@pages/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/reference-physical-units.module';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
+import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
+import { AgentsModule } from '@pages/agents/agents.module';
+import { ArticlesModule } from '@pages/mercuriales/articles/articles.module';
+import { RubriquesModule } from '@pages/mercuriales/rubrique/rubriques.module';
+import { SousRubriquesModule } from '@pages/mercuriales/sous-rubrique/sous-rubriques.module';
+import { CarnetsModule } from '@pages/carnets/carnets.module';
+import { GradesModule } from '@pages/grades/grades.module';
+import { CategoriesAgentsModule } from '@pages/categories-agents/categories-agents.module';
+
 registerLocaleData(localeFr);
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -74,6 +84,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     ParagraphsModule,
     SubProgramsModule,
     ReferencePhysicalUnitsModule,
+    ContribuablesModule,
+    BanksAgencesModule,
+    AgentsModule,
+    ArticlesModule,
+    RubriquesModule,
+    SousRubriquesModule,
+    CarnetsModule,
+    GradesModule,
+    CategoriesAgentsModule,
   ],
   providers: [
     AppInstallCheckGuard,
@@ -82,5 +101,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     { provide: LOCALE_ID, useValue: 'fr-FR' },
   ],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}

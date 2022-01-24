@@ -1,0 +1,18 @@
+p-blockui {
+  &::ng-deep {
+    .p-blockui {
+      z-index: 1000;
+    }
+  }
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  i {
+    font-size: 6rem;
+  }
+}

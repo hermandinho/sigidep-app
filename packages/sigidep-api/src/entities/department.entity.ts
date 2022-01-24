@@ -7,15 +7,17 @@ import { ArrondissementEntity } from './arrondissement.entity';
   name: 'departments',
   orderBy: {
     code: 'ASC',
-    label: 'ASC',
   },
 })
 export class DepartmentEntity extends BaseEntity {
   @Column({ name: 'code', nullable: true })
   public code?: string;
 
-  @Column({ name: 'label', nullable: false })
-  public label: string;
+  @Column({ name: 'label_fr', nullable: false })
+  public labelFr: string;
+
+  @Column({ name: 'label_en', nullable: false })
+  public labelEn: string;
 
   @ManyToOne(() => RegionEntity, (object) => object.departments, {
     eager: false,

@@ -7,7 +7,7 @@ p-table {
         & > tr {
           &:hover {
             .action {
-              visibility: visible;
+              opacity: 1;
             }
           }
           & > td {
@@ -15,37 +15,38 @@ p-table {
           }
         }
 
-        /*tr {
-         &:hover {
-           .action {
-             visibility: visible;
-           }
-         }
-       }*/
-
         .action {
-          visibility: hidden;
+          opacity: 0;
         }
       }
     }
-  }
-}
-td {
-  &.paragraph {
-    span {
-      color: var(--ah-success);
-      -webkit-text-stroke-width: 2px;
-      .pi-plus {
-        margin-right: 0.5rem;
+    td {
+      &.paragraph {
+        span {
+          color: var(--ah-success);
+          -webkit-text-stroke-width: 2px;
+          .pi-plus {
+            margin-right: 0.5rem;
+          }
+        }
       }
-    }
-  }
-  &.activity {
-    span {
-      color: var(--ah-blue-200);
-      -webkit-text-stroke-width: 2px;
-      .pi-plus {
-        margin-right: 0.5rem;
+      &.action-item {
+        span {
+          color: var(--ah-primary-hover);
+          -webkit-text-stroke-width: 2px;
+          .pi-plus {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+      &.activity {
+        span {
+          color: var(--ah-blue-200);
+          -webkit-text-stroke-width: 2px;
+          .pi-plus {
+            margin-right: 0.5rem;
+          }
+        }
       }
     }
   }

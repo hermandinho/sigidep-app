@@ -4,9 +4,13 @@ import { RoleEntity } from '@entities/role.entity';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import {
+  CATEGORIES_AGENTS_DATA,
   CATEGORIES_DATA,
+  CONTRIBUABLES_DATA,
   FINANCIAL_SOURCES_DATA,
+  GRADES_DATA,
   PERMISSIONS_DATA,
+  REGIMES_DATA,
   REGIONS_DATA,
   ROOT_ROLE,
   ROOT_USER,
@@ -20,6 +24,10 @@ import { RegionEntity } from '@entities/region.entity';
 import { SectorEntity } from '@entities/sector.entity';
 import { PrimaryFunctionsEntity } from '@entities/primary-functions.entity';
 import { SecondaryFunctionsEntity } from '@entities/secondary-functions.entity';
+import { ContribuableEntity } from '@entities/contribuable.entity';
+import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
+import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
+import { GradeEntity } from '@entities/grade.entity';
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -45,6 +53,16 @@ export class SeederService implements OnModuleInit {
     private readonly primaryFunctionsRepository: Repository<PrimaryFunctionsEntity>,
     @InjectRepository(SecondaryFunctionsEntity)
     private readonly secondaryFunctionsRepository: Repository<SecondaryFunctionsEntity>,
+    @InjectRepository(ContribuableEntity)
+    private readonly contribuableRepository: Repository<ContribuableEntity>,
+    @InjectRepository(RegimeFiscalEntity)
+    private readonly regimeFiscalRepository: Repository<RegimeFiscalEntity>,
+
+    @InjectRepository(CategorieAgentEntity)
+    private readonly categoriesAgentsRepository: Repository<CategorieAgentEntity>,
+
+    @InjectRepository(GradeEntity)
+    private readonly gradesRepository: Repository<GradeEntity>,
   ) {}
 
   private async _initRoot(): Promise<{ role: RoleEntity; user: UserEntity }> {
@@ -240,6 +258,69 @@ export class SeederService implements OnModuleInit {
     this.logger.warn(`Synced ${sFunctionsCount} secondary functions.`);
   }
 
+  private async _initContribuables(): Promise<void> {
+    let count = 0;
+
+    for (const source of CONTRIBUABLES_DATA) {
+      const check = await this.contribuableRepository.findOne(source, {
+        loadEagerRelations: false,
+      });
+      if (!check) {
+        await this.contribuableRepository.save(source);
+        count += 1;
+      }
+    }
+
+    this.logger.warn(`Synced ${count} contribubales`);
+  }
+
+  private async _initRegimesFiscaux(): Promise<void> {
+    let count = 0;
+
+    for (const source of REGIMES_DATA) {
+      const check = await this.regimeFiscalRepository.findOne(source, {
+        loadEagerRelations: false,
+      });
+      if (!check) {
+        await this.regimeFiscalRepository.save(source);
+        count += 1;
+      }
+    }
+
+    this.logger.warn(`Synced ${count} regimes fiscaux`);
+  }
+
+  private async _initCategoriesAgents(): Promise<void> {
+    let count = 0;
+
+    for (const source of CATEGORIES_AGENTS_DATA) {
+      const check = await this.categoriesAgentsRepository.findOne(source, {
+        loadEagerRelations: false,
+      });
+      if (!check) {
+        await this.categoriesAgentsRepository.save(source);
+        count += 1;
+      }
+    }
+    this.logger.warn(`Synced ${count} catégories agents`);
+  }
+
+  private async _initGrades(): Promise<void> {
+    let count = 0;
+
+    for (const source of GRADES_DATA) {
+      const check = await this.gradesRepository.findOne(source, {
+        loadEagerRelations: false,
+      });
+      if (!check) {
+        await this.gradesRepository.save(source);
+        count += 1;
+      }
+    }
+
+    this.logger.warn(`Synced ${count} grades`);
+  }
+
   async onModuleInit(): Promise<any> {
     const { role } = await this._initRoot();
     this._initPermissions(role);
@@ -247,5 +328,8 @@ export class SeederService implements OnModuleInit {
     this._initCategories();
     this._initLocations();
     this._initSectors();
+    this._initRegimesFiscaux();
+    this._initCategoriesAgents();
+    this._initGrades();
   }
 }

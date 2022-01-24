@@ -125,7 +125,7 @@
         >
           <ng-template let-option pTemplate="item">
             <div>
-              <div>{{ option?.formattedLabel }}</div>
+              <div>{{ option?.formattedLabel || option?.label }}</div>
             </div>
           </ng-template>
         </p-dropdown>

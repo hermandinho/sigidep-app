@@ -10,9 +10,17 @@ import { FinancialSourcesComponent } from '@pages/financial-sources/financial-so
 import { AdministrativeUnitsComponent } from '@pages/administrative-units/administrative-units.component';
 import { TechnicalSupervisorsComponent } from '@pages/technical-supervisors/technical-supervisors.component';
 import { ParagraphsComponent } from '@pages/paragraphs/paragraphs.component';
-import { SubProgramsComponent } from '@pages/sub-programs/sub-programs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ReferencePhysicalUnitsComponent } from '@pages/reference-physical-units/reference-physical-units.component';
+import { ContribuablesComponent } from '@pages/contribuables/contribuables.component';
+import { BanksAgencesComponent } from '@pages/banks-agences/banks-agences.component';
+import { AgentsComponent } from '@pages/agents/agents.component';
+import { ArticlesComponent } from '@pages/mercuriales/articles/articles.component';
+import { RubriqueComponent } from '@pages/mercuriales/rubrique/rubrique.component';
+import { SousRubriqueComponent } from '@pages/mercuriales/sous-rubrique/sous-rubrique.component';
+import { CarnetsComponent } from '@pages/carnets/carnets.component';
+import { GradesComponent } from '@pages/grades/grades.component';
+import { CategoriesAgentsComponent } from '@pages/categories-agents/categories-agents.component';
 
 const routes: Routes = [
   {
@@ -95,7 +103,8 @@ const routes: Routes = [
         data: {
           permissions: [...MenuPermissions.sub_programs],
         }
-      }*/ {
+      }*/
+      {
         path: 'sub-programs',
         canActivate: [AuthGuard],
         data: {
@@ -105,6 +114,78 @@ const routes: Routes = [
           import('../pages/sub-programs/sub-programs.module').then(
             (m) => m.SubProgramsModule
           ),
+      },
+      {
+        path: 'contribuables',
+        component: ContribuablesComponent,
+        canActivate: [AuthGuard, PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.contribuables],
+        },
+      },
+      {
+        path: 'banks-agences',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
+        component: BanksAgencesComponent,
+      },
+      {
+        path: 'agents',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.agents],
+        },
+        component: AgentsComponent,
+      },
+      {
+        path: 'articles',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.articles],
+        },
+        component: ArticlesComponent,
+      },
+      {
+        path: 'rubriques',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.articles],
+        },
+        component: RubriqueComponent,
+      },
+      {
+        path: 'sous-rubriques',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.articles],
+        },
+        component: SousRubriqueComponent,
+      },
+      {
+        path: 'carnets',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.carnetsMandats],
+        },
+        component: CarnetsComponent,
+      },
+      {
+        path: 'grades',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.agents],
+        },
+        component: GradesComponent,
+      },
+      {
+        path: 'categories-agents',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.agents],
+        },
+        component: CategoriesAgentsComponent,
       },
       /*{
         path: '**',

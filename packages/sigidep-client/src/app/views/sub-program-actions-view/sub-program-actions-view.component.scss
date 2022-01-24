@@ -1,0 +1,11 @@
+td {
+  &.activity {
+    span {
+      color: var(--ah-blue-200);
+      -webkit-text-stroke-width: 2px;
+      .pi-plus {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

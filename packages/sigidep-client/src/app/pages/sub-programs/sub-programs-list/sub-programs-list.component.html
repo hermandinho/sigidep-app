@@ -55,34 +55,18 @@
       </ng-template>
     </p-treeTable>-->
   <p-table
-    [value]="data"
-    dataKey="id"
     [paginator]="true"
-    [rows]="5"
     [rowsPerPageOptions]="tableRowsPerPageOptions"
+    [rows]="5"
+    [value]="data | orderBy: 'code'"
+    dataKey="id"
     responsiveLayout="stack"
   >
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 3rem"></th>
-        <!--        <th class="p-text-center" style="width: 3rem">{{ 'tables.headers.code' | translate }}</th>-->
         <th class="p-text-left">{{ "tables.headers.label" | translate }}</th>
-        <!--        <th class="p-text-center" style="width: 20%">
-          {{ "tables.headers.administrativeUnit" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.financialSource" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.yearN1" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.yearN2" | translate }}
-        </th>
-        <th class="p-text-center" style="width: 5rem">
-          {{ "tables.headers.yearN3" | translate }}
-        </th>-->
-        <th class="p-text-center" style="width: 15%"></th>
+        <th class="p-text-center" style="width: 25%"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -113,11 +97,11 @@
             currentLang === "fr" ? item.formattedLabelFr : item.formattedLabelEn
           }}
         </td>
-        <td>
+        <td class="p-d-flex p-jc-end">
           <button
-            (click)="addActivity(item)"
+            (click)="addAction(item)"
             *appCheckPermissions="['subPrograms.create']"
-            [pTooltip]="'hints.addActivity' | translate"
+            [pTooltip]="'hints.addAction' | translate"
             class="p-button-rounded p-button-success p-mr-2 action"
             icon="pi pi-plus"
             pButton
@@ -126,11 +110,24 @@
           ></button>
 
           <button
+            *appCheckPermissions="['subPrograms.update']"
+            [pTooltip]="'hints.edit' | translate"
+            [routerLink]="['/', 'sub-programs', item.id, 'edit']"
+            class="p-button-rounded p-button-info p-mr-2 action"
+            icon="pi pi-pencil"
+            pButton
+            pRipple
+            tooltipPosition="top"
+          ></button>
+
+          <button
             *appCheckPermissions="['subPrograms.delete']"
+            [pTooltip]="'hints.delete' | translate"
             class="p-button-rounded p-button-danger p-mr-2 action"
             icon="pi pi-trash"
             pButton
             pRipple
+            tooltipPosition="top"
           ></button>
         </td>
       </tr>
@@ -138,12 +135,12 @@
     <ng-template pTemplate="rowexpansion" let-item>
       <tr>
         <td [attr.colspan]="9">
-          <app-sub-program-activities-view
-            [activities]="item?.activities ?? []"
+          <app-sub-program-actions-view
             [subProgram]="item"
-          ></app-sub-program-activities-view>
+          ></app-sub-program-actions-view>
         </td>
       </tr>
     </ng-template>
   </p-table>
+  <p-toast [autoZIndex]="true" [preventDuplicates]="true"></p-toast>
 </p-card>

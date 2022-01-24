@@ -8,6 +8,7 @@ import {
   DepartmentModel,
   RegionsModel,
 } from '@models/addresses.model';
+import { StructureModel } from '@models/structure.model';
 
 class SubProgramBaseModel {
   id!: number;
@@ -20,6 +21,7 @@ class SubProgramBaseModel {
 }
 
 export class SubProgramObjectiveModel {
+  id!: number;
   index!: number;
   labelEn!: string;
   labelFr!: string;
@@ -47,9 +49,52 @@ export class SubProgramModel extends SubProgramBaseModel {
   indicatorsPaymentCreditN2!: number;
   indicatorsPaymentCreditN3!: number;
   objectives!: SubProgramObjectiveModel[];
-  activities!: SubProgramActivityModel[];
+  actions!: SubProgramActionModel[];
+  structure!: StructureModel;
+  strategies!: {
+    strategyFr: string;
+    strategyEn: string;
+  };
+  coordinator!: string;
+  owner!: string;
+  followUpOwner!: string;
+  startDate!: string;
+  endDate!: string;
 
   constructor(params?: Partial<SubProgramModel>) {
+    super();
+    if (params) {
+      Object.assign(this, params);
+    }
+  }
+
+  public get formattedLabelEn(): string {
+    return `${this.code} - ${this.labelEn}`;
+  }
+
+  public get formattedLabelFr(): string {
+    return `${this.code} - ${this.labelFr}`;
+  }
+}
+
+export class SubProgramActionModel extends SubProgramBaseModel {
+  objectivesFr!: string;
+  objectivesEn!: string;
+  indicatorsFr!: string;
+  indicatorsEn!: string;
+  verificationSourceFr!: string;
+  verificationSourceEn!: string;
+  referenceValue!: number;
+  referenceYear!: Date;
+  targetValue!: number;
+  targetYear!: Date;
+  measurementUnit!: string;
+  startDate!: Date;
+  endDate!: Date;
+  subProgram?: SubProgramModel;
+  activities?: SubProgramActivityModel[];
+
+  constructor(params?: Partial<SubProgramActionModel>) {
     super();
     if (params) {
       Object.assign(this, params);
@@ -81,6 +126,7 @@ export class SubProgramActivityModel extends SubProgramBaseModel {
   measurementUnit!: string;
   startDate!: Date;
   endDate!: Date;
+  action?: SubProgramActionModel;
   tasks?: SubProgramActivityTaskModel[];
 
   constructor(params?: Partial<SubProgramActivityModel>) {

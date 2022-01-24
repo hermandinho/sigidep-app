@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
   ValidationPipe,
@@ -17,6 +18,8 @@ import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-progra
 import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
 import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
 import { CreateSubProgramActivityTaskOperationDto } from '@modules/sub-programs/dto/create-sub-program-activity-task-operation.dto';
+import { CreateSubProgramActionDto } from '@modules/sub-programs/dto/create-sub-program-action.dto';
+import { EditSubProgramDto } from '@modules/sub-programs/dto/edit-sub-program.dto';
 
 @Controller('sub-programs')
 @ApiTags('Sub programs')
@@ -31,6 +34,12 @@ export class SubProgramsController {
     return this.services.filter();
   }
 
+  @Get('/:id')
+  @UseGuards(new PermissionsGuard(['subPrograms.read']))
+  public async findOne(@Param('id') id: number) {
+    return this.services.findOne(id);
+  }
+
   @Post('/')
   @UseGuards(new PermissionsGuard(['subPrograms.create']))
   public async create(
@@ -40,14 +49,35 @@ export class SubProgramsController {
     return this.services.create(payload, user);
   }
 
-  @Post('/:id/activity')
+  @Patch('/:id')
+  @UseGuards(new PermissionsGuard(['subPrograms.update']))
+  public async edit(
+    @Body(ValidationPipe) payload: EditSubProgramDto,
+    @GetCurrentUser() user: UserEntity,
+    @Param('id') id: number,
+  ) {
+    return this.services.editSp(id, payload, user);
+  }
+
+  @Post('/:id/action')
+  @UseGuards(new PermissionsGuard(['subPrograms.create']))
+  public async createAction(
+    @Param('id') id: number,
+    @Body(ValidationPipe) payload: CreateSubProgramActionDto,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    return this.services.createAction(id, payload, user);
+  }
+
+  @Post('/:id/action/:actionId')
   @UseGuards(new PermissionsGuard(['subPrograms.create']))
   public async createActivity(
     @Param('id') id: number,
+    @Param('actionId') actionId: number,
     @Body(ValidationPipe) payload: CreateSubProgramActivityDto,
     @GetCurrentUser() user: UserEntity,
   ) {
-    return this.services.createActivity(id, payload, user);
+    return this.services.createActivity(id, actionId, payload, user);
   }
 
   @Post('/:id/activity/:actId/task')
@@ -65,9 +95,15 @@ export class SubProgramsController {
   @UseGuards(new PermissionsGuard(['subPrograms.create']))
   public async createActivityTaskOperation(
     @Param('taskId') taskId: number,
+    @Param('actId') actId: number,
     @Body(ValidationPipe) payload: CreateSubProgramActivityTaskOperationDto,
     @GetCurrentUser() user: UserEntity,
   ) {
-    return this.services.createActivityTaskOperation(taskId, payload, user);
+    return this.services.createActivityTaskOperation(
+      taskId,
+      actId,
+      payload,
+      user,
+    );
   }
 }

@@ -4,13 +4,12 @@ import { UserEntity } from '@entities/user.entity';
 import { SubProgramEntity } from '@entities/sub-program.entity';
 import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
 import { SubProgramActivityTaskEntity } from '@entities/sub-program-activity-task.entity';
+import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
 
 @Entity({
   name: 'sub_program_activities',
   orderBy: {
-    code: 'ASC',
-    labelFr: 'ASC',
-    labelEn: 'ASC',
+    id: 'ASC',
   },
 })
 export class SubProgramActivityEntity extends BaseEntity {
@@ -82,12 +81,12 @@ export class SubProgramActivityEntity extends BaseEntity {
   @JoinColumn({ name: 'created_by' })
   createdBy?: UserEntity;
 
-  @ManyToOne(() => SubProgramEntity, (object) => object.activities, {
+  @ManyToOne(() => SubProgramActionEntity, (object) => object.activities, {
     onDelete: 'CASCADE',
     nullable: false,
   })
-  @JoinColumn({ name: 'sub_program_id' })
-  subProgram: SubProgramEntity;
+  @JoinColumn({ name: 'action_id' })
+  action: SubProgramActionEntity;
 
   @OneToMany(() => SubProgramActivityTaskEntity, (object) => object.activity)
   public tasks: SubProgramActivityTaskEntity[];

@@ -13,6 +13,17 @@ import * as fromApp from './app.reducer';
 import * as fromSubPrograms from './sub-programs.reducer';
 import * as fromAddresses from './addresses.reducer';
 import * as fromRefPhysicalUnits from './reference-physical-units.reducer';
+import * as fromContribuables from './contribuables.reducer';
+
+import * as fromBanksAgences from './banks-agences.reducers';
+import * as fromRegimes from './regimes.reducer';
+import * as fromAgents from './agents.reducer';
+import * as fromGrades from './grades.reducer';
+import * as fromCategoriesAgents from './categories-agents.reducer';
+import * as fromArticles from './articles.reducer';
+import * as fromRubriques from './rubriques.reducer';
+import * as fromSousRubriques from './sous-rubriques.reducer';
+import * as fromCarnetsMandats from './carnets-mandats.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -27,6 +38,16 @@ export interface AppState {
   subPrograms: fromSubPrograms.State;
   addresses: fromAddresses.State;
   refPhysicalUnits: fromRefPhysicalUnits.State;
+  contribuables: fromContribuables.State;
+  banksAgences: fromBanksAgences.State;
+  regimes: fromRegimes.State;
+  grades: fromGrades.State;
+  categoriesAgents: fromCategoriesAgents.State;
+  agents: fromAgents.State;
+  articles: fromArticles.State;
+  rubriques: fromRubriques.State;
+  sousRubriques: fromSousRubriques.State;
+  carnetsMandats: fromCarnetsMandats.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -42,6 +63,16 @@ export const reducers: ActionReducerMap<AppState> = {
   subPrograms: fromSubPrograms.reducer,
   addresses: fromAddresses.reducer,
   refPhysicalUnits: fromRefPhysicalUnits.reducer,
+  contribuables: fromContribuables.reducer,
+  banksAgences: fromBanksAgences.reducer,
+  regimes: fromRegimes.reducer,
+  grades: fromGrades.reducer,
+  categoriesAgents: fromCategoriesAgents.reducer,
+  agents: fromAgents.reducer,
+  articles: fromArticles.reducer,
+  rubriques: fromRubriques.reducer,
+  sousRubriques: fromSousRubriques.reducer,
+  carnetsMandats: fromCarnetsMandats.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

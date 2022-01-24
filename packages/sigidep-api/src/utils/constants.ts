@@ -14,6 +14,13 @@ export enum PermissionContextsEnum {
   FUNCTIONS = 'functions',
   SUB_PROGRAMS = 'subPrograms',
   REFERENCE_PHYSICAL_UNITS = 'referencePhysicalUnits',
+  CONTRIBUABLES = 'contribuables',
+  REGIMES = 'regimes',
+  AGENTS = 'agents',
+  ARTICLES = 'articles',
+  RUBRIQUES = 'rubriques',
+  SOUS_RUBRIQUES = 'sousRubriques',
+  CARNET_MANDATS = 'carnetsMandats',
 }
 
 export enum UserAccountStatusEnum {

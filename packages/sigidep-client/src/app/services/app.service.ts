@@ -34,6 +34,9 @@ export class AppService {
       summary: payload.summary?.includes('.')
         ? this.translateService.instant(payload.summary)
         : payload.summary,
+      // life: 100000000000000000,
+      // @ts-ignore
+      // baseZIndex: 9999999,
     });
   }
 

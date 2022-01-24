@@ -5,6 +5,8 @@ import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-progra
 import { ExerciseEntity } from '@entities/exercise.entity';
 import { StructureEntity } from '@entities/structure.entity';
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
+import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
+import { EditSubProgramDto } from '@modules/sub-programs/dto/edit-sub-program.dto';
 
 interface ISubProgramStrategy {
   labelFr: string;
@@ -32,9 +34,7 @@ interface ISubProgramObjective {
 @Entity({
   name: 'sub_programs',
   orderBy: {
-    code: 'ASC',
-    labelFr: 'ASC',
-    labelEn: 'ASC',
+    id: 'ASC',
   },
 })
 export class SubProgramEntity extends BaseEntity {
@@ -46,6 +46,15 @@ export class SubProgramEntity extends BaseEntity {
 
   @Column({ name: 'label_en', nullable: false })
   public labelEn: string;
+
+  @Column({ name: 'coordinator', nullable: true })
+  public coordinator: string;
+
+  @Column({ name: 'owner', nullable: true })
+  public owner: string;
+
+  @Column({ name: 'follow_up_owner', nullable: true })
+  public followUpOwner: string;
 
   @Column({ name: 'description_fr', nullable: false, type: 'text' })
   public presentationFr: string;
@@ -105,12 +114,12 @@ export class SubProgramEntity extends BaseEntity {
   public endDate: Date;
 
   // RELATIONS
-  @ManyToOne(() => UserEntity, (object) => object.id, {
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'owner_id' })
-  owner?: UserEntity;
+  // @ManyToOne(() => UserEntity, (object) => object.id, {
+  //   onDelete: 'SET NULL',
+  //   nullable: true,
+  // })
+  // @JoinColumn({ name: 'owner_id' })
+  // owner?: UserEntity;
 
   @ManyToOne(() => UserEntity, (object) => object.id, {
     onDelete: 'SET NULL',
@@ -133,10 +142,14 @@ export class SubProgramEntity extends BaseEntity {
   @JoinColumn({ name: 'structure_id' })
   structure: StructureEntity;
 
-  @OneToMany(() => SubProgramActivityEntity, (object) => object.subProgram)
-  activities: SubProgramActivityEntity[];
+  @OneToMany(() => SubProgramActionEntity, (object) => object.subProgram)
+  actions: SubProgramActionEntity[];
 
-  constructor(params?: Partial<SubProgramEntity | CreateSubProgramDto>) {
+  constructor(
+    params?: Partial<
+      SubProgramEntity | CreateSubProgramDto | EditSubProgramDto
+    >,
+  ) {
     super();
     if (params) {
       Object.assign(this, params);

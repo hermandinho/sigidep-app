@@ -73,6 +73,10 @@ export class CreateAdministrativeUnitFormComponent
     this._initListeners();
   }
 
+  get currentLang() {
+    return this._translate.currentLang;
+  }
+
   get isUpdateForm(): boolean {
     return !!this.form?.value?.id;
   }
@@ -171,7 +175,7 @@ export class CreateAdministrativeUnitFormComponent
       return;
     }
 
-    console.log(this.form.value);
+    // console.log(this.form.value);
     const {
       code,
       labelFr,

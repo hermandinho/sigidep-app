@@ -23,6 +23,12 @@ export class ApisService {
     });
   }
 
+  public put<T>(url: string, payload: any, query?: any): Observable<T> {
+    return this.http.put<T>(url, payload, {
+      params: query,
+    });
+  }
+
   public delete<T>(url: string, query: any): Observable<T> {
     return this.http.delete<T>(url, {
       params: query,

@@ -15,6 +15,8 @@ import { StructureModel } from '@models/structure.model';
 import { getStructureSelector } from '@reducers/app.reducer';
 import { ApisService } from '@services/apis.service';
 import { SubProgramModel } from '@models/sub-program.model';
+import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
 
 export interface IFormFiledElt {
   label: string;
@@ -38,6 +40,7 @@ export interface IFormFiledElt {
   required?: boolean;
   i18n?: boolean;
   flexRow?: boolean;
+  editable?: boolean;
 }
 
 @Component({
@@ -72,6 +75,10 @@ export class CreateSubProgramFormComponent
     '2': { back: true, forward: false, submit: true },
   };
 
+  public blockUi = true;
+  public isEdit!: boolean;
+  public notFound!: boolean;
+
   constructor(
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
@@ -79,9 +86,11 @@ export class CreateSubProgramFormComponent
     private readonly dispatcher: Actions,
     public translate: TranslateService,
     private readonly _fb: FormBuilder,
-    private _apisService: ApisService
+    private _apisService: ApisService,
+    private _route: ActivatedRoute
   ) {
     super();
+    moment.locale(translate.currentLang);
     // TODO subscribe to language changes
     this.steps = [
       {
@@ -104,6 +113,7 @@ export class CreateSubProgramFormComponent
       },
     ];
     this.form = this._fb.group({
+      id: [undefined, []],
       common: this._fb.group({
         exerciseId: [undefined, [Validators.required]],
         structureId: [undefined, [Validators.required]],
@@ -119,9 +129,11 @@ export class CreateSubProgramFormComponent
         ],
         labelFr: [undefined, [Validators.required]],
         labelEn: [undefined, [Validators.required]],
+        coordinator: [undefined, [Validators.required]],
+        owner: [undefined, [Validators.required]],
+        followUpOwner: [undefined, [Validators.required]],
         startDate: [undefined, [Validators.required]],
         endDate: [undefined, [Validators.required]],
-        ownerId: [undefined, []],
         presentationFr: [undefined, [Validators.required]],
         presentationEn: [undefined, [Validators.required]],
       }),
@@ -162,6 +174,10 @@ export class CreateSubProgramFormComponent
     else return this.commonFormGroup?.valid && this.strategiesFormGroup?.valid;
   }
 
+  get currentLang() {
+    return this.translate.currentLang;
+  }
+
   ngOnInit(): void {
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -176,6 +192,31 @@ export class CreateSubProgramFormComponent
         ],
       })
     );
+
+    this._route.params.pipe(this.takeUntilDestroy).subscribe((params) => {
+      if (!params.id) {
+        this.blockUi = false;
+      } else {
+        this.isEdit = true;
+        this._store.dispatch(
+          SetAppBreadcrumb({
+            breadcrumb: [
+              {
+                label: 'breadcrumb.subPrograms',
+                routerLink: ['/', 'sub-programs'],
+              },
+              {
+                label: '#' + params.id,
+              },
+              {
+                label: 'breadcrumb.edit',
+              },
+            ],
+          })
+        );
+        this._fetchItem(+params.id);
+      }
+    });
 
     this.formElements = {
       identification: [
@@ -194,6 +235,27 @@ export class CreateSubProgramFormComponent
           size: 6,
           required: true,
           i18n: true,
+        },
+        {
+          label: 'coordinator',
+          type: 'text',
+          formControl: 'coordinator',
+          size: 6,
+          required: true,
+        },
+        {
+          label: 'owner',
+          type: 'text',
+          formControl: 'owner',
+          size: 6,
+          required: true,
+        },
+        {
+          label: 'followUpOwner',
+          type: 'text',
+          formControl: 'followUpOwner',
+          size: 6,
+          required: true,
         },
         {
           label: 'startDate',
@@ -308,9 +370,9 @@ export class CreateSubProgramFormComponent
                       labelFr: [data.labelFr],
                       labelEn: [data.labelEn],
                       referenceValue: [data.referenceValue],
-                      referenceYear: [data.referenceYear],
+                      referenceYear: [new Date(data.referenceYear)],
                       targetValue: [data.targetValue],
-                      targetYear: [data.targetYear],
+                      targetYear: [new Date(data.targetYear)],
                       measurementUnit: [data.measurementUnit],
                       verificationSourceFr: [data.verificationSourceFr],
                       verificationSourceEn: [data.verificationSourceEn],
@@ -341,46 +403,75 @@ export class CreateSubProgramFormComponent
       strategies: values.strategies,
     };
 
-    this._apisService
-      .post<SubProgramModel>('/sub-programs', {
-        ...payload,
-      })
-      .subscribe(
-        (res) => {
-          this.busy = false;
-          this._store.dispatch(GetSubPrograms());
-
-          this._appService.showToast({
-            summary: 'messages.success',
-            detail: 'messages.subPrograms.createSuccess',
-            severity: 'success',
-            life: 5000,
-            closable: true,
-          });
-
-          if (quiteOnSuccess) {
-            this._store.dispatch(new Go({ path: ['/', 'sub-programs'] }));
-          } else {
-            this.resetFormAndSteps();
+    if (this.isEdit) {
+      this._apisService
+        .patch<SubProgramModel>(`/sub-programs/${this.form.value.id}`, {
+          ...payload,
+        })
+        .subscribe(
+          (res) => {
+            this.busy = false;
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.subPrograms.updateSuccess',
+              severity: 'success',
+              life: 5000,
+              closable: true,
+            });
+            setTimeout(() => {
+              this._store.dispatch(new Go({ path: ['/', 'sub-programs'] }));
+            }, 2000);
+          },
+          ({ error }) => {
+            this._onError(error);
           }
-        },
-        ({ error }) => {
-          let err = '';
-          if (error?.statusCode === 409) {
-            err = 'errors.subPrograms.conflict';
-          } else {
-            err = 'errors.unknown';
+        );
+    } else {
+      this._apisService
+        .post<SubProgramModel>('/sub-programs', {
+          ...payload,
+        })
+        .subscribe(
+          (res) => {
+            this.busy = false;
+            this._store.dispatch(GetSubPrograms());
+
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.subPrograms.createSuccess',
+              severity: 'success',
+              life: 5000,
+              closable: true,
+            });
+
+            if (quiteOnSuccess) {
+              this._store.dispatch(new Go({ path: ['/', 'sub-programs'] }));
+            } else {
+              this.resetFormAndSteps();
+            }
+          },
+          ({ error }) => {
+            this._onError(error);
           }
-          this.busy = false;
-          this._appService.showToast({
-            detail: err,
-            summary: 'errors.error',
-            severity: 'error',
-            life: 5000,
-            closable: true,
-          });
-        }
-      );
+        );
+    }
+  }
+
+  private _onError(error: any) {
+    let err = '';
+    if (error?.statusCode === 409) {
+      err = 'errors.subPrograms.conflict';
+    } else {
+      err = 'errors.unknown';
+    }
+    this.busy = false;
+    this._appService.showToast({
+      detail: err,
+      summary: 'errors.error',
+      severity: 'error',
+      life: 5000,
+      closable: true,
+    });
   }
 
   private _initListeners() {
@@ -421,5 +512,71 @@ export class CreateSubProgramFormComponent
     });
 
     this.objectivesFormGroup?.clear();
+  }
+
+  private _fetchItem(id: number) {
+    this._apisService.get<SubProgramModel>(`/sub-programs/${id}`).subscribe(
+      (res) => {
+        this._initEditForm(res);
+      },
+      (error) => {
+        this.notFound = true;
+      }
+    );
+  }
+
+  private _initEditForm(params: SubProgramModel) {
+    this.form.patchValue({
+      id: params.id,
+      common: {
+        exerciseId: params.exercise?.id,
+        structureId: params.structure?.id,
+      },
+      identification: {
+        code: params.code,
+        labelFr: params.labelFr,
+        labelEn: params.labelEn,
+        coordinator: params.coordinator,
+        owner: params.owner,
+        followUpOwner: params.followUpOwner,
+        startDate: new Date(params.startDate),
+        endDate: new Date(params.endDate),
+        presentationFr: params.presentationFr,
+        presentationEn: params.presentationEn,
+      },
+      strategies: {
+        ...params.strategies,
+      },
+    });
+    (params.objectives || []).forEach((obj) => {
+      this.objectivesFormGroup.push(
+        this._fb.group({
+          ...(obj.id && { id: [obj.id] }),
+          labelFr: [obj.labelFr],
+          labelEn: [obj.labelEn],
+          index: obj.index,
+          indicators: this._fb.array(
+            (obj.indicators || []).map((ind) => {
+              return this._fb.group({
+                labelFr: ind.labelFr,
+                labelEn: ind.labelEn,
+                referenceValue: ind.referenceValue,
+                referenceYear: new Date(ind.referenceYear),
+                targetValue: ind.targetValue,
+                targetYear: new Date(ind.targetYear),
+                measurementUnit: ind.measurementUnit,
+                verificationSourceFr: ind.verificationSourceFr,
+                verificationSourceEn: ind.verificationSourceEn,
+                index: ind.index,
+                parentIndex: ind.parentIndex,
+              });
+            }),
+            [Validators.required, Validators.minLength(1)]
+          ),
+        })
+      );
+    });
+
+    this.blockUi = false;
   }
 }

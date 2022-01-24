@@ -7,15 +7,17 @@ import { AdministrativeUnitEntity } from '@entities/administrative-unit.entity';
   name: 'regions',
   orderBy: {
     code: 'ASC',
-    label: 'ASC',
   },
 })
 export class RegionEntity extends BaseEntity {
   @Column({ name: 'code', nullable: true })
   public code: string;
 
-  @Column({ name: 'label', nullable: false })
-  public label: string;
+  @Column({ name: 'label_fr', nullable: false })
+  public labelFr: string;
+
+  @Column({ name: 'label_en', nullable: false })
+  public labelEn: string;
 
   // RELATIONS
   @OneToMany(() => AdministrativeUnitEntity, (object) => object.region, {})
