@@ -13,6 +13,7 @@ import { ReferencePhysicalUnitsEffects } from '@effects/reference-physical-units
 import { ContribuablesEffects } from '@effects/contribuables.effects';
 import { BanksAgencesEffects } from '@effects/banks-agences.effects';
 import { RegimesEffects } from '@effects/regimes.effects';
+<<<<<<< HEAD
 import { AgentsEffects } from './agents.effects';
 import { GradesEffects } from './grades.effects';
 import { CategoriesAgntsEffects } from './categories-agents.effects';
@@ -20,6 +21,9 @@ import { ArticlesEffects } from './articles.effects';
 import { SousRubriquesEffects } from './sous-rubriques.effects';
 import { RubriquesEffects } from './rubriques.effects';
 import { CarnetsMandatsEffects } from './carnets-mandats.effects';
+=======
+import { ContribuablesBudgetairesEffects } from './contribuables-budgetaires.effects';
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
 
 export const Effects = [
   AuthEffects,
@@ -37,6 +41,7 @@ export const Effects = [
   ContribuablesEffects,
   BanksAgencesEffects,
   RegimesEffects,
+<<<<<<< HEAD
   AgentsEffects,
   GradesEffects,
   CategoriesAgntsEffects,
@@ -44,4 +49,7 @@ export const Effects = [
   SousRubriquesEffects,
   RubriquesEffects,
   CarnetsMandatsEffects,
+=======
+  ContribuablesBudgetairesEffects
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
 ];

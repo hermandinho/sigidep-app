@@ -22,6 +22,7 @@ import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module'
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
+import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
 
 @Module({
   imports: [
@@ -98,6 +99,7 @@ import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.modul
     AgentsModule,
     MercurialeModule,
     CarnetMandatModule,
+    ContribuablesBudgetairesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

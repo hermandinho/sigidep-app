@@ -1,3 +1,5 @@
+import { CreateContribuableBudgetaireFormComponent } from './../components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component';
+import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { Injectable } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -45,6 +47,7 @@ export class DialogsService {
 
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
+<<<<<<< HEAD
   private agentCreateComponent: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
@@ -52,6 +55,9 @@ export class DialogsService {
   private carnetCreateComponent: any;
   private gradeCreateComponent: any;
   private categorieAgentCreateComponent: any;
+=======
+  private contribuableBudgetaireCreateComponent: any;
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -472,6 +478,7 @@ export class DialogsService {
     });
   }
 
+<<<<<<< HEAD
   public async launchAgentsCreateDialog(item?: AgentModel): Promise<any> {
     if (!this.agentCreateComponent) {
       const { CreateAgentFormComponent } = await import(
@@ -599,6 +606,23 @@ export class DialogsService {
     return this._dialogService.open(this.categorieAgentCreateComponent, {
       header: this._translateService.instant('dialogs.headers.editCategorie'),
       width: '50vw',
+=======
+  public async launchContribuablesBudgetairesCreateDialog(
+    item?: ContribuableBugetaireModel
+  ): Promise<any> {
+    if (!this.contribuableBudgetaireCreateComponent) {
+      const { CreateContribuableBudgetaireFormComponent } = await import(
+        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+      );
+      this.contribuableBudgetaireCreateComponent = CreateContribuableBudgetaireFormComponent;
+    }
+
+    return this._dialogService.open(this.contribuableBudgetaireCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editContribuableBudgetaire' : 'createContribuableBudgetaire')
+      ),
+      width: '70vw',
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
       height: 'auto',
       modal: true,
       data: {

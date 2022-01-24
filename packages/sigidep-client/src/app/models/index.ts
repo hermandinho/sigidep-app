@@ -15,6 +15,7 @@ export * from './reference-physical-unit.model';
 export * from './contribuable.model';
 export * from './banque.model';
 export * from './agence.model';
+<<<<<<< HEAD
 export * from './agent.model';
 export * from './categorie-agent.model';
 export * from './grade.model';
@@ -22,3 +23,6 @@ export * from './article.model';
 export * from './sous-rubrique.model';
 export * from './rubrique.model';
 export * from './carnet-mandat.model';
+=======
+export * from './contribuable-budgetaire.model';
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))

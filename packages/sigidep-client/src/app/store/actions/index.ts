@@ -13,6 +13,7 @@ export * from './reference-physical-units.actions';
 export * from './contribuables.actions';
 export * from './banks-agences.actions';
 export * from '@actions/regimes.actions';
+<<<<<<< HEAD
 export * from '@actions/agents.actions';
 export * from '@actions/categorie-agent.actions';
 export * from '@actions/grades.actions';
@@ -20,3 +21,6 @@ export * from '@actions/rubriques.actions';
 export * from '@actions/sous-rubriques.actions';
 export * from '@actions/articles.actions';
 export * from '@actions/carnets-mandats.actions';
+=======
+export * from '@actions/contribuables-budgetaires.actions';
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))

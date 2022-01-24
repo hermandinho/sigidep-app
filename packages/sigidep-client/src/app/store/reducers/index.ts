@@ -14,6 +14,7 @@ import * as fromSubPrograms from './sub-programs.reducer';
 import * as fromAddresses from './addresses.reducer';
 import * as fromRefPhysicalUnits from './reference-physical-units.reducer';
 import * as fromContribuables from './contribuables.reducer';
+import * as fromContribuablesBudgetaires from './contribuables-budgetaires.reducer';
 
 import * as fromBanksAgences from './banks-agences.reducers';
 import * as fromRegimes from './regimes.reducer';
@@ -41,6 +42,7 @@ export interface AppState {
   contribuables: fromContribuables.State;
   banksAgences: fromBanksAgences.State;
   regimes: fromRegimes.State;
+<<<<<<< HEAD
   grades: fromGrades.State;
   categoriesAgents: fromCategoriesAgents.State;
   agents: fromAgents.State;
@@ -48,6 +50,9 @@ export interface AppState {
   rubriques: fromRubriques.State;
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
+=======
+  contribuablesBudgetaires: fromContribuablesBudgetaires.State
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -66,6 +71,7 @@ export const reducers: ActionReducerMap<AppState> = {
   contribuables: fromContribuables.reducer,
   banksAgences: fromBanksAgences.reducer,
   regimes: fromRegimes.reducer,
+<<<<<<< HEAD
   grades: fromGrades.reducer,
   categoriesAgents: fromCategoriesAgents.reducer,
   agents: fromAgents.reducer,
@@ -73,6 +79,9 @@ export const reducers: ActionReducerMap<AppState> = {
   rubriques: fromRubriques.reducer,
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
+=======
+  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer
+>>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
