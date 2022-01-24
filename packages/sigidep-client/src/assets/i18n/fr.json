@@ -25,13 +25,10 @@
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
-<<<<<<< HEAD
     "agents": "Agents",
     "mercuriales": "Mercuriale",
-    "carnetsMandats": "Carnets Mandats"
-=======
+    "carnetsMandats": "Carnets Mandats",
     "contribuablesBudgetaires": "contribuables Budgetaires"
->>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
   },
   "buttons": {
     "save": "Enregistrer",
@@ -158,7 +155,6 @@
     "agence": "Agence",
     "localisation": "Localisation",
     "siege": "Siège",
-<<<<<<< HEAD
     "adresse": "adresse",
     "bank": "banque",
     "matricule": "Matricule",
@@ -207,12 +203,10 @@
     "nomAgentRetrait": "Nom Agent Retrait",
     "numCniAgentRetrait": "CNI Agent Retrait",
     "dateDelivranceCni": "Date Délivrance CNI",
-    "lieuDelivranceCni": "Lieu Délivrance CNI"
-=======
+    "lieuDelivranceCni": "Lieu Délivrance CNI",
     "adresse": "Adresse",
     "bank": "Banque",
     "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
->>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -372,7 +366,6 @@
     "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
-<<<<<<< HEAD
     "banksAgences": "Banques et Agences",
     "agents": "Agents",
     "articles": "Articles",
@@ -381,11 +374,8 @@
     "grades": "Grades",
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
-    "categories-agents": "Catégories"
-=======
-    "banksagences": "Banques et Agences",
+    "categories-agents": "Catégories",
     "contribuablesbudgetaires": "contribuables budgetaires"
->>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -443,7 +433,6 @@
       "contact": "Contact",
       "ville": "Ville",
       "quartier": "Quartier",
-<<<<<<< HEAD
       "matricule": "Matricule",
       "nom": "Nom",
       "prenom": "Prenom",
@@ -485,10 +474,8 @@
       "nomAgentRetrait": "Nom Agent Retrait",
       "numCniAgentRetrait": "CNI Agent Retrait",
       "dateDelivranceCni": "Date Délivrance CNI",
-      "lieuDelivranceCni": "Lieu Délivrance CNI"
-=======
+      "lieuDelivranceCni": "Lieu Délivrance CNI",
       "bankAgence": "banque (Agence)"
->>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -527,18 +514,15 @@
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
       "editAgenceBank": "Modifier une agence de banque",
-<<<<<<< HEAD
       "editAgent": "Editer un agent",
       "editArticle": "Editer un article",
       "editRubrique": "Editer une rubrique",
       "editSousRubrique": "Editer une sous-rubrique",
       "editCategorie": "Editer une catégorie",
       "editGrade": "Editer une grade",
-      "editCarnet": "Editer un carnet"
-=======
+      "editCarnet": "Editer un carnet",
       "createContribuableBudgetaire": "Creer un contribuable budgetaire",
       "editContribuableBudgetaire" : "Mettre à jour un contribuable budgetaire"
->>>>>>> 2a74169 (Handle contribuable budgetaire (CRUD))
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
