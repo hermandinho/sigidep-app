@@ -60,7 +60,7 @@ import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetai
           synchronize: true,
           type: 'postgres',
           port: 5432,
-          autoLoadEntities: true,
+          //autoLoadEntities: true,
           // dropSchema: true,
           // logging: true,
           // migrationsTableName: 'migrations',
