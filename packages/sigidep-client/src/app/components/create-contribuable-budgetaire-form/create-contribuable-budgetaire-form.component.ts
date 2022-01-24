@@ -93,14 +93,8 @@ export class CreateContribuableBudgetaireFormComponent
       });
       this.isEditMode = true;
 
-<<<<<<< HEAD
-      const b = this.banksList.find(elt => elt.id === banque.id);
-      this.form.get('banque')?.setValue(b);
-      
-=======
       const b = this.banksList.find((elt) => elt.id === banque.id);
       this.form.get('banque')?.setValue(b);
->>>>>>> 392bb280ef2c6d1e4132657c17b43329e189982b
     }
   }
 
