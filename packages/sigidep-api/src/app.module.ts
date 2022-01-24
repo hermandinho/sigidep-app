@@ -22,8 +22,6 @@ import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module'
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
-import { GradesModule } from '@modules/grades/grades.module';
-import { CategoriesAgentsModule } from '@modules/categories-agents/categories-agents.module';
 
 @Module({
   imports: [
@@ -61,7 +59,7 @@ import { CategoriesAgentsModule } from '@modules/categories-agents/categories-ag
           synchronize: true,
           type: 'postgres',
           port: 5432,
-          // autoLoadEntities: true,
+          autoLoadEntities: true,
           // dropSchema: true,
           // logging: true,
           // migrationsTableName: 'migrations',
@@ -100,8 +98,6 @@ import { CategoriesAgentsModule } from '@modules/categories-agents/categories-ag
     AgentsModule,
     MercurialeModule,
     CarnetMandatModule,
-    GradesModule,
-    CategoriesAgentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
