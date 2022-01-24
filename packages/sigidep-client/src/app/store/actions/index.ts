@@ -20,3 +20,4 @@ export * from '@actions/rubriques.actions';
 export * from '@actions/sous-rubriques.actions';
 export * from '@actions/articles.actions';
 export * from '@actions/carnets-mandats.actions';
+export * from '@actions/contribuables-budgetaires.actions';

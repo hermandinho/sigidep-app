@@ -27,7 +27,8 @@
     "banksAgences": "Banques et Agences",
     "agents": "Agents",
     "mercuriales": "Mercuriale",
-    "carnetsMandats": "Carnets Mandats"
+    "carnetsMandats": "Carnets Mandats",
+    "contribuablesBudgetaires": "Contribuables Budgetaires"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -152,6 +153,7 @@
     "ville": "Ville",
     "quartier": "Quartier",
     "codeAgence": "Code Agence",
+    "agence": "Agence",
     "localisation": "Localisation",
     "siege": "Siège",
     "adresse": "adresse",
@@ -205,7 +207,8 @@
     "lieuDelivranceCni": "Lieu Délivrance CNI",
     "carnet": "Carnet",
     "affectation": "Affectation",
-    "isAssign": "Affecter?"
+    "isAssign": "Affecter?",
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -373,7 +376,8 @@
     "grades": "Grades",
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
-    "categories-agents": "Catégories"
+    "categories-agents": "Catégories",
+    "contribuablesbudgetaires": "contribuables budgetaires"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -473,7 +477,8 @@
       "numCniAgentRetrait": "CNI Agent Retrait",
       "dateDelivranceCni": "Date Délivrance CNI",
       "lieuDelivranceCni": "Lieu Délivrance CNI",
-      "exercice": "Exercice"
+      "exercice": "Exercice",
+      "bankAgence": "banque (Agence)"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -519,7 +524,9 @@
       "editCategorie": "Editer une catégorie",
       "editGrade": "Editer une grade",
       "editCarnet": "Editer un carnet",
-      "assignCarnet": "Affecter le carnet {{code}}"
+      "assignCarnet": "Affecter le carnet {{code}}",
+      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
+      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

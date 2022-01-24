@@ -18,6 +18,9 @@ export class CarnetMandatEntity extends BaseEntity {
   @Column({ name: 'dernier_feuillet', nullable: true })
   public dernierFeuillet: string;
 
+  @Column({ name: 'date_enreg', nullable: true, type: 'date' })
+  public dateEnreg: Date;
+
   @ManyToOne(() => AgentEntity, (object) => object.id, {
     cascade: true,
     eager: false,
@@ -39,13 +42,13 @@ export class CarnetMandatEntity extends BaseEntity {
   public nomAgentRetrait: string;
 
   @Column({ name: 'num_cni_agent_retrait', nullable: true })
-  public numCniAgentRetrait: string;
+  public numCNIAgentRetrait: string;
 
   @Column({ name: 'date_delivrance_cni', nullable: true, type: 'date' })
-  public dateDelivranceCni: Date;
+  public dateDelivranceCNI: Date;
 
   @Column({ name: 'lieu_delivrance_cni', nullable: true })
-  public lieuDelivranceCni: string;
+  public lieuDelivranceCNI: string;
 
   @ManyToOne(() => ExerciseEntity, (object) => object.id, {
     cascade: true,
