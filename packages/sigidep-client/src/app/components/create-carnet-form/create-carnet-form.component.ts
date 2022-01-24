@@ -12,20 +12,23 @@ import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
-import { Observable, of, Subject } from 'rxjs';
-import { GradeModel } from '@models/grade.model';
-import { CategorieAgentModel } from '@models/categorie-agent.model';
+import { Observable, of } from 'rxjs';
 import { AgentModel } from '@models/agent.model';
-import { GetAgents } from '@actions/agents.actions';
 import {
   getDataSelector as getGestionnairesDataSelector,
   getLoadingSelector as getGestionnairesLoadingSelector,
 } from '@reducers/agents.reducer';
 
+import {
+  getDataSelector as getExercicesDataSelector,
+  getLoadingSelector as getExercicesLoadingSelector,
+} from '@reducers/exercise.reducer';
+
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { CarnetMandatModel } from '@models/carnet-mandat.model';
 import { GetCarnetMandats } from '@actions/carnets-mandats.actions';
+import { ExerciseModel } from '@models/exercise.model';
 
 @Component({
   selector: 'app-create-carnet-form',
@@ -34,9 +37,11 @@ import { GetCarnetMandats } from '@actions/carnets-mandats.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
-  gestionnairesLoading$: Observable<boolean> = of(true);
+  public gestionnairesLoading$: Observable<boolean> = of(true);
   public gestionnaires: AgentModel[] = [];
-
+  public exercices: ExerciseModel[] = [];
+  public exercicesLoading$: Observable<boolean> = of(true);
+  public assignment: boolean = false;
   public form: FormGroup;
   public busy = false;
   constructor(
@@ -51,9 +56,20 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
 
     this.form = this._fb.group({
       id: [undefined],
-      code: [undefined, [Validators.required]],
-      premierFeuillet: [undefined, Validators.required],
-      dernierFeuillet: [undefined, Validators.required],
+      code: [undefined, [Validators.required, Validators.maxLength(10)]],
+      exercice: this._fb.group({
+        id: [],
+        code: [undefined, Validators.required],
+        year: [],
+      }),
+      premierFeuillet: [
+        undefined,
+        [Validators.required, Validators.maxLength(10)],
+      ],
+      dernierFeuillet: [
+        undefined,
+        [Validators.required, Validators.maxLength(10)],
+      ],
       dateAffectation: [undefined, this.dateValidator],
       dateRetrait: [undefined, this.dateValidator],
       matAgentRetrait: [
@@ -77,6 +93,7 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.assignment = this.config.data?.assignment;
     if (this.config.data?.item) {
       const {
         id,
@@ -91,6 +108,7 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
         numCniAgentRetrait,
         dateDelivranceCni,
         lieuDelivranceCni,
+        exercice,
       } = this.config.data?.item as CarnetMandatModel;
       this.form.patchValue({
         id,
@@ -105,7 +123,15 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
         numCniAgentRetrait,
         dateDelivranceCni,
         lieuDelivranceCni,
+        exercice,
       });
+
+      if (this.assignment) {
+        this.form.controls['exercice'].disable();
+        this.form.controls['code'].disable();
+        this.form.controls['premierFeuillet'].disable();
+        this.form.controls['dernierFeuillet'].disable();
+      }
     }
   }
 
@@ -123,24 +149,40 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
       select(getGestionnairesLoadingSelector),
       map((status) => status)
     );
+
+    this._store
+      .pipe(this.takeUntilDestroy, select(getExercicesDataSelector))
+      .subscribe((payload) => {
+        this.exercices = [...payload];
+      });
+
+    this.exercicesLoading$ = this._store.pipe(
+      select(getExercicesLoadingSelector),
+      map((status) => status)
+    );
   }
 
   submit() {
     this.busy = true;
     const editedCarnet = {
       ...this.form.value,
-      gestionnaire: this.gestionnaires.find(
-        (item) => item.matricule === this.form.value?.gestionnaire?.matricule
-      ),
+      exercice:
+        this.exercices.find(
+          (item) => item.code === this.form.value?.exercice?.code
+        ) ?? null,
+      gestionnaire:
+        this.gestionnaires.find(
+          (item) => item.matricule === this.form.value?.gestionnaire?.matricule
+        ) ?? null,
       dateAffectation: this.form.value?.dateAffectation
         ? new Date(this.form.value?.dateAffectation).toISOString()
-        : undefined,
+        : null,
       dateRetrait: this.form.value?.dateRetrait
         ? new Date(this.form.value?.dateRetrait).toISOString()
-        : undefined,
+        : null,
       dateDelivranceCni: this.form.value?.dateDelivranceCni
         ? new Date(this.form.value?.dateDelivranceCni).toISOString()
-        : undefined,
+        : null,
     } as CarnetMandatModel;
 
     if (this.isUpdateForm) {

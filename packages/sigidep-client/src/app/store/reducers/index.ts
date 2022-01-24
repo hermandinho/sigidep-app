@@ -75,7 +75,7 @@ export const reducers: ActionReducerMap<AppState> = {
   rubriques: fromRubriques.reducer,
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
-  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer
+  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

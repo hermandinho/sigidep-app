@@ -1,6 +1,7 @@
 import { IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { EditAgentDTO } from '@modules/agents/dto/edit-Agent.dto';
+import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
 
 export class EditCarnetMandatDTO {
   public id?: number;
@@ -16,6 +17,7 @@ export class EditCarnetMandatDTO {
   public dernierFeuillet: string;
 
   /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
+  @ApiProperty({ example: '', required: false })
   public gestionnaire: EditAgentDTO;
 
   @ApiProperty({
@@ -50,4 +52,7 @@ export class EditCarnetMandatDTO {
 
   @ApiProperty({ example: '', required: false })
   public lieuDelivranceCni: string;
+
+  @ApiProperty({ example: '', required: false })
+  public exercice: CreateExerciseDto;
 }

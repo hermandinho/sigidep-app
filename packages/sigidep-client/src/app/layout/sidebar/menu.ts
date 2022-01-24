@@ -157,8 +157,6 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           state: {
             permissions: [...MenuPermissions.carnetsMandats],
           },
-
-          
         },
 
         {

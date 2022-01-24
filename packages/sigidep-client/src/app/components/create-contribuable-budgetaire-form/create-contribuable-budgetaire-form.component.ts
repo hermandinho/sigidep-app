@@ -68,7 +68,6 @@ export class CreateContribuableBudgetaireFormComponent
   }
 
   async ngOnInit(): Promise<void> {
-
     await this.getInitialData();
 
     if (this.config.data?.item) {
@@ -94,9 +93,8 @@ export class CreateContribuableBudgetaireFormComponent
       });
       this.isEditMode = true;
 
-      const b = this.banksList.find(elt => elt.id === banque.id);
+      const b = this.banksList.find((elt) => elt.id === banque.id);
       this.form.get('banque')?.setValue(b);
-      
     }
   }
 
