@@ -1,6 +1,6 @@
 import { IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { EditAgentDTO } from '@modules/agents/dto/edit-Agent.dto';
+import { EditAgentDTO } from '@modules/agents/dto/edit-agent.dto';
 import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
 
 export class EditCarnetMandatDTO {
