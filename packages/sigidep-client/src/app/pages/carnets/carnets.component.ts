@@ -21,6 +21,8 @@ import {
   DeleteCarnetMandatSuccess,
   GetCarnetMandats,
 } from '@actions/carnets-mandats.actions';
+import { GetExercises } from '@actions/exercises.actions';
+import { ExerciseStatusType } from '@models/exercise.model';
 
 @Component({
   selector: 'app-carnets',
@@ -41,6 +43,11 @@ export class CarnetsComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.tableColumns = [
+      {
+        field: 'exercice',
+        title: 'tables.headers.exercice',
+        sortable: true,
+      },
       {
         field: 'code',
         title: 'tables.headers.numero',
@@ -78,6 +85,7 @@ export class CarnetsComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this._store.dispatch(GetAgents());
     this._store.dispatch(GetCarnetMandats());
+    this._store.dispatch(GetExercises({ status: 'in_progress' }));
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -96,6 +104,10 @@ export class CarnetsComponent extends BaseComponent implements OnInit {
 
   edit(item: CarnetMandatModel) {
     this._dialogService.launchCarnetCreateDialog(item);
+  }
+
+  affect(item: CarnetMandatModel) {
+    this._dialogService.launchCarnetCreateDialog(item, true);
   }
 
   delete(item: CarnetMandatModel) {

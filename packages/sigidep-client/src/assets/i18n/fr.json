@@ -49,7 +49,8 @@
     "monthlyBreakdown": "Ventilation mensuelle",
     "quarterlyBreakdown": "Ventilation trimestrielle",
     "halfYearlyBreakdown": "Ventilation semestrielle",
-    "program": "Programmer"
+    "program": "Programmer",
+    "assign": "Affecter"
   },
   "install": {
     "title": "Installation"
@@ -204,8 +205,9 @@
     "numCniAgentRetrait": "CNI Agent Retrait",
     "dateDelivranceCni": "Date Délivrance CNI",
     "lieuDelivranceCni": "Lieu Délivrance CNI",
-    "adresse": "Adresse",
-    "bank": "Banque",
+    "carnet": "Carnet",
+    "affectation": "Affectation",
+    "isAssign": "Affecter?",
     "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
   },
   "hints": {
@@ -475,6 +477,7 @@
       "numCniAgentRetrait": "CNI Agent Retrait",
       "dateDelivranceCni": "Date Délivrance CNI",
       "lieuDelivranceCni": "Lieu Délivrance CNI",
+      "exercice": "Exercice",
       "bankAgence": "banque (Agence)"
     },
     "stats": {
@@ -521,8 +524,9 @@
       "editCategorie": "Editer une catégorie",
       "editGrade": "Editer une grade",
       "editCarnet": "Editer un carnet",
+      "assignCarnet": "Affecter le carnet {{code}}",
       "createContribuableBudgetaire": "Creer un contribuable budgetaire",
-      "editContribuableBudgetaire" : "Mettre à jour un contribuable budgetaire"
+      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

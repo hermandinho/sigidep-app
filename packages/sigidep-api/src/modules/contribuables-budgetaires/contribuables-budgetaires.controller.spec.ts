@@ -11,7 +11,9 @@ describe('ContribuablesBudgetairesController', () => {
       providers: [ContribuablesBudgetairesService],
     }).compile();
 
-    controller = module.get<ContribuablesBudgetairesController>(ContribuablesBudgetairesController);
+    controller = module.get<ContribuablesBudgetairesController>(
+      ContribuablesBudgetairesController,
+    );
   });
 
   it('should be defined', () => {

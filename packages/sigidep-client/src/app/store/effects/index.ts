@@ -45,5 +45,5 @@ export const Effects = [
   SousRubriquesEffects,
   RubriquesEffects,
   CarnetsMandatsEffects,
-  ContribuablesBudgetairesEffects
+  ContribuablesBudgetairesEffects,
 ];

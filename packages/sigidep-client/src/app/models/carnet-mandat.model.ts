@@ -1,4 +1,4 @@
-import { AgentModel } from '.';
+import { AgentModel, ExerciseModel } from '.';
 import { BaseModel } from './base.model';
 
 export class CarnetMandatModel extends BaseModel {
@@ -13,6 +13,7 @@ export class CarnetMandatModel extends BaseModel {
   numCniAgentRetrait?: string;
   dateDelivranceCni?: Date;
   lieuDelivranceCni?: string;
+  exercice!: ExerciseModel;
 
   constructor(params?: Partial<CarnetMandatModel>) {
     super();
