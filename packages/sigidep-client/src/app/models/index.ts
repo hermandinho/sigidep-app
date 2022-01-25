@@ -21,3 +21,5 @@ export * from './grade.model';
 export * from './article.model';
 export * from './sous-rubrique.model';
 export * from './rubrique.model';
+export * from './carnet-mandat.model';
+export * from './contribuable-budgetaire.model';

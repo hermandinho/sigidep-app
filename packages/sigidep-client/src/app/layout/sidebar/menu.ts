@@ -19,6 +19,7 @@ export const MenuPermissions = {
   ],
   agents: [...simpleCrudPermissions('agents')],
   articles: [...simpleCrudPermissions('articles')],
+  carnetsMandats: [...simpleCrudPermissions('carnetsMandats')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -148,6 +149,34 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             permissions: [...MenuPermissions.articles],
           },
         },
+        {
+          routerLink: 'carnets',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.carnetsMandats'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.carnetsMandats],
+          },
+        },
+
+        {
+          routerLink: 'banks-agences',
+          icon: 'pi pi-wallet',
+          label: translate.instant('sidebar.banksAgences'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
+        },
+        {
+          routerLink: 'contribuables-budgetaires',
+          icon: 'pi pi-wallet',
+          label: translate.instant('sidebar.contribuablesBudgetaires'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
+        },
       ],
     },
     {
@@ -214,15 +243,6 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
         },
       ],
-    },
-    {
-      routerLink: 'banks-agences',
-      icon: 'pi pi-wallet',
-      label: translate.instant('sidebar.banksAgences'),
-      routerLinkActiveOptions: { exact: true },
-      state: {
-        permissions: [],
-      },
     },
     {
       routerLink: 'roles',

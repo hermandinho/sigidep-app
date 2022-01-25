@@ -1,8 +1,8 @@
+import { BaseModel } from './base.model';
 import { CategorieAgentModel } from './categorie-agent.model';
 import { GradeModel } from './grade.model';
 
-export class AgentModel {
-  id!: number;
+export class AgentModel extends BaseModel {
   matricule!: string;
   nom!: string;
   prenom?: string;
@@ -41,6 +41,7 @@ export class AgentModel {
   categorie?: CategorieAgentModel;
 
   constructor(params?: Partial<AgentModel>) {
+    super();
     if (params) {
       Object.assign(this, params);
     }

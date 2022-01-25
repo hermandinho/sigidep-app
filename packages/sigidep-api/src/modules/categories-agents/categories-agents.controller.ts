@@ -46,7 +46,6 @@ export class CategoriesAgentsController {
   }
 
   @Delete('/:id')
-  @UseGuards(new PermissionsGuard(['categories-agents.delete']))
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
   }

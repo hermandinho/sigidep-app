@@ -148,7 +148,7 @@ export class ArticlesComponent extends BaseComponent implements OnInit {
         } else if (action.type === DeleteArticleSuccess.type) {
           this._appService.showToast({
             severity: 'success',
-            detail: 'messages.agents.deleteSuccess',
+            detail: 'messages.articles.deleteSuccess',
             summary: 'errors.success',
             closable: true,
           });

@@ -1,3 +1,4 @@
+import { ContribuablesBudgetairesModule } from './pages/contribuables-budgetaires/contribuables-budgetaires.module';
 import { BanksAgencesModule } from './pages/banks-agences/banks-agences.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,6 +36,9 @@ import { AgentsModule } from '@pages/agents/agents.module';
 import { ArticlesModule } from '@pages/mercuriales/articles/articles.module';
 import { RubriquesModule } from '@pages/mercuriales/rubrique/rubriques.module';
 import { SousRubriquesModule } from '@pages/mercuriales/sous-rubrique/sous-rubriques.module';
+import { CarnetsModule } from '@pages/carnets/carnets.module';
+import { GradesModule } from '@pages/grades/grades.module';
+import { CategoriesAgentsModule } from '@pages/categories-agents/categories-agents.module';
 
 registerLocaleData(localeFr);
 
@@ -87,6 +91,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ArticlesModule,
     RubriquesModule,
     SousRubriquesModule,
+    CarnetsModule,
+    GradesModule,
+    CategoriesAgentsModule,
+    ContribuablesBudgetairesModule,
   ],
   providers: [
     AppInstallCheckGuard,

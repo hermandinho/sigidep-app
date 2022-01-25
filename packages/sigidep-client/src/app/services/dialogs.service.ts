@@ -1,3 +1,5 @@
+import { CreateContribuableBudgetaireFormComponent } from './../components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component';
+import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { Injectable } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,10 +22,10 @@ import {
   ArticleModel,
   RubriqueModel,
   SousRubriqueModel,
+  CarnetMandatModel,
+  GradeModel,
+  CategorieAgentModel,
 } from '@models/index';
-import { CreateSubProgramActivityTaskFormComponent } from '@components/create-sub-program-activity-task-form/create-sub-program-activity-task-form.component';
-import { CreateSubProgramActionFormComponent } from '@components/create-sub-program-action-form/create-sub-program-action-form.component';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -49,6 +51,10 @@ export class DialogsService {
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
   private sousRubriqueCreateComponent: any;
+  private carnetCreateComponent: any;
+  private gradeCreateComponent: any;
+  private categorieAgentCreateComponent: any;
+  private contribuableBudgetaireCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -544,5 +550,100 @@ export class DialogsService {
         item,
       },
     });
+  }
+
+  public async launchCarnetCreateDialog(
+    item?: CarnetMandatModel,
+    assignment = false
+  ): Promise<any> {
+    if (!this.sousRubriqueCreateComponent) {
+      const { CreateCarnetFormComponent } = await import(
+        '@components/create-carnet-form/create-carnet-form.component'
+      );
+      this.carnetCreateComponent = CreateCarnetFormComponent;
+    }
+    return this._dialogService.open(this.carnetCreateComponent, {
+      header: this._translateService.instant(
+        !assignment
+          ? 'dialogs.headers.editCarnet'
+          : 'dialogs.headers.assignCarnet',
+        { code: item?.code }
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        assignment,
+      },
+    });
+  }
+
+  public async launchGradeCreateDialog(item?: GradeModel): Promise<any> {
+    if (!this.gradeCreateComponent) {
+      const { CreateGradeFormComponent } = await import(
+        '@components/create-grade-form/create-grade-form.component'
+      );
+      this.gradeCreateComponent = CreateGradeFormComponent;
+    }
+    return this._dialogService.open(this.gradeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editGrade'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchCategorieAgentCreateDialog(
+    item?: CategorieAgentModel
+  ): Promise<any> {
+    if (!this.categorieAgentCreateComponent) {
+      const { CategorieAgentFormComponent } = await import(
+        '@components/categorie-agent-form/categorie-agent-form.component'
+      );
+      this.categorieAgentCreateComponent = CategorieAgentFormComponent;
+    }
+    return this._dialogService.open(this.categorieAgentCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editCategorie'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchContribuablesBudgetairesCreateDialog(
+    item?: ContribuableBugetaireModel
+  ): Promise<any> {
+    if (!this.contribuableBudgetaireCreateComponent) {
+      const { CreateContribuableBudgetaireFormComponent } = await import(
+        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+      );
+      this.contribuableBudgetaireCreateComponent =
+        CreateContribuableBudgetaireFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.contribuableBudgetaireCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item
+              ? 'editContribuableBudgetaire'
+              : 'createContribuableBudgetaire')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+        },
+      }
+    );
   }
 }

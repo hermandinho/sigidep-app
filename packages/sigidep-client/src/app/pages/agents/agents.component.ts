@@ -103,6 +103,14 @@ export class AgentsComponent extends BaseComponent implements OnInit {
           {
             label: 'breadcrumb.agents',
           },
+          {
+            label: 'breadcrumb.grades',
+            routerLink: ['/', 'grades'],
+          },
+          {
+            label: 'breadcrumb.categories-agents',
+            routerLink: ['/', 'categories-agents'],
+          },
         ],
       })
     );

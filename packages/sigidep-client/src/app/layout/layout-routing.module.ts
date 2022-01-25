@@ -1,3 +1,4 @@
+import { ContribuablesBudgetairesComponent } from './../pages/contribuables-budgetaires/contribuables-budgetaires.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
@@ -18,6 +19,9 @@ import { AgentsComponent } from '@pages/agents/agents.component';
 import { ArticlesComponent } from '@pages/mercuriales/articles/articles.component';
 import { RubriqueComponent } from '@pages/mercuriales/rubrique/rubrique.component';
 import { SousRubriqueComponent } from '@pages/mercuriales/sous-rubrique/sous-rubrique.component';
+import { CarnetsComponent } from '@pages/carnets/carnets.component';
+import { GradesComponent } from '@pages/grades/grades.component';
+import { CategoriesAgentsComponent } from '@pages/categories-agents/categories-agents.component';
 
 const routes: Routes = [
   {
@@ -159,6 +163,38 @@ const routes: Routes = [
           permissions: [...MenuPermissions.articles],
         },
         component: SousRubriqueComponent,
+      },
+      {
+        path: 'carnets',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.carnetsMandats],
+        },
+        component: CarnetsComponent,
+      },
+      {
+        path: 'grades',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.agents],
+        },
+        component: GradesComponent,
+      },
+      {
+        path: 'categories-agents',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.agents],
+        },
+        component: CategoriesAgentsComponent,
+      },
+      {
+        path: 'contribuables-budgetaires',
+        component: ContribuablesBudgetairesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
       },
       /*{
         path: '**',
