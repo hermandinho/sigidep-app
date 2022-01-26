@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AgentsService } from './agents.service';
 import { PermissionsGuard } from '@guards/permissions.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { EditAgentDTO } from './dto/edit-agent.dto';
+import { EditAgentDTO } from '@modules/agents/dto/edit-agent.dto';
 
 @Controller('agents')
 @ApiTags('Agents')

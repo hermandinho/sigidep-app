@@ -1,6 +1,6 @@
 import { IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { EditAgentDTO } from '@modules/agents/dto/edit-Agent.dto';
+import { EditAgentDTO } from '@modules/agents/dto/edit-agent.dto';
 import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
 
 export class EditCarnetMandatDTO {
@@ -15,6 +15,15 @@ export class EditCarnetMandatDTO {
 
   @ApiProperty({ example: '', required: false })
   public dernierFeuillet: string;
+
+  @ApiProperty({
+    example: new Date().toISOString(),
+    nullable: true,
+    required: false,
+  })
+  @IsDateString()
+  @IsOptional()
+  public dateEnreg: Date | string;
 
   /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
   @ApiProperty({ example: '', required: false })
