@@ -27,10 +27,11 @@ export class ArticleMercurialeEntity extends BaseEntity {
 
   @ManyToOne(
     () => SousRubriqueMercurialeEntity,
-    (sousRubrique) => sousRubrique.id,
+    (sousRubrique) => sousRubrique.articles,
     {
       cascade: true,
-      eager: true,
+      eager: false,
+      onDelete: 'CASCADE',
     },
   )
   @JoinColumn({ name: 'sous_rubrique_id' })
