@@ -8,7 +8,6 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { Observable, of, Subject } from 'rxjs';
 import { RubriqueModel } from '@models/rubrique.model';
-import { SousRubriqueModel } from '@models/sous-rubrique.model';
 
 import { GetRubriques } from '@actions/rubriques.actions';
 

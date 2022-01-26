@@ -1,6 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { EditSousRubriqueDTO } from '../dto';
 
 export class EditRubriqueDTO {
   public id?: number;
@@ -12,7 +11,4 @@ export class EditRubriqueDTO {
 
   @ApiProperty({ example: 'MEUBLES', required: true })
   public label?: string;
-
-  @ApiProperty({ required: false })
-  public sousRubriques: EditSousRubriqueDTO[];
 }
