@@ -1,0 +1,64 @@
+<p-card>
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button
+          (click)="openForm()"
+          [label]="'buttons.create' | translate"
+          class="p-button-success p-mr-2"
+          icon="pi pi-plus"
+          pButton
+          pRipple
+        ></button>
+        <!--<ng-container>
+              <button (click)="delete()" *appCheckPermissions="['banksAgences.delete']"
+                      [disabled]="!selectedItems?.length"
+                      class="p-button-danger" icon="pi pi-trash"
+                      pButton pRipple></button>
+            </ng-container>-->
+      </ng-template>
+      <ng-template pTemplate="right"> </ng-template>
+    </p-toolbar>
+  
+    <p-table [value]="data" dataKey="code" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <ng-container *ngFor="let column of tableColumns">
+            <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+              {{ column.title | translate }}
+              <p-sortIcon field="code"></p-sortIcon>
+            </th>
+            <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+          </ng-container>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-bankItem let-expanded="expanded">
+        <tr>
+          <td></td>
+          <td>{{ bankItem.code }}</td>
+          <td>{{ bankItem.raisonSociale }}</td>
+          <td>{{ bankItem.banque.label }} ({{ bankItem.agence.label }})</td>
+          <td>{{ bankItem.numeroCompte }}</td>
+          <td>{{ bankItem.cle }}</td>
+          <td>
+            <button
+              (click)="edit(bankItem)"
+              class="p-button-rounded p-button-success p-mr-2"
+              icon="pi pi-pencil"
+              pButton
+              pRipple
+            ></button>
+            <button
+              (click)="delete(bankItem)"
+              class="p-button-rounded p-button-warning"
+              icon="pi pi-trash"
+              pButton
+              pRipple
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+  

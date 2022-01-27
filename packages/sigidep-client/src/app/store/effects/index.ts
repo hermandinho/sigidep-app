@@ -21,7 +21,6 @@ import { ArticlesEffects } from './articles.effects';
 import { SousRubriquesEffects } from './sous-rubriques.effects';
 import { RubriquesEffects } from './rubriques.effects';
 import { CarnetsMandatsEffects } from './carnets-mandats.effects';
-import { ContribuablesBudgetairesEffects } from './contribuables-budgetaires.effects';
 
 export const Effects = [
   AuthEffects,

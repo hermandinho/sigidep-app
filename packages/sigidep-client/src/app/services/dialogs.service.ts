@@ -26,6 +26,7 @@ import {
   GradeModel,
   CategorieAgentModel,
 } from '@models/index';
+import { AccreditationsGestionnairesFormComponent } from '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +56,8 @@ export class DialogsService {
   private carnetCreateComponent: any;
   private gradeCreateComponent: any;
   private categorieAgentCreateComponent: any;
-  private contribuableBudgetaireCreateComponent: any;
+
+  private accreditationsGestionnairesCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -647,25 +649,25 @@ export class DialogsService {
     });
   }
 
-  public async launchContribuablesBudgetairesCreateDialog(
-    item?: ContribuableBugetaireModel
+  public async launchAccreditationsGestionnairesCreateDialog(
+    item?: any
   ): Promise<any> {
-    if (!this.contribuableBudgetaireCreateComponent) {
-      const { CreateContribuableBudgetaireFormComponent } = await import(
-        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+    if (!this.accreditationsGestionnairesCreateComponent) {
+      const { AccreditationsGestionnairesFormComponent } = await import(
+        '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component'
       );
-      this.contribuableBudgetaireCreateComponent =
-        CreateContribuableBudgetaireFormComponent;
+      this.accreditationsGestionnairesCreateComponent =
+        AccreditationsGestionnairesFormComponent;
     }
 
     return this._dialogService.open(
-      this.contribuableBudgetaireCreateComponent,
+      this.accreditationsGestionnairesCreateComponent,
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
             (item
-              ? 'editContribuableBudgetaire'
-              : 'createContribuableBudgetaire')
+              ? 'editAccreditationsGestionnaires'
+              : 'createAccreditationsGestionnaires')
         ),
         width: '70vw',
         height: 'auto',

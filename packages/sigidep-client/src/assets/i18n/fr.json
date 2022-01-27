@@ -29,7 +29,7 @@
     "agents": "Agents",
     "mercuriales": "Mercuriale",
     "carnetsMandats": "Carnets Mandats",
-    "contribuablesBudgetaires": "Contribuables Budgetaires"
+    "accreditationsGestionnaires": "Accreditations des Gestionnaires"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -380,7 +380,7 @@
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
     "categories-agents": "Catégories",
-    "contribuablesbudgetaires": "contribuables budgetaires"
+    "accreditationsGestionnaires": "Accreditations des Gestionnaires"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -531,8 +531,8 @@
       "editGrade": "Editer une grade",
       "editCarnet": "Editer un carnet",
       "assignCarnet": "Affecter le carnet {{code}}",
-      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
-      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire"
+      "createAccreditationsGestionnaires": "Ajouter des accreditations aux gestionnaires",
+      "editAccreditationsGestionnaires": "Mettre à jour des accreditations"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

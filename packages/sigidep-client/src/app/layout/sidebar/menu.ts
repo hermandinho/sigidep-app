@@ -177,6 +177,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             permissions: [],
           },
         },
+        {
+          routerLink: 'accreditations-gestionnaires',
+          icon: 'pi pi-wallet',
+          label: translate.instant('sidebar.accreditationsGestionnaires'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
+        },
       ],
     },
     {
