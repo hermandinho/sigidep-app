@@ -26,3 +26,6 @@ export * from './article-mercuriale.entity';
 export * from './rubrique-mercuriale.entity';
 export * from './sous-rubriques-mercuriales.entity';
 export * from './carnet-mandat.entity';
+export * from './piece-jointe.entity';
+export * from './bareme-mission.entity';
+export * from './type-procedure.entity';

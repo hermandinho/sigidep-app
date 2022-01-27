@@ -28,23 +28,6 @@ const routes: Routes = [
     redirectTo: 'auth',
     pathMatch: 'full',
   },
-  {
-    path: 'carnets',
-    loadChildren: () =>
-      import('./pages/carnets/carnets.module').then((m) => m.CarnetsModule),
-  },
-  {
-    path: 'grades',
-    loadChildren: () =>
-      import('./pages/grades/grades.module').then((m) => m.GradesModule),
-  },
-  {
-    path: 'categories-agents',
-    loadChildren: () =>
-      import('./pages/categories-agents/categories-agents.module').then(
-        (m) => m.CategoriesAgentsModule
-      ),
-  },
 
   {
     path: '**',

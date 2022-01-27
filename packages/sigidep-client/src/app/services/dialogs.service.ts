@@ -25,6 +25,9 @@ import {
   CarnetMandatModel,
   GradeModel,
   CategorieAgentModel,
+  BaremeMissionModel,
+  PieceJointeModel,
+  TypeProcedureModel,
 } from '@models/index';
 @Injectable({
   providedIn: 'root',
@@ -55,6 +58,10 @@ export class DialogsService {
   private gradeCreateComponent: any;
   private categorieAgentCreateComponent: any;
   private contribuableBudgetaireCreateComponent: any;
+
+  private baremeCreateComponent: any;
+  private typeProcedureCreateComponent: any;
+  private pieceJointeCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -645,5 +652,67 @@ export class DialogsService {
         },
       }
     );
+  }
+
+  public async launchBaremeCreateDialog(
+    item?: BaremeMissionModel
+  ): Promise<any> {
+    if (!this.baremeCreateComponent) {
+      const { CreateBaremeFormComponent } = await import(
+        '@components/create-bareme-form/create-bareme-form.component'
+      );
+      this.baremeCreateComponent = CreateBaremeFormComponent;
+    }
+    return this._dialogService.open(this.baremeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editBareme'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchTypeProcedureCreateDialog(
+    item?: TypeProcedureModel
+  ): Promise<any> {
+    if (!this.typeProcedureCreateComponent) {
+      const { CreateTypeProcedureFormComponent } = await import(
+        '@components/create-type-procedure-form/create-type-procedure-form.component'
+      );
+      this.typeProcedureCreateComponent = CreateTypeProcedureFormComponent;
+    }
+    return this._dialogService.open(this.typeProcedureCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.editTypeProcedure'
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchPieceJointeCreateDialog(
+    item?: PieceJointeModel
+  ): Promise<any> {
+    if (!this.pieceJointeCreateComponent) {
+      const { CreatePieceJointeFormComponent } = await import(
+        '@components/create-piece-jointe-form/create-piece-jointe-form.component'
+      );
+      this.pieceJointeCreateComponent = CreatePieceJointeFormComponent;
+    }
+    return this._dialogService.open(this.pieceJointeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editPieceJointe'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
   }
 }
