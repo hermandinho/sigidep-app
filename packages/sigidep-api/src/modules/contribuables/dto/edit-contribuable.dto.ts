@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { CreateRegimeFiscalDTO } from '@modules/regime-fiscal/dto/create-regime-fiscal.dto';
 import { CreateBankDto } from '@modules/banks-agences/dto/create-banks.dto';
 import { CreateAgenceDto } from '@modules/banks-agences/dto/create-agence.dto';
+import { Type } from 'class-transformer';
 
 export class EditContribuableDTO {
   public id?: number;
@@ -22,6 +23,7 @@ export class EditContribuableDTO {
 
   @ApiProperty({ example: 'REEL', required: true })
   @IsNotEmpty()
+  @Type(() => CreateRegimeFiscalDTO)
   public regimeFiscal: CreateRegimeFiscalDTO;
 
   @ApiProperty({ example: 'Rue des banques', required: true })
@@ -53,10 +55,12 @@ export class EditContribuableDTO {
 
   @ApiProperty({ example: '10005', required: true })
   @IsNotEmpty()
+  @Type(() => CreateBankDto)
   public banque: CreateBankDto;
 
   @ApiProperty({ example: '10005', required: true })
   @IsNotEmpty()
+  @Type(() => CreateAgenceDto)
   public agence: CreateAgenceDto;
 
   @ApiProperty({ example: '10005152462', required: true })

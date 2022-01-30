@@ -14,7 +14,7 @@ export class EditSousRubriqueDTO {
   @ApiProperty({ example: 'MEUBLES EN CUIR', required: false })
   public label?: string;
 
-  @ApiProperty({ example: '', required: true })
+  @ApiProperty({ required: true })
   @IsDefined()
   @Type(() => EditRubriqueDTO)
   public rubrique: EditRubriqueDTO;
