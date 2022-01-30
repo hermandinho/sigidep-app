@@ -39,6 +39,12 @@ import { SousRubriquesModule } from '@pages/mercuriales/sous-rubrique/sous-rubri
 import { CarnetsModule } from '@pages/carnets/carnets.module';
 import { GradesModule } from '@pages/grades/grades.module';
 import { CategoriesAgentsModule } from '@pages/categories-agents/categories-agents.module';
+import { BaremesModule } from '@pages/baremes/baremes.module';
+import { TypesProceduresModule } from '@pages/types-procedures/types-procedures.module';
+import { PiecesJointesModule } from '@pages/pieces-jointes/pieces-jointes.module';
+import { CreateBaremeFormComponent } from './components/create-bareme-form/create-bareme-form.component';
+import { CreateTypeProcedureFormComponent } from './components/create-type-procedure-form/create-type-procedure-form.component';
+import { CreatePieceJointeFormComponent } from './components/create-piece-jointe-form/create-piece-jointe-form.component';
 
 registerLocaleData(localeFr);
 
@@ -95,6 +101,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     GradesModule,
     CategoriesAgentsModule,
     ContribuablesBudgetairesModule,
+    BaremesModule,
+    TypesProceduresModule,
+    PiecesJointesModule,
   ],
   providers: [
     AppInstallCheckGuard,

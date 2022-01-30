@@ -28,7 +28,10 @@
     "agents": "Agents",
     "mercuriales": "Mercuriale",
     "carnetsMandats": "Carnets Mandats",
-    "contribuablesBudgetaires": "Contribuables Budgetaires"
+    "contribuablesBudgetaires": "Contribuables Budgetaires",
+    "baremes": "Barèmes",
+    "typesProcedures": "Types Procédures",
+    "piecesJointes": "Pièces Jointes"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -208,7 +211,9 @@
     "carnet": "Carnet",
     "affectation": "Affectation",
     "isAssign": "Affecter?",
-    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire",
+    "montant": "Montant",
+    "order": "Ordre"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -348,6 +353,21 @@
       "deleteSuccess": "Carnet supprimé avec succès.",
       "createSuccess": "Carnet créé avec succès.",
       "updateSuccess": "Carnet modifié avec succès."
+    },
+    "piecesJointes": {
+      "deleteSuccess": "Pièce Jointe supprimée avec succès.",
+      "createSuccess": "Pièce Jointe créée avec succès.",
+      "updateSuccess": "Pièce Jointe modifiée avec succès."
+    },
+    "typesProcedures": {
+      "deleteSuccess": "Type procédure supprimé avec succès.",
+      "createSuccess": "Type procédure créé avec succès.",
+      "updateSuccess": "Type procédure modifié avec succès."
+    },
+    "baremes": {
+      "deleteSuccess": "Barème supprimé avec succès.",
+      "createSuccess": "Barème créé avec succès.",
+      "updateSuccess": "Barème modifié avec succès."
     }
   },
   "menus": {
@@ -377,7 +397,10 @@
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
     "categories-agents": "Catégories",
-    "contribuablesbudgetaires": "contribuables budgetaires"
+    "contribuablesbudgetaires": "contribuables budgetaires",
+    "piecesjointes": "Pieces Jointes",
+    "baremes": "Baremes",
+    "typesprocedures": "Types Procédures"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -394,7 +417,10 @@
       "sousRubriques": "Sous Rubriques",
       "grades": "Grades",
       "categories": "Catégories",
-      "carnetsMandats": "Carnets de Mandats"
+      "carnetsMandats": "Carnets de Mandats",
+      "typesProcedures": "Types de Procédures",
+      "piecesJointes": "Pièces Jointes",
+      "baremes": "Barèmes"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -478,7 +504,9 @@
       "dateDelivranceCni": "Date Délivrance CNI",
       "lieuDelivranceCni": "Lieu Délivrance CNI",
       "exercice": "Exercice",
-      "bankAgence": "banque (Agence)"
+      "bankAgence": "banque (Agence)",
+      "order": "Ordre",
+      "montant": "Montant (FCFA)"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -526,7 +554,10 @@
       "editCarnet": "Editer un carnet",
       "assignCarnet": "Affecter le carnet {{code}}",
       "createContribuableBudgetaire": "Creer un contribuable budgetaire",
-      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire"
+      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire",
+      "editBareme": "Editer un Barème",
+      "editTypeProcedure": "Editer un type de procédure",
+      "editPieceJointe": "Editer une pièce jointe"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -541,7 +572,10 @@
       "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible.",
       "deleteGrade": "Voulez-vous vraiment supprimer cette grade? Cette action est irréversible.",
       "deleteCategorie": "Voulez-vous vraiment supprimer cette catégorie? Cette action est irréversible.",
-      "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible."
+      "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible.",
+      "deletePieceJointe": "Voulez-vous vraiment supprimer cette pièce jointe? Cette action est irréversible.",
+      "deleteTypeProcedure": "Voulez-vous vraiment supprimer ce type de procédure? Cette action est irréversible.",
+      "deleteBareme": "Voulez-vous vraiment supprimer ce barème? Cette action est irréversible."
     }
   },
   "exerciseStatuses": {

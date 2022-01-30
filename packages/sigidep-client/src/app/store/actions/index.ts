@@ -21,3 +21,6 @@ export * from '@actions/sous-rubriques.actions';
 export * from '@actions/articles.actions';
 export * from '@actions/carnets-mandats.actions';
 export * from '@actions/contribuables-budgetaires.actions';
+export * from '@actions/baremes.actions';
+export * from '@actions/types-procedures.actions';
+export * from '@actions/piece-jointe.actions';
