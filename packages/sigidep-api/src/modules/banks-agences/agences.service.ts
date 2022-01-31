@@ -17,7 +17,7 @@ export class AgencesService {
 
   async create(payload: CreateAgenceDto): Promise<AgencesEntity> {
     const check = await this.repository.findOne(
-      { code: payload.code },
+      { bank: { id: payload.bank.id }, code: payload.code },
       { loadEagerRelations: false },
     );
 

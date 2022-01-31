@@ -25,6 +25,9 @@ import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
 import { GestionnairesModule } from './modules/gestionnaires/gestionnaires.module';
 import { AccreditationsModule } from './modules/accreditations/accreditations.module';
+import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
+import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
+import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
 
 @Module({
   imports: [
@@ -62,7 +65,7 @@ import { AccreditationsModule } from './modules/accreditations/accreditations.mo
           synchronize: true,
           type: 'postgres',
           port: 5432,
-          autoLoadEntities: true,
+          //autoLoadEntities: true,
           // dropSchema: true,
           // logging: true,
           // migrationsTableName: 'migrations',
@@ -105,6 +108,9 @@ import { AccreditationsModule } from './modules/accreditations/accreditations.mo
     ContribuablesBudgetairesModule,
     GestionnairesModule,
     AccreditationsModule,
+    BaremesMissionsModule,
+    PiecesJointesModule,
+    TypesProceduresModule,
   ],
   controllers: [AppController],
   providers: [AppService],

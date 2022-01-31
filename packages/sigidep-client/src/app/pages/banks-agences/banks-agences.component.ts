@@ -73,7 +73,7 @@ export class BanksAgencesComponent extends BaseComponent implements OnInit {
 
   delete(item: BankModel) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteParagraph',
+      message: 'dialogs.messages.deleteBank',
       accept: () => {
         this._store.dispatch(DeleteBanks({ ids: [item.id] }));
       },
@@ -92,7 +92,7 @@ export class BanksAgencesComponent extends BaseComponent implements OnInit {
 
   deleteAgence(item: AgenceModel) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteParagraph',
+      message: 'dialogs.messages.deleteAgence',
       accept: () => {
         this._store.dispatch(DeleteAgenges({ ids: [item.id] }));
       },
@@ -137,7 +137,7 @@ export class BanksAgencesComponent extends BaseComponent implements OnInit {
         } else if (action.type === DeleteBanksSuccess.type) {
           this._appService.showToast({
             severity: 'success',
-            detail: 'messages.paragraphs.deleteSuccess',
+            detail: 'messages.banks.deleteSuccess',
             summary: 'errors.success',
             closable: true,
           });

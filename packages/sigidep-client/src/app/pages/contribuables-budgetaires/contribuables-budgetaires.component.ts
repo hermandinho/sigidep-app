@@ -89,7 +89,7 @@ export class ContribuablesBudgetairesComponent
 
   delete(item: ContribuableBugetaireModel) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteParagraph',
+      message: 'dialogs.messages.deleteContribuableBudgetaire',
       accept: () => {
         this._store.dispatch(DeleteContribuableBugetaire({ id: item.id }));
       },
@@ -137,7 +137,7 @@ export class ContribuablesBudgetairesComponent
         } else if (action.type === DeleteContribuableBugetaireSuccess.type) {
           this._appService.showToast({
             severity: 'success',
-            detail: 'messages.paragraphs.deleteSuccess',
+            detail: 'messages.contribuablesBudgetaires.deleteSuccess',
             summary: 'errors.success',
             closable: true,
           });

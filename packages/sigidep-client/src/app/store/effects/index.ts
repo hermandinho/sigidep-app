@@ -22,6 +22,9 @@ import { SousRubriquesEffects } from './sous-rubriques.effects';
 import { RubriquesEffects } from './rubriques.effects';
 import { CarnetsMandatsEffects } from './carnets-mandats.effects';
 import { GestionnairesEffects } from './gestionnaires.effects';
+import { TypesProceduresEffects } from './types-procedures.effects';
+import { BaremesEffects } from './baremes.effects';
+import { PiecesJointesEffects } from './pieces-jointes.effects';
 
 export const Effects = [
   AuthEffects,
@@ -48,5 +51,8 @@ export const Effects = [
   RubriquesEffects,
   CarnetsMandatsEffects,
   ContribuablesBudgetairesEffects,
-  GestionnairesEffects
+  GestionnairesEffects,
+  TypesProceduresEffects,
+  BaremesEffects,
+  PiecesJointesEffects,
 ];

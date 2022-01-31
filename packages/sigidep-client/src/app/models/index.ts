@@ -24,3 +24,6 @@ export * from './sous-rubrique.model';
 export * from './rubrique.model';
 export * from './carnet-mandat.model';
 export * from './contribuable-budgetaire.model';
+export * from './piece-jointe.model';
+export * from './type-procedure.model';
+export * from './bareme-mission.model';

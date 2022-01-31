@@ -83,7 +83,7 @@ export class AccreditationsGestionnairesComponent
 
   delete(item: GestionnaireModel) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteParagraph',
+      message: 'dialogs.messages.deleteGestionnaire',
       accept: () => {
         this._store.dispatch(DeleteGestionnaire({ id: item.id }));
       },

@@ -89,7 +89,7 @@ export class AccreditationsGestionnairesFormComponent
         }
       });
 
-    this.form
+    /* this.form
       .get('activity')
       ?.valueChanges.subscribe((val: SubProgramActivityModel) => {
         if (val) {
@@ -109,9 +109,9 @@ export class AccreditationsGestionnairesFormComponent
             this.imputationsOperationsList.push(ac);
           }
         }
-      });
+      }); */
 
-      /* this.form
+      this.form
       .get('task')
       ?.valueChanges.subscribe((val: SubProgramActivityTaskModel) => {
         if (val) {
@@ -131,7 +131,7 @@ export class AccreditationsGestionnairesFormComponent
             this.imputationsOperationsList.push(ac);
           }
         }
-      }); */
+      });
 
 
       this.form
