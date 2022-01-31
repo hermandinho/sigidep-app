@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { CarnetMandatController } from './carnet-mandat.controller';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarnetMandatEntity } from '@entities/carnet-mandat.entity';
 import { CarnetMandatService } from './carnet-mandat.service';
 
+@Global()
 @Module({
   controllers: [CarnetMandatController],
   providers: [CarnetMandatService],
