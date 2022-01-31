@@ -1,3 +1,4 @@
+import { GestionnaireModel } from './../../models/gestionnaire.model';
 import { AppService } from './../../services/app.service';
 import { Actions, ofType } from '@ngrx/effects';
 import { BaseComponent } from './../../components/base.component';
@@ -7,18 +8,17 @@ import { AppState } from './../../store/reducers/index';
 import { Store, select } from '@ngrx/store';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
-import { ContribuableBugetaireModel } from '@models/index';
 import { Component, OnInit } from '@angular/core';
 import {
-  DeleteContribuableBugetaire,
-  DeleteContribuableBugetaireSuccess,
-  DeleteContribuableBugetaireFailure,
-  GetContribuablesBugetaires,
-} from '@actions/contribuables-budgetaires.actions';
+  DeleteGestionnaire,
+  DeleteGestionnaireSuccess,
+  DeleteGestionnaireFailure,
+  GetGestionnaires,
+} from '@actions/gestionnaires.actions';
 import {
   getDataSelector,
   getLoadingSelector,
-} from '@reducers/contribuables-budgetaires.reducer';
+} from '@reducers/gestionnaires.reducer';
 
 @Component({
   selector: 'app-accreditations-gestionnaires',
@@ -29,7 +29,7 @@ export class AccreditationsGestionnairesComponent
   extends BaseComponent
   implements OnInit
 {
-  data: ContribuableBugetaireModel[] = [];
+  data: GestionnaireModel[] = [];
   selectedItems: any[] = [];
   loading$: Observable<boolean> = of(true);
   tableColumns: any[] = [];
@@ -43,35 +43,29 @@ export class AccreditationsGestionnairesComponent
     super();
 
     this.tableColumns = [
-      { field: 'code', title: 'tables.headers.code', sortable: true },
+      { field: 'matricule', title: 'tables.headers.matricule', sortable: true },
       {
-        field: 'raisonSociale',
-        title: 'tables.headers.raisonSociale',
+        field: 'nom',
+        title: 'tables.headers.nom',
         sortable: true,
       },
       {
-        field: 'banque.label',
-        title: 'tables.headers.bankAgence',
+        field: 'prenom',
+        title: 'tables.headers.prenom',
         sortable: true,
       },
-      {
-        field: 'numeroCompte',
-        title: 'tables.headers.numeroCompte',
-        sortable: true,
-      },
-      { field: 'cle', title: 'tables.headers.cle', sortable: true },
     ];
 
     this._initListeners();
   }
 
   ngOnInit(): void {
-    //this._store.dispatch(GetContribuablesBugetaires());
+    this._store.dispatch(GetGestionnaires());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.accreditationsGestionnaires',
+            label: 'breadcrumb.accreditationsgestionnaires',
           },
         ],
       })
@@ -83,15 +77,15 @@ export class AccreditationsGestionnairesComponent
     this._dialogService.launchAccreditationsGestionnairesCreateDialog();
   }
 
-  edit(item: ContribuableBugetaireModel) {
+  edit(item: GestionnaireModel) {
     this._dialogService.launchAccreditationsGestionnairesCreateDialog(item);
   }
 
-  delete(item: ContribuableBugetaireModel) {
+  delete(item: GestionnaireModel) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteParagraph',
       accept: () => {
-        this._store.dispatch(DeleteContribuableBugetaire({ id: item.id }));
+        this._store.dispatch(DeleteGestionnaire({ id: item.id }));
       },
     });
   }
@@ -103,7 +97,7 @@ export class AccreditationsGestionnairesComponent
       .subscribe((data) => {
         this.data = (data || []).map(
           (d) =>
-            new ContribuableBugetaireModel({
+            new GestionnaireModel({
               ...d,
             })
         );
@@ -118,12 +112,12 @@ export class AccreditationsGestionnairesComponent
       .pipe(
         this.takeUntilDestroy,
         ofType(
-          DeleteContribuableBugetaireSuccess,
-          DeleteContribuableBugetaireFailure
+          DeleteGestionnaireSuccess,
+          DeleteGestionnaireFailure
         )
       )
       .subscribe((action) => {
-        if (action.type === DeleteContribuableBugetaireFailure.type) {
+        if (action.type === DeleteGestionnaireFailure.type) {
           if (action.error?.statusCode === 403) {
             this._appService.showUnauthorizedActionToast();
           } else {
@@ -134,7 +128,7 @@ export class AccreditationsGestionnairesComponent
               closable: true,
             });
           }
-        } else if (action.type === DeleteContribuableBugetaireSuccess.type) {
+        } else if (action.type === DeleteGestionnaireSuccess.type) {
           this._appService.showToast({
             severity: 'success',
             detail: 'messages.paragraphs.deleteSuccess',

@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../../modules/shared.module';
 import { InputMaskModule } from 'primeng/inputmask';
 import { NgModule } from '@angular/core';
@@ -9,6 +10,6 @@ import { AccreditationsGestionnairesFormComponent } from '@components/accreditat
     AccreditationsGestionnairesComponent,
     AccreditationsGestionnairesFormComponent,
   ],
-  imports: [SharedModule, InputMaskModule],
+  imports: [SharedModule, InputMaskModule, FormsModule],
 })
 export class AccreditationsGestionnairesModule {}

@@ -16,11 +16,10 @@ export class RubriqueMercurialeEntity extends BaseEntity {
   @Column({ name: 'label', nullable: true })
   public label?: string;
 
-  @OneToMany(
-    (type) => SousRubriqueMercurialeEntity,
-    (sousRubrique) => sousRubrique.rubrique,
-  )
-  public sousRubriques: SousRubriqueMercurialeEntity[];
+  @OneToMany(() => SousRubriqueMercurialeEntity, (object) => object.rubrique, {
+    eager: true,
+  })
+  public sousRubriques: Partial<SousRubriqueMercurialeEntity>[];
 
   constructor(param?: Partial<RubriqueMercurialeEntity>) {
     super();

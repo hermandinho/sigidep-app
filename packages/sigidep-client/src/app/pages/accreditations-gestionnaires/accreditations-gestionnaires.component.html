@@ -30,27 +30,27 @@
             </th>
             <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
           </ng-container>
+          <th>{{ 'Total des accreditations' }}</th>
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-bankItem let-expanded="expanded">
+      <ng-template pTemplate="body" let-gestionnaire>
         <tr>
           <td></td>
-          <td>{{ bankItem.code }}</td>
-          <td>{{ bankItem.raisonSociale }}</td>
-          <td>{{ bankItem.banque.label }} ({{ bankItem.agence.label }})</td>
-          <td>{{ bankItem.numeroCompte }}</td>
-          <td>{{ bankItem.cle }}</td>
+          <td>{{ gestionnaire.matricule }}</td>
+          <td>{{ gestionnaire.nom }}</td>
+          <td>{{ gestionnaire.prenom }}</td>
+          <td>{{ gestionnaire.accreditations?.length }}</td>
           <td>
             <button
-              (click)="edit(bankItem)"
+              (click)="edit(gestionnaire)"
               class="p-button-rounded p-button-success p-mr-2"
               icon="pi pi-pencil"
               pButton
               pRipple
             ></button>
             <button
-              (click)="delete(bankItem)"
+              (click)="delete(gestionnaire)"
               class="p-button-rounded p-button-warning"
               icon="pi pi-trash"
               pButton

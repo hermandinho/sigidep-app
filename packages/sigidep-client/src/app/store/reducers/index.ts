@@ -25,6 +25,7 @@ import * as fromArticles from './articles.reducer';
 import * as fromRubriques from './rubriques.reducer';
 import * as fromSousRubriques from './sous-rubriques.reducer';
 import * as fromCarnetsMandats from './carnets-mandats.reducer';
+import * as fromGestionnaires from './gestionnaires.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -50,6 +51,7 @@ export interface AppState {
   rubriques: fromRubriques.State;
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
+  gestionnaires: fromGestionnaires.State
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -76,6 +78,7 @@ export const reducers: ActionReducerMap<AppState> = {
   rubriques: fromRubriques.reducer,
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
+  gestionnaires: fromGestionnaires.reducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

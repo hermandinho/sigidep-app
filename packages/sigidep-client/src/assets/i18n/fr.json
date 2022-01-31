@@ -159,7 +159,6 @@
     "siege": "Siège",
     "adresse": "Adresse",
     "bank": "Banque",
-    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire",
     "matricule": "Matricule",
     "nom": "Nom",
     "prenom": "Prenom",
@@ -210,7 +209,9 @@
     "carnet": "Carnet",
     "affectation": "Affectation",
     "isAssign": "Affecter?",
-    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire",
+    "agent": "Agent",
+    "typeAccreditation": "Type d'accreditation"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -380,7 +381,7 @@
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
     "categories-agents": "Catégories",
-    "accreditationsGestionnaires": "Accreditations des Gestionnaires"
+    "accreditationsgestionnaires": "Accreditations des Gestionnaires"
   },
   "tables": {
     "emptyMessage": "Aucun élément",

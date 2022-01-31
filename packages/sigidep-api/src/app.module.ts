@@ -23,6 +23,8 @@ import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetai
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
+import { GestionnairesModule } from './modules/gestionnaires/gestionnaires.module';
+import { AccreditationsModule } from './modules/accreditations/accreditations.module';
 
 @Module({
   imports: [
@@ -60,7 +62,7 @@ import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.modul
           synchronize: true,
           type: 'postgres',
           port: 5432,
-          //autoLoadEntities: true,
+          autoLoadEntities: true,
           // dropSchema: true,
           // logging: true,
           // migrationsTableName: 'migrations',
@@ -101,6 +103,8 @@ import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.modul
     MercurialeModule,
     CarnetMandatModule,
     ContribuablesBudgetairesModule,
+    GestionnairesModule,
+    AccreditationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
