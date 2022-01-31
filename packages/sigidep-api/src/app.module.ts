@@ -23,6 +23,9 @@ import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
 import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
+import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
+import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
+import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
 
 @Module({
   imports: [
@@ -100,6 +103,9 @@ import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetai
     MercurialeModule,
     CarnetMandatModule,
     ContribuablesBudgetairesModule,
+    BaremesMissionsModule,
+    PiecesJointesModule,
+    TypesProceduresModule,
   ],
   controllers: [AppController],
   providers: [AppService],

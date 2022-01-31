@@ -26,6 +26,10 @@ import * as fromRubriques from './rubriques.reducer';
 import * as fromSousRubriques from './sous-rubriques.reducer';
 import * as fromCarnetsMandats from './carnets-mandats.reducer';
 
+import * as fromBaremes from './baremes.reducer';
+import * as fromPiecesJointes from './pieces-jointes.reducer';
+import * as fromTypesProcedures from './types-procedures.reducer';
+
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
   auth: fromAuth.State;
@@ -50,6 +54,9 @@ export interface AppState {
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
   contribuablesBudgetaires: fromContribuablesBudgetaires.State;
+  baremes: fromBaremes.State;
+  typesProcedures: fromTypesProcedures.State;
+  piecesJointes: fromPiecesJointes.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -76,6 +83,9 @@ export const reducers: ActionReducerMap<AppState> = {
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
   contribuablesBudgetaires: fromContribuablesBudgetaires.reducer,
+  baremes: fromBaremes.reducer,
+  piecesJointes: fromPiecesJointes.reducer,
+  typesProcedures: fromTypesProcedures.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

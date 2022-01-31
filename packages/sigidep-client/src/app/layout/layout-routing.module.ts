@@ -22,6 +22,9 @@ import { SousRubriqueComponent } from '@pages/mercuriales/sous-rubrique/sous-rub
 import { CarnetsComponent } from '@pages/carnets/carnets.component';
 import { GradesComponent } from '@pages/grades/grades.component';
 import { CategoriesAgentsComponent } from '@pages/categories-agents/categories-agents.component';
+import { BaremesComponent } from '@pages/baremes/baremes.component';
+import { TypesProceduresComponent } from '@pages/types-procedures/types-procedures.component';
+import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
 
 const routes: Routes = [
   {
@@ -195,6 +198,30 @@ const routes: Routes = [
         data: {
           permissions: [],
         },
+      },
+      {
+        path: 'baremes',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.baremes],
+        },
+        component: BaremesComponent,
+      },
+      {
+        path: 'types-procedures',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.typesProcedures],
+        },
+        component: TypesProceduresComponent,
+      },
+      {
+        path: 'pieces-jointes',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.piecesJointes],
+        },
+        component: PiecesJointesComponent,
       },
       /*{
         path: '**',
