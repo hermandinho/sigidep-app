@@ -29,3 +29,4 @@ export * from './carnet-mandat.entity';
 export * from './piece-jointe.entity';
 export * from './bareme-mission.entity';
 export * from './type-procedure.entity';
+export * from './gestionnaire.entity';
