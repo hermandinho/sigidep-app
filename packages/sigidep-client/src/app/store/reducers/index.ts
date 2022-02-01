@@ -25,6 +25,7 @@ import * as fromArticles from './articles.reducer';
 import * as fromRubriques from './rubriques.reducer';
 import * as fromSousRubriques from './sous-rubriques.reducer';
 import * as fromCarnetsMandats from './carnets-mandats.reducer';
+import * as fromGestionnaires from './gestionnaires.reducer';
 
 import * as fromBaremes from './baremes.reducer';
 import * as fromPiecesJointes from './pieces-jointes.reducer';
@@ -46,6 +47,7 @@ export interface AppState {
   contribuables: fromContribuables.State;
   banksAgences: fromBanksAgences.State;
   regimes: fromRegimes.State;
+  contribuablesBudgetaires: fromContribuablesBudgetaires.State
   grades: fromGrades.State;
   categoriesAgents: fromCategoriesAgents.State;
   agents: fromAgents.State;
@@ -53,7 +55,7 @@ export interface AppState {
   rubriques: fromRubriques.State;
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
-  contribuablesBudgetaires: fromContribuablesBudgetaires.State;
+  gestionnaires: fromGestionnaires.State
   baremes: fromBaremes.State;
   typesProcedures: fromTypesProcedures.State;
   piecesJointes: fromPiecesJointes.State;
@@ -75,6 +77,7 @@ export const reducers: ActionReducerMap<AppState> = {
   contribuables: fromContribuables.reducer,
   banksAgences: fromBanksAgences.reducer,
   regimes: fromRegimes.reducer,
+  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer,
   grades: fromGrades.reducer,
   categoriesAgents: fromCategoriesAgents.reducer,
   agents: fromAgents.reducer,
@@ -82,7 +85,7 @@ export const reducers: ActionReducerMap<AppState> = {
   rubriques: fromRubriques.reducer,
   sousRubriques: fromSousRubriques.reducer,
   carnetsMandats: fromCarnetsMandats.reducer,
-  contribuablesBudgetaires: fromContribuablesBudgetaires.reducer,
+  gestionnaires: fromGestionnaires.reducer,
   baremes: fromBaremes.reducer,
   piecesJointes: fromPiecesJointes.reducer,
   typesProcedures: fromTypesProcedures.reducer,

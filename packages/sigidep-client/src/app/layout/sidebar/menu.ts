@@ -23,6 +23,11 @@ export const MenuPermissions = {
   baremes: [...simpleCrudPermissions('baremes')],
   typesProcedures: [...simpleCrudPermissions('typesProcedures')],
   piecesJointes: [...simpleCrudPermissions('piecesJointes')],
+
+  banksAgences: [...simpleCrudPermissions('banksAgences')],
+  contribuablesBudgetaires: [...simpleCrudPermissions('contribuablesBudgetaires')],
+  accreditationsGestionnaires: [...simpleCrudPermissions('accreditationsGestionnaires')],
+
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -164,11 +169,11 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
 
         {
           routerLink: 'banks-agences',
-          icon: 'pi pi-wallet',
+          icon: 'pi pi-credit-card',
           label: translate.instant('sidebar.banksAgences'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [],
+            permissions: [...MenuPermissions.banksAgences],
           },
         },
         {
@@ -177,7 +182,16 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           label: translate.instant('sidebar.contribuablesBudgetaires'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [],
+            permissions: [...MenuPermissions.contribuablesBudgetaires],
+          },
+        },
+        {
+          routerLink: 'accreditations-gestionnaires',
+          icon: 'pi pi-users',
+          label: translate.instant('sidebar.accreditationsGestionnaires'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.accreditationsGestionnaires],
           },
         },
         {

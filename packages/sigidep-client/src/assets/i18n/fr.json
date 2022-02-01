@@ -25,10 +25,11 @@
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
+    "contribuablesBudgetaires": "contribuables Budgetaires",
     "agents": "Agents",
     "mercuriales": "Mercuriale",
     "carnetsMandats": "Carnets Mandats",
-    "contribuablesBudgetaires": "Contribuables Budgetaires",
+    "accreditationsGestionnaires": "Accreditations des Gestionnaires",
     "baremes": "Barèmes",
     "typesProcedures": "Types Procédures",
     "piecesJointes": "Pièces Jointes"
@@ -159,8 +160,8 @@
     "agence": "Agence",
     "localisation": "Localisation",
     "siege": "Siège",
-    "adresse": "adresse",
-    "bank": "banque",
+    "adresse": "Adresse",
+    "bank": "Banque",
     "matricule": "Matricule",
     "nom": "Nom",
     "prenom": "Prenom",
@@ -212,6 +213,8 @@
     "affectation": "Affectation",
     "isAssign": "Affecter?",
     "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire",
+    "agent": "Agent",
+    "typeAccreditation": "Type d'accreditation",
     "montant": "Montant",
     "order": "Ordre"
   },
@@ -279,6 +282,18 @@
     "agents": {
       "delete": "Une erreur est survenue lors de la suppression de cet agent.",
       "conflict": "Un agent avec ce code existe déjà."
+    },
+    "banks": {
+      "delete": "Une erreur est survenue lors de la suppression de cette banque.",
+      "conflict": "Une banque avec ce code existe déjà."
+    },
+    "agences": {
+      "delete": "Une erreur est survenue lors de la suppression de cette agence.",
+      "conflict": "Une agence avec ce code existe déjà."
+    },
+    "gestionnaires": {
+      "delete": "Une erreur est survenue lors de la suppression de ce gestionnaire.",
+      "conflict": "Un gestionnaire avec ce code existe déjà."
     }
   },
   "messages": {
@@ -368,6 +383,26 @@
       "deleteSuccess": "Barème supprimé avec succès.",
       "createSuccess": "Barème créé avec succès.",
       "updateSuccess": "Barème modifié avec succès."
+    },
+    "banks": {
+      "deleteSuccess": "Banque supprimé avec succès.",
+      "createSuccess": "Banque créé avec succès.",
+      "updateSuccess": "Banque modifié avec succès."
+    },
+    "agences": {
+      "deleteSuccess": "Agence supprimé avec succès.",
+      "createSuccess": "Agence créé avec succès.",
+      "updateSuccess": "Agence modifié avec succès."
+    },
+    "contribuablesBudgetaires": {
+      "deleteSuccess": "Contribuable Budgetaire supprimé avec succès.",
+      "createSuccess": "Contribuable Budgetaire créé avec succès.",
+      "updateSuccess": "Contribuable Budgetaire modifié avec succès."
+    },
+    "gestionnaires": {
+      "deleteSuccess": "Gestionnaire supprimé avec succès.",
+      "createSuccess": "Gestionnaire créé avec succès.",
+      "updateSuccess": "Gestionnaire modifié avec succès."
     }
   },
   "menus": {
@@ -388,7 +423,8 @@
     "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences",
+    "banksagences": "Banques et Agences",
+    "contribuablesbudgetaires": "contribuables budgetaires",
     "agents": "Agents",
     "articles": "Articles",
     "rubriques": "Rubriques",
@@ -397,7 +433,7 @@
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
     "categories-agents": "Catégories",
-    "contribuablesbudgetaires": "contribuables budgetaires",
+    "accreditationsgestionnaires": "Accreditations des Gestionnaires",
     "piecesjointes": "Pieces Jointes",
     "baremes": "Baremes",
     "typesprocedures": "Types Procédures"
@@ -545,6 +581,8 @@
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
       "editAgenceBank": "Modifier une agence de banque",
+      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
+      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire",
       "editAgent": "Editer un agent",
       "editArticle": "Editer un article",
       "editRubrique": "Editer une rubrique",
@@ -553,8 +591,8 @@
       "editGrade": "Editer une grade",
       "editCarnet": "Editer un carnet",
       "assignCarnet": "Affecter le carnet {{code}}",
-      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
-      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire",
+      "createAccreditationsGestionnaires": "Ajouter des accreditations aux gestionnaires",
+      "editAccreditationsGestionnaires": "Mettre à jour des accreditations",
       "editBareme": "Editer un Barème",
       "editTypeProcedure": "Editer un type de procédure",
       "editPieceJointe": "Editer une pièce jointe"
@@ -575,7 +613,11 @@
       "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible.",
       "deletePieceJointe": "Voulez-vous vraiment supprimer cette pièce jointe? Cette action est irréversible.",
       "deleteTypeProcedure": "Voulez-vous vraiment supprimer ce type de procédure? Cette action est irréversible.",
-      "deleteBareme": "Voulez-vous vraiment supprimer ce barème? Cette action est irréversible."
+      "deleteBareme": "Voulez-vous vraiment supprimer ce barème? Cette action est irréversible.",
+      "deleteBank": "Voulez-vous vraiment supprimer cette banque? Cette action est irréversible",
+      "deleteAgence": "Voulez-vous vraiment supprimer cette agence? Cette action est irréversible",
+      "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
+      "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible"
     }
   },
   "exerciseStatuses": {

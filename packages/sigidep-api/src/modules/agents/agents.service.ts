@@ -27,6 +27,7 @@ export class AgentsService {
       .createQueryBuilder('agent')
       .leftJoinAndSelect('agent.grade', 'grade')
       .leftJoinAndSelect('agent.categorie', 'categorie')
+      .leftJoinAndSelect('agent.gestionnaire', 'gestionnaire')
       .getMany();
   }
 

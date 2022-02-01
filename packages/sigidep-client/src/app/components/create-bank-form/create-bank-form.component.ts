@@ -85,7 +85,7 @@ export class CreateBankFormComponent extends BaseComponent implements OnInit {
 
         this._appService.showToast({
           summary: 'messages.success',
-          detail: 'messages.paragraphs.createSuccess',
+          detail: 'messages.banks.createSuccess',
           severity: 'success',
           life: 3000,
           closable: true,
@@ -94,7 +94,7 @@ export class CreateBankFormComponent extends BaseComponent implements OnInit {
       ({ error }) => {
         let err = '';
         if (error?.statusCode === 409) {
-          err = 'errors.paragraphs.conflict';
+          err = 'errors.banks.conflict';
         } else {
           err = 'errors.unknown';
         }

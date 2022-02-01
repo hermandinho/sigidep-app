@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { GestionnairesEntity } from './gestionnaire.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  Unique,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { CategorieAgentEntity } from './categorie-agent.entity';
 import { GradeEntity } from './grade.entity';
@@ -90,4 +98,7 @@ export class AgentEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'categorie' })
   public categorie: CategorieAgentEntity;
+
+  @OneToOne(() => GestionnairesEntity, (object) => object.agent, {})
+  public gestionnaire: GestionnairesEntity;
 }
