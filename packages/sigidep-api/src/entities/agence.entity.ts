@@ -5,7 +5,6 @@ import { BanksEntity } from './bank.entity';
 @Entity({
   name: 'agences',
 })
-@Unique('UQ_AGENCE_CODE', ['code'])
 export class AgencesEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;

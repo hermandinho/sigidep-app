@@ -146,7 +146,7 @@ export class CreateContribuableBudgetaireFormComponent
 
         this._appService.showToast({
           summary: 'messages.success',
-          detail: 'messages.paragraphs.createSuccess',
+          detail: 'messages.contribuablesBudgetaires.createSuccess',
           severity: 'success',
           life: 3000,
           closable: true,
@@ -155,7 +155,7 @@ export class CreateContribuableBudgetaireFormComponent
       ({ error }) => {
         let err = '';
         if (error?.statusCode === 409) {
-          err = 'errors.paragraphs.conflict';
+          err = 'errors.contribuablesBudgetaires.conflict';
         } else {
           err = 'errors.unknown';
         }

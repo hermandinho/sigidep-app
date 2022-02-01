@@ -99,7 +99,7 @@ export class CreateAgenceBankFormComponent
 
         this._appService.showToast({
           summary: 'messages.success',
-          detail: 'messages.paragraphs.createSuccess',
+          detail: 'messages.agences.createSuccess',
           severity: 'success',
           life: 3000,
           closable: true,
@@ -108,7 +108,7 @@ export class CreateAgenceBankFormComponent
       ({ error }) => {
         let err = '';
         if (error?.statusCode === 409) {
-          err = 'errors.paragraphs.conflict';
+          err = 'errors.agences.conflict';
         } else {
           err = 'errors.unknown';
         }

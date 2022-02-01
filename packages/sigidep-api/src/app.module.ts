@@ -19,10 +19,12 @@ import { ReferencePhysicalUnitsModule } from './modules/reference-physical-units
 import { ContribuablesModule } from '@modules/contribuables/contribuables.module';
 import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module';
 import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
+import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
-import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
+import { GestionnairesModule } from './modules/gestionnaires/gestionnaires.module';
+import { AccreditationsModule } from './modules/accreditations/accreditations.module';
 import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
 import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
 import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
@@ -99,10 +101,13 @@ import { TypesProceduresModule } from '@modules/types-procedures/types-procedure
     ContribuablesModule,
     BanksAgencesModule,
     RegimeFiscalModule,
+    ContribuablesBudgetairesModule,
     AgentsModule,
     MercurialeModule,
     CarnetMandatModule,
     ContribuablesBudgetairesModule,
+    GestionnairesModule,
+    AccreditationsModule,
     BaremesMissionsModule,
     PiecesJointesModule,
     TypesProceduresModule,

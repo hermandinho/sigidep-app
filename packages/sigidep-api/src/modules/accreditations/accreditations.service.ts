@@ -1,23 +1,23 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AgencesEntity } from './../../entities/agence.entity';
 import {
   Injectable,
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateAgenceDto } from './dto/create-agence.dto';
+import { CreateAccreditationDto } from './dto/create-accreditation.dto';
+import { AccreditationEntity } from '@entities/accreditation.entity';
 import { Repository, In } from 'typeorm';
 
 @Injectable()
-export class AgencesService {
+export class AccreditationsService {
   constructor(
-    @InjectRepository(AgencesEntity)
-    private readonly repository: Repository<AgencesEntity>,
+    @InjectRepository(AccreditationEntity)
+    private readonly repository: Repository<AccreditationEntity>,
   ) {}
 
-  async create(payload: CreateAgenceDto): Promise<AgencesEntity> {
+  async create(payload: CreateAccreditationDto) {
     const check = await this.repository.findOne(
-      { bank: { id: payload.bank.id }, code: payload.code },
+      { imputation: payload.imputation },
       { loadEagerRelations: false },
     );
 
@@ -29,14 +29,18 @@ export class AgencesService {
   }
 
   findAll() {
-    return `This action returns all banksAgences`;
+    return `This action returns all accreditations`;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} banksAgence`;
+    return `This action returns a #${id} accreditation`;
   }
 
-  async update(id: number, payload: CreateAgenceDto) {
+  findByGestionnaire(id: number) {
+    return `This action returns a #${id} accreditation`;
+  }
+
+  async update(id: number, payload: CreateAccreditationDto) {
     const check = await this.repository.findOne(
       { id },
       { loadEagerRelations: false },

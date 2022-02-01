@@ -22,6 +22,7 @@ import { SousRubriqueComponent } from '@pages/mercuriales/sous-rubrique/sous-rub
 import { CarnetsComponent } from '@pages/carnets/carnets.component';
 import { GradesComponent } from '@pages/grades/grades.component';
 import { CategoriesAgentsComponent } from '@pages/categories-agents/categories-agents.component';
+import { AccreditationsGestionnairesComponent } from '@pages/accreditations-gestionnaires/accreditations-gestionnaires.component';
 import { BaremesComponent } from '@pages/baremes/baremes.component';
 import { TypesProceduresComponent } from '@pages/types-procedures/types-procedures.component';
 import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
@@ -136,6 +137,14 @@ const routes: Routes = [
         component: BanksAgencesComponent,
       },
       {
+        path: 'contribuables-budgetaires',
+        component: ContribuablesBudgetairesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [],
+        },
+      },
+      {
         path: 'agents',
         canActivate: [AuthGuard],
         data: {
@@ -192,8 +201,8 @@ const routes: Routes = [
         component: CategoriesAgentsComponent,
       },
       {
-        path: 'contribuables-budgetaires',
-        component: ContribuablesBudgetairesComponent,
+        path: 'accreditations-gestionnaires',
+        component: AccreditationsGestionnairesComponent,
         canActivate: [AuthGuard],
         data: {
           permissions: [],

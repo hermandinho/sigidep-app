@@ -1,3 +1,4 @@
+import { AccreditationsGestionnairesModule } from './pages/accreditations-gestionnaires/accreditations-gestionnaires.module';
 import { ContribuablesBudgetairesModule } from './pages/contribuables-budgetaires/contribuables-budgetaires.module';
 import { BanksAgencesModule } from './pages/banks-agences/banks-agences.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
@@ -93,6 +94,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
     BanksAgencesModule,
+    ContribuablesBudgetairesModule,
     AgentsModule,
     ArticlesModule,
     RubriquesModule,
@@ -101,6 +103,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GradesModule,
     CategoriesAgentsModule,
     ContribuablesBudgetairesModule,
+    AccreditationsGestionnairesModule,
     BaremesModule,
     TypesProceduresModule,
     PiecesJointesModule,
