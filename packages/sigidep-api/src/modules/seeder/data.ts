@@ -10,6 +10,8 @@ import { ContribuableEntity } from '@entities/contribuable.entity';
 import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
 import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
 import { GradeEntity } from '@entities/grade.entity';
+import { TypeProcedureEntity } from '@entities/type-procedure.entity';
+
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
   description:
@@ -5534,5 +5536,44 @@ export const GRADES_DATA: Partial<GradeEntity>[] = [
   },
   {
     code: 'GRADE3',
+  },
+];
+
+export const PROCEDURESTYPES_DATA: Partial<TypeProcedureEntity>[] = [
+  {
+    code: '1110',
+    label: 'BCA - Bon de Commande Administratif',
+  },
+  {
+    code: '1111',
+    label: 'LC - Lettre Commande',
+  },
+  {
+    code: '1115',
+    label: 'Marché',
+  },
+  {
+    code: '1121',
+    label: 'Missions',
+  },
+  {
+    code: '1122',
+    label: 'Primes',
+  },
+  {
+    code: '1123',
+    label: 'Frais de Relève',
+  },
+  {
+    code: '1124',
+    label: 'Mise à Disposition - Agent',
+  },
+  {
+    code: '1125',
+    label: 'Mise à Disposition - Structure',
+  },
+  {
+    code: '1126',
+    label: 'Déblocage - Contribuable',
   },
 ];
