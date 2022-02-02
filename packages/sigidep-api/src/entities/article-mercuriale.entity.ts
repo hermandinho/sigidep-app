@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { BaseEntity } from '.';
 import { SousRubriqueMercurialeEntity } from './sous-rubriques-mercuriales.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({
   name: 'articles_mercuriales',
@@ -27,13 +28,15 @@ export class ArticleMercurialeEntity extends BaseEntity {
 
   @ManyToOne(
     () => SousRubriqueMercurialeEntity,
-    (sousRubrique) => sousRubrique.id,
+    (sousRubrique) => sousRubrique.articles,
     {
       cascade: true,
-      eager: true,
+      eager: false,
+      onDelete: 'CASCADE',
     },
   )
   @JoinColumn({ name: 'sous_rubrique_id' })
+  @ApiProperty({ type: () => SousRubriqueMercurialeEntity })
   public sousRubrique: SousRubriqueMercurialeEntity;
 
   constructor(param?: Partial<ArticleMercurialeEntity>) {

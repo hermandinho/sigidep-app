@@ -21,6 +21,13 @@ export enum PermissionContextsEnum {
   RUBRIQUES = 'rubriques',
   SOUS_RUBRIQUES = 'sousRubriques',
   CARNET_MANDATS = 'carnetsMandats',
+  BAREMES_MISSIONS = 'baremes',
+  PIECES_JOINTES = 'piecesJointes',
+  TYPES_PROCEDURES = 'typesProcedures',
+
+  BANKS_AGENCES = 'banksAgences',
+  CONTRIBUABLES_BUDGETAIRES = 'contribuablesBudgetaires',
+  ACCREDITATIONS_GESTIONNAIRES = 'accreditationsGestionnaires',
 }
 
 export enum UserAccountStatusEnum {

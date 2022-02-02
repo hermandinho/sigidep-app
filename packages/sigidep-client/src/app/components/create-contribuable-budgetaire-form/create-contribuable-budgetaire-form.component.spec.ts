@@ -8,13 +8,14 @@ describe('CreateContribuableBudgetaireFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateContribuableBudgetaireFormComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateContribuableBudgetaireFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateContribuableBudgetaireFormComponent);
+    fixture = TestBed.createComponent(
+      CreateContribuableBudgetaireFormComponent
+    );
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

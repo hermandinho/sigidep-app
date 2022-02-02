@@ -8,18 +8,18 @@ import { ApisService } from '@services/apis.service';
 
 import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import {
-    GetContribuablesBugetaires,
-    GetContribuablesBugetairesSuccess,
-    GetContribuablesBugetairesFailure,
-    UpdateContribuableBugetaire,
-    UpdateContribuableBugetaireSuccess,
-    UpdateContribuableBugetaireFailure,
-    DeleteContribuableBugetaire,
-    DeleteContribuableBugetaireSuccess,
-    DeleteContribuableBugetaireFailure,
-    CreateContribuableBugetaire,
-    CreateContribuableBugetaireSuccess,
-    CreateContribuableBugetaireFailure
+  GetContribuablesBugetaires,
+  GetContribuablesBugetairesSuccess,
+  GetContribuablesBugetairesFailure,
+  UpdateContribuableBugetaire,
+  UpdateContribuableBugetaireSuccess,
+  UpdateContribuableBugetaireFailure,
+  DeleteContribuableBugetaire,
+  DeleteContribuableBugetaireSuccess,
+  DeleteContribuableBugetaireFailure,
+  CreateContribuableBugetaire,
+  CreateContribuableBugetaireSuccess,
+  CreateContribuableBugetaireFailure,
 } from '@store/actions';
 
 @Injectable()
@@ -28,14 +28,16 @@ export class ContribuablesBudgetairesEffects {
     this.actions$.pipe(
       ofType(GetContribuablesBugetaires),
       mergeMap((action) =>
-        this.apisService.get<ContribuableBugetaireModel[]>('/contribuables-budgetaires').pipe(
-          switchMap((payload) => {
-            return [GetContribuablesBugetairesSuccess({ payload })];
-          }),
-          catchError((err: HttpErrorResponse) =>
-            of(GetContribuablesBugetairesFailure(err))
+        this.apisService
+          .get<ContribuableBugetaireModel[]>('/contribuables-budgetaires')
+          .pipe(
+            switchMap((payload) => {
+              return [GetContribuablesBugetairesSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetContribuablesBugetairesFailure(err))
+            )
           )
-        )
       )
     )
   );
@@ -45,7 +47,10 @@ export class ContribuablesBudgetairesEffects {
       ofType(CreateContribuableBugetaire),
       mergeMap((action) =>
         this.apisService
-          .post<ContribuableBugetaireModel>('/contribuables-budgetaires', action.payload)
+          .post<ContribuableBugetaireModel>(
+            '/contribuables-budgetaires',
+            action.payload
+          )
           .pipe(
             switchMap((payload) => {
               return [CreateContribuableBugetaireSuccess({ payload })];
@@ -63,7 +68,10 @@ export class ContribuablesBudgetairesEffects {
       ofType(UpdateContribuableBugetaire),
       mergeMap((action) =>
         this.apisService
-          .post<ContribuableBugetaireModel>('/contribuables-budgetaires', action.payload)
+          .post<ContribuableBugetaireModel>(
+            '/contribuables-budgetaires',
+            action.payload
+          )
           .pipe(
             switchMap((payload) => {
               return [UpdateContribuableBugetaireSuccess({ payload })];
@@ -80,14 +88,19 @@ export class ContribuablesBudgetairesEffects {
     this.actions$.pipe(
       ofType(DeleteContribuableBugetaire),
       mergeMap((action) =>
-        this.apisService.delete<any>(`/contribuables-budgetaires?ids=${action.id}`, {}).pipe(
-          switchMap((payload) => {
-            return [DeleteContribuableBugetaireSuccess(), GetContribuablesBugetaires()];
-          }),
-          catchError((err: HttpErrorResponse) =>
-            of(DeleteContribuableBugetaireFailure(err))
+        this.apisService
+          .delete<any>(`/contribuables-budgetaires?ids=${action.id}`, {})
+          .pipe(
+            switchMap((payload) => {
+              return [
+                DeleteContribuableBugetaireSuccess(),
+                GetContribuablesBugetaires(),
+              ];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(DeleteContribuableBugetaireFailure(err))
+            )
           )
-        )
       )
     )
   );

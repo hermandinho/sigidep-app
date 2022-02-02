@@ -4,14 +4,11 @@ import { SharedModule } from '@modules/shared.module';
 import { NgModule } from '@angular/core';
 import { ContribuablesBudgetairesComponent } from './contribuables-budgetaires.component';
 
-
-
 @NgModule({
   declarations: [
-    ContribuablesBudgetairesComponent, CreateContribuableBudgetaireFormComponent
+    ContribuablesBudgetairesComponent,
+    CreateContribuableBudgetaireFormComponent,
   ],
-  imports: [
-    SharedModule, InputMaskModule
-  ]
+  imports: [SharedModule, InputMaskModule],
 })
-export class ContribuablesBudgetairesModule { }
+export class ContribuablesBudgetairesModule {}

@@ -20,6 +20,14 @@ export const MenuPermissions = {
   agents: [...simpleCrudPermissions('agents')],
   articles: [...simpleCrudPermissions('articles')],
   carnetsMandats: [...simpleCrudPermissions('carnetsMandats')],
+  baremes: [...simpleCrudPermissions('baremes')],
+  typesProcedures: [...simpleCrudPermissions('typesProcedures')],
+  piecesJointes: [...simpleCrudPermissions('piecesJointes')],
+
+  banksAgences: [...simpleCrudPermissions('banksAgences')],
+  contribuablesBudgetaires: [...simpleCrudPermissions('contribuablesBudgetaires')],
+  accreditationsGestionnaires: [...simpleCrudPermissions('accreditationsGestionnaires')],
+
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -157,17 +165,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           state: {
             permissions: [...MenuPermissions.carnetsMandats],
           },
-
-          
         },
 
         {
           routerLink: 'banks-agences',
-          icon: 'pi pi-wallet',
+          icon: 'pi pi-credit-card',
           label: translate.instant('sidebar.banksAgences'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [],
+            permissions: [...MenuPermissions.banksAgences],
           },
         },
         {
@@ -176,7 +182,43 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           label: translate.instant('sidebar.contribuablesBudgetaires'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [],
+            permissions: [...MenuPermissions.contribuablesBudgetaires],
+          },
+        },
+        {
+          routerLink: 'accreditations-gestionnaires',
+          icon: 'pi pi-users',
+          label: translate.instant('sidebar.accreditationsGestionnaires'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.accreditationsGestionnaires],
+          },
+        },
+        {
+          routerLink: 'baremes',
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.baremes'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.baremes],
+          },
+        },
+        {
+          routerLink: 'types-procedures',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.typesProcedures'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.typesProcedures],
+          },
+        },
+        {
+          routerLink: 'pieces-jointes',
+          icon: 'pi pi-paperclip',
+          label: translate.instant('sidebar.piecesJointes'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.piecesJointes],
           },
         },
       ],

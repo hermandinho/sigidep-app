@@ -68,7 +68,6 @@ export class CreateContribuableBudgetaireFormComponent
   }
 
   async ngOnInit(): Promise<void> {
-
     await this.getInitialData();
 
     if (this.config.data?.item) {
@@ -94,9 +93,8 @@ export class CreateContribuableBudgetaireFormComponent
       });
       this.isEditMode = true;
 
-      const b = this.banksList.find(elt => elt.id === banque.id);
+      const b = this.banksList.find((elt) => elt.id === banque.id);
       this.form.get('banque')?.setValue(b);
-      
     }
   }
 
@@ -148,7 +146,7 @@ export class CreateContribuableBudgetaireFormComponent
 
         this._appService.showToast({
           summary: 'messages.success',
-          detail: 'messages.paragraphs.createSuccess',
+          detail: 'messages.contribuablesBudgetaires.createSuccess',
           severity: 'success',
           life: 3000,
           closable: true,
@@ -157,7 +155,7 @@ export class CreateContribuableBudgetaireFormComponent
       ({ error }) => {
         let err = '';
         if (error?.statusCode === 409) {
-          err = 'errors.paragraphs.conflict';
+          err = 'errors.contribuablesBudgetaires.conflict';
         } else {
           err = 'errors.unknown';
         }

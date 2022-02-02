@@ -1,3 +1,4 @@
+import { GestionnaireModel } from './gestionnaire.model';
 import { BaseModel } from './base.model';
 import { CategorieAgentModel } from './categorie-agent.model';
 import { GradeModel } from './grade.model';
@@ -39,6 +40,8 @@ export class AgentModel extends BaseModel {
   grade?: GradeModel;
 
   categorie?: CategorieAgentModel;
+
+  gestionnaire?: GestionnaireModel;
 
   constructor(params?: Partial<AgentModel>) {
     super();

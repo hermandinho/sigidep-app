@@ -24,15 +24,22 @@ export class SousRubriqueMercurialeEntity extends BaseEntity {
   @Column({ name: 'label', nullable: true })
   public label?: string;
 
-  @ManyToOne(() => RubriqueMercurialeEntity, (rubrique) => rubrique.id, {
-    cascade: true,
-    eager: true,
-  })
+  @ManyToOne(
+    () => RubriqueMercurialeEntity,
+    (rubrique) => rubrique.sousRubriques,
+    {
+      cascade: true,
+      eager: false,
+      onDelete: 'CASCADE',
+    },
+  )
   @JoinColumn({ name: 'rubrique_id' })
   public rubrique: RubriqueMercurialeEntity;
 
-  @OneToMany(() => ArticleMercurialeEntity, (article) => article.sousRubrique)
-  public articles: ArticleMercurialeEntity[];
+  @OneToMany(() => ArticleMercurialeEntity, (article) => article.sousRubrique, {
+    eager: true,
+  })
+  public articles: Partial<ArticleMercurialeEntity>[];
 
   constructor(param?: Partial<SousRubriqueMercurialeEntity>) {
     super();
