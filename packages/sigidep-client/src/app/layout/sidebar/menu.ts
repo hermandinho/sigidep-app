@@ -25,9 +25,13 @@ export const MenuPermissions = {
   piecesJointes: [...simpleCrudPermissions('piecesJointes')],
 
   banksAgences: [...simpleCrudPermissions('banksAgences')],
-  contribuablesBudgetaires: [...simpleCrudPermissions('contribuablesBudgetaires')],
-  accreditationsGestionnaires: [...simpleCrudPermissions('accreditationsGestionnaires')],
-
+  contribuablesBudgetaires: [
+    ...simpleCrudPermissions('contribuablesBudgetaires'),
+  ],
+  accreditationsGestionnaires: [
+    ...simpleCrudPermissions('accreditationsGestionnaires'),
+  ],
+  encours: [...simpleCrudPermissions('encours')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -159,7 +163,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           routerLink: 'carnets',
-          icon: 'pi pi-table',
+          icon: 'pi pi-bars',
           label: translate.instant('sidebar.carnetsMandats'),
           routerLinkActiveOptions: { exact: true },
           state: {
@@ -219,6 +223,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.piecesJointes],
+          },
+        },
+        {
+          routerLink: 'encours',
+          icon: 'pi pi-arrow-circle-up',
+          label: translate.instant('sidebar.encours'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.encours],
           },
         },
       ],

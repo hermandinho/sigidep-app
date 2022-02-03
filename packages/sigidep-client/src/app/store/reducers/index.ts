@@ -30,6 +30,7 @@ import * as fromGestionnaires from './gestionnaires.reducer';
 import * as fromBaremes from './baremes.reducer';
 import * as fromPiecesJointes from './pieces-jointes.reducer';
 import * as fromTypesProcedures from './types-procedures.reducer';
+import * as fromEncours from './encours.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -47,7 +48,7 @@ export interface AppState {
   contribuables: fromContribuables.State;
   banksAgences: fromBanksAgences.State;
   regimes: fromRegimes.State;
-  contribuablesBudgetaires: fromContribuablesBudgetaires.State
+  contribuablesBudgetaires: fromContribuablesBudgetaires.State;
   grades: fromGrades.State;
   categoriesAgents: fromCategoriesAgents.State;
   agents: fromAgents.State;
@@ -55,10 +56,11 @@ export interface AppState {
   rubriques: fromRubriques.State;
   sousRubriques: fromSousRubriques.State;
   carnetsMandats: fromCarnetsMandats.State;
-  gestionnaires: fromGestionnaires.State
+  gestionnaires: fromGestionnaires.State;
   baremes: fromBaremes.State;
   typesProcedures: fromTypesProcedures.State;
   piecesJointes: fromPiecesJointes.State;
+  encours: fromEncours.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -89,6 +91,7 @@ export const reducers: ActionReducerMap<AppState> = {
   baremes: fromBaremes.reducer,
   piecesJointes: fromPiecesJointes.reducer,
   typesProcedures: fromTypesProcedures.reducer,
+  encours: fromEncours.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

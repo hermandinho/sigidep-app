@@ -28,6 +28,7 @@ export enum PermissionContextsEnum {
   BANKS_AGENCES = 'banksAgences',
   CONTRIBUABLES_BUDGETAIRES = 'contribuablesBudgetaires',
   ACCREDITATIONS_GESTIONNAIRES = 'accreditationsGestionnaires',
+  ENCOURS = 'encours',
 }
 
 export enum UserAccountStatusEnum {

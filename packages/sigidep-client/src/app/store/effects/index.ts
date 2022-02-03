@@ -25,6 +25,7 @@ import { GestionnairesEffects } from './gestionnaires.effects';
 import { TypesProceduresEffects } from './types-procedures.effects';
 import { BaremesEffects } from './baremes.effects';
 import { PiecesJointesEffects } from './pieces-jointes.effects';
+import { EncoursEffects } from './encours.effects';
 
 export const Effects = [
   AuthEffects,
@@ -55,4 +56,5 @@ export const Effects = [
   TypesProceduresEffects,
   BaremesEffects,
   PiecesJointesEffects,
+  EncoursEffects,
 ];

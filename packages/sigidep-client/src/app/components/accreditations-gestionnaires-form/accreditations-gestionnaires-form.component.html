@@ -59,22 +59,27 @@
 
       <div class="p-field p-col-12 p-md-12">
         <div class="p-field">
-          <label class="required">{{ "labels.typeAccreditation" | translate }}</label>
+          <label class="required">{{
+            "labels.typeAccreditation" | translate
+          }}</label>
 
           <p-dropdown
-              [autoDisplayFirst]="false"
-              [options]="['sub-program', 'administrative-unit']"
-              formControlName="typeAccreditation"
-            >
-            </p-dropdown>
+            [autoDisplayFirst]="false"
+            [options]="['sub-program', 'administrative-unit']"
+            formControlName="typeAccreditation"
+          >
+          </p-dropdown>
         </div>
       </div>
 
-      <ng-container *ngIf="form.get('typeAccreditation')?.value === 'sub-program'">
-
+      <ng-container
+        *ngIf="form.get('typeAccreditation')?.value === 'sub-program'"
+      >
         <div class="p-field p-col-12 p-md-12">
           <div class="p-field">
-            <label class="required">{{ "labels.subProgram" | translate }}</label>
+            <label class="required">{{
+              "labels.subProgram" | translate
+            }}</label>
             <p-dropdown
               [autoDisplayFirst]="false"
               [options]="subProgramsList"
@@ -94,7 +99,7 @@
             </p-dropdown>
           </div>
         </div>
-  
+
         <div class="p-field p-col-12 p-md-4">
           <div class="p-field">
             <label class="required">{{ "labels.action" | translate }}</label>
@@ -117,7 +122,7 @@
             </p-dropdown>
           </div>
         </div>
-  
+
         <div class="p-field p-col-12 p-md-4">
           <div class="p-field">
             <label class="required">{{ "labels.activity" | translate }}</label>
@@ -140,7 +145,7 @@
             </p-dropdown>
           </div>
         </div>
-  
+
         <div class="p-field p-col-12 p-md-4">
           <div class="p-field">
             <label class="required">{{ "labels.task" | translate }}</label>
@@ -165,10 +170,14 @@
         </div>
       </ng-container>
 
-      <ng-container *ngIf="form.get('typeAccreditation')?.value === 'administrative-unit'">
+      <ng-container
+        *ngIf="form.get('typeAccreditation')?.value === 'administrative-unit'"
+      >
         <div class="p-field p-col-12 p-md-12">
           <div class="p-field">
-            <label class="required">{{ "labels.administrativeUnit" | translate }}</label>
+            <label class="required">{{
+              "labels.administrativeUnit" | translate
+            }}</label>
             <p-dropdown
               [autoDisplayFirst]="false"
               [options]="administrativeUnitList"
@@ -189,8 +198,6 @@
           </div>
         </div>
       </ng-container>
-      
-
     </div>
   </form>
 
@@ -237,7 +244,7 @@
               />
             </ng-template>
             <ng-template pTemplate="output">
-              {{ product.dateDebut | date}}
+              {{ product.dateDebut | date }}
             </ng-template>
           </p-cellEditor>
         </td>
@@ -253,7 +260,7 @@
               />
             </ng-template>
             <ng-template pTemplate="output">
-              {{ product.dateFin  | date }}
+              {{ product.dateFin | date }}
             </ng-template>
           </p-cellEditor>
         </td>
