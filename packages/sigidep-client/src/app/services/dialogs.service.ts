@@ -30,6 +30,7 @@ import {
   TypeProcedureModel,
 } from '@models/index';
 import { AccreditationsGestionnairesFormComponent } from '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component';
+import { CreateEncoursModel } from '@models/create-encours.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -65,6 +66,8 @@ export class DialogsService {
   private baremeCreateComponent: any;
   private typeProcedureCreateComponent: any;
   private pieceJointeCreateComponent: any;
+
+  private encoursCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -739,6 +742,26 @@ export class DialogsService {
     }
     return this._dialogService.open(this.pieceJointeCreateComponent, {
       header: this._translateService.instant('dialogs.headers.editPieceJointe'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEncoursCreateDialog(
+    item?: CreateEncoursModel
+  ): Promise<any> {
+    if (!this.encoursCreateComponent) {
+      const { CreateEncoursFormComponent } = await import(
+        '@components/create-encours-form/create-encours-form.component'
+      );
+      this.encoursCreateComponent = CreateEncoursFormComponent;
+    }
+    return this._dialogService.open(this.encoursCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.encours'),
       width: '50vw',
       height: 'auto',
       modal: true,

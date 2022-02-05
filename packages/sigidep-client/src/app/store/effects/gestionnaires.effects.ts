@@ -8,18 +8,18 @@ import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { ApisService } from '@services/apis.service';
 
 import {
-    GetGestionnaires,
-    GetGestionnairesSuccess,
-    GetGestionnairesFailure,
-    UpdateGestionnaire,
-    UpdateGestionnaireSuccess,
-    UpdateGestionnaireFailure,
-    DeleteGestionnaire,
-    DeleteGestionnaireSuccess,
-    DeleteGestionnaireFailure,
-    CreateGestionnaire,
-    CreateGestionnaireSuccess,
-    CreateGestionnaireFailure
+  GetGestionnaires,
+  GetGestionnairesSuccess,
+  GetGestionnairesFailure,
+  UpdateGestionnaire,
+  UpdateGestionnaireSuccess,
+  UpdateGestionnaireFailure,
+  DeleteGestionnaire,
+  DeleteGestionnaireSuccess,
+  DeleteGestionnaireFailure,
+  CreateGestionnaire,
+  CreateGestionnaireSuccess,
+  CreateGestionnaireFailure,
 } from '@store/actions';
 
 @Injectable()
@@ -28,16 +28,14 @@ export class GestionnairesEffects {
     this.actions$.pipe(
       ofType(GetGestionnaires),
       mergeMap((action) =>
-        this.apisService
-          .get<GestionnaireModel[]>('/gestionnaires')
-          .pipe(
-            switchMap((payload) => {
-              return [GetGestionnairesSuccess({ payload })];
-            }),
-            catchError((err: HttpErrorResponse) =>
-              of(GetGestionnairesFailure(err))
-            )
+        this.apisService.get<GestionnaireModel[]>('/gestionnaires').pipe(
+          switchMap((payload) => {
+            return [GetGestionnairesSuccess({ payload })];
+          }),
+          catchError((err: HttpErrorResponse) =>
+            of(GetGestionnairesFailure(err))
           )
+        )
       )
     )
   );
@@ -47,10 +45,7 @@ export class GestionnairesEffects {
       ofType(CreateGestionnaire),
       mergeMap((action) =>
         this.apisService
-          .post<GestionnaireModel>(
-            '/gestionnaires',
-            action.payload
-          )
+          .post<GestionnaireModel>('/gestionnaires', action.payload)
           .pipe(
             switchMap((payload) => {
               return [CreateGestionnaireSuccess({ payload })];
@@ -68,10 +63,7 @@ export class GestionnairesEffects {
       ofType(UpdateGestionnaire),
       mergeMap((action) =>
         this.apisService
-          .post<GestionnaireModel>(
-            '/gestionnaires',
-            action.payload
-          )
+          .post<GestionnaireModel>('/gestionnaires', action.payload)
           .pipe(
             switchMap((payload) => {
               return [UpdateGestionnaireSuccess({ payload })];
@@ -92,10 +84,7 @@ export class GestionnairesEffects {
           .delete<any>(`/gestionnaires?ids=${action.id}`, {})
           .pipe(
             switchMap((payload) => {
-              return [
-                DeleteGestionnaireSuccess(),
-                GetGestionnaires(),
-              ];
+              return [DeleteGestionnaireSuccess(), GetGestionnaires()];
             }),
             catchError((err: HttpErrorResponse) =>
               of(DeleteGestionnaireFailure(err))

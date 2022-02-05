@@ -26,6 +26,7 @@ import { AccreditationsGestionnairesComponent } from '@pages/accreditations-gest
 import { BaremesComponent } from '@pages/baremes/baremes.component';
 import { TypesProceduresComponent } from '@pages/types-procedures/types-procedures.component';
 import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
+import { EncoursComponent } from '@pages/encours/encours.component';
 
 const routes: Routes = [
   {
@@ -231,6 +232,14 @@ const routes: Routes = [
           permissions: [...MenuPermissions.piecesJointes],
         },
         component: PiecesJointesComponent,
+      },
+      {
+        path: 'encours',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.encours],
+        },
+        component: EncoursComponent,
       },
       /*{
         path: '**',

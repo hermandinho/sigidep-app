@@ -8,9 +8,8 @@ describe('AccreditationsGestionnairesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccreditationsGestionnairesComponent ]
-    })
-    .compileComponents();
+      declarations: [AccreditationsGestionnairesComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

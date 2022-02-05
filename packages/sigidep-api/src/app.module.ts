@@ -28,6 +28,7 @@ import { AccreditationsModule } from './modules/accreditations/accreditations.mo
 import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
 import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
 import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
+import { EncoursModule } from '@modules/encours/encours.module';
 
 @Module({
   imports: [
@@ -111,6 +112,7 @@ import { TypesProceduresModule } from '@modules/types-procedures/types-procedure
     BaremesMissionsModule,
     PiecesJointesModule,
     TypesProceduresModule,
+    EncoursModule,
   ],
   controllers: [AppController],
   providers: [AppService],
