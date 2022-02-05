@@ -74,6 +74,7 @@ export const PERMISSIONS_DATA: Partial<PermissionEntity>[] = [
   ...simpleCrudGenerator(C.BAREMES_MISSIONS),
   ...simpleCrudGenerator(C.PIECES_JOINTES),
   ...simpleCrudGenerator(C.TYPES_PROCEDURES),
+  ...simpleCrudGenerator(C.ENCOURS),
   ,
 ];
 

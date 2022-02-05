@@ -23,7 +23,7 @@ import {
 @Component({
   selector: 'app-accreditations-gestionnaires',
   templateUrl: './accreditations-gestionnaires.component.html',
-  styleUrls: ['./accreditations-gestionnaires.component.scss']
+  styleUrls: ['./accreditations-gestionnaires.component.scss'],
 })
 export class AccreditationsGestionnairesComponent
   extends BaseComponent
@@ -111,10 +111,7 @@ export class AccreditationsGestionnairesComponent
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
-        ofType(
-          DeleteGestionnaireSuccess,
-          DeleteGestionnaireFailure
-        )
+        ofType(DeleteGestionnaireSuccess, DeleteGestionnaireFailure)
       )
       .subscribe((action) => {
         if (action.type === DeleteGestionnaireFailure.type) {

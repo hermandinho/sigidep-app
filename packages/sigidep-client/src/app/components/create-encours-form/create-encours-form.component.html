@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required">{{ "labels.exercice" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="exercices"
+            [placeholder]="'Select...'"
+            class="p-col-6"
+            formControlName="exercise"
+            optionLabel="year"
+            optionValue="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code + "-" + option.year }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>{{ option.code + "-" + option.year }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.seuil" | translate }}</label>
+        <input
+          type="number"
+          min="0"
+          max="100"
+          class="form-control"
+          pInputText
+          formControlName="valeurSeuil"
+          [placeholder]="'0'"
+        />
+      </div>
+    </div>
+  </div>
+  <ng-template [ngIf]="loading">
+    <p-progressSpinner
+      class="progress-spinner"
+      strokeWidth="3"
+    ></p-progressSpinner>
+  </ng-template>
+  <div class="actions">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'reload' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

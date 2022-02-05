@@ -1,9 +1,7 @@
 import { GestionnaireModel } from './../../models/gestionnaire.model';
 import { createAction, props } from '@ngrx/store';
 
-export const GetGestionnaires = createAction(
-  '[Gestionnaires] Filter'
-);
+export const GetGestionnaires = createAction('[Gestionnaires] Filter');
 export const GetGestionnairesSuccess = createAction(
   '[Gestionnaires] Filter success',
   props<{ payload: GestionnaireModel[] }>()
