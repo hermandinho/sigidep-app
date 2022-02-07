@@ -47,4 +47,9 @@ export class EncoursController {
   public async deleteOne(@Param('id') id: number) {
     return this.encoursServices.deleteOne(id);
   }
+
+  @Get('/:id')
+  public async getOne(@Param('id') id: number) {
+    return this.encoursServices.getOne(id);
+  }
 }

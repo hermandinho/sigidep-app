@@ -49,7 +49,34 @@ export class EncoursService {
   }
 
   public async filter(): Promise<EncoursEntity[]> {
-    return this.encoursRepository.createQueryBuilder('e').getMany();
+    return this.encoursRepository
+      .createQueryBuilder('encours')
+      .leftJoinAndSelect('encours.exercise', 'exercise')
+      .leftJoinAndSelect('encours.sousProgramme', 's')
+      .getMany();
+  }
+
+  public async getOne(id: number): Promise<EncoursEntity> {
+    return this.encoursRepository
+      .createQueryBuilder('encours')
+      .where('encours.id = :id', { id: id })
+      .leftJoinAndSelect('encours.exercise', 'exercise')
+      .leftJoinAndSelect('encours.sousProgramme', 's')
+      .leftJoinAndSelect('s.actions', 'ac')
+      .leftJoinAndSelect('ac.activities', 'a')
+      .leftJoinAndSelect('a.tasks', 't')
+      .leftJoinAndSelect('t.operations', 'op')
+      .leftJoinAndSelect('op.arrondissement', 'ar')
+      .leftJoinAndSelect('op.region', 're')
+      .leftJoinAndSelect('op.department', 'dep')
+      .leftJoinAndSelect('op.paragraph', 'par')
+      .leftJoinAndSelect('op.physicalUnits', 'units')
+      .leftJoinAndSelect('units.referencePhysicalUnit', 'ref')
+      .leftJoinAndSelect('t.financialSource', 'fs')
+      .leftJoinAndSelect('s.exercise', 'e')
+      .leftJoinAndSelect('t.administrativeUnit', 'au')
+      .leftJoinAndSelect('au.function', 'f')
+      .getOne();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -65,9 +92,11 @@ export class EncoursService {
      * Build encours entity from others
      */
     let encours: EncoursEntity = new EncoursEntity();
-    const check = await this.encoursRepository.findOne({
-      exercise: payload.exercise,
-    });
+    const check = await this.encoursRepository
+      .createQueryBuilder('encours')
+      .leftJoinAndSelect('encours.exercise', 'exercise')
+      .where('exercise.code = :code', { code: payload.exercise })
+      .getOne();
     if (!reload && check) {
       throw new ConflictException();
     }
@@ -80,7 +109,7 @@ export class EncoursService {
     });
 
     if (exercise) {
-      encours.exercise = exercise.code;
+      encours.exercise = exercise;
     } else {
       throw new NotFoundException(); //Exercise not found
     }
@@ -92,7 +121,7 @@ export class EncoursService {
       .getOne();
 
     if (subProgram) {
-      encours.sousProgramme = subProgram.code + ' ' + subProgram.labelFr;
+      encours.sousProgramme = subProgram;
     } else {
       //throw new NotFoundException();
     }
@@ -104,7 +133,7 @@ export class EncoursService {
       .where('subprogram.code = :code', { code: subProgram?.code })
       .getMany();
     if (actions) {
-      encours.actions = actions?.map((item) => item.code) ?? [];
+      encours.actions = actions ?? undefined;
       encours.nombreActions = actions?.length ?? undefined;
     } else {
       //throw new NotFoundException();
@@ -113,13 +142,13 @@ export class EncoursService {
     const activities = await this.activityRepository
       .createQueryBuilder('activity')
       .leftJoinAndSelect('activity.action', 'action')
-      .where(actions.length > 0 ? 'action.code IN (:...actions)' : 'false', {
-        actions: encours.actions,
+      .where(actions.length > 0 ? 'action.code IN (:...codes)' : 'false', {
+        codes: encours.actions?.map((item) => item.code),
       })
       .getMany();
 
     if (activities) {
-      encours.activities = activities?.map((item) => item.code) ?? [];
+      encours.activities = activities ?? undefined;
       encours.nombreActivites = activities?.length ?? undefined;
     } else {
       //throw new NotFoundException();
@@ -129,16 +158,16 @@ export class EncoursService {
       .createQueryBuilder('task')
       .leftJoinAndSelect('task.activity', 'activity')
       .where(activities.length > 0 ? 'activity.code IN (:...ids)' : 'false', {
-        ids: encours.activities,
+        ids: encours?.activities?.map((item) => item.code),
       })
       .distinct(true)
       .getMany();
 
     if (tasks) {
-      encours.tasks = tasks?.map((item) => item.code) ?? [];
+      encours.tasks = tasks ?? undefined;
       encours.nombreTasks = tasks?.length ?? undefined;
       encours.adminUnits =
-        tasks?.map((item) => item.administrativeUnit.code) ?? [];
+        tasks?.map((item) => item.administrativeUnit) ?? undefined;
     } else {
       //throw new NotFoundException();
     }
@@ -147,21 +176,19 @@ export class EncoursService {
       .createQueryBuilder('operation')
       .leftJoinAndSelect('operation.task', 'task')
       .where(tasks.length > 0 ? 'task.code IN (:...ids)' : 'false', {
-        ids: encours.tasks,
+        ids: encours?.tasks?.map((item) => item.code),
       })
       .distinct(true)
       .getMany();
 
     if (operations) {
-      encours.operations = operations?.map((item) => item.id + '') ?? [];
+      encours.operations = operations ?? undefined;
       encours.imputations = operations?.map((item) => item.imputation) ?? [];
 
       encours.localities = operations.map((item) => item.locality);
-      encours.arrondissements = operations.map(
-        (item) => item.arrondissement.code,
-      );
-      encours.regions = operations.map((item) => item.region.code);
-      encours.departments = operations.map((item) => item.department.code);
+      encours.arrondissements = operations.map((item) => item.arrondissement);
+      encours.regions = operations.map((item) => item.region);
+      encours.departments = operations.map((item) => item.department);
       encours.gestionnaires = operations.map((item) => item.managerName);
       encours.sourceVerif = operations.map((item) => item.verificationSourceFr); // should use LANG
       encours.modeGestions = operations.map((item) => item.managementMode);
@@ -200,16 +227,16 @@ export class EncoursService {
       .createQueryBuilder('unit')
       .leftJoinAndSelect('unit.operation', 'operation')
       .where(operations.length > 0 ? 'operation.id IN (:...ids)' : 'false', {
-        ids: encours.operations,
+        ids: encours?.operations?.map((item) => item.id),
       })
       .leftJoinAndSelect('unit.referencePhysicalUnit', 'ref')
       .getMany();
 
     if (unitesPhys) {
-      encours.codeUnitePhysiques =
-        unitesPhys?.map((item) => item.referencePhysicalUnit.code) ?? [];
+      encours.unitePhysiques = unitesPhys;
       encours.libelleUnitePhys =
-        unitesPhys?.map((item) => item.referencePhysicalUnit.labelFr) ?? []; // LANG MUST BE HANDLED LATTER
+        unitesPhys?.map((item) => item.referencePhysicalUnit.labelFr) ??
+        undefined; // LANG MUST BE HANDLED LATTER
       encours.quantiteUnitePhys =
         unitesPhys?.map((item) => item.quantity) ?? [];
       encours.puUnitePhys = unitesPhys?.map((item) => item.unitPrice) ?? [];

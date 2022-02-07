@@ -57,7 +57,8 @@
     "program": "Programmer",
     "assign": "Affecter",
     "enligne": "Charger",
-    "reload": "Recharger"
+    "reload": "Recharger",
+    "load": "Charger"
   },
   "install": {
     "title": "Installation"
@@ -628,7 +629,8 @@
       "editBareme": "Editer un Barème",
       "editTypeProcedure": "Editer un type de procédure",
       "editPieceJointe": "Editer une pièce jointe",
-      "encours": "Mise en ligne du budget"
+      "encours": "Mise en ligne du budget ",
+      "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

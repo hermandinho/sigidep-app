@@ -1,0 +1,46 @@
+<div class="container">
+  <p-panel
+    [toggleable]="true"
+    class="smallinputs floatclass"
+    [collapsed]="false"
+  >
+    <p-header>
+      {{ "labels.exercise" | translate }}: {{ encours?.exercise?.code }} -
+      {{ encours?.exercise?.year }}
+    </p-header>
+    <p-treeTable [value]="nodes">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ "tables.headers.label" | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td *ngIf="rowData.type !== 'UP'">
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            {{ rowData.type }}-{{ rowData.code }}-{{
+              rowData.label ?? rowData.labelFr
+            }}
+          </td>
+          <td *ngIf="rowData.type === 'UP'">
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            {{ rowData.type }}: QTE: {{ rowData.quantity }} | PU:
+            {{ rowData.unitPrice }} | TOTAL: {{ rowData.total }}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td>
+            {{ "tables.headers.volumeAE" | translate }}: {{ encours?.volumeAE }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ "tables.headers.volumeCP" | translate }}: {{ encours?.volumeCP }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </p-panel>
+</div>

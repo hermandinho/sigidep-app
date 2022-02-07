@@ -55,7 +55,7 @@
       (click)="submit()"
       [disabled]="!form?.valid || busy"
       [label]="
-        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'reload' : 'save')
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'reload' : 'load')
           | translate
       "
       pButton

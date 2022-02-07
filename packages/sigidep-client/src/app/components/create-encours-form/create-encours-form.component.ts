@@ -16,6 +16,7 @@ import {
 import { ExerciseModel } from '@models/exercise.model';
 import { map } from 'rxjs/operators';
 import { EncoursModel } from '@models/encours.model';
+import { DialogsService } from '@services/dialogs.service';
 
 @Component({
   selector: 'app-create-encours-form',
@@ -40,7 +41,8 @@ export class CreateEncoursFormComponent
     private _fb: FormBuilder,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    private readonly _dialogService: DialogsService
   ) {
     super();
     this.form = this._fb.group({
@@ -91,6 +93,7 @@ export class CreateEncoursFormComponent
           this.loading = false;
           this.busy = false;
           this.ref.close(res);
+          this.openStatisticsForm(res);
           this._store.dispatch(GetEncours());
           this._appService.showToast({
             summary: 'messages.success',
@@ -123,7 +126,9 @@ export class CreateEncoursFormComponent
         (res) => {
           this.busy = false;
           this.loading = false;
+          console.log('HUUUM MAASSA...: ', res);
           this.ref.close(res);
+          this.openStatisticsForm(res);
           this._store.dispatch(GetEncours());
           this._appService.showToast({
             summary: 'messages.success',
@@ -153,4 +158,8 @@ export class CreateEncoursFormComponent
       );
     }
   }
+
+  openStatisticsForm = async (item: EncoursModel) => {
+    this._dialogService.launchEncoursStatisticsDialog(item);
+  };
 }

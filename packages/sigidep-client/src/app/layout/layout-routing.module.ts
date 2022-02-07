@@ -241,6 +241,17 @@ const routes: Routes = [
         },
         component: EncoursComponent,
       },
+      {
+        path: 'encours',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.encours],
+        },
+        loadChildren: () =>
+          import('../pages/encours/encours.module').then(
+            (m) => m.EncoursModule
+          ),
+      },
       /*{
         path: '**',
         component: NotFoundComponent,

@@ -31,6 +31,7 @@ import {
 } from '@models/index';
 import { AccreditationsGestionnairesFormComponent } from '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component';
 import { CreateEncoursModel } from '@models/create-encours.model';
+import { EncoursModel } from '@models/encours.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -68,6 +69,8 @@ export class DialogsService {
   private pieceJointeCreateComponent: any;
 
   private encoursCreateComponent: any;
+
+  private encoursStatisticsComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -762,6 +765,31 @@ export class DialogsService {
     }
     return this._dialogService.open(this.encoursCreateComponent, {
       header: this._translateService.instant('dialogs.headers.encours'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEncoursStatisticsDialog(
+    item?: EncoursModel
+  ): Promise<any> {
+    if (!this.encoursStatisticsComponent) {
+      const { DisplayEncoursStatisticsComponent } = await import(
+        '@components/display-encours-statistics/display-encours-statistics.component'
+      );
+      this.encoursStatisticsComponent = DisplayEncoursStatisticsComponent;
+    }
+    return this._dialogService.open(this.encoursStatisticsComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.encoursExercise',
+        {
+          code: item?.exercise.code + '-' + item?.exercise.year,
+        }
+      ),
       width: '50vw',
       height: 'auto',
       modal: true,
