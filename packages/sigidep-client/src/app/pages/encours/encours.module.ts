@@ -13,6 +13,7 @@ import { PanelModule } from 'primeng/panel';
 import { DisplayEncoursItemComponent } from '@components/display-encours-item/display-encours-item.component';
 import { DisplayEncoursStatisticsComponent } from '@components/display-encours-statistics/display-encours-statistics.component';
 import { TreeTableModule } from 'primeng/treetable';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TreeTableModule } from 'primeng/treetable';
     SharedModule,
     ToastModule,
     PanelModule,
+    CardModule,
   ],
 })
 export class EncoursModule {}

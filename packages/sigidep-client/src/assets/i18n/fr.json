@@ -232,7 +232,10 @@
     "sousProgram": "Sous Programme",
     "seuil": "Seuil",
     "exercice": "Exercice",
-    "statsMiseEnLigne": "Statistiques de mise en ligne"
+    "statsMiseEnLigne": "Statistiques de mise en ligne",
+    "indicatorsPaymentCreditN1": "Ind. Crédit Pay. 1",
+    "indicatorsPaymentCreditN2": "Ind. Crédit Pay. 2",
+    "indicatorsPaymentCreditN3": "Ind. Crédit Pay. 3"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -575,7 +578,8 @@
       "volumeAE": "Volume AE",
       "volumeCP": "VOlume CP",
       "sousProgram": "Sous Programme",
-      "seuil": "Seuil"
+      "seuil": "Seuil",
+      "physicalUnits": "Unités physiques"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

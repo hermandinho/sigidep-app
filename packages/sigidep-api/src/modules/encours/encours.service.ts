@@ -56,10 +56,15 @@ export class EncoursService {
       .getMany();
   }
 
-  public async getOne(id: number): Promise<EncoursEntity> {
+  public async getOne(
+    id?: number,
+    codeExercise?: number,
+  ): Promise<EncoursEntity> {
     return this.encoursRepository
       .createQueryBuilder('encours')
-      .where('encours.id = :id', { id: id })
+      .where(!codeExercise ? 'encours.id = :code' : 'exercise.code = :code', {
+        code: !codeExercise ? id : codeExercise,
+      })
       .leftJoinAndSelect('encours.exercise', 'exercise')
       .leftJoinAndSelect('encours.sousProgramme', 's')
       .leftJoinAndSelect('s.actions', 'ac')
@@ -86,22 +91,15 @@ export class EncoursService {
   public async create(
     payload: CreateEncoursDTO,
     user: UserEntity,
-    reload = false,
   ): Promise<EncoursEntity> {
     /**
      * Build encours entity from others
      */
-    let encours: EncoursEntity = new EncoursEntity();
-    const check = await this.encoursRepository
-      .createQueryBuilder('encours')
-      .leftJoinAndSelect('encours.exercise', 'exercise')
-      .where('exercise.code = :code', { code: payload.exercise })
-      .getOne();
-    if (!reload && check) {
-      throw new ConflictException();
-    }
+    const encours: EncoursEntity = new EncoursEntity();
+    const check = await this.getOne(undefined, payload.exercise);
+
     if (check) {
-      encours = check;
+      throw new ConflictException();
     }
 
     const exercise = await this.exerciseRepository.findOne({

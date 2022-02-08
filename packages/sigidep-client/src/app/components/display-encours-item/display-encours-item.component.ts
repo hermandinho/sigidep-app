@@ -14,6 +14,7 @@ import { ApisService } from '@services/apis.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { TreeNode } from 'primeng/api';
+import { Tree } from 'primeng/tree';
 
 @Component({
   selector: 'app-display-encours-item',
@@ -45,6 +46,10 @@ export class DisplayEncoursItemComponent
 
   get currentLang() {
     return this.translate.currentLang;
+  }
+
+  get currentLangCurrencyFormat() {
+    return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
 
   ngOnInit(): void {
@@ -116,9 +121,14 @@ export class DisplayEncoursItemComponent
                         children: item2.operations?.map((item3) => {
                           return {
                             data: { ...item3, type: 'OP' },
-                            chidren: item3.physicalUnits?.map((item4) => {
+                            chidren: item3.physicalUnits.map((item4) => {
                               return {
-                                data: { ...item4, type: 'UP' },
+                                data: {
+                                  ...item4,
+                                  id: '#' + item.id,
+                                  type: 'UP',
+                                },
+                                children: undefined,
                               };
                             }),
                           };
@@ -131,6 +141,8 @@ export class DisplayEncoursItemComponent
             }),
           },
         ];
+
+        console.log('DATA....: ', this.nodes);
       },
       (error) => {
         this.loading = false;

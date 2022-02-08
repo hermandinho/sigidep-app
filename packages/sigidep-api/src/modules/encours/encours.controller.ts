@@ -35,13 +35,6 @@ export class EncoursController {
   ) {
     return this.encoursServices.create(payload, user);
   }
-  @Put('/')
-  public async reload(
-    @Body(ValidationPipe) payload: CreateEncoursDTO,
-    @GetCurrentUser() user: UserEntity,
-  ) {
-    return this.encoursServices.create(payload, user, true);
-  }
 
   @Delete('/:id')
   public async deleteOne(@Param('id') id: number) {

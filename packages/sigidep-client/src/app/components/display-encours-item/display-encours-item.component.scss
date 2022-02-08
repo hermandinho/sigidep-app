@@ -3,10 +3,28 @@
   height: 100%;
   grid-template-rows: auto 50px;
 
-  .item {
-    margin-left: 10px;
-    .sub-item {
-      margin-left: 10px;
+  .infos {
+    display: flex;
+    justify-content: center;
+    dl {
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: max-content auto;
     }
+
+    dt {
+      grid-column-start: 1;
+    }
+
+    dd {
+      grid-column-start: 2;
+    }
+  }
+
+  .p-table {
+    position: relative;
+    align-items: right;
+    width: 50px !important;
+    margin-left: inherit;
   }
 }

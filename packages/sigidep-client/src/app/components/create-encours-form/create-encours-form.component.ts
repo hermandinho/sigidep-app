@@ -46,6 +46,7 @@ export class CreateEncoursFormComponent
   ) {
     super();
     this.form = this._fb.group({
+      id: [undefined],
       exercise: ['', Validators.required],
       valeurSeuil: [0, [Validators.min(0), Validators.max(100)]],
     });
@@ -61,16 +62,12 @@ export class CreateEncoursFormComponent
     );
   }
 
-  get isUpdateForm(): boolean {
-    return !!this.config.data?.item;
-  }
-
   ngOnInit(): void {
     if (this.config.data?.item) {
-      const { exercise, valeurSeuil } = this.config.data
+      const { id, exercise, valeurSeuil } = this.config.data
         ?.item as CreateEncoursModel;
-
       this.form.patchValue({
+        id: id,
         exercise: exercise,
         valeurSeuil: valeurSeuil,
       });
@@ -87,76 +84,41 @@ export class CreateEncoursFormComponent
     const editedEncours = {
       ...this.form?.value,
     } as CreateEncoursModel;
-    if (this.isUpdateForm) {
-      this._apisService.put<EncoursModel>('/encours', editedEncours).subscribe(
-        (res) => {
-          this.loading = false;
-          this.busy = false;
-          this.ref.close(res);
-          this.openStatisticsForm(res);
-          this._store.dispatch(GetEncours());
-          this._appService.showToast({
-            summary: 'messages.success',
-            detail: 'messages.encours.createSuccess',
-            severity: 'success',
-            life: 3000,
-            closable: true,
-          });
-        },
-        ({ error }) => {
-          let err = '';
-          if (error?.statusCode === 409) {
-            err = 'errors.encours.notfound';
-          } else {
-            err = 'errors.unknown';
-          }
-          this.loading = false;
-          this.busy = false;
-          this._appService.showToast({
-            detail: err,
-            summary: 'errors.error',
-            severity: 'error',
-            life: 5000,
-            closable: true,
-          });
+
+    this._apisService.post<EncoursModel>('/encours', editedEncours).subscribe(
+      (res) => {
+        this.busy = false;
+        this.loading = false;
+        this.ref.close(res);
+        this.openStatisticsForm(res);
+        this._store.dispatch(GetEncours());
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail: 'messages.encours.createSuccess',
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        this.loading = false;
+        this.busy = false;
+        this.ref.close();
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.dejaEncours';
+        } else {
+          err = 'errors.unknown';
         }
-      );
-    } else {
-      this._apisService.post<EncoursModel>('/encours', editedEncours).subscribe(
-        (res) => {
-          this.busy = false;
-          this.loading = false;
-          console.log('HUUUM MAASSA...: ', res);
-          this.ref.close(res);
-          this.openStatisticsForm(res);
-          this._store.dispatch(GetEncours());
-          this._appService.showToast({
-            summary: 'messages.success',
-            detail: 'messages.encours.createSuccess',
-            severity: 'success',
-            life: 3000,
-            closable: true,
-          });
-        },
-        ({ error }) => {
-          this.loading = false;
-          this.busy = false;
-          let err = '';
-          if (error?.statusCode === 409) {
-            err = 'errors.dejaEncours';
-          } else {
-            err = 'errors.unknown';
-          }
-          this._appService.showToast({
-            detail: err,
-            summary: 'errors.error',
-            severity: 'error',
-            life: 5000,
-            closable: true,
-          });
-        }
-      );
-    }
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
   }
 
   openStatisticsForm = async (item: EncoursModel) => {

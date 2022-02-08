@@ -1,4 +1,5 @@
 export class CreateEncoursModel {
+  id!: number;
   exercise!: number;
   valeurSeuil!: number;
 

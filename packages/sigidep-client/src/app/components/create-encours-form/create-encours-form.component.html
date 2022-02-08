@@ -54,10 +54,7 @@
     <button
       (click)="submit()"
       [disabled]="!form?.valid || busy"
-      [label]="
-        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'reload' : 'load')
-          | translate
-      "
+      [label]="'buttons.' + (busy ? 'busy' : 'load') | translate"
       pButton
     ></button>
   </div>

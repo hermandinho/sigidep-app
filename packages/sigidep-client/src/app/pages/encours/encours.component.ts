@@ -89,6 +89,7 @@ export class EncoursComponent extends BaseComponent implements OnInit {
 
   reload(item: EncoursModel) {
     this._dialogService.launchEncoursCreateDialog({
+      id: item.id,
       exercise: item.exercise.code,
       valeurSeuil: item.valeurSeuil,
     });

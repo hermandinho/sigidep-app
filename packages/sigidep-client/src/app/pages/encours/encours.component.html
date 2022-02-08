@@ -80,14 +80,6 @@
             pRipple
           ></button>
           <button
-            (click)="reload(item)"
-            *appCheckPermissions="['encours.update']"
-            class="p-button-rounded p-button-primary p-mr-2"
-            icon="pi pi-refresh"
-            pButton
-            pRipple
-          ></button>
-          <button
             (click)="delete(item)"
             *appCheckPermissions="['encours.delete']"
             [disabled]="item?.status === 'active'"
