@@ -5578,4 +5578,3 @@ export const PROCEDURESTYPES_DATA: Partial<TypeProcedureEntity>[] = [
     label: 'Déblocage - Contribuable',
   },
 ];
-
