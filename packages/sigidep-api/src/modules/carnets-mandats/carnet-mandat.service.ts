@@ -45,14 +45,10 @@ export class CarnetMandatService {
     if (check) {
       throw new ConflictException();
     }
-    try {
-      return this.repository.save({
-        ...payload,
-        createdBy: user,
-      });
-    } catch (error) {
-      throw error;
-    }
+    return this.repository.save({
+      ...payload,
+      createdBy: user,
+    });
   }
 
   public async update(

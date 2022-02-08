@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { AgentEntity, BaseEntity, ExerciseEntity } from '.';
 
@@ -24,10 +25,12 @@ export class CarnetMandatEntity extends BaseEntity {
   @ManyToOne(() => AgentEntity, (object) => object.id, {
     cascade: true,
     eager: false,
+    nullable: true,
   })
+  @IsOptional()
   @JoinColumn({ name: 'gestionnaire_id' })
   /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
-  public gestionnaire: AgentEntity;
+  public gestionnaire?: AgentEntity;
 
   @Column({ name: 'date_affectation', nullable: true, type: 'date' })
   public dateAffectation: Date;
@@ -54,7 +57,7 @@ export class CarnetMandatEntity extends BaseEntity {
     cascade: true,
     eager: false,
   })
-  @JoinColumn({ name: 'service_id' })
+  @JoinColumn({ name: 'exercise_id' })
   public exercice: ExerciseEntity;
 
   /** TO ADD LATER WHEN MANDAT WILL BE AVAILABLE 

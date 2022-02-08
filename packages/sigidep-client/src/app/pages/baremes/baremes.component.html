@@ -15,7 +15,7 @@
   </p-toolbar>
   <p-table
     #dt
-    [globalFilterFields]="['code', 'montant']"
+    [globalFilterFields]="['id', 'montant']"
     [loading]="(loading$ | async) || false"
     [paginator]="true"
     [rowHover]="true"
@@ -50,7 +50,7 @@
         <ng-container *ngFor="let column of tableColumns">
           <th *ngIf="column.sortable" [pSortableColumn]="column.field">
             {{ column.title | translate }}
-            <p-sortIcon field="code"></p-sortIcon>
+            <p-sortIcon field="id"></p-sortIcon>
           </th>
           <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
         </ng-container>
@@ -60,7 +60,7 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td *ngFor="let column of tableColumns">
-          <span *ngIf="column.field === 'code'">
+          <span *ngIf="column.field === 'id'">
             {{ item[column.field] }}
           </span>
           <span *ngIf="column.field === 'montant'">
