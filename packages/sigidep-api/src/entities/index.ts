@@ -30,6 +30,6 @@ export * from './piece-jointe.entity';
 export * from './bareme-mission.entity';
 export * from './type-procedure.entity';
 export * from './encours.entity';
-export * from './engagement-juridique-entity';
-export * from './exec-procedure-entity';
+export * from './engagement-juridique.entity';
+export * from './exec-procedure.entity';
 export * from './exec-taxes.entity';

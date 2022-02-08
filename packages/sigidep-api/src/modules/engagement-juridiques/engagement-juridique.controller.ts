@@ -14,7 +14,7 @@ import { UserEntity } from '@entities/user.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { EngagementJuridiqueService } from './engagement-juridique.service';
-import { CreateEngagementJuridiqueDTO } from './dto/create-exec-procedure.dto';
+import { CreateEngagementJuridiqueDTO } from './dto/create-engagement-juridique.dto';
 @Controller('engagement-juridiques')
 @ApiTags('engagement-juridiques')
 @UseGuards(AuthGuard())

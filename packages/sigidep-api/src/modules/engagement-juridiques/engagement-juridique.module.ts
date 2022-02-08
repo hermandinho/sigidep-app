@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { EngagementJuridiqueEntity } from '@entities/engagement-juridique-entity';
+import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
 import { EngagementJuridiqueController } from './engagement-juridique.controller';
 import { EngagementJuridiqueService } from './engagement-juridique.service';
 

@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ExecProcedureService } from './exec-procedures.service';
 import { ExecProceduresController } from './exec-procedures.controller';
-import { ExecProcedureEntity } from '@entities/exec-procedure-entity';
+import { ExecProcedureEntity } from '@entities/exec-procedure.entity';
 
 @Module({
   controllers: [ExecProceduresController],

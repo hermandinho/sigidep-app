@@ -1,14 +1,23 @@
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import { AdministrativeUnitEntity, ExerciseEntity, SubProgramEntity } from '.';
+import {
+  AdministrativeUnitEntity,
+  ExerciseEntity,
+  SubProgramEntity,
+  BaseEntity,
+} from '.';
 import { SubProgramActivityEntity } from './sub-program-activity.entity';
 import { SubProgramActivityTaskEntity } from './sub-program-activity-task.entity';
 import { SubProgramActionEntity } from './sub-program-action.entity';
-import { ExecProcedureEntity } from './exec-procedure-entity';
+import { ExecProcedureEntity } from './exec-procedure.entity';
 
-@Entity({
-  name: 'engagement_juridiques',
-})
+export enum EtatEngagementEnum {
+  SAVE = 'SAVE',
+  MODIFY = 'MODIFY',
+  RESERVED = 'RESERVED',
+  CANCEL = 'CANCEL',
+}
+
+@Entity('engagementjuridiques')
 export class EngagementJuridiqueEntity extends BaseEntity {
   @ManyToOne(() => ExecProcedureEntity, (object) => object.id, {
     eager: true,
@@ -72,13 +81,12 @@ export class EngagementJuridiqueEntity extends BaseEntity {
   @Column({ type: 'float', nullable: false })
   public montantAE: number;
 
-  @Column({ name: 'etat', type: 'enum', nullable: false })
+  @Column({
+    name: 'etat',
+    type: 'enum',
+    enum: EtatEngagementEnum,
+    default: EtatEngagementEnum.SAVE,
+    nullable: false,
+  })
   public etat: EtatEngagementEnum;
-}
-
-export enum EtatEngagementEnum {
-  SAVE = 'SAVE',
-  MODIFY = 'MODIFY',
-  RESERVED = 'RESERVED',
-  CANCEL = 'CANCEL',
 }
