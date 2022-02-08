@@ -60,16 +60,22 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td *ngFor="let column of tableColumns">
-          <span>
+          <span *ngIf="column.field === 'valeurSeuil'">
             {{ item[column.field] }}
+          </span>
+          <span *ngIf="column.field === 'exercise'">
+            {{ item[column.field]?.code + "- " + item[column.field]?.year }}
+          </span>
+          <span *ngIf="column.field === 'sousProgramme'">
+            {{ item[column.field]?.code + "- " + item[column.field]?.labelFr }}
           </span>
         </td>
         <td class="actions">
           <button
-            (click)="reload(item)"
-            *appCheckPermissions="['encours.update']"
-            class="p-button-rounded p-button-primary p-mr-2"
-            icon="pi pi-refresh"
+            (click)="showItem(item)"
+            *appCheckPermissions="['encours.read']"
+            class="p-button-rounded p-button-secondary p-mr-2"
+            icon="pi pi-info"
             pButton
             pRipple
           ></button>

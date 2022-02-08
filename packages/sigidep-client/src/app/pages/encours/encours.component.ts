@@ -1,4 +1,3 @@
-import { SetAppBreadcrumb } from '@actions/app.actions';
 import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '@services/app.service';
@@ -19,8 +18,8 @@ import {
   DeleteEncoursSuccess,
   GetEncours,
 } from '@actions/encours.actions';
-import { GetExercises } from '@actions/exercises.actions';
-import { CreateEncoursModel } from '@models/create-encours.model';
+import { Router } from '@angular/router';
+import { GetExercises, Go, SetAppBreadcrumb } from '@store/actions';
 
 @Component({
   selector: 'app-encours',
@@ -50,52 +49,12 @@ export class EncoursComponent extends BaseComponent implements OnInit {
       {
         field: 'sousProgramme',
         title: 'tables.headers.sousProgram',
-        sortable: false,
+        sortable: true,
       },
       {
         field: 'valeurSeuil',
         title: 'tables.headers.seuil',
-        sortable: false,
-      },
-      {
-        field: 'nombreActions',
-        title: 'tables.headers.nombreActions',
-        sortable: false,
-      },
-      {
-        field: 'nombreActivites',
-        title: 'tables.headers.nombreActivites',
-        sortable: false,
-      },
-      {
-        field: 'nombreTasks',
-        title: 'tables.headers.nombreTasks',
-        sortable: false,
-      },
-      {
-        field: 'nombreOperations',
-        title: 'tables.headers.nombreOperations',
-        sortable: false,
-      },
-      {
-        field: 'nombreImputations',
-        title: 'tables.headers.nombreImputations',
-        sortable: false,
-      },
-      {
-        field: 'nombreUnitesPhysiques',
-        title: 'tables.headers.nombreUnitesPhysiques',
-        sortable: false,
-      },
-      {
-        field: 'volumeAE',
-        title: 'tables.headers.volumeAE',
-        sortable: false,
-      },
-      {
-        field: 'volumeCP',
-        title: 'tables.headers.volumeCP',
-        sortable: false,
+        sortable: true,
       },
     ];
     this._initListeners();
@@ -130,7 +89,8 @@ export class EncoursComponent extends BaseComponent implements OnInit {
 
   reload(item: EncoursModel) {
     this._dialogService.launchEncoursCreateDialog({
-      exercise: item.exercise,
+      id: item.id,
+      exercise: item.exercise.code,
       valeurSeuil: item.valeurSeuil,
     });
   }
@@ -172,4 +132,8 @@ export class EncoursComponent extends BaseComponent implements OnInit {
         }
       });
   }
+  public showItem = (item: EncoursModel) => {
+    console.log('HEEEEEE', item);
+    this._store.dispatch(new Go({ path: ['encours/details', item.id] }));
+  };
 }

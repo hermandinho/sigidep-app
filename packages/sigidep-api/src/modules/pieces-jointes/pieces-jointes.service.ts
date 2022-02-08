@@ -32,9 +32,11 @@ export class PiecesJointesService {
     payload: CreatePieceJointeDTO,
     user: UserEntity,
   ): Promise<PieceJointeEntity> {
-    const check = await this.repository.findOne({
-      code: payload.code,
-    });
+    const check = await this.repository
+      .createQueryBuilder('pj')
+      .where('pj.code= :code', { code: payload.code })
+      .orWhere('pj.order= :order', { order: payload.order })
+      .getOne();
 
     if (check) {
       throw new ConflictException();

@@ -52,7 +52,7 @@ export class CreateSousRubriqueFormComponent
       label: [undefined, Validators.required],
       rubrique: this._fb.group({
         id: [],
-        code: [],
+        code: [undefined, Validators.required],
         label: [],
       }),
     });

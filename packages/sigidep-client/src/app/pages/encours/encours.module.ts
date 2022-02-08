@@ -10,23 +10,29 @@ import { SharedModule } from '@modules/shared.module';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PanelModule } from 'primeng/panel';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { DisplayEncoursItemComponent } from '@components/display-encours-item/display-encours-item.component';
+import { DisplayEncoursStatisticsComponent } from '@components/display-encours-statistics/display-encours-statistics.component';
+import { TreeTableModule } from 'primeng/treetable';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
-  declarations: [EncoursComponent, CreateEncoursFormComponent],
+  declarations: [
+    EncoursComponent,
+    CreateEncoursFormComponent,
+    DisplayEncoursItemComponent,
+    DisplayEncoursStatisticsComponent,
+  ],
   imports: [
     CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     ProgressSpinnerModule,
+    TreeTableModule,
     EncoursRoutingModule,
-    CommonModule,
     CheckboxModule,
     InputMaskModule,
     SharedModule,
     ToastModule,
     PanelModule,
+    CardModule,
   ],
 })
 export class EncoursModule {}

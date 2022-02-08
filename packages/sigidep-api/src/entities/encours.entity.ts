@@ -1,5 +1,21 @@
-import { Column, Entity, Unique } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import {
+  AdministrativeUnitEntity,
+  ArrondissementEntity,
+  DepartmentEntity,
+  ExerciseEntity,
+  RegionEntity,
+  SubProgramEntity,
+} from '.';
 import { BaseEntity } from './base.entity';
+import { SubProgramActionEntity } from './sub-program-action.entity';
+import { SubProgramActivityTaskOperationPhysicalUnitEntity } from './sub-program-activity-task-operation-physical-unit.entity';
+import {
+  managementModeEnum,
+  SubProgramActivityTaskOperationEntity,
+} from './sub-program-activity-task-operation.entity';
+import { SubProgramActivityTaskEntity } from './sub-program-activity-task.entity';
+import { SubProgramActivityEntity } from './sub-program-activity.entity';
 
 @Entity({
   name: 'encours',
@@ -8,55 +24,90 @@ import { BaseEntity } from './base.entity';
   },
 })
 export class EncoursEntity extends BaseEntity {
-  @Column({ nullable: false })
-  public exercise: number;
+  @OneToOne(() => ExerciseEntity, (object) => object.id, {
+    eager: true,
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'exercise_id' })
+  public exercise: ExerciseEntity;
 
-  @Column({ nullable: true })
-  public sousProgramme: string;
+  @OneToOne(() => SubProgramEntity, (object) => object.id, {
+    eager: true,
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'sub_program_id' })
+  public sousProgramme: SubProgramEntity;
 
-  @Column('varchar', { array: true, nullable: true })
-  public actions: string[];
+  @OneToMany(() => SubProgramActionEntity, (object) => object.id, {
+    eager: false,
+  })
+  public actions: SubProgramActionEntity[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public activities: string[];
+  @OneToMany(() => SubProgramActivityEntity, (object) => object.id, {
+    eager: true,
+  })
+  public activities: SubProgramActivityEntity[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public tasks: string[];
+  @OneToMany(() => SubProgramActivityTaskEntity, (object) => object.id, {
+    eager: true,
+  })
+  public tasks: SubProgramActivityTaskEntity[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public operations: string[];
+  @OneToMany(
+    () => SubProgramActivityTaskOperationEntity,
+    (object) => object.id,
+    { eager: true },
+  )
+  public operations: SubProgramActivityTaskOperationEntity[];
 
   @Column('varchar', { array: true, nullable: true })
   public imputations: string[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public adminUnits: string[];
+  @OneToMany(() => AdministrativeUnitEntity, (object) => object.id, {
+    eager: true,
+  })
+  public adminUnits: AdministrativeUnitEntity[];
 
   @Column('varchar', { array: true, nullable: true })
   public livrables: string[];
 
   @Column('varchar', { array: true, nullable: true })
   public sourceVerif: string[];
+
   @Column('varchar', { array: true, nullable: true })
-  public modeGestions: string[];
+  public modeGestions: managementModeEnum[];
 
   @Column('varchar', { array: true, nullable: true })
   public gestionnaires: string[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public regions: string[];
+  @OneToMany(() => RegionEntity, (object) => object.id, {
+    eager: true,
+  })
+  public regions: RegionEntity[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public departments: string[];
+  @OneToMany(() => DepartmentEntity, (object) => object.id, {
+    eager: true,
+  })
+  public departments: DepartmentEntity[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public arrondissements: string[];
+  @OneToMany(() => ArrondissementEntity, (object) => object.id, {
+    eager: true,
+  })
+  public arrondissements: ArrondissementEntity[];
 
   @Column('varchar', { array: true, nullable: true })
   public localities: string[];
 
-  @Column('varchar', { array: true, nullable: true })
-  public codeUnitePhysiques: string[];
+  @OneToMany(
+    () => SubProgramActivityTaskOperationPhysicalUnitEntity,
+    (object) => object.id,
+    {
+      eager: true,
+    },
+  )
+  public unitePhysiques: SubProgramActivityTaskOperationPhysicalUnitEntity[];
 
   @Column('varchar', { array: true, nullable: true })
   public libelleUnitePhys: string[];

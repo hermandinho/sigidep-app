@@ -3,8 +3,11 @@ import { BaseEntity } from '.';
 
 @Entity({
   name: 'pieces_jointes',
+  orderBy: {
+    order: 'ASC',
+  },
 })
-@Unique('UQ_PIECE_JOINTE_CODE', ['code'])
+@Unique('UQ_PIECE_JOINTE_CODE', ['code', 'order'])
 export class PieceJointeEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;

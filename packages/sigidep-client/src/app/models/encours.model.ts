@@ -1,23 +1,36 @@
+import {
+  AdministrativeUnitModel,
+  ArrondissementModel,
+  DepartmentModel,
+  ExerciseModel,
+  RegionsModel,
+  SubProgramActionModel,
+  SubProgramActivityModel,
+  SubProgramActivityTaskModel,
+  SubProgramActivityTaskOperationModel,
+  SubProgramModel,
+} from '.';
 import { BaseModel } from './base.model';
+import { PhysicalUnitModel } from './physical-unit.entity';
 
 export class EncoursModel extends BaseModel {
-  exercise!: number;
-  sousProgramme!: string;
-  actions!: string[];
-  activities!: string[];
-  tasks!: string[];
-  operations!: string[];
+  exercise!: ExerciseModel;
+  sousProgramme!: SubProgramModel;
+  actions!: SubProgramActionModel[];
+  activities!: SubProgramActivityModel[];
+  tasks!: SubProgramActivityTaskModel[];
+  operations!: SubProgramActivityTaskOperationModel[];
   imputations!: string[];
-  adminUnits!: string[];
+  adminUnits!: AdministrativeUnitModel[];
   livrables!: string[];
   sourceVerif!: string[];
   modeGestions!: string[];
   gestionnaires!: string[];
-  regions!: string[];
-  departments!: string[];
-  arrondissements!: string[];
+  regions!: RegionsModel[];
+  departments!: DepartmentModel[];
+  arrondissements!: ArrondissementModel[];
   localities!: string[];
-  codeUnitePhysiques!: string[];
+  unitePhysiques!: PhysicalUnitModel[];
   libelleUnitePhys!: string[];
   quantiteUnitePhys!: number[];
   puUnitePhys!: number[];
