@@ -1,4 +1,3 @@
-import { EtatEngagementEnum } from '@entities/engagement-juridique-entity';
 import { CreateAdministrativeUnitDto } from '@modules/administrative-units/dto/create-administrative-unit.dto';
 import { CreateExecProcedureDTO } from '@modules/exec-procedures/dto/create-exec-procedure.dto';
 import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
@@ -10,6 +9,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateEngagementJuridiqueDTO {
+  id?: number;
   @ApiProperty({
     type: () => CreateExecProcedureDTO,
     nullable: true,
@@ -81,5 +81,5 @@ export class CreateEngagementJuridiqueDTO {
   public montantAE: number;
 
   @ApiProperty({ type: 'enum', example: 'CANCEL', required: false })
-  public etat: EtatEngagementEnum;
+  public etat: string;
 }

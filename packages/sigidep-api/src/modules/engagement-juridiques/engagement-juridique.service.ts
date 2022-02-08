@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { EngagementJuridiqueEntity } from '@entities/engagement-juridique-entity';
-import { CreateEngagementJuridiqueDTO } from './dto/create-exec-procedure.dto';
+import { CreateEngagementJuridiqueDTO } from './dto/create-engagement-juridique.dto';
 
 @Injectable()
 export class EngagementJuridiqueService {
@@ -29,7 +29,7 @@ export class EngagementJuridiqueService {
     user: UserEntity,
   ): Promise<EngagementJuridiqueEntity> {
     return this.repository.save({
-      ...payload,
+      ...(payload as any),
       createdBy: user,
     });
   }
@@ -47,7 +47,7 @@ export class EngagementJuridiqueService {
     }
 
     return this.repository.save({
-      ...payload,
+      ...(payload as any),
       updateBy: user,
     });
   }
