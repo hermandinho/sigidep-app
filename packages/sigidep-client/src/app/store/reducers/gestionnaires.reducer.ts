@@ -6,18 +6,18 @@ import {
   on,
 } from '@ngrx/store';
 import {
-    GetGestionnaires,
-    GetGestionnairesSuccess,
-    GetGestionnairesFailure,
-    UpdateGestionnaire,
-    UpdateGestionnaireSuccess,
-    UpdateGestionnaireFailure,
-    DeleteGestionnaire,
-    DeleteGestionnaireSuccess,
-    DeleteGestionnaireFailure,
-    CreateGestionnaire,
-    CreateGestionnaireSuccess,
-    CreateGestionnaireFailure
+  GetGestionnaires,
+  GetGestionnairesSuccess,
+  GetGestionnairesFailure,
+  UpdateGestionnaire,
+  UpdateGestionnaireSuccess,
+  UpdateGestionnaireFailure,
+  DeleteGestionnaire,
+  DeleteGestionnaireSuccess,
+  DeleteGestionnaireFailure,
+  CreateGestionnaire,
+  CreateGestionnaireSuccess,
+  CreateGestionnaireFailure,
 } from '@store/actions';
 import { GestionnaireModel } from '@models/gestionnaire.model';
 
@@ -52,13 +52,9 @@ const gestionnairesReducer = createReducer(
   on(DeleteGestionnaire, (state, { id }) => {
     return { ...state, loading: true };
   }),
-  on(
-    DeleteGestionnaireSuccess,
-    DeleteGestionnaireFailure,
-    (state, {}) => {
-      return { ...state, loading: false };
-    }
-  ),
+  on(DeleteGestionnaireSuccess, DeleteGestionnaireFailure, (state, {}) => {
+    return { ...state, loading: false };
+  }),
   on(CreateGestionnaire, (state) => {
     return { ...state, loading: true };
   }),

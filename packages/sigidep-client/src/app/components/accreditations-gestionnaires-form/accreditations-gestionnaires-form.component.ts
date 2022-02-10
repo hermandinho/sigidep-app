@@ -1,6 +1,9 @@
 import { AdministrativeUnitModel } from '@models/index';
 import { GestionnaireModel } from './../../models/gestionnaire.model';
-import { SubProgramActivityModel, SubProgramActivityTaskModel } from '@models/sub-program.model';
+import {
+  SubProgramActivityModel,
+  SubProgramActivityTaskModel,
+} from '@models/sub-program.model';
 import { SubProgramModel } from './../../models/sub-program.model';
 import { AgentModel } from '@models/agent.model';
 import { ExerciseModel } from './../../models/exercise.model';
@@ -111,7 +114,7 @@ export class AccreditationsGestionnairesFormComponent
         }
       }); */
 
-      this.form
+    this.form
       .get('task')
       ?.valueChanges.subscribe((val: SubProgramActivityTaskModel) => {
         if (val) {
@@ -133,8 +136,7 @@ export class AccreditationsGestionnairesFormComponent
         }
       });
 
-
-      this.form
+    this.form
       .get('administrativeUnit')
       ?.valueChanges.subscribe((val: AdministrativeUnitModel) => {
         if (val) {
@@ -142,8 +144,7 @@ export class AccreditationsGestionnairesFormComponent
           const ac = new AccreditationGestionnaireModel({});
 
           // Let Build Imputation Number
-          const { exercice, agent, administrativeUnit } =
-            this.form.value;
+          const { exercice, agent, administrativeUnit } = this.form.value;
           ac.imputation = `${exercice.code} ${agent.matricule} ${administrativeUnit.code}`;
 
           const found = this.imputationsOperationsList.find(
@@ -266,8 +267,6 @@ export class AccreditationsGestionnairesFormComponent
         })().toPromise();
 
         this.getGestionnaireWithAccreditation();
-
-        
 
         this.form.get('administrativeUnit')?.setValue(undefined);
         this.form.get('subProgram')?.setValue(undefined);

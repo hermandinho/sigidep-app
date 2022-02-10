@@ -1,0 +1,152 @@
+<div class="container">
+  <p-header>
+    {{ "labels.exercise" | translate }}: {{ encours?.exercise?.code }} -
+    {{ encours?.exercise?.year }}
+  </p-header>
+  <p-treeTable [value]="nodes" dataKey="id">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ "tables.headers.label" | translate }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+      <tr>
+        <td
+          *ngIf="
+            rowData.type !== 'UP' &&
+            rowData.type !== 'OP' &&
+            rowData.type !== 'SP'
+          "
+        >
+          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          {{ rowData.type }}-{{ rowData.code }}-{{
+            rowData.label ?? rowData.labelFr
+          }}
+        </td>
+
+        <td *ngIf="rowData.type === 'SP'">
+          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          <p-header>
+            {{ rowData.type }}-{{ rowData.code }}-{{
+              rowData.label ?? rowData.labelFr
+            }}
+          </p-header>
+        </td>
+        <td *ngIf="rowData.type === 'OP'">
+          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+          {{ rowData.type }}-{{
+            currentLang === "fr" ? rowData.labelFr : rowData.labelEn
+          }}
+          <div class="infos">
+            <dl>
+              <dt>{{ "labels.engagementAuthorization" | translate }}:</dt>
+              <dd>{{ rowData.engagementAuthorization }}</dd>
+              <dt>{{ "labels.paymentCreditN1" | translate }}:</dt>
+              <dd>
+                {{
+                  rowData.paymentCreditN1
+                    | currency: "":"":"":currentLangCurrencyFormat
+                }}
+              </dd>
+              <dt>{{ "labels.paymentCreditN2" | translate }}:</dt>
+              <dd>
+                {{
+                  rowData.paymentCreditN2
+                    | currency: "":"":"":currentLangCurrencyFormat
+                }}
+              </dd>
+              <dt>{{ "labels.paymentCreditN3" | translate }}:</dt>
+              <dd>
+                {{
+                  rowData.paymentCreditN3
+                    | currency: "":"":"":currentLangCurrencyFormat
+                }}
+              </dd>
+            </dl>
+            <dl>
+              <dt>{{ "labels.imputation" | translate }}:</dt>
+              <dd>{{ rowData.imputation }}</dd>
+              <dt>{{ "labels.gestionnaire" | translate }}:</dt>
+              <dd>{{ rowData.managerName }}</dd>
+              <dt>{{ "labels.managementMode" | translate }}:</dt>
+              <dd>{{ rowData.managementMode }}</dd>
+              <dt>{{ "labels.region" | translate }}:</dt>
+              <dd>{{ rowData.region.formattedLabel }}</dd>
+              <dt>{{ "labels.department" | translate }}:</dt>
+              <dd>{{ rowData.department.formattedLabel }}</dd>
+              <dt>{{ "labels.arrondissement" | translate }}:</dt>
+              <dd>{{ rowData.arrondissement.formattedLabel }}</dd>
+              <dt>{{ "labels.locality" | translate }}:</dt>
+              <dd>{{ rowData.locality }}</dd>
+            </dl>
+          </div>
+
+          <p-table
+            class="inner__table"
+            #dt
+            [paginator]="true"
+            [rowHover]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [value]="rowData.physicalUnits"
+            [currentPageReportTemplate]="'tables.stats.pager' | translate"
+            dataKey="id"
+            responsiveLayout="scroll"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="4">
+                  OP-{{
+                    currentLang === "fr" ? rowData.labelFr : rowData.labelEn
+                  }}-{{ "tables.headers.physicalUnits" | translate }}
+                </th>
+              </tr>
+              <tr>
+                <th>#Ref</th>
+                <th>{{ "labels.quantity" | translate }}</th>
+                <th>{{ "labels.unitPrice" | translate }}</th>
+                <th>{{ "labels.totalPrice" | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{ item.id }}#{{ item.referencePhysicalUnit.code }}</td>
+                <td>
+                  {{
+                    item.quantity | currency: "":"":"":currentLangCurrencyFormat
+                  }}
+                </td>
+                <td>
+                  {{
+                    item.unitPrice
+                      | currency: "":"":"":currentLangCurrencyFormat
+                  }}
+                </td>
+                <td>
+                  {{
+                    item.totalPrice
+                      | currency: "":"":"":currentLangCurrencyFormat
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td>
+          {{ "tables.headers.volumeAE" | translate }}:
+          {{ encours?.volumeAE | currency: "":"":"":currentLangCurrencyFormat }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ "tables.headers.volumeCP" | translate }}:
+          {{ encours?.volumeCP | currency: "":"":"":currentLangCurrencyFormat }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-treeTable>
+</div>

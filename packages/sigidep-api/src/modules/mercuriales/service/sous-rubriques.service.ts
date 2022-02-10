@@ -36,9 +36,12 @@ export class SousRubriquesService {
     payload: EditSousRubriqueDTO,
     user: UserEntity,
   ): Promise<SousRubriqueMercurialeEntity> {
-    const check = await this.repository.findOne({
-      code: payload.code,
-    });
+    const check = await this.repository
+      .createQueryBuilder('sousRubrique')
+      .leftJoinAndSelect('sousRubrique.rubrique', 'rubrique')
+      .where('sousRubrique.code = :code1 ', { code1: payload.code })
+      .andWhere('rubrique.code = :code2', { code2: payload.rubrique.code })
+      .getOne();
 
     if (check) {
       throw new ConflictException();

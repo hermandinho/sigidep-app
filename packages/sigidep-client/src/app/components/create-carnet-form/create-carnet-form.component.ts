@@ -80,10 +80,13 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
       numCniAgentRetrait: [undefined],
       dateDelivranceCni: [undefined, this.dateValidator],
       lieuDelivranceCni: [],
-      gestionnaire: this._fb.group({
-        id: [],
-        matricule: [],
-      }),
+      gestionnaire: this._fb.group(
+        {
+          id: [null],
+          matricule: [undefined],
+        },
+        null
+      ),
     });
     this._initListeners();
   }
@@ -165,23 +168,24 @@ export class CreateCarnetFormComponent extends BaseComponent implements OnInit {
   submit() {
     this.busy = true;
     const editedCarnet = {
-      ...this.form.value,
+      ...this.form.getRawValue(),
       exercice:
         this.exercices.find(
-          (item) => item.code === this.form.value?.exercice?.code
+          (item) => item.code === this.form.getRawValue()?.exercice?.code
         ) ?? null,
       gestionnaire:
         this.gestionnaires.find(
-          (item) => item.matricule === this.form.value?.gestionnaire?.matricule
+          (item) =>
+            item.matricule === this.form.getRawValue()?.gestionnaire?.matricule
         ) ?? null,
-      dateAffectation: this.form.value?.dateAffectation
-        ? new Date(this.form.value?.dateAffectation).toISOString()
+      dateAffectation: this.form.getRawValue()?.dateAffectation
+        ? new Date(this.form.getRawValue()?.dateAffectation).toISOString()
         : null,
-      dateRetrait: this.form.value?.dateRetrait
-        ? new Date(this.form.value?.dateRetrait).toISOString()
+      dateRetrait: this.form.getRawValue()?.dateRetrait
+        ? new Date(this.form.getRawValue()?.dateRetrait).toISOString()
         : null,
-      dateDelivranceCni: this.form.value?.dateDelivranceCni
-        ? new Date(this.form.value?.dateDelivranceCni).toISOString()
+      dateDelivranceCni: this.form.getRawValue()?.dateDelivranceCni
+        ? new Date(this.form.getRawValue()?.dateDelivranceCni).toISOString()
         : null,
     } as CarnetMandatModel;
 
