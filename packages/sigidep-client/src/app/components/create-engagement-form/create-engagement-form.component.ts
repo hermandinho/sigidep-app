@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -26,6 +19,7 @@ import {
   GetEncours,
   GetExercises,
   GetTypesProcedures,
+  GetEngagementJuridiques,
   GetProcedures,
   GetAdministrativeUnites,
 } from '@store/actions';
@@ -42,6 +36,7 @@ import {
   AdministrativeUnitModel,
 } from '@models/index';
 import { flatten } from '@angular/compiler';
+import { debounce } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-engagement-form',
@@ -53,13 +48,6 @@ export class CreateEngagementFormComponent
   extends BaseComponent
   implements OnInit
 {
-  @Input() startingForm!: FormGroup;
-  @Output() subformInitialized: EventEmitter<FormGroup> =
-    new EventEmitter<FormGroup>();
-  @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
-    'back' | 'forward'
-  >();
-
   loading$: Observable<boolean> = of(true);
   public exercises: ExerciseModel[] = [];
   public encours!: EncoursModel;
@@ -72,7 +60,7 @@ export class CreateEngagementFormComponent
   public adminUnits: AdministrativeUnitModel[] = [];
   public procedures: ExecProcedureModel[] = [];
 
-  public commonForm!: FormGroup;
+  public form: FormGroup;
 
   public busy = false;
   constructor(
@@ -84,20 +72,93 @@ export class CreateEngagementFormComponent
     private _store: Store<AppState>
   ) {
     super();
+
+    this.form = this._fb.group({
+      id: [undefined],
+      typeProcedure: this._fb.group({
+        id: [undefined],
+        imputation: [],
+        code: [undefined, Validators.required],
+        label: [],
+      }),
+      procedure: this._fb.group({
+        id: [undefined],
+        nomAgent: [undefined],
+      }),
+      exercise: this._fb.group({
+        id: [undefined],
+        code: [undefined],
+      }),
+      montantAE: [undefined],
+      adminUnit: this._fb.group({
+        id: [undefined],
+        code: [undefined],
+      }),
+      imputation: [undefined],
+      numero: [undefined],
+      reference: [undefined],
+      task: this._fb.group({
+        id: [undefined],
+        code: [undefined],
+      }),
+      activity: this._fb.group({
+        id: [undefined],
+        code: [undefined],
+      }),
+      action: this._fb.group({
+        id: [undefined],
+        code: [undefined],
+      }),
+      sousProgramme: this._fb.group({
+        id: [undefined],
+        code: [undefined],
+      }),
+    });
     this._initListeners();
   }
 
   get isUpdateForm(): boolean {
-    return !!this.commonForm?.value?.id;
-  }
-
-  doChangeStep(direction: 'forward') {
-    this.changeStep.emit(direction);
+    return !!this.form?.value?.id;
   }
 
   ngOnInit(): void {
-    this.commonForm = this.startingForm;
-    this.subformInitialized.emit(this.commonForm);
+    this._store.dispatch(GetExercises({}));
+    this._store.dispatch(GetProcedures());
+    this._store.dispatch(GetAdministrativeUnites());
+    this._store.dispatch(GetTypesProcedures());
+    if (this.config.data?.item) {
+      const {
+        procedure,
+        exercise,
+        sousProgramme,
+        action,
+        activity,
+        task,
+        reference,
+        numero,
+        imputation,
+        adminUnit,
+        montantAE,
+        etat,
+      } = this.config.data?.item as EngagementJuridiqueModel;
+      this.form.patchValue({
+        procedure,
+        exercise,
+        sousProgramme,
+        action,
+        activity,
+        task,
+        reference,
+        numero,
+        imputation,
+        adminUnit,
+        montantAE,
+        etat,
+      });
+      /*  this.agences =
+        this.banques.find((item) => item.code === banque.code)?.agences ?? [];
+        */
+    }
   }
 
   close() {
@@ -142,20 +203,87 @@ export class CreateEngagementFormComponent
         this.imputations = payload[0]?.imputations;
       });
   }
+
   submit() {
-    this.changeStep.emit('forward');
+    this.busy = true;
+    const editedEngagement = {
+      ...this.form.value,
+    } as EngagementJuridiqueModel;
+
+    if (this.isUpdateForm) {
+      this._apisService
+        .put<EngagementJuridiqueModel>('/engagements', editedEngagement)
+        .subscribe(
+          (res) => {
+            this.busy = false;
+            this.ref.close(res);
+            this._store.dispatch(GetEngagementJuridiques());
+
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.engagements.createSuccess',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.engagements.notfound';
+            } else {
+              err = 'errors.unknown';
+            }
+            this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+    } else {
+      this._apisService
+        .post<EngagementJuridiqueModel>('/engagements', editedEngagement)
+        .subscribe(
+          (res) => {
+            this.busy = false;
+            this.ref.close(res);
+            this._store.dispatch(GetEngagementJuridiques());
+
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.engagements.createSuccess',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.engagements.conflict';
+            } else {
+              err = 'errors.unknown';
+            }
+            this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+    }
   }
 
   onChange = (event: any) => {
+    console.log('CHANGR§§§§§§§§§', event.value);
     this._fetchItem(event.value);
-  };
-
-  onChangeType = (event: any) => {
-    const typeProcedure = this.typesProcedures.find(
-      (item) => item.code === event.value
-    );
-    this.commonForm.patchValue({ typeProcedure });
-    this.subformInitialized.emit(this.commonForm);
   };
 
   private _fetchItem(id: number) {

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="form" [formGroup]="commonForm">
+  <div class="form" [formGroup]="form">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
         <label class="required">{{ "labels.numero" | translate }}</label>
@@ -89,20 +89,10 @@
             class="p-col-6"
             optionLabel="year"
             (onChange)="onChange($event)"
-            optionValue="id"
-            formControlName="id"
+            optionValue="code"
+            formControlName="code"
           >
           </p-dropdown>
-          <ng-template let-option pTemplate="selectedItem">
-            <div>
-              <div>{{ option.code | translate }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-option pTemplate="item">
-            <div>
-              <div>{{ option.code | translate }}</div>
-            </div>
-          </ng-template>
         </ng-container>
       </div>
       <div class="p-field p-col-12 p-md-6">
@@ -239,8 +229,11 @@
     </button>
     <button
       (click)="submit()"
-      [disabled]="!commonForm?.valid"
-      [label]="'buttons.next' | translate"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
       pButton
     ></button>
   </div>

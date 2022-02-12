@@ -22,6 +22,10 @@ import { ToastModule } from 'primeng/toast';
     CreateEngagementFormComponent,
     EngagementCommandeComponent,
   ],
+import { CreateEngagementFormComponent } from '@components/create-engagement-form/create-engagement-form.component';
+
+@NgModule({
+  declarations: [EngagementsComponent, CreateEngagementFormComponent],
   imports: [
     CommonModule,
     EngagementsRoutingModule,
