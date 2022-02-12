@@ -29,6 +29,7 @@ import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
 import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
 import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
 import { EncoursModule } from '@modules/encours/encours.module';
+import { RegionsModule } from './modules/regions/regions.module';
 
 @Module({
   imports: [
@@ -113,6 +114,7 @@ import { EncoursModule } from '@modules/encours/encours.module';
     PiecesJointesModule,
     TypesProceduresModule,
     EncoursModule,
+    RegionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -31,7 +31,6 @@ import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
 import { GradeEntity } from '@entities/grade.entity';
 import { TypeProcedureEntity } from '@entities/type-procedure.entity';
 
-
 @Injectable()
 export class SeederService implements OnModuleInit {
   private readonly logger = new Logger(SeederService.name);
@@ -63,7 +62,7 @@ export class SeederService implements OnModuleInit {
 
     @InjectRepository(CategorieAgentEntity)
     private readonly categoriesAgentsRepository: Repository<CategorieAgentEntity>,
-    
+
     @InjectRepository(GradeEntity)
     private readonly gradesRepository: Repository<GradeEntity>,
 
@@ -343,7 +342,6 @@ export class SeederService implements OnModuleInit {
     this.logger.warn(`Synced ${count} grades`);
   }
 
-  
   async onModuleInit(): Promise<any> {
     const { role } = await this._initRoot();
     this._initPermissions(role);
