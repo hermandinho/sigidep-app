@@ -22,4 +22,12 @@ export class EngagementCommandeDTO extends CreateEngagementJuridiqueDTO {
 
   @ApiProperty({ example: '10', required: false })
   public cleCompteContribuable: string;
+  @ApiProperty({ example: 'REF', required: false })
+  public reference: string;
+
+  @ApiProperty({ example: 'OBJ', required: false })
+  public objet: string;
+
+  @ApiProperty({ type: 'float', example: 15000.56, required: false })
+  public montantTTC: number;
 }

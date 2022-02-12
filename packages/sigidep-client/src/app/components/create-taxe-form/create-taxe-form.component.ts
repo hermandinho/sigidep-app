@@ -76,7 +76,7 @@ export class CreateTaxeFormComponent extends BaseComponent implements OnInit {
           this._store.dispatch(GetTaxes());
           this._appService.showToast({
             summary: 'messages.success',
-            detail: 'messages.taxes.editSuccess',
+            detail: 'messages.grades.createSuccess',
             severity: 'success',
             life: 3000,
             closable: true,
