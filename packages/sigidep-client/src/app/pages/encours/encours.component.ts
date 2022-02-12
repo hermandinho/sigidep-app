@@ -18,7 +18,6 @@ import {
   DeleteEncoursSuccess,
   GetEncours,
 } from '@actions/encours.actions';
-import { Router } from '@angular/router';
 import { GetExercises, Go, SetAppBreadcrumb } from '@store/actions';
 
 @Component({
@@ -61,8 +60,8 @@ export class EncoursComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._store.dispatch(GetEncours());
     this._store.dispatch(GetExercises({}));
+    this._store.dispatch(GetEncours());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -133,7 +132,6 @@ export class EncoursComponent extends BaseComponent implements OnInit {
       });
   }
   public showItem = (item: EncoursModel) => {
-    console.log('HEEEEEE', item);
     this._store.dispatch(new Go({ path: ['encours/details', item.id] }));
   };
 }

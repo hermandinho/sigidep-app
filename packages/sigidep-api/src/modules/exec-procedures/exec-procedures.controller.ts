@@ -16,8 +16,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { ExecProcedureService } from './exec-procedures.service';
 import { CreateExecProcedureDTO } from './dto/create-exec-procedure.dto';
 
-@Controller('exec-procedures')
-@ApiTags('exec-procedures')
+@Controller('procedures')
+@ApiTags('procedures')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
 export class ExecProceduresController {

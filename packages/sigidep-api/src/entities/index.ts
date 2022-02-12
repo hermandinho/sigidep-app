@@ -33,3 +33,6 @@ export * from './encours.entity';
 export * from './engagement-juridique.entity';
 export * from './exec-procedure.entity';
 export * from './exec-taxes.entity';
+export * from './engagement-commande.entity';
+export * from './engagement-mission.entity';
+export * from './engagement-decision.entity';

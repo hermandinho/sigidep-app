@@ -16,8 +16,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { ExecTaxesService } from './exec-taxes.service';
 import { CreateExecTaxesDTO } from './dto/create-exec-taxes.dto';
 
-@Controller('exec-taxes')
-@ApiTags('exec-taxes')
+@Controller('taxes')
+@ApiTags('taxes')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
 export class ExecTaxesController {

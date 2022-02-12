@@ -252,6 +252,37 @@ const routes: Routes = [
             (m) => m.EncoursModule
           ),
       },
+      {
+        path: 'taxes',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.taxes],
+        },
+        loadChildren: () =>
+          import('../pages/taxes/taxes.module').then((m) => m.TaxesModule),
+      },
+      {
+        path: 'procedures',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.procedures],
+        },
+        loadChildren: () =>
+          import('../pages/procedures/procedures.module').then(
+            (m) => m.ProceduresModule
+          ),
+      },
+      {
+        path: 'engagements',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.engagements],
+        },
+        loadChildren: () =>
+          import('../pages/engagements/engagements.module').then(
+            (m) => m.EngagementsModule
+          ),
+      },
       /*{
         path: '**',
         component: NotFoundComponent,

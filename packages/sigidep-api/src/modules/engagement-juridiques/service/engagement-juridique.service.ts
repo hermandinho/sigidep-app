@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
-import { CreateEngagementJuridiqueDTO } from './dto/create-engagement-juridique.dto';
+import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
 
 @Injectable()
 export class EngagementJuridiqueService {

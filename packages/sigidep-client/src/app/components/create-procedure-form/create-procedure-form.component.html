@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="typeProcedure">
+          <label class="required">{{
+            "labels.typeProcedure" | translate
+          }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="types"
+            [placeholder]="'labels.typeProcedure' | translate"
+            class="p-col-6"
+            optionLabel="code"
+            optionValue="code"
+            formControlName="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>{{ option.code | translate }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>
+                  {{ option.code | translate }}-{{ option.label | translate }}
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </ng-container>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.matriculeAgent" | translate
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="matriculeAgent"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.nomAgent" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="nomAgent"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.numContribuable" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="numContribuable"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.nomContribuable" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="nomContribuable"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.TxTVA" | translate }}</label>
+        <input
+          type="number"
+          min="0"
+          class="form-control"
+          pInputText
+          formControlName="TxTVA"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.TxIR" | translate }}</label>
+        <input
+          type="number"
+          min="0"
+          class="form-control"
+          pInputText
+          formControlName="TxIR"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.RIB" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="RIB"
+          [placeholder]="''"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid || busy"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>
