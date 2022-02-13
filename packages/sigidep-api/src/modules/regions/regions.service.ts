@@ -1,7 +1,8 @@
 import { RegionEntity } from '@entities/region.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
+import { CreateRegionDto } from './dto/create-region.dto';
 
 @Injectable()
 export class RegionsService {
@@ -15,13 +16,36 @@ export class RegionsService {
   }
 
   async get(id: number): Promise<RegionEntity> {
-    return await this.regionRepository.findOne(id);
+    const r = await this.regionRepository.findOne(id);
+    if (!r) {
+      throw new NotFoundException();
+    }
+    return r;
   }
-  async update(id: number, pa): Promise<RegionEntity> {
-    return await this.regionRepository.findOne(id);
+  async update(payload: CreateRegionDto) {
+    const r = await this.regionRepository.findOne(payload.id);
+    if (!r) {
+      throw new NotFoundException();
+    }
+    console.log(payload);
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .update(RegionEntity)
+        .set(payload)
+        .where('id = :id', { id: payload.id })
+        .execute();
+      return await this.regionRepository.findOne(payload.id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   async delete(id: number): Promise<any> {
     return await this.regionRepository.delete({ id });
+  }
+
+  async add(createRegionDto: CreateRegionDto): Promise<any> {
+    return await this.regionRepository.save(createRegionDto);
   }
 }
