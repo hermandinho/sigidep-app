@@ -44,6 +44,7 @@ import { BaremesModule } from '@pages/baremes/baremes.module';
 import { TypesProceduresModule } from '@pages/types-procedures/types-procedures.module';
 import { PiecesJointesModule } from '@pages/pieces-jointes/pieces-jointes.module';
 import { EncoursModule } from '@pages/encours/encours.module';
+import { RegionsModule } from './pages/regions/regions.module';
 
 registerLocaleData(localeFr);
 
@@ -106,6 +107,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TypesProceduresModule,
     PiecesJointesModule,
     EncoursModule,
+    RegionsModule,
   ],
   providers: [
     AppInstallCheckGuard,

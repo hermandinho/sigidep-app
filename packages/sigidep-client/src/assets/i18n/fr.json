@@ -482,7 +482,8 @@
       "typesProcedures": "Types de Procédures",
       "piecesJointes": "Pièces Jointes",
       "baremes": "Barèmes",
-      "encours": "Statistiques Budgets En Cours"
+      "encours": "Statistiques Budgets En Cours",
+      "regions": "Liste des regions"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -657,7 +658,8 @@
       "deleteAgence": "Voulez-vous vraiment supprimer cette agence? Cette action est irréversible",
       "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
       "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible",
-      "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible"
+      "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
+      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible"
     }
   },
   "exerciseStatuses": {

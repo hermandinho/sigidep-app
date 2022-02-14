@@ -27,3 +27,4 @@ export * from '@actions/baremes.actions';
 export * from '@actions/types-procedures.actions';
 export * from '@actions/piece-jointe.actions';
 export * from '@actions/encours.actions';
+export * from '@actions/regions.actions';

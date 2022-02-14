@@ -27,6 +27,7 @@ import { BaremesComponent } from '@pages/baremes/baremes.component';
 import { TypesProceduresComponent } from '@pages/types-procedures/types-procedures.component';
 import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
 import { EncoursComponent } from '@pages/encours/encours.component';
+import { RegionsComponent } from '@pages/regions/regions.component';
 
 const routes: Routes = [
   {
@@ -251,6 +252,14 @@ const routes: Routes = [
           import('../pages/encours/encours.module').then(
             (m) => m.EncoursModule
           ),
+      },
+      {
+        path: 'regions',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.regions],
+        },
+        component: RegionsComponent,
       },
       /*{
         path: '**',

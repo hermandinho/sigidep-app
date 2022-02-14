@@ -22,6 +22,7 @@ export class RegionsService {
     }
     return r;
   }
+
   async update(payload: CreateRegionDto) {
     const r = await this.regionRepository.findOne(payload.id);
     if (!r) {
