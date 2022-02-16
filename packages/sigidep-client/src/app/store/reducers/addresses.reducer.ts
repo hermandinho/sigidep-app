@@ -9,7 +9,12 @@ import {
   GetRegions,
   GetRegionsFailure,
   GetRegionsSuccess,
+  DeleteRegion,
 } from '@store/actions';
+import {
+  DeleteRegionSuccess,
+  DeleteRegionFailure,
+} from '@actions/regions.actions'
 import { RegionsModel } from '@models/addresses.model';
 
 export interface State {
@@ -36,6 +41,12 @@ const authReducer = createReducer(
   }),
   on(GetRegionsSuccess, (state, { payload }) => {
     return { ...state, loading: false, data: payload };
+  }),
+  on(DeleteRegion, (state, { id }) => {
+    return { ...state, loading: true };
+  }),
+  on(DeleteRegionSuccess, DeleteRegionFailure, (state, { }) => {
+    return { ...state, loading: false };
   }),
   on(GetRegionsFailure, (state, { error }) => {
     return { ...state, loading: false, error };

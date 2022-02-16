@@ -18,3 +18,10 @@ export const DeleteRegion = createAction(
   '[Region] Delete',
   props<{ id: number }>()
 );
+
+export const DeleteRegionSuccess = createAction(
+  '[Region] Delete success'
+)
+export const DeleteRegionFailure = createAction(
+  '[Region] Delete failure'
+)

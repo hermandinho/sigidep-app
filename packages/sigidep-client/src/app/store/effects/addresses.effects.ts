@@ -10,6 +10,11 @@ import {
   GetRegionsFailure,
   GetRegionsSuccess,
 } from '@store/actions';
+import {
+  DeleteRegion,
+  DeleteRegionSuccess,
+  DeleteRegionFailure,
+} from '@actions/regions.actions'
 import { RegionsModel } from '@models/addresses.model';
 
 @Injectable()
@@ -28,5 +33,19 @@ export class AddressesEffects {
     )
   );
 
-  constructor(private actions$: Actions, private apisService: ApisService) {}
+  delete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DeleteRegion),
+      mergeMap((action) =>
+        this.apisService.delete<any>(`/regions/${action.id}`, {}).pipe(
+          switchMap((payload) => {
+            return [DeleteRegionSuccess(), GetRegions()];
+          }),
+          catchError((err: HttpErrorResponse) => of(DeleteRegionFailure()))
+        )
+      )
+    )
+  );
+
+  constructor(private actions$: Actions, private apisService: ApisService) { }
 }
