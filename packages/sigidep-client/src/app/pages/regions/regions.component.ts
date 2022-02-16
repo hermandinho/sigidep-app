@@ -16,6 +16,7 @@ import {
   getDataSelector,
   getLoadingSelector,
 } from '@reducers/addresses.reducer';
+import { SetAppBreadcrumb } from '@store/actions';
 
 @Component({
   selector: 'app-regions',
@@ -58,6 +59,15 @@ export class RegionsComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this._store.dispatch(GetRegions());
+    this._store.dispatch(
+      SetAppBreadcrumb({
+        breadcrumb: [
+          {
+            label: 'breadcrumb.regions',
+          },
+        ],
+      })
+    );
   }
 
   openForm() {
