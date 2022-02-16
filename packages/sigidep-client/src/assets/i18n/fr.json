@@ -635,7 +635,8 @@
       "editTypeProcedure": "Editer un type de procédure",
       "editPieceJointe": "Editer une pièce jointe",
       "encours": "Mise en ligne du budget ",
-      "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}"
+      "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
+      "regions": "Nouvelle region"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
