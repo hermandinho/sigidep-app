@@ -59,6 +59,15 @@ export class EncoursModel extends BaseModel {
   nombreUnitesPhysiques!: number;
   volumeAE!: number;
   volumeCP!: number;
+
+
+  /**
+   * Retouche sur l'entite
+   */
+  paragraphLabellFr!: string;
+  paragraphLabellEn!: string;
+  paragraph!: string;
+  codeUnitePhysique!: string;
   constructor(params?: Partial<EncoursModel>) {
     super();
     if (params) {

@@ -18,7 +18,6 @@ import {
   DeleteEncoursSuccess,
   GetEncours,
 } from '@actions/encours.actions';
-import { Router } from '@angular/router';
 import { GetExercises, Go, SetAppBreadcrumb } from '@store/actions';
 
 @Component({

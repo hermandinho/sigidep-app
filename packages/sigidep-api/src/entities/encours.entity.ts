@@ -181,4 +181,19 @@ export class EncoursEntity extends BaseEntity {
 
   @Column({ nullable: true })
   public volumeCP: number;
+
+  /**
+   * Retouche sur l'entite
+   */
+  @Column('text',{ nullable: true })
+  public paragraphLabellFr: string;
+
+  @Column('text',{ nullable: true })
+  public paragraphLabellEn: string;
+
+  @Column('text',{ nullable: true })
+  public paragraph: string;
+
+  @Column('varchar',{ nullable: true })
+  public codeUnitePhysique: string;
 }
