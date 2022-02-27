@@ -145,14 +145,16 @@ export class AccreditationsGestionnairesFormComponent
 
           // Let Build Imputation Number
           const { exercice, agent, administrativeUnit } = this.form.value;
-          ac.imputation = `${exercice.code} ${agent.matricule} ${administrativeUnit.code}`;
+          if (administrativeUnit!==undefined) {
+            ac.imputation = `${exercice.code} ${agent.matricule} ${administrativeUnit.code}`;
 
-          const found = this.imputationsOperationsList.find(
-            (elt) => elt.imputation === ac.imputation || !elt.id
-          );
+            const found = this.imputationsOperationsList.find(
+              (elt) => elt.imputation === ac.imputation || !elt.id
+            );
 
-          if (!found) {
-            this.imputationsOperationsList.push(ac);
+            if (!found) {
+              this.imputationsOperationsList.push(ac);
+            }
           }
         }
       });
@@ -300,9 +302,9 @@ export class AccreditationsGestionnairesFormComponent
 
     /* this._appService.showConfirmation({
       message: 'dialogs.messages.deleteAccreditation',
-      
+
       accept: () => {
-       
+
       },
     }); */
     this._apisService
@@ -327,10 +329,9 @@ export class AccreditationsGestionnairesFormComponent
   submit() {
     this.busy = true;
 
-    /* if (this.isUpdateForm) {
-      this.busy = false; // TODO
-      return;
-    } */
+    if (this.isUpdateForm) {
+      this.busy = false;
+    }
 
     (() => {
       if (!this.isUpdateForm) {
@@ -379,5 +380,11 @@ export class AccreditationsGestionnairesFormComponent
         });
       }
     );
+  }
+
+  change({value}:any){
+    // this.form.value["administrativeUnit"] = value
+    console.log(this.form.valid)
+    console.log(this.form.value)
   }
 }

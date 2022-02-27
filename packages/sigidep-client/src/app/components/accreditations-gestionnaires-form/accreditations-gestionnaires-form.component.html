@@ -181,6 +181,7 @@
             <p-dropdown
               [autoDisplayFirst]="false"
               [options]="administrativeUnitList"
+              (onChange)="change($event)"
               formControlName="administrativeUnit"
               optionLabel="labelFr"
             >
