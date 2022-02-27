@@ -158,25 +158,25 @@ export class EncoursEntity extends BaseEntity {
    * Statistiques mise en ligne
    */
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public nombreActions: number;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public nombreActivites: number;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public nombreTasks: number;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public nombreOperations: number;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public nombreImputations: number;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public nombreUnitesPhysiques: number;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
   public volumeAE: number;
 
   @Column({ nullable: true })

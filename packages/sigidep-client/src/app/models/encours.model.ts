@@ -51,19 +51,16 @@ export class EncoursModel extends BaseModel {
   /***
    * Statistiques mise en ligne
    */
-  nombreActions!: number;
-  nombreActivites!: number;
-  nombreTasks!: number;
-  nombreOperations!: number;
-  nombreImputations!: number;
-  nombreUnitesPhysiques!: number;
-  volumeAE!: number;
-  volumeCP!: number;
+  readonly nombreActions!: number;
+  readonly nombreActivites!: number;
+  readonly nombreTasks!: number;
+  readonly nombreOperations!: number;
+  readonly nombreImputations!: number;
+  readonly nombreUnitesPhysiques!: number;
+  readonly volumeAE!: number;
+  readonly volumeCP!: number;
 
 
-  /**
-   * Retouche sur l'entite
-   */
   paragraphLabellFr!: string;
   paragraphLabellEn!: string;
   paragraph!: string;
@@ -72,6 +69,14 @@ export class EncoursModel extends BaseModel {
     super();
     if (params) {
       Object.assign(this, params);
+      this.nombreActions = params.actions?.length||0
+      this.nombreActivites = params.activities?.length||0
+      this.nombreTasks = params.tasks?.length||0
+      this.nombreOperations = params.operations?.length||0
+      this.nombreImputations = params.imputations?.length||0
+      this.nombreUnitesPhysiques = params.unitePhysiques?.length||0
+      this.volumeAE=10
+      this.volumeCP=10
     }
   }
 }
