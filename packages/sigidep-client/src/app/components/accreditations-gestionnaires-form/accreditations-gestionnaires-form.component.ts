@@ -19,6 +19,8 @@ import { Component, OnInit } from '@angular/core';
 import { GetContribuablesBugetaires } from '@actions/contribuables-budgetaires.actions';
 import { BankModel } from '@models/banque.model';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
+import { EncoursModel } from '@models/encours.model';
+import { FilterService } from './filter.service';
 
 @Component({
   selector: 'app-accreditations-gestionnaires-form',
@@ -40,7 +42,10 @@ export class AccreditationsGestionnairesFormComponent
   subProgramsList: SubProgramModel[] = [];
   administrativeUnitList: AdministrativeUnitModel[] = [];
 
+  // imputationsOperationsList: any[] = [];
   imputationsOperationsList: AccreditationGestionnaireModel[] = [];
+
+  public selectedEncours: EncoursModel|null = null;
 
   constructor(
     private _fb: FormBuilder,
@@ -48,7 +53,8 @@ export class AccreditationsGestionnairesFormComponent
     public ref: DynamicDialogRef,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    private filterService: FilterService
   ) {
     super();
     this.form = this._fb.group({
@@ -193,7 +199,8 @@ export class AccreditationsGestionnairesFormComponent
 
   async getInitialData() {
     const exercicesResult = await this._apisService
-      .get<ExerciseModel[]>(`/exercises?status=in_progress`)
+      .get<ExerciseModel[]>(`/exercises`) // TODO: reutiliser la ligne suivante
+      // .get<ExerciseModel[]>(`/exercises?status=in_progress`)
       .toPromise();
     this.exercicesInprogressList = exercicesResult;
 
@@ -216,12 +223,24 @@ export class AccreditationsGestionnairesFormComponent
   async getGestionnaireWithAccreditation() {
     const agentWithAcrreditationResult = await this._apisService
       .get<GestionnaireModel>(
-        `/gestionnaires/agent/${this.form.get('agent')?.value.id}`
+        // `/gestionnaire/${this.form.get('agent')?.value.id}`
+          `/gestionnaires/agent/${this.form.get('agent')?.value.id}`
       )
       .toPromise();
-    this.imputationsOperationsList = agentWithAcrreditationResult
+    this.imputationsOperationsList = agentWithAcrreditationResult && agentWithAcrreditationResult.accreditations.length>0
       ? agentWithAcrreditationResult.accreditations
-      : [];
+      : [
+        // TODO: Juste pour le test, a retirer
+        {
+          createdAt: new Date(),
+          dateDebut: new Date(),
+          dateFin: new Date(),
+          imputation: "yo",
+          labelOperation: "test",
+          id: 1,
+          updatedAt: new Date(),
+        }
+      ];
   }
 
   async saveAccreditation() {
@@ -311,7 +330,6 @@ export class AccreditationsGestionnairesFormComponent
       .delete<any>(`/accreditations?ids=${item.id}`, {})
       .toPromise()
       .then((result: any) => {
-        this.loadingRemoveAccreditation = false;
         this.getGestionnaireWithAccreditation();
       })
       .catch((err: any) => {
@@ -322,6 +340,8 @@ export class AccreditationsGestionnairesFormComponent
           life: 5000,
           closable: true,
         });
+      })
+      .finally(()=>{
         this.loadingRemoveAccreditation = false;
       });
   }
@@ -382,9 +402,13 @@ export class AccreditationsGestionnairesFormComponent
     );
   }
 
-  change({value}:any){
-    // this.form.value["administrativeUnit"] = value
-    console.log(this.form.valid)
-    console.log(this.form.value)
+  setSelectedEncours({value}:any) {
+    console.log(value)
+    this.filterService.getEncoursByExercice(value.id)
+    .subscribe(data=>{
+      this.selectedEncours= data
+    }, err=>{
+      console.log(err)
+    })
   }
 }

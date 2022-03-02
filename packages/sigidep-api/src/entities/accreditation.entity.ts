@@ -1,6 +1,7 @@
 import { GestionnairesEntity } from './gestionnaire.entity';
 import { BaseEntity } from '@entities/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { EncoursEntity } from '.';
 
 @Entity({
   name: 'accreditation',
@@ -27,6 +28,15 @@ export class AccreditationEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'gestionnaireId' })
   public gestionnaire: GestionnairesEntity;
+
+
+  @ManyToOne(() => EncoursEntity, (object)=>object.id, {
+    eager: false,
+    onDelete: 'CASCADE',
+    nullable: false
+  })
+  @JoinColumn({ name: 'encoursId'})
+  public encours: EncoursEntity;
 
   constructor(param?: Partial<AccreditationEntity>) {
     super();

@@ -5,7 +5,6 @@ import {
   Get,
   Param,
   Post,
-  Put,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -44,5 +43,11 @@ export class EncoursController {
   @Get('/:id')
   public async getOne(@Param('id') id: number) {
     return this.encoursServices.getOne(id);
+  }
+
+  @Get('/exercice/:id')
+  public async getEncoursByExercice(@Param('id') id:number) {
+    return this.encoursServices.getRepository()
+      .createQueryBuilder('encours').where('exercise_id=:id', {id}).getMany()
   }
 }

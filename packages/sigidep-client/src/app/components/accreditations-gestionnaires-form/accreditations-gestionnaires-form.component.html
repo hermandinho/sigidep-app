@@ -7,6 +7,7 @@
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="exercicesInprogressList"
+            (onChange)="setSelectedEncours($event)"
             formControlName="exercice"
             optionLabel="code"
           >
@@ -171,6 +172,104 @@
       </ng-container>
 
       <ng-container
+        *ngIf="form.get('typeAccreditation')?.value === 'sub-program'"
+      >
+        <div class="p-field p-col-12 p-md-12">
+          <div class="p-field">
+            <label class="required">{{
+              "labels.subProgram" | translate
+            }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="subProgramsList"
+              formControlName="subProgram"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <div class="p-field">
+            <label class="required">{{ "labels.action" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="form.get('subProgram')?.value?.actions"
+              formControlName="action"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <div class="p-field">
+            <label class="required">{{ "labels.activity" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="form.get('action')?.value?.activities"
+              formControlName="activity"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <div class="p-field">
+            <label class="required">{{ "labels.task" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="form.get('activity')?.value?.tasks"
+              formControlName="task"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container
         *ngIf="form.get('typeAccreditation')?.value === 'administrative-unit'"
       >
         <div class="p-field p-col-12 p-md-12">
@@ -181,7 +280,6 @@
             <p-dropdown
               [autoDisplayFirst]="false"
               [options]="administrativeUnitList"
-              (onChange)="change($event)"
               formControlName="administrativeUnit"
               optionLabel="labelFr"
             >
@@ -203,7 +301,7 @@
   </form>
 
   <!---->
-  <p-table [value]="imputationsOperationsList" responsiveLayout="scroll">
+  <p-table *ngIf="imputationsOperationsList.length>0" [value]="imputationsOperationsList" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
@@ -294,7 +392,6 @@
     </button>
     <button
       (click)="saveAccreditation()"
-      [disabled]="!form?.valid || busy"
       [label]="
         'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
           | translate
