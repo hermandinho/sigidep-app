@@ -1,21 +1,7 @@
-import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BaseComponent } from '@components/base.component';
-import { EngagementCommandeModel } from '@models/engagement-commande.model';
-import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
-
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TypeProcedureEnum } from '@models/exec-procedure.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AppService } from '@services/app.service';
-import { ApisService } from '@services/apis.service';
-import { select, Store } from '@ngrx/store';
-import { AppState } from '@reducers/index';
-import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
-import { GetExercises } from '@actions/exercises.actions';
-import { GetProcedures } from '@actions/exec-procedure.actions';
-import { GetAdministrativeUnites } from '@actions/administrative-units.actions';
-import { GetTypesProcedures } from '@actions/types-procedures.actions';
 
 type Step = 'common' | 'mission' | 'decision' | 'command';
 @Component({
@@ -23,28 +9,14 @@ type Step = 'common' | 'mission' | 'decision' | 'command';
   templateUrl: './engagement-container.component.html',
   styleUrls: ['./engagement-container.component.scss'],
 })
-export class EngagementContainerComponent
-  extends BaseComponent
-  implements OnInit
-{
+export class EngagementContainerComponent implements OnInit {
   private currentStepBs: BehaviorSubject<Step> = new BehaviorSubject<Step>(
     'common'
   );
   public currentStep$: Observable<Step> = this.currentStepBs.asObservable();
   public form!: FormGroup;
 
-  public busy = false;
-  constructor(
-    public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig,
-    private _fb: FormBuilder,
-    private _appService: AppService,
-    private _apisService: ApisService,
-    private _store: Store<AppState>
-  ) {
-    super();
-    //this._initListeners();
-  }
+  constructor(private _fb: FormBuilder) {}
 
   currentProcedure!: any;
 
@@ -58,11 +30,14 @@ export class EngagementContainerComponent
         codeAgenceContribuable: '',
         numeroCompteContribuable: '',
         cleCompteContribuable: '',
+        reference: '',
+        objet: '',
+        montantTTC: '',
       }),
       commonForm: this._fb.group({
         id: [undefined],
         typeProcedure: this._fb.group({
-          id: [undefined, Validators.required],
+          id: [undefined],
           imputation: [],
           code: [undefined],
           label: [],
@@ -101,64 +76,6 @@ export class EngagementContainerComponent
         }),
       }),
     });
-
-    this._store.dispatch(GetExercises({}));
-    this._store.dispatch(GetProcedures());
-    this._store.dispatch(GetAdministrativeUnites());
-    this._store.dispatch(GetTypesProcedures());
-
-    if (this.config.data?.item) {
-      const {
-        id,
-        procedure,
-        exercise,
-        sousProgramme,
-        action,
-        activity,
-        task,
-        reference,
-        numero,
-        imputation,
-        adminUnit,
-        montantAE,
-        etat,
-        niuContribuable,
-        montantTTC,
-        raisonSocialeContribuable,
-        codeBanqueContribuable,
-        codeAgenceContribuable,
-        numeroCompteContribuable,
-        cleCompteContribuable,
-      } = this.config.data?.item as EngagementCommandeModel;
-
-      this.form.patchValue({
-        commonForm: {
-          id,
-          typeProcedure: { ...procedure.typeProcedure },
-          procedure,
-          exercise,
-          sousProgramme,
-          action,
-          activity,
-          task,
-          reference,
-          numero,
-          imputation,
-          adminUnit,
-          montantAE,
-          etat,
-        },
-        commandForm: {
-          niuContribuable,
-          montantTTC,
-          raisonSocialeContribuable,
-          codeBanqueContribuable,
-          codeAgenceContribuable,
-          numeroCompteContribuable,
-          cleCompteContribuable,
-        },
-      });
-    }
   }
 
   get commonFormGroup(): FormGroup {
@@ -203,94 +120,8 @@ export class EngagementContainerComponent
         break;
     }
   }
-
-  get isUpdateForm(): boolean {
-    return !!this.form?.value?.commonForm?.id;
-  }
-
   submitForm() {
     const formValues = this.form.value;
     // submit the form with a service
-    this.busy = true;
-    const editedEngagement = {
-      ...this.form.value.commonForm,
-      ...this.form.value.commandForm,
-    } as EngagementCommandeModel;
-
-    if (this.isUpdateForm) {
-      this._apisService
-        .put<EngagementCommandeModel>(
-          '/engagements/commandes',
-          editedEngagement
-        )
-        .subscribe(
-          (res) => {
-            this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementCommandes());
-
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail: 'messages.engagements.createSuccess',
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.notfound';
-            } else {
-              err = 'errors.unknown';
-            }
-            this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
-          }
-        );
-    } else {
-      this._apisService
-        .post<EngagementCommandeModel>(
-          '/engagements/commandes',
-          editedEngagement
-        )
-        .subscribe(
-          (res) => {
-            this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementCommandes());
-
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail: 'messages.engagements.createSuccess',
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.conflict';
-            } else {
-              err = 'errors.unknown';
-            }
-            this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
-          }
-        );
-    }
   }
 }

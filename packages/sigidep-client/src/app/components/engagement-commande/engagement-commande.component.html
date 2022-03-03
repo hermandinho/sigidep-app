@@ -1,72 +1,26 @@
 <div class="container">
   <div class="form" [formGroup]="commandForm">
     <div class="p-fluid p-grid">
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.niuContribuable" | translate
-        }}</label>
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.reference" | translate }}</label>
         <input
           type="text"
           class="form-control"
           pInputText
-          formControlName="niuContribuable"
+          formControlName="reference"
           [placeholder]="''"
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.raisonSocialeContribuable" | translate
-        }}</label>
-        <input
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.objet" | translate }}</label>
+        <textarea
           class="form-control"
-          formControlName="raisonSocialeContribuable"
+          formControlName="objet"
           [placeholder]="''"
-          pInputText
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.codeBanqueContribuable" | translate
-        }}</label>
-        <input
-          class="form-control"
-          formControlName="codeBanqueContribuable"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.codeAgenceContribuable" | translate
-        }}</label>
-        <input
-          class="form-control"
-          formControlName="codeAgenceContribuable"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.numeroCompteContribuable" | translate
-        }}</label>
-        <input
-          class="form-control"
-          formControlName="numeroCompteContribuable"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.cleCompteContribuable" | translate
-        }}</label>
-        <input
-          class="form-control"
-          formControlName="cleCompteContribuable"
-          [placeholder]="''"
-          pInputText
-        />
+          rows="4"
+          cols="35"
+          pInputTextarea
+        ></textarea>
       </div>
 
       <div class="p-field p-col-12 p-md-12">
