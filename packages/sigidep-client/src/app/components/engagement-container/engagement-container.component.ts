@@ -106,6 +106,7 @@ export class EngagementContainerComponent
     this._store.dispatch(GetProcedures());
     this._store.dispatch(GetAdministrativeUnites());
     this._store.dispatch(GetTypesProcedures());
+
     if (this.config.data?.item) {
       const {
         procedure,
@@ -120,9 +121,18 @@ export class EngagementContainerComponent
         adminUnit,
         montantAE,
         etat,
-      } = this.config.data?.item as EngagementJuridiqueModel;
+        niuContribuable,
+        montantTTC,
+        raisonSocialeContribuable,
+        codeBanqueContribuable,
+        codeAgenceContribuable,
+        numeroCompteContribuable,
+        cleCompteContribuable,
+      } = this.config.data?.item as EngagementCommandeModel;
+
       this.form.patchValue({
         commonForm: {
+          typeProcedure: { ...procedure.typeProcedure },
           procedure,
           exercise,
           sousProgramme,
@@ -135,12 +145,17 @@ export class EngagementContainerComponent
           adminUnit,
           montantAE,
           etat,
-          typeProcedure: procedure.typeProcedure,
+        },
+        commandForm: {
+          niuContribuable,
+          montantTTC,
+          raisonSocialeContribuable,
+          codeBanqueContribuable,
+          codeAgenceContribuable,
+          numeroCompteContribuable,
+          cleCompteContribuable,
         },
       });
-      /*  this.agences =
-        this.banques.find((item) => item.code === banque.code)?.agences ?? [];
-        */
     }
   }
 

@@ -111,8 +111,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PiecesJointesModule,
     EncoursModule,
     TaxesModule,
-    EngagementsModule,
     ProceduresModule,
+    EngagementsModule,
   ],
   providers: [
     AppInstallCheckGuard,
