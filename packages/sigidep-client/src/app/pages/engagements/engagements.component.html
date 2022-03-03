@@ -60,7 +60,11 @@
       <tr>
         <td *ngFor="let column of tableColumns">
           <span>
-            {{ item[column.field]?.code ?? item[column.field] }}
+            {{
+              item[column.field]?.RIB ??
+                item[column.field]?.code ??
+                item[column.field]
+            }}
           </span>
         </td>
         <td>

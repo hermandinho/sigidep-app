@@ -8,9 +8,6 @@ export class EngagementCommandeModel extends EngagementJuridiqueModel {
   codeAgenceContribuable!: string;
   numeroCompteContribuable!: string;
   cleCompteContribuable!: string;
-  reference!: string;
-  objet!: string;
-  montantTTC!: number;
 
   constructor(params?: Partial<EngagementCommandeModel>) {
     super();

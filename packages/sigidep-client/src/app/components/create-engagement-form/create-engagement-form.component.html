@@ -89,10 +89,20 @@
             class="p-col-6"
             optionLabel="year"
             (onChange)="onChange($event)"
-            optionValue="code"
-            formControlName="code"
+            optionValue="id"
+            formControlName="id"
           >
           </p-dropdown>
+          <ng-template let-option pTemplate="selectedItem">
+            <div>
+              <div>{{ option.code | translate }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-option pTemplate="item">
+            <div>
+              <div>{{ option.code | translate }}</div>
+            </div>
+          </ng-template>
         </ng-container>
       </div>
       <div class="p-field p-col-12 p-md-6">
