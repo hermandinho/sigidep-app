@@ -26,7 +26,6 @@ import {
   GetEncours,
   GetExercises,
   GetTypesProcedures,
-  GetEngagementJuridiques,
   GetProcedures,
   GetAdministrativeUnites,
 } from '@store/actions';
@@ -85,7 +84,6 @@ export class CreateEngagementFormComponent
     private _store: Store<AppState>
   ) {
     super();
-
     this._initListeners();
   }
 
@@ -100,44 +98,6 @@ export class CreateEngagementFormComponent
   ngOnInit(): void {
     this.commonForm = this.startingForm;
     this.subformInitialized.emit(this.commonForm);
-
-    this._store.dispatch(GetExercises({}));
-    this._store.dispatch(GetProcedures());
-    this._store.dispatch(GetAdministrativeUnites());
-    this._store.dispatch(GetTypesProcedures());
-    if (this.config.data?.item) {
-      const {
-        procedure,
-        exercise,
-        sousProgramme,
-        action,
-        activity,
-        task,
-        reference,
-        numero,
-        imputation,
-        adminUnit,
-        montantAE,
-        etat,
-      } = this.config.data?.item as EngagementJuridiqueModel;
-      this.commonForm.patchValue({
-        procedure,
-        exercise,
-        sousProgramme,
-        action,
-        activity,
-        task,
-        reference,
-        numero,
-        imputation,
-        adminUnit,
-        montantAE,
-        etat,
-      });
-      /*  this.agences =
-        this.banques.find((item) => item.code === banque.code)?.agences ?? [];
-        */
-    }
   }
 
   close() {
@@ -184,82 +144,6 @@ export class CreateEngagementFormComponent
   }
   submit() {
     this.changeStep.emit('forward');
-  }
-  submit_() {
-    this.busy = true;
-    const editedEngagement = {
-      ...this.commonForm.value,
-    } as EngagementJuridiqueModel;
-
-    if (this.isUpdateForm) {
-      this._apisService
-        .put<EngagementJuridiqueModel>('/engagements', editedEngagement)
-        .subscribe(
-          (res) => {
-            this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementJuridiques());
-
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail: 'messages.engagements.createSuccess',
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.notfound';
-            } else {
-              err = 'errors.unknown';
-            }
-            this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
-          }
-        );
-    } else {
-      this._apisService
-        .post<EngagementJuridiqueModel>('/engagements', editedEngagement)
-        .subscribe(
-          (res) => {
-            this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementJuridiques());
-
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail: 'messages.engagements.createSuccess',
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.conflict';
-            } else {
-              err = 'errors.unknown';
-            }
-            this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
-          }
-        );
-    }
   }
 
   onChange = (event: any) => {

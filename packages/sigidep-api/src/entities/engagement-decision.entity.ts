@@ -1,7 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { ChildEntity, Column, Entity } from 'typeorm';
 import { EngagementJuridiqueEntity } from '.';
 
-@Entity({ name: 'engagement-decision' })
+@ChildEntity({ name: 'engagement-decision' })
 export class EngagementDecisionEntity extends EngagementJuridiqueEntity {
   @Column()
   public numeroDecision: string;
