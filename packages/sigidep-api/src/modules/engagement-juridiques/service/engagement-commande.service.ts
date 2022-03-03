@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { EngagementCommandeEntity } from '@entities/engagement-commande.entity';
 import { EngagementCommandeDTO } from '../dto/create-engagement-commande.dto';
+import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
 
 @Injectable()
 export class EngagementCommandeService {
@@ -28,6 +29,7 @@ export class EngagementCommandeService {
     payload: EngagementCommandeDTO,
     user: UserEntity,
   ): Promise<EngagementCommandeEntity> {
+    payload.etat = EtatEngagementEnum.SAVE;
     return this.repository.save({
       ...(payload as any),
       createdBy: user,
