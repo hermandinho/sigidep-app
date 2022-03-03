@@ -116,7 +116,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.contribuables',
+            label: 'breadcrumb.engagements',
           },
         ],
       })

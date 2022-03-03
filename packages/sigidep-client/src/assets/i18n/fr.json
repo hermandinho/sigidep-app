@@ -452,10 +452,6 @@
       "deleteSuccess": "Chargement du budget supprimé avec succès.",
       "createSuccess": "Budget mis en ligne avec succès."
     },
-    "accreditation": {
-      "deleteSuccess": "Accreditation supprimé avec succès.",
-      "createSuccess": "Accreditation effectuée."
-    },  
     "procedures": {
       "deleteSuccess": "Procédure supprimée avec succès.",
       "createSuccess": "Procédure enregistrée avec succès."
@@ -527,9 +523,6 @@
       "piecesJointes": "Pièces Jointes",
       "baremes": "Barèmes",
       "encours": "Statistiques Budgets En Cours",
-      "regions": "Liste des regions",
-      "imputationsFiltres": "Imputations filtrées",
-      "imputationsSelectionnes": "Imputations selectionnées",
       "procdeures": "Procédures",
       "taxes": "Taxes",
       "engagements": "Engagements"
@@ -704,7 +697,6 @@
       "editPieceJointe": "Editer une pièce jointe",
       "encours": "Mise en ligne du budget ",
       "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
-      "regions": "Nouvelle region",
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
       "editEngagement": "Editer un Engagement"

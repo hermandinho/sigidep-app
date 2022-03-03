@@ -1,6 +1,6 @@
 import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
@@ -62,7 +62,7 @@ export class EngagementContainerComponent
       commonForm: this._fb.group({
         id: [undefined],
         typeProcedure: this._fb.group({
-          id: [undefined],
+          id: [undefined, Validators.required],
           imputation: [],
           code: [undefined],
           label: [],
