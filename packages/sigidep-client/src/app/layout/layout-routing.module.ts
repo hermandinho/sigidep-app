@@ -29,6 +29,8 @@ import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.com
 import { EncoursComponent } from '@pages/encours/encours.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { EngagementsComponent } from '@pages/engagements/engagements.component';
+import { ProceduresComponent } from '@pages/procedures/procedures.component';
+import { TaxesComponent } from '@pages/taxes/taxes.component';
 
 const routes: Routes = [
   {
@@ -265,6 +267,7 @@ const routes: Routes = [
       },
       {
         path: 'taxes',
+        component: TaxesComponent,
         canActivate: [AuthGuard],
         data: {
           permissions: [...MenuPermissions.taxes],
@@ -274,6 +277,7 @@ const routes: Routes = [
       },
       {
         path: 'procedures',
+        component: ProceduresComponent,
         canActivate: [AuthGuard],
         data: {
           permissions: [...MenuPermissions.procedures],
