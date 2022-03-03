@@ -109,6 +109,7 @@ export class EngagementContainerComponent
 
     if (this.config.data?.item) {
       const {
+        id,
         procedure,
         exercise,
         sousProgramme,
@@ -132,6 +133,7 @@ export class EngagementContainerComponent
 
       this.form.patchValue({
         commonForm: {
+          id,
           typeProcedure: { ...procedure.typeProcedure },
           procedure,
           exercise,
@@ -203,7 +205,7 @@ export class EngagementContainerComponent
   }
 
   get isUpdateForm(): boolean {
-    return !!this.form?.value?.id;
+    return !!this.form?.value?.commonForm?.id;
   }
 
   submitForm() {
