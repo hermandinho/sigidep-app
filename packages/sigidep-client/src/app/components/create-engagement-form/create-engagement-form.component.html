@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="form" [formGroup]="form">
+  <div class="form" [formGroup]="commonForm">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
         <label class="required">{{ "labels.numero" | translate }}</label>
@@ -229,11 +229,8 @@
     </button>
     <button
       (click)="submit()"
-      [disabled]="!form?.valid || busy"
-      [label]="
-        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
-          | translate
-      "
+      [disabled]="!commonForm?.valid"
+      [label]="'buttons.next' | translate"
       pButton
     ></button>
   </div>
