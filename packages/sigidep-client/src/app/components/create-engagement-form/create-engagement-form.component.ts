@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -36,7 +43,6 @@ import {
   AdministrativeUnitModel,
 } from '@models/index';
 import { flatten } from '@angular/compiler';
-import { debounce } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-engagement-form',
@@ -48,6 +54,13 @@ export class CreateEngagementFormComponent
   extends BaseComponent
   implements OnInit
 {
+  @Input() startingForm!: FormGroup;
+  @Output() subformInitialized: EventEmitter<FormGroup> =
+    new EventEmitter<FormGroup>();
+  @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
+    'back' | 'forward'
+  >();
+
   loading$: Observable<boolean> = of(true);
   public exercises: ExerciseModel[] = [];
   public encours!: EncoursModel;
@@ -60,7 +73,7 @@ export class CreateEngagementFormComponent
   public adminUnits: AdministrativeUnitModel[] = [];
   public procedures: ExecProcedureModel[] = [];
 
-  public form: FormGroup;
+  public commonForm!: FormGroup;
 
   public busy = false;
   constructor(
@@ -73,55 +86,21 @@ export class CreateEngagementFormComponent
   ) {
     super();
 
-    this.form = this._fb.group({
-      id: [undefined],
-      typeProcedure: this._fb.group({
-        id: [undefined],
-        imputation: [],
-        code: [undefined, Validators.required],
-        label: [],
-      }),
-      procedure: this._fb.group({
-        id: [undefined],
-        nomAgent: [undefined],
-      }),
-      exercise: this._fb.group({
-        id: [undefined],
-        code: [undefined],
-      }),
-      montantAE: [undefined],
-      adminUnit: this._fb.group({
-        id: [undefined],
-        code: [undefined],
-      }),
-      imputation: [undefined],
-      numero: [undefined],
-      reference: [undefined],
-      task: this._fb.group({
-        id: [undefined],
-        code: [undefined],
-      }),
-      activity: this._fb.group({
-        id: [undefined],
-        code: [undefined],
-      }),
-      action: this._fb.group({
-        id: [undefined],
-        code: [undefined],
-      }),
-      sousProgramme: this._fb.group({
-        id: [undefined],
-        code: [undefined],
-      }),
-    });
     this._initListeners();
   }
 
   get isUpdateForm(): boolean {
-    return !!this.form?.value?.id;
+    return !!this.commonForm?.value?.id;
+  }
+
+  doChangeStep(direction: 'forward') {
+    this.changeStep.emit(direction);
   }
 
   ngOnInit(): void {
+    this.commonForm = this.startingForm;
+    this.subformInitialized.emit(this.commonForm);
+
     this._store.dispatch(GetExercises({}));
     this._store.dispatch(GetProcedures());
     this._store.dispatch(GetAdministrativeUnites());
@@ -141,7 +120,7 @@ export class CreateEngagementFormComponent
         montantAE,
         etat,
       } = this.config.data?.item as EngagementJuridiqueModel;
-      this.form.patchValue({
+      this.commonForm.patchValue({
         procedure,
         exercise,
         sousProgramme,
@@ -203,11 +182,13 @@ export class CreateEngagementFormComponent
         this.imputations = payload[0]?.imputations;
       });
   }
-
   submit() {
+    this.changeStep.emit('forward');
+  }
+  submit_() {
     this.busy = true;
     const editedEngagement = {
-      ...this.form.value,
+      ...this.commonForm.value,
     } as EngagementJuridiqueModel;
 
     if (this.isUpdateForm) {
@@ -282,8 +263,15 @@ export class CreateEngagementFormComponent
   }
 
   onChange = (event: any) => {
-    console.log('CHANGR§§§§§§§§§', event.value);
     this._fetchItem(event.value);
+  };
+
+  onChangeType = (event: any) => {
+    const typeProcedure = this.typesProcedures.find(
+      (item) => item.code === event.value
+    );
+    this.commonForm.patchValue({ typeProcedure });
+    this.subformInitialized.emit(this.commonForm);
   };
 
   private _fetchItem(id: number) {

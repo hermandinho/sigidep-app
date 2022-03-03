@@ -852,10 +852,10 @@ export class DialogsService {
     item?: EngagementJuridiqueModel
   ): Promise<any> {
     if (!this.engagementCreateComponent) {
-      const { CreateEngagementFormComponent } = await import(
-        '@components/create-engagement-form/create-engagement-form.component'
+      const { EngagementContainerComponent } = await import(
+        '@components/engagement-container/engagement-container.component'
       );
-      this.engagementCreateComponent = CreateEngagementFormComponent;
+      this.engagementCreateComponent = EngagementContainerComponent;
     }
 
     return this._dialogService.open(this.engagementCreateComponent, {
