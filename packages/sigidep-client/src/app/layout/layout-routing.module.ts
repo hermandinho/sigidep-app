@@ -28,6 +28,7 @@ import { TypesProceduresComponent } from '@pages/types-procedures/types-procedur
 import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
 import { EncoursComponent } from '@pages/encours/encours.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
+import { EngagementsComponent } from '@pages/engagements/engagements.component';
 
 const routes: Routes = [
   {
@@ -285,6 +286,7 @@ const routes: Routes = [
       {
         path: 'engagements',
         canActivate: [AuthGuard],
+        component: EngagementsComponent,
         data: {
           permissions: [...MenuPermissions.engagements],
         },
