@@ -1,9 +1,13 @@
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
 
 export class EngagementCommandeModel extends EngagementJuridiqueModel {
-  reference!: string;
-  objet!: string;
   montantTTC!: number;
+  niuContribuable!: string;
+  raisonSocialeContribuable!: string;
+  codeBanqueContribuable!: string;
+  codeAgenceContribuable!: string;
+  numeroCompteContribuable!: string;
+  cleCompteContribuable!: string;
 
   constructor(params?: Partial<EngagementCommandeModel>) {
     super();

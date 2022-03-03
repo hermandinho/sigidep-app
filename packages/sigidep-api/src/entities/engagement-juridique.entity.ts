@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  JoinColumn,
+  TableInheritance,
+} from 'typeorm';
 import {
   AdministrativeUnitEntity,
   ExerciseEntity,
@@ -18,6 +24,7 @@ export enum EtatEngagementEnum {
 }
 
 @Entity('engagementjuridiques')
+@TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class EngagementJuridiqueEntity extends BaseEntity {
   @ManyToOne(() => ExecProcedureEntity, (object) => object.id, {
     eager: true,
@@ -29,7 +36,7 @@ export class EngagementJuridiqueEntity extends BaseEntity {
 
   @ManyToOne(() => ExerciseEntity, (object) => object.id, {
     eager: true,
-    nullable: true,
+    nullable: false,
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'exercise_id' })
@@ -53,12 +60,14 @@ export class EngagementJuridiqueEntity extends BaseEntity {
 
   @ManyToOne(() => SubProgramActivityEntity, (object) => object.id, {
     eager: true,
+    nullable: true,
   })
   @JoinColumn({ name: 'activity_id' })
   public activity: SubProgramActivityEntity;
 
   @ManyToOne(() => SubProgramActivityTaskEntity, (object) => object.id, {
     eager: true,
+    nullable: true,
   })
   @JoinColumn({ name: 'task_id' })
   public task: SubProgramActivityTaskEntity;
@@ -69,11 +78,12 @@ export class EngagementJuridiqueEntity extends BaseEntity {
   @Column({ nullable: true })
   public numero: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   public imputation: string;
 
   @ManyToOne(() => AdministrativeUnitEntity, (object) => object.id, {
     eager: true,
+    nullable: true,
   })
   @JoinColumn({ name: 'admin_unit_id' })
   public adminUnit: AdministrativeUnitEntity;
