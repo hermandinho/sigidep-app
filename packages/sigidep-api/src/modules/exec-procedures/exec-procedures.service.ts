@@ -17,7 +17,10 @@ export class ExecProcedureService {
   }
 
   public async filter(): Promise<ExecProcedureEntity[]> {
-    return this.repository.createQueryBuilder('execp').getMany();
+    return this.repository
+      .createQueryBuilder('execp')
+      .leftJoinAndSelect('execp.typeProcedure', 'typeProcedure')
+      .getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {

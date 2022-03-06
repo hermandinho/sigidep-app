@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { EncoursEntity } from '@entities/encours.entity';
 import { ExerciseEntity } from '@entities/exercise.entity';
@@ -15,6 +15,7 @@ import { SubProgramActionEntity } from '@entities/sub-program-action.entity';
 import { SubProgramActivityEntity } from '@entities/sub-program-activity.entity';
 import { SubProgramActivityTaskOperationPhysicalUnitEntity } from '@entities/sub-program-activity-task-operation-physical-unit.entity';
 import { SubProgramActivityTaskEntity } from '@entities/sub-program-activity-task.entity';
+import { encours_query } from './sql';
 
 @Injectable()
 export class EncoursService {
@@ -42,6 +43,9 @@ export class EncoursService {
 
     @InjectRepository(SubProgramActivityTaskOperationEntity)
     private readonly operationRepository: Repository<SubProgramActivityTaskOperationEntity>,
+
+    @InjectConnection()
+    private readonly connection: Connection
   ) {}
 
   public getRepository(): Repository<EncoursEntity> {
@@ -82,6 +86,10 @@ export class EncoursService {
       .leftJoinAndSelect('t.administrativeUnit', 'au')
       .leftJoinAndSelect('au.function', 'f')
       .getOne();
+  }
+
+  public async getOne2() {
+    return this.connection.query(encours_query)
   }
 
   public async deleteOne(id: number): Promise<any> {

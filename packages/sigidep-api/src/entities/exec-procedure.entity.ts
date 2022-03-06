@@ -7,10 +7,10 @@ import { BaseEntity, TypeProcedureEntity } from '.';
   },
 })
 export class ExecProcedureEntity extends BaseEntity {
-  @ManyToOne(() => TypeProcedureEntity, (object) => object.id, {
-    cascade: true,
-    eager: false,
+  @ManyToOne(() => TypeProcedureEntity, (object) => object.code, {
+    eager: true,
     nullable: false,
+    cascade: false,
   })
   typeProcedure: TypeProcedureEntity;
 

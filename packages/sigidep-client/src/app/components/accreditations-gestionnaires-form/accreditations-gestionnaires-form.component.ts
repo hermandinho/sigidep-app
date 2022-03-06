@@ -8,7 +8,7 @@ import { SubProgramModel } from './../../models/sub-program.model';
 import { AgentModel } from '@models/agent.model';
 import { ExerciseModel } from './../../models/exercise.model';
 import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { AppService } from './../../services/app.service';
 import { ApisService } from './../../services/apis.service';
@@ -21,6 +21,9 @@ import { BankModel } from '@models/banque.model';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
 import { EncoursModel } from '@models/encours.model';
 import { FilterService } from './filter.service';
+import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-accreditations-gestionnaires-form',
@@ -37,6 +40,8 @@ export class AccreditationsGestionnairesFormComponent
   loadingRemoveAccreditation = false;
   loadingSaveAccreditation = false;
 
+  public loading$: Observable<boolean> = of(true);
+
   agentsList: AgentModel[] = [];
   exercicesInprogressList: ExerciseModel[] = [];
   subProgramsList: SubProgramModel[] = [];
@@ -45,7 +50,11 @@ export class AccreditationsGestionnairesFormComponent
   // imputationsOperationsList: any[] = [];
   imputationsOperationsList: AccreditationGestionnaireModel[] = [];
 
-  public selectedEncours: EncoursModel|null = null;
+  public allEncours: EncoursModel[] = [];
+  public filteredEncours: EncoursModel[] = [];
+  public selectedsEncours: EncoursModel[] = [];
+  public tasks:[] = []
+  public exercicesCodeList:string[] = []
 
   constructor(
     private _fb: FormBuilder,
@@ -61,109 +70,56 @@ export class AccreditationsGestionnairesFormComponent
       exercice: [undefined, [Validators.required]],
       agent: [undefined, [Validators.required]],
       typeAccreditation: [undefined, [Validators.required]],
-      subProgram: [undefined, [Validators.required]],
-      action: [undefined, [Validators.required]],
-      activity: [undefined, [Validators.required]],
+      subProgram: [undefined, []],
+      action: [undefined, []],
+      activity: [undefined, []],
       task: [undefined, []],
-
       administrativeUnit: [undefined, [Validators.required]],
       id: [undefined, []],
     });
 
-    this.form.get('agent')?.valueChanges.subscribe((val: AgentModel) => {
-      if (val) {
-        this.getGestionnaireWithAccreditation();
+    this.listenForm()
+  }
+  private listenForm() {
+    this.form.get('subProgram')?.valueChanges.subscribe((value) =>{
+      if (value) {
+        this.filteredEncours = this.filteredEncours.filter(e=>e.subProgram==value)
       }
-    });
+    })
 
-    this.form
-      .get('typeAccreditation')
-      ?.valueChanges.subscribe((val: SubProgramActivityModel) => {
-        if (val) {
-          this.form.get('administrativeUnit')?.setValue(undefined);
-          this.form.get('subProgram')?.setValue(undefined);
-          this.form.get('action')?.setValue(undefined);
-          this.form.get('activity')?.setValue(undefined);
-          this.form.get('task')?.setValue(undefined);
-        }
+    this.form.get('action')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.filteredEncours = this.filteredEncours.filter(e => e.action == value)
+      }
+    })
+    this.form.get('task')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.filteredEncours = this.filteredEncours.filter(e => e.task == value)
+      }
+    })
+    this.form.get('activity')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.filteredEncours = this.filteredEncours.filter(e => e.activity == value)
+      }
+    })
+    this.form.get('activity')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.filteredEncours = this.filteredEncours.filter(e => e.activity == value)
+      }
+    })
+  }
+  private _initListeners() {
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => {
+        this.allEncours = [...data];
+        this.filteredEncours = [...data];
+        console.log('.........', data);
       });
-
-    this.form
-      .get('subProgram')
-      ?.valueChanges.subscribe((val: SubProgramActivityModel) => {
-        if (val) {
-          this.form.get('action')?.setValue(undefined);
-          this.form.get('activity')?.setValue(undefined);
-          this.form.get('task')?.setValue(undefined);
-        }
-      });
-
-    /* this.form
-      .get('activity')
-      ?.valueChanges.subscribe((val: SubProgramActivityModel) => {
-        if (val) {
-          // Let Add new Item iside table
-          const ac = new AccreditationGestionnaireModel({});
-
-          // Let Build Imputation Number
-          const { exercice, agent, subProgram, action, activity, task } =
-            this.form.value;
-          ac.imputation = `${exercice.code} ${agent.matricule} ${subProgram.code} ${action.code} ${val.code}`;
-
-          const found = this.imputationsOperationsList.find(
-            (elt) => elt.imputation === ac.imputation || !elt.id
-          );
-
-          if (!found) {
-            this.imputationsOperationsList.push(ac);
-          }
-        }
-      }); */
-
-    this.form
-      .get('task')
-      ?.valueChanges.subscribe((val: SubProgramActivityTaskModel) => {
-        if (val) {
-          // Let Add new Item inside table
-          const ac = new AccreditationGestionnaireModel({});
-
-          // Let Build Imputation Number
-          const { exercice, agent, subProgram, action, activity } =
-            this.form.value;
-          ac.imputation = `${exercice.code} ${agent.matricule} ${subProgram.code} ${action.code} ${activity.code} ${val.code}`;
-
-          const found = this.imputationsOperationsList.find(
-            (elt) => elt.imputation === ac.imputation || !elt.id
-          );
-
-          if (!found) {
-            this.imputationsOperationsList.push(ac);
-          }
-        }
-      });
-
-    this.form
-      .get('administrativeUnit')
-      ?.valueChanges.subscribe((val: AdministrativeUnitModel) => {
-        if (val) {
-          // Let Add new Item iside table
-          const ac = new AccreditationGestionnaireModel({});
-
-          // Let Build Imputation Number
-          const { exercice, agent, administrativeUnit } = this.form.value;
-          if (administrativeUnit!==undefined) {
-            ac.imputation = `${exercice.code} ${agent.matricule} ${administrativeUnit.code}`;
-
-            const found = this.imputationsOperationsList.find(
-              (elt) => elt.imputation === ac.imputation || !elt.id
-            );
-
-            if (!found) {
-              this.imputationsOperationsList.push(ac);
-            }
-          }
-        }
-      });
+    this.loading$ = this._store.pipe(
+      select(getLoadingSelector),
+      map((status) => status)
+    );
   }
 
   get isUpdateForm(): boolean {
@@ -172,6 +128,7 @@ export class AccreditationsGestionnairesFormComponent
 
   async ngOnInit(): Promise<void> {
     await this.getInitialData();
+    this._initListeners()
 
     if (this.config.data?.item) {
       const { id, matricule } = this.config.data?.item as GestionnaireModel;
@@ -191,6 +148,11 @@ export class AccreditationsGestionnairesFormComponent
       this.form.get('agent')?.setValue(a);
       this.form.get('agent')?.disable();
     }
+  }
+
+  uniqueItemsWith(key:string) {
+    return [...new Map(this.allEncours.map((item:any) =>
+      [item[key], item])).values()] as EncoursModel[];
   }
 
   close() {
@@ -223,7 +185,6 @@ export class AccreditationsGestionnairesFormComponent
   async getGestionnaireWithAccreditation() {
     const agentWithAcrreditationResult = await this._apisService
       .get<GestionnaireModel>(
-        // `/gestionnaire/${this.form.get('agent')?.value.id}`
           `/gestionnaires/agent/${this.form.get('agent')?.value.id}`
       )
       .toPromise();
@@ -262,6 +223,7 @@ export class AccreditationsGestionnairesFormComponent
               nom: seletedAgent.nom,
               prenom: seletedAgent.prenom,
               fonction: seletedAgent.fonction,
+
               agent: seletedAgent,
             })
             .toPromise();
@@ -318,14 +280,6 @@ export class AccreditationsGestionnairesFormComponent
   async deleteAccreditation(item: AccreditationGestionnaireModel) {
     if (this.loadingRemoveAccreditation) return;
     this.loadingRemoveAccreditation = true;
-
-    /* this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteAccreditation',
-
-      accept: () => {
-
-      },
-    }); */
     this._apisService
       .delete<any>(`/accreditations?ids=${item.id}`, {})
       .toPromise()
@@ -347,68 +301,7 @@ export class AccreditationsGestionnairesFormComponent
   }
 
   submit() {
-    this.busy = true;
 
-    if (this.isUpdateForm) {
-      this.busy = false;
-    }
-
-    (() => {
-      if (!this.isUpdateForm) {
-        return this._apisService.post<ContribuableBugetaireModel>(
-          `/contribuables-budgetaires`,
-          {
-            ...this.form.value,
-          }
-        );
-      } else {
-        return this._apisService.patch<ContribuableBugetaireModel>(
-          `/contribuables-budgetaires/${this.form.value['id']}`,
-          {
-            ...this.form.value,
-          }
-        );
-      }
-    })().subscribe(
-      (res) => {
-        this.busy = false;
-        this.ref.close(res);
-        this._store.dispatch(GetContribuablesBugetaires());
-
-        this._appService.showToast({
-          summary: 'messages.success',
-          detail: 'messages.paragraphs.createSuccess',
-          severity: 'success',
-          life: 3000,
-          closable: true,
-        });
-      },
-      ({ error }) => {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.paragraphs.conflict';
-        } else {
-          err = 'errors.unknown';
-        }
-        this.busy = false;
-        this._appService.showToast({
-          detail: err,
-          summary: 'errors.error',
-          severity: 'error',
-          life: 5000,
-          closable: true,
-        });
-      }
-    );
   }
 
-  setSelectedEncours({value}:any) {
-    console.log(value)
-    this.filterService.getEncoursByExercice(value.id)
-    .subscribe(data=>{
-      this.selectedEncours= data
-    }, err=>{
-      console.log(err)
-    })
-  }
 }

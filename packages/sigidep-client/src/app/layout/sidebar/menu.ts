@@ -33,6 +33,9 @@ export const MenuPermissions = {
   ],
   encours: [...simpleCrudPermissions('encours')],
   regions: [...simpleCrudPermissions('regions')],
+  procedures: [...simpleCrudPermissions('procedures')],
+  taxes: [...simpleCrudPermissions('taxes')],
+  engagements: [...simpleCrudPermissions('engagements')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -233,6 +236,33 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.encours],
+          },
+        },
+        {
+          routerLink: 'procedures',
+          icon: 'pi pi-check',
+          label: translate.instant('sidebar.procedures'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.procedures],
+          },
+        },
+        {
+          routerLink: 'taxes',
+          icon: 'pi pi-file',
+          label: translate.instant('sidebar.taxes'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.taxes],
+          },
+        },
+        {
+          routerLink: 'engagements',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.engagements'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.engagements],
           },
         },
       ],

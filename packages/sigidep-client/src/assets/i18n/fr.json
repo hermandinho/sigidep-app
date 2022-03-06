@@ -484,7 +484,9 @@
       "piecesJointes": "Pièces Jointes",
       "baremes": "Barèmes",
       "encours": "Statistiques Budgets En Cours",
-      "regions": "Liste des regions"
+      "regions": "Liste des regions",
+      "imputationsFiltres": "Imputations filtrées",
+      "imputationsSelectionnes": "Imputations selectionnées"
     },
     "headers": {
       "exerciseCode": "Code",

@@ -14,9 +14,37 @@ import { BaseModel } from './base.model';
 import { PhysicalUnitModel } from './physical-unit.entity';
 
 export class EncoursModel extends BaseModel {
+  public exerciseCode!: string;
+  public subProgram!: string;
+  public active!: string;
+  public task!: string;
+  public administrativeUnit!: string;
+  public imputation!: string;
+  public operationLabelFr!: string;
+  public operationLabelEn!: string;
+  public livrableFr!: string;
+  public sourceVerificationFr!: string;
+  public gestionnaire!: string;
+  public modeGestion!: string;
+  public cpInitial!: number;
+  public aeInitial!: number;
+  public sourceFinencement!: string;
+  public region!: string;
+  public department!: string;
+  public arrondissement!: string;
+  public locality!: string;
+  public codeUnitePhysique!: string;
+  public labelUnitePhysique!: string;
+  public qteUnitePhysique!: number;
+  public puUnitePhysique!: string;
+  public amountUnitePhysique!: string;
+  public operation!: string;
+  public action!: string;
+
+
+//------------------------------------------------------
   exercise!: ExerciseModel;
   sousProgramme!: SubProgramModel;
-  actions!: SubProgramActionModel[];
   activities!: SubProgramActivityModel[];
   tasks!: SubProgramActivityTaskModel[];
   operations!: SubProgramActivityTaskOperationModel[];
@@ -39,7 +67,6 @@ export class EncoursModel extends BaseModel {
   cpInit!: number[];
   cpInitRevisee!: number[];
   aeInitRevisee!: number[];
-
   aeDisponible!: number[];
   cpDisponible!: number[];
   aeEngagJuridique!: number[];
@@ -47,6 +74,7 @@ export class EncoursModel extends BaseModel {
   aeDispoANouveau!: number[];
   cpDispoANouveau!: number[];
   valeurSeuil!: number;
+  activity!: string;
 
   /***
    * Statistiques mise en ligne
@@ -60,16 +88,15 @@ export class EncoursModel extends BaseModel {
   readonly volumeAE!: number;
   readonly volumeCP!: number;
 
+  actions!: any[];
 
   paragraphLabellFr!: string;
   paragraphLabellEn!: string;
   paragraph!: string;
-  codeUnitePhysique!: string;
   constructor(params?: Partial<EncoursModel>) {
     super();
     if (params) {
       Object.assign(this, params);
-      this.nombreActions = params.actions?.length||0
       this.nombreActivites = params.activities?.length||0
       this.nombreTasks = params.tasks?.length||0
       this.nombreOperations = params.operations?.length||0

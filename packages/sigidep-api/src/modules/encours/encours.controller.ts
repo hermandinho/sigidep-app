@@ -32,6 +32,7 @@ export class EncoursController {
     @Body(ValidationPipe) payload: CreateEncoursDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
+    // console.log("icicicicici", await this.encoursServices.getOne())
     return this.encoursServices.create(payload, user);
   }
 
