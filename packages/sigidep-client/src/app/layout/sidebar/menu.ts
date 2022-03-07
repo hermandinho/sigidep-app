@@ -35,6 +35,7 @@ export const MenuPermissions = {
   procedures: [...simpleCrudPermissions('procedures')],
   taxes: [...simpleCrudPermissions('taxes')],
   engagements: [...simpleCrudPermissions('engagements')],
+  regions: [...simpleCrudPermissions('regions')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {

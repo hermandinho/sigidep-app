@@ -16,6 +16,9 @@ export class RegionsModel {
   get formattedLabelEn(): string {
     return `${this.code} - ${this.labelEn}`;
   }
+  get formattedLabel(): string {
+    return this.code + `${this.labelFr} - (${this.labelEn})`;
+  }
 }
 
 export class DepartmentModel {

@@ -1,13 +1,14 @@
 export class RegionsModel {
   id!: number;
   code!: string;
-  label!: string;
+  labelEn!: string;
+  labelFr!: string;
 
   constructor(param: Partial<RegionsModel>) {
     Object.assign(this, param);
   }
 
   get formattedLabel(): string {
-    return `${this.code} - ${this.label}`;
+    return `${this.code} - ${this.labelFr}(${this.labelEn})`;
   }
 }

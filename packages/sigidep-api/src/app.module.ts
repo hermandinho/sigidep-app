@@ -29,6 +29,7 @@ import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
 import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
 import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
 import { EncoursModule } from '@modules/encours/encours.module';
+import { RegionsModule } from './modules/regions/regions.module';
 import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
 import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
 import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
@@ -116,6 +117,7 @@ import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
     PiecesJointesModule,
     TypesProceduresModule,
     EncoursModule,
+    RegionsModule,
     EngagementJuridiqueModule,
     ExecProcedureModule,
     ExecTaxesModule,

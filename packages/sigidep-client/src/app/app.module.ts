@@ -48,6 +48,7 @@ import { TaxesModule } from '@pages/taxes/taxes.module';
 import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
+import { RegionsModule } from './pages/regions/regions.module';
 
 registerLocaleData(localeFr);
 
@@ -113,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TaxesModule,
     ProceduresModule,
     EngagementsModule,
+    RegionsModule,
   ],
   providers: [
     AppInstallCheckGuard,

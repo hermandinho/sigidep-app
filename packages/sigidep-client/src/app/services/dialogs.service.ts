@@ -37,6 +37,7 @@ import { ExecProcedureModel } from '@models/exec-procedure.model';
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
+import { RegionsModel } from '@models/regions.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -74,6 +75,7 @@ export class DialogsService {
   private pieceJointeCreateComponent: any;
 
   private encoursCreateComponent: any;
+  private regionsCreateComponent: any;
 
   private encoursStatisticsComponent: any;
 
@@ -776,6 +778,23 @@ export class DialogsService {
     }
     return this._dialogService.open(this.encoursCreateComponent, {
       header: this._translateService.instant('dialogs.headers.encours'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+  public async launchRegionsCreateDialog(item?: RegionsModel): Promise<any> {
+    if (!this.regionsCreateComponent) {
+      const { CreateRegionsFormComponent } = await import(
+        '@components/create-regions-form/create-regions-form.component'
+      );
+      this.regionsCreateComponent = CreateRegionsFormComponent;
+    }
+    return this._dialogService.open(this.regionsCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.regions'),
       width: '50vw',
       height: 'auto',
       modal: true,

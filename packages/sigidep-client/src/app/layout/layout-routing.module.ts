@@ -30,6 +30,7 @@ import { EncoursComponent } from '@pages/encours/encours.component';
 import { EngagementsComponent } from '@pages/engagements/engagements.component';
 import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
+import { RegionsComponent } from '@pages/regions/regions.component';
 
 const routes: Routes = [
   {
@@ -288,6 +289,14 @@ const routes: Routes = [
           import('../pages/engagements/engagements.module').then(
             (m) => m.EngagementsModule
           ),
+      },
+      {
+        path: 'regions',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.regions],
+        },
+        component: RegionsComponent,
       },
       /*{
         path: '**',

@@ -523,7 +523,8 @@
       "encours": "Statistiques Budgets En Cours",
       "procdeures": "Procédures",
       "taxes": "Taxes",
-      "engagements": "Engagements"
+      "engagements": "Engagements",
+      "regions": "Liste des regions"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -697,7 +698,8 @@
       "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
-      "editEngagement": "Editer un Engagement"
+      "editEngagement": "Editer un Engagement",
+      "regions": "Nouvelle region"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -720,7 +722,8 @@
       "deleteAgence": "Voulez-vous vraiment supprimer cette agence? Cette action est irréversible",
       "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
       "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible",
-      "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible"
+      "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
+      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible"
     }
   },
   "exerciseStatuses": {
