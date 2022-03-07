@@ -2,22 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
-import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
-import { CreateEngagementJuridiqueDTO } from './dto/create-engagement-juridique.dto';
+import { EngagementDecisionEntity } from '@entities/engagement-decision.entity';
+import { EngagementDecisionDTO } from '../dto/create-engagement-decision.dto';
 
 @Injectable()
-export class EngagementJuridiqueService {
+export class EngagementDecisionService {
   constructor(
-    @InjectRepository(EngagementJuridiqueEntity)
-    private readonly repository: Repository<EngagementJuridiqueEntity>,
+    @InjectRepository(EngagementDecisionEntity)
+    private readonly repository: Repository<EngagementDecisionEntity>,
   ) {}
 
-  public getRepository(): Repository<EngagementJuridiqueEntity> {
+  public getRepository(): Repository<EngagementDecisionEntity> {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementJuridiqueEntity[]> {
-    return this.repository.createQueryBuilder('ej').getMany();
+  public async filter(): Promise<EngagementDecisionEntity[]> {
+    return this.repository.createQueryBuilder('ed').getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -25,9 +25,9 @@ export class EngagementJuridiqueService {
   }
 
   public async create(
-    payload: CreateEngagementJuridiqueDTO,
+    payload: EngagementDecisionDTO,
     user: UserEntity,
-  ): Promise<EngagementJuridiqueEntity> {
+  ): Promise<EngagementDecisionEntity> {
     return this.repository.save({
       ...(payload as any),
       createdBy: user,
@@ -35,9 +35,9 @@ export class EngagementJuridiqueService {
   }
 
   public async update(
-    payload: CreateEngagementJuridiqueDTO,
+    payload: EngagementDecisionDTO,
     user: UserEntity,
-  ): Promise<EngagementJuridiqueEntity> {
+  ): Promise<EngagementDecisionEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
     });

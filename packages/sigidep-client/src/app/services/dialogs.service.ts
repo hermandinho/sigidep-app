@@ -32,6 +32,11 @@ import {
 import { AccreditationsGestionnairesFormComponent } from '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component';
 import { CreateEncoursModel } from '@models/create-encours.model';
 import { EncoursModel } from '@models/encours.model';
+import { ExecTaxesModel } from '@models/exec-taxes.model';
+import { ExecProcedureModel } from '@models/exec-procedure.model';
+import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
+import { EngagementCommandeModel } from '@models/engagement-commande.model';
+import { EngagementDecisionModel } from '@models/engagement-decision.model';
 import { RegionsModel } from '@models/regions.model';
 @Injectable({
   providedIn: 'root',
@@ -73,6 +78,12 @@ export class DialogsService {
   private regionsCreateComponent: any;
 
   private encoursStatisticsComponent: any;
+
+  private taxeCreateComponent: any;
+
+  private procedureCreateComponent: any;
+
+  private engagementCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -809,6 +820,65 @@ export class DialogsService {
           code: item?.exercise.code + '-' + item?.exercise.year,
         }
       ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchTaxeCreateDialog(item?: ExecTaxesModel): Promise<any> {
+    if (!this.taxeCreateComponent) {
+      const { CreateTaxeFormComponent } = await import(
+        '@components/create-taxe-form/create-taxe-form.component'
+      );
+      this.taxeCreateComponent = CreateTaxeFormComponent;
+    }
+    return this._dialogService.open(this.taxeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editTaxes'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchProcedureCreateDialog(
+    item?: ExecProcedureModel
+  ): Promise<any> {
+    if (!this.procedureCreateComponent) {
+      const { CreateProcedureFormComponent } = await import(
+        '@components/create-procedure-form/create-procedure-form.component'
+      );
+      this.procedureCreateComponent = CreateProcedureFormComponent;
+    }
+    return this._dialogService.open(this.procedureCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editProcedures'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEngagementCreateDialog(
+    item?: EngagementJuridiqueModel
+  ): Promise<any> {
+    if (!this.engagementCreateComponent) {
+      const { EngagementContainerComponent } = await import(
+        '@components/engagement-container/engagement-container.component'
+      );
+      this.engagementCreateComponent = EngagementContainerComponent;
+    }
+
+    return this._dialogService.open(this.engagementCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editEngagement'),
       width: '50vw',
       height: 'auto',
       modal: true,

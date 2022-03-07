@@ -33,7 +33,10 @@
     "baremes": "Barèmes",
     "typesProcedures": "Types Procédures",
     "piecesJointes": "Pièces Jointes",
-    "encours": "Mise En Ligne"
+    "encours": "Mise En Ligne",
+    "taxes": "Taxes",
+    "procedures": "Procédures",
+    "engagements": "Engagements"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -58,7 +61,9 @@
     "assign": "Affecter",
     "enligne": "Charger",
     "reload": "Recharger",
-    "load": "Charger"
+    "load": "Charger",
+    "back": "Retour",
+    "submit": "Soumettre"
   },
   "install": {
     "title": "Installation"
@@ -235,7 +240,24 @@
     "statsMiseEnLigne": "Statistiques de mise en ligne",
     "indicatorsPaymentCreditN1": "Ind. Crédit Pay. 1",
     "indicatorsPaymentCreditN2": "Ind. Crédit Pay. 2",
-    "indicatorsPaymentCreditN3": "Ind. Crédit Pay. 3"
+    "indicatorsPaymentCreditN3": "Ind. Crédit Pay. 3",
+    "RIB": "RIB",
+    "TxIR": "TxIR",
+    "TxTVA": "TxTVA",
+    "sousProgramme": "Sous Programme",
+    "etat": "Etat",
+    "procedure": "Prcoédure",
+    "reference": "Référence",
+    "adminUnit": "Unté Admin",
+    "montantAE": "Montant AE",
+    "typeProcedure": "Type Procédure",
+    "niuContribuable": "NUI Contribuable",
+    "raisonSocialeContribuable": "Raison Sociale",
+    "codeBanqueContribuable": "Code Banque",
+    "codeAgenceContribuable": "Code Agence",
+    "cleCompteContribuable": "Clé Compte",
+    "numeroCompteContribuable": "Numéro Compte",
+    "montantTTC": "Montant TTC"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -427,6 +449,19 @@
     "encours": {
       "deleteSuccess": "Chargement du budget supprimé avec succès.",
       "createSuccess": "Budget mis en ligne avec succès."
+    },
+    "procedures": {
+      "deleteSuccess": "Procédure supprimée avec succès.",
+      "createSuccess": "Procédure enregistrée avec succès."
+    },
+    "taxes": {
+      "deleteSuccess": "Taxe supprimée avec succès.",
+      "createSuccess": "Taxe enregistrée avec succès.",
+      "editSuccess": "Taxe mise à jour avec succès."
+    },
+    "engagements": {
+      "deleteSuccess": "Engagement supprimé avec succès.",
+      "createSuccess": "Engagement enregistré avec succès."
     }
   },
   "menus": {
@@ -461,7 +496,10 @@
     "piecesjointes": "Pieces Jointes",
     "baremes": "Baremes",
     "typesprocedures": "Types Procédures",
-    "encours": "Mise En ligne"
+    "encours": "Mise En ligne",
+    "taxes": "Taxes",
+    "procedures": "Procédures",
+    "engagements": "Engagements"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -483,6 +521,9 @@
       "piecesJointes": "Pièces Jointes",
       "baremes": "Barèmes",
       "encours": "Statistiques Budgets En Cours",
+      "procdeures": "Procédures",
+      "taxes": "Taxes",
+      "engagements": "Engagements",
       "regions": "Liste des regions"
     },
     "headers": {
@@ -580,7 +621,26 @@
       "volumeCP": "VOlume CP",
       "sousProgram": "Sous Programme",
       "seuil": "Seuil",
-      "physicalUnits": "Unités physiques"
+      "physicalUnits": "Unités physiques",
+      "RIB": "RIB",
+      "TxIR": "TxIR",
+      "TxTVA": "TxTVA",
+      "nomContribuable": "Nom Contribuable",
+      "numContribuable": "Num. Contribuable",
+      "nomAgent": "Nom agent",
+      "typeProcedure": "Type Procédure",
+      "matriculeAgent": "Matricule Agent",
+      "action": "Action",
+      "activity": "Activité",
+      "sousProgramme": "Sous Programme",
+      "etat": "Etat",
+      "procedure": "Prcoédure",
+      "exercise": "Exercice",
+      "reference": "Référence",
+      "adminUnit": "Unté Admin",
+      "imputation": "Imputation",
+      "task": "Tâche",
+      "montantAE": "Montant AE"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -636,6 +696,9 @@
       "editPieceJointe": "Editer une pièce jointe",
       "encours": "Mise en ligne du budget ",
       "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
+      "editProcedures": "Editer une procédure",
+      "editTaxes": "Editer une taxe",
+      "editEngagement": "Editer un Engagement",
       "regions": "Nouvelle region"
     },
     "messages": {

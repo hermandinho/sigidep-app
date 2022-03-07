@@ -32,6 +32,13 @@ import * as fromPiecesJointes from './pieces-jointes.reducer';
 import * as fromTypesProcedures from './types-procedures.reducer';
 import * as fromEncours from './encours.reducer';
 
+import * as fromCommandes from '@reducers/engagement-commande.reducer';
+import * as fromDecisions from '@reducers/engagement-decision.reducer';
+import * as fromMissions from '@reducers/engagement-mission.reducer';
+import * as fromEngagements from '@reducers/engagement-juridique.reducer';
+import * as fromProcedures from '@reducers/exec-procedure.reducer';
+import * as fromTaxes from '@reducers/exec-taxes.reducer';
+
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
   auth: fromAuth.State;
@@ -61,6 +68,12 @@ export interface AppState {
   typesProcedures: fromTypesProcedures.State;
   piecesJointes: fromPiecesJointes.State;
   encours: fromEncours.State;
+  commandes: fromCommandes.State;
+  decisions: fromDecisions.State;
+  missions: fromMissions.State;
+  engagements: fromEngagements.State;
+  procedures: fromProcedures.State;
+  taxes: fromTaxes.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -92,6 +105,13 @@ export const reducers: ActionReducerMap<AppState> = {
   piecesJointes: fromPiecesJointes.reducer,
   typesProcedures: fromTypesProcedures.reducer,
   encours: fromEncours.reducer,
+
+  commandes: fromCommandes.reducer,
+  decisions: fromDecisions.reducer,
+  missions: fromMissions.reducer,
+  engagements: fromEngagements.reducer,
+  procedures: fromProcedures.reducer,
+  taxes: fromTaxes.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
