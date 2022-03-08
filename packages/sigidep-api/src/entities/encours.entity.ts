@@ -140,6 +140,8 @@ export class EncoursEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'actions' })
   public action: string
 
+  public actions: any[]
+
   /***
    * Statistiques mise en ligne
    */

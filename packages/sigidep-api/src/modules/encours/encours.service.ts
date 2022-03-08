@@ -55,8 +55,8 @@ export class EncoursService {
   public async filter(): Promise<EncoursEntity[]> {
     return this.encoursRepository
       .createQueryBuilder('encours')
-      .leftJoinAndSelect('encours.exercise', 'exercise')
-      .leftJoinAndSelect('encours.sousProgramme', 's')
+      // .leftJoinAndSelect('encours.exercise', 'exercise')
+      // .leftJoinAndSelect('encours.sousProgramme', 's')
       .getMany();
   }
 

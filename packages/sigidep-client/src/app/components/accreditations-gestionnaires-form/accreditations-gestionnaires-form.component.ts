@@ -24,6 +24,7 @@ import { FilterService } from './filter.service';
 import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { GetEncours } from '@actions/encours.actions';
 
 @Component({
   selector: 'app-accreditations-gestionnaires-form',
@@ -50,9 +51,9 @@ export class AccreditationsGestionnairesFormComponent
   // imputationsOperationsList: any[] = [];
   imputationsOperationsList: AccreditationGestionnaireModel[] = [];
 
-  public allEncours: EncoursModel[] = [];
-  public filteredEncours: EncoursModel[] = [];
-  public selectedsEncours: EncoursModel[] = [];
+  public allEncours: {startDate: Date, endDate: Date ,element:EncoursModel}[] = [];
+  public filteredEncours: {startDate: Date, endDate: Date ,element:EncoursModel}[] = [];
+  public selectedsEncours: {startDate: Date, endDate: Date ,element:EncoursModel}[] = [];
   public tasks:[] = []
   public exercicesCodeList:string[] = []
 
@@ -67,14 +68,14 @@ export class AccreditationsGestionnairesFormComponent
   ) {
     super();
     this.form = this._fb.group({
-      exercice: [undefined, [Validators.required]],
-      agent: [undefined, [Validators.required]],
+      exercice: [undefined, []],
+      gestionnaire: [undefined, [Validators.required]],
       typeAccreditation: [undefined, [Validators.required]],
       subProgram: [undefined, []],
       action: [undefined, []],
       activity: [undefined, []],
       task: [undefined, []],
-      administrativeUnit: [undefined, [Validators.required]],
+      administrativeUnit: [undefined, []],
       id: [undefined, []],
     });
 
@@ -83,28 +84,28 @@ export class AccreditationsGestionnairesFormComponent
   private listenForm() {
     this.form.get('subProgram')?.valueChanges.subscribe((value) =>{
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(e=>e.subProgram==value)
+        this.filteredEncours = this.filteredEncours.filter(e=>e.element.subProgram==value)
       }
     })
 
     this.form.get('action')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(e => e.action == value)
+        this.filteredEncours = this.filteredEncours.filter(e => e.element.action == value)
       }
     })
     this.form.get('task')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(e => e.task == value)
+        this.filteredEncours = this.filteredEncours.filter(e => e.element.task == value)
       }
     })
     this.form.get('activity')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(e => e.activity == value)
+        this.filteredEncours = this.filteredEncours.filter(e => e.element.activity == value)
       }
     })
     this.form.get('activity')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(e => e.activity == value)
+        this.filteredEncours = this.filteredEncours.filter(e => e.element.activity == value)
       }
     })
   }
@@ -112,9 +113,13 @@ export class AccreditationsGestionnairesFormComponent
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
-        this.allEncours = [...data];
-        this.filteredEncours = [...data];
-        console.log('.........', data);
+        this.allEncours = [...data.map(e=>({
+          element: e,
+          startDate: new Date(),
+          endDate: new Date(),
+        }))];
+        this.filteredEncours = [...this.allEncours];
+        console.log('.........hhhhh', this.filteredEncours);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
@@ -129,7 +134,7 @@ export class AccreditationsGestionnairesFormComponent
   async ngOnInit(): Promise<void> {
     await this.getInitialData();
     this._initListeners()
-
+    this._store.dispatch(GetEncours());
     if (this.config.data?.item) {
       const { id, matricule } = this.config.data?.item as GestionnaireModel;
       /* this.form.patchValue({
@@ -300,8 +305,60 @@ export class AccreditationsGestionnairesFormComponent
       });
   }
 
-  submit() {
-
+  validDates(startDate: any, endDate:any) {
+    return (new Date(startDate) <= new Date(endDate))
   }
+
+  async reset() {
+    this.selectedsEncours = []
+    this.filteredEncours = [...this.allEncours]
+    await this.ngOnInit()
+  }
+
+  addToSelected(item: { startDate: Date, endDate: Date, element: EncoursModel }) {
+    this.filteredEncours = [...(this.filteredEncours.filter(e=>e!=item))]
+    this.selectedsEncours = [...this.selectedsEncours, item]
+  }
+  removeFromSelected(item: { startDate: Date, endDate: Date, element: EncoursModel }) {
+    this.selectedsEncours = [...(this.selectedsEncours.filter(e => e != item))]
+    this.filteredEncours = [...this.filteredEncours, item]
+  }
+
+  submit() {
+    const accreditation = { ...this.form.value, imputations: (this.selectedsEncours) } as AccreditationGestionnaireModel
+    this.busy = true;
+    this._apisService.post<AccreditationGestionnaireModel>('/accreditations', accreditation).subscribe(
+      (res) => {
+        this.busy = false;
+        this.ref.close(res);
+        this._appService.showToast({
+          summary: 'message.success',
+          detail: 'messages.accreditation.createSuccess',
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        this.busy = false;
+        this.ref.close();
+        let err = '';
+        console.log(error);
+        if (error?.statusCode === 409) {
+          err = 'errors.dejaRegion';
+        } else {
+          err = 'errors.unknown';
+        }
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
+  }
+
 
 }

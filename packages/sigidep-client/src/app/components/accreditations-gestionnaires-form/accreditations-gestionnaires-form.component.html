@@ -36,7 +36,7 @@
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="agentsList"
-            formControlName="agent"
+            formControlName="gestionnaire"
             optionLabel="matricule"
           >
             <ng-template let-option pTemplate="selectedItem">
@@ -203,7 +203,7 @@
   <h3>{{
   "tables.titles.imputationsFiltres" | translate
   }}</h3>
-  <p-table  [value]="imputationsOperationsList" responsiveLayout="scroll">
+  <p-table  [value]="filteredEncours" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
@@ -217,19 +217,20 @@
     <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
       <tr>
         <td>{{ rowIndex }}</td>
-        <td>{{ product.imputation }}</td>
+        <td>{{ product.element.imputation }}</td>
+        <td>{{ product.labelOperation }}</td>
         <td pEditableColumn>
           <p-cellEditor>
             <ng-template pTemplate="input">
               <input
                 pInputText
-                [disabled]="product.id"
-                type="text"
-                [(ngModel)]="product.labelOperation"
+                type="date"
+                placeholder="dd-mm-yyyy"
+                [(ngModel)]="product.startDate"
               />
             </ng-template>
             <ng-template pTemplate="output">
-              {{ product.labelOperation }}
+              {{ product.startDate | date }}
             </ng-template>
           </p-cellEditor>
         </td>
@@ -240,45 +241,20 @@
                 pInputText
                 type="date"
                 placeholder="dd-mm-yyyy"
-                [disabled]="product.id"
-                [(ngModel)]="product.dateDebut"
+                [(ngModel)]="product.endDate"
               />
             </ng-template>
             <ng-template pTemplate="output">
-              {{ product.dateDebut | date }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-        <td pEditableColumn>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input
-                pInputText
-                type="date"
-                placeholder="dd-mm-yyyy"
-                [disabled]="product.id"
-                [(ngModel)]="product.dateFin"
-              />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ product.dateFin | date }}
+              {{ product.endDate | date }}
             </ng-template>
           </p-cellEditor>
         </td>
         <td>
-          <!-- <button
-            (click)="edit(bankItem)"
-            class="p-button-rounded p-button-success p-mr-2"
-            icon="pi pi-pencil"
-            pButton
-            pRipple
-          ></button> -->
           <button
-            *ngIf="product.id"
-            (click)="deleteAccreditation(product)"
-            class="p-button-rounded p-button-warning"
-            icon="pi pi-trash"
-            [disabled]="loadingRemoveAccreditation"
+            (click)="addToSelected(product)"
+            class="p-button-rounded p-button-success"
+            icon="pi pi-plus"
+            [disabled]="!validDates(product.startDate, product.endDate)"
             pButton
             pRipple
           ></button>
@@ -290,7 +266,7 @@
   <h3>{{
   "tables.titles.imputationsSelectionnes" | translate
   }}</h3>
-  <p-table [value]="imputationsOperationsList" responsiveLayout="scroll">
+  <p-table [value]="selectedsEncours" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
@@ -304,49 +280,19 @@
     <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
       <tr>
         <td>{{ rowIndex }}</td>
-        <td>{{ product.imputation }}</td>
-        <td pEditableColumn>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input pInputText [disabled]="product.id" type="text" [(ngModel)]="product.labelOperation" />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ product.labelOperation }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-        <td pEditableColumn>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input pInputText type="date" placeholder="dd-mm-yyyy" [disabled]="product.id"
-                [(ngModel)]="product.dateDebut" />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ product.dateDebut | date }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-        <td pEditableColumn>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input pInputText type="date" placeholder="dd-mm-yyyy" [disabled]="product.id"
-                [(ngModel)]="product.dateFin" />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ product.dateFin | date }}
-            </ng-template>
-          </p-cellEditor>
+        <td>{{ product.element.imputation }}</td>
+        <td>
+              {{ product.element.labelOperation }}
         </td>
         <td>
-          <!-- <button
-              (click)="edit(bankItem)"
-              class="p-button-rounded p-button-success p-mr-2"
-              icon="pi pi-pencil"
-              pButton
-              pRipple
-            ></button> -->
-          <button *ngIf="product.id" (click)="deleteAccreditation(product)" class="p-button-rounded p-button-warning"
-            icon="pi pi-trash" [disabled]="loadingRemoveAccreditation" pButton pRipple></button>
+          {{ product.startDate | date }}
+        </td>
+        <td >
+          {{ product.endDate | date }}
+        </td>
+        <td>
+          <button (click)="removeFromSelected(product)" class="p-button-rounded p-button-warning"
+            icon="pi pi-trash" pButton pRipple></button>
         </td>
       </tr>
     </ng-template>
@@ -356,8 +302,12 @@
     <button pButton class="p-mr-3 p-button-warning" (click)="close()">
       {{ "buttons.cancel" | translate }}
     </button>
+    <button pButton class="p-mr-3 p-button-primary" (click)="reset()">
+      {{ "buttons.reset" | translate }}
+    </button>
     <button
-      (click)="saveAccreditation()"
+      (click)="submit()"
+      [disabled]="selectedsEncours.length<1 || !form.valid"
       [label]="
         'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
           | translate

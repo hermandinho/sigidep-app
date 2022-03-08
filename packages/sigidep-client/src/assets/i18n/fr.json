@@ -59,6 +59,7 @@
     "assign": "Affecter",
     "enligne": "Charger",
     "reload": "Recharger",
+    "reset": "Reinitializer",
     "load": "Charger"
   },
   "install": {
@@ -428,6 +429,10 @@
     "encours": {
       "deleteSuccess": "Chargement du budget supprimé avec succès.",
       "createSuccess": "Budget mis en ligne avec succès."
+    },
+    "accreditation": {
+      "deleteSuccess": "Accreditation supprimé avec succès.",
+      "createSuccess": "Accreditation effectuée."
     }
   },
   "menus": {

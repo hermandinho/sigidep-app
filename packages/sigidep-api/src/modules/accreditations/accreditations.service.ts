@@ -16,14 +16,14 @@ export class AccreditationsService {
   ) {}
 
   async create(payload: CreateAccreditationDto) {
-    const check = await this.repository.findOne(
-      { imputation: payload.imputation },
-      { loadEagerRelations: false },
-    );
+    // const check = await this.repository.findOne(
+    //   { imputations: payload.imputations },
+    //   { loadEagerRelations: false },
+    // );
 
-    if (check) {
-      throw new ConflictException();
-    }
+    // if (check) {
+    //   throw new ConflictException();
+    // }
 
     return this.repository.save({ ...payload });
   }
