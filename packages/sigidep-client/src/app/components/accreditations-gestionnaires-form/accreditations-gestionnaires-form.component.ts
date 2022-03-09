@@ -87,7 +87,6 @@ export class AccreditationsGestionnairesFormComponent
         this.filteredEncours = this.filteredEncours.filter(e=>e.element.subProgram==value)
       }
     })
-
     this.form.get('action')?.valueChanges.subscribe((value) => {
       if (value) {
         this.filteredEncours = this.filteredEncours.filter(e => e.element.action == value)
@@ -119,7 +118,6 @@ export class AccreditationsGestionnairesFormComponent
           endDate: new Date(),
         }))];
         this.filteredEncours = [...this.allEncours];
-        console.log('.........hhhhh', this.filteredEncours);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
@@ -207,79 +205,6 @@ export class AccreditationsGestionnairesFormComponent
           updatedAt: new Date(),
         }
       ];
-  }
-
-  async saveAccreditation() {
-    const item = this.imputationsOperationsList.find((elt) => !elt.id);
-
-    if (item) {
-      this.busy = true;
-
-      try {
-        const seletedAgent = this.form.get('agent')?.value as AgentModel;
-        let gestionnaire: GestionnaireModel | undefined =
-          seletedAgent.gestionnaire;
-
-        //const item2 = this.imputationsOperationsList.find((elt) => elt.id);
-        if (!seletedAgent.gestionnaire) {
-          gestionnaire = await this._apisService
-            .post<GestionnaireModel>(`/gestionnaires`, {
-              matricule: seletedAgent.matricule,
-              nom: seletedAgent.nom,
-              prenom: seletedAgent.prenom,
-              fonction: seletedAgent.fonction,
-
-              agent: seletedAgent,
-            })
-            .toPromise();
-        }
-
-        await (() => {
-          if (!item.id) {
-            return this._apisService.post<ContribuableBugetaireModel>(
-              `/accreditations`,
-              {
-                ...item,
-                gestionnaire,
-              }
-            );
-          } else {
-            return this._apisService.patch<ContribuableBugetaireModel>(
-              `/accreditations/${item['id']}`,
-              {
-                ...item,
-                gestionnaire,
-              }
-            );
-          }
-        })().toPromise();
-
-        this.getGestionnaireWithAccreditation();
-
-        this.form.get('administrativeUnit')?.setValue(undefined);
-        this.form.get('subProgram')?.setValue(undefined);
-        this.form.get('action')?.setValue(undefined);
-        this.form.get('activity')?.setValue(undefined);
-        this.form.get('task')?.setValue(undefined);
-      } catch (error: any) {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.paragraphs.conflict';
-        } else {
-          err = 'errors.unknown';
-        }
-        this.busy = false;
-        this._appService.showToast({
-          detail: err,
-          summary: 'errors.error',
-          severity: 'error',
-          life: 5000,
-          closable: true,
-        });
-      } finally {
-        this.busy = false;
-      }
-    }
   }
 
   async deleteAccreditation(item: AccreditationGestionnaireModel) {
