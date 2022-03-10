@@ -11,6 +11,7 @@ import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module'
 import { GradesModule } from '@modules/grades/grades.module';
 import { CategoriesAgentsModule } from '@modules/categories-agents/categories-agents.module';
 import { AgentsModule } from '@modules/agents/agents.module';
+import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
 
 @Module({
   providers: [SeederService],
@@ -26,6 +27,7 @@ import { AgentsModule } from '@modules/agents/agents.module';
     GradesModule,
     CategoriesAgentsModule,
     AgentsModule,
+    TypesProceduresModule,
   ],
 })
 export class SeederModule {}

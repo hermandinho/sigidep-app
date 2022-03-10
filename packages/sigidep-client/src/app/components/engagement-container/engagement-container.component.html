@@ -1,0 +1,16 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+  <app-create-engagement-form
+    *ngSwitchCase="'common'"
+    [startingForm]="commonFormGroup"
+    (subformInitialized)="subformInitialized('commonForm', $event)"
+    (changeStep)="changeStep('common', $event)"
+  ></app-create-engagement-form>
+  <app-engagement-commande
+    *ngSwitchCase="'command'"
+    [startingForm]="commandFormGroup"
+    (subformInitialized)="subformInitialized('commandForm', $event)"
+    (changeStep)="changeStep('command', 'back')"
+    (submitForm)="submitForm()"
+  ></app-engagement-commande>
+  <app-engagement-decision *ngSwitchCase="'mission'"></app-engagement-decision>
+</ng-container>

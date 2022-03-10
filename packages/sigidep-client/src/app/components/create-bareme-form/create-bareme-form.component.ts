@@ -32,7 +32,6 @@ export class CreateBaremeFormComponent extends BaseComponent implements OnInit {
     super();
     this.form = this._fb.group({
       id: [undefined],
-      code: [undefined, Validators.required],
       montant: [undefined, [Validators.required, Validators.min(0.0)]],
     });
   }
@@ -43,11 +42,9 @@ export class CreateBaremeFormComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.config.data?.item) {
-      const { id, code, montant } = this.config.data
-        ?.item as BaremeMissionModel;
+      const { id, montant } = this.config.data?.item as BaremeMissionModel;
       this.form.patchValue({
         id,
-        code,
         montant,
       });
     }

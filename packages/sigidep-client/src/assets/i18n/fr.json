@@ -32,7 +32,11 @@
     "accreditationsGestionnaires": "Accreditations des Gestionnaires",
     "baremes": "Barèmes",
     "typesProcedures": "Types Procédures",
-    "piecesJointes": "Pièces Jointes"
+    "piecesJointes": "Pièces Jointes",
+    "encours": "Mise En Ligne",
+    "taxes": "Taxes",
+    "procedures": "Procédures",
+    "engagements": "Engagements"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -40,6 +44,7 @@
     "login": "Connexion",
     "create": "Créer",
     "delete": "Supprimer",
+    "download": "Télécharger",
     "cancel": "Annuler",
     "confirm": "Confirmer",
     "update": "Modifier",
@@ -54,7 +59,13 @@
     "quarterlyBreakdown": "Ventilation trimestrielle",
     "halfYearlyBreakdown": "Ventilation semestrielle",
     "program": "Programmer",
-    "assign": "Affecter"
+    "assign": "Affecter",
+    "enligne": "Charger",
+    "reload": "Recharger",
+    "reset": "Reinitializer",
+    "load": "Charger",
+    "back": "Retour",
+    "submit": "Soumettre"
   },
   "install": {
     "title": "Installation"
@@ -216,7 +227,39 @@
     "agent": "Agent",
     "typeAccreditation": "Type d'accreditation",
     "montant": "Montant",
-    "order": "Ordre"
+    "order": "Ordre",
+    "nombreActions": "Actions",
+    "nombreActivites": "Activités",
+    "nombreTasks": "Tâches",
+    "nombreOperations": "Opérations",
+    "nombreImputations": "Imputations",
+    "nombreUnitesPhysiques": "UnitesPhysiques",
+    "volumeAE": "Volume AE",
+    "volumeCP": "VOlume CP",
+    "sousProgram": "Sous Programme",
+    "seuil": "Seuil",
+    "exercice": "Exercice",
+    "statsMiseEnLigne": "Statistiques de mise en ligne",
+    "indicatorsPaymentCreditN1": "Ind. Crédit Pay. 1",
+    "indicatorsPaymentCreditN2": "Ind. Crédit Pay. 2",
+    "indicatorsPaymentCreditN3": "Ind. Crédit Pay. 3",
+    "RIB": "RIB",
+    "TxIR": "TxIR",
+    "TxTVA": "TxTVA",
+    "sousProgramme": "Sous Programme",
+    "etat": "Etat",
+    "procedure": "Prcoédure",
+    "reference": "Référence",
+    "adminUnit": "Unté Admin",
+    "montantAE": "Montant AE",
+    "typeProcedure": "Type Procédure",
+    "niuContribuable": "NUI Contribuable",
+    "raisonSocialeContribuable": "Raison Sociale",
+    "codeBanqueContribuable": "Code Banque",
+    "codeAgenceContribuable": "Code Agence",
+    "cleCompteContribuable": "Clé Compte",
+    "numeroCompteContribuable": "Numéro Compte",
+    "montantTTC": "Montant TTC"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -237,6 +280,7 @@
     "unauthorized": "Oups!",
     "unknown": "Une erreur est survenue lors de cette opération",
     "subProgramNotFound": "Ce sous program n'existe pas.",
+    "dejaEncours": "Buget déjà en ligne",
     "auth": {
       "invalidCredentials": "Compte utilisateur introuvable",
       "accountInactive": "Ce compte est désactivé",
@@ -403,6 +447,27 @@
       "deleteSuccess": "Gestionnaire supprimé avec succès.",
       "createSuccess": "Gestionnaire créé avec succès.",
       "updateSuccess": "Gestionnaire modifié avec succès."
+    },
+    "encours": {
+      "deleteSuccess": "Chargement du budget supprimé avec succès.",
+      "createSuccess": "Budget mis en ligne avec succès."
+    },
+    "accreditation": {
+      "deleteSuccess": "Accreditation supprimé avec succès.",
+      "createSuccess": "Accreditation effectuée."
+    },  
+    "procedures": {
+      "deleteSuccess": "Procédure supprimée avec succès.",
+      "createSuccess": "Procédure enregistrée avec succès."
+    },
+    "taxes": {
+      "deleteSuccess": "Taxe supprimée avec succès.",
+      "createSuccess": "Taxe enregistrée avec succès.",
+      "editSuccess": "Taxe mise à jour avec succès."
+    },
+    "engagements": {
+      "deleteSuccess": "Engagement supprimé avec succès.",
+      "createSuccess": "Engagement enregistré avec succès."
     }
   },
   "menus": {
@@ -436,7 +501,11 @@
     "accreditationsgestionnaires": "Accreditations des Gestionnaires",
     "piecesjointes": "Pieces Jointes",
     "baremes": "Baremes",
-    "typesprocedures": "Types Procédures"
+    "typesprocedures": "Types Procédures",
+    "encours": "Mise En ligne",
+    "taxes": "Taxes",
+    "procedures": "Procédures",
+    "engagements": "Engagements"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -456,7 +525,14 @@
       "carnetsMandats": "Carnets de Mandats",
       "typesProcedures": "Types de Procédures",
       "piecesJointes": "Pièces Jointes",
-      "baremes": "Barèmes"
+      "baremes": "Barèmes",
+      "encours": "Statistiques Budgets En Cours",
+      "regions": "Liste des regions",
+      "imputationsFiltres": "Imputations filtrées",
+      "imputationsSelectionnes": "Imputations selectionnées",
+      "procdeures": "Procédures",
+      "taxes": "Taxes",
+      "engagements": "Engagements"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -542,7 +618,37 @@
       "exercice": "Exercice",
       "bankAgence": "banque (Agence)",
       "order": "Ordre",
-      "montant": "Montant (FCFA)"
+      "montant": "Montant (FCFA)",
+      "nombreActions": "Actions",
+      "nombreActivites": "Activités",
+      "nombreTasks": "Tâches",
+      "nombreOperations": "Opérations",
+      "nombreImputations": "Imputations",
+      "nombreUnitesPhysiques": "UnitesPhysiques",
+      "volumeAE": "Volume AE",
+      "volumeCP": "VOlume CP",
+      "sousProgram": "Sous Programme",
+      "seuil": "Seuil",
+      "physicalUnits": "Unités physiques",
+      "RIB": "RIB",
+      "TxIR": "TxIR",
+      "TxTVA": "TxTVA",
+      "nomContribuable": "Nom Contribuable",
+      "numContribuable": "Num. Contribuable",
+      "nomAgent": "Nom agent",
+      "typeProcedure": "Type Procédure",
+      "matriculeAgent": "Matricule Agent",
+      "action": "Action",
+      "activity": "Activité",
+      "sousProgramme": "Sous Programme",
+      "etat": "Etat",
+      "procedure": "Prcoédure",
+      "exercise": "Exercice",
+      "reference": "Référence",
+      "adminUnit": "Unté Admin",
+      "imputation": "Imputation",
+      "task": "Tâche",
+      "montantAE": "Montant AE"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -595,7 +701,13 @@
       "editAccreditationsGestionnaires": "Mettre à jour des accreditations",
       "editBareme": "Editer un Barème",
       "editTypeProcedure": "Editer un type de procédure",
-      "editPieceJointe": "Editer une pièce jointe"
+      "editPieceJointe": "Editer une pièce jointe",
+      "encours": "Mise en ligne du budget ",
+      "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
+      "regions": "Nouvelle region",
+      "editProcedures": "Editer une procédure",
+      "editTaxes": "Editer une taxe",
+      "editEngagement": "Editer un Engagement"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -617,7 +729,9 @@
       "deleteBank": "Voulez-vous vraiment supprimer cette banque? Cette action est irréversible",
       "deleteAgence": "Voulez-vous vraiment supprimer cette agence? Cette action est irréversible",
       "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
-      "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible"
+      "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible",
+      "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
+      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible"
     }
   },
   "exerciseStatuses": {

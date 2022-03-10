@@ -26,6 +26,14 @@ import { AccreditationsGestionnairesComponent } from '@pages/accreditations-gest
 import { BaremesComponent } from '@pages/baremes/baremes.component';
 import { TypesProceduresComponent } from '@pages/types-procedures/types-procedures.component';
 import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
+import { EncoursComponent } from '@pages/encours/encours.component';
+import { EngagementsComponent } from '@pages/engagements/engagements.component';
+import { ProceduresComponent } from '@pages/procedures/procedures.component';
+import { TaxesComponent } from '@pages/taxes/taxes.component';
+import { RegionsComponent } from '@pages/regions/regions.component';
+import { EngagementsComponent } from '@pages/engagements/engagements.component';
+import { ProceduresComponent } from '@pages/procedures/procedures.component';
+import { TaxesComponent } from '@pages/taxes/taxes.component';
 
 const routes: Routes = [
   {
@@ -231,6 +239,102 @@ const routes: Routes = [
           permissions: [...MenuPermissions.piecesJointes],
         },
         component: PiecesJointesComponent,
+      },
+      {
+        path: 'encours',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.encours],
+        },
+        component: EncoursComponent,
+      },
+      {
+        path: 'encours',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.encours],
+        },
+        loadChildren: () =>
+          import('../pages/encours/encours.module').then(
+            (m) => m.EncoursModule
+          ),
+      },
+      {
+        path: 'taxes',
+        component: TaxesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.taxes],
+        },
+        loadChildren: () =>
+          import('../pages/taxes/taxes.module').then((m) => m.TaxesModule),
+      },
+      {
+        path: 'procedures',
+        component: ProceduresComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.procedures],
+        },
+        loadChildren: () =>
+          import('../pages/procedures/procedures.module').then(
+            (m) => m.ProceduresModule
+          ),
+      },
+      {
+        path: 'engagements',
+        canActivate: [AuthGuard],
+        component: EngagementsComponent,
+        data: {
+          permissions: [...MenuPermissions.engagements],
+        },
+        loadChildren: () =>
+          import('../pages/engagements/engagements.module').then(
+            (m) => m.EngagementsModule
+          ),
+      },
+      {
+        path: 'regions',
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.regions],
+        },
+        component: RegionsComponent,
+
+      },
+      {
+        path: 'taxes',
+        component: TaxesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.taxes],
+        },
+        loadChildren: () =>
+          import('../pages/taxes/taxes.module').then((m) => m.TaxesModule),
+      },
+      {
+        path: 'procedures',
+        component: ProceduresComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.procedures],
+        },
+        loadChildren: () =>
+          import('../pages/procedures/procedures.module').then(
+            (m) => m.ProceduresModule
+          ),
+      },
+      {
+        path: 'engagements',
+        canActivate: [AuthGuard],
+        component: EngagementsComponent,
+        data: {
+          permissions: [...MenuPermissions.engagements],
+        },
+        loadChildren: () =>
+          import('../pages/engagements/engagements.module').then(
+            (m) => m.EngagementsModule
+          ),
       },
       /*{
         path: '**',

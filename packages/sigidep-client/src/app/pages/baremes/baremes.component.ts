@@ -39,7 +39,7 @@ export class BaremesComponent extends BaseComponent implements OnInit {
 
     this.tableColumns = [
       {
-        field: 'code',
+        field: 'id',
         title: 'tables.headers.code',
         sortable: true,
       },

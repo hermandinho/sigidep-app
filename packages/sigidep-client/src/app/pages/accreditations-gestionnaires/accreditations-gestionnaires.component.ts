@@ -19,11 +19,14 @@ import {
   getDataSelector,
   getLoadingSelector,
 } from '@reducers/gestionnaires.reducer';
+import jsPDF from 'jspdf';
+import * as moment from 'moment';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-accreditations-gestionnaires',
   templateUrl: './accreditations-gestionnaires.component.html',
-  styleUrls: ['./accreditations-gestionnaires.component.scss']
+  styleUrls: ['./accreditations-gestionnaires.component.scss'],
 })
 export class AccreditationsGestionnairesComponent
   extends BaseComponent
@@ -111,10 +114,7 @@ export class AccreditationsGestionnairesComponent
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
-        ofType(
-          DeleteGestionnaireSuccess,
-          DeleteGestionnaireFailure
-        )
+        ofType(DeleteGestionnaireSuccess, DeleteGestionnaireFailure)
       )
       .subscribe((action) => {
         if (action.type === DeleteGestionnaireFailure.type) {
@@ -137,5 +137,16 @@ export class AccreditationsGestionnairesComponent
           });
         }
       });
+  }
+  download() {
+    // table_content
+    let pdf = new jsPDF()
+    let data: any = document.getElementById("table_content")
+    html2canvas(data)
+      .then(canvas => {
+        let imgdata = canvas.toDataURL('image/image.png')
+        pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95)
+        pdf.save('accreditations-' +moment(new Date()).format("YYYY-MM-DD hh:mm:ss")+'.pdf')
+      })
   }
 }

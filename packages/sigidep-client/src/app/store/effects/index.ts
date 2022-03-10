@@ -25,6 +25,13 @@ import { GestionnairesEffects } from './gestionnaires.effects';
 import { TypesProceduresEffects } from './types-procedures.effects';
 import { BaremesEffects } from './baremes.effects';
 import { PiecesJointesEffects } from './pieces-jointes.effects';
+import { EncoursEffects } from './encours.effects';
+import { EngagementsCommandesEffects } from '@effects/engagement-commande.effects';
+import { EngagementsDecisionsEffects } from '@effects/engagement-decision.effects';
+import { EngagementsJuridiquesEffects } from '@effects/engagement-juridique.effects';
+import { EngagementsMissionsEffects } from '@effects/engagement-mission.effects';
+import { TaxesEffects } from '@effects/exec-taxes.effects';
+import { ProceduresEffects } from '@effects/exec-procedure.effects';
 
 export const Effects = [
   AuthEffects,
@@ -55,4 +62,11 @@ export const Effects = [
   TypesProceduresEffects,
   BaremesEffects,
   PiecesJointesEffects,
+  EncoursEffects,
+  EngagementsCommandesEffects,
+  EngagementsMissionsEffects,
+  EngagementsDecisionsEffects,
+  ProceduresEffects,
+  TaxesEffects,
+  EngagementsJuridiquesEffects,
 ];

@@ -32,10 +32,10 @@ export class EditCarnetMandatDTO {
   public dateEnreg: Date | string;
 
   /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
-  @ApiProperty({ required: false })
-  @IsDefined()
-  @Type(() => EditAgentDTO)
-  public gestionnaire: EditAgentDTO;
+
+  @ApiProperty({ type: () => EditAgentDTO, nullable: true, required: false })
+  @IsOptional()
+  public gestionnaire?: EditAgentDTO;
 
   @ApiProperty({
     example: new Date().toISOString(),
@@ -70,7 +70,7 @@ export class EditCarnetMandatDTO {
   @ApiProperty({ example: '', required: false })
   public lieuDelivranceCni: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ type: () => CreateExerciseDto, required: false })
   @IsDefined()
   @Type(() => CreateExerciseDto)
   public exercice: CreateExerciseDto;

@@ -33,7 +33,7 @@ export class BaremeMissionService {
     user: UserEntity,
   ): Promise<BaremeMissionEntity> {
     const check = await this.repository.findOne({
-      code: payload.code,
+      id: payload.id,
     });
 
     if (check) {

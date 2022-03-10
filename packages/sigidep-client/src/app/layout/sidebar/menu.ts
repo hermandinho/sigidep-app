@@ -25,9 +25,20 @@ export const MenuPermissions = {
   piecesJointes: [...simpleCrudPermissions('piecesJointes')],
 
   banksAgences: [...simpleCrudPermissions('banksAgences')],
-  contribuablesBudgetaires: [...simpleCrudPermissions('contribuablesBudgetaires')],
-  accreditationsGestionnaires: [...simpleCrudPermissions('accreditationsGestionnaires')],
-
+  contribuablesBudgetaires: [
+    ...simpleCrudPermissions('contribuablesBudgetaires'),
+  ],
+  accreditationsGestionnaires: [
+    ...simpleCrudPermissions('accreditationsGestionnaires'),
+  ],
+  encours: [...simpleCrudPermissions('encours')],
+  procedures: [...simpleCrudPermissions('procedures')],
+  taxes: [...simpleCrudPermissions('taxes')],
+  engagements: [...simpleCrudPermissions('engagements')],
+  regions: [...simpleCrudPermissions('regions')],
+  procedures: [...simpleCrudPermissions('procedures')],
+  taxes: [...simpleCrudPermissions('taxes')],
+  engagements: [...simpleCrudPermissions('engagements')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -159,7 +170,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           routerLink: 'carnets',
-          icon: 'pi pi-table',
+          icon: 'pi pi-bars',
           label: translate.instant('sidebar.carnetsMandats'),
           routerLinkActiveOptions: { exact: true },
           state: {
@@ -219,6 +230,42 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.piecesJointes],
+          },
+        },
+        {
+          routerLink: 'encours',
+          icon: 'pi pi-arrow-circle-up',
+          label: translate.instant('sidebar.encours'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.encours],
+          },
+        },
+        {
+          routerLink: 'procedures',
+          icon: 'pi pi-check',
+          label: translate.instant('sidebar.procedures'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.procedures],
+          },
+        },
+        {
+          routerLink: 'taxes',
+          icon: 'pi pi-file',
+          label: translate.instant('sidebar.taxes'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.taxes],
+          },
+        },
+        {
+          routerLink: 'engagements',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.engagements'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.engagements],
           },
         },
       ],

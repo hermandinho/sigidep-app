@@ -43,9 +43,16 @@ import { CategoriesAgentsModule } from '@pages/categories-agents/categories-agen
 import { BaremesModule } from '@pages/baremes/baremes.module';
 import { TypesProceduresModule } from '@pages/types-procedures/types-procedures.module';
 import { PiecesJointesModule } from '@pages/pieces-jointes/pieces-jointes.module';
-import { CreateBaremeFormComponent } from './components/create-bareme-form/create-bareme-form.component';
-import { CreateTypeProcedureFormComponent } from './components/create-type-procedure-form/create-type-procedure-form.component';
-import { CreatePieceJointeFormComponent } from './components/create-piece-jointe-form/create-piece-jointe-form.component';
+import { EncoursModule } from '@pages/encours/encours.module';
+import { TaxesModule } from '@pages/taxes/taxes.module';
+import { EngagementsModule } from '@pages/engagements/engagements.module';
+import { ProceduresModule } from '@pages/procedures/procedures.module';
+import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
+import { RegionsModule } from './pages/regions/regions.module';
+import { TaxesModule } from '@pages/taxes/taxes.module';
+import { EngagementsModule } from '@pages/engagements/engagements.module';
+import { ProceduresModule } from '@pages/procedures/procedures.module';
+import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
 
 registerLocaleData(localeFr);
 
@@ -107,6 +114,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     BaremesModule,
     TypesProceduresModule,
     PiecesJointesModule,
+    EncoursModule,
+    TaxesModule,
+    ProceduresModule,
+    EngagementsModule,
+    RegionsModule,
+    TaxesModule,
+    ProceduresModule,
+    EngagementsModule,
   ],
   providers: [
     AppInstallCheckGuard,

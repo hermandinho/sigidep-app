@@ -1,23 +1,21 @@
 import { GestionnairesEntity } from './gestionnaire.entity';
 import { BaseEntity } from '@entities/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
+import { EncoursEntity } from '.';
 
 @Entity({
   name: 'accreditation',
 })
-@Unique('UQ_ACCREDITATION_IMPUTATION', ['imputation'])
 export class AccreditationEntity extends BaseEntity {
-  @Column({ name: 'imputation', nullable: false })
-  public imputation: string;
+  @Column({ name: 'imputations', nullable: false, type: 'jsonb' })
+  public imputations: { startDate: Date, endDate: Date, element: EncoursEntity };
 
-  @Column({ name: 'labelOperation', nullable: false })
-  public labelOperation: string;
 
-  @Column({ name: 'dateDebut', nullable: false })
-  public dateDebut: Date;
+  // @Column({ nullable: false })
+  // public startDate: Date;
 
-  @Column({ name: 'dateFin', nullable: false })
-  public dateFin: Date;
+  // @Column({ nullable: false })
+  // public endDate: Date;
 
   // RELATIONS
   @ManyToOne(() => GestionnairesEntity, (object) => object.id, {

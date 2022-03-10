@@ -1,0 +1,52 @@
+<div class="form" [formGroup]="form">
+  <p-checkbox
+    formControlName="actions"
+    [binary]="true"
+    label="{{ 'labels.nombreActions' | translate }}: {{
+      form.value.nombreActions
+    }}"
+  >
+  </p-checkbox>
+  <p-checkbox
+    formControlName="activites"
+    [binary]="true"
+    label="{{ 'labels.nombreActivites' | translate }}: {{
+      form.value.nombreActivites
+    }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    formControlName="tasks"
+    [binary]="true"
+    label="{{ 'labels.nombreTasks' | translate }}: {{ form.value.nombreTasks }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    formControlName="operations"
+    [binary]="true"
+    label="{{ 'labels.nombreOperations' | translate }}: {{
+      form.value.nombreOperations
+    }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    formControlName="imputations"
+    [binary]="true"
+    label="{{ 'labels.nombreImputations' | translate }}: {{
+      form.value.nombreImputations
+    }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    [binary]="true"
+    formControlName="nombreUnitesPhysiques"
+    label="{{ 'labels.nombreUnitesPhysiques' | translate }}: {{
+      form.value.nombreUnitesPhysiques
+    }}"
+  >
+  </p-checkbox>
+</div>

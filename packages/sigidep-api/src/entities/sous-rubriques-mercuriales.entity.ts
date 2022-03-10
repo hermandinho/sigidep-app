@@ -16,7 +16,6 @@ import { RubriqueMercurialeEntity } from './rubrique-mercuriale.entity';
     code: 'ASC',
   },
 })
-@Unique('UQ_SOUS_RUBRIQUE_MERCURIALE_CODE', ['code'])
 export class SousRubriqueMercurialeEntity extends BaseEntity {
   @Column({ name: 'code', nullable: false })
   public code: string;
