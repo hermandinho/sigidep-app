@@ -1,14 +1,28 @@
-import { Column, Entity } from 'typeorm';
+import { ChildEntity, Column, Entity } from 'typeorm';
 import { EngagementJuridiqueEntity } from '.';
 
-@Entity({
+@ChildEntity({
   name: 'engagement-commande',
 })
 export class EngagementCommandeEntity extends EngagementJuridiqueEntity {
   @Column()
-  public reference: string;
+  public niuContribuable: string;
+
   @Column()
-  public objet: string;
+  public raisonSocialeContribuable: string;
+
+  @Column()
+  public codeBanqueContribuable: string;
+
+  @Column()
+  public codeAgenceContribuable: string;
+
+  @Column()
+  public numeroCompteContribuable: string;
+
+  @Column()
+  public cleCompteContribuable: string;
+
   @Column({ type: 'float' })
   public montantTTC: number;
 }

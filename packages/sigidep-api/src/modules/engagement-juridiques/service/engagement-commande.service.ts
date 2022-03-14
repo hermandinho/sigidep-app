@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { EngagementCommandeEntity } from '@entities/engagement-commande.entity';
 import { EngagementCommandeDTO } from '../dto/create-engagement-commande.dto';
+import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
 
 @Injectable()
 export class EngagementCommandeService {
@@ -17,7 +18,16 @@ export class EngagementCommandeService {
   }
 
   public async filter(): Promise<EngagementCommandeEntity[]> {
-    return this.repository.createQueryBuilder('em').getMany();
+    return this.repository
+      .createQueryBuilder('ej')
+      .leftJoinAndSelect('ej.exercise', 'exercise')
+      .leftJoinAndSelect('ej.sousProgramme', 's')
+      .leftJoinAndSelect('ej.action', 'ac')
+      .leftJoinAndSelect('ej.activity', 'a')
+      .leftJoinAndSelect('ej.procedure', 'p')
+      .leftJoinAndSelect('p.typeProcedure', 'typ')
+      .leftJoinAndSelect('ej.task', 't')
+      .getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -28,6 +38,7 @@ export class EngagementCommandeService {
     payload: EngagementCommandeDTO,
     user: UserEntity,
   ): Promise<EngagementCommandeEntity> {
+    payload.etat = EtatEngagementEnum.SAVE;
     return this.repository.save({
       ...(payload as any),
       createdBy: user,

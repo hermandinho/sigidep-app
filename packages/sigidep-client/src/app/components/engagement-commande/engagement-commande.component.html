@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="form" [formGroup]="commandForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.niuContribuable" | translate
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="niuContribuable"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.raisonSocialeContribuable" | translate
+        }}</label>
+        <input
+          class="form-control"
+          formControlName="raisonSocialeContribuable"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.codeBanqueContribuable" | translate
+        }}</label>
+        <input
+          class="form-control"
+          formControlName="codeBanqueContribuable"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.codeAgenceContribuable" | translate
+        }}</label>
+        <input
+          class="form-control"
+          formControlName="codeAgenceContribuable"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.numeroCompteContribuable" | translate
+        }}</label>
+        <input
+          class="form-control"
+          formControlName="numeroCompteContribuable"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{
+          "labels.cleCompteContribuable" | translate
+        }}</label>
+        <input
+          class="form-control"
+          formControlName="cleCompteContribuable"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <label class="required">{{ "labels.montantTTC" | translate }}</label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="montantTTC"
+          [placeholder]="''"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+    <button
+      (click)="submit()"
+      [disabled]="!commandForm?.valid"
+      [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

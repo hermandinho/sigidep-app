@@ -14,7 +14,7 @@ import {
 import {
   DeleteRegionSuccess,
   DeleteRegionFailure,
-} from '@actions/regions.actions'
+} from '@actions/regions.actions';
 import { RegionsModel } from '@models/addresses.model';
 
 export interface State {
@@ -45,7 +45,7 @@ const authReducer = createReducer(
   on(DeleteRegion, (state, { id }) => {
     return { ...state, loading: true };
   }),
-  on(DeleteRegionSuccess, DeleteRegionFailure, (state, { }) => {
+  on(DeleteRegionSuccess, DeleteRegionFailure, (state, {}) => {
     return { ...state, loading: false };
   }),
   on(GetRegionsFailure, (state, { error }) => {

@@ -14,7 +14,7 @@ import {
   DeleteRegion,
   DeleteRegionSuccess,
   DeleteRegionFailure,
-} from '@actions/regions.actions'
+} from '@actions/regions.actions';
 import { RegionsModel } from '@models/addresses.model';
 
 @Injectable()
@@ -47,5 +47,5 @@ export class AddressesEffects {
     )
   );
 
-  constructor(private actions$: Actions, private apisService: ApisService) { }
+  constructor(private actions$: Actions, private apisService: ApisService) {}
 }

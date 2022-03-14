@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import {
   getDataSelector,
   getLoadingSelector,
-} from '@reducers/engagement-juridique.reducer';
+} from '@reducers/engagement-commande.reducer';
 import {
   EngagementJuridiqueModel,
   EngagementMissionModel,
@@ -18,7 +18,7 @@ import {
   EngagementCommandeModel,
 } from '@models/index';
 import {
-  GetEngagementJuridiques,
+  GetEngagementCommandes,
   DeleteEngagement,
   DeleteEngagementSuccess,
   DeleteEngagementFailure,
@@ -110,12 +110,12 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._store.dispatch(GetEngagementJuridiques());
+    this._store.dispatch(GetEngagementCommandes());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.contribuables',
+            label: 'breadcrumb.engagements',
           },
         ],
       })
