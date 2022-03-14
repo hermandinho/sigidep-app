@@ -36,8 +36,8 @@ export class GestionnairesEntity extends BaseEntity {
   @JoinColumn({ name: 'agentId' })
   public agent: AgentEntity;
 
-  @OneToMany(() => AccreditationEntity, (object) => object.gestionnaire, {})
-  public accreditations: AccreditationEntity[];
+  // @OneToMany(() => AccreditationEntity, (object) => object.gestionnaire, {})
+  // public accreditations: AccreditationEntity[];
 
   constructor(param?: Partial<GestionnairesEntity>) {
     super();

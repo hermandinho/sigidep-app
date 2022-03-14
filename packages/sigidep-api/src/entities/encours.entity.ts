@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import {
   AdministrativeUnitEntity,
   ArrondissementEntity,
@@ -176,8 +176,10 @@ export class EncoursEntity extends BaseEntity {
   public paragraph: string;
 
 
-// -----------------------------------------------
+//TODO: Supprimer les champs en bas -----------------------------------------------
+  @ManyToOne(()=>ExerciseEntity, o=>o.id)
   public exercise:ExerciseEntity
+
   @OneToOne(() => SubProgramEntity, (object) => object.id, {
     eager: true,
     nullable: true,

@@ -30,11 +30,15 @@ export class AccreditationsService {
   }
 
   findAll() {
-    return `This action returns all accreditations`;
+    return this.repository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} accreditation`;
+  async findOne(id: number) {
+    const r = await this.repository.findOne(id);
+    if (!r) {
+      throw new NotFoundException();
+    }
+    return r;
   }
 
   findByGestionnaire(id: number) {
@@ -53,6 +57,10 @@ export class AccreditationsService {
 
     Object.assign(check, { ...payload });
     return check.save();
+  }
+
+  delete(id: number) {
+    return this.repository.delete({id})
   }
 
   public async deleteMany(ids: number[]): Promise<void> {

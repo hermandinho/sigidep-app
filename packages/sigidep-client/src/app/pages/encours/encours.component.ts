@@ -41,12 +41,12 @@ export class EncoursComponent extends BaseComponent implements OnInit {
 
     this.tableColumns = [
       {
-        field: 'exercise',
+        field: 'exercise', //TODO: exerciseCode
         title: 'tables.headers.exercice',
         sortable: true,
       },
       {
-        field: 'sousProgramme',
+        field: 'sousProgramme', //TODO: subProgram
         title: 'tables.headers.sousProgram',
         sortable: true,
       },
