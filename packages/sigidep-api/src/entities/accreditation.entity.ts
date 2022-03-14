@@ -16,7 +16,7 @@ export class AccreditationEntity extends BaseEntity {
     onDelete: 'CASCADE',
     nullable: true,
   })
-  @JoinColumn({ name: 'gestionnaireId' })
+  @JoinColumn({ name: 'gestionnaire_id', referencedColumnName: 'id' })
   public gestionnaire: GestionnairesEntity;
 
   constructor(param?: Partial<AccreditationEntity>) {
