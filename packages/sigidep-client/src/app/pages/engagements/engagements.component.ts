@@ -19,6 +19,7 @@ import {
 } from '@models/index';
 import {
   GetEngagementCommandes,
+  GetEngagementJuridiques,
   DeleteEngagement,
   DeleteEngagementSuccess,
   DeleteEngagementFailure,
