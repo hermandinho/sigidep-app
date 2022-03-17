@@ -45,6 +45,10 @@ import { TypesProceduresModule } from '@pages/types-procedures/types-procedures.
 import { PiecesJointesModule } from '@pages/pieces-jointes/pieces-jointes.module';
 import { EncoursModule } from '@pages/encours/encours.module';
 import { RegionsModule } from './pages/regions/regions.module';
+import { TaxesModule } from '@pages/taxes/taxes.module';
+import { EngagementsModule } from '@pages/engagements/engagements.module';
+import { ProceduresModule } from '@pages/procedures/procedures.module';
+import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
 
 registerLocaleData(localeFr);
 

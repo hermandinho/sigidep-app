@@ -28,6 +28,9 @@ import { TypesProceduresComponent } from '@pages/types-procedures/types-procedur
 import { PiecesJointesComponent } from '@pages/pieces-jointes/pieces-jointes.component';
 import { EncoursComponent } from '@pages/encours/encours.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
+import { EngagementsComponent } from '@pages/engagements/engagements.component';
+import { ProceduresComponent } from '@pages/procedures/procedures.component';
+import { TaxesComponent } from '@pages/taxes/taxes.component';
 
 const routes: Routes = [
   {
