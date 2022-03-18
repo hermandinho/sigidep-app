@@ -79,10 +79,10 @@ export class EncoursEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'mode_gestion' })
   public modeGestion: string;
 
-  @Column('float', { nullable: true, name: 'ae_initial' })
+  @Column('decimal', { nullable: true, name: 'ae_initial' })
   public aeInitial: number;
 
-  @Column('float', { nullable: true, name: 'cp_initial' })
+  @Column('decimal', { nullable: true, name: 'cp_initial' })
   public cpInitial: number;
 
   @Column('varchar', { nullable: true, name: 'source_finencement' })
@@ -115,49 +115,49 @@ export class EncoursEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'libelle_unite_physique' })
   public labelUnitePhysique: string;
 
-  @Column('int', { nullable: true, name: 'qte_unite_physique' })
+  @Column('bigint', { nullable: true, name: 'qte_unite_physique' })
   public qteUnitePhysique: number;
 
   @Column('varchar', { nullable: true, name: 'code_unite_physique' })
   public codeUnitePhysique: string;
 
-  @Column('float', { nullable: true, name: 'pu_unite_physique' })
+  @Column('decimal', { nullable: true, name: 'pu_unite_physique' })
   public puUnitePhysique: string;
 
-  @Column('float', { nullable: true, name: 'montant_unite_physique' })
+  @Column('decimal', { nullable: true, name: 'montant_unite_physique' })
   public amountUnitePhysique: string;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public aeInitRevisee: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public cpInitRevisee: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public aeDisponible: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public cpDisponible: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public aeDispoANouveau: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public cpDispoANouveau: number;
 
-  @Column('float', { nullable: true })
+  @Column('decimal', { nullable: true })
   public valeurSeuil: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public aeInit: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public cpInit: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public aeEngagJuridique: number;
 
-  @Column('int', { nullable: true })
+  @Column('bigint', { nullable: true })
   public cpMandat: number;
 
   public actions: any[]
@@ -270,12 +270,12 @@ export class EncoursEntity extends BaseEntity {
   // @Column('varchar', { array: true, nullable: true })
   public libelleUnitePhys: string[];
 
-  // @Column('int', { array: true, nullable: true })
+  // @Column('bigint', { array: true, nullable: true })
   public quantiteUnitePhys: number[];
 
-  // @Column('int', { array: true, nullable: true })
+  // @Column('bigint', { array: true, nullable: true })
   public puUnitePhys: number[];
 
-  // @Column('int', { array: true, nullable: true })
+  // @Column('bigint', { array: true, nullable: true })
   public montantUnitePhys: number[];
 }
