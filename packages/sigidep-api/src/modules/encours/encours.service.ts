@@ -53,13 +53,10 @@ export class EncoursService {
   }
 
   public async filter(): Promise<EncoursEntity[]> {
-    return (
-      this.encoursRepository
-        .createQueryBuilder('encours')
-        // .leftJoinAndSelect('encours.exercise', 'exercise')
-        // .leftJoinAndSelect('encours.sousProgramme', 's')
-        .getMany()
-    );
+    return this.encoursRepository
+      .createQueryBuilder('encours')
+      .leftJoinAndSelect('encours.operation', 'operation')
+      .getMany();
   }
 
   public async getOne(
@@ -68,7 +65,7 @@ export class EncoursService {
   ): Promise<EncoursEntity> {
     return this.encoursRepository
       .createQueryBuilder('encours')
-      .where(!codeExercise ? 'encours.id = :code' : 'exercise.code = :code', {
+      .where(!codeExercise ? 'encours.id = :code' : 'exercise = :code', {
         code: !codeExercise ? id : codeExercise,
       })
       .getOne();
@@ -105,7 +102,7 @@ export class EncoursService {
     } else {
       throw new NotFoundException(); //Exercise not found
     }
-
+    /*
     const subPrograms = await this.subProgramRepository
       .createQueryBuilder('subprogram')
       .leftJoinAndSelect('subprogram.exercise', 'exercise')
@@ -212,7 +209,7 @@ export class EncoursService {
       encours.volumeAE = operations
         .map((item) => item.engagementAuthorization)
         .reduce((prev, current) => current + prev, 0); // SHOULD RECHECK THE FORMULE
-    */
+   
     } else {
       //throw new NotFoundException();
     }
@@ -240,7 +237,7 @@ export class EncoursService {
     }
 
     encours.valeurSeuil = payload.valeurSeuil;
-
+ */
     return this.encoursRepository.save({
       ...encours,
       createdBy: user,

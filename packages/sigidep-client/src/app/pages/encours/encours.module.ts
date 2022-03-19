@@ -10,7 +10,6 @@ import { SharedModule } from '@modules/shared.module';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PanelModule } from 'primeng/panel';
-import { DisplayEncoursItemComponent } from '@components/display-encours-item/display-encours-item.component';
 import { DisplayEncoursStatisticsComponent } from '@components/display-encours-statistics/display-encours-statistics.component';
 import { TreeTableModule } from 'primeng/treetable';
 import { CardModule } from 'primeng/card';
@@ -19,7 +18,6 @@ import { CardModule } from 'primeng/card';
   declarations: [
     EncoursComponent,
     CreateEncoursFormComponent,
-    DisplayEncoursItemComponent,
     DisplayEncoursStatisticsComponent,
   ],
   imports: [

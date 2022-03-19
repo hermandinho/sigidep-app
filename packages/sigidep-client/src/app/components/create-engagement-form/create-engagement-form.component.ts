@@ -128,8 +128,8 @@ export class CreateEngagementFormComponent
       .pipe(this.takeUntilDestroy, select(getEncoursDataSelector))
       .subscribe((payload) => {
         this.encours = payload[0];
-        console.log('data', payload);
-        this.sousProgrammes = [payload[0]?.sousProgramme];
+        //console.log('data', payload);
+        /*  this.sousProgrammes = [payload[0]?.sousProgramme];
         this.actions = payload[0]?.sousProgramme?.actions;
 
         this.activities = flatten(
@@ -140,6 +140,7 @@ export class CreateEngagementFormComponent
         );
         this.adminUnits = payload[0]?.adminUnits;
         this.imputations = payload[0]?.imputations;
+        */
       });
   }
   submit() {

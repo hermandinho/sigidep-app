@@ -1,6 +1,6 @@
 <p-card>
   <p-toolbar styleClass="p-mb-4">
-    <ng-template pTemplate="left">
+    <ng-template *ngIf="false" pTemplate="left">
       <button
         (click)="openForm()"
         *appCheckPermissions="['encours.create']"
@@ -15,7 +15,7 @@
   </p-toolbar>
   <p-table
     #dt
-    [globalFilterFields]="['exercise', 'valeurSeuil']"
+    [globalFilterFields]="globalColumns"
     [loading]="(loading$ | async) || false"
     [paginator]="true"
     [rowHover]="true"
@@ -60,29 +60,17 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td *ngFor="let column of tableColumns">
-          <span *ngIf="column.field === 'valeurSeuil'">
+          <span *ngIf="column.field !== 'operation'">
             {{ item[column.field] }}
           </span>
-          <span *ngIf="column.field === 'exercise'">
-            {{ item[column.field]?.code + "- " + item[column.field]?.year }}
-          </span>
-          <span *ngIf="column.field === 'sousProgramme'">
-            {{ item[column.field]?.code + "- " + item[column.field]?.labelFr }}
+          <span *ngIf="column.field === 'operation'">
+            {{ item[column.field]?.id }}
           </span>
         </td>
         <td class="actions">
           <button
-            (click)="showItem(item)"
-            *appCheckPermissions="['encours.read']"
-            class="p-button-rounded p-button-secondary p-mr-2"
-            icon="pi pi-info"
-            pButton
-            pRipple
-          ></button>
-          <button
             (click)="delete(item)"
             *appCheckPermissions="['encours.delete']"
-            [disabled]="item?.status === 'active'"
             class="p-button-rounded p-button-warning"
             icon="pi pi-trash"
             pButton
