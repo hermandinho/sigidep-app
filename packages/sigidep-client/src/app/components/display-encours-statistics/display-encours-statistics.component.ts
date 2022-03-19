@@ -48,7 +48,7 @@ export class DisplayEncoursStatisticsComponent
       const {
         id,
         exercise,
-        sousProgramme,
+        subProgram,
         nombreActions,
         nombreActivites,
         nombreTasks,
@@ -59,14 +59,13 @@ export class DisplayEncoursStatisticsComponent
       this.form.patchValue({
         id,
         exercise,
-        sousProgramme,
+        subProgram,
         nombreActions,
         nombreActivites,
         nombreTasks,
         nombreOperations,
         nombreImputations,
         nombreUnitesPhysiques,
-
         actions: nombreActions > 0,
         activites: nombreActivites > 0,
         tasks: nombreTasks > 0,

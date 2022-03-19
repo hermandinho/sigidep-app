@@ -29,15 +29,12 @@ import {
   PieceJointeModel,
   TypeProcedureModel,
 } from '@models/index';
-import { AccreditationsGestionnairesFormComponent } from '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component';
 import { CreateEncoursModel } from '@models/create-encours.model';
 import { EncoursModel } from '@models/encours.model';
 import { RegionsModel } from '@models/regions.model';
 import { ExecTaxesModel } from '@models/exec-taxes.model';
 import { ExecProcedureModel } from '@models/exec-procedure.model';
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
-import { EngagementCommandeModel } from '@models/engagement-commande.model';
-import { EngagementDecisionModel } from '@models/engagement-decision.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -817,7 +814,7 @@ export class DialogsService {
       header: this._translateService.instant(
         'dialogs.headers.encoursExercise',
         {
-          code: item?.exercise.code + '-' + item?.exercise.year,
+          code: item?.exercise,
         }
       ),
       width: '50vw',

@@ -30,6 +30,7 @@ export class EncoursComponent extends BaseComponent implements OnInit {
   tableColumns: any[] = [];
   data: EncoursModel[] = [];
   loading$: Observable<boolean> = of(true);
+  public globalColumns!: string[];
 
   constructor(
     private readonly _appService: AppService,
@@ -46,8 +47,169 @@ export class EncoursComponent extends BaseComponent implements OnInit {
         sortable: true,
       },
       {
-        field: 'sousProgramme', //TODO: subProgram
+        field: 'subProgram',
         title: 'tables.headers.sousProgram',
+        sortable: true,
+      },
+      {
+        field: 'action',
+        title: 'tables.headers.action',
+        sortable: true,
+      },
+      {
+        field: 'activity',
+        title: 'tables.headers.activity',
+        sortable: true,
+      },
+
+      {
+        field: 'task',
+        title: 'tables.headers.task',
+        sortable: true,
+      },
+      {
+        field: 'adminUnit',
+        title: 'tables.headers.adminUnit',
+        sortable: true,
+      },
+      {
+        field: 'paragraph',
+        title: 'tables.headers.paragraph',
+        sortable: true,
+      },
+      {
+        field: 'imputation',
+        title: 'tables.headers.imputation',
+        sortable: true,
+      },
+      {
+        field: 'operation',
+        title: 'tables.headers.operation',
+        sortable: true,
+      },
+      {
+        field: 'livrables',
+        title: 'tables.headers.livrables',
+        sortable: true,
+      },
+      {
+        field: 'sourceVerif',
+        title: 'tables.headers.sourceVerif',
+        sortable: true,
+      },
+      {
+        field: 'sourceVerif',
+        title: 'tables.headers.sourceVerif',
+        sortable: true,
+      },
+      {
+        field: 'gestionnaire',
+        title: 'tables.headers.gestionnaire',
+        sortable: true,
+      },
+      {
+        field: 'modeGestion',
+        title: 'tables.headers.modeGestion',
+        sortable: true,
+      },
+      {
+        field: 'aeInitial',
+        title: 'tables.headers.aeInitial',
+        sortable: true,
+      },
+      {
+        field: 'cpInitial',
+        title: 'tables.headers.cpInitial',
+        sortable: true,
+      },
+      {
+        field: 'labelParagraphFr',
+        title: 'tables.headers.labelParagraphFr',
+        sortable: true,
+      },
+      {
+        field: 'labelParagraphEn',
+        title: 'tables.headers.labelParagraphEn',
+        sortable: true,
+      },
+      {
+        field: 'sourceFinancement',
+        title: 'tables.headers.sourceFinancement',
+        sortable: true,
+      },
+      {
+        field: 'region',
+        title: 'tables.headers.region',
+        sortable: true,
+      },
+      {
+        field: 'department',
+        title: 'tables.headers.department',
+        sortable: true,
+      },
+      {
+        field: 'arrondissement',
+        title: 'tables.headers.arrondissement',
+        sortable: true,
+      },
+      {
+        field: 'localite',
+        title: 'tables.headers.localite',
+        sortable: true,
+      },
+      {
+        field: 'unitePhysique',
+        title: 'tables.headers.unitePhysique',
+        sortable: true,
+      },
+      {
+        field: 'libelleUnitePhys',
+        title: 'tables.headers.libelleUnitePhys',
+        sortable: true,
+      },
+      {
+        field: 'quantiteUnitePhysique',
+        title: 'tables.headers.quantiteUnitePhysique',
+        sortable: true,
+      },
+      {
+        field: 'puUnitePhys',
+        title: 'tables.headers.puUnitePhys',
+        sortable: true,
+      },
+      {
+        field: 'montantUnitePhys',
+        title: 'tables.headers.montantUnitePhys',
+        sortable: true,
+      },
+      {
+        field: 'aeInitRevisee',
+        title: 'tables.headers.aeInitRevisee',
+        sortable: true,
+      },
+      {
+        field: 'cpInitRevisee',
+        title: 'tables.headers.cpInitRevisee',
+        sortable: true,
+      },
+      {
+        field: 'aeDisponible',
+        title: 'tables.headers.aeDisponible',
+        sortable: true,
+      },
+      {
+        field: 'cpDisponible',
+        title: 'tables.headers.cpDisponible',
+        sortable: true,
+      },
+      {
+        field: 'aeDispoANouveau',
+        title: 'tables.headers.aeDispoANouveau',
+        sortable: true,
+      },
+      {
+        field: 'cpDispoANouveau',
+        title: 'tables.headers.cpDispoANouveau',
         sortable: true,
       },
       {
@@ -56,6 +218,7 @@ export class EncoursComponent extends BaseComponent implements OnInit {
         sortable: true,
       },
     ];
+    this.globalColumns = this.tableColumns.map((item) => item.field);
     this._initListeners();
   }
 
@@ -89,7 +252,7 @@ export class EncoursComponent extends BaseComponent implements OnInit {
   reload(item: EncoursModel) {
     this._dialogService.launchEncoursCreateDialog({
       id: item.id,
-      exercise: item.exercise.code,
+      exercise: +item.exercise,
       valeurSeuil: item.valeurSeuil,
     });
   }
