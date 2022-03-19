@@ -3,13 +3,12 @@ import { Injectable } from '@angular/core';
 import { EncoursModel } from '@models/encours.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FilterService {
-
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
 
   public getEncoursByExercice(id: number) {
-    return this.http.get<EncoursModel>(`/encours/exercice/${id}`)
+    return this.http.get<EncoursModel>(`/encours/exercice/${id}`);
   }
 }

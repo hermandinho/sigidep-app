@@ -200,10 +200,8 @@
   </form>
 
   <!-- *ngIf="imputationsOperationsList.length>0" -->
-  <h3>{{
-  "tables.titles.imputationsFiltres" | translate
-  }}</h3>
-  <p-table  [value]="filteredEncours" responsiveLayout="scroll">
+  <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
+  <p-table [value]="filteredEncours" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th>#</th>
@@ -263,9 +261,7 @@
     </ng-template>
   </p-table>
 
-  <h3>{{
-  "tables.titles.imputationsSelectionnes" | translate
-  }}</h3>
+  <h3>{{ "tables.titles.imputationsSelectionnes" | translate }}</h3>
   <p-table [value]="selectedsEncours" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
@@ -282,17 +278,22 @@
         <td>{{ rowIndex }}</td>
         <td>{{ product.element.imputation }}</td>
         <td>
-              {{ product.element.labelOperation }}
+          {{ product.element.labelOperation }}
         </td>
         <td>
           {{ product.startDate | date }}
         </td>
-        <td >
+        <td>
           {{ product.endDate | date }}
         </td>
         <td>
-          <button (click)="removeFromSelected(product)" class="p-button-rounded p-button-warning"
-            icon="pi pi-trash" pButton pRipple></button>
+          <button
+            (click)="removeFromSelected(product)"
+            class="p-button-rounded p-button-warning"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
         </td>
       </tr>
     </ng-template>
@@ -307,7 +308,7 @@
     </button>
     <button
       (click)="submit()"
-      [disabled]="selectedsEncours.length<1 || !form.valid"
+      [disabled]="selectedsEncours.length < 1 || !form.valid"
       [label]="
         'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
           | translate

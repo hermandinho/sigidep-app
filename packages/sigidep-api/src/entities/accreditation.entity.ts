@@ -8,8 +8,11 @@ import { EncoursEntity } from '.';
 })
 export class AccreditationEntity extends BaseEntity {
   @Column({ name: 'imputations', nullable: false, type: 'jsonb' })
-  public imputations: { startDate: Date, endDate: Date, element: EncoursEntity };
-
+  public imputations: {
+    startDate: Date;
+    endDate: Date;
+    element: EncoursEntity;
+  };
 
   // @Column({ nullable: false })
   // public startDate: Date;
@@ -21,9 +24,9 @@ export class AccreditationEntity extends BaseEntity {
   @ManyToOne(() => GestionnairesEntity, (object) => object.id, {
     eager: false,
     onDelete: 'CASCADE',
-    nullable: false,
+    nullable: true,
   })
-  @JoinColumn({ name: 'gestionnaireId' })
+  @JoinColumn({ name: 'gestionnaire_id', referencedColumnName: 'id' })
   public gestionnaire: GestionnairesEntity;
 
   constructor(param?: Partial<AccreditationEntity>) {

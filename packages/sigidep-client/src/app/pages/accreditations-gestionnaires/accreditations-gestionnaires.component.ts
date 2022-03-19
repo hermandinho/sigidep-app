@@ -9,19 +9,12 @@ import { Store, select } from '@ngrx/store';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import {
-  DeleteGestionnaire,
-  DeleteGestionnaireSuccess,
-  DeleteGestionnaireFailure,
-  GetGestionnaires,
-} from '@actions/gestionnaires.actions';
-import {
-  getDataSelector,
-  getLoadingSelector,
-} from '@reducers/gestionnaires.reducer';
 import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import html2canvas from 'html2canvas';
+import { DeleteAccreditations, DeleteAccreditationsFailure, DeleteAccreditationsSuccess, GetAccreditations } from '@actions/accreditaions.actions';
+import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
+import { getDataSelector, getLoadingSelector } from '@reducers/accreditation.reducer';
 
 @Component({
   selector: 'app-accreditations-gestionnaires',
@@ -32,7 +25,7 @@ export class AccreditationsGestionnairesComponent
   extends BaseComponent
   implements OnInit
 {
-  data: GestionnaireModel[] = [];
+  data: AccreditationGestionnaireModel[] = [];
   selectedItems: any[] = [];
   loading$: Observable<boolean> = of(true);
   tableColumns: any[] = [];
@@ -63,7 +56,7 @@ export class AccreditationsGestionnairesComponent
   }
 
   ngOnInit(): void {
-    this._store.dispatch(GetGestionnaires());
+    this._store.dispatch(GetAccreditations());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -88,7 +81,7 @@ export class AccreditationsGestionnairesComponent
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteGestionnaire',
       accept: () => {
-        this._store.dispatch(DeleteGestionnaire({ id: item.id }));
+        this._store.dispatch(DeleteAccreditations({ id: item.id }));
       },
     });
   }
@@ -100,7 +93,7 @@ export class AccreditationsGestionnairesComponent
       .subscribe((data) => {
         this.data = (data || []).map(
           (d) =>
-            new GestionnaireModel({
+            new AccreditationGestionnaireModel({
               ...d,
             })
         );
@@ -114,10 +107,10 @@ export class AccreditationsGestionnairesComponent
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,
-        ofType(DeleteGestionnaireSuccess, DeleteGestionnaireFailure)
+        ofType(DeleteAccreditationsSuccess, DeleteAccreditationsFailure)
       )
       .subscribe((action) => {
-        if (action.type === DeleteGestionnaireFailure.type) {
+        if (action.type === DeleteAccreditationsFailure.type) {
           if (action.error?.statusCode === 403) {
             this._appService.showUnauthorizedActionToast();
           } else {
@@ -128,10 +121,10 @@ export class AccreditationsGestionnairesComponent
               closable: true,
             });
           }
-        } else if (action.type === DeleteGestionnaireSuccess.type) {
+        } else if (action.type === DeleteAccreditationsSuccess.type) {
           this._appService.showToast({
             severity: 'success',
-            detail: 'messages.paragraphs.deleteSuccess',
+            detail: 'messages.accreditation.deleteSuccess',
             summary: 'errors.success',
             closable: true,
           });
@@ -140,13 +133,16 @@ export class AccreditationsGestionnairesComponent
   }
   download() {
     // table_content
-    let pdf = new jsPDF()
-    let data: any = document.getElementById("table_content")
-    html2canvas(data)
-      .then(canvas => {
-        let imgdata = canvas.toDataURL('image/image.png')
-        pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95)
-        pdf.save('accreditations-' +moment(new Date()).format("YYYY-MM-DD hh:mm:ss")+'.pdf')
-      })
+    let pdf = new jsPDF();
+    let data: any = document.getElementById('table_content');
+    html2canvas(data).then((canvas) => {
+      let imgdata = canvas.toDataURL('image/image.png');
+      pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95);
+      pdf.save(
+        'accreditations-' +
+          moment(new Date()).format('YYYY-MM-DD hh:mm:ss') +
+          '.pdf'
+      );
+    });
   }
 }

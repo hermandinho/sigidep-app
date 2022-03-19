@@ -45,7 +45,7 @@ export class EncoursService {
     private readonly operationRepository: Repository<SubProgramActivityTaskOperationEntity>,
 
     @InjectConnection()
-    private readonly connection: Connection
+    private readonly connection: Connection,
   ) {}
 
   public getRepository(): Repository<EncoursEntity> {
@@ -55,8 +55,7 @@ export class EncoursService {
   public async filter(): Promise<EncoursEntity[]> {
     return this.encoursRepository
       .createQueryBuilder('encours')
-      // .leftJoinAndSelect('encours.exercise', 'exercise')
-      // .leftJoinAndSelect('encours.sousProgramme', 's')
+      .leftJoinAndSelect('encours.operation', 'operation')
       .getMany();
   }
 
@@ -66,30 +65,14 @@ export class EncoursService {
   ): Promise<EncoursEntity> {
     return this.encoursRepository
       .createQueryBuilder('encours')
-      .where(!codeExercise ? 'encours.id = :code' : 'exercise.code = :code', {
+      .where(!codeExercise ? 'encours.id = :code' : 'exercise = :code', {
         code: !codeExercise ? id : codeExercise,
       })
-      .leftJoinAndSelect('encours.exercise', 'exercise')
-      .leftJoinAndSelect('encours.sousProgramme', 's')
-      .leftJoinAndSelect('s.actions', 'ac')
-      .leftJoinAndSelect('ac.activities', 'a')
-      .leftJoinAndSelect('a.tasks', 't')
-      .leftJoinAndSelect('t.operations', 'op')
-      .leftJoinAndSelect('op.arrondissement', 'ar')
-      .leftJoinAndSelect('op.region', 're')
-      .leftJoinAndSelect('op.department', 'dep')
-      .leftJoinAndSelect('op.paragraph', 'par')
-      .leftJoinAndSelect('op.physicalUnits', 'units')
-      .leftJoinAndSelect('units.referencePhysicalUnit', 'ref')
-      .leftJoinAndSelect('t.financialSource', 'fs')
-      .leftJoinAndSelect('s.exercise', 'e')
-      .leftJoinAndSelect('t.administrativeUnit', 'au')
-      .leftJoinAndSelect('au.function', 'f')
       .getOne();
   }
 
   public async getOne2() {
-    return this.connection.query(encours_query)
+    return this.connection.query(encours_query);
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -115,19 +98,19 @@ export class EncoursService {
     });
 
     if (exercise) {
-      encours.exercise = exercise;
+      encours.exercise = exercise.code + '';
     } else {
       throw new NotFoundException(); //Exercise not found
     }
-
-    const subProgram = await this.subProgramRepository
+    /*
+    const subPrograms = await this.subProgramRepository
       .createQueryBuilder('subprogram')
       .leftJoinAndSelect('subprogram.exercise', 'exercise')
       .where('exercise.code = :code', { code: exercise?.code })
-      .getOne();
+      .getMany();
 
-    if (subProgram) {
-      encours.sousProgramme = subProgram;
+    if (subPrograms) {
+      encours.subProgram = subPrograms?.map((item) => item.code);
     } else {
       //throw new NotFoundException();
     }
@@ -136,10 +119,15 @@ export class EncoursService {
       .createQueryBuilder('action')
       .distinct(true)
       .leftJoinAndSelect('action.subProgram', 'subprogram')
-      .where('subprogram.code = :code', { code: subProgram?.code })
+      .where(
+        subPrograms.length > 0 ? 'subprogram.code IN (:...codes)' : 'false',
+        {
+          codes: encours.subProgram,
+        },
+      )
       .getMany();
     if (actions) {
-      encours.actions = actions ?? undefined;
+      encours.action = actions?.map((item) => item.code);
       encours.nombreActions = actions?.length ?? undefined;
     } else {
       //throw new NotFoundException();
@@ -149,12 +137,12 @@ export class EncoursService {
       .createQueryBuilder('activity')
       .leftJoinAndSelect('activity.action', 'action')
       .where(actions.length > 0 ? 'action.code IN (:...codes)' : 'false', {
-        codes: encours.actions?.map((item) => item.code),
+        codes: encours.action,
       })
       .getMany();
 
     if (activities) {
-      encours.activities = activities ?? undefined;
+      encours.activity = activities?.map((item) => item.code);
       encours.nombreActivites = activities?.length ?? undefined;
     } else {
       //throw new NotFoundException();
@@ -164,16 +152,15 @@ export class EncoursService {
       .createQueryBuilder('task')
       .leftJoinAndSelect('task.activity', 'activity')
       .where(activities.length > 0 ? 'activity.code IN (:...ids)' : 'false', {
-        ids: encours?.activities?.map((item) => item.code),
+        ids: encours?.activity,
       })
       .distinct(true)
       .getMany();
 
     if (tasks) {
-      encours.tasks = tasks ?? undefined;
+      encours.task = tasks?.map((item) => item.code);
       encours.nombreTasks = tasks?.length ?? undefined;
-      encours.adminUnits =
-        tasks?.map((item) => item.administrativeUnit) ?? undefined;
+      encours.adminUnit = tasks?.map((item) => item.administrativeUnit.code);
     } else {
       //throw new NotFoundException();
     }
@@ -182,28 +169,29 @@ export class EncoursService {
       .createQueryBuilder('operation')
       .leftJoinAndSelect('operation.task', 'task')
       .where(tasks.length > 0 ? 'task.code IN (:...ids)' : 'false', {
-        ids: encours?.tasks?.map((item) => item.code),
+        ids: encours?.task,
       })
       .distinct(true)
       .getMany();
 
     if (operations) {
+      encours.operation = operations?.map((item) => item.id + '');
       encours.operations = operations ?? undefined;
-      encours.imputations = operations?.map((item) => item.imputation) ?? [];
+      encours.imputation = operations?.map((item) => item.imputation);
 
-      encours.localities = operations.map((item) => item.locality);
-      encours.arrondissements = operations.map((item) => item.arrondissement);
-      encours.regions = operations.map((item) => item.region);
-      encours.departments = operations.map((item) => item.department);
-      encours.gestionnaires = operations.map((item) => item.managerName);
+      encours.localite = operations.map((item) => item.locality);
+      encours.arrondissement = operations.map(
+        (item) => item.arrondissement.code,
+      );
+      encours.region = operations.map((item) => item.region.code);
+      encours.department = operations.map((item) => item.department.code);
+      encours.gestionnaire = operations.map((item) => item.managerName);
       encours.sourceVerif = operations.map((item) => item.verificationSourceFr); // should use LANG
-      encours.modeGestions = operations.map((item) => item.managementMode);
+      encours.modeGestion = operations.map((item) => item.managementMode);
       encours.livrables = operations.map((item) => item.deliverablesFr);
 
-      encours.nombreOperations = operations?.length ?? undefined;
-      encours.nombreImputations = encours.imputations.length;
-      encours.aeInit = operations.map((item) => item.engagementAuthorization);
-      encours.cpInit = operations.map((item) => item.paymentCreditN1);
+      encours.nombreOperations = operations?.length;
+      encours.nombreImputations = encours.imputation?.length;
       encours.aeInitRevisee = operations.map(
         (item) => item.engagementAuthorization,
       );
@@ -217,14 +205,11 @@ export class EncoursService {
         (item) => item.engagementAuthorization,
       );
       encours.cpDispoANouveau = operations.map((item) => item.paymentCreditN1);
-
+      /*
       encours.volumeAE = operations
         .map((item) => item.engagementAuthorization)
         .reduce((prev, current) => current + prev, 0); // SHOULD RECHECK THE FORMULE
-
-      encours.volumeAE = operations
-        .map((item) => item.paymentCreditN1)
-        .reduce((prev, current) => prev + current, 0); // SHOULD RECHECK THE FORMULE
+   
     } else {
       //throw new NotFoundException();
     }
@@ -233,28 +218,26 @@ export class EncoursService {
       .createQueryBuilder('unit')
       .leftJoinAndSelect('unit.operation', 'operation')
       .where(operations.length > 0 ? 'operation.id IN (:...ids)' : 'false', {
-        ids: encours?.operations?.map((item) => item.id),
+        ids: encours?.operation,
       })
       .leftJoinAndSelect('unit.referencePhysicalUnit', 'ref')
       .getMany();
 
     if (unitesPhys) {
-      encours.unitePhysiques = unitesPhys;
+      encours.unitePhysique = unitesPhys?.map((item) => item.id + '');
       encours.libelleUnitePhys =
         unitesPhys?.map((item) => item.referencePhysicalUnit.labelFr) ??
         undefined; // LANG MUST BE HANDLED LATTER
-      encours.quantiteUnitePhys =
-        unitesPhys?.map((item) => item.quantity) ?? [];
       encours.puUnitePhys = unitesPhys?.map((item) => item.unitPrice) ?? [];
       encours.montantUnitePhys =
         unitesPhys?.map((item) => item.totalPrice) ?? [];
-      encours.nombreUnitesPhysiques = unitesPhys?.length ?? undefined;
+      encours.nombreUnitesPhysiques = unitesPhys?.length;
     } else {
       //throw new NotFoundException();
     }
 
     encours.valeurSeuil = payload.valeurSeuil;
-
+ */
     return this.encoursRepository.save({
       ...encours,
       createdBy: user,

@@ -9,7 +9,11 @@ export class CreateAccreditationDto {
   @IsNotEmpty()
   /*   @MinLength(5)
   @MaxLength(5) */
-  public imputations: { startDate: Date, endDate: Date, element: EncoursEntity };
+  public imputations: {
+    startDate: Date;
+    endDate: Date;
+    element: EncoursEntity;
+  };
 
   // @ApiProperty({ example: 'Tamo', required: true })
   // @IsNotEmpty()

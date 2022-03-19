@@ -11,7 +11,7 @@ import {
   RubriquesService,
   SousRubriquesService,
 } from './service';
-import { RubriqueMercurialeEntity } from '@entities/rubrique-mercuriale.entity';
+//import { RubriqueMercurialeEntity } from '@entities/rubrique-mercuriale.entity';
 import { SousRubriqueMercurialeEntity } from '@entities/sous-rubriques-mercuriales.entity';
 import { ArticleMercurialeEntity } from '@entities/article-mercuriale.entity';
 
@@ -31,7 +31,7 @@ import { ArticleMercurialeEntity } from '@entities/article-mercuriale.entity';
     AuthModule,
     TypeOrmModule.forFeature([
       ArticleMercurialeEntity,
-      RubriqueMercurialeEntity,
+      //RubriqueMercurialeEntity,
       SousRubriqueMercurialeEntity,
     ]),
   ],
