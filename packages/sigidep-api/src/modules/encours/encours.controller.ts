@@ -47,8 +47,11 @@ export class EncoursController {
   }
 
   @Get('/exercice/:id')
-  public async getEncoursByExercice(@Param('id') id:number) {
-    return this.encoursServices.getRepository()
-      .createQueryBuilder('encours').where('exercise_id=:id', {id}).getMany()
+  public async getEncoursByExercice(@Param('id') id: number) {
+    return this.encoursServices
+      .getRepository()
+      .createQueryBuilder('encours')
+      .where('exercise_id=:id', { id })
+      .getMany();
   }
 }

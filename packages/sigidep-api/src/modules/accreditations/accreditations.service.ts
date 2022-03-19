@@ -25,7 +25,11 @@ export class AccreditationsService {
     //   throw new ConflictException();
     // }
 
+<<<<<<< HEAD
     console.log("yoooo")
+=======
+    console.log('yoooo', payload);
+>>>>>>> 2239a55 (reorganiser la table encours)
     return this.repository.save({ ...payload });
   }
 

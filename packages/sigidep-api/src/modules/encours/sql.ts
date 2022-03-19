@@ -54,4 +54,4 @@ AS operation_id    FROM Public.sub_program_activity_task_operations OP
         ON SP.exercise_id = Exo.id
 																						
 ORDER BY OP.id ASC ;
-`
+`;

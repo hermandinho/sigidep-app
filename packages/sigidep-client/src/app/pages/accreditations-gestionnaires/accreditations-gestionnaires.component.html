@@ -9,8 +9,14 @@
         pButton
         pRipple
       ></button>
-      <button (click)="download()" [label]="'buttons.download' | translate" class="p-button-primary p-mr-2" icon="pi pi-download"
-        pButton pRipple></button>
+      <button
+        (click)="download()"
+        [label]="'buttons.download' | translate"
+        class="p-button-primary p-mr-2"
+        icon="pi pi-download"
+        pButton
+        pRipple
+      ></button>
       <!--<ng-container>
               <button (click)="delete()" *appCheckPermissions="['banksAgences.delete']"
                       [disabled]="!selectedItems?.length"
@@ -21,7 +27,12 @@
     <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
 
-  <p-table [id]="'table_content'" [value]="data" dataKey="code" responsiveLayout="scroll">
+  <p-table
+    [id]="'table_content'"
+    [value]="data"
+    dataKey="code"
+    responsiveLayout="scroll"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th></th>

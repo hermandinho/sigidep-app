@@ -31,9 +31,6 @@ import { EngagementsComponent } from '@pages/engagements/engagements.component';
 import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
-import { EngagementsComponent } from '@pages/engagements/engagements.component';
-import { ProceduresComponent } from '@pages/procedures/procedures.component';
-import { TaxesComponent } from '@pages/taxes/taxes.component';
 
 const routes: Routes = [
   {
@@ -300,7 +297,6 @@ const routes: Routes = [
           permissions: [...MenuPermissions.regions],
         },
         component: RegionsComponent,
-
       },
       {
         path: 'taxes',

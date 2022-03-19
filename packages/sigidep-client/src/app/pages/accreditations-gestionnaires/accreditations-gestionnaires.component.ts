@@ -133,13 +133,16 @@ export class AccreditationsGestionnairesComponent
   }
   download() {
     // table_content
-    let pdf = new jsPDF()
-    let data: any = document.getElementById("table_content")
-    html2canvas(data)
-      .then(canvas => {
-        let imgdata = canvas.toDataURL('image/image.png')
-        pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95)
-        pdf.save('accreditations-' +moment(new Date()).format("YYYY-MM-DD hh:mm:ss")+'.pdf')
-      })
+    let pdf = new jsPDF();
+    let data: any = document.getElementById('table_content');
+    html2canvas(data).then((canvas) => {
+      let imgdata = canvas.toDataURL('image/image.png');
+      pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95);
+      pdf.save(
+        'accreditations-' +
+          moment(new Date()).format('YYYY-MM-DD hh:mm:ss') +
+          '.pdf'
+      );
+    });
   }
 }
