@@ -41,8 +41,7 @@ export class EncoursModel extends BaseModel {
   public operation!: string;
   public action!: string;
 
-
-//------------------------------------------------------
+  //------------------------------------------------------
   exercise!: ExerciseModel;
   sousProgramme!: SubProgramModel;
   activities!: SubProgramActivityModel[];
@@ -97,13 +96,13 @@ export class EncoursModel extends BaseModel {
     super();
     if (params) {
       Object.assign(this, params);
-      this.nombreActivites = params.activities?.length||0
-      this.nombreTasks = params.tasks?.length||0
-      this.nombreOperations = params.operations?.length||0
-      this.nombreImputations = params.imputations?.length||0
-      this.nombreUnitesPhysiques = params.unitePhysiques?.length||0
-      this.volumeAE=10
-      this.volumeCP=10
+      this.nombreActivites = params.activities?.length || 0;
+      this.nombreTasks = params.tasks?.length || 0;
+      this.nombreOperations = params.operations?.length || 0;
+      this.nombreImputations = params.imputations?.length || 0;
+      this.nombreUnitesPhysiques = params.unitePhysiques?.length || 0;
+      this.volumeAE = 10;
+      this.volumeCP = 10;
     }
   }
 }

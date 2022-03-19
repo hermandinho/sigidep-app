@@ -297,7 +297,6 @@ const routes: Routes = [
           permissions: [...MenuPermissions.regions],
         },
         component: RegionsComponent,
-
       },
       {
         path: 'taxes',

@@ -25,7 +25,7 @@ export class AccreditationsService {
     //   throw new ConflictException();
     // }
 
-    console.log("yoooo",payload)
+    console.log('yoooo', payload);
     return this.repository.save({ ...payload });
   }
 
