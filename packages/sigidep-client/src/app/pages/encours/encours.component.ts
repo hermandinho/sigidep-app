@@ -19,6 +19,7 @@ import {
   GetEncours,
 } from '@actions/encours.actions';
 import { GetExercises, Go, SetAppBreadcrumb } from '@store/actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-encours',
@@ -36,7 +37,8 @@ export class EncoursComponent extends BaseComponent implements OnInit {
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions
+    private readonly dispatcher: Actions,
+    public translate: TranslateService
   ) {
     super();
 
@@ -247,6 +249,14 @@ export class EncoursComponent extends BaseComponent implements OnInit {
         this._store.dispatch(DeleteEncours({ id: item.id }));
       },
     });
+  }
+
+  get currentLang() {
+    return this.translate.currentLang;
+  }
+
+  get currentLangCurrencyFormat() {
+    return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
 
   reload(item: EncoursModel) {

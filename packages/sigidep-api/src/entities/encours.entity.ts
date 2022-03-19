@@ -4,7 +4,6 @@ import { SubProgramActivityTaskOperationEntity } from './sub-program-activity-ta
 
 @Entity({
   name: 'encours',
-  insertColumns: 'after',
   orderBy: {
     createdAt: 'DESC',
   },

@@ -25,6 +25,7 @@ import {
   DeleteEngagementFailure,
   SetAppBreadcrumb,
 } from '@store/actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-engagements',
@@ -41,7 +42,8 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
-    private readonly dispatcher: Actions
+    private readonly dispatcher: Actions,
+    public translate: TranslateService
   ) {
     super();
 
@@ -123,6 +125,13 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     );
   }
 
+  get currentLang() {
+    return this.translate.currentLang;
+  }
+
+  get currentLangCurrencyFormat() {
+    return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
+  }
   async openForm() {
     this._dialogService.launchEngagementCreateDialog();
   }
