@@ -1,0 +1,25 @@
+.container {
+  display: grid;
+
+  grid-template-rows: auto 50px;
+  .actions {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+
+  .group {
+    margin: 10px 0px;
+  }
+  .progress-spinner {
+    position: absolute;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+}

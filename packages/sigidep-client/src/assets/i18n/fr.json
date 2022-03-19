@@ -25,10 +25,18 @@
     "accounting": "Comptabilité",
     "contribuables": "Contribuables",
     "banksAgences": "Banques et Agences",
+    "contribuablesBudgetaires": "contribuables Budgetaires",
     "agents": "Agents",
     "mercuriales": "Mercuriale",
     "carnetsMandats": "Carnets Mandats",
-    "contribuablesBudgetaires": "Contribuables Budgetaires"
+    "accreditationsGestionnaires": "Accreditations des Gestionnaires",
+    "baremes": "Barèmes",
+    "typesProcedures": "Types Procédures",
+    "piecesJointes": "Pièces Jointes",
+    "encours": "Mise En Ligne",
+    "taxes": "Taxes",
+    "procedures": "Procédures",
+    "engagements": "Engagements"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -36,6 +44,7 @@
     "login": "Connexion",
     "create": "Créer",
     "delete": "Supprimer",
+    "download": "Télécharger",
     "cancel": "Annuler",
     "confirm": "Confirmer",
     "update": "Modifier",
@@ -50,7 +59,13 @@
     "quarterlyBreakdown": "Ventilation trimestrielle",
     "halfYearlyBreakdown": "Ventilation semestrielle",
     "program": "Programmer",
-    "assign": "Affecter"
+    "assign": "Affecter",
+    "enligne": "Charger",
+    "reload": "Recharger",
+    "reset": "Reinitializer",
+    "load": "Charger",
+    "back": "Retour",
+    "submit": "Soumettre"
   },
   "install": {
     "title": "Installation"
@@ -156,8 +171,8 @@
     "agence": "Agence",
     "localisation": "Localisation",
     "siege": "Siège",
-    "adresse": "adresse",
-    "bank": "banque",
+    "adresse": "Adresse",
+    "bank": "Banque",
     "matricule": "Matricule",
     "nom": "Nom",
     "prenom": "Prenom",
@@ -208,7 +223,43 @@
     "carnet": "Carnet",
     "affectation": "Affectation",
     "isAssign": "Affecter?",
-    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire"
+    "numeroContribuableBugetaire": "Numéro Contribuable Budgétaire",
+    "agent": "Agent",
+    "typeAccreditation": "Type d'accreditation",
+    "montant": "Montant",
+    "order": "Ordre",
+    "nombreActions": "Actions",
+    "nombreActivites": "Activités",
+    "nombreTasks": "Tâches",
+    "nombreOperations": "Opérations",
+    "nombreImputations": "Imputations",
+    "nombreUnitesPhysiques": "UnitesPhysiques",
+    "volumeAE": "Volume AE",
+    "volumeCP": "VOlume CP",
+    "sousProgram": "Sous Programme",
+    "seuil": "Seuil",
+    "exercice": "Exercice",
+    "statsMiseEnLigne": "Statistiques de mise en ligne",
+    "indicatorsPaymentCreditN1": "Ind. Crédit Pay. 1",
+    "indicatorsPaymentCreditN2": "Ind. Crédit Pay. 2",
+    "indicatorsPaymentCreditN3": "Ind. Crédit Pay. 3",
+    "RIB": "RIB",
+    "TxIR": "TxIR",
+    "TxTVA": "TxTVA",
+    "sousProgramme": "Sous Programme",
+    "etat": "Etat",
+    "procedure": "Prcoédure",
+    "reference": "Référence",
+    "adminUnit": "Unté Admin",
+    "montantAE": "Montant AE",
+    "typeProcedure": "Type Procédure",
+    "niuContribuable": "NUI Contribuable",
+    "raisonSocialeContribuable": "Raison Sociale",
+    "codeBanqueContribuable": "Code Banque",
+    "codeAgenceContribuable": "Code Agence",
+    "cleCompteContribuable": "Clé Compte",
+    "numeroCompteContribuable": "Numéro Compte",
+    "montantTTC": "Montant TTC"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -229,6 +280,7 @@
     "unauthorized": "Oups!",
     "unknown": "Une erreur est survenue lors de cette opération",
     "subProgramNotFound": "Ce sous program n'existe pas.",
+    "dejaEncours": "Buget déjà en ligne",
     "auth": {
       "invalidCredentials": "Compte utilisateur introuvable",
       "accountInactive": "Ce compte est désactivé",
@@ -274,6 +326,18 @@
     "agents": {
       "delete": "Une erreur est survenue lors de la suppression de cet agent.",
       "conflict": "Un agent avec ce code existe déjà."
+    },
+    "banks": {
+      "delete": "Une erreur est survenue lors de la suppression de cette banque.",
+      "conflict": "Une banque avec ce code existe déjà."
+    },
+    "agences": {
+      "delete": "Une erreur est survenue lors de la suppression de cette agence.",
+      "conflict": "Une agence avec ce code existe déjà."
+    },
+    "gestionnaires": {
+      "delete": "Une erreur est survenue lors de la suppression de ce gestionnaire.",
+      "conflict": "Un gestionnaire avec ce code existe déjà."
     }
   },
   "messages": {
@@ -348,6 +412,58 @@
       "deleteSuccess": "Carnet supprimé avec succès.",
       "createSuccess": "Carnet créé avec succès.",
       "updateSuccess": "Carnet modifié avec succès."
+    },
+    "piecesJointes": {
+      "deleteSuccess": "Pièce Jointe supprimée avec succès.",
+      "createSuccess": "Pièce Jointe créée avec succès.",
+      "updateSuccess": "Pièce Jointe modifiée avec succès."
+    },
+    "typesProcedures": {
+      "deleteSuccess": "Type procédure supprimé avec succès.",
+      "createSuccess": "Type procédure créé avec succès.",
+      "updateSuccess": "Type procédure modifié avec succès."
+    },
+    "baremes": {
+      "deleteSuccess": "Barème supprimé avec succès.",
+      "createSuccess": "Barème créé avec succès.",
+      "updateSuccess": "Barème modifié avec succès."
+    },
+    "banks": {
+      "deleteSuccess": "Banque supprimé avec succès.",
+      "createSuccess": "Banque créé avec succès.",
+      "updateSuccess": "Banque modifié avec succès."
+    },
+    "agences": {
+      "deleteSuccess": "Agence supprimé avec succès.",
+      "createSuccess": "Agence créé avec succès.",
+      "updateSuccess": "Agence modifié avec succès."
+    },
+    "contribuablesBudgetaires": {
+      "deleteSuccess": "Contribuable Budgetaire supprimé avec succès.",
+      "createSuccess": "Contribuable Budgetaire créé avec succès.",
+      "updateSuccess": "Contribuable Budgetaire modifié avec succès."
+    },
+    "gestionnaires": {
+      "deleteSuccess": "Gestionnaire supprimé avec succès.",
+      "createSuccess": "Gestionnaire créé avec succès.",
+      "updateSuccess": "Gestionnaire modifié avec succès."
+    },
+    "encours": {
+      "deleteSuccess": "Chargement du budget supprimé avec succès.",
+      "createSuccess": "Budget mis en ligne avec succès."
+    },
+    "procedures": {
+      "deleteSuccess": "Procédure supprimée avec succès.",
+      "createSuccess": "Procédure enregistrée avec succès."
+    },
+    "taxes": {
+      "deleteSuccess": "Taxe supprimée avec succès.",
+      "createSuccess": "Taxe enregistrée avec succès.",
+      "editSuccess": "Taxe mise à jour avec succès."
+    },
+    "engagements": {
+      "deleteSuccess": "Engagement supprimé avec succès.",
+      "createSuccess": "Engagement enregistré avec succès."
     }
   },
   "menus": {
@@ -368,7 +484,8 @@
     "edit": "Modifier",
     "referencePhysicalUnits": "Unités physiques de référence",
     "contribuables": "Contribuables",
-    "banksAgences": "Banques et Agences",
+    "banksagences": "Banques et Agences",
+    "contribuablesbudgetaires": "contribuables budgetaires",
     "agents": "Agents",
     "articles": "Articles",
     "rubriques": "Rubriques",
@@ -377,7 +494,14 @@
     "categories": "Catégories",
     "carnets": "Carnets de Mandats",
     "categories-agents": "Catégories",
-    "contribuablesbudgetaires": "contribuables budgetaires"
+    "accreditationsgestionnaires": "Accreditations des Gestionnaires",
+    "piecesjointes": "Pieces Jointes",
+    "baremes": "Baremes",
+    "typesprocedures": "Types Procédures",
+    "encours": "Mise En ligne",
+    "taxes": "Taxes",
+    "procedures": "Procédures",
+    "engagements": "Engagements"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -394,7 +518,14 @@
       "sousRubriques": "Sous Rubriques",
       "grades": "Grades",
       "categories": "Catégories",
-      "carnetsMandats": "Carnets de Mandats"
+      "carnetsMandats": "Carnets de Mandats",
+      "typesProcedures": "Types de Procédures",
+      "piecesJointes": "Pièces Jointes",
+      "baremes": "Barèmes",
+      "encours": "Budgets En Cours",
+      "procdeures": "Procédures",
+      "taxes": "Taxes",
+      "engagements": "Engagements"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -478,7 +609,64 @@
       "dateDelivranceCni": "Date Délivrance CNI",
       "lieuDelivranceCni": "Lieu Délivrance CNI",
       "exercice": "Exercice",
-      "bankAgence": "banque (Agence)"
+      "bankAgence": "banque (Agence)",
+      "order": "Ordre",
+      "montant": "Montant (FCFA)",
+      "nombreActions": "Actions",
+      "nombreActivites": "Activités",
+      "nombreTasks": "Tâches",
+      "nombreOperations": "Opérations",
+      "nombreImputations": "Imputations",
+      "nombreUnitesPhysiques": "UnitesPhysiques",
+      "volumeAE": "Volume AE",
+      "volumeCP": "VOlume CP",
+      "sousProgram": "Sous Programme",
+      "seuil": "Seuil",
+      "physicalUnits": "Unités physiques",
+      "RIB": "RIB",
+      "TxIR": "TxIR",
+      "TxTVA": "TxTVA",
+      "nomContribuable": "Nom Contribuable",
+      "numContribuable": "Num. Contribuable",
+      "nomAgent": "Nom agent",
+      "typeProcedure": "Type Procédure",
+      "matriculeAgent": "Matricule Agent",
+      "action": "Action",
+      "activity": "Activité",
+      "sousProgramme": "Sous Programme",
+      "etat": "Etat",
+      "procedure": "Prcoédure",
+      "exercise": "Exercice",
+      "reference": "Référence",
+      "adminUnit": "Unté Admin",
+      "imputation": "Imputation",
+      "task": "Tâche",
+      "montantAE": "Montant AE",
+      "subProgram": "Sous programme",
+      "paragraph": "Paragraphe",
+      "livrables": "Livrables",
+      "sourceVerif": "sourceVerif",
+      "modeGestion": "Mode gestion",
+      "aeInitial": "AE Initial",
+      "cpInitial": "CP Inital",
+      "labelParagraphFr": "Libelle Paragraphe Fr",
+      "labelParagraphEn": "Libelle Paragraphe En",
+      "sourceFinancement": "Source Financement",
+      "department": "Département",
+      "arrondissement": "Arrondissement",
+      "localite": "Localité",
+      "unitePhysique": "Unité Physique",
+      "libelleUnitePhys": " Libellé Unité Phys.",
+      "quantiteUnitePhysique": "Qté Unité Phys.",
+      "puUnitePhys": "PU Unité Phys.",
+      "montantUnitePhys": "Monatnt Unité Phys.",
+      "aeInitRevisee": "AE Init. Révisée",
+      "cpInitRevisee": "CP Init Révisée",
+      "aeDisponible": "AE Dispo",
+      "cpDisponible": "CP Dispo",
+      "aeDispoANouveau": "AE Disp à nouveau",
+      "cpDispoANouveau": " CP Dispo à Nouveau",
+      "operation": "operation"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -517,6 +705,8 @@
       "editBank": "Modifier une banque",
       "createAgenceBank": "Create une agence de banque",
       "editAgenceBank": "Modifier une agence de banque",
+      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
+      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire",
       "editAgent": "Editer un agent",
       "editArticle": "Editer un article",
       "editRubrique": "Editer une rubrique",
@@ -525,8 +715,16 @@
       "editGrade": "Editer une grade",
       "editCarnet": "Editer un carnet",
       "assignCarnet": "Affecter le carnet {{code}}",
-      "createContribuableBudgetaire": "Creer un contribuable budgetaire",
-      "editContribuableBudgetaire": "Mettre à jour un contribuable budgetaire"
+      "createAccreditationsGestionnaires": "Ajouter des accreditations aux gestionnaires",
+      "editAccreditationsGestionnaires": "Mettre à jour des accreditations",
+      "editBareme": "Editer un Barème",
+      "editTypeProcedure": "Editer un type de procédure",
+      "editPieceJointe": "Editer une pièce jointe",
+      "encours": "Mise en ligne du budget ",
+      "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
+      "editProcedures": "Editer une procédure",
+      "editTaxes": "Editer une taxe",
+      "editEngagement": "Editer un Engagement"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -541,7 +739,16 @@
       "deleteAgent": "Voulez-vous vraiment supprimer cet agent? Cette action est irréversible.",
       "deleteGrade": "Voulez-vous vraiment supprimer cette grade? Cette action est irréversible.",
       "deleteCategorie": "Voulez-vous vraiment supprimer cette catégorie? Cette action est irréversible.",
-      "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible."
+      "deleteCarnet": "Voulez-vous vraiment supprimer ce carnet? Cette action est irréversible.",
+      "deletePieceJointe": "Voulez-vous vraiment supprimer cette pièce jointe? Cette action est irréversible.",
+      "deleteTypeProcedure": "Voulez-vous vraiment supprimer ce type de procédure? Cette action est irréversible.",
+      "deleteBareme": "Voulez-vous vraiment supprimer ce barème? Cette action est irréversible.",
+      "deleteBank": "Voulez-vous vraiment supprimer cette banque? Cette action est irréversible",
+      "deleteAgence": "Voulez-vous vraiment supprimer cette agence? Cette action est irréversible",
+      "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
+      "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible",
+      "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
+      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible"
     }
   },
   "exerciseStatuses": {

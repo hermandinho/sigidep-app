@@ -1,0 +1,319 @@
+<div class="container">
+  <form class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{ "labels.exercise" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="exercicesInprogressList"
+            formControlName="exercice"
+            optionLabel="code"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>
+                  {{ option.code }} / {{ option.startDate }} -
+                  {{ option.endDate }}
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>
+                  {{ option.code }} / {{ option.startDate }} -
+                  {{ option.endDate }}
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{ "labels.agent" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="agentsList"
+            formControlName="gestionnaire"
+            optionLabel="matricule"
+          >
+            <ng-template let-option pTemplate="selectedItem">
+              <div>
+                <div>
+                  {{ option.matricule }} - {{ option.nom + "" + option.prenom }}
+                </div>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              <div>
+                <div>
+                  {{ option.matricule }} - {{ option.nom + "" + option.prenom }}
+                </div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <div class="p-field">
+          <label class="required">{{
+            "labels.typeAccreditation" | translate
+          }}</label>
+
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="['sub-program', 'administrative-unit']"
+            formControlName="typeAccreditation"
+          >
+          </p-dropdown>
+        </div>
+      </div>
+
+      <!-- *ngIf="form.get('typeAccreditation')?.value === 'sub-program'" -->
+      <ng-container>
+        <div class="p-field p-col-12 p-md-12">
+          <div class="p-field">
+            <label class="required">{{
+              "labels.subProgram" | translate
+            }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="uniqueItemsWith('subProgram')"
+              formControlName="subProgram"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <div class="p-field">
+            <label class="required">{{ "labels.action" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="uniqueItemsWith('actions')"
+              formControlName="action"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <div class="p-field">
+            <label class="required">{{ "labels.activity" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="uniqueItemsWith('activity')"
+              formControlName="activity"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <div class="p-field">
+            <label class="required">{{ "labels.task" | translate }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="uniqueItemsWith('task')"
+              formControlName="task"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="form.get('typeAccreditation')?.value === 'administrative-unit'"
+      >
+        <div class="p-field p-col-12 p-md-12">
+          <div class="p-field">
+            <label class="required">{{
+              "labels.administrativeUnit" | translate
+            }}</label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="administrativeUnitList"
+              formControlName="administrativeUnit"
+              optionLabel="labelFr"
+            >
+              <ng-template let-option pTemplate="selectedItem">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="item">
+                <div>
+                  <div>{{ option.code }} - {{ option.labelFr }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+
+  <!-- *ngIf="imputationsOperationsList.length>0" -->
+  <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
+  <p-table [value]="filteredEncours" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Imputation</th>
+        <th>Libellé Operation</th>
+        <th>Date debut</th>
+        <th>Date fin</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+      <tr>
+        <td>{{ rowIndex }}</td>
+        <td>{{ product.element.imputation }}</td>
+        <td>{{ product.labelOperation }}</td>
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                pInputText
+                type="date"
+                placeholder="dd-mm-yyyy"
+                [(ngModel)]="product.startDate"
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.startDate | date }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                pInputText
+                type="date"
+                placeholder="dd-mm-yyyy"
+                [(ngModel)]="product.endDate"
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.endDate | date }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <button
+            (click)="addToSelected(product)"
+            class="p-button-rounded p-button-success"
+            icon="pi pi-plus"
+            [disabled]="!validDates(product.startDate, product.endDate)"
+            pButton
+            pRipple
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <h3>{{ "tables.titles.imputationsSelectionnes" | translate }}</h3>
+  <p-table [value]="selectedsEncours" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Imputation</th>
+        <th>Libellé Operation</th>
+        <th>Date debut</th>
+        <th>Date fin</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+      <tr>
+        <td>{{ rowIndex }}</td>
+        <td>{{ product.element.imputation }}</td>
+        <td>
+          {{ product.element.labelOperation }}
+        </td>
+        <td>
+          {{ product.startDate | date }}
+        </td>
+        <td>
+          {{ product.endDate | date }}
+        </td>
+        <td>
+          <button
+            (click)="removeFromSelected(product)"
+            class="p-button-rounded p-button-warning"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="footer p-mt-4">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button pButton class="p-mr-3 p-button-primary" (click)="reset()">
+      {{ "buttons.reset" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="selectedsEncours.length < 1 || !form.valid"
+      [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      "
+      pButton
+    ></button>
+  </div>
+</div>

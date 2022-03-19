@@ -1,3 +1,4 @@
+import { AccreditationsGestionnairesModule } from './pages/accreditations-gestionnaires/accreditations-gestionnaires.module';
 import { ContribuablesBudgetairesModule } from './pages/contribuables-budgetaires/contribuables-budgetaires.module';
 import { BanksAgencesModule } from './pages/banks-agences/banks-agences.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
@@ -39,6 +40,15 @@ import { SousRubriquesModule } from '@pages/mercuriales/sous-rubrique/sous-rubri
 import { CarnetsModule } from '@pages/carnets/carnets.module';
 import { GradesModule } from '@pages/grades/grades.module';
 import { CategoriesAgentsModule } from '@pages/categories-agents/categories-agents.module';
+import { BaremesModule } from '@pages/baremes/baremes.module';
+import { TypesProceduresModule } from '@pages/types-procedures/types-procedures.module';
+import { PiecesJointesModule } from '@pages/pieces-jointes/pieces-jointes.module';
+import { EncoursModule } from '@pages/encours/encours.module';
+import { TaxesModule } from '@pages/taxes/taxes.module';
+import { EngagementsModule } from '@pages/engagements/engagements.module';
+import { ProceduresModule } from '@pages/procedures/procedures.module';
+import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
+import { RegionsModule } from './pages/regions/regions.module';
 
 registerLocaleData(localeFr);
 
@@ -87,6 +97,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReferencePhysicalUnitsModule,
     ContribuablesModule,
     BanksAgencesModule,
+    ContribuablesBudgetairesModule,
     AgentsModule,
     ArticlesModule,
     RubriquesModule,
@@ -95,6 +106,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     GradesModule,
     CategoriesAgentsModule,
     ContribuablesBudgetairesModule,
+    AccreditationsGestionnairesModule,
+    BaremesModule,
+    TypesProceduresModule,
+    PiecesJointesModule,
+    EncoursModule,
+    TaxesModule,
+    ProceduresModule,
+    EngagementsModule,
+    RegionsModule,
+    TaxesModule,
+    ProceduresModule,
+    EngagementsModule,
   ],
   providers: [
     AppInstallCheckGuard,

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
@@ -15,6 +15,7 @@ import {
 import { SousRubriqueMercurialeEntity } from '@entities/sous-rubriques-mercuriales.entity';
 import { ArticleMercurialeEntity } from '@entities/article-mercuriale.entity';
 
+@Global()
 @Module({
   controllers: [
     ArticlesController,

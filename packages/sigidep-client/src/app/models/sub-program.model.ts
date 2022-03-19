@@ -9,6 +9,7 @@ import {
   RegionsModel,
 } from '@models/addresses.model';
 import { StructureModel } from '@models/structure.model';
+import { BaseModel } from './base.model';
 
 class SubProgramBaseModel {
   id!: number;
@@ -153,7 +154,7 @@ export class SubProgramActivityTaskModel extends SubProgramActivityModel {
   operations!: SubProgramActivityTaskOperationModel[];
 }
 
-export class SubProgramActivityTaskOperationModel {
+export class SubProgramActivityTaskOperationModel extends BaseModel {
   labelFr!: string;
   labelEn!: string;
   deliverablesFr!: string;
@@ -181,6 +182,7 @@ export class SubProgramActivityTaskOperationModel {
   arrondissementId!: ArrondissementModel;
 
   constructor(params?: Partial<SubProgramActivityTaskOperationModel>) {
+    super();
     if (params) {
       Object.assign(this, params);
     }

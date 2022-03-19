@@ -1,6 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsDefined, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { EditSousRubriqueDTO } from '../dto';
+import { Type } from 'class-transformer';
 
 export class EditArticleMercurialeDTO {
   public id?: number;
@@ -21,6 +22,8 @@ export class EditArticleMercurialeDTO {
   @ApiProperty({ example: '50000.50', required: false })
   public prix: number;
 
-  @ApiProperty({ example: '', required: true })
+  @ApiProperty({ type: () => EditSousRubriqueDTO, required: true })
+  @IsDefined()
+  @Type(() => EditSousRubriqueDTO)
   public sousRubrique: EditSousRubriqueDTO;
 }

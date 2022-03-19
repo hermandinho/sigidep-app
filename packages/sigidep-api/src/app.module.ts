@@ -19,10 +19,20 @@ import { ReferencePhysicalUnitsModule } from './modules/reference-physical-units
 import { ContribuablesModule } from '@modules/contribuables/contribuables.module';
 import { BanksAgencesModule } from './modules/banks-agences/banks-agences.module';
 import { RegimeFiscalModule } from '@modules/regime-fiscal/regime-fiscal.module';
+import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
 import { AgentsModule } from '@modules/agents/agents.module';
 import { MercurialeModule } from '@modules/mercuriales/mercuriale.module';
 import { CarnetMandatModule } from '@modules/carnets-mandats/carnet-mandat.module';
-import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetaires/contribuables-budgetaires.module';
+import { GestionnairesModule } from './modules/gestionnaires/gestionnaires.module';
+import { AccreditationsModule } from './modules/accreditations/accreditations.module';
+import { BaremesMissionsModule } from '@modules/baremes/bareme-mission.module';
+import { PiecesJointesModule } from '@modules/pieces-jointes/pieces-jointes.module';
+import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
+import { EncoursModule } from '@modules/encours/encours.module';
+import { RegionsModule } from './modules/regions/regions.module';
+import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
+import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
+import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
 
 @Module({
   imports: [
@@ -96,10 +106,21 @@ import { ContribuablesBudgetairesModule } from './modules/contribuables-budgetai
     ContribuablesModule,
     BanksAgencesModule,
     RegimeFiscalModule,
+    ContribuablesBudgetairesModule,
     AgentsModule,
     MercurialeModule,
     CarnetMandatModule,
     ContribuablesBudgetairesModule,
+    GestionnairesModule,
+    AccreditationsModule,
+    BaremesMissionsModule,
+    PiecesJointesModule,
+    TypesProceduresModule,
+    EncoursModule,
+    RegionsModule,
+    EngagementJuridiqueModule,
+    ExecProcedureModule,
+    ExecTaxesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

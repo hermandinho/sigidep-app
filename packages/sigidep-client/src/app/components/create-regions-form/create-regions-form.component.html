@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required">{{ "labels.labelFr" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="labelFr"
+            [placeholder]="'Ouest'"
+          />
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.labelEn" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="labelEn"
+          [placeholder]="'West'"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required">{{ "labels.code" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="code"
+            [placeholder]="'wst'"
+          />
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <ng-template [ngIf]="loading">
+    <p-progressSpinner
+      class="progress-spinner"
+      strokeWidth="3"
+    ></p-progressSpinner>
+  </ng-template>
+  <div class="actions">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="!form?.valid"
+      [label]="'buttons.save' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

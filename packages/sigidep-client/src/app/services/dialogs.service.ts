@@ -25,7 +25,16 @@ import {
   CarnetMandatModel,
   GradeModel,
   CategorieAgentModel,
+  BaremeMissionModel,
+  PieceJointeModel,
+  TypeProcedureModel,
 } from '@models/index';
+import { CreateEncoursModel } from '@models/create-encours.model';
+import { EncoursModel } from '@models/encours.model';
+import { RegionsModel } from '@models/regions.model';
+import { ExecTaxesModel } from '@models/exec-taxes.model';
+import { ExecProcedureModel } from '@models/exec-procedure.model';
+import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -47,6 +56,7 @@ export class DialogsService {
 
   private bankCreateComponent: any;
   private agenceBankCreateComponent: any;
+  private contribuableBudgetaireCreateComponent: any;
   private agentCreateComponent: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
@@ -54,7 +64,23 @@ export class DialogsService {
   private carnetCreateComponent: any;
   private gradeCreateComponent: any;
   private categorieAgentCreateComponent: any;
-  private contribuableBudgetaireCreateComponent: any;
+
+  private accreditationsGestionnairesCreateComponent: any;
+
+  private baremeCreateComponent: any;
+  private typeProcedureCreateComponent: any;
+  private pieceJointeCreateComponent: any;
+
+  private encoursCreateComponent: any;
+  private regionsCreateComponent: any;
+
+  private encoursStatisticsComponent: any;
+
+  private taxeCreateComponent: any;
+
+  private procedureCreateComponent: any;
+
+  private engagementCreateComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -475,6 +501,35 @@ export class DialogsService {
     });
   }
 
+  public async launchContribuablesBudgetairesCreateDialog(
+    item?: ContribuableBugetaireModel
+  ): Promise<any> {
+    if (!this.contribuableBudgetaireCreateComponent) {
+      const { CreateContribuableBudgetaireFormComponent } = await import(
+        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+      );
+      this.contribuableBudgetaireCreateComponent =
+        CreateContribuableBudgetaireFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.contribuableBudgetaireCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+            (item
+              ? 'editContribuableBudgetaire'
+              : 'createContribuableBudgetaire')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+        },
+      }
+    );
+  }
   public async launchAgentsCreateDialog(item?: AgentModel): Promise<any> {
     if (!this.agentCreateComponent) {
       const { CreateAgentFormComponent } = await import(
@@ -617,25 +672,25 @@ export class DialogsService {
     });
   }
 
-  public async launchContribuablesBudgetairesCreateDialog(
-    item?: ContribuableBugetaireModel
+  public async launchAccreditationsGestionnairesCreateDialog(
+    item?: any
   ): Promise<any> {
-    if (!this.contribuableBudgetaireCreateComponent) {
-      const { CreateContribuableBudgetaireFormComponent } = await import(
-        '@components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component'
+    if (!this.accreditationsGestionnairesCreateComponent) {
+      const { AccreditationsGestionnairesFormComponent } = await import(
+        '@components/accreditations-gestionnaires-form/accreditations-gestionnaires-form.component'
       );
-      this.contribuableBudgetaireCreateComponent =
-        CreateContribuableBudgetaireFormComponent;
+      this.accreditationsGestionnairesCreateComponent =
+        AccreditationsGestionnairesFormComponent;
     }
 
     return this._dialogService.open(
-      this.contribuableBudgetaireCreateComponent,
+      this.accreditationsGestionnairesCreateComponent,
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
             (item
-              ? 'editContribuableBudgetaire'
-              : 'createContribuableBudgetaire')
+              ? 'editAccreditationsGestionnaires'
+              : 'createAccreditationsGestionnaires')
         ),
         width: '70vw',
         height: 'auto',
@@ -645,5 +700,188 @@ export class DialogsService {
         },
       }
     );
+  }
+
+  public async launchBaremeCreateDialog(
+    item?: BaremeMissionModel
+  ): Promise<any> {
+    if (!this.baremeCreateComponent) {
+      const { CreateBaremeFormComponent } = await import(
+        '@components/create-bareme-form/create-bareme-form.component'
+      );
+      this.baremeCreateComponent = CreateBaremeFormComponent;
+    }
+    return this._dialogService.open(this.baremeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editBareme'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchTypeProcedureCreateDialog(
+    item?: TypeProcedureModel
+  ): Promise<any> {
+    if (!this.typeProcedureCreateComponent) {
+      const { CreateTypeProcedureFormComponent } = await import(
+        '@components/create-type-procedure-form/create-type-procedure-form.component'
+      );
+      this.typeProcedureCreateComponent = CreateTypeProcedureFormComponent;
+    }
+    return this._dialogService.open(this.typeProcedureCreateComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.editTypeProcedure'
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchPieceJointeCreateDialog(
+    item?: PieceJointeModel
+  ): Promise<any> {
+    if (!this.pieceJointeCreateComponent) {
+      const { CreatePieceJointeFormComponent } = await import(
+        '@components/create-piece-jointe-form/create-piece-jointe-form.component'
+      );
+      this.pieceJointeCreateComponent = CreatePieceJointeFormComponent;
+    }
+    return this._dialogService.open(this.pieceJointeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editPieceJointe'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEncoursCreateDialog(
+    item?: CreateEncoursModel
+  ): Promise<any> {
+    if (!this.encoursCreateComponent) {
+      const { CreateEncoursFormComponent } = await import(
+        '@components/create-encours-form/create-encours-form.component'
+      );
+      this.encoursCreateComponent = CreateEncoursFormComponent;
+    }
+    return this._dialogService.open(this.encoursCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.encours'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+  public async launchRegionsCreateDialog(item?: RegionsModel): Promise<any> {
+    if (!this.regionsCreateComponent) {
+      const { CreateRegionsFormComponent } = await import(
+        '@components/create-regions-form/create-regions-form.component'
+      );
+      this.regionsCreateComponent = CreateRegionsFormComponent;
+    }
+    return this._dialogService.open(this.regionsCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.regions'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEncoursStatisticsDialog(
+    item?: EncoursModel
+  ): Promise<any> {
+    if (!this.encoursStatisticsComponent) {
+      const { DisplayEncoursStatisticsComponent } = await import(
+        '@components/display-encours-statistics/display-encours-statistics.component'
+      );
+      this.encoursStatisticsComponent = DisplayEncoursStatisticsComponent;
+    }
+    return this._dialogService.open(this.encoursStatisticsComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.encoursExercise',
+        {
+          code: item?.exercise,
+        }
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchTaxeCreateDialog(item?: ExecTaxesModel): Promise<any> {
+    if (!this.taxeCreateComponent) {
+      const { CreateTaxeFormComponent } = await import(
+        '@components/create-taxe-form/create-taxe-form.component'
+      );
+      this.taxeCreateComponent = CreateTaxeFormComponent;
+    }
+    return this._dialogService.open(this.taxeCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editTaxes'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchProcedureCreateDialog(
+    item?: ExecProcedureModel
+  ): Promise<any> {
+    if (!this.procedureCreateComponent) {
+      const { CreateProcedureFormComponent } = await import(
+        '@components/create-procedure-form/create-procedure-form.component'
+      );
+      this.procedureCreateComponent = CreateProcedureFormComponent;
+    }
+    return this._dialogService.open(this.procedureCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editProcedures'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEngagementCreateDialog(
+    item?: EngagementJuridiqueModel
+  ): Promise<any> {
+    if (!this.engagementCreateComponent) {
+      const { EngagementContainerComponent } = await import(
+        '@components/engagement-container/engagement-container.component'
+      );
+      this.engagementCreateComponent = EngagementContainerComponent;
+    }
+
+    return this._dialogService.open(this.engagementCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editEngagement'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
   }
 }
