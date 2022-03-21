@@ -6,7 +6,17 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { ApisService } from '@services/apis.service';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
-import { CreateAccreditations, CreateAccreditationsFailure, CreateAccreditationsSuccess, DeleteAccreditations, DeleteAccreditationsFailure, DeleteAccreditationsSuccess, GetAccreditations, GetAccreditationsFailure, GetAccreditationsSuccess } from '@actions/accreditaions.actions';
+import {
+  CreateAccreditations,
+  CreateAccreditationsFailure,
+  CreateAccreditationsSuccess,
+  DeleteAccreditations,
+  DeleteAccreditationsFailure,
+  DeleteAccreditationsSuccess,
+  GetAccreditations,
+  GetAccreditationsFailure,
+  GetAccreditationsSuccess,
+} from '@actions/accreditaions.actions';
 
 @Injectable()
 export class AccreditationEffects {
@@ -14,12 +24,16 @@ export class AccreditationEffects {
     this.actions$.pipe(
       ofType(GetAccreditations),
       mergeMap((action) =>
-        this.apisService.get<AccreditationGestionnaireModel[]>('/accreditations').pipe(
-          switchMap((payload) => {
-            return [GetAccreditationsSuccess({ payload })];
-          }),
-          catchError((err: HttpErrorResponse) => of(GetAccreditationsFailure(err)))
-        )
+        this.apisService
+          .get<AccreditationGestionnaireModel[]>('/accreditations')
+          .pipe(
+            switchMap((payload) => {
+              return [GetAccreditationsSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetAccreditationsFailure(err))
+            )
+          )
       )
     )
   );
@@ -28,12 +42,19 @@ export class AccreditationEffects {
     this.actions$.pipe(
       ofType(CreateAccreditations),
       mergeMap((action) =>
-        this.apisService.post<AccreditationGestionnaireModel>('/accreditations', action.payload).pipe(
-          switchMap((payload) => {
-            return [CreateAccreditationsSuccess({ payload })];
-          }),
-          catchError((err: HttpErrorResponse) => of(CreateAccreditationsFailure(err)))
-        )
+        this.apisService
+          .post<AccreditationGestionnaireModel>(
+            '/accreditations',
+            action.payload
+          )
+          .pipe(
+            switchMap((payload) => {
+              return [CreateAccreditationsSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(CreateAccreditationsFailure(err))
+            )
+          )
       )
     )
   );
@@ -46,11 +67,13 @@ export class AccreditationEffects {
           switchMap((payload) => {
             return [DeleteAccreditationsSuccess(), GetAccreditations()];
           }),
-          catchError((err: HttpErrorResponse) => of(DeleteAccreditationsFailure(err)))
+          catchError((err: HttpErrorResponse) =>
+            of(DeleteAccreditationsFailure(err))
+          )
         )
       )
     )
   );
 
-  constructor(private actions$: Actions, private apisService: ApisService) { }
+  constructor(private actions$: Actions, private apisService: ApisService) {}
 }

@@ -74,7 +74,6 @@ export class EncoursEntity extends BaseEntity {
   @Column('varchar', { nullable: true })
   public localite: string;
 
-
   @Column('varchar', { nullable: true })
   public libelleUnitePhys: string;
 
@@ -102,6 +101,7 @@ export class EncoursEntity extends BaseEntity {
   @Column('float', { nullable: true })
   public aeDispoANouveau: number;
 
+  @Column('float', { nullable: true })
   @Column('float', { nullable: true })
   public cpDispoANouveau: number;
 

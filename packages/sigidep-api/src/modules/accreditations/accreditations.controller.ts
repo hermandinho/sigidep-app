@@ -54,7 +54,7 @@ export class AccreditationsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id:number) {
-    return this.service.delete(id)
+  remove(@Param('id') id: number) {
+    return this.service.delete(id);
   }
 }

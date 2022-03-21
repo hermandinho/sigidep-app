@@ -1,7 +1,22 @@
-import { CreateAccreditations, CreateAccreditationsFailure, CreateAccreditationsSuccess, DeleteAccreditations, DeleteAccreditationsFailure, DeleteAccreditationsSuccess, GetAccreditations, GetAccreditationsFailure, GetAccreditationsSuccess } from "@actions/accreditaions.actions";
-import { AccreditationGestionnaireModel } from "@models/accreditation-gestionnaire.model";
-import { Action, createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
-
+import {
+  CreateAccreditations,
+  CreateAccreditationsFailure,
+  CreateAccreditationsSuccess,
+  DeleteAccreditations,
+  DeleteAccreditationsFailure,
+  DeleteAccreditationsSuccess,
+  GetAccreditations,
+  GetAccreditationsFailure,
+  GetAccreditationsSuccess,
+} from '@actions/accreditaions.actions';
+import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
+import {
+  Action,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
 
 export interface State {
   data: AccreditationGestionnaireModel[];
@@ -19,7 +34,6 @@ export const initialState: State = {
     statusCode: 0,
   },
 };
-
 
 const accreditationsReducer = createReducer(
   initialState,
@@ -39,7 +53,7 @@ const accreditationsReducer = createReducer(
   on(DeleteAccreditations, (state, { id }) => {
     return { ...state, loading: true };
   }),
-  on(DeleteAccreditationsSuccess, DeleteAccreditationsFailure, (state, { }) => {
+  on(DeleteAccreditationsSuccess, DeleteAccreditationsFailure, (state, {}) => {
     return { ...state, loading: false };
   }),
 

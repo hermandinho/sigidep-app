@@ -14,6 +14,7 @@ import {
 //import { RubriqueMercurialeEntity } from '@entities/rubrique-mercuriale.entity';
 import { SousRubriqueMercurialeEntity } from '@entities/sous-rubriques-mercuriales.entity';
 import { ArticleMercurialeEntity } from '@entities/article-mercuriale.entity';
+import { RubriqueMercurialeEntity } from '@entities/rubrique-mercuriale.entity';
 
 @Global()
 @Module({

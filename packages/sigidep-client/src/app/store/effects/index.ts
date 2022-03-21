@@ -26,7 +26,7 @@ import { TypesProceduresEffects } from './types-procedures.effects';
 import { BaremesEffects } from './baremes.effects';
 import { PiecesJointesEffects } from './pieces-jointes.effects';
 import { EncoursEffects } from './encours.effects';
-import { AccreditationEffects } from './accreditations.effects'
+import { AccreditationEffects } from './accreditations.effects';
 import { EngagementsCommandesEffects } from '@effects/engagement-commande.effects';
 import { EngagementsDecisionsEffects } from '@effects/engagement-decision.effects';
 import { EngagementsJuridiquesEffects } from '@effects/engagement-juridique.effects';

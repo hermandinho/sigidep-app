@@ -31,7 +31,7 @@ import * as fromBaremes from './baremes.reducer';
 import * as fromPiecesJointes from './pieces-jointes.reducer';
 import * as fromTypesProcedures from './types-procedures.reducer';
 import * as fromEncours from './encours.reducer';
-import * as fromAccreditations from '@reducers/accreditation.reducer'
+import * as fromAccreditations from '@reducers/accreditation.reducer';
 
 import * as fromCommandes from '@reducers/engagement-commande.reducer';
 import * as fromDecisions from '@reducers/engagement-decision.reducer';

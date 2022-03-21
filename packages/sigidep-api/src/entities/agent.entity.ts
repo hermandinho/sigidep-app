@@ -99,6 +99,8 @@ export class AgentEntity extends BaseEntity {
   @JoinColumn({ name: 'categorie' })
   public categorie: CategorieAgentEntity;
 
-  @OneToOne(() => GestionnairesEntity, (object) => object.agent, {cascade:true})
+  @OneToOne(() => GestionnairesEntity, (object) => object.agent, {
+    cascade: true,
+  })
   public gestionnaire: GestionnairesEntity;
 }

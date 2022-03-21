@@ -27,7 +27,9 @@ export const DeleteAccreditations = createAction(
   '[Accreditations] Delete',
   props<{ id: number }>()
 );
-export const DeleteAccreditationsSuccess = createAction('[Accreditations] Delete success');
+export const DeleteAccreditationsSuccess = createAction(
+  '[Accreditations] Delete success'
+);
 export const DeleteAccreditationsFailure = createAction(
   '[Accreditations] Delete failure',
   props<{ error?: any }>() // TODO defile errors global model here

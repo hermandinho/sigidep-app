@@ -30,7 +30,7 @@ export class AccreditationsService {
   }
 
   findAll() {
-    return this.repository.find()
+    return this.repository.find();
   }
 
   async findOne(id: number) {
@@ -60,7 +60,7 @@ export class AccreditationsService {
   }
 
   delete(id: number) {
-    return this.repository.delete({id})
+    return this.repository.delete({ id });
   }
 
   public async deleteMany(ids: number[]): Promise<void> {

@@ -12,9 +12,17 @@ import { Component, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import html2canvas from 'html2canvas';
-import { DeleteAccreditations, DeleteAccreditationsFailure, DeleteAccreditationsSuccess, GetAccreditations } from '@actions/accreditaions.actions';
+import {
+  DeleteAccreditations,
+  DeleteAccreditationsFailure,
+  DeleteAccreditationsSuccess,
+  GetAccreditations,
+} from '@actions/accreditaions.actions';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
-import { getDataSelector, getLoadingSelector } from '@reducers/accreditation.reducer';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/accreditation.reducer';
 
 @Component({
   selector: 'app-accreditations-gestionnaires',
