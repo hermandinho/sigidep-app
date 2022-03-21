@@ -32,7 +32,7 @@ import { RubriqueMercurialeEntity } from '@entities/rubrique-mercuriale.entity';
     AuthModule,
     TypeOrmModule.forFeature([
       ArticleMercurialeEntity,
-      //RubriqueMercurialeEntity,
+      RubriqueMercurialeEntity,
       SousRubriqueMercurialeEntity,
     ]),
   ],
