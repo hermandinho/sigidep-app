@@ -92,7 +92,6 @@ export class RegionsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        console.log('.........', data);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),

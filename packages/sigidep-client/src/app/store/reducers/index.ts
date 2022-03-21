@@ -31,6 +31,7 @@ import * as fromBaremes from './baremes.reducer';
 import * as fromPiecesJointes from './pieces-jointes.reducer';
 import * as fromTypesProcedures from './types-procedures.reducer';
 import * as fromEncours from './encours.reducer';
+import * as fromAccreditations from '@reducers/accreditation.reducer';
 
 import * as fromCommandes from '@reducers/engagement-commande.reducer';
 import * as fromDecisions from '@reducers/engagement-decision.reducer';
@@ -68,6 +69,7 @@ export interface AppState {
   typesProcedures: fromTypesProcedures.State;
   piecesJointes: fromPiecesJointes.State;
   encours: fromEncours.State;
+  accreditations: fromAccreditations.State;
   commandes: fromCommandes.State;
   decisions: fromDecisions.State;
   missions: fromMissions.State;
@@ -105,6 +107,7 @@ export const reducers: ActionReducerMap<AppState> = {
   piecesJointes: fromPiecesJointes.reducer,
   typesProcedures: fromTypesProcedures.reducer,
   encours: fromEncours.reducer,
+  accreditations: fromAccreditations.reducer,
 
   commandes: fromCommandes.reducer,
   decisions: fromDecisions.reducer,

@@ -42,6 +42,8 @@ export class EncoursEntity extends BaseEntity {
   @Column('varchar', { nullable: true })
   public gestionnaire: string;
 
+  @Column('varchar', { nullable: true, name: 'unite_physique' })
+  public unitePhysique: string;
   @Column('varchar', { nullable: true })
   public modeGestion: string;
 
@@ -73,9 +75,6 @@ export class EncoursEntity extends BaseEntity {
   public localite: string;
 
   @Column('varchar', { nullable: true })
-  public unitePhysique: string;
-
-  @Column('varchar', { nullable: true })
   public libelleUnitePhys: string;
 
   @Column('int', { nullable: true })
@@ -102,6 +101,7 @@ export class EncoursEntity extends BaseEntity {
   @Column('float', { nullable: true })
   public aeDispoANouveau: number;
 
+  @Column('float', { nullable: true })
   @Column('float', { nullable: true })
   public cpDispoANouveau: number;
 
