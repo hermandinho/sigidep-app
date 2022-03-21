@@ -52,4 +52,9 @@ export class AccreditationsController {
     }
     return this.service.deleteMany(ids?.split(',').map((item) => +item));
   }
+
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.service.delete(id);
+  }
 }

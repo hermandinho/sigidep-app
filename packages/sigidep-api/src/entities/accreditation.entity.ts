@@ -24,9 +24,9 @@ export class AccreditationEntity extends BaseEntity {
   @ManyToOne(() => GestionnairesEntity, (object) => object.id, {
     eager: false,
     onDelete: 'CASCADE',
-    nullable: false,
+    nullable: true,
   })
-  @JoinColumn({ name: 'gestionnaireId' })
+  @JoinColumn({ name: 'gestionnaire_id', referencedColumnName: 'id' })
   public gestionnaire: GestionnairesEntity;
 
   constructor(param?: Partial<AccreditationEntity>) {
