@@ -7,41 +7,24 @@ import {
   Output,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
-import { ExerciseModel } from '@models/index';
 import { Observable, of, Subject } from 'rxjs';
+import { getDataSelector } from '@reducers/types-procedures.reducer';
 import {
-  getDataSelector,
-  getLoadingSelector,
-} from '@reducers/types-procedures.reducer';
-import { getDataSelector as getEncoursDataSelector } from '@reducers/encours.reducer';
-import { getDataSelector as getProceduresDataSelector } from '@reducers/exec-procedure.reducer';
-import { getDataSelector as getExercisesDataSelector } from '@reducers/exercise.reducer';
-import {
-  GetEncours,
-  GetExercises,
-  GetTypesProcedures,
-  GetProcedures,
-  GetAdministrativeUnites,
-} from '@store/actions';
+  getLoadingSelector as getEncoursLoadingSelector,
+  getDataSelector as getEncoursDataSelector,
+} from '@reducers/encours.reducer';
 
-import {
-  EncoursModel,
-  EngagementJuridiqueModel,
-  TypeProcedureModel,
-  SubProgramActivityModel,
-  SubProgramActionModel,
-  SubProgramModel,
-  ExecProcedureModel,
-  SubProgramActivityTaskModel,
-  AdministrativeUnitModel,
-} from '@models/index';
-import { flatten } from '@angular/compiler';
+import { GetEncours } from '@store/actions';
+
+import { EncoursModel, TypeProcedureModel } from '@models/index';
+import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-engagement-form',
@@ -61,18 +44,112 @@ export class CreateEngagementFormComponent
   >();
 
   loading$: Observable<boolean> = of(true);
-  public exercises: ExerciseModel[] = [];
-  public encours!: EncoursModel;
+  public exercises: string[] = [];
+  public encoursList!: EncoursModel[];
   public typesProcedures: TypeProcedureModel[] = [];
-  public activities: SubProgramActivityModel[] = [];
-  public actions: SubProgramActionModel[] = [];
-  public sousProgrammes: SubProgramModel[] = [];
-  public imputations: string[] = [];
-  public tasks: SubProgramActivityTaskModel[] = [];
-  public adminUnits: AdministrativeUnitModel[] = [];
-  public procedures: ExecProcedureModel[] = [];
+  public adminUnits: string[] = [];
+  public paragraphes: string[] = [];
 
   public commonForm!: FormGroup;
+
+  public imputationColumns = [
+    {
+      field: 'subProgram',
+      title: 'tables.headers.sousProgram',
+      sortable: true,
+    },
+    {
+      field: 'action',
+      title: 'tables.headers.action',
+      sortable: true,
+    },
+    {
+      field: 'activity',
+      title: 'tables.headers.activity',
+      sortable: true,
+    },
+
+    {
+      field: 'task',
+      title: 'tables.headers.task',
+      sortable: true,
+    },
+
+    {
+      field: 'imputation',
+      title: 'tables.headers.imputation',
+      sortable: true,
+    },
+    {
+      field: 'operation',
+      title: 'tables.headers.operation',
+      sortable: true,
+    },
+    {
+      field: 'aeDisponible',
+      title: 'tables.headers.aeDisponible',
+      sortable: true,
+    },
+    {
+      field: 'cpDisponible',
+      title: 'tables.headers.cpDisponible',
+      sortable: true,
+    },
+    {
+      field: 'aeDispoANouveau',
+      title: 'tables.headers.aeDispoANouveau',
+      sortable: true,
+    },
+    {
+      field: 'cpDispoANouveau',
+      title: 'tables.headers.cpDispoANouveau',
+      sortable: true,
+    },
+    {
+      field: 'gestionnaire',
+      title: 'tables.headers.gestionnaire',
+      sortable: true,
+    },
+    {
+      field: 'modeGestion',
+      title: 'tables.headers.modeGestion',
+      sortable: true,
+    },
+
+    {
+      field: 'region',
+      title: 'tables.headers.region',
+      sortable: true,
+    },
+    {
+      field: 'department',
+      title: 'tables.headers.department',
+      sortable: true,
+    },
+    {
+      field: 'arrondissement',
+      title: 'tables.headers.arrondissement',
+      sortable: true,
+    },
+    {
+      field: 'localite',
+      title: 'tables.headers.localite',
+      sortable: true,
+    },
+
+    {
+      field: 'aeInitRevisee',
+      title: 'tables.headers.aeInitRevisee',
+      sortable: true,
+    },
+    {
+      field: 'cpInitRevisee',
+      title: 'tables.headers.cpInitRevisee',
+      sortable: true,
+    },
+  ];
+
+  public selectedImputation!: EncoursModel;
 
   public busy = false;
   constructor(
@@ -81,7 +158,8 @@ export class CreateEngagementFormComponent
     private _fb: FormBuilder,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    public translate: TranslateService
   ) {
     super();
     this._initListeners();
@@ -91,6 +169,13 @@ export class CreateEngagementFormComponent
     return !!this.commonForm?.value?.id;
   }
 
+  get currentLang() {
+    return this.translate.currentLang;
+  }
+
+  get currentLangCurrencyFormat() {
+    return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
+  }
   doChangeStep(direction: 'forward') {
     this.changeStep.emit(direction);
   }
@@ -105,6 +190,10 @@ export class CreateEngagementFormComponent
   }
   private _initListeners() {
     this._store.dispatch(GetEncours());
+    this.loading$ = this._store.pipe(
+      select(getEncoursLoadingSelector),
+      map((status) => status)
+    );
     this._store.pipe(this.takeUntilDestroy, select(getDataSelector));
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
@@ -113,49 +202,43 @@ export class CreateEngagementFormComponent
       });
 
     this._store
-      .pipe(this.takeUntilDestroy, select(getExercisesDataSelector))
-      .subscribe((payload) => {
-        this.exercises = [...payload];
-      });
-
-    this._store
-      .pipe(this.takeUntilDestroy, select(getProceduresDataSelector))
-      .subscribe((payload) => {
-        this.procedures = [...payload];
-      });
-
-    this._store
       .pipe(this.takeUntilDestroy, select(getEncoursDataSelector))
       .subscribe((payload) => {
-        this.encours = payload[0];
-        //console.log('data', payload);
-        /*  this.sousProgrammes = [payload[0]?.sousProgramme];
-        this.actions = payload[0]?.sousProgramme?.actions;
-
-        this.activities = flatten(
-          payload[0]?.actions?.map((item) => this.activities ?? [])
-        );
-        this.tasks = flatten(
-          payload[0]?.activities?.map((item) => item.tasks ?? [])
-        );
-        this.adminUnits = payload[0]?.adminUnits;
-        this.imputations = payload[0]?.imputations;
-        */
+        this.encoursList = payload;
+        this.exercises = [
+          ...new Set(this.encoursList.map((item) => item.exercise)),
+        ];
+        this.adminUnits = [
+          ...new Set(this.encoursList.map((item) => item.adminUnit)),
+        ];
+        this.paragraphes = [
+          ...new Set(this.encoursList.map((item) => item.paragraph)),
+        ];
       });
   }
   submit() {
     this.changeStep.emit('forward');
   }
 
+  onRowSelect = (event: any) => {
+    this.commonForm.patchValue({
+      imputation: this.selectedImputation.imputation,
+      task: this.selectedImputation.task,
+      activity: this.selectedImputation.activity,
+      action: this.selectedImputation.action,
+      subProgram: this.selectedImputation.subProgram,
+    });
+  };
+
   onChange = (event: any) => {
     this._fetchItem(event.value);
   };
 
   onChangeType = (event: any) => {
-    const typeProcedure = this.typesProcedures.find(
+    const codeProcedure = this.typesProcedures.find(
       (item) => item.code === event.value
-    );
-    this.commonForm.patchValue({ typeProcedure });
+    )?.code;
+    this.commonForm.patchValue({ codeProcedure });
     this.subformInitialized.emit(this.commonForm);
   };
 

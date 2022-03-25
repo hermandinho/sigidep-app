@@ -1,4 +1,6 @@
+import { CreateExecTaxesDTO } from '@modules/exec-taxes/dto/create-exec-taxes.dto';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { CreateEngagementJuridiqueDTO } from './create-engagement-juridique.dto';
 
 export class EngagementCommandeDTO extends CreateEngagementJuridiqueDTO {
@@ -9,7 +11,7 @@ export class EngagementCommandeDTO extends CreateEngagementJuridiqueDTO {
   public montantTTC: number;
 
   @ApiProperty({ example: 'CCA', required: false })
-  public raisonSocialeContribuable: string;
+  public raisonSociale: string;
 
   @ApiProperty({ example: '10000', required: false })
   public codeBanqueContribuable: string;
@@ -22,4 +24,16 @@ export class EngagementCommandeDTO extends CreateEngagementJuridiqueDTO {
 
   @ApiProperty({ example: '10', required: false })
   public cleCompteContribuable: string;
+
+  @ApiProperty({ example: '19.86', required: false })
+  public tauxTVA: number;
+
+  @ApiProperty({
+    type: () => CreateExecTaxesDTO,
+    nullable: true,
+    required: false,
+  })
+  @IsNotEmpty()
+  @IsOptional()
+  public taxesApplicable: CreateExecTaxesDTO;
 }

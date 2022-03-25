@@ -49,9 +49,9 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
 
     this.tableColumns = [
       {
-        field: 'procedure',
-        title: 'tables.headers.procedure',
-        sortable: true,
+        field: 'numero',
+        title: 'tables.headers.numero',
+        sortable: false,
       },
       {
         field: 'exercise',
@@ -59,7 +59,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
         sortable: true,
       },
       {
-        field: 'sousProgramme',
+        field: 'subProgram',
         title: 'tables.headers.sousProgramme',
         sortable: true,
       },
@@ -98,11 +98,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
         title: 'tables.headers.imputation',
         sortable: true,
       },
-      {
-        field: 'numero',
-        title: 'tables.headers.numero',
-        sortable: false,
-      },
+
       {
         field: 'reference',
         title: 'tables.headers.reference',

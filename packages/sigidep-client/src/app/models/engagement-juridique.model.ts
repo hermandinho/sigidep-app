@@ -17,28 +17,21 @@ export enum EtatEngagementEnum {
 }
 
 export class EngagementJuridiqueModel extends BaseModel {
-  procedure!: ExecProcedureModel;
-
-  exercise!: ExerciseModel;
-
-  sousProgramme!: SubProgramModel;
-
-  action!: SubProgramActionModel;
-
-  activity!: SubProgramActivityModel;
-
-  task!: SubProgramActivityTaskModel;
-
+  exercise!: string;
+  codeProcedure!: string;
   reference!: string;
-
-  numero!: number;
-
+  dateSignature!: Date;
+  signataire!: string;
+  objet!: string;
+  subProgram!: string;
+  action!: string;
+  activity!: string;
+  task!: string;
+  adminUnit!: string;
+  paragraph!: string;
   imputation!: string;
-
-  adminUnit!: AdministrativeUnitModel;
-
+  numero!: string;
   montantAE!: number;
-
   etat!: EtatEngagementEnum;
 
   constructor(params?: Partial<EngagementJuridiqueModel>) {

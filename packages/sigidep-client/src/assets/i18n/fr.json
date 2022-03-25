@@ -259,7 +259,14 @@
     "codeAgenceContribuable": "Code Agence",
     "cleCompteContribuable": "Clé Compte",
     "numeroCompteContribuable": "Numéro Compte",
-    "montantTTC": "Montant TTC"
+    "montantTTC": "Montant TTC",
+    "selectimputation": "Choisir une imputation",
+    "signataire": "Signataire",
+    "dateSignature": "Date Signature",
+    "objet": "Objet",
+    "paragraphe": "Paragraphe",
+    "taxesApplicables": "Taxe Applicable",
+    "tauxTVA": "Taux TVA"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

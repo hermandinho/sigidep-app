@@ -18,16 +18,7 @@ export class EngagementCommandeService {
   }
 
   public async filter(): Promise<EngagementCommandeEntity[]> {
-    return this.repository
-      .createQueryBuilder('ej')
-      .leftJoinAndSelect('ej.exercise', 'exercise')
-      .leftJoinAndSelect('ej.sousProgramme', 's')
-      .leftJoinAndSelect('ej.action', 'ac')
-      .leftJoinAndSelect('ej.activity', 'a')
-      .leftJoinAndSelect('ej.procedure', 'p')
-      .leftJoinAndSelect('p.typeProcedure', 'typ')
-      .leftJoinAndSelect('ej.task', 't')
-      .getMany();
+    return this.repository.createQueryBuilder('ej').getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -39,6 +30,16 @@ export class EngagementCommandeService {
     user: UserEntity,
   ): Promise<EngagementCommandeEntity> {
     payload.etat = EtatEngagementEnum.SAVE;
+    const val1: string = payload.adminUnit?.substring(2, 3);
+    const val2: string = (
+      '00000' + Number(Math.floor(Math.random() * 31)).toString(2)
+    ).slice(-5);
+
+    payload.numero = payload.exercise + 'CE' + val1 + '-' + val2;
+    console.log(
+      '........................................!!!!!.................',
+    );
+    console.log('CE QUI EST TROUVE....: ', payload.numero);
     return this.repository.save({
       ...(payload as any),
       createdBy: user,

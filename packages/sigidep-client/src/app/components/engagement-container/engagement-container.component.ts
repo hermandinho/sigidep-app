@@ -1,6 +1,11 @@
 import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
@@ -16,6 +21,12 @@ import { GetExercises } from '@actions/exercises.actions';
 import { GetProcedures } from '@actions/exec-procedure.actions';
 import { GetAdministrativeUnites } from '@actions/administrative-units.actions';
 import { GetTypesProcedures } from '@actions/types-procedures.actions';
+import { GetEncours } from '@actions/encours.actions';
+import * as moment from 'moment';
+import {
+  MAX_AMOUNT_PROCEDURE_1110,
+  MAX_AMOUNT_PROCEDURE_1111,
+} from './engagement-container.conts';
 
 type Step = 'common' | 'mission' | 'decision' | 'command';
 @Component({
@@ -51,115 +62,145 @@ export class EngagementContainerComponent
   ngOnInit() {
     this.form = this._fb.group({
       commandForm: this._fb.group({
-        niuContribuable: '',
+        niuContribuable: [undefined],
         montantTTC: '',
-        raisonSocialeContribuable: '',
+        raisonSociale: '',
         codeBanqueContribuable: '',
         codeAgenceContribuable: '',
         numeroCompteContribuable: '',
         cleCompteContribuable: '',
+        tauxTVA: '',
+        taxesApplicable: this._fb.group({
+          id: '',
+          code: '',
+          label: '',
+          TxTVA: '',
+          TxIR: '',
+        }),
       }),
       commonForm: this._fb.group({
         id: [undefined],
-        typeProcedure: this._fb.group({
-          id: [undefined, Validators.required],
-          imputation: [],
-          code: [undefined],
-          label: [],
-        }),
-        procedure: this._fb.group({
-          id: [undefined],
-          nomAgent: [undefined],
-        }),
-        exercise: this._fb.group({
-          id: [undefined],
-          code: [undefined],
-        }),
-        montantAE: [undefined],
-        adminUnit: this._fb.group({
-          id: [undefined],
-          code: [undefined],
-        }),
-        imputation: [undefined],
+        codeProcedure: [undefined, Validators.required],
+        exercise: [undefined, Validators.required],
+        montantAE: [undefined, [Validators.required, this.montantAEValidator]],
+        adminUnit: [undefined],
+        imputation: [undefined, Validators.required],
         numero: [undefined],
         reference: [undefined],
-        task: this._fb.group({
-          id: [undefined],
-          code: [undefined],
-        }),
-        activity: this._fb.group({
-          id: [undefined],
-          code: [undefined],
-        }),
-        action: this._fb.group({
-          id: [undefined],
-          code: [undefined],
-        }),
-        sousProgramme: this._fb.group({
-          id: [undefined],
-          code: [undefined],
-        }),
+        task: [undefined],
+        activity: [undefined],
+        action: [undefined],
+        subProgram: [undefined],
+        dateSignature: [undefined, [this.dateValidator]],
+        signataire: [undefined],
+        objet: [undefined],
+        paragraph: [undefined],
+        etat: [undefined],
       }),
     });
 
-    this._store.dispatch(GetExercises({}));
-    this._store.dispatch(GetProcedures());
-    this._store.dispatch(GetAdministrativeUnites());
+    this._store.dispatch(GetEncours());
     this._store.dispatch(GetTypesProcedures());
 
     if (this.config.data?.item) {
       const {
         id,
-        procedure,
+        codeProcedure,
         exercise,
-        sousProgramme,
-        action,
-        activity,
-        task,
-        reference,
-        numero,
-        imputation,
-        adminUnit,
         montantAE,
+        adminUnit,
+        imputation,
+        numero,
+        reference,
+        task,
+        activity,
+        action,
+        subProgram,
+        dateSignature,
+        signataire,
+        objet,
+        paragraph,
         etat,
         niuContribuable,
         montantTTC,
-        raisonSocialeContribuable,
+        raisonSociale,
         codeBanqueContribuable,
         codeAgenceContribuable,
         numeroCompteContribuable,
         cleCompteContribuable,
+        tauxTVA,
+        taxesApplicable,
       } = this.config.data?.item as EngagementCommandeModel;
 
       this.form.patchValue({
         commonForm: {
           id,
-          typeProcedure: { ...procedure.typeProcedure },
-          procedure,
+          codeProcedure,
           exercise,
-          sousProgramme,
-          action,
-          activity,
-          task,
-          reference,
-          numero,
-          imputation,
-          adminUnit,
           montantAE,
+          adminUnit,
+          imputation,
+          numero,
+          reference,
+          task,
+          activity,
+          action,
+          subProgram,
+          dateSignature,
+          signataire,
+          objet,
+          paragraph,
           etat,
         },
         commandForm: {
           niuContribuable,
           montantTTC,
-          raisonSocialeContribuable,
+          raisonSociale,
           codeBanqueContribuable,
           codeAgenceContribuable,
           numeroCompteContribuable,
           cleCompteContribuable,
+          tauxTVA,
+          taxesApplicable,
         },
       });
     }
   }
+  dateValidator = (control: FormControl): { [s: string]: any } | null => {
+    if (control.value) {
+      const date = moment(control.value);
+      const today = moment();
+      if (date.isAfter(today)) {
+        return { invalidDate: 'errors.futureDate' };
+      }
+    }
+    return null;
+  };
+
+  montantAEValidator = (control: FormControl): { [s: string]: any } | null => {
+    if (control.value) {
+      const amount = control.value;
+      const error = { invalidAmount: 'errors.invalidAmount' };
+      if (
+        this.currentProcedure === '1110' &&
+        amount > MAX_AMOUNT_PROCEDURE_1110
+      ) {
+        return error;
+      } else if (
+        this.currentProcedure === '1111' &&
+        (amount <= MAX_AMOUNT_PROCEDURE_1110 ||
+          amount > MAX_AMOUNT_PROCEDURE_1111)
+      ) {
+        return error;
+      } else if (
+        this.currentProcedure === '1115' &&
+        amount <= MAX_AMOUNT_PROCEDURE_1111
+      ) {
+        return error;
+      }
+    }
+    return null;
+  };
 
   get commonFormGroup(): FormGroup {
     return this.form?.get('commonForm') as FormGroup;
@@ -171,7 +212,8 @@ export class EngagementContainerComponent
   subformInitialized(name: string, group: FormGroup) {
     this.form.setControl(name, group);
     if (name === 'commonForm') {
-      this.currentProcedure = this.form.value?.commonForm?.typeProcedure?.code;
+      this.currentProcedure = this.form.value?.commonForm?.codeProcedure;
+      this.form.controls['montantAE'].updateValueAndValidity();
       //console.log("TYPE ", this.currentProcedure, this.form.value?.commonForm)
     }
   }
@@ -268,7 +310,10 @@ export class EngagementContainerComponent
 
             this._appService.showToast({
               summary: 'messages.success',
-              detail: 'messages.engagements.createSuccess',
+              detail:
+                'messages.engagements.createSuccess' +
+                ': numéro: ' +
+                res.numero,
               severity: 'success',
               life: 3000,
               closable: true,

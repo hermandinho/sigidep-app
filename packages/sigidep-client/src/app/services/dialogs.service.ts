@@ -876,7 +876,7 @@ export class DialogsService {
 
     return this._dialogService.open(this.engagementCreateComponent, {
       header: this._translateService.instant('dialogs.headers.editEngagement'),
-      width: '50vw',
+      width: '60vw',
       height: 'auto',
       modal: true,
       data: {
