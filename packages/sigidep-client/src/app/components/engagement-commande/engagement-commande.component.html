@@ -2,16 +2,21 @@
   <div class="form" [formGroup]="commandForm">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.niuContribuable" | translate
-        }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          formControlName="niuContribuable"
-          [placeholder]="''"
-        />
+        <ng-container>
+          <label class="required"
+            >{{ "labels.niuContribuable" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="contribuables"
+            [placeholder]="''"
+            optionLabel="code"
+            optionValue="code"
+            formControlName="niuContribuable"
+            (onChange)="onContribuableChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
       </div>
       <div class="p-field p-col-12 p-md-6">
         <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
@@ -41,9 +46,7 @@
         />
       </div>
       <div class="p-field p-col-12 p-md-2">
-        <label class="required">{{
-          "labels.numeroCompteContribuable" | translate
-        }}</label>
+        <label>{{ "labels.numeroCompteContribuable" | translate }}</label>
         <input
           class="form-control"
           formControlName="numeroCompteContribuable"
@@ -52,9 +55,7 @@
         />
       </div>
       <div class="p-field p-col-12 p-md-2">
-        <label class="required">{{
-          "labels.cleCompteContribuable" | translate
-        }}</label>
+        <label>{{ "labels.cleCompteContribuable" | translate }}</label>
         <input
           class="form-control"
           formControlName="cleCompteContribuable"
@@ -68,27 +69,28 @@
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="taxes"
-            [placeholder]="'labels.taxesApplicable' | translate"
+            [placeholder]="''"
             optionLabel="label"
             optionValue="id"
             formControlName="id"
+            (onChange)="onTaxeChange($event)"
           >
           </p-dropdown>
         </ng-container>
       </div>
 
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "labels.montantTTC" | translate }}</label>
+      <div class="p-field p-col-12 p-md-3">
+        <label>{{ "TxIR" | translate }}</label>
         <input
           type="number"
           class="form-control"
           pInputText
-          formControlName="montantTTC"
+          formControlName="tauxIR"
           [placeholder]="''"
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "labels.tauxTVA" | translate }}</label>
+      <div class="p-field p-col-12 p-md-3">
+        <label>{{ "labels.tauxTVA" | translate }}</label>
         <input
           type="number"
           class="form-control"

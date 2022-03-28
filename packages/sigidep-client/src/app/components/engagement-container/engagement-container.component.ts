@@ -27,6 +27,10 @@ import {
   MAX_AMOUNT_PROCEDURE_1110,
   MAX_AMOUNT_PROCEDURE_1111,
 } from './engagement-container.conts';
+import { EngagementMissionModel } from '@models/engagement-mission.model';
+import { GetEngagementMissions } from '@actions/engagement-mission.actions';
+import { EngagementDecisionModel } from '@models/engagement-decision.model';
+import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 
 type Step = 'common' | 'mission' | 'decision' | 'command';
 @Component({
@@ -70,12 +74,13 @@ export class EngagementContainerComponent
         numeroCompteContribuable: '',
         cleCompteContribuable: '',
         tauxTVA: '',
+        tauxIR: '',
         taxesApplicable: this._fb.group({
           id: '',
           code: '',
           label: '',
-          TxTVA: '',
-          TxIR: '',
+          TxTVA: [{ value: '', disabled: true }],
+          TxIR: [{ value: '', disabled: true }],
         }),
       }),
       commonForm: this._fb.group({
@@ -96,6 +101,40 @@ export class EngagementContainerComponent
         objet: [undefined],
         paragraph: [undefined],
         etat: [undefined],
+        operationId: [undefined],
+      }),
+      missionForm: this._fb.group({
+        typeMission: [undefined],
+        matriculeBeneficiaire: [undefined],
+        nomBeneficiaire: [undefined],
+        itineraire: [undefined],
+        dateDebut: [undefined],
+        dateFin: [undefined],
+        nombreJours: [undefined],
+        baremeJour: [undefined],
+        montant: [undefined],
+      }),
+
+      decisionForm: this._fb.group({
+        isContribuable: [true],
+        isContribuableBudget: [false],
+        matriculeBeneficiaire: [undefined],
+        nomBeneficiaire: [undefined],
+        numContribBudget: [undefined],
+        nomContribBudget: [undefined],
+        codeUnitAdminBenef: [undefined],
+        nomUnitAdminBenef: [undefined],
+        montantBrut: [undefined],
+        montantIRNC: [undefined],
+        raisonSociale: [undefined],
+        codeBanqueContribuable: [undefined],
+        codeAgenceContribuable: [undefined],
+        numeroCompteContribuable: [undefined],
+        cleCompteContribuable: [undefined],
+        tauxTVA: [undefined],
+        tauxIR: [undefined],
+        netAPercevoir: [undefined],
+        taxesApplicable: [undefined],
       }),
     });
 
@@ -122,16 +161,36 @@ export class EngagementContainerComponent
         paragraph,
         etat,
         niuContribuable,
-        montantTTC,
         raisonSociale,
         codeBanqueContribuable,
         codeAgenceContribuable,
         numeroCompteContribuable,
         cleCompteContribuable,
         tauxTVA,
+        tauxIR,
         taxesApplicable,
-      } = this.config.data?.item as EngagementCommandeModel;
-
+        operationId,
+        type,
+        matriculeBeneficiaire,
+        nomBeneficiaire,
+        itineraire,
+        dateDebut,
+        dateFin,
+        nombreJours,
+        baremeJour,
+        montant,
+        numContribBudget,
+        nomContribBudget,
+        codeUnitAdminBenef,
+        nomUnitAdminBenef,
+        montantBrut,
+        montantIRNC,
+        netAPercevoir,
+      } = this.config.data?.item as
+        | EngagementCommandeModel
+        | EngagementMissionModel
+        | EngagementDecisionModel
+        | any;
       this.form.patchValue({
         commonForm: {
           id,
@@ -151,16 +210,49 @@ export class EngagementContainerComponent
           objet,
           paragraph,
           etat,
+          operationId,
         },
         commandForm: {
           niuContribuable,
-          montantTTC,
           raisonSociale,
           codeBanqueContribuable,
           codeAgenceContribuable,
           numeroCompteContribuable,
           cleCompteContribuable,
           tauxTVA,
+          tauxIR,
+          taxesApplicable,
+        },
+        missionForm: {
+          type,
+          matriculeBeneficiaire,
+          nomBeneficiaire,
+          itineraire,
+          dateDebut,
+          dateFin,
+          nombreJours,
+          baremeJour,
+          montant,
+        },
+        decisionForm: {
+          exercise,
+          adminUnit,
+          matriculeBeneficiaire,
+          nomBeneficiaire,
+          numContribBudget,
+          nomContribBudget,
+          codeUnitAdminBenef,
+          nomUnitAdminBenef,
+          montantBrut,
+          montantIRNC,
+          raisonSociale,
+          codeBanqueContribuable,
+          codeAgenceContribuable,
+          numeroCompteContribuable,
+          cleCompteContribuable,
+          tauxTVA,
+          tauxIR,
+          netAPercevoir,
           taxesApplicable,
         },
       });
@@ -209,11 +301,19 @@ export class EngagementContainerComponent
     return this.form?.get('commandForm') as FormGroup;
   }
 
+  get missionFormGroup(): FormGroup {
+    return this.form?.get('missionForm') as FormGroup;
+  }
+
+  get decisionFormGroup(): FormGroup {
+    return this.form?.get('decisionForm') as FormGroup;
+  }
+
   subformInitialized(name: string, group: FormGroup) {
     this.form.setControl(name, group);
     if (name === 'commonForm') {
       this.currentProcedure = this.form.value?.commonForm?.codeProcedure;
-      this.form.controls['montantAE'].updateValueAndValidity();
+      //this.form.controls['montantAE'].updateValueAndValidity();
       //console.log("TYPE ", this.currentProcedure, this.form.value?.commonForm)
     }
   }
@@ -231,7 +331,9 @@ export class EngagementContainerComponent
             case '1115':
               this.currentStepBs.next('command');
               break;
-
+            case '1121':
+              this.currentStepBs.next('mission');
+              break;
             default:
               this.currentStepBs.next('decision');
               break;
@@ -250,92 +352,147 @@ export class EngagementContainerComponent
     return !!this.form?.value?.commonForm?.id;
   }
 
+  get montantAE(): number {
+    return this.form.getRawValue()?.commonForm?.montantAE;
+  }
+
   submitForm() {
     const formValues = this.form.value;
     // submit the form with a service
     this.busy = true;
-    const editedEngagement = {
-      ...this.form.value.commonForm,
-      ...this.form.value.commandForm,
-    } as EngagementCommandeModel;
+    let editedEngagement;
+    if (this.currentProcedure === '1121') {
+      editedEngagement = {
+        ...this.form.getRawValue()?.commonForm,
+        ...this.form.getRawValue().missionForm,
+      } as EngagementMissionModel;
+    } else if (
+      this.currentProcedure === '1110' ||
+      this.currentProcedure === '1111' ||
+      this.currentProcedure === '1115'
+    ) {
+      editedEngagement = {
+        ...this.form.getRawValue()?.commonForm,
+        ...this.form.getRawValue()?.commandForm,
+      } as EngagementCommandeModel;
+    } else {
+      editedEngagement = {
+        ...this.form.getRawValue()?.commonForm,
+        ...this.form.getRawValue()?.decisionForm,
+      } as EngagementDecisionModel;
+    }
 
     if (this.isUpdateForm) {
-      this._apisService
-        .put<EngagementCommandeModel>(
-          '/engagements/commandes',
-          editedEngagement
-        )
-        .subscribe(
-          (res) => {
-            this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementCommandes());
+      const method: Observable<any> =
+        this.currentProcedure === '1121'
+          ? this._apisService.put<EngagementCommandeModel>(
+              '/engagements/missions',
+              editedEngagement
+            )
+          : this.currentProcedure === '1110' ||
+            this.currentProcedure === '1111' ||
+            this.currentProcedure === '1115'
+          ? this._apisService.put<EngagementMissionModel>(
+              '/engagements/commandes',
+              editedEngagement
+            )
+          : this._apisService.put<EngagementMissionModel>(
+              '/engagements/decisions',
+              editedEngagement
+            );
+      method.subscribe(
+        (res) => {
+          this.busy = false;
+          this.ref.close(res);
+          this.currentProcedure === '1121'
+            ? this._store.dispatch(GetEngagementMissions())
+            : this.currentProcedure === '1110' ||
+              this.currentProcedure === '1111' ||
+              this.currentProcedure === '1115'
+            ? this._store.dispatch(GetEngagementCommandes())
+            : this._store.dispatch(GetEngagementDecisions());
 
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail: 'messages.engagements.createSuccess',
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.notfound';
-            } else {
-              err = 'errors.unknown';
-            }
-            this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail: 'messages.engagements.createSuccess',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.engagements.notfound';
+          } else {
+            err = 'errors.unknown';
           }
-        );
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
     } else {
-      this._apisService
-        .post<EngagementCommandeModel>(
-          '/engagements/commandes',
-          editedEngagement
-        )
-        .subscribe(
-          (res) => {
-            this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementCommandes());
+      const method: Observable<any> =
+        this.currentProcedure === '1121'
+          ? this._apisService.post<EngagementMissionModel>(
+              '/engagements/missions',
+              editedEngagement
+            )
+          : this.currentProcedure === '1110' ||
+            this.currentProcedure === '1111' ||
+            this.currentProcedure === '1115'
+          ? this._apisService.post<EngagementMissionModel>(
+              '/engagements/commandes',
+              editedEngagement
+            )
+          : this._apisService.post<EngagementMissionModel>(
+              '/engagements/decisions',
+              editedEngagement
+            );
+      method.subscribe(
+        (res) => {
+          this.busy = false;
+          this.ref.close(res);
+          this.currentProcedure === '1121'
+            ? this._store.dispatch(GetEngagementMissions())
+            : this.currentProcedure === '1110' ||
+              this.currentProcedure === '1111' ||
+              this.currentProcedure === '1115'
+            ? this._store.dispatch(GetEngagementCommandes())
+            : this._store.dispatch(GetEngagementDecisions());
 
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail:
-                'messages.engagements.createSuccess' +
-                ': numéro: ' +
-                res.numero,
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.conflict';
-            } else {
-              err = 'errors.unknown';
-            }
-            this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail:
+              'messages.engagements.createSuccess' + ': numéro: ' + res.numero,
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.engagements.conflict';
+          } else {
+            err = 'errors.unknown';
           }
-        );
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
     }
   }
 }

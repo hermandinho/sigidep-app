@@ -3,10 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
-import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Actions, ofType } from '@ngrx/effects';
 import { BaseComponent } from '@components/base.component';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,6 +13,12 @@ import {
   getDataSelector as getTaxesDataSelector,
   getLoadingSelector as getTaxesLoadingSelector,
 } from '@reducers/exec-taxes.reducer';
+import {
+  getDataSelector as getContribuablesDataSelector,
+  getLoadingSelector as getContribuablesLoadingSelector,
+} from '@reducers/contribuables.reducer';
+import { GetContribuables } from '@actions/contribuables.actions';
+import { ContribuableModel } from '@models/contribuable.model';
 
 @Component({
   selector: 'app-engagement-commande',
@@ -35,18 +39,30 @@ export class EngagementCommandeComponent
   public commandForm!: FormGroup;
   public taxes!: ExecTaxesModel[];
   loading$: Observable<boolean> = of(true);
+  public contribuables!: ContribuableModel[];
+
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private _fb: FormBuilder,
     private _appService: AppService,
-    private _apisService: ApisService,
     private _store: Store<AppState>
   ) {
     super();
   }
   ngOnInit() {
     this._store.dispatch(GetTaxes());
+    this._store.dispatch(GetContribuables());
+    this._store
+      .pipe(this.takeUntilDestroy, select(getContribuablesDataSelector))
+      .subscribe((data) => {
+        this.contribuables = [...data];
+      });
+
+    this.loading$ = this._store.pipe(
+      select(getContribuablesLoadingSelector),
+      map((status) => status)
+    );
     this._store
       .pipe(this.takeUntilDestroy, select(getTaxesDataSelector))
       .subscribe((data) => {
@@ -58,11 +74,41 @@ export class EngagementCommandeComponent
     );
     this.commandForm = this.startingForm;
     this.subformInitialized.emit(this.commandForm);
+    this.commandForm.controls['tauxTVA'].disable();
+    this.commandForm.controls['tauxIR'].disable();
+    this.commandForm.controls['raisonSociale'].disable();
+    this.commandForm.controls['codeAgenceContribuable'].disable();
+    this.commandForm.controls['codeBanqueContribuable'].disable();
+    this.commandForm.controls['numeroCompteContribuable'].disable();
+    this.commandForm.controls['cleCompteContribuable'].disable();
   }
-  doChangeStep(direction: 'back') {
+  doChangeStep = (direction: 'back') => {
     this.changeStep.emit(direction);
-  }
-  submit() {
+  };
+  submit = () => {
     this.submitForm.emit();
-  }
+  };
+
+  onTaxeChange = (event: any) => {
+    const taxe = this.taxes.find((item) => item.id === event.value);
+    if (taxe)
+      this.commandForm.patchValue({
+        tauxTVA: taxe.TxTVA,
+        tauxIR: taxe.TxIR,
+      });
+  };
+
+  onContribuableChange = (event: any) => {
+    const contribuable = this.contribuables.find(
+      (item) => item.code === event.value
+    );
+    if (contribuable)
+      this.commandForm.patchValue({
+        raisonSociale: contribuable.raisonSociale,
+        codeBanqueContribuable: contribuable.banque.code,
+        codeAgenceContribuable: contribuable.agence.code,
+        numeroCompteContribuable: contribuable.numeroCompte,
+        cleCompteContribuable: contribuable.cle,
+      });
+  };
 }

@@ -1,29 +1,26 @@
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
+import { ExecTaxesModel } from './exec-taxes.model';
 
 export class EngagementDecisionModel extends EngagementJuridiqueModel {
-  numeroDecision!: string;
-
-  dateSignature!: Date;
-
-  objet!: string;
-
-  nomSignataire!: string;
-
   matriculeBeneficiaire!: string;
-
   nomBeneficiaire!: string;
-
   numContribBudget!: string;
 
   nomContribBudget!: string;
+  codeUnitAdminBenef!: string;
 
-  montantHT!: number;
+  nomUnitAdminBenef!: string;
+  montantBrut!: number;
 
-  montantTaxe!: number;
-
-  montantTTC!: number;
-
-  netAPercevoir!: number;
+  montantIRNC!: number;
+  raisonSociale!: string;
+  codeBanqueContribuable!: string;
+  codeAgenceContribuable!: string;
+  numeroCompteContribuable!: string;
+  cleCompteContribuable!: string;
+  tauxTVA!: number;
+  tauxIR!: number;
+  taxesApplicable!: ExecTaxesModel;
 
   constructor(params?: Partial<EngagementDecisionModel>) {
     super();

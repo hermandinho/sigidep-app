@@ -7,9 +7,6 @@ export class EngagementCommandeDTO extends CreateEngagementJuridiqueDTO {
   @ApiProperty({ example: '12258552', required: false })
   public niuContribuable: string;
 
-  @ApiProperty({ type: 'float', example: 15000.56, required: false })
-  public montantTTC: number;
-
   @ApiProperty({ example: 'CCA', required: false })
   public raisonSociale: string;
 

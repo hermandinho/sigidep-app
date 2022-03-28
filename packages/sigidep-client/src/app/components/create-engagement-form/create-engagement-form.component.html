@@ -8,7 +8,7 @@
             [autoDisplayFirst]="false"
             [options]="exercises"
             [placeholder]="'labels.exercise' | translate"
-            class="p-col-6"
+            (onChange)="onExerciseChange($event)"
             formControlName="exercise"
           >
           </p-dropdown>
@@ -84,7 +84,7 @@
             [autoDisplayFirst]="false"
             [options]="adminUnits"
             [placeholder]="'labels.adminUnit' | translate"
-            class="p-col-6"
+            (onChange)="onAdminUnitChange($event)"
             formControlName="adminUnit"
           >
           </p-dropdown>
@@ -98,6 +98,7 @@
             [autoDisplayFirst]="false"
             [options]="paragraphes"
             [placeholder]="''"
+            (onChange)="onParagrapheChange($event)"
             formControlName="paragraph"
           >
           </p-dropdown>
@@ -142,7 +143,15 @@
         <ng-template pTemplate="header">
           <tr>
             <ng-container *ngFor="let column of imputationColumns">
-              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+              <th
+                *ngIf="column.sortable"
+                [pSortableColumn]="column.field"
+                [ngClass]="{
+                  emphase:
+                    column.field === 'aeDisponible' ||
+                    column.field === 'cpDisponible'
+                }"
+              >
                 {{ column.title | translate }}
                 <p-sortIcon field="exercise"></p-sortIcon>
               </th>
@@ -153,7 +162,15 @@
         </ng-template>
         <ng-template pTemplate="body" let-item>
           <tr [pSelectableRow]="item">
-            <td *ngFor="let column of imputationColumns" class="nowrap">
+            <td
+              *ngFor="let column of imputationColumns"
+              class="nowrap"
+              [ngClass]="{
+                emphase:
+                  column.field === 'aeDisponible' ||
+                  column.field === 'cpDisponible'
+              }"
+            >
               <span
                 class="wrap"
                 *ngIf="

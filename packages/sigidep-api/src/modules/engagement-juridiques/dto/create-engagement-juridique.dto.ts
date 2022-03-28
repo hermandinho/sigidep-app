@@ -48,4 +48,7 @@ export class CreateEngagementJuridiqueDTO {
 
   @ApiProperty({ example: '55CE00-00000', required: false })
   public numero: string;
+
+  @ApiProperty({ required: true })
+  public operationId: number;
 }

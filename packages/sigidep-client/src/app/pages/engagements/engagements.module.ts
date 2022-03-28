@@ -13,7 +13,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SharedModule } from '@modules/shared.module';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
-
+import { TabViewModule } from 'primeng/tabview';
+import { PanelModule } from 'primeng/panel';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { EngagementMissionComponent } from '@components/engagement-mission/engagement-mission.component';
 @NgModule({
   declarations: [
     EngagementsComponent,
@@ -21,6 +24,7 @@ import { ToastModule } from 'primeng/toast';
     EngagementContainerComponent,
     CreateEngagementFormComponent,
     EngagementCommandeComponent,
+    EngagementMissionComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,9 @@ import { ToastModule } from 'primeng/toast';
     SharedModule,
     CheckboxModule,
     ToastModule,
+    TabViewModule,
+    PanelModule,
+    RadioButtonModule,
   ],
 })
 export class EngagementsModule {}

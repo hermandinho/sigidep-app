@@ -1,13 +1,4 @@
-import {
-  AdministrativeUnitModel,
-  ExerciseModel,
-  SubProgramActionModel,
-  SubProgramActivityModel,
-  SubProgramActivityTaskModel,
-  SubProgramModel,
-} from '.';
 import { BaseModel } from './base.model';
-import { ExecProcedureModel } from './exec-procedure.model';
 
 export enum EtatEngagementEnum {
   SAVE = 'SAVE',
@@ -33,6 +24,7 @@ export class EngagementJuridiqueModel extends BaseModel {
   numero!: string;
   montantAE!: number;
   etat!: EtatEngagementEnum;
+  operationId!: number;
 
   constructor(params?: Partial<EngagementJuridiqueModel>) {
     super();

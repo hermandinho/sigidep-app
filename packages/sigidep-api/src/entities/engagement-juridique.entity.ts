@@ -63,4 +63,7 @@ export class EngagementJuridiqueEntity extends BaseEntity {
     nullable: false,
   })
   public etat: EtatEngagementEnum;
+
+  @Column({ nullable: false, name: 'operation_id' })
+  public operationId: number;
 }

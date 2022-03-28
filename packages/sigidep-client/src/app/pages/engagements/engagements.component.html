@@ -1,5 +1,5 @@
 <p-card>
-  <p-toolbar styleClass="p-mb-4">
+  <p-toolbar styleClass="p-mb-2">
     <ng-template pTemplate="left">
       <button
         (click)="openForm()"
@@ -12,96 +12,327 @@
     </ng-template>
     <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
-  <p-table
-    #dt
-    [globalFilterFields]="['procedure', 'sousProgramme', 'action', 'activity']"
-    [loading]="(loading$ | async) || false"
-    [paginator]="true"
-    [rowHover]="true"
-    [rows]="10"
-    [showCurrentPageReport]="true"
-    [sortMode]="'single'"
-    [value]="data"
-    [currentPageReportTemplate]="'tables.stats.pager' | translate"
-    dataKey="id"
-    responsiveLayout="scroll"
-  >
-    <ng-template pTemplate="caption">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        <h5 class="p-m-0">
-          {{ "tables.titles.engagements" | translate }}
-        </h5>
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input
-            pInputText
-            type="text"
-            (input)="
-              dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
-            "
-            [placeholder]="'labels.search' | translate"
-          />
-        </span>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <ng-container *ngFor="let column of tableColumns">
-          <th *ngIf="column.sortable" [pSortableColumn]="column.field">
-            {{ column.title | translate }}
-            <p-sortIcon field="code"></p-sortIcon>
-          </th>
-          <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
-        </ng-container>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        <td *ngFor="let column of tableColumns" class="nowrap">
-          <span *ngIf="column.field !== 'subProgram'">
-            {{
-              item[column.field]?.RIB ??
-                item[column.field]?.label ??
-                item[column.field]
-            }}
-          </span>
-          <span
-            *ngIf="column.field === 'subProgram'"
-            data-title="{{ item[column.field] }}"
-          >
-            {{
-              item[column.field].length > 20
-                ? (item[column.field] | slice: 0:20) + ".."
-                : item[column.field]
-            }}
-          </span>
-        </td>
-        <td>
-          <button
-            (click)="edit(item)"
-            *appCheckPermissions="['engagements.update']"
-            class="p-button-rounded p-button-success p-mr-2"
-            icon="pi pi-pencil"
-            pButton
-            pRipple
-          ></button>
-          <button
-            (click)="delete(item)"
-            *appCheckPermissions="['engagements.delete']"
-            [disabled]="item?.status === 'active'"
-            class="p-button-rounded p-button-warning"
-            icon="pi pi-trash"
-            pButton
-            pRipple
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-      <div class="p-d-flex p-ai-center p-jc-between">
-        <!--          In total there are {{products ? products.length : 0 }} products.-->
-      </div>
-    </ng-template>
-  </p-table>
+  <p-tabView>
+    <p-tabPanel header="Commande">
+      <p-table
+        #dt
+        [globalFilterFields]="[
+          'procedure',
+          'sousProgramme',
+          'action',
+          'activity'
+        ]"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="commandes"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.engagements" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="code"></p-sortIcon>
+              </th>
+              <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span *ngIf="column.field !== 'subProgram'">
+                {{
+                  item[column.field]?.RIB ??
+                    item[column.field]?.label ??
+                    item[column.field]
+                }}
+              </span>
+              <span
+                *ngIf="column.field === 'subProgram'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                (click)="edit(item)"
+                *appCheckPermissions="['engagements.update']"
+                class="p-button-rounded p-button-success p-mr-2"
+                icon="pi pi-pencil"
+                pButton
+                pRipple
+              ></button>
+              <button
+                (click)="reserve(item)"
+                *appCheckPermissions="['engagements.update']"
+                class="p-button-rounded p-button-success p-mr-2"
+                icon="pi pi-book"
+                pButton
+                pRipple
+              ></button>
+              <button
+                (click)="delete(item)"
+                *appCheckPermissions="['engagements.delete']"
+                [disabled]="item?.status === 'active'"
+                class="p-button-rounded p-button-warning"
+                icon="pi pi-trash"
+                pButton
+                pRipple
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Mission">
+      <p-table
+        #dt
+        [globalFilterFields]="[
+          'procedure',
+          'sousProgramme',
+          'action',
+          'activity'
+        ]"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="missions"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.engagements" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="code"></p-sortIcon>
+              </th>
+              <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span *ngIf="column.field !== 'subProgram'">
+                {{
+                  item[column.field]?.RIB ??
+                    item[column.field]?.label ??
+                    item[column.field]
+                }}
+              </span>
+              <span
+                *ngIf="column.field === 'subProgram'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                (click)="edit(item)"
+                *appCheckPermissions="['engagements.update']"
+                class="p-button-rounded p-button-success p-mr-2"
+                icon="pi pi-pencil"
+                pButton
+                pRipple
+              ></button>
+              <button
+                (click)="reserve(item)"
+                *appCheckPermissions="['engagements.update']"
+                class="p-button-rounded p-button-success p-mr-2"
+                icon="pi pi-book"
+                pButton
+                pRipple
+              ></button>
+              <button
+                (click)="delete(item)"
+                *appCheckPermissions="['engagements.delete']"
+                [disabled]="item?.status === 'active'"
+                class="p-button-rounded p-button-warning"
+                icon="pi pi-trash"
+                pButton
+                pRipple
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Decision">
+      <p-table
+        #dt
+        [globalFilterFields]="[
+          'procedure',
+          'sousProgramme',
+          'action',
+          'activity'
+        ]"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="decisions"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.engagements" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="code"></p-sortIcon>
+              </th>
+              <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span *ngIf="column.field !== 'subProgram'">
+                {{
+                  item[column.field]?.RIB ??
+                    item[column.field]?.label ??
+                    item[column.field]
+                }}
+              </span>
+              <span
+                *ngIf="column.field === 'subProgram'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                (click)="edit(item)"
+                *appCheckPermissions="['engagements.update']"
+                class="p-button-rounded p-button-success p-mr-2"
+                icon="pi pi-pencil"
+                pButton
+                pRipple
+              ></button>
+              <button
+                (click)="reserve(item)"
+                *appCheckPermissions="['engagements.update']"
+                class="p-button-rounded p-button-success p-mr-2"
+                icon="pi pi-book"
+                pButton
+                pRipple
+              ></button>
+              <button
+                (click)="delete(item)"
+                *appCheckPermissions="['engagements.delete']"
+                [disabled]="item?.status === 'active'"
+                class="p-button-rounded p-button-warning"
+                icon="pi pi-trash"
+                pButton
+                pRipple
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
 </p-card>

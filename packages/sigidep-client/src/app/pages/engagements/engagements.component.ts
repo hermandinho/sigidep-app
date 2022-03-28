@@ -8,18 +8,33 @@ import { BaseComponent } from '@components/base.component';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  getDataSelector,
-  getLoadingSelector,
+  getDataSelector as getCommandeDataSelector,
+  getLoadingSelector as getCommandeLoadingSelector,
 } from '@reducers/engagement-commande.reducer';
+
+import {
+  getDataSelector as getMissionDataSelector,
+  getLoadingSelector as getMissionLoadingSelector,
+} from '@reducers/engagement-mission.reducer';
+
+import {
+  getDataSelector as getDecisionDataSelector,
+  getLoadingSelector as getDecisionLoadingSelector,
+} from '@reducers/engagement-decision.reducer';
+
 import {
   EngagementJuridiqueModel,
   EngagementMissionModel,
   EngagementDecisionModel,
   EngagementCommandeModel,
+  EtatEngagementEnum,
 } from '@models/index';
 import {
   GetEngagementCommandes,
   GetEngagementJuridiques,
+  GetEngagementDecisions,
+  GetEngagementMissions,
+  UpdateEngagementCommande,
   DeleteEngagement,
   DeleteEngagementSuccess,
   DeleteEngagementFailure,
@@ -36,6 +51,10 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: EngagementJuridiqueModel[] = [];
+  commandes: EngagementCommandeModel[] = [];
+  missions: EngagementMissionModel[] = [];
+  decisions: EngagementDecisionModel[] = [];
+
   loading$: Observable<boolean> = of(true);
 
   constructor(
@@ -110,6 +129,8 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this._store.dispatch(GetEngagementCommandes());
+    this._store.dispatch(GetEngagementMissions());
+    this._store.dispatch(GetEngagementDecisions());
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -145,17 +166,49 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     });
   }
 
+  reserve(item: EngagementCommandeModel) {
+    const engagement = { ...item, etat: EtatEngagementEnum.RESERVED };
+    this._appService.showConfirmation({
+      message: 'dialogs.messages.reserveEngagement',
+      accept: () => {
+        this._store.dispatch(UpdateEngagementCommande({ payload: item }));
+      },
+    });
+  }
   private _initListeners() {
     this._store
-      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .pipe(this.takeUntilDestroy, select(getCommandeDataSelector))
       .subscribe((data) => {
-        this.data = [...data];
+        this.commandes = [...data];
       });
 
     this.loading$ = this._store.pipe(
-      select(getLoadingSelector),
+      select(getCommandeLoadingSelector),
       map((status) => status)
     );
+
+    this._store
+      .pipe(this.takeUntilDestroy, select(getMissionDataSelector))
+      .subscribe((data) => {
+        this.missions = [...data];
+      });
+
+    this.loading$ = this._store.pipe(
+      select(getMissionLoadingSelector),
+      map((status) => status)
+    );
+
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
+      .subscribe((data) => {
+        this.decisions = [...data];
+      });
+
+    this.loading$ = this._store.pipe(
+      select(getDecisionLoadingSelector),
+      map((status) => status)
+    );
+
     this.dispatcher
       .pipe(
         this.takeUntilDestroy,

@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
@@ -20,11 +20,21 @@ import {
   getDataSelector as getEncoursDataSelector,
 } from '@reducers/encours.reducer';
 
-import { GetEncours } from '@store/actions';
+import {
+  getDataSelector as getEngagementDataSelector,
+  getLoadingSelector as getEngagementLoadingSelector,
+} from '@reducers/engagement-juridique.reducer';
 
-import { EncoursModel, TypeProcedureModel } from '@models/index';
+import { GetEncours, GetEngagementJuridiques } from '@store/actions';
+
+import {
+  EncoursModel,
+  TypeProcedureModel,
+  EngagementJuridiqueModel,
+} from '@models/index';
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-engagement-form',
@@ -46,6 +56,7 @@ export class CreateEngagementFormComponent
   loading$: Observable<boolean> = of(true);
   public exercises: string[] = [];
   public encoursList!: EncoursModel[];
+  public originalEncoursList!: EncoursModel[];
   public typesProcedures: TypeProcedureModel[] = [];
   public adminUnits: string[] = [];
   public paragraphes: string[] = [];
@@ -188,37 +199,94 @@ export class CreateEngagementFormComponent
   close() {
     this.ref.close();
   }
+  calculSommeMontantAE = (
+    engagements: EngagementJuridiqueModel[],
+    imputation: string
+  ) => {
+    const sommeMontantAE: number = engagements
+      .filter(
+        (item) => item.imputation === imputation && item.etat === 'RESERVED'
+      )
+      .map((item) => item.montantAE)
+      .reduce((acc, curr) => acc + curr, 0);
+    return sommeMontantAE;
+  };
   private _initListeners() {
     this._store.dispatch(GetEncours());
+    this._store.dispatch(GetEngagementJuridiques());
     this.loading$ = this._store.pipe(
       select(getEncoursLoadingSelector),
       map((status) => status)
     );
-    this._store.pipe(this.takeUntilDestroy, select(getDataSelector));
+
+    this._store
+      .pipe(this.takeUntilDestroy, select(getEncoursDataSelector))
+      .subscribe((encoursPayload) => {
+        this._store
+          .pipe(this.takeUntilDestroy, select(getEngagementDataSelector))
+          .subscribe((engagementPayload) => {
+            if (encoursPayload != null) {
+              this.encoursList = encoursPayload.map((item) => {
+                const sommeMontantAE = this.calculSommeMontantAE(
+                  engagementPayload,
+                  item.imputation
+                );
+                return {
+                  ...item,
+                  aeDisponible: item.aeInitRevisee - sommeMontantAE,
+                  cpDisponible: item.cpInitRevisee - sommeMontantAE,
+                };
+              });
+              this.originalEncoursList = this.encoursList;
+              this.exercises = [
+                ...new Set(this.encoursList.map((item) => item.exercise)),
+              ];
+              this.adminUnits = [
+                ...new Set(this.encoursList.map((item) => item.adminUnit)),
+              ];
+              this.paragraphes = [
+                ...new Set(this.encoursList.map((item) => item.paragraph)),
+              ];
+
+              if (this.commonForm.value?.id) {
+                const operationId = this.commonForm.value?.operationId;
+
+                const selected = this.encoursList.filter(
+                  (item) => item.operation.id === operationId
+                );
+                console.log(this.commonForm.value, operationId, selected);
+                if (operationId && selected)
+                  this.selectedImputation = selected[0];
+              }
+            }
+          });
+      });
+
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((payload) => {
         this.typesProcedures = [...payload];
       });
-
-    this._store
-      .pipe(this.takeUntilDestroy, select(getEncoursDataSelector))
-      .subscribe((payload) => {
-        this.encoursList = payload;
-        this.exercises = [
-          ...new Set(this.encoursList.map((item) => item.exercise)),
-        ];
-        this.adminUnits = [
-          ...new Set(this.encoursList.map((item) => item.adminUnit)),
-        ];
-        this.paragraphes = [
-          ...new Set(this.encoursList.map((item) => item.paragraph)),
-        ];
-      });
   }
   submit() {
     this.changeStep.emit('forward');
   }
+
+  onExerciseChange = (event: any) => {
+    this.encoursList = this.originalEncoursList.filter(
+      (item) => item.exercise === event.value
+    );
+  };
+  onAdminUnitChange = (event: any) => {
+    this.encoursList = this.originalEncoursList.filter(
+      (item) => item.adminUnit === event.value
+    );
+  };
+  onParagrapheChange = (event: any) => {
+    this.encoursList = this.originalEncoursList.filter(
+      (item) => item.paragraph === event.value
+    );
+  };
 
   onRowSelect = (event: any) => {
     this.commonForm.patchValue({
@@ -227,7 +295,11 @@ export class CreateEngagementFormComponent
       activity: this.selectedImputation.activity,
       action: this.selectedImputation.action,
       subProgram: this.selectedImputation.subProgram,
+      operationId: this.selectedImputation.operation.id,
     });
+    this.commonForm.controls['montantAE'].setValidators(
+      Validators.max(this.selectedImputation.aeDisponible)
+    );
   };
 
   onChange = (event: any) => {

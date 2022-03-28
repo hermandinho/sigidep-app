@@ -12,5 +12,20 @@
     (changeStep)="changeStep('command', 'back')"
     (submitForm)="submitForm()"
   ></app-engagement-commande>
-  <app-engagement-decision *ngSwitchCase="'mission'"></app-engagement-decision>
+  <app-engagement-mission
+    *ngSwitchCase="'mission'"
+    [startingForm]="missionFormGroup"
+    (subformInitialized)="subformInitialized('missionForm', $event)"
+    (changeStep)="changeStep('mission', 'back')"
+    (submitForm)="submitForm()"
+  ></app-engagement-mission>
+  <app-engagement-decision
+    *ngSwitchCase="'decision'"
+    [montantAE]="montantAE"
+    [procedure]="currentProcedure"
+    [startingForm]="decisionFormGroup"
+    (subformInitialized)="subformInitialized('decisionForm', $event)"
+    (changeStep)="changeStep('decision', 'back')"
+    (submitForm)="submitForm()"
+  ></app-engagement-decision>
 </ng-container>

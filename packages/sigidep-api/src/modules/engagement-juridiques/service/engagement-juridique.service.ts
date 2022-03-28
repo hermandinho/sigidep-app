@@ -17,16 +17,7 @@ export class EngagementJuridiqueService {
   }
 
   public async filter(): Promise<EngagementJuridiqueEntity[]> {
-    return this.repository
-      .createQueryBuilder('ej')
-      .leftJoinAndSelect('ej.exercise', 'exercise')
-      .leftJoinAndSelect('ej.sousProgramme', 's')
-      .leftJoinAndSelect('ej.action', 'ac')
-      .leftJoinAndSelect('ej.activity', 'a')
-      .leftJoinAndSelect('ej.procedure', 'p')
-      .leftJoinAndSelect('p.typeProcedure', 'typ')
-      .leftJoinAndSelect('ej.task', 't')
-      .getMany();
+    return this.repository.createQueryBuilder('eng').getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
