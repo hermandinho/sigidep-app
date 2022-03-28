@@ -60,6 +60,7 @@ export class EngagementDecisionComponent
   @Input() startingForm!: FormGroup;
   @Input() procedure!: string;
   @Input() montantAE!: number;
+  @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -147,6 +148,7 @@ export class EngagementDecisionComponent
       map((status) => status)
     );
     this.decisionForm = this.startingForm;
+    if (this.readOnly) this.decisionForm.disable();
     this.decisionForm.patchValue({
       montantBrut: this.montantAE,
     });

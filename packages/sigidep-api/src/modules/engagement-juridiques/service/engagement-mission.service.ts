@@ -56,7 +56,7 @@ export class EngagementMissionService {
     if (!check) {
       throw new NotFoundException();
     }
-
+    payload = { ...payload, etat: EtatEngagementEnum.MODIFY };
     return this.repository.save({
       ...(payload as any),
       updateBy: user,

@@ -266,7 +266,15 @@
     "objet": "Objet",
     "paragraphe": "Paragraphe",
     "taxesApplicables": "Taxe Applicable",
-    "tauxTVA": "Taux TVA"
+    "tauxTVA": "Taux TVA",
+    "all": "Tout",
+    "cancel": "Annulé",
+    "modify": "Modifié",
+    "save": "Enregistré",
+    "book": "Réservé",
+    "filterbyStatus": "Filtre Rapide",
+    "respectNonMorcellement": "Respect du non morcellement",
+    "disponibiltecredits": "Disponibilité des credits"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -731,7 +739,9 @@
       "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
-      "editEngagement": "Editer un Engagement"
+      "editEngagement": "Editer un Engagement",
+      "viewEngagement": "Engagement: {{numero}}",
+      "reserverEngagement": "Réservation de l'engagement No: {{numero}}"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

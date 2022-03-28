@@ -8,7 +8,10 @@ import {
 } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
-import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
+import {
+  EngagementJuridiqueModel,
+  Step,
+} from '@models/engagement-juridique.model';
 
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -17,22 +20,17 @@ import { ApisService } from '@services/apis.service';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
-import { GetExercises } from '@actions/exercises.actions';
-import { GetProcedures } from '@actions/exec-procedure.actions';
-import { GetAdministrativeUnites } from '@actions/administrative-units.actions';
+
 import { GetTypesProcedures } from '@actions/types-procedures.actions';
 import { GetEncours } from '@actions/encours.actions';
 import * as moment from 'moment';
-import {
-  MAX_AMOUNT_PROCEDURE_1110,
-  MAX_AMOUNT_PROCEDURE_1111,
-} from './engagement-container.conts';
+import { MAX_AMOUNT_PROCEDURE_1110, MAX_AMOUNT_PROCEDURE_1111 } from './consts';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
 import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
+import { DialogsService } from '@services/dialogs.service';
 
-type Step = 'common' | 'mission' | 'decision' | 'command';
 @Component({
   selector: 'app-engagement-container',
   templateUrl: './engagement-container.component.html',
@@ -48,20 +46,25 @@ export class EngagementContainerComponent
   public currentStep$: Observable<Step> = this.currentStepBs.asObservable();
   public form!: FormGroup;
 
+  public action!: 'book' | 'edit';
   public busy = false;
+
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private _fb: FormBuilder,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    private readonly _dialogService: DialogsService
   ) {
     super();
     //this._initListeners();
   }
 
   currentProcedure!: any;
+
+  isBook = () => this.action === 'book';
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -102,6 +105,7 @@ export class EngagementContainerComponent
         paragraph: [undefined],
         etat: [undefined],
         operationId: [undefined],
+        aeDisponible: [undefined],
       }),
       missionForm: this._fb.group({
         typeMission: [undefined],
@@ -140,6 +144,10 @@ export class EngagementContainerComponent
 
     this._store.dispatch(GetEncours());
     this._store.dispatch(GetTypesProcedures());
+
+    if (this.config.data?.action) {
+      this.action = this.config.data?.action;
+    }
 
     if (this.config.data?.item) {
       const {
@@ -186,11 +194,13 @@ export class EngagementContainerComponent
         montantBrut,
         montantIRNC,
         netAPercevoir,
+        aeDisponible,
       } = this.config.data?.item as
         | EngagementCommandeModel
         | EngagementMissionModel
         | EngagementDecisionModel
         | any;
+      this.currentProcedure = codeProcedure;
       this.form.patchValue({
         commonForm: {
           id,
@@ -211,6 +221,7 @@ export class EngagementContainerComponent
           paragraph,
           etat,
           operationId,
+          aeDisponible,
         },
         commandForm: {
           niuContribuable,
@@ -312,7 +323,8 @@ export class EngagementContainerComponent
   subformInitialized(name: string, group: FormGroup) {
     this.form.setControl(name, group);
     if (name === 'commonForm') {
-      this.currentProcedure = this.form.value?.commonForm?.codeProcedure;
+      this.currentProcedure =
+        this.form.getRawValue()?.commonForm?.codeProcedure;
       //this.form.controls['montantAE'].updateValueAndValidity();
       //console.log("TYPE ", this.currentProcedure, this.form.value?.commonForm)
     }
@@ -357,7 +369,8 @@ export class EngagementContainerComponent
   }
 
   submitForm() {
-    const formValues = this.form.value;
+    const formValues = this.form.getRawValue();
+    console.log('FOM VALUES HERE ...: ', formValues);
     // submit the form with a service
     this.busy = true;
     let editedEngagement;
@@ -380,6 +393,10 @@ export class EngagementContainerComponent
         ...this.form.getRawValue()?.commonForm,
         ...this.form.getRawValue()?.decisionForm,
       } as EngagementDecisionModel;
+    }
+
+    if (this.isBook()) {
+      this.bookProcess(editedEngagement);
     }
 
     if (this.isUpdateForm) {
@@ -495,4 +512,20 @@ export class EngagementContainerComponent
       );
     }
   }
+
+  bookProcess = (
+    engagement:
+      | EngagementMissionModel
+      | EngagementDecisionModel
+      | EngagementCommandeModel
+  ) => {
+    if (this.currentStepBs.value === 'command')
+      this._store.dispatch(GetEngagementCommandes());
+    if (this.currentStepBs.value === 'mission')
+      this._store.dispatch(GetEngagementMissions());
+    this._dialogService.launchReservationEngagementDialog(
+      engagement,
+      this.currentStepBs.value
+    );
+  };
 }

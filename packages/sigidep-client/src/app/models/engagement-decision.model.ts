@@ -22,6 +22,8 @@ export class EngagementDecisionModel extends EngagementJuridiqueModel {
   tauxIR!: number;
   taxesApplicable!: ExecTaxesModel;
 
+  netAPercevoir!: number;
+
   constructor(params?: Partial<EngagementDecisionModel>) {
     super();
     if (params) {

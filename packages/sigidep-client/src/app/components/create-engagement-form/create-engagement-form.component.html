@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="form" [formGroup]="commonForm">
+  <div class="form" [formGroup]="commonForm" [ngClass]="{ readonly: readOnly }">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
         <ng-container>
@@ -231,8 +231,13 @@
       {{ "buttons.cancel" | translate }}
     </button>
     <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
       (click)="submit()"
-      [disabled]="!commonForm?.valid"
+      [disabled]="!commonForm?.valid && !readOnly"
       [label]="'buttons.next' | translate"
       pButton
     ></button>

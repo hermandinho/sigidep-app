@@ -1,3 +1,4 @@
+import { NumberValueAccessor } from '@angular/forms';
 import { BaseModel } from './base.model';
 
 export enum EtatEngagementEnum {
@@ -6,6 +7,8 @@ export enum EtatEngagementEnum {
   RESERVED = 'RESERVED',
   CANCEL = 'CANCEL',
 }
+
+export type Step = 'common' | 'mission' | 'decision' | 'command';
 
 export class EngagementJuridiqueModel extends BaseModel {
   exercise!: string;
@@ -25,6 +28,7 @@ export class EngagementJuridiqueModel extends BaseModel {
   montantAE!: number;
   etat!: EtatEngagementEnum;
   operationId!: number;
+  aeDisponible!: number;
 
   constructor(params?: Partial<EngagementJuridiqueModel>) {
     super();

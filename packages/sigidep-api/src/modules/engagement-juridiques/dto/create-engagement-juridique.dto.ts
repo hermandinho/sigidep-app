@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateEngagementJuridiqueDTO {
   id?: number;
-  @ApiProperty({ type: 'float', example: '00015-4521368', required: false })
+  @ApiProperty({ type: 'float', example: '521368', required: false })
   public montantAE: number;
 
   @ApiProperty({ type: 'enum', example: 'CANCEL', required: false })
@@ -51,4 +51,7 @@ export class CreateEngagementJuridiqueDTO {
 
   @ApiProperty({ required: true })
   public operationId: number;
+
+  @ApiProperty({ type: 'float', example: '100000', required: false })
+  public aeDisponible!: number;
 }

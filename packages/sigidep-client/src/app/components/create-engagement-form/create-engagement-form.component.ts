@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -34,19 +35,21 @@ import {
 } from '@models/index';
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { isNgTemplate } from '@angular/compiler';
+import { imputationColumnsConst } from './consts';
 
 @Component({
   selector: 'app-create-engagement-form',
   templateUrl: './create-engagement-form.component.html',
   styleUrls: ['./create-engagement-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class CreateEngagementFormComponent
   extends BaseComponent
   implements OnInit
 {
   @Input() startingForm!: FormGroup;
+  @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -63,102 +66,7 @@ export class CreateEngagementFormComponent
 
   public commonForm!: FormGroup;
 
-  public imputationColumns = [
-    {
-      field: 'subProgram',
-      title: 'tables.headers.sousProgram',
-      sortable: true,
-    },
-    {
-      field: 'action',
-      title: 'tables.headers.action',
-      sortable: true,
-    },
-    {
-      field: 'activity',
-      title: 'tables.headers.activity',
-      sortable: true,
-    },
-
-    {
-      field: 'task',
-      title: 'tables.headers.task',
-      sortable: true,
-    },
-
-    {
-      field: 'imputation',
-      title: 'tables.headers.imputation',
-      sortable: true,
-    },
-    {
-      field: 'operation',
-      title: 'tables.headers.operation',
-      sortable: true,
-    },
-    {
-      field: 'aeDisponible',
-      title: 'tables.headers.aeDisponible',
-      sortable: true,
-    },
-    {
-      field: 'cpDisponible',
-      title: 'tables.headers.cpDisponible',
-      sortable: true,
-    },
-    {
-      field: 'aeDispoANouveau',
-      title: 'tables.headers.aeDispoANouveau',
-      sortable: true,
-    },
-    {
-      field: 'cpDispoANouveau',
-      title: 'tables.headers.cpDispoANouveau',
-      sortable: true,
-    },
-    {
-      field: 'gestionnaire',
-      title: 'tables.headers.gestionnaire',
-      sortable: true,
-    },
-    {
-      field: 'modeGestion',
-      title: 'tables.headers.modeGestion',
-      sortable: true,
-    },
-
-    {
-      field: 'region',
-      title: 'tables.headers.region',
-      sortable: true,
-    },
-    {
-      field: 'department',
-      title: 'tables.headers.department',
-      sortable: true,
-    },
-    {
-      field: 'arrondissement',
-      title: 'tables.headers.arrondissement',
-      sortable: true,
-    },
-    {
-      field: 'localite',
-      title: 'tables.headers.localite',
-      sortable: true,
-    },
-
-    {
-      field: 'aeInitRevisee',
-      title: 'tables.headers.aeInitRevisee',
-      sortable: true,
-    },
-    {
-      field: 'cpInitRevisee',
-      title: 'tables.headers.cpInitRevisee',
-      sortable: true,
-    },
-  ];
+  public imputationColumns = imputationColumnsConst;
 
   public selectedImputation!: EncoursModel;
 
@@ -193,6 +101,7 @@ export class CreateEngagementFormComponent
 
   ngOnInit(): void {
     this.commonForm = this.startingForm;
+    if (this.readOnly) this.commonForm.disable();
     this.subformInitialized.emit(this.commonForm);
   }
 
@@ -296,10 +205,12 @@ export class CreateEngagementFormComponent
       action: this.selectedImputation.action,
       subProgram: this.selectedImputation.subProgram,
       operationId: this.selectedImputation.operation.id,
+      aeDisponible: this.selectedImputation.aeDisponible,
     });
-    this.commonForm.controls['montantAE'].setValidators(
+    /*this.commonForm.controls['montantAE'].setValidators(
       Validators.max(this.selectedImputation.aeDisponible)
     );
+    */
   };
 
   onChange = (event: any) => {

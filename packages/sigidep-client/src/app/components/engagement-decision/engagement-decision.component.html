@@ -227,9 +227,22 @@
       pButton
     ></button>
     <button
+      *ngIf="!readOnly"
       (click)="submit()"
       [disabled]="!decisionForm?.valid"
       [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+    <button
+      *ngIf="readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
+      (click)="submit()"
+      [disabled]="!decisionForm?.valid"
+      [label]="'labels.book' | translate"
       pButton
     ></button>
   </div>

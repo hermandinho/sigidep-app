@@ -16,7 +16,13 @@ import { ToastModule } from 'primeng/toast';
 import { TabViewModule } from 'primeng/tabview';
 import { PanelModule } from 'primeng/panel';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { MenuModule } from 'primeng/menu';
+import { RippleModule } from 'primeng/ripple';
 import { EngagementMissionComponent } from '@components/engagement-mission/engagement-mission.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReservationEngagementComponent } from '@components/reservation-engagement/reservation-engagement.component';
 @NgModule({
   declarations: [
     EngagementsComponent,
@@ -25,6 +31,7 @@ import { EngagementMissionComponent } from '@components/engagement-mission/engag
     CreateEngagementFormComponent,
     EngagementCommandeComponent,
     EngagementMissionComponent,
+    ReservationEngagementComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +46,10 @@ import { EngagementMissionComponent } from '@components/engagement-mission/engag
     TabViewModule,
     PanelModule,
     RadioButtonModule,
+    FormsModule,
+    MultiSelectModule,
+    MenuModule,
+    RippleModule,
   ],
 })
 export class EngagementsModule {}

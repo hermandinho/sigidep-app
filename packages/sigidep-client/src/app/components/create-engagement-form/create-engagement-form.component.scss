@@ -23,3 +23,9 @@
 .emphase {
   background-color: lightpink !important;
 }
+
+.readonly {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}

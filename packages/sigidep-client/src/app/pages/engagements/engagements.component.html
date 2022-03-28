@@ -1,6 +1,6 @@
 <p-card>
   <p-toolbar styleClass="p-mb-2">
-    <ng-template pTemplate="left">
+    <ng-template pTemplate="right">
       <button
         (click)="openForm()"
         [label]="'buttons.create' | translate"
@@ -10,7 +10,24 @@
         pRipple
       ></button>
     </ng-template>
-    <ng-template pTemplate="right"> </ng-template>
+    <ng-template pTemplate="left">
+      <div class="quick_filter">
+        <div class="p-field">
+          <label>{{ "labels.filterbyStatus" | translate }}:</label>
+          <p-multiSelect
+            [filter]="false"
+            [options]="filters"
+            [(ngModel)]="selectedFilters"
+            autoDisplayFirst="false"
+            optionValue="value"
+            labelValue="label"
+            defaultLabel="{{ 'labels.all' | translate }}"
+            (onChange)="handleFilter($event)"
+          >
+          </p-multiSelect>
+        </div>
+      </div>
+    </ng-template>
   </p-toolbar>
   <p-tabView>
     <p-tabPanel header="Commande">
@@ -66,12 +83,22 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td *ngFor="let column of tableColumns" class="nowrap">
-              <span *ngIf="column.field !== 'subProgram'">
+              <span
+                *ngIf="column.field !== 'subProgram' && column.field !== 'etat'"
+              >
                 {{
                   item[column.field]?.RIB ??
                     item[column.field]?.label ??
                     item[column.field]
                 }}
+              </span>
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] }}
+                <span
+                  class="ui-chkbox-icon ui-clickable pi pi-pencil"
+                  [ngStyle]="{ color: 'blue' }"
+                >
+                </span>
               </span>
               <span
                 *ngIf="column.field === 'subProgram'"
@@ -86,29 +113,12 @@
             </td>
             <td class="actions_button">
               <button
-                (click)="edit(item)"
-                *appCheckPermissions="['engagements.update']"
-                class="p-button-rounded p-button-success p-mr-2"
-                icon="pi pi-pencil"
+                type="button"
                 pButton
                 pRipple
-              ></button>
-              <button
-                (click)="reserve(item)"
-                *appCheckPermissions="['engagements.update']"
-                class="p-button-rounded p-button-success p-mr-2"
-                icon="pi pi-book"
-                pButton
-                pRipple
-              ></button>
-              <button
-                (click)="delete(item)"
-                *appCheckPermissions="['engagements.delete']"
-                [disabled]="item?.status === 'active'"
-                class="p-button-rounded p-button-warning"
-                icon="pi pi-trash"
-                pButton
-                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-v"
+                (click)="currentItem = item; menu.toggle($event)"
               ></button>
             </td>
           </tr>
@@ -193,29 +203,12 @@
             </td>
             <td class="actions_button">
               <button
-                (click)="edit(item)"
-                *appCheckPermissions="['engagements.update']"
-                class="p-button-rounded p-button-success p-mr-2"
-                icon="pi pi-pencil"
+                type="button"
                 pButton
                 pRipple
-              ></button>
-              <button
-                (click)="reserve(item)"
-                *appCheckPermissions="['engagements.update']"
-                class="p-button-rounded p-button-success p-mr-2"
-                icon="pi pi-book"
-                pButton
-                pRipple
-              ></button>
-              <button
-                (click)="delete(item)"
-                *appCheckPermissions="['engagements.delete']"
-                [disabled]="item?.status === 'active'"
-                class="p-button-rounded p-button-warning"
-                icon="pi pi-trash"
-                pButton
-                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-v"
+                (click)="currentItem = item; menu.toggle($event)"
               ></button>
             </td>
           </tr>
@@ -300,29 +293,12 @@
             </td>
             <td class="actions_button">
               <button
-                (click)="edit(item)"
-                *appCheckPermissions="['engagements.update']"
-                class="p-button-rounded p-button-success p-mr-2"
-                icon="pi pi-pencil"
+                type="button"
                 pButton
                 pRipple
-              ></button>
-              <button
-                (click)="reserve(item)"
-                *appCheckPermissions="['engagements.update']"
-                class="p-button-rounded p-button-success p-mr-2"
-                icon="pi pi-book"
-                pButton
-                pRipple
-              ></button>
-              <button
-                (click)="delete(item)"
-                *appCheckPermissions="['engagements.delete']"
-                [disabled]="item?.status === 'active'"
-                class="p-button-rounded p-button-warning"
-                icon="pi pi-trash"
-                pButton
-                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-h"
+                (click)="currentItem = item; menu.toggle($event)"
               ></button>
             </td>
           </tr>
@@ -335,4 +311,5 @@
       </p-table>
     </p-tabPanel>
   </p-tabView>
+  <p-menu appendTo="body" #menu [popup]="true" [model]="menus"></p-menu>
 </p-card>

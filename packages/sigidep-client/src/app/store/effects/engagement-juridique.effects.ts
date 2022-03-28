@@ -21,6 +21,9 @@ import {
   UpdateEngagementSuccess,
 } from '@actions/engagement-juridique.actions';
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
+import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
+import { GetEngagementMissions } from '@actions/engagement-mission.actions';
+import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 
 @Injectable()
 export class EngagementsJuridiquesEffects {
@@ -82,7 +85,13 @@ export class EngagementsJuridiquesEffects {
       mergeMap((action) =>
         this.apisService.delete<any>(`/engagements/${action.id}`, {}).pipe(
           switchMap((payload) => {
-            return [DeleteEngagementSuccess(), GetEngagementJuridiques()];
+            return [
+              DeleteEngagementSuccess(),
+              GetEngagementJuridiques(),
+              GetEngagementCommandes(),
+              GetEngagementMissions(),
+              GetEngagementDecisions(),
+            ];
           }),
           catchError((err: HttpErrorResponse) =>
             of(DeleteEngagementFailure(err))

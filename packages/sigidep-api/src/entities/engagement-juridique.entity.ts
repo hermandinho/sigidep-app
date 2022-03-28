@@ -59,11 +59,13 @@ export class EngagementJuridiqueEntity extends BaseEntity {
     name: 'etat',
     type: 'enum',
     enum: EtatEngagementEnum,
-    default: EtatEngagementEnum.SAVE,
-    nullable: false,
+    nullable: true,
   })
   public etat: EtatEngagementEnum;
 
   @Column({ nullable: false, name: 'operation_id' })
   public operationId: number;
+
+  @Column({ nullable: false, name: 'ae_disponible' })
+  aeDisponible!: number;
 }

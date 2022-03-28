@@ -28,13 +28,18 @@ import {
   BaremeMissionModel,
   PieceJointeModel,
   TypeProcedureModel,
+  ExecTaxesModel,
+  RegionsModel,
+  ExecProcedureModel,
+  EncoursModel,
+  EngagementJuridiqueModel,
+  EngagementCommandeModel,
+  EngagementDecisionModel,
+  EngagementMissionModel,
+  Step,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
-import { EncoursModel } from '@models/encours.model';
-import { RegionsModel } from '@models/regions.model';
-import { ExecTaxesModel } from '@models/exec-taxes.model';
-import { ExecProcedureModel } from '@models/exec-procedure.model';
-import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -81,6 +86,7 @@ export class DialogsService {
   private procedureCreateComponent: any;
 
   private engagementCreateComponent: any;
+  private reservationEngagementComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -865,7 +871,12 @@ export class DialogsService {
   }
 
   public async launchEngagementCreateDialog(
-    item?: EngagementJuridiqueModel
+    item?:
+      | EngagementJuridiqueModel
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel,
+    action?: string
   ): Promise<any> {
     if (!this.engagementCreateComponent) {
       const { EngagementContainerComponent } = await import(
@@ -875,12 +886,47 @@ export class DialogsService {
     }
 
     return this._dialogService.open(this.engagementCreateComponent, {
-      header: this._translateService.instant('dialogs.headers.editEngagement'),
+      header: this._translateService.instant(
+        action
+          ? 'dialogs.headers.viewEngagement'
+          : 'dialogs.headers.editEngagement',
+        { numero: item?.numero }
+      ),
       width: '60vw',
       height: 'auto',
       modal: true,
       data: {
         item,
+        action,
+      },
+    });
+  }
+
+  public async launchReservationEngagementDialog(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel,
+    type: Step
+  ): Promise<any> {
+    if (!this.reservationEngagementComponent) {
+      const { ReservationEngagementComponent } = await import(
+        '@components/reservation-engagement/reservation-engagement.component'
+      );
+      this.reservationEngagementComponent = ReservationEngagementComponent;
+    }
+
+    return this._dialogService.open(this.reservationEngagementComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.reserverEngagement',
+        { numero: item?.numero }
+      ),
+      width: '40vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
       },
     });
   }

@@ -1,0 +1,69 @@
+<div class="form" [formGroup]="form">
+  <p-checkbox
+    formControlName="disponibiliteCredits"
+    [binary]="true"
+    label="{{ 'labels.disponibilitecredits' | translate }}: montantAE: {{
+      engagement.montantAE
+    }}: aeDisponible: {{ engagement?.aeDisponible }}"
+  >
+  </p-checkbox>
+  <p-checkbox
+    *ngIf="type === 'command'"
+    formControlName="respectNonMorcellement"
+    [binary]="true"
+    label="{{
+      'labels.respectNonMorcellement' | translate
+    }}: Dernière Commande: {{ dernierCommande?.dateSignature ?? 'RAS' }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    *ngIf="type === 'decision'"
+    formControlName="priseEnCompteTaxes"
+    [binary]="true"
+    label="{{ 'labels.priseEnCompteTaxes' | translate }}: NetAPercevoir = {{
+      engagement.netAPercevoir
+    }} = {{ engagement?.montantBrut - engagement?.montantIRNC }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    *ngIf="type === 'mission'"
+    formControlName="respectQuotas"
+    [binary]="true"
+    label="{{ 'labels.respectQuotas' | translate }}: CumulJoursMissions = {{
+      cumulJoursMissions
+    }}"
+  >
+  </p-checkbox>
+  <div class="footer">
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-mr-3 p-button-danger"
+      [label]="'buttons.close' | translate"
+      pButton
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
+      [disabled]="!form?.valid"
+      [label]="'Demande de levée' | translate"
+      pButton
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-check-square"
+      [disabled]="!form?.valid"
+      [label]="'labels.book' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

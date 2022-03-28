@@ -29,6 +29,7 @@ export class EngagementCommandeComponent
   extends BaseComponent
   implements OnInit
 {
+  @Input() readOnly!: boolean;
   @Input() startingForm!: FormGroup;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
@@ -74,6 +75,7 @@ export class EngagementCommandeComponent
     );
     this.commandForm = this.startingForm;
     this.subformInitialized.emit(this.commandForm);
+    if (this.readOnly) this.commandForm.disable();
     this.commandForm.controls['tauxTVA'].disable();
     this.commandForm.controls['tauxIR'].disable();
     this.commandForm.controls['raisonSociale'].disable();

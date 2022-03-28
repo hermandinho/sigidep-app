@@ -7,6 +7,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { BaseComponent } from '@components/base.component';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import {
   getDataSelector as getCommandeDataSelector,
   getLoadingSelector as getCommandeLoadingSelector,
@@ -46,6 +47,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-engagements',
   templateUrl: './engagements.component.html',
   styleUrls: ['./engagements.component.scss'],
+  providers: [MessageService],
 })
 export class EngagementsComponent extends BaseComponent implements OnInit {
   selectedItems: any[] = [];
@@ -55,14 +57,47 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
   missions: EngagementMissionModel[] = [];
   decisions: EngagementDecisionModel[] = [];
 
-  loading$: Observable<boolean> = of(true);
+  originalCommandes: EngagementCommandeModel[] = [];
+  originalMissions: EngagementMissionModel[] = [];
+  originalDecisions: EngagementDecisionModel[] = [];
 
+  loading$: Observable<boolean> = of(true);
+  menus!: MenuItem[];
+  /*
+   quick filter
+  */
+
+  public filters = [
+    {
+      label: this.translate.instant('labels.save'),
+      value: EtatEngagementEnum.SAVE,
+    },
+    {
+      label: this.translate.instant('labels.modify'),
+      value: EtatEngagementEnum.MODIFY,
+    },
+    {
+      label: this.translate.instant('labels.book'),
+      value: EtatEngagementEnum.RESERVED,
+    },
+    {
+      label: this.translate.instant('labels.cancel'),
+      value: EtatEngagementEnum.CANCEL,
+    },
+  ];
+  public selectedFilters!: string[];
+  public currentItem!:
+    | EngagementCommandeModel
+    | EngagementDecisionModel
+    | EngagementMissionModel;
   constructor(
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig
   ) {
     super();
 
@@ -71,6 +106,11 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
         field: 'numero',
         title: 'tables.headers.numero',
         sortable: false,
+      },
+      {
+        field: 'etat',
+        title: 'tables.headers.etat',
+        sortable: true,
       },
       {
         field: 'exercise',
@@ -97,11 +137,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
         title: 'tables.headers.task',
         sortable: true,
       },
-      {
-        field: 'etat',
-        title: 'tables.headers.etat',
-        sortable: true,
-      },
+
       {
         field: 'montantAE',
         title: 'tables.headers.montantAE',
@@ -128,6 +164,41 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
+    this.menus = [
+      {
+        items: [
+          {
+            label: 'Edit',
+            icon: 'pi pi-pencil',
+            command: () => {
+              this.edit(this.currentItem);
+            },
+          },
+          {
+            label: 'Book',
+            icon: 'pi pi-check-square',
+            command: () => {
+              this.reserve(this.currentItem);
+            },
+          },
+          {
+            label: 'Cancel',
+            icon: 'pi pi-minus-circle',
+            command: () => {
+              // this.delete();
+            },
+          },
+          {
+            label: 'Delete',
+            icon: 'pi pi-times',
+            command: () => {
+              this.delete(this.currentItem);
+            },
+          },
+        ],
+      },
+    ];
     this._store.dispatch(GetEngagementCommandes());
     this._store.dispatch(GetEngagementMissions());
     this._store.dispatch(GetEngagementDecisions());
@@ -145,6 +216,18 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
   get currentLang() {
     return this.translate.currentLang;
   }
+
+  handleFilter = (event: any) => {
+    this.commandes = this.originalCommandes.filter((item) =>
+      this.selectedFilters.includes(item.etat)
+    );
+    this.missions = this.originalMissions.filter((item) =>
+      this.selectedFilters.includes(item.etat)
+    );
+    this.decisions = this.originalDecisions.filter((item) =>
+      this.selectedFilters.includes(item.etat)
+    );
+  };
 
   get currentLangCurrencyFormat() {
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
@@ -166,12 +249,16 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  reserve(item: EngagementCommandeModel) {
-    const engagement = { ...item, etat: EtatEngagementEnum.RESERVED };
+  reserve(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel
+  ) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.reserveEngagement',
       accept: () => {
-        this._store.dispatch(UpdateEngagementCommande({ payload: item }));
+        this._dialogService.launchEngagementCreateDialog(item, 'book');
       },
     });
   }
@@ -180,6 +267,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getCommandeDataSelector))
       .subscribe((data) => {
         this.commandes = [...data];
+        this.originalCommandes = [...data];
       });
 
     this.loading$ = this._store.pipe(
@@ -191,6 +279,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getMissionDataSelector))
       .subscribe((data) => {
         this.missions = [...data];
+        this.originalMissions = [...data];
       });
 
     this.loading$ = this._store.pipe(
@@ -202,6 +291,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((data) => {
         this.decisions = [...data];
+        this.originalDecisions = [...data];
       });
 
     this.loading$ = this._store.pipe(

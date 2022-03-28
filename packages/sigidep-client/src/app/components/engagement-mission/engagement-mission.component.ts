@@ -36,6 +36,7 @@ export class EngagementMissionComponent
   implements OnInit
 {
   @Input() startingForm!: FormGroup;
+  @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -89,6 +90,7 @@ export class EngagementMissionComponent
     );
     this.missionForm = this.startingForm;
     this.subformInitialized.emit(this.missionForm);
+    if (this.readOnly) this.missionForm.disable();
     this.missionForm.controls['nomBeneficiaire'].disable();
     this.missionForm.controls['montant'].disable();
     this.missionForm.controls['nombreJours'].disable();

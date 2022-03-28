@@ -104,14 +104,37 @@
 
   <div class="footer">
     <button
+      type="button"
+      pButton
+      pRipple
+      class="p-mr-3 p-button-warning"
+      icon="pi pi-chevron-left"
       (click)="doChangeStep('back')"
       [label]="'buttons.back' | translate"
       pButton
     ></button>
     <button
+      *ngIf="!readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
       (click)="submit()"
       [disabled]="!commandForm?.valid"
       [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+    <button
+      *ngIf="readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-check-square"
+      (click)="submit()"
+      [disabled]="!commandForm?.valid && false"
+      [label]="'labels.book' | translate"
       pButton
     ></button>
   </div>
