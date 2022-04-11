@@ -4,7 +4,7 @@ import { BaseModel } from './base.model';
 export enum EtatEngagementEnum {
   SAVE = 'SAVE',
   MODIFY = 'MODIFY',
-  RESERVED = 'RESERVED',
+  RESERVED = 'BOOK',
   CANCEL = 'CANCEL',
 }
 

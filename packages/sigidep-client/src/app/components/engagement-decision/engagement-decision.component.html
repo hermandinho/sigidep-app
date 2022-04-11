@@ -2,7 +2,7 @@
   <div class="form" [formGroup]="decisionForm">
     <div class="p-fluid p-grid">
       <div
-        *ngIf="procedure !== '1122'"
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
         class="align__items p-field p-col-12 p-md-12"
       >
         <div class="p-field p-col-12 p-md-6">
@@ -68,7 +68,10 @@
           pInputText
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-6">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-6"
+      >
         <ng-container>
           <label class="required">{{ "labels.exercise" | translate }}</label>
           <p-dropdown
@@ -80,7 +83,10 @@
           </p-dropdown>
         </ng-container>
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-6">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-6"
+      >
         <ng-container>
           <label class="required">{{ "labels.adminUnit" | translate }}</label>
           <p-dropdown
@@ -95,7 +101,10 @@
           </p-dropdown>
         </ng-container>
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-6">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-6"
+      >
         <label>{{ "labels.codeUnitAdminBenef" | translate }}</label>
         <input
           class="form-control"
@@ -105,7 +114,10 @@
         />
       </div>
 
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-6">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-6"
+      >
         <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -114,7 +126,10 @@
           pInputText
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-4">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-4"
+      >
         <label>{{ "labels.codeBanqueContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -123,7 +138,10 @@
           pInputText
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-4">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-4"
+      >
         <label>{{ "labels.codeAgenceContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -132,7 +150,10 @@
           pInputText
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-2">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-2"
+      >
         <label>{{ "labels.numeroCompteContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -141,7 +162,10 @@
           pInputText
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-2">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-2"
+      >
         <label>{{ "labels.cleCompteContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -150,7 +174,10 @@
           pInputText
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-6">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-6"
+      >
         <ng-container formGroupName="taxesApplicable">
           <label>{{ "labels.taxesApplicables" | translate }}</label>
           <p-dropdown
@@ -166,7 +193,10 @@
         </ng-container>
       </div>
 
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-3">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-3"
+      >
         <label>{{ "TxIR" | translate }}</label>
         <input
           type="number"
@@ -176,7 +206,10 @@
           [placeholder]="''"
         />
       </div>
-      <div *ngIf="procedure !== '1122'" class="p-field p-col-12 p-md-3">
+      <div
+        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        class="p-field p-col-12 p-md-3"
+      >
         <label>{{ "labels.tauxTVA" | translate }}</label>
         <input
           type="number"
@@ -186,7 +219,7 @@
           [placeholder]="''"
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
+      <div *ngIf="procedure !== '1123'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.montantBrut" | translate }}</label>
         <input
           type="number"
@@ -196,7 +229,7 @@
           [placeholder]="''"
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
+      <div *ngIf="procedure !== '1123'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.montantIRNC" | translate }}</label>
         <input
           type="number"
@@ -241,7 +274,7 @@
       class="p-button"
       icon="pi pi-save"
       (click)="submit()"
-      [disabled]="!decisionForm?.valid"
+      [disabled]="!decisionForm?.valid && false"
       [label]="'labels.book' | translate"
       pButton
     ></button>

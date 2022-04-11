@@ -61,7 +61,7 @@
       pRipple
       class="p-button"
       icon="pi pi-check-square"
-      [disabled]="!form?.valid"
+      (click)="handleSubmit()"
       [label]="'labels.book' | translate"
       pButton
     ></button>

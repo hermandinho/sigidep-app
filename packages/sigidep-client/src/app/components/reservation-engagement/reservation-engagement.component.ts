@@ -6,7 +6,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
-import { Step } from '@models/engagement-juridique.model';
+import { EtatEngagementEnum, Step } from '@models/engagement-juridique.model';
 import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
 
@@ -35,6 +35,8 @@ import {
 import { Observable, of } from 'rxjs';
 import * as moment from 'moment';
 import { NombreJours } from './consts';
+import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
+import { DialogsService } from '@services/dialogs.service';
 
 @Component({
   selector: 'app-reservation-engagement',
@@ -64,8 +66,10 @@ export class ReservationEngagementComponent
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private _fb: FormBuilder,
+    private _appService: AppService,
+    private _apisService: ApisService,
     private _store: Store<AppState>,
-    public translate: TranslateService
+    private readonly _dialogService: DialogsService
   ) {
     super();
     this.form = this._fb.group({
@@ -132,4 +136,67 @@ export class ReservationEngagementComponent
   close() {
     this.ref.close();
   }
+
+  handleSubmit = () => {
+    const formValues = this.form.getRawValue();
+    //this.busy = true;
+    let editedEngagement = {
+      ...this.engagement,
+      etat: EtatEngagementEnum.RESERVED,
+    };
+
+    const method: Observable<any> =
+      this.type === 'mission'
+        ? this._apisService.put<EngagementMissionModel>(
+            '/engagements/missions/reservation',
+            editedEngagement
+          )
+        : this.type === 'command'
+        ? this._apisService.put<EngagementMissionModel>(
+            '/engagements/commandes/reservation',
+            editedEngagement
+          )
+        : this._apisService.put<EngagementMissionModel>(
+            '/engagements/decisions/reservation',
+            editedEngagement
+          );
+    method.subscribe(
+      (res) => {
+        //this.busy = false;
+        this.ref.close(res);
+        this.type === 'mission'
+          ? this._store.dispatch(GetEngagementMissions())
+          : this.type === 'command'
+          ? this._store.dispatch(GetEngagementCommandes())
+          : this._store.dispatch(GetEngagementDecisions());
+
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail:
+            'messages.engagementsreservationSuccess' +
+            ': numéro: ' +
+            res.numero,
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.engagements.conflict';
+        } else {
+          err = 'errors.unknown';
+        }
+        //this.busy = false;
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
+  };
 }

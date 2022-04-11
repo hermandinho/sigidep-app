@@ -53,5 +53,5 @@ export class CreateEngagementJuridiqueDTO {
   public operationId: number;
 
   @ApiProperty({ type: 'float', example: '100000', required: false })
-  public aeDisponible!: number;
+  public aeDisponible: number;
 }

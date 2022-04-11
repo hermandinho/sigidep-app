@@ -103,6 +103,11 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
 
     this.tableColumns = [
       {
+        field: 'codeProcedure',
+        title: 'tables.headers.type',
+        sortable: true,
+      },
+      {
         field: 'numero',
         title: 'tables.headers.numero',
         sortable: false,

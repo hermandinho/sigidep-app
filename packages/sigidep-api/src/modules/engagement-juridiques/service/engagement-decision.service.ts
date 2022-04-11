@@ -48,6 +48,7 @@ export class EngagementDecisionService {
   public async update(
     payload: EngagementDecisionDTO,
     user: UserEntity,
+    reserve: boolean = false,
   ): Promise<EngagementDecisionEntity> {
     const check = await this.repository.findOne({
       numero: payload.numero,
@@ -56,7 +57,10 @@ export class EngagementDecisionService {
     if (!check) {
       throw new NotFoundException();
     }
-    payload = { ...payload, etat: EtatEngagementEnum.MODIFY };
+    payload = {
+      ...payload,
+      etat: reserve ? EtatEngagementEnum.RESERVED : EtatEngagementEnum.MODIFY,
+    };
     return this.repository.save({
       ...(payload as any),
       updateBy: user,

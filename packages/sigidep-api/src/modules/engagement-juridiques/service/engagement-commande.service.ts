@@ -49,6 +49,7 @@ export class EngagementCommandeService {
   public async update(
     payload: EngagementCommandeDTO,
     user: UserEntity,
+    reserve: boolean = false,
   ): Promise<EngagementCommandeEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
@@ -57,8 +58,11 @@ export class EngagementCommandeService {
     if (!check) {
       throw new NotFoundException();
     }
-    payload = { ...payload, etat: EtatEngagementEnum.MODIFY };
-    console.log('ETAT.....: ', payload.etat);
+    payload = {
+      ...payload,
+      etat: reserve ? EtatEngagementEnum.RESERVED : EtatEngagementEnum.MODIFY,
+    };
+
     return this.repository.save({
       ...(payload as any),
       updateBy: user,

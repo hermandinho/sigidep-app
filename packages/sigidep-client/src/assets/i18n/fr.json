@@ -65,7 +65,8 @@
     "reset": "Reinitializer",
     "load": "Charger",
     "back": "Retour",
-    "submit": "Soumettre"
+    "submit": "Soumettre",
+    "close": "Fermer"
   },
   "install": {
     "title": "Installation"
@@ -681,7 +682,8 @@
       "cpDisponible": "CP Dispo",
       "aeDispoANouveau": "AE Disp à nouveau",
       "cpDispoANouveau": " CP Dispo à Nouveau",
-      "operation": "operation"
+      "operation": "operation",
+      "type": "Type"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

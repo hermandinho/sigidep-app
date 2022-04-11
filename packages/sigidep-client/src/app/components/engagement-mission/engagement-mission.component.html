@@ -141,7 +141,7 @@
       class="p-button"
       icon="pi pi-save"
       (click)="submit()"
-      [disabled]="!missionForm?.valid"
+      [disabled]="!missionForm?.valid && false"
       [label]="'labels.book' | translate"
       pButton
     ></button>

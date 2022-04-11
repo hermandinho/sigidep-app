@@ -4,7 +4,7 @@ import { BaseEntity } from '.';
 export enum EtatEngagementEnum {
   SAVE = 'SAVE',
   MODIFY = 'MODIFY',
-  RESERVED = 'RESERVED',
+  RESERVED = 'BOOK',
   CANCEL = 'CANCEL',
 }
 
@@ -66,6 +66,6 @@ export class EngagementJuridiqueEntity extends BaseEntity {
   @Column({ nullable: false, name: 'operation_id' })
   public operationId: number;
 
-  @Column({ nullable: false, name: 'ae_disponible' })
+  @Column({ nullable: true, name: 'ae_disponible' })
   aeDisponible!: number;
 }

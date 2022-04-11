@@ -113,9 +113,7 @@ export class CreateEngagementFormComponent
     imputation: string
   ) => {
     const sommeMontantAE: number = engagements
-      .filter(
-        (item) => item.imputation === imputation && item.etat === 'RESERVED'
-      )
+      .filter((item) => item.imputation === imputation && item.etat === 'BOOK')
       .map((item) => item.montantAE)
       .reduce((acc, curr) => acc + curr, 0);
     return sommeMontantAE;

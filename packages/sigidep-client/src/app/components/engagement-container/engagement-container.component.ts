@@ -370,8 +370,6 @@ export class EngagementContainerComponent
 
   submitForm() {
     const formValues = this.form.getRawValue();
-    console.log('FOM VALUES HERE ...: ', formValues);
-    // submit the form with a service
     this.busy = true;
     let editedEngagement;
     if (this.currentProcedure === '1121') {
@@ -397,9 +395,10 @@ export class EngagementContainerComponent
 
     if (this.isBook()) {
       this.bookProcess(editedEngagement);
+      this.ref.close();
     }
 
-    if (this.isUpdateForm) {
+    if (!this.isBook() && this.isUpdateForm) {
       const method: Observable<any> =
         this.currentProcedure === '1121'
           ? this._apisService.put<EngagementCommandeModel>(
@@ -454,7 +453,7 @@ export class EngagementContainerComponent
           });
         }
       );
-    } else {
+    } else if (!this.isBook()) {
       const method: Observable<any> =
         this.currentProcedure === '1121'
           ? this._apisService.post<EngagementMissionModel>(

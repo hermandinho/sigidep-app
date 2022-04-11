@@ -152,6 +152,13 @@ export class EngagementDecisionComponent
     this.decisionForm.patchValue({
       montantBrut: this.montantAE,
     });
+
+    if (this.procedure === '1123') {
+      this.decisionForm.patchValue({
+        netAPercevoir: this.montantAE,
+      });
+    }
+
     this.subformInitialized.emit(this.decisionForm);
     this.decisionForm.controls['tauxTVA'].disable();
     this.decisionForm.controls['tauxIR'].disable();

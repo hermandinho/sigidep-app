@@ -41,8 +41,8 @@ export class EngagementCommandeController {
     @Body(ValidationPipe) payload: EngagementCommandeDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
-    payload.etat = EtatEngagementEnum.RESERVED;
-    return this.services.update(payload, user);
+    const val = { ...payload, etat: EtatEngagementEnum.RESERVED };
+    return this.services.update(val, user, true);
   }
   @Put('/')
   public async update(

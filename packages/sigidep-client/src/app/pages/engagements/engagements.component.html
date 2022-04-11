@@ -94,11 +94,6 @@
               </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] }}
-                <span
-                  class="ui-chkbox-icon ui-clickable pi pi-pencil"
-                  [ngStyle]="{ color: 'blue' }"
-                >
-                </span>
               </span>
               <span
                 *ngIf="column.field === 'subProgram'"
