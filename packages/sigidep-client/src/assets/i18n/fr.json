@@ -275,7 +275,14 @@
     "book": "Réservé",
     "filterbyStatus": "Filtre Rapide",
     "respectNonMorcellement": "Respect du non morcellement",
-    "disponibiltecredits": "Disponibilité des credits"
+    "disponibiltecredits": "Disponibilité des credits",
+    "nomBeneficaire": "Nom Bénéficiaire",
+    "matriculeBeneficaire": "Matricule Bénéficaire",
+    "netAPercevoir": "Net à percevoir",
+    "typeContribuable": "Type",
+    "codeUnitAdminBenef": "Code Unité Admin Bénéficaire",
+    "nomUnitAdminBenef": "Nom Unité Bénéficaire",
+    "exerciseBudgetaire": "Excercice Budgétaire"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -767,7 +774,9 @@
       "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
       "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible",
       "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
-      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible"
+      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible",
+      "reserveEngagement": "Etes-vous sûr de reserver cet engagement?",
+      "cancelEngagement": "Voulez-vous annuler cet engagement?"
     }
   },
   "exerciseStatuses": {

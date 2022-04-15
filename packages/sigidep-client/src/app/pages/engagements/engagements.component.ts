@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { select, Store } from '@ngrx/store';
@@ -42,6 +42,8 @@ import {
   SetAppBreadcrumb,
 } from '@store/actions';
 import { TranslateService } from '@ngx-translate/core';
+import { ApisService } from '@services/apis.service';
+import { TabView } from 'primeng/tabview';
 
 @Component({
   selector: 'app-engagements',
@@ -63,6 +65,8 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
 
   loading$: Observable<boolean> = of(true);
   menus!: MenuItem[];
+
+  public busy = false;
   /*
    quick filter
   */
@@ -90,6 +94,10 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     | EngagementCommandeModel
     | EngagementDecisionModel
     | EngagementMissionModel;
+
+  @ViewChild(TabView) tabView!: TabView;
+
+  public printing: boolean = false;
   constructor(
     private readonly _appService: AppService,
     private readonly _dialogService: DialogsService,
@@ -97,6 +105,8 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     private readonly dispatcher: Actions,
     public translate: TranslateService,
     private messageService: MessageService,
+    private _apisService: ApisService,
+
     private primengConfig: PrimeNGConfig
   ) {
     super();
@@ -184,14 +194,14 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
             label: 'Book',
             icon: 'pi pi-check-square',
             command: () => {
-              this.reserve(this.currentItem);
+              this.handleReservation(this.currentItem);
             },
           },
           {
             label: 'Cancel',
             icon: 'pi pi-minus-circle',
             command: () => {
-              // this.delete();
+              this.handleCancel(this.currentItem);
             },
           },
           {
@@ -199,6 +209,13 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
             icon: 'pi pi-times',
             command: () => {
               this.delete(this.currentItem);
+            },
+          },
+          {
+            label: 'Print',
+            icon: 'pi pi-print',
+            command: () => {
+              this.handlePrint(this.currentItem);
             },
           },
         ],
@@ -254,7 +271,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  reserve(
+  handleReservation(
     item:
       | EngagementCommandeModel
       | EngagementDecisionModel
@@ -264,6 +281,67 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       message: 'dialogs.messages.reserveEngagement',
       accept: () => {
         this._dialogService.launchEngagementCreateDialog(item, 'book');
+      },
+    });
+  }
+
+  handlePrint(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel
+  ) {
+    //TODO
+  }
+
+  handleCancel(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel
+  ) {
+    this.busy = true;
+    this._appService.showConfirmation({
+      message: 'dialogs.messages.cancelEngagement',
+      accept: () => {
+        this._apisService
+          .put<EngagementJuridiqueModel>('/engagements/' + item.id, null)
+          .subscribe(
+            (res) => {
+              this.busy = false;
+              this._appService.showToast({
+                summary: 'messages.success',
+                detail:
+                  'messages.engagements.cancelSuccess' +
+                  ': numéro: ' +
+                  res.numero,
+                severity: 'success',
+                life: 3000,
+                closable: true,
+              });
+              if (item instanceof EngagementCommandeModel)
+                this._store.dispatch(GetEngagementCommandes());
+              else if (item instanceof EngagementDecisionModel)
+                this._store.dispatch(GetEngagementDecisions());
+              else this._store.dispatch(GetEngagementMissions());
+            },
+            ({ error }) => {
+              let err = '';
+              if (error?.statusCode === 409) {
+                err = 'errors.engagements.cancelError';
+              } else {
+                err = 'errors.unknown';
+              }
+              this.busy = false;
+              this._appService.showToast({
+                detail: err,
+                summary: 'errors.error',
+                severity: 'error',
+                life: 5000,
+                closable: true,
+              });
+            }
+          );
       },
     });
   }

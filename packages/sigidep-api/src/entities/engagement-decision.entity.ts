@@ -13,6 +13,9 @@ export class EngagementDecisionEntity extends EngagementJuridiqueEntity {
   @Column({ nullable: true, name: 'num_contrib_budget' })
   public numContribBudget: string;
 
+  @Column({ nullable: true, name: 'num_contribuable' })
+  public numContribuable: string;
+
   @Column({ nullable: true, name: 'nom_contrib_budget' })
   public nomContribBudget: string;
 

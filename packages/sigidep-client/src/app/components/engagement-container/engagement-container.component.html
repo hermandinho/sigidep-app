@@ -1,14 +1,14 @@
 <ng-container [ngSwitch]="currentStep$ | async">
   <app-create-engagement-form
     *ngSwitchCase="'common'"
-    [readOnly]="isBook()"
+    [readOnly]="isBook"
     [startingForm]="commonFormGroup"
     (subformInitialized)="subformInitialized('commonForm', $event)"
     (changeStep)="changeStep('common', $event)"
   ></app-create-engagement-form>
   <app-engagement-commande
     *ngSwitchCase="'command'"
-    [readOnly]="isBook()"
+    [readOnly]="isBook"
     [startingForm]="commandFormGroup"
     (subformInitialized)="subformInitialized('commandForm', $event)"
     (changeStep)="changeStep('command', 'back')"
@@ -16,7 +16,7 @@
   ></app-engagement-commande>
   <app-engagement-mission
     *ngSwitchCase="'mission'"
-    [readOnly]="isBook()"
+    [readOnly]="isBook"
     [startingForm]="missionFormGroup"
     (subformInitialized)="subformInitialized('missionForm', $event)"
     (changeStep)="changeStep('mission', 'back')"
@@ -24,7 +24,7 @@
   ></app-engagement-mission>
   <app-engagement-decision
     *ngSwitchCase="'decision'"
-    [readOnly]="isBook()"
+    [readOnly]="isBook"
     [montantAE]="montantAE"
     [procedure]="currentProcedure"
     [startingForm]="decisionFormGroup"

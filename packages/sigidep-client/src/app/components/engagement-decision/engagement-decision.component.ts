@@ -47,6 +47,7 @@ import { AdministrativeUnitModel } from '@models/administrative-unit.model';
 import { GetAgents } from '@actions/agents.actions';
 import { AgentModel } from '@models/agent.model';
 import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
+import { GetContribuablesBugetaires } from '@actions/contribuables-budgetaires.actions';
 
 @Component({
   selector: 'app-engagement-decision',
@@ -77,6 +78,8 @@ export class EngagementDecisionComponent
   public exercises: string[] = [];
   public encoursList!: EncoursModel[];
 
+  public category: string = 'contribuable';
+
   public adminUnits!: AdministrativeUnitModel[];
 
   public agents!: AgentModel[];
@@ -96,6 +99,7 @@ export class EngagementDecisionComponent
     this._store.dispatch(GetAgents());
     this._store.dispatch(GetAdministrativeUnites());
     this._store.dispatch(GetContribuables());
+    this._store.dispatch(GetContribuablesBugetaires());
     this._store
       .pipe(this.takeUntilDestroy, select(getEncoursDataSelector))
       .subscribe((EncoursData) => {
@@ -153,17 +157,23 @@ export class EngagementDecisionComponent
       montantBrut: this.montantAE,
     });
 
-    if (this.procedure === '1123') {
+    if (
+      this.procedure === '1123' ||
+      this.procedure === '1124' ||
+      this.procedure === '1125' ||
+      this.procedure === '1126'
+    ) {
       this.decisionForm.patchValue({
         netAPercevoir: this.montantAE,
       });
+      this.decisionForm.controls['netAPercevoir'].disable();
     }
 
     this.subformInitialized.emit(this.decisionForm);
     this.decisionForm.controls['tauxTVA'].disable();
     this.decisionForm.controls['tauxIR'].disable();
     this.decisionForm.controls['raisonSociale'].disable();
-    this.decisionForm.controls['nomBeneficaire'].disable();
+    this.decisionForm.controls['nomBeneficiaire'].disable();
     this.decisionForm.controls['montantBrut'].disable();
     this.decisionForm.controls['codeAgenceContribuable'].disable();
     this.decisionForm.controls['codeBanqueContribuable'].disable();
@@ -180,7 +190,7 @@ export class EngagementDecisionComponent
     this.submitForm.emit();
   };
 
-  onTaxeChange = (event: any) => {
+  handleTaxeChange = (event: any) => {
     const taxe = this.taxes.find((item) => item.id === event.value);
     if (taxe)
       this.decisionForm.patchValue({
@@ -189,7 +199,7 @@ export class EngagementDecisionComponent
       });
   };
 
-  onContribuableChange = (event: any) => {
+  handleContribuableChange = (event: any) => {
     let contribuable;
     if (this.decisionForm.value?.isContribuable === true) {
       contribuable = this.contribuables.find(
@@ -212,16 +222,16 @@ export class EngagementDecisionComponent
       });
   };
 
-  onAdminUnitChange = (event: any) => {
+  handleAdminUnitChange = (event: any) => {
     const adminUnit = this.adminUnits.find((item) => item.code === event.value);
     if (adminUnit)
       this.decisionForm.patchValue({
         codeUnitAdminBenef: adminUnit.code,
-        nomUnitAdminBenef: adminUnit.formattedLabelFr,
+        nomUnitAdminBenef: adminUnit.labelFr,
       });
   };
 
-  onAgentChange = (event: any) => {
+  handleAgentChange = (event: any) => {
     const agent = this.agents.find((item) => item.matricule === event.value);
     if (agent) {
       this.decisionForm.patchValue({

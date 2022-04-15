@@ -13,6 +13,9 @@ export class EngagementDecisionDTO extends CreateEngagementJuridiqueDTO {
   @ApiProperty({ example: '0200', required: false })
   public numContribBudget: string;
 
+  @ApiProperty({ example: '0200', required: false })
+  public numContribuable: string;
+
   @ApiProperty({ example: 'JEAN LUC', required: false })
   public nomContribBudget: string;
 

@@ -64,7 +64,9 @@ export class EngagementContainerComponent
 
   currentProcedure!: any;
 
-  isBook = () => this.action === 'book';
+  get isBook() {
+    return this.action === 'book';
+  }
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -125,6 +127,7 @@ export class EngagementContainerComponent
         matriculeBeneficiaire: [undefined],
         nomBeneficiaire: [undefined],
         numContribBudget: [undefined],
+        numContribuable: [undefined],
         nomContribBudget: [undefined],
         codeUnitAdminBenef: [undefined],
         nomUnitAdminBenef: [undefined],
@@ -393,12 +396,12 @@ export class EngagementContainerComponent
       } as EngagementDecisionModel;
     }
 
-    if (this.isBook()) {
+    if (this.isBook) {
       this.bookProcess(editedEngagement);
       this.ref.close();
     }
 
-    if (!this.isBook() && this.isUpdateForm) {
+    if (!this.isBook && this.isUpdateForm) {
       const method: Observable<any> =
         this.currentProcedure === '1121'
           ? this._apisService.put<EngagementCommandeModel>(
@@ -453,7 +456,7 @@ export class EngagementContainerComponent
           });
         }
       );
-    } else if (!this.isBook()) {
+    } else if (!this.isBook) {
       const method: Observable<any> =
         this.currentProcedure === '1121'
           ? this._apisService.post<EngagementMissionModel>(

@@ -2,56 +2,69 @@
   <div class="form" [formGroup]="decisionForm">
     <div class="p-fluid p-grid">
       <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
+        *ngIf="procedure === '1126'"
         class="align__items p-field p-col-12 p-md-12"
       >
         <div class="p-field p-col-12 p-md-6">
-          <div class="ui-g-12">
-            <p-radioButton
-              formControlName="isContribuable"
-              label="{{ 'labels.contribuable' | translate }}"
-              name="contribuable"
-              inputId="contribuable"
-            >
-            </p-radioButton>
-          </div>
-          <div class="ui-g-12">
-            <p-radioButton
-              formControlName="isContribuable"
-              label="{{ 'labels.contribuableBudget' | translate }}"
-              name="contribuable"
-              inputId="contribuablebudget"
-            >
-            </p-radioButton>
-          </div>
+          <label>{{ "labels.typeContribuable" | translate }} </label>
+          <p-dropdown
+            [autoDisplayFirst]="true"
+            [options]="['contribuable', 'contribuable Budgetaire']"
+            [placeholder]="''"
+            [(ngModel)]="category"
+          >
+          </p-dropdown>
         </div>
-        <div class="p-field p-col-12 p-md-6">
+        <div
+          class="p-field p-col-12 p-md-6"
+          *ngIf="category === 'contribuable'"
+        >
           <ng-container>
             <label>{{ "labels.niuContribuable" | translate }} </label>
             <p-dropdown
               [autoDisplayFirst]="false"
-              [options]="contribuables ?? contribuablesBudget"
+              [options]="contribuables"
               [placeholder]="''"
               optionLabel="code"
               optionValue="code"
-              formControlName="niuContribuable"
-              (onChange)="onContribuableChange($event)"
+              formControlName="numContribuable"
+              (onChange)="handleContribuableChange($event)"
+            >
+            </p-dropdown>
+          </ng-container>
+        </div>
+        <div
+          class="p-field p-col-12 p-md-6"
+          *ngIf="category !== 'contribuable'"
+        >
+          <ng-container>
+            <label>{{ "labels.niuContribuableBudget" | translate }} </label>
+            <p-dropdown
+              [autoDisplayFirst]="false"
+              [options]="contribuablesBudget"
+              [placeholder]="'contribuable'"
+              optionLabel="code"
+              optionValue="code"
+              formControlName="numContribBudget"
+              (onChange)="handleContribuableChange($event)"
             >
             </p-dropdown>
           </ng-container>
         </div>
       </div>
-
-      <div class="p-field p-col-12 p-md-6">
+      <div
+        class="p-field p-col-12 p-md-6"
+        *ngIf="procedure !== '1125' && procedure !== '1126'"
+      >
         <ng-container>
-          <label class="required">{{
-            "labels.matriculeBeneficiaire" | translate
-          }}</label>
+          <label class="required">
+            {{ "labels.matriculeBeneficiaire" | translate }}
+          </label>
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="agents"
             [placeholder]="''"
-            (onChange)="onAgentChange($event)"
+            (onChange)="handleAgentChange($event)"
             formControlName="matriculeBeneficiaire"
             optionLabel="matricule"
             optionValue="matricule"
@@ -59,7 +72,10 @@
           </p-dropdown>
         </ng-container>
       </div>
-      <div class="p-field p-col-12 p-md-6">
+      <div
+        *ngIf="procedure !== '1125' && procedure !== '1126'"
+        class="p-field p-col-12 p-md-6"
+      >
         <label>{{ "labels.nomBeneficiaire" | translate }}</label>
         <input
           class="form-control"
@@ -68,12 +84,11 @@
           pInputText
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-6"
-      >
+      <div *ngIf="procedure === '1125'" class="p-field p-col-12 p-md-6">
         <ng-container>
-          <label class="required">{{ "labels.exercise" | translate }}</label>
+          <label class="required">{{
+            "labels.exerciseBudgetaire" | translate
+          }}</label>
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="exercises"
@@ -83,28 +98,22 @@
           </p-dropdown>
         </ng-container>
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-6"
-      >
+      <div *ngIf="procedure === '1125'" class="p-field p-col-12 p-md-6">
         <ng-container>
           <label class="required">{{ "labels.adminUnit" | translate }}</label>
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="adminUnits"
             [placeholder]="''"
-            optionLabel="code"
+            optionLabel="labelFr"
             optionValue="code"
             formControlName="adminUnit"
-            (onChange)="onAdminUnitChange($event)"
+            (onChange)="handleAdminUnitChange($event)"
           >
           </p-dropdown>
         </ng-container>
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-6"
-      >
+      <div *ngIf="procedure === '1125'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.codeUnitAdminBenef" | translate }}</label>
         <input
           class="form-control"
@@ -113,11 +122,17 @@
           pInputText
         />
       </div>
+      <div *ngIf="procedure === '1125'" class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.nomUnitAdminBenef" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="nomUnitAdminBenef"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
 
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-6"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -126,10 +141,7 @@
           pInputText
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-4"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.codeBanqueContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -138,10 +150,7 @@
           pInputText
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-4"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-5">
         <label>{{ "labels.codeAgenceContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -150,10 +159,7 @@
           pInputText
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-2"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-5">
         <label>{{ "labels.numeroCompteContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -162,10 +168,7 @@
           pInputText
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-2"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-2">
         <label>{{ "labels.cleCompteContribuable" | translate }}</label>
         <input
           class="form-control"
@@ -174,10 +177,7 @@
           pInputText
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-6"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-6">
         <ng-container formGroupName="taxesApplicable">
           <label>{{ "labels.taxesApplicables" | translate }}</label>
           <p-dropdown
@@ -187,16 +187,13 @@
             optionLabel="label"
             optionValue="id"
             formControlName="id"
-            (onChange)="onTaxeChange($event)"
+            (onChange)="handleTaxeChange($event)"
           >
           </p-dropdown>
         </ng-container>
       </div>
 
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-3"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-3">
         <label>{{ "TxIR" | translate }}</label>
         <input
           type="number"
@@ -206,10 +203,7 @@
           [placeholder]="''"
         />
       </div>
-      <div
-        *ngIf="procedure !== '1122' && procedure !== '1123'"
-        class="p-field p-col-12 p-md-3"
-      >
+      <div *ngIf="procedure === '1126'" class="p-field p-col-12 p-md-3">
         <label>{{ "labels.tauxTVA" | translate }}</label>
         <input
           type="number"
@@ -219,7 +213,7 @@
           [placeholder]="''"
         />
       </div>
-      <div *ngIf="procedure !== '1123'" class="p-field p-col-12 p-md-6">
+      <div *ngIf="procedure === '1122'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.montantBrut" | translate }}</label>
         <input
           type="number"
@@ -229,7 +223,7 @@
           [placeholder]="''"
         />
       </div>
-      <div *ngIf="procedure !== '1123'" class="p-field p-col-12 p-md-6">
+      <div *ngIf="procedure === '1122'" class="p-field p-col-12 p-md-6">
         <label>{{ "labels.montantIRNC" | translate }}</label>
         <input
           type="number"

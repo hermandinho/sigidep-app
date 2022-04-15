@@ -1,6 +1,6 @@
 import { GetTaxes } from '@actions/exec-taxes.actions';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';

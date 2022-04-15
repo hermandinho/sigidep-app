@@ -2,7 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
-import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
+import {
+  EngagementJuridiqueEntity,
+  EtatEngagementEnum,
+} from '@entities/engagement-juridique.entity';
 import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
 
 @Injectable()
@@ -49,6 +52,19 @@ export class EngagementJuridiqueService {
     return this.repository.save({
       ...(payload as any),
       updateBy: user,
+    });
+  }
+
+  public async cancelReservation(
+    id: number,
+  ): Promise<EngagementJuridiqueEntity> {
+    const property = await this.repository.findOne({
+      id: id,
+    });
+
+    return this.repository.save({
+      ...property, // existing fields
+      etat: EtatEngagementEnum.CANCEL, // updated fields
     });
   }
 }
