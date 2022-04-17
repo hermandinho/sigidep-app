@@ -1,0 +1,34 @@
+dl {
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+dt {
+  float: left;
+  width: 50%;
+  padding: 0;
+  margin: 0;
+  top: 2em;
+}
+dd {
+  float: left;
+  width: 50%;
+  padding: 0;
+  margin: 0;
+  top: 2em;
+}
+
+.footer {
+  padding: 15px;
+  float: right;
+}
+
+.center {
+  align-content: center;
+}
+
+.left-down {
+  align-items: center;
+  top: 2em;
+}

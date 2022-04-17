@@ -1,4 +1,3 @@
-import { CreateContribuableBudgetaireFormComponent } from './../components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component';
 import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { Injectable } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -87,6 +86,8 @@ export class DialogsService {
 
   private engagementCreateComponent: any;
   private reservationEngagementComponent: any;
+
+  private printEngagementComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -919,6 +920,35 @@ export class DialogsService {
     return this._dialogService.open(this.reservationEngagementComponent, {
       header: this._translateService.instant(
         'dialogs.headers.reserverEngagement',
+        { numero: item?.numero }
+      ),
+      width: '40vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
+
+  public async launchPrintEngagementDialog(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel,
+    type?: Step
+  ): Promise<any> {
+    if (!this.printEngagementComponent) {
+      const { PrintEngagementComponent } = await import(
+        '@components/print-engagement/print-engagement.component'
+      );
+      this.printEngagementComponent = PrintEngagementComponent;
+    }
+
+    return this._dialogService.open(this.printEngagementComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.printEngagement',
         { numero: item?.numero }
       ),
       width: '40vw',

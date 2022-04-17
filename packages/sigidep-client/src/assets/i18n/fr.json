@@ -66,7 +66,8 @@
     "load": "Charger",
     "back": "Retour",
     "submit": "Soumettre",
-    "close": "Fermer"
+    "close": "Fermer",
+    "print": "Imprimer"
   },
   "install": {
     "title": "Installation"
@@ -282,7 +283,15 @@
     "typeContribuable": "Type",
     "codeUnitAdminBenef": "Code Unité Admin Bénéficaire",
     "nomUnitAdminBenef": "Nom Unité Bénéficaire",
-    "exerciseBudgetaire": "Excercice Budgétaire"
+    "exerciseBudgetaire": "Excercice Budgétaire",
+    "operation": "Opération",
+    "visa": "Visa du Responsable",
+    "autorisationEngagement": "Autorisation d'Engagement",
+    "print": "Imprimer",
+    "reserver": "Reserver",
+    "edit": "Editer",
+    "delete": "Supprimer",
+    "annuler": "Annuler"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -750,7 +759,8 @@
       "editTaxes": "Editer une taxe",
       "editEngagement": "Editer un Engagement",
       "viewEngagement": "Engagement: {{numero}}",
-      "reserverEngagement": "Réservation de l'engagement No: {{numero}}"
+      "reserverEngagement": "Réservation de l'engagement No: {{numero}}",
+      "printEngagement": "Engagement"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

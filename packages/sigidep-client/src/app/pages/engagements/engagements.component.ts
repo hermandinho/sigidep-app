@@ -184,35 +184,35 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       {
         items: [
           {
-            label: 'Edit',
+            label: this.translate.instant('labels.edit'),
             icon: 'pi pi-pencil',
             command: () => {
               this.edit(this.currentItem);
             },
           },
           {
-            label: 'Book',
+            label: this.translate.instant('labels.reserver'),
             icon: 'pi pi-check-square',
             command: () => {
               this.handleReservation(this.currentItem);
             },
           },
           {
-            label: 'Cancel',
+            label: this.translate.instant('labels.annuler'),
             icon: 'pi pi-minus-circle',
             command: () => {
               this.handleCancel(this.currentItem);
             },
           },
           {
-            label: 'Delete',
+            label: this.translate.instant('labels.delete'),
             icon: 'pi pi-times',
             command: () => {
               this.delete(this.currentItem);
             },
           },
           {
-            label: 'Print',
+            label: this.translate.instant('labels.print'),
             icon: 'pi pi-print',
             command: () => {
               this.handlePrint(this.currentItem);
@@ -291,7 +291,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       | EngagementDecisionModel
       | EngagementMissionModel
   ) {
-    //TODO
+    this._dialogService.launchPrintEngagementDialog(item);
   }
 
   handleCancel(

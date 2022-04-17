@@ -1,0 +1,51 @@
+<div class="container">
+  <div id="print-section">
+    <h3>
+      {{ "labels.autorisationEngagement" | translate }} N<sup>o</sup>:
+      {{ engagement.numero }}
+    </h3>
+    <dl class="p-fluid p-grid">
+      <dd>{{ "labels.exercise" | translate }}:</dd>
+      <dt>{{ engagement.exercise }}</dt>
+      <dd>{{ "labels.imputation" | translate }}:</dd>
+      <dt>{{ engagement.imputation }}</dt>
+      <dd>{{ "labels.subProgram" | translate }}:</dd>
+      <dt>{{ engagement.subProgram }}</dt>
+      <dd>{{ "labels.action" | translate }}:</dd>
+      <dt>{{ engagement.action }}</dt>
+      <dd>{{ "labels.activity" | translate }}:</dd>
+      <dt>{{ engagement.activity }}</dt>
+      <dd>{{ "labels.task" | translate }}:</dd>
+      <dt>{{ engagement.task }}</dt>
+      <dd>{{ "labels.operation" | translate }}:</dd>
+      <dt>{{ engagement.operationId }}</dt>
+      <dd>{{ "labels.adminUnit" | translate }}:</dd>
+      <dt>{{ engagement.adminUnit }}</dt>
+      <dd>{{ "labels.paragraph" | translate }}:</dd>
+      <dt>{{ engagement.paragraph }}</dt>
+      <dd>{{ "labels.objet" | translate }}:</dd>
+      <dt>{{ engagement.objet }}</dt>
+      <dd>{{ "labels.montantAE" | translate }}:</dd>
+      <dt>
+        {{
+          engagement.montantAE | currency: "":"":"":currentLangCurrencyFormat
+        }}
+        FCFA
+      </dt>
+    </dl>
+    <div class="footer">
+      {{ "labels.visa" | translate }}
+    </div>
+  </div>
+  <button
+    type="button"
+    [useExistingCss]="true"
+    pButton
+    pRipple
+    class="p-button left-down"
+    icon="pi pi-print"
+    printSectionId="print-section"
+    ngxPrint
+    [label]="'buttons.print' | translate"
+  ></button>
+</div>

@@ -375,16 +375,12 @@ export class EngagementContainerComponent
     const formValues = this.form.getRawValue();
     this.busy = true;
     let editedEngagement;
-    if (this.currentProcedure === '1121') {
+    if (this.isMission) {
       editedEngagement = {
         ...this.form.getRawValue()?.commonForm,
         ...this.form.getRawValue().missionForm,
       } as EngagementMissionModel;
-    } else if (
-      this.currentProcedure === '1110' ||
-      this.currentProcedure === '1111' ||
-      this.currentProcedure === '1115'
-    ) {
+    } else if (this.isCommand) {
       editedEngagement = {
         ...this.form.getRawValue()?.commonForm,
         ...this.form.getRawValue()?.commandForm,
@@ -402,32 +398,27 @@ export class EngagementContainerComponent
     }
 
     if (!this.isBook && this.isUpdateForm) {
-      const method: Observable<any> =
-        this.currentProcedure === '1121'
-          ? this._apisService.put<EngagementCommandeModel>(
-              '/engagements/missions',
-              editedEngagement
-            )
-          : this.currentProcedure === '1110' ||
-            this.currentProcedure === '1111' ||
-            this.currentProcedure === '1115'
-          ? this._apisService.put<EngagementMissionModel>(
-              '/engagements/commandes',
-              editedEngagement
-            )
-          : this._apisService.put<EngagementMissionModel>(
-              '/engagements/decisions',
-              editedEngagement
-            );
+      const method: Observable<any> = this.isMission
+        ? this._apisService.put<EngagementCommandeModel>(
+            '/engagements/missions',
+            editedEngagement
+          )
+        : this.isCommand
+        ? this._apisService.put<EngagementMissionModel>(
+            '/engagements/commandes',
+            editedEngagement
+          )
+        : this._apisService.put<EngagementMissionModel>(
+            '/engagements/decisions',
+            editedEngagement
+          );
       method.subscribe(
         (res) => {
           this.busy = false;
           this.ref.close(res);
-          this.currentProcedure === '1121'
+          this.isMission
             ? this._store.dispatch(GetEngagementMissions())
-            : this.currentProcedure === '1110' ||
-              this.currentProcedure === '1111' ||
-              this.currentProcedure === '1115'
+            : this.isCommand
             ? this._store.dispatch(GetEngagementCommandes())
             : this._store.dispatch(GetEngagementDecisions());
 
@@ -457,32 +448,27 @@ export class EngagementContainerComponent
         }
       );
     } else if (!this.isBook) {
-      const method: Observable<any> =
-        this.currentProcedure === '1121'
-          ? this._apisService.post<EngagementMissionModel>(
-              '/engagements/missions',
-              editedEngagement
-            )
-          : this.currentProcedure === '1110' ||
-            this.currentProcedure === '1111' ||
-            this.currentProcedure === '1115'
-          ? this._apisService.post<EngagementMissionModel>(
-              '/engagements/commandes',
-              editedEngagement
-            )
-          : this._apisService.post<EngagementMissionModel>(
-              '/engagements/decisions',
-              editedEngagement
-            );
+      const method: Observable<any> = this.isMission
+        ? this._apisService.post<EngagementMissionModel>(
+            '/engagements/missions',
+            editedEngagement
+          )
+        : this.isCommand
+        ? this._apisService.post<EngagementMissionModel>(
+            '/engagements/commandes',
+            editedEngagement
+          )
+        : this._apisService.post<EngagementMissionModel>(
+            '/engagements/decisions',
+            editedEngagement
+          );
       method.subscribe(
         (res) => {
           this.busy = false;
           this.ref.close(res);
-          this.currentProcedure === '1121'
+          this.isMission
             ? this._store.dispatch(GetEngagementMissions())
-            : this.currentProcedure === '1110' ||
-              this.currentProcedure === '1111' ||
-              this.currentProcedure === '1115'
+            : this.isCommand
             ? this._store.dispatch(GetEngagementCommandes())
             : this._store.dispatch(GetEngagementDecisions());
 
@@ -530,4 +516,16 @@ export class EngagementContainerComponent
       this.currentStepBs.value
     );
   };
+
+  get isCommand() {
+    return (
+      this.currentProcedure === '1110' ||
+      this.currentProcedure === '1111' ||
+      this.currentProcedure === '1115'
+    );
+  }
+
+  get isMission() {
+    return this.currentProcedure === '1121';
+  }
 }

@@ -21,8 +21,8 @@ import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { EngagementMissionComponent } from '@components/engagement-mission/engagement-mission.component';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReservationEngagementComponent } from '@components/reservation-engagement/reservation-engagement.component';
+import { PrintEngagementComponent } from '@components/print-engagement/print-engagement.component';
 @NgModule({
   declarations: [
     EngagementsComponent,
@@ -32,6 +32,7 @@ import { ReservationEngagementComponent } from '@components/reservation-engageme
     EngagementCommandeComponent,
     EngagementMissionComponent,
     ReservationEngagementComponent,
+    PrintEngagementComponent,
   ],
   imports: [
     CommonModule,
