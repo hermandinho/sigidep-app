@@ -130,7 +130,7 @@ export class ReservationEngagementComponent
           (this.engagement as EngagementDecisionModel).montantIRNC,
       respectQuotas: this.cumulJoursMissions <= 100,
     });
-    console.log('FORMULAIRE.....: ', this.form.getRawValue());
+    //console.log('FORMULAIRE.....: ', this.form.getRawValue());
   }
 
   close() {
@@ -169,7 +169,7 @@ export class ReservationEngagementComponent
           : this.type === 'command'
           ? this._store.dispatch(GetEngagementCommandes())
           : this._store.dispatch(GetEngagementDecisions());
-
+        this._dialogService.launchPrintEngagementDialog(this.engagement);
         this._appService.showToast({
           summary: 'messages.success',
           detail:
