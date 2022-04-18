@@ -122,8 +122,6 @@ export class EngagementContainerComponent
       }),
 
       decisionForm: this._fb.group({
-        isContribuable: [true],
-        isContribuableBudget: [false],
         matriculeBeneficiaire: [undefined],
         nomBeneficiaire: [undefined],
         numContribBudget: [undefined],
@@ -141,7 +139,13 @@ export class EngagementContainerComponent
         tauxTVA: [undefined],
         tauxIR: [undefined],
         netAPercevoir: [undefined],
-        taxesApplicable: [undefined],
+        taxesApplicable: this._fb.group({
+          id: '',
+          code: '',
+          label: '',
+          TxTVA: '',
+          TxIR: '',
+        }),
       }),
     });
 
@@ -198,6 +202,7 @@ export class EngagementContainerComponent
         montantIRNC,
         netAPercevoir,
         aeDisponible,
+        numContribuable,
       } = this.config.data?.item as
         | EngagementCommandeModel
         | EngagementMissionModel
@@ -268,6 +273,7 @@ export class EngagementContainerComponent
           tauxIR,
           netAPercevoir,
           taxesApplicable,
+          numContribuable,
         },
       });
     }

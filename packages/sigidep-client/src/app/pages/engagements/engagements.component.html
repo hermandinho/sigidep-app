@@ -93,7 +93,7 @@
                 }}
               </span>
               <span *ngIf="column.field === 'etat'">
-                {{ item[column.field] }}
+                {{ item[column.field] | translate }}
               </span>
               <span
                 *ngIf="column.field === 'subProgram'"
@@ -113,7 +113,11 @@
                 pRipple
                 class="p-button-rounded p-button"
                 icon="pi pi-ellipsis-v"
-                (click)="currentItem = item; menu.toggle($event)"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
               ></button>
             </td>
           </tr>
@@ -178,12 +182,17 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td *ngFor="let column of tableColumns" class="nowrap">
-              <span *ngIf="column.field !== 'subProgram'">
+              <span
+                *ngIf="column.field !== 'subProgram' && column.field !== 'etat'"
+              >
                 {{
                   item[column.field]?.RIB ??
                     item[column.field]?.label ??
                     item[column.field]
                 }}
+              </span>
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
               </span>
               <span
                 *ngIf="column.field === 'subProgram'"
@@ -203,7 +212,11 @@
                 pRipple
                 class="p-button-rounded p-button"
                 icon="pi pi-ellipsis-v"
-                (click)="currentItem = item; menu.toggle($event)"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
               ></button>
             </td>
           </tr>
@@ -268,13 +281,19 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td *ngFor="let column of tableColumns" class="nowrap">
-              <span *ngIf="column.field !== 'subProgram'">
+              <span
+                *ngIf="column.field !== 'subProgram' && column.field !== 'etat'"
+              >
                 {{
                   item[column.field]?.RIB ??
                     item[column.field]?.label ??
                     item[column.field]
                 }}
               </span>
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
+              </span>
+
               <span
                 *ngIf="column.field === 'subProgram'"
                 data-title="{{ item[column.field] }}"
@@ -293,7 +312,11 @@
                 pRipple
                 class="p-button-rounded p-button"
                 icon="pi pi-ellipsis-h"
-                (click)="currentItem = item; menu.toggle($event)"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
               ></button>
             </td>
           </tr>

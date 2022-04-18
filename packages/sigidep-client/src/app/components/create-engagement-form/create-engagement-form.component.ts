@@ -32,6 +32,7 @@ import {
   EncoursModel,
   TypeProcedureModel,
   EngagementJuridiqueModel,
+  EtatEngagementEnum,
 } from '@models/index';
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -113,7 +114,11 @@ export class CreateEngagementFormComponent
     imputation: string
   ) => {
     const sommeMontantAE: number = engagements
-      .filter((item) => item.imputation === imputation && item.etat === 'BOOK')
+      .filter(
+        (item) =>
+          item.imputation === imputation &&
+          item.etat === EtatEngagementEnum.RESERVED
+      )
       .map((item) => item.montantAE)
       .reduce((acc, curr) => acc + curr, 0);
     return sommeMontantAE;
@@ -155,13 +160,12 @@ export class CreateEngagementFormComponent
                 ...new Set(this.encoursList.map((item) => item.paragraph)),
               ];
 
-              if (this.commonForm.value?.id) {
+              if (this.commonForm?.value?.id) {
                 const operationId = this.commonForm.value?.operationId;
 
                 const selected = this.encoursList.filter(
                   (item) => item.operation.id === operationId
                 );
-                console.log(this.commonForm.value, operationId, selected);
                 if (operationId && selected)
                   this.selectedImputation = selected[0];
               }

@@ -6,18 +6,27 @@
         class="align__items p-field p-col-12 p-md-12"
       >
         <div class="p-field p-col-12 p-md-6">
-          <label>{{ "labels.typeContribuable" | translate }} </label>
-          <p-dropdown
-            [autoDisplayFirst]="true"
-            [options]="['contribuable', 'contribuable Budgetaire']"
-            [placeholder]="''"
-            [(ngModel)]="category"
+          <p-radioButton
+            formControlName="isContribuable"
+            (click)="handleCheck('contribuable')"
+            label="{{ 'labels.contribuable' | translate }}"
+            [value]="true"
+            inputId="type1"
           >
-          </p-dropdown>
+          </p-radioButton>
+          &nbsp;
+          <p-radioButton
+            formControlName="isContribuable"
+            (click)="handleCheck('contribuableBudget')"
+            label="{{ 'labels.contribuableBudget' | translate }}"
+            [value]="false"
+            inputId="type2"
+          >
+          </p-radioButton>
         </div>
         <div
           class="p-field p-col-12 p-md-6"
-          *ngIf="category === 'contribuable'"
+          *ngIf="decisionForm.controls['isContribuable'].value === true"
         >
           <ng-container>
             <label>{{ "labels.niuContribuable" | translate }} </label>
@@ -35,14 +44,13 @@
         </div>
         <div
           class="p-field p-col-12 p-md-6"
-          *ngIf="category !== 'contribuable'"
+          *ngIf="decisionForm.controls['isContribuable'].value === false"
         >
           <ng-container>
             <label>{{ "labels.niuContribuableBudget" | translate }} </label>
             <p-dropdown
               [autoDisplayFirst]="false"
               [options]="contribuablesBudget"
-              [placeholder]="'contribuable'"
               optionLabel="code"
               optionValue="code"
               formControlName="numContribBudget"

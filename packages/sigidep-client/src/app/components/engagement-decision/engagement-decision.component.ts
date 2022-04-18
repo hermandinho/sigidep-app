@@ -1,6 +1,11 @@
 import { GetTaxes } from '@actions/exec-taxes.actions';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
@@ -78,7 +83,7 @@ export class EngagementDecisionComponent
   public exercises: string[] = [];
   public encoursList!: EncoursModel[];
 
-  public category: string = 'contribuable';
+  public isContribuable: boolean = true;
 
   public adminUnits!: AdministrativeUnitModel[];
 
@@ -152,10 +157,26 @@ export class EngagementDecisionComponent
       map((status) => status)
     );
     this.decisionForm = this.startingForm;
-    if (this.readOnly) this.decisionForm.disable();
+    this.decisionForm.addControl(
+      'isContribuable',
+      new FormControl(true, Validators.required)
+    );
+    if (this.readOnly) {
+      this.decisionForm.disable();
+    }
     this.decisionForm.patchValue({
       montantBrut: this.montantAE,
     });
+
+    if (this.decisionForm.getRawValue().numContribuable) {
+      this.decisionForm.patchValue({
+        isContribuable: true,
+      });
+    } else if (this.decisionForm.getRawValue().numContribBudget) {
+      this.decisionForm.patchValue({
+        isContribuable: false,
+      });
+    }
 
     if (
       this.procedure === '1123' ||
@@ -197,6 +218,17 @@ export class EngagementDecisionComponent
         tauxTVA: taxe.TxTVA,
         tauxIR: taxe.TxIR,
       });
+  };
+  handleCheck = (type: 'contribuable' | 'contribuableBudget') => {
+    if (type === 'contribuableBudget') {
+      this.decisionForm.patchValue({
+        numContribuable: '',
+      });
+    } else {
+      this.decisionForm.patchValue({
+        numContribBudget: '',
+      });
+    }
   };
 
   handleContribuableChange = (event: any) => {

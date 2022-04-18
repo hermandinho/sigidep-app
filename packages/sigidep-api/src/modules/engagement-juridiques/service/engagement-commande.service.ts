@@ -35,7 +35,7 @@ export class EngagementCommandeService {
     payload.etat = EtatEngagementEnum.SAVE;
     const val1: string = payload.adminUnit?.substring(2, 4);
     const val2: string = (
-      '00000' + Number(Math.floor(Math.random() * 31)).toString(2)
+      '00000' + Number(Math.floor(Math.random() * 100000))
     ).slice(-5);
 
     payload.numero = payload.exercise + 'CE' + val1 + '-' + val2;

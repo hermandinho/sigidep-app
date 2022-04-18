@@ -2,10 +2,10 @@ import { Column, Entity, TableInheritance } from 'typeorm';
 import { BaseEntity } from '.';
 
 export enum EtatEngagementEnum {
-  SAVE = 'SAVE',
-  MODIFY = 'MODIFY',
-  RESERVED = 'BOOK',
-  CANCEL = 'CANCEL',
+  SAVE = 'labels.save',
+  MODIFY = 'labels.modify',
+  RESERVED = 'labels.book',
+  CANCEL = 'labels.cancel',
 }
 
 @Entity('engagement_juridique')

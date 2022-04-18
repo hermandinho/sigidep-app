@@ -291,7 +291,21 @@
     "reserver": "Reserver",
     "edit": "Editer",
     "delete": "Supprimer",
-    "annuler": "Annuler"
+    "annuler": "Annuler",
+    "contribuableBudget": "Contribuable Budgétaire",
+    "contribuable": "Contribuable",
+    "niuContribuableBudget": "NUI contribubale Budgétaire",
+    "disponibiliteCredits": "Disponibilité des Crédits",
+    "priseEnCompteTaxes": "Prise en compte des taxes",
+    "respectQuotas": "Respect des quotas",
+    "matriculeBeneficiaire": "Matricule Bénéficaire",
+    "typeMission": "Type mission",
+    "itineraire": "Itinéraire",
+    "dateDebut": "Date début",
+    "dateFin": "Date de Fin",
+    "nombreJours": "Nombre jours",
+    "baremeJour": "Bareme jour",
+    "montantMission": "Montant Mission"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -495,7 +509,8 @@
     },
     "engagements": {
       "deleteSuccess": "Engagement supprimé avec succès.",
-      "createSuccess": "Engagement enregistré avec succès."
+      "createSuccess": "Engagement enregistré avec succès.",
+      "cancelSuccess": "Réservation annulée avec succès"
     }
   },
   "menus": {
@@ -786,7 +801,7 @@
       "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
       "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible",
       "reserveEngagement": "Etes-vous sûr de reserver cet engagement?",
-      "cancelEngagement": "Voulez-vous annuler cet engagement?"
+      "cancelEngagement": "Voulez-vous annuler cette Réservation ?"
     }
   },
   "exerciseStatuses": {

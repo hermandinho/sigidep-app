@@ -5,6 +5,7 @@ export class EngagementDecisionModel extends EngagementJuridiqueModel {
   matriculeBeneficiaire!: string;
   nomBeneficiaire!: string;
   numContribBudget!: string;
+  numContribuable!: string;
 
   nomContribBudget!: string;
   codeUnitAdminBenef!: string;

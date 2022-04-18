@@ -1,11 +1,10 @@
-import { NumberValueAccessor } from '@angular/forms';
 import { BaseModel } from './base.model';
 
 export enum EtatEngagementEnum {
-  SAVE = 'SAVE',
-  MODIFY = 'MODIFY',
-  RESERVED = 'BOOK',
-  CANCEL = 'CANCEL',
+  SAVE = 'labels.save',
+  MODIFY = 'labels.modify',
+  RESERVED = 'labels.book',
+  CANCEL = 'labels.cancel',
 }
 
 export type Step = 'common' | 'mission' | 'decision' | 'command';
@@ -35,5 +34,20 @@ export class EngagementJuridiqueModel extends BaseModel {
     if (params) {
       Object.assign(this, params);
     }
+  }
+  public get isCommand() {
+    return (
+      this.codeProcedure === '1110' ||
+      this.codeProcedure === '1111' ||
+      this.codeProcedure === '1115'
+    );
+  }
+
+  public get isMission() {
+    return this.codeProcedure === '1121';
+  }
+
+  public get isDecision() {
+    return !this.isCommand && !this.isMission;
   }
 }

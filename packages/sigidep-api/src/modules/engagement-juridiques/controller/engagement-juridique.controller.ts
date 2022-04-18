@@ -48,8 +48,11 @@ export class EngagementJuridiqueController {
     return this.services.deleteOne(id);
   }
 
-  @Put('/:id')
-  public async cancelReservation(@Param('id') id: number) {
+  @Put('/cancel/:id')
+  public async cancelReservation(
+    @Param('id') id: number,
+    @Body(ValidationPipe) payload: CreateEngagementJuridiqueDTO,
+  ) {
     return this.services.cancelReservation(id);
   }
 }

@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { select, Store } from '@ngrx/store';
@@ -39,19 +47,26 @@ import {
   DeleteEngagement,
   DeleteEngagementSuccess,
   DeleteEngagementFailure,
+  CancelEngagementReservation,
+  CancelEngagementReservationSuccess,
+  CancelEngagementReservationFailure,
   SetAppBreadcrumb,
 } from '@store/actions';
 import { TranslateService } from '@ngx-translate/core';
-import { ApisService } from '@services/apis.service';
 import { TabView } from 'primeng/tabview';
+import { TableColumns } from './consts';
 
 @Component({
   selector: 'app-engagements',
   templateUrl: './engagements.component.html',
   styleUrls: ['./engagements.component.scss'],
   providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EngagementsComponent extends BaseComponent implements OnInit {
+export class EngagementsComponent
+  extends BaseComponent
+  implements OnInit, AfterContentChecked
+{
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: EngagementJuridiqueModel[] = [];
@@ -71,24 +86,7 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
    quick filter
   */
 
-  public filters = [
-    {
-      label: this.translate.instant('labels.save'),
-      value: EtatEngagementEnum.SAVE,
-    },
-    {
-      label: this.translate.instant('labels.modify'),
-      value: EtatEngagementEnum.MODIFY,
-    },
-    {
-      label: this.translate.instant('labels.book'),
-      value: EtatEngagementEnum.RESERVED,
-    },
-    {
-      label: this.translate.instant('labels.cancel'),
-      value: EtatEngagementEnum.CANCEL,
-    },
-  ];
+  public filters: any[] = [];
   public selectedFilters!: string[];
   public currentItem!:
     | EngagementCommandeModel
@@ -104,123 +102,20 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
     public translate: TranslateService,
-    private messageService: MessageService,
-    private _apisService: ApisService,
-
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private ref: ChangeDetectorRef
   ) {
     super();
-
-    this.tableColumns = [
-      {
-        field: 'codeProcedure',
-        title: 'tables.headers.type',
-        sortable: true,
-      },
-      {
-        field: 'numero',
-        title: 'tables.headers.numero',
-        sortable: false,
-      },
-      {
-        field: 'etat',
-        title: 'tables.headers.etat',
-        sortable: true,
-      },
-      {
-        field: 'exercise',
-        title: 'tables.headers.exercise',
-        sortable: true,
-      },
-      {
-        field: 'subProgram',
-        title: 'tables.headers.sousProgramme',
-        sortable: true,
-      },
-      {
-        field: 'action',
-        title: 'tables.headers.action',
-        sortable: true,
-      },
-      {
-        field: 'activity',
-        title: 'tables.headers.activity',
-        sortable: true,
-      },
-      {
-        field: 'task',
-        title: 'tables.headers.task',
-        sortable: true,
-      },
-
-      {
-        field: 'montantAE',
-        title: 'tables.headers.montantAE',
-        sortable: false,
-      },
-      {
-        field: 'adminUnit',
-        title: 'tables.headers.adminUnit',
-        sortable: false,
-      },
-      {
-        field: 'imputation',
-        title: 'tables.headers.imputation',
-        sortable: true,
-      },
-
-      {
-        field: 'reference',
-        title: 'tables.headers.reference',
-        sortable: false,
-      },
-    ];
+    this.filters = Object.entries(EtatEngagementEnum).map(([key, value]) => ({
+      value: key,
+      label: this.translate.instant(value),
+    }));
+    this.tableColumns = TableColumns;
     this._initListeners();
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.menus = [
-      {
-        items: [
-          {
-            label: this.translate.instant('labels.edit'),
-            icon: 'pi pi-pencil',
-            command: () => {
-              this.edit(this.currentItem);
-            },
-          },
-          {
-            label: this.translate.instant('labels.reserver'),
-            icon: 'pi pi-check-square',
-            command: () => {
-              this.handleReservation(this.currentItem);
-            },
-          },
-          {
-            label: this.translate.instant('labels.annuler'),
-            icon: 'pi pi-minus-circle',
-            command: () => {
-              this.handleCancel(this.currentItem);
-            },
-          },
-          {
-            label: this.translate.instant('labels.delete'),
-            icon: 'pi pi-times',
-            command: () => {
-              this.delete(this.currentItem);
-            },
-          },
-          {
-            label: this.translate.instant('labels.print'),
-            icon: 'pi pi-print',
-            command: () => {
-              this.handlePrint(this.currentItem);
-            },
-          },
-        ],
-      },
-    ];
     this._store.dispatch(GetEngagementCommandes());
     this._store.dispatch(GetEngagementMissions());
     this._store.dispatch(GetEngagementDecisions());
@@ -233,6 +128,55 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
         ],
       })
     );
+  }
+
+  ngAfterContentChecked(): void {
+    //this.ref.detectChanges();
+    this.menus = [
+      {
+        items: [
+          {
+            label: this.translate.instant('labels.edit'),
+            icon: 'pi pi-pencil',
+            command: () => {
+              this.edit(this.currentItem);
+            },
+            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+          },
+          {
+            label: this.translate.instant('labels.reserver'),
+            icon: 'pi pi-check-square',
+            command: () => {
+              this.handleReservation(this.currentItem);
+            },
+            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+          },
+          {
+            label: this.translate.instant('labels.annuler'),
+            icon: 'pi pi-minus-circle',
+            command: () => {
+              this.handleCancel(this.currentItem);
+            },
+            disabled: this.currentItem?.etat !== EtatEngagementEnum.RESERVED,
+          },
+          {
+            label: this.translate.instant('labels.delete'),
+            icon: 'pi pi-times',
+            command: () => {
+              this.delete(this.currentItem);
+            },
+            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+          },
+          {
+            label: this.translate.instant('labels.print'),
+            icon: 'pi pi-print',
+            command: () => {
+              this.handlePrint(this.currentItem);
+            },
+          },
+        ],
+      },
+    ];
   }
 
   get currentLang() {
@@ -300,48 +244,10 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
       | EngagementDecisionModel
       | EngagementMissionModel
   ) {
-    this.busy = true;
     this._appService.showConfirmation({
       message: 'dialogs.messages.cancelEngagement',
       accept: () => {
-        this._apisService
-          .put<EngagementJuridiqueModel>('/engagements/' + item.id, null)
-          .subscribe(
-            (res) => {
-              this.busy = false;
-              this._appService.showToast({
-                summary: 'messages.success',
-                detail:
-                  'messages.engagements.cancelSuccess' +
-                  ': numéro: ' +
-                  res.numero,
-                severity: 'success',
-                life: 3000,
-                closable: true,
-              });
-              if (item instanceof EngagementCommandeModel)
-                this._store.dispatch(GetEngagementCommandes());
-              else if (item instanceof EngagementDecisionModel)
-                this._store.dispatch(GetEngagementDecisions());
-              else this._store.dispatch(GetEngagementMissions());
-            },
-            ({ error }) => {
-              let err = '';
-              if (error?.statusCode === 409) {
-                err = 'errors.engagements.cancelError';
-              } else {
-                err = 'errors.unknown';
-              }
-              this.busy = false;
-              this._appService.showToast({
-                detail: err,
-                summary: 'errors.error',
-                severity: 'error',
-                life: 5000,
-                closable: true,
-              });
-            }
-          );
+        this._store.dispatch(CancelEngagementReservation({ payload: item }));
       },
     });
   }
@@ -403,6 +309,36 @@ export class EngagementsComponent extends BaseComponent implements OnInit {
           this._appService.showToast({
             severity: 'success',
             detail: 'messages.engagements.deleteSuccess',
+            summary: 'errors.success',
+            closable: true,
+          });
+        }
+      });
+
+    this.dispatcher
+      .pipe(
+        this.takeUntilDestroy,
+        ofType(
+          CancelEngagementReservationSuccess,
+          CancelEngagementReservationFailure
+        )
+      )
+      .subscribe((action) => {
+        if (action.type === CancelEngagementReservationFailure.type) {
+          if (action.error?.statusCode === 403) {
+            this._appService.showUnauthorizedActionToast();
+          } else {
+            this._appService.showToast({
+              severity: 'error',
+              summary: 'errors.error',
+              detail: 'errors.error',
+              closable: true,
+            });
+          }
+        } else if (action.type === CancelEngagementReservationSuccess.type) {
+          this._appService.showToast({
+            severity: 'success',
+            detail: 'messages.engagements.cancelSuccess',
             summary: 'errors.success',
             closable: true,
           });

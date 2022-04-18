@@ -3,28 +3,52 @@
     <h3>
       {{ "labels.autorisationEngagement" | translate }} N<sup>o</sup>:
       {{ engagement.numero }}
+      <span *ngIf="!isBook" style="float: right; color: red"
+        >{{ "labels.etat" | translate }}:
+        {{ engagement.etat | translate }}</span
+      >
     </h3>
     <dl class="p-fluid p-grid">
       <dd>{{ "labels.exercise" | translate }}:</dd>
       <dt>{{ engagement.exercise }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.imputation" | translate }}:</dd>
       <dt>{{ engagement.imputation }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.subProgram" | translate }}:</dd>
       <dt>{{ engagement.subProgram }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.action" | translate }}:</dd>
       <dt>{{ engagement.action }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.activity" | translate }}:</dd>
       <dt>{{ engagement.activity }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.task" | translate }}:</dd>
       <dt>{{ engagement.task }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.operation" | translate }}:</dd>
       <dt>{{ engagement.operationId }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.adminUnit" | translate }}:</dd>
       <dt>{{ engagement.adminUnit }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.paragraph" | translate }}:</dd>
       <dt>{{ engagement.paragraph }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.objet" | translate }}:</dd>
       <dt>{{ engagement.objet }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
       <dd>{{ "labels.montantAE" | translate }}:</dd>
       <dt>
         {{

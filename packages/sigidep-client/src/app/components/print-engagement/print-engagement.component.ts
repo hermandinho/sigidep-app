@@ -30,6 +30,7 @@ import { GetEncours, GetEngagementJuridiques } from '@store/actions';
 
 import { TranslateService } from '@ngx-translate/core';
 import { Engagement } from './types';
+import { EtatEngagementEnum } from '@models/engagement-juridique.model';
 
 @Component({
   selector: 'app-print-engagement',
@@ -52,6 +53,10 @@ export class PrintEngagementComponent extends BaseComponent implements OnInit {
     return this.translate.currentLang;
   }
 
+  get isBook() {
+    return this.engagement.etat === EtatEngagementEnum.RESERVED;
+  }
+
   get currentLangCurrencyFormat() {
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
@@ -71,6 +76,7 @@ export class PrintEngagementComponent extends BaseComponent implements OnInit {
         objet,
         montantAE,
         numero,
+        etat,
       } = this.config.data?.item as Engagement;
       this.engagement = {
         numero,
@@ -85,6 +91,7 @@ export class PrintEngagementComponent extends BaseComponent implements OnInit {
         paragraph,
         objet,
         montantAE,
+        etat,
       };
     }
   }

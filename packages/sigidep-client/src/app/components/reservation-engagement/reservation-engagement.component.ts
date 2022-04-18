@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
@@ -11,32 +16,19 @@ import { AppService } from '@services/app.service';
 import { ApisService } from '@services/apis.service';
 
 import { select, Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { GetEncours } from '@actions/encours.actions';
 import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
 import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 import { AppState } from '@reducers/index';
-import { map } from 'rxjs/operators';
 
-import {
-  getLoadingSelector as getEncoursLoadingSelector,
-  getDataSelector as getEncoursDataSelector,
-} from '@reducers/encours.reducer';
+import { getDataSelector as getEngagementCommandeDataSelector } from '@reducers/engagement-commande.reducer';
 
-import {
-  getDataSelector as getEngagementCommandeDataSelector,
-  getLoadingSelector as getEngagementCommandeLoadingSelector,
-} from '@reducers/engagement-commande.reducer';
-
-import {
-  getDataSelector as getEngagementMissionDataSelector,
-  getLoadingSelector as getEngagementMissionLoadingSelector,
-} from '@reducers/engagement-mission.reducer';
+import { getDataSelector as getEngagementMissionDataSelector } from '@reducers/engagement-mission.reducer';
 import { Observable, of } from 'rxjs';
 import * as moment from 'moment';
 import { NombreJours } from './consts';
 import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 import { DialogsService } from '@services/dialogs.service';
+import { check } from './config';
 
 @Component({
   selector: 'app-reservation-engagement',
@@ -48,7 +40,7 @@ export class ReservationEngagementComponent
   extends BaseComponent
   implements OnInit
 {
-  public form: FormGroup;
+  public form!: FormGroup;
 
   public engagement!:
     | EngagementCommandeModel
@@ -72,35 +64,38 @@ export class ReservationEngagementComponent
     private readonly _dialogService: DialogsService
   ) {
     super();
-    this.form = this._fb.group({
-      id: [undefined],
-      disponibiliteCredits: [false, undefined],
-      respectNonMorcellement: [false, undefined],
-      priseEnCompteTaxes: [false, undefined],
-      respectQuotas: [false, undefined],
-    });
   }
 
   ngOnInit(): void {
-    if (this.config.data?.item) {
-      this.engagement = this.config.data?.item;
-      this.type = this.config.data.type;
-      this.form.disable();
-    }
+    this.engagement = this.config.data?.item;
+    this.type = this.config.data?.type;
+    this.form = this._fb.group({
+      id: [undefined],
+      disponibiliteCredits: [undefined, check()],
+      respectNonMorcellement: [
+        undefined,
+        this.type === 'command' ? check() : null,
+      ],
+      priseEnCompteTaxes: [
+        undefined,
+        this.type === 'decision' ? check() : null,
+      ],
+      respectQuotas: [undefined, this.type === 'mission' ? check() : null],
+    });
     this._initListeners();
   }
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getEngagementCommandeDataSelector))
       .subscribe((payload) => {
-        this.dernierCommande = payload.reduce((acc, curr) =>
-          moment(acc.dateSignature).isAfter(curr.dateSignature) ? acc : curr
-        );
-
-        console.log('PALOD...:', this.dernierCommande);
+        if (payload && payload.length !== 0) {
+          this.dernierCommande = payload.reduce((acc, curr) =>
+            moment(acc.dateSignature).isAfter(curr.dateSignature) ? acc : curr
+          );
+        }
       });
 
-    if (this.type === 'mission')
+    if (this.type === 'mission') {
       this._store
         .pipe(this.takeUntilDestroy, select(getEngagementMissionDataSelector))
         .subscribe((payload) => {
@@ -114,6 +109,7 @@ export class ReservationEngagementComponent
             .map((item) => item.nombreJours)
             .reduce((acc, curr) => acc + curr, 0);
         });
+    }
 
     this.form.patchValue({
       id: this.engagement.id,
@@ -133,6 +129,10 @@ export class ReservationEngagementComponent
     //console.log('FORMULAIRE.....: ', this.form.getRawValue());
   }
 
+  get isValid() {
+    console.log('CHECK ....: ', this.form);
+    return this.form.valid;
+  }
   close() {
     this.ref.close();
   }
@@ -169,7 +169,7 @@ export class ReservationEngagementComponent
           : this.type === 'command'
           ? this._store.dispatch(GetEngagementCommandes())
           : this._store.dispatch(GetEngagementDecisions());
-        this._dialogService.launchPrintEngagementDialog(this.engagement);
+        this._dialogService.launchPrintEngagementDialog(res);
         this._appService.showToast({
           summary: 'messages.success',
           detail:
