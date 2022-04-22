@@ -1,10 +1,15 @@
+import {
+    GetCertificatEngagements,
+    GetCertificatEngagementsSuccess,
+    GetCertificatEngagementsFailure
+} from '../actions/consultations.actions';
 
 import {
   GetEncours,
   GetEncoursFailure,
   GetEncoursSuccess,
 } from '@actions/encours.actions';
-import { GetImputations, GetImputationsFailure, GetImputationsSuccess } from '@actions/imputations.actions';
+import { GetImputations, GetImputationsFailure, GetImputationsSuccess } from '@actions/consultations.actions';
 import { EncoursModel } from '@models/encours.model';
 import {
   Action,
@@ -31,7 +36,7 @@ export const initialState: State = {
   },
 };
 
-const imputationsReducer = createReducer(
+const consultationsReducer = createReducer(
   initialState,
   on(GetImputations, (state) => {
     return { ...state, loading: true };
@@ -41,14 +46,23 @@ const imputationsReducer = createReducer(
   }),
   on(GetImputationsFailure, (state, { error }) => {
     return { ...state, loading: false, error };
+  }),
+   on(GetCertificatEngagements, (state) => {
+    return { ...state, loading: true };
+  }),
+  on(GetCertificatEngagementsSuccess, (state, { payload }) => {
+    return { ...state, loading: false, data: payload };
+  }),
+  on(GetCertificatEngagementsFailure, (state, { error }) => {
+    return { ...state, loading: false, error };
   })
 );
 
 export function reducer(state: State | undefined, action: Action): State {
-  return imputationsReducer(state, action);
+  return consultationsReducer(state, action);
 }
 
-export const featureKey = 'imputations';
+export const featureKey = 'consultations';
 
 const userState = createFeatureSelector<State>(featureKey);
 

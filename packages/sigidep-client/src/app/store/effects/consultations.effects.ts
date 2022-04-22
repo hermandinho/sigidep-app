@@ -4,15 +4,34 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, mergeMap, switchMap } from 'rxjs/operators';
+import {
+    GetCertificatEngagementsFailure,
+    GetCertificatEngagementsSuccess,
+    GetCertificatEngagements
+} from '../actions/consultations.actions';
 import { ApisService } from '@services/apis.service';
 import { EncoursModel } from '@models/encours.model';
 import { GetEncours, GetEncoursFailure, GetEncoursSuccess } from '@actions/encours.actions';
-import { GetImputations, GetImputationsFailure, GetImputationsSuccess } from '@actions/imputations.actions';
+import { GetImputations, GetImputationsFailure, GetImputationsSuccess } from '@actions/consultations.actions';
 
 
 @Injectable()
-export class ImputationsEffects {
-  fetch$ = createEffect(() =>
+export class ConsultationsEffects {
+  certificat$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GetCertificatEngagements),
+      mergeMap((action) =>
+        this.apisService.get<EncoursModel[]>(`/encours/imputations/code?imputation=${action.engagement}`).pipe(
+          switchMap((payload) => {
+            return [GetCertificatEngagementsSuccess({ payload })];
+          }),
+          catchError((err: HttpErrorResponse) => of(GetCertificatEngagementsFailure(err)))
+        )
+      )
+    )
+  );
+
+  imputation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GetImputations),
       mergeMap((action) =>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
-import { EncoursModel } from '@models/encours.model';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GetCertificatEngagements } from '../../store/actions/consultations.actions';
 import { AppState } from '@reducers/index';
-import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
-import { GetImputations } from '@actions/imputations.actions';
-import { Router } from '@angular/router';
+import { GetImputations } from '@actions/consultations.actions';
 import { DialogsService } from '@services/dialogs.service';
+import { EncoursModel } from '@models/encours.model';
+import { getDataSelector, getLoadingSelector } from '@reducers/consultations.reducer';
 
 @Component({
   selector: 'app-consultations',
@@ -25,6 +25,8 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   public globalColumns!: string[];
   public formImputation!: FormGroup;
+  public formMandat!: FormGroup;
+  public formEngagement!: FormGroup;
   public imputation: boolean = false;
   constructor(
     private _fb: FormBuilder,
@@ -36,10 +38,25 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
     this.formImputation = this._fb.group({
       imputation: [undefined, [Validators.required]],
     });
+
+    this.formEngagement = this._fb.group({
+      engagement: [undefined, [Validators.required]],
+    });
+    this.formMandat = this._fb.group({
+      mandat: [undefined, [Validators.required]],
+    });
   }
 
   get form1() {
     return this.formImputation.controls;
+  }
+
+   get form2() {
+    return this.formEngagement.controls;
+   }
+
+   get form3() {
+    return this.formMandat.controls;
   }
 
   ngOnInit(): void {
@@ -99,6 +116,28 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
     ;
     console.log(editedImputation)
     this._store.dispatch(GetImputations({ imputation: editedImputation }));
+    this.initTable();
+    console.log(this.data)
+    this.busy = false;
+  }
+   submitMandat() {
+    this.busy = true;
+    const editedMandat =
+      this.form3.mandat.value
+    ;
+    console.log(editedMandat)
+    //this._store.dispatch(GetImputations({ mandat: editedMandat }));
+    this.initTable();
+    console.log(this.data)
+    this.busy = false;
+   }
+   submitEngagement() {
+    this.busy = true;
+    const editedEngagement =
+      this.form2.engagement.value
+    ;
+    console.log(editedEngagement)
+    this._store.dispatch(GetCertificatEngagements({ engagement: editedEngagement }));
     this.initTable();
     console.log(this.data)
     this.busy = false;
