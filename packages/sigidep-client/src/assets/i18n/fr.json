@@ -36,7 +36,8 @@
     "encours": "Mise En Ligne",
     "taxes": "Taxes",
     "procedures": "Procédures",
-    "engagements": "Engagements"
+    "engagements": "Engagements",
+    "consultation": "Consultations"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -65,7 +66,8 @@
     "reset": "Reinitializer",
     "load": "Charger",
     "back": "Retour",
-    "submit": "Soumettre"
+    "submit": "Soumettre",
+    "print":"Imprimer"
   },
   "install": {
     "title": "Installation"
@@ -259,7 +261,10 @@
     "codeAgenceContribuable": "Code Agence",
     "cleCompteContribuable": "Clé Compte",
     "numeroCompteContribuable": "Numéro Compte",
-    "montantTTC": "Montant TTC"
+    "montantTTC": "Montant TTC",
+    "imputationBudgetaire":"Imputation budgétaire",
+    "certificatEngagement":"Certificat d’Engagement",
+    "mandats":"Mandat"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -724,7 +729,8 @@
       "encoursExercise": "Statistiques de Mise en ligne du budget Exercice: {{code}}",
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
-      "editEngagement": "Editer un Engagement"
+      "editEngagement": "Editer un Engagement",
+      "imputation":"Imputation"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",

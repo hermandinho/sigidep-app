@@ -82,6 +82,8 @@ export class DialogsService {
 
   private engagementCreateComponent: any;
 
+  private etatImputationComponent: any;
+
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
@@ -884,4 +886,24 @@ export class DialogsService {
       },
     });
   }
+ public async launchImputationEtatDialog(
+    item?: EncoursModel
+  ): Promise<any> {
+    if (!this.etatImputationComponent) {
+      const { EtatImputationComponent } = await import(
+        '@components/etat-imputation/etat-imputation.component'
+      );
+      this.etatImputationComponent = EtatImputationComponent;
+    }
+    return this._dialogService.open(this.etatImputationComponent, {
+      header: this._translateService.instant('dialogs.headers.imputation'),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
 }

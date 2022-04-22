@@ -36,6 +36,7 @@ export const MenuPermissions = {
   taxes: [...simpleCrudPermissions('taxes')],
   engagements: [...simpleCrudPermissions('engagements')],
   regions: [...simpleCrudPermissions('regions')],
+  consultations: [...simpleCrudPermissions('consultations'),],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -145,6 +146,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.contribuables],
+          },
+        },
+        {
+          routerLink: 'consultations',
+          icon: 'pi pi-eye',
+          label: translate.instant('sidebar.consultation'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.consultations],
           },
         },
         {

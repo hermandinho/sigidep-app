@@ -1,0 +1,173 @@
+<p-card>
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="right"> </ng-template>
+  </p-toolbar>
+  <div class="container">
+    <div class="form" [formGroup]="formImputation">
+      <div class="p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.imputationBudgetaire" | translate }}:</label>&nbsp;
+          <input type="text" class="form-control" pInputText formControlName="imputation" [placeholder]="" />&nbsp;&nbsp;
+          <span>{{'{'}}Exemple : <strong>55 01 02 330030 201100</strong>{{'}'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button (click)="submit()" [disabled]="!formImputation?.valid || busy" [label]="
+          'buttons.' + 'save'| translate
+        " pButton></button>
+    </div>
+  </div>
+
+
+ <!--  <div class="p-field p-col-12 p-md-6">
+    <label>{{ "labels.certificatEngagement" | translate }}:</label>&nbsp;
+    <input type="text" class="form-control" pInputText formControlName="engagement" [placeholder]="" />&nbsp;&nbsp;
+    <span>{{'{'}}Exemple de Certificat : <strong>55CE00-00010</strong>{{'}'}}</span>
+
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label>{{ "labels.mandats" | translate }}:</label>&nbsp;
+    <input type="text" class="form-control" pInputText formControlName="mandat" [placeholder]="" />&nbsp;&nbsp;
+    <span>{{'{'}}Exemple de numéro Mandat :<strong> 0001024</strong>{{'}'}}</span>
+
+  </div> -->
+
+</p-card>
+
+<p-card *ngIf="imputation">
+  <p-table #dt [globalFilterFields]="globalColumns" [paginator]="true"
+    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [sortMode]="'single'" [value]="data"
+    [currentPageReportTemplate]="'tables.stats.pager' | translate" dataKey="id" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-m-0">
+          {{ "tables.titles.imputation" | translate }}
+        </h5>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let column of tableColumns">
+          <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+            {{ column.title | translate }}
+            <p-sortIcon field="exercise"></p-sortIcon>
+          </th>
+        </ng-container>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td *ngFor="let column of tableColumns">
+            {{ item[column.field] }}
+          <ng-template>
+            <span *ngIf="column.field !== 'operation'">
+              {{ item[column.field] }}
+            </span>
+            <span *ngIf="column.field === 'operation'">
+              {{ item[column.field]?.id }}
+            </span>
+          </ng-template>
+        </td>
+        <td class="actions">
+          <button (click)="detail(item)" class="p-button-rounded p-button-warning"
+            icon="pi pi-eye" pButton pRipple></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<!-- <p-card id="print-section">
+
+  <h3><i class="pi pi-check"></i> Etat de restitution pour les détails de l’imputation</h3>
+  <div class="grid-container-header">
+
+    <div class="grid-fr">
+      <strong>REPUBLIQUE DU CAMEROUN</strong> <br>
+      <i>Paix-Travail-Patrie</i> <br>
+      ********* <br>
+      <strong>CHAMBRE D'AGRICULTURE, DES PECHES, DE <br>
+      L'ELEVAGE ET DES FORETS DU CAMEROUN</strong>
+    </div>
+    <div class="grid-img">
+      <img src="assets/img/logopdf.png" alt="logo pdf">
+    </div>
+    <div class="grid-en">
+      <strong>REPUBLIC OF CAMEROON</strong> <br>
+      <em>Peace-Work-Fatherland</em> <br>
+      ********* <br>
+      <strong>CHAMBER OF AGRICULTURE, FISHERIES, <br> LIVESTOCK AND FOREST OF CAMEROON</strong>
+    </div>
+  </div>
+  <h1>SITUATION DES CREDITS SUR IMPUTATION</h1>
+<div class="grid-container">
+  <fieldset class="grid-item1">
+    <legend><i>Identification de l’imputation</i></legend>
+    <p>
+      N° imputation : <strong>55 01 04 330030 201100 911 - FRAIS RECH INVEST SECT AGRI</strong><br>
+      <i>Frais de recherche pour investissement dans le secteur agricole, animal, sylvicole et faunique
+        Research costs for investment in the agricultural, animal, forestry and wildlife sector</i>
+        <br>
+        Opération: Frais d'appui
+    </p>
+
+  </fieldset>
+  <fieldset class="grid-item2">
+    <legend><i>Statistiques de consommation (en F CFA)</i></legend>
+    <table>
+      <tr>
+        <th></th>
+        <th>AE</th>
+        <th>CP</th>
+      </tr>
+      <tr>
+        <td><strong>Dotation Initiale :</strong></td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+      <tr>
+        <td><strong>Abattement :</strong></td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+      <tr>
+        <td><strong>Dotation Init. Révisée :</strong></td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+      <tr>
+        <td><strong>Virement débiteur :</strong></td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+      <tr>
+        <td><strong>Virement créditeur :</strong></td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Crédits consommés :</strong>
+        </td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+      <tr>
+        <td>Taux consommation :</td>
+        <td>5 000 000</td>
+        <td>5 000 000</td>
+      </tr>
+    </table>
+  </fieldset>
+</div>
+</p-card>
+<button printSectionId="print-section" printTitle="MyTitle" [useExistingCss]="true"
+ ngxPrint>print</button>
+
+  <button pButton class="p-mr-3 p-button-warning">
+    {{ "buttons.cancel" | translate }}
+  </button>
+ -->
