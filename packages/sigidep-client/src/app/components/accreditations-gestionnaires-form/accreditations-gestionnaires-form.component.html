@@ -9,6 +9,8 @@
             [options]="exercicesInprogressList"
             formControlName="exercice"
             optionLabel="code"
+            [(ngModel)]="exercice"
+            (onChange)="setOtherField()"
           >
             <ng-template let-option pTemplate="selectedItem">
               <div>
@@ -29,7 +31,6 @@
           </p-dropdown>
         </div>
       </div>
-
       <div class="p-field p-col-12 p-md-12">
         <div class="p-field">
           <label class="required">{{ "labels.agent" | translate }}</label>

@@ -1,13 +1,8 @@
 import { AdministrativeUnitModel } from '@models/index';
 import { GestionnaireModel } from './../../models/gestionnaire.model';
-import {
-  SubProgramActivityModel,
-  SubProgramActivityTaskModel,
-} from '@models/sub-program.model';
 import { SubProgramModel } from './../../models/sub-program.model';
 import { AgentModel } from '@models/agent.model';
 import { ExerciseModel } from './../../models/exercise.model';
-import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { AppService } from './../../services/app.service';
@@ -16,15 +11,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BaseComponent } from './../base.component';
 import { Component, OnInit } from '@angular/core';
-import { GetContribuablesBugetaires } from '@actions/contribuables-budgetaires.actions';
-import { BankModel } from '@models/banque.model';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
 import { EncoursModel } from '@models/encours.model';
 import { FilterService } from './filter.service';
 import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { GetEncours } from '@actions/encours.actions';
+import { GetEncourByExercice, GetEncours } from '@actions/encours.actions';
 
 @Component({
   selector: 'app-accreditations-gestionnaires-form',
@@ -40,6 +33,7 @@ export class AccreditationsGestionnairesFormComponent
   isEditMode = false;
   loadingRemoveAccreditation = false;
   loadingSaveAccreditation = false;
+  public exercice = null;
 
   public loading$: Observable<boolean> = of(true);
 
@@ -75,8 +69,7 @@ export class AccreditationsGestionnairesFormComponent
     public ref: DynamicDialogRef,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>,
-    private filterService: FilterService
+    private _store: Store<AppState>
   ) {
     super();
     this.form = this._fb.group({
@@ -130,6 +123,7 @@ export class AccreditationsGestionnairesFormComponent
       }
     });
   }
+
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
@@ -141,6 +135,7 @@ export class AccreditationsGestionnairesFormComponent
             endDate: new Date(),
           })),
         ];
+
         this.filteredEncours = [...this.allEncours];
       });
     this.loading$ = this._store.pipe(
@@ -325,5 +320,11 @@ export class AccreditationsGestionnairesFormComponent
           });
         }
       );
+  }
+  /**
+   * setOtherField
+   */
+  public setOtherField() {
+    this._store.dispatch(GetEncourByExercice({ id: this.exercice!['code'] }));
   }
 }

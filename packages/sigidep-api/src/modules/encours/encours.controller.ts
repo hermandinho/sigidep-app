@@ -51,7 +51,7 @@ export class EncoursController {
     return this.encoursServices
       .getRepository()
       .createQueryBuilder('encours')
-      .where('exercise_id=:id', { id })
+      .where('exercise=:id', { id })
       .getMany();
   }
 }
