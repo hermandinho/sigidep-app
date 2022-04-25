@@ -36,7 +36,17 @@
     "encours": "Mise En Ligne",
     "taxes": "Taxes",
     "procedures": "Procédures",
-    "engagements": "Engagements"
+    "engagementsjuridiques": "Engagements Juridiques",
+    "engagementsmandats": "Engagements Mandats",
+    "boncommande": "Bon de Commande Administratif",
+    "lettrecommande": "Lettre commande",
+    "marche": "Marché",
+    "missions": "Missions",
+    "primes": "Primes",
+    "fraisreleve": "Frais de Relève",
+    "dispositionagent": "Mise à Disposition Agent",
+    "dispositionstructure": "Mise à Disposition Structure",
+    "deblocagecontribuable": "Déblocage Contribuable"
   },
   "buttons": {
     "save": "Enregistrer",

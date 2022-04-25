@@ -259,11 +259,75 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         {
           routerLink: 'engagements',
           icon: 'pi pi-table',
-          label: translate.instant('sidebar.engagements'),
+          label: translate.instant('sidebar.engagementsjuridiques'),
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.engagements],
           },
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.engagementsmandats'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
+          items: [
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.boncommande'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.lettrecommande'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-filter',
+              label: translate.instant('sidebar.marche'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.missions'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.primes'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.fraisreleve'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.dispositionagent'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.dispositionstructure'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.deblocagecontribuable'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
         },
       ],
     },
