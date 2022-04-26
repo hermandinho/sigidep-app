@@ -34,3 +34,4 @@ export * from './engagement-mission.model';
 export * from './encours.model';
 export * from './exec-procedure.model';
 export * from './exec-taxes.model';
+export * from './traitement.model';

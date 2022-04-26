@@ -276,19 +276,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             {
               routerLink: '#',
               icon: 'pi pi-table',
-              label: translate.instant('sidebar.boncommande'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: '#',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.lettrecommande'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: '#',
-              icon: 'pi pi-filter',
-              label: translate.instant('sidebar.marche'),
+              label: translate.instant('sidebar.commandepublique'),
               routerLinkActiveOptions: { exact: true },
             },
             {
@@ -300,31 +288,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             {
               routerLink: '#',
               icon: 'pi pi-table',
-              label: translate.instant('sidebar.primes'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: '#',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.fraisreleve'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: '#',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.dispositionagent'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: '#',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.dispositionstructure'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: '#',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.deblocagecontribuable'),
+              label: translate.instant('sidebar.decisions'),
               routerLinkActiveOptions: { exact: true },
             },
           ],

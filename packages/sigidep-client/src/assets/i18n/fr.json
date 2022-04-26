@@ -38,15 +38,9 @@
     "procedures": "Procédures",
     "engagementsjuridiques": "Engagements Juridiques",
     "engagementsmandats": "Engagements Mandats",
-    "boncommande": "Bon de Commande Administratif",
-    "lettrecommande": "Lettre commande",
-    "marche": "Marché",
+    "commandepublique": "Commande Publique",
     "missions": "Missions",
-    "primes": "Primes",
-    "fraisreleve": "Frais de Relève",
-    "dispositionagent": "Mise à Disposition Agent",
-    "dispositionstructure": "Mise à Disposition Structure",
-    "deblocagecontribuable": "Déblocage Contribuable"
+    "decisions": "Décisions"
   },
   "buttons": {
     "save": "Enregistrer",

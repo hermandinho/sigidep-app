@@ -16,6 +16,7 @@ import {
   ROOT_ROLE,
   ROOT_USER,
   SECTORS_DATA,
+  TRAITMENTS_DATA,
 } from '@modules/seeder/data';
 import { PermissionEntity } from '@entities/permission.entity';
 import { RolePermissionEntity } from '@entities/role-permission.entity';
@@ -30,6 +31,7 @@ import { RegimeFiscalEntity } from '@entities/regime-fiscal.entity';
 import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
 import { GradeEntity } from '@entities/grade.entity';
 import { TypeProcedureEntity } from '@entities/type-procedure.entity';
+import { TraitementEntity } from '@entities/traitement.entity';
 
 @Injectable()
 export class SeederService implements OnModuleInit {
@@ -68,6 +70,9 @@ export class SeederService implements OnModuleInit {
 
     @InjectRepository(TypeProcedureEntity)
     private readonly proceduretypesRepository: Repository<TypeProcedureEntity>,
+
+    @InjectRepository(TraitementEntity)
+    private readonly traitementRepository: Repository<TraitementEntity>,
   ) {}
 
   private async _initRoot(): Promise<{ role: RoleEntity; user: UserEntity }> {
@@ -339,7 +344,23 @@ export class SeederService implements OnModuleInit {
       }
     }
 
-    this.logger.warn(`Synced ${count} grades`);
+    this.logger.warn(`Synced ${count} types procedures`);
+  }
+
+  private async _initTraitements(): Promise<void> {
+    let count = 0;
+
+    for (const source of TRAITMENTS_DATA) {
+      const check = await this.traitementRepository.findOne(source, {
+        loadEagerRelations: false,
+      });
+      if (!check) {
+        await this.traitementRepository.save(source);
+        count += 1;
+      }
+    }
+
+    this.logger.warn(`Synced ${count} traitements`);
   }
 
   async onModuleInit(): Promise<any> {
@@ -353,5 +374,6 @@ export class SeederService implements OnModuleInit {
     this._initCategoriesAgents();
     this._initGrades();
     this._initProcedureTypes();
+    this._initTraitements();
   }
 }
