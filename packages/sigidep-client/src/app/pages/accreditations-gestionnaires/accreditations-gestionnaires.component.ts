@@ -105,6 +105,7 @@ export class AccreditationsGestionnairesComponent
               ...d,
             })
         );
+        console.log(data);
       });
 
     this.loading$ = this._store.pipe(

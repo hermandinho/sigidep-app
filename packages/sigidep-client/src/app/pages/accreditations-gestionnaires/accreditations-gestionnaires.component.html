@@ -17,12 +17,6 @@
         pButton
         pRipple
       ></button>
-      <!--<ng-container>
-              <button (click)="delete()" *appCheckPermissions="['banksAgences.delete']"
-                      [disabled]="!selectedItems?.length"
-                      class="p-button-danger" icon="pi pi-trash"
-                      pButton pRipple></button>
-            </ng-container>-->
     </ng-template>
     <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
@@ -53,7 +47,7 @@
         <td>{{ gestionnaire.matricule }}</td>
         <td>{{ gestionnaire.nom }}</td>
         <td>{{ gestionnaire.prenom }}</td>
-        <td>{{ gestionnaire.accreditations?.length }}</td>
+        <td>{{ gestionnaire.count }}</td>
         <td>
           <button
             (click)="edit(gestionnaire)"

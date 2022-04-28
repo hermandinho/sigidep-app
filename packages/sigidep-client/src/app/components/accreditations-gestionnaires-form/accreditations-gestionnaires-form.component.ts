@@ -41,6 +41,9 @@ export class AccreditationsGestionnairesFormComponent
   exercicesInprogressList: ExerciseModel[] = [];
   subProgramsList: SubProgramModel[] = [];
   administrativeUnitList: AdministrativeUnitModel[] = [];
+  taskList: String[] = [];
+  actionList: String[] = [];
+  activityList: String[] = [];
 
   // imputationsOperationsList: any[] = [];
   imputationsOperationsList: AccreditationGestionnaireModel[] = [];
@@ -89,37 +92,30 @@ export class AccreditationsGestionnairesFormComponent
   private listenForm() {
     this.form.get('subProgram')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.subProgram == value
+        this.filteredEncours = this.allEncours.filter((e) =>
+          e.element.subProgram == value.subProgram ? e : null
         );
       }
     });
     this.form.get('action')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.action == value
-        );
+        this.filteredEncours = this.allEncours.filter((e) => {
+          return e.element.action == value.action ? e : null;
+        });
       }
     });
     this.form.get('task')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.task == value
+        this.filteredEncours = this.allEncours.filter((e) =>
+          e.element.task == value.task ? e : null
         );
       }
     });
     this.form.get('activity')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.activity == value
-        );
-      }
-    });
-    this.form.get('activity')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.activity == value
-        );
+        this.filteredEncours = this.allEncours.filter((e) => {
+          return e.element.activity == value.activity ? e : null;
+        });
       }
     });
   }
@@ -135,7 +131,11 @@ export class AccreditationsGestionnairesFormComponent
             endDate: new Date(),
           })),
         ];
-
+        this.allEncours.forEach((element) => {
+          this.taskList.push(element.element.task);
+          this.actionList.push(element.element.action);
+          this.activityList.push(element.element.activity);
+        });
         this.filteredEncours = [...this.allEncours];
       });
     this.loading$ = this._store.pipe(
@@ -154,16 +154,6 @@ export class AccreditationsGestionnairesFormComponent
     this._store.dispatch(GetEncours());
     if (this.config.data?.item) {
       const { id, matricule } = this.config.data?.item as GestionnaireModel;
-      /* this.form.patchValue({
-        id,
-        code,
-        raisonSociale,
-        exercice,
-        banque,
-        agence,
-        numeroCompte,
-        cle,
-      }); */
       this.isEditMode = true;
 
       const a = this.agentsList.find((elt) => elt.matricule === matricule);
@@ -173,11 +163,13 @@ export class AccreditationsGestionnairesFormComponent
   }
 
   uniqueItemsWith(key: string) {
-    return [
+    let values = [
       ...new Map(
-        this.allEncours.map((item: any) => [item[key], item])
+        this.allEncours.map((item: any) => [item.element[key], item.element])
       ).values(),
     ] as EncoursModel[];
+
+    return values;
   }
 
   close() {
