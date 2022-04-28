@@ -12,6 +12,7 @@ import { GradesModule } from '@modules/grades/grades.module';
 import { CategoriesAgentsModule } from '@modules/categories-agents/categories-agents.module';
 import { AgentsModule } from '@modules/agents/agents.module';
 import { TypesProceduresModule } from '@modules/types-procedures/types-procedures.module';
+import { TraitementsModule } from '@modules/traitements/traitements.module';
 
 @Module({
   providers: [SeederService],
@@ -28,6 +29,7 @@ import { TypesProceduresModule } from '@modules/types-procedures/types-procedure
     CategoriesAgentsModule,
     AgentsModule,
     TypesProceduresModule,
+    TraitementsModule,
   ],
 })
 export class SeederModule {}

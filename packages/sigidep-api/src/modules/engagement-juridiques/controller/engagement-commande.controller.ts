@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { EngagementCommandeDTO } from '../dto/create-engagement-commande.dto';
 import { EngagementCommandeService } from '../service/engagement-commande.service';
+import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
 @Controller('engagements/commandes')
 @ApiTags('engagements/commandes')
 @UseGuards(AuthGuard())
@@ -35,6 +36,14 @@ export class EngagementCommandeController {
     return this.services.create(payload, user);
   }
 
+  @Put('/reservation')
+  public async reserve(
+    @Body(ValidationPipe) payload: EngagementCommandeDTO,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    const val = { ...payload, etat: EtatEngagementEnum.RESERVED };
+    return this.services.update(val, user, true);
+  }
   @Put('/')
   public async update(
     @Body(ValidationPipe) payload: EngagementCommandeDTO,

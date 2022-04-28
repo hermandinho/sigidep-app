@@ -1,4 +1,7 @@
 import {
+  CancelEngagementReservation,
+  CancelEngagementReservationFailure,
+  CancelEngagementReservationSuccess,
   CreateEngagementJuridique,
   CreateEngagementJuridiqueFailure,
   CreateEngagementJuridiqueSuccess,
@@ -63,9 +66,13 @@ const engagementJuridiquesReducer = createReducer(
   on(UpdateEngagement, (state) => {
     return { ...state, loading: true };
   }),
+  on(CancelEngagementReservation, (state) => {
+    return { ...state, loading: true };
+  }),
   on(
     CreateEngagementJuridiqueSuccess,
     UpdateEngagementSuccess,
+    CancelEngagementReservationSuccess,
     (state, { payload }) => {
       return { ...state, loading: false, data: [payload] };
     }
@@ -73,6 +80,7 @@ const engagementJuridiquesReducer = createReducer(
   on(
     CreateEngagementJuridiqueFailure,
     UpdateEngagementFailure,
+    CancelEngagementReservationFailure,
     (state, { error }) => {
       return { ...state, loading: false, error: error };
     }

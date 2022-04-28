@@ -49,3 +49,16 @@ export const UpdateEngagementFailure = createAction(
   '[EngagementJuridiques] Update failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
+
+export const CancelEngagementReservation = createAction(
+  '[EngagementJuridiques] Cancel',
+  props<{ payload: EngagementJuridiqueModel }>()
+);
+export const CancelEngagementReservationSuccess = createAction(
+  '[EngagementJuridiques] Cancel success',
+  props<{ payload: EngagementJuridiqueModel }>()
+);
+export const CancelEngagementReservationFailure = createAction(
+  '[EngagementJuridiques] Cancel failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

@@ -47,4 +47,12 @@ export class EngagementJuridiqueController {
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
   }
+
+  @Put('/cancel/:id')
+  public async cancelReservation(
+    @Param('id') id: number,
+    @Body(ValidationPipe) payload: CreateEngagementJuridiqueDTO,
+  ) {
+    return this.services.cancelReservation(id);
+  }
 }

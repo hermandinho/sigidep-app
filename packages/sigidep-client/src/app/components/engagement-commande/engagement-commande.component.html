@@ -2,32 +2,33 @@
   <div class="form" [formGroup]="commandForm">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.niuContribuable" | translate
-        }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          formControlName="niuContribuable"
-          [placeholder]="''"
-        />
+        <ng-container>
+          <label class="required"
+            >{{ "labels.niuContribuable" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="contribuables"
+            [placeholder]="''"
+            optionLabel="code"
+            optionValue="code"
+            formControlName="niuContribuable"
+            (onChange)="onContribuableChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
       </div>
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.raisonSocialeContribuable" | translate
-        }}</label>
+        <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
         <input
           class="form-control"
-          formControlName="raisonSocialeContribuable"
+          formControlName="raisonSociale"
           [placeholder]="''"
           pInputText
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.codeBanqueContribuable" | translate
-        }}</label>
+      <div class="p-field p-col-12 p-md-4">
+        <label>{{ "labels.codeBanqueContribuable" | translate }}</label>
         <input
           class="form-control"
           formControlName="codeBanqueContribuable"
@@ -35,10 +36,8 @@
           pInputText
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.codeAgenceContribuable" | translate
-        }}</label>
+      <div class="p-field p-col-12 p-md-4">
+        <label>{{ "labels.codeAgenceContribuable" | translate }}</label>
         <input
           class="form-control"
           formControlName="codeAgenceContribuable"
@@ -46,10 +45,8 @@
           pInputText
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.numeroCompteContribuable" | translate
-        }}</label>
+      <div class="p-field p-col-12 p-md-2">
+        <label>{{ "labels.numeroCompteContribuable" | translate }}</label>
         <input
           class="form-control"
           formControlName="numeroCompteContribuable"
@@ -57,10 +54,8 @@
           pInputText
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{
-          "labels.cleCompteContribuable" | translate
-        }}</label>
+      <div class="p-field p-col-12 p-md-2">
+        <label>{{ "labels.cleCompteContribuable" | translate }}</label>
         <input
           class="form-control"
           formControlName="cleCompteContribuable"
@@ -68,14 +63,39 @@
           pInputText
         />
       </div>
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="taxesApplicable">
+          <label>{{ "labels.taxesApplicables" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="taxes"
+            [placeholder]="''"
+            optionLabel="label"
+            optionValue="id"
+            formControlName="id"
+            (onChange)="onTaxeChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
 
-      <div class="p-field p-col-12 p-md-12">
-        <label class="required">{{ "labels.montantTTC" | translate }}</label>
+      <div class="p-field p-col-12 p-md-3">
+        <label>{{ "TxIR" | translate }}</label>
         <input
           type="number"
           class="form-control"
           pInputText
-          formControlName="montantTTC"
+          formControlName="tauxIR"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-3">
+        <label>{{ "labels.tauxTVA" | translate }}</label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="tauxTVA"
           [placeholder]="''"
         />
       </div>
@@ -84,14 +104,37 @@
 
   <div class="footer">
     <button
+      type="button"
+      pButton
+      pRipple
+      class="p-mr-3 p-button-warning"
+      icon="pi pi-chevron-left"
       (click)="doChangeStep('back')"
       [label]="'buttons.back' | translate"
       pButton
     ></button>
     <button
+      *ngIf="!readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
       (click)="submit()"
       [disabled]="!commandForm?.valid"
       [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+    <button
+      *ngIf="readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-check-square"
+      (click)="submit()"
+      [disabled]="!commandForm?.valid && false"
+      [label]="'labels.book' | translate"
       pButton
     ></button>
   </div>

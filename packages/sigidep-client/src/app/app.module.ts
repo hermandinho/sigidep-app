@@ -49,6 +49,8 @@ import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
 import { RegionsModule } from './pages/regions/regions.module';
+import { EngagementMissionComponent } from './components/engagement-mission/engagement-mission.component';
+import { ReservationEngagementComponent } from './components/reservation-engagement/reservation-engagement.component';
 
 registerLocaleData(localeFr);
 
