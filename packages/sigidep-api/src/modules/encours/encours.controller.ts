@@ -54,4 +54,5 @@ export class EncoursController {
       .where('exercise=:id', { id })
       .getMany();
   }
+  
 }

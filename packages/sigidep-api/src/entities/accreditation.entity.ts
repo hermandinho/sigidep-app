@@ -19,7 +19,7 @@ export class AccreditationEntity extends BaseEntity {
   @Column({ name: 'tache', nullable: false, default: 'default value' })
   public tache: string;
 
-  @Column({ name: 'operation', nullable: false, default: 'default value' })
+  @Column({ name: 'operation', nullable: true, default: 'default value' })
   public operation: string;
 
   // RELATIONS

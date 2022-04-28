@@ -18,12 +18,15 @@ export class AccreditationsController {
 
   @Post()
   create(@Body() createAccreditationDto: CreateAccreditationDto) {
+    console.log(createAccreditationDto.imputations[0].element);
     return this.service.create(createAccreditationDto);
   }
 
   @Get()
   findAll() {
-    return this.service.findAll();
+    let data = this.service.findAll();
+    console.log(data);
+    return data;
   }
 
   @Get(':id')

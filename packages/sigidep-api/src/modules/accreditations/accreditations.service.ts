@@ -16,21 +16,29 @@ export class AccreditationsService {
   ) {}
 
   async create(payload: CreateAccreditationDto) {
-    // const check = await this.repository.findOne(
-    //   { imputations: payload.imputations },
-    //   { loadEagerRelations: false },
-    // );
+    let res = null;
+    for (let i = 0; i < payload.imputations.length; i++) {
+      let data = {
+        startDate: payload.imputations[0].startDate,
+        endDate: payload.imputations[0].endDate,
+        imputation: payload.imputations[0].element.imputation,
+        tache: payload.imputations[0].element.task,
+        operation: payload.imputations[0].element.operation?.labelEn,
+        gestionnaire: payload.gestionnaire,
+      };
+      res = this.repository.save({ ...data });
+    }
 
-    // if (check) {
-    //   throw new ConflictException();
-    // }
-
-    console.log('yoooo', payload);
-    return this.repository.save({ ...payload });
+    return res;
   }
 
-  findAll() {
-    return this.repository.find();
+  async findAll() {
+    return this.repository.query(
+      'SELECT COUNT(accreditation.id) as count, gestionnaires.* FROM accreditation,gestionnaires WHERE gestionnaires.id = accreditation.gestionnaire_id  GROUP BY gestionnaires.id',
+    );
+    // return this.repository.find({
+    //   relations: ['gestionnaire'],
+    // });
   }
 
   async findOne(id: number) {
