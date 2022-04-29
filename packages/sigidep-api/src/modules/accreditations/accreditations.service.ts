@@ -7,12 +7,16 @@ import {
 import { CreateAccreditationDto } from './dto/create-accreditation.dto';
 import { AccreditationEntity } from '@entities/accreditation.entity';
 import { Repository, In } from 'typeorm';
+import { GestionnairesEntity } from '@entities/gestionnaire.entity';
 
 @Injectable()
 export class AccreditationsService {
   constructor(
     @InjectRepository(AccreditationEntity)
     private readonly repository: Repository<AccreditationEntity>,
+
+    @InjectRepository(GestionnairesEntity)
+    private readonly gestionnaireRepository: Repository<GestionnairesEntity>,
   ) {}
 
   async create(payload: CreateAccreditationDto) {
@@ -36,9 +40,6 @@ export class AccreditationsService {
     return this.repository.query(
       'SELECT COUNT(accreditation.id) as count, gestionnaires.* FROM accreditation,gestionnaires WHERE gestionnaires.id = accreditation.gestionnaire_id  GROUP BY gestionnaires.id',
     );
-    // return this.repository.find({
-    //   relations: ['gestionnaire'],
-    // });
   }
 
   async findOne(id: number) {
@@ -50,7 +51,9 @@ export class AccreditationsService {
   }
 
   findByGestionnaire(id: number) {
-    return `This action returns a #${id} accreditation`;
+    return this.gestionnaireRepository.findOne(id, {
+      relations: ['accreditations'],
+    });
   }
 
   async update(id: number, payload: CreateAccreditationDto) {

@@ -4,10 +4,14 @@ import { Module } from '@nestjs/common';
 import { AccreditationsService } from './accreditations.service';
 import { AccreditationsController } from './accreditations.controller';
 import { AccreditationEntity } from '@entities/accreditation.entity';
+import { GestionnairesEntity } from '@entities/gestionnaire.entity';
 
 @Module({
   controllers: [AccreditationsController],
   providers: [AccreditationsService],
-  imports: [AuthModule, TypeOrmModule.forFeature([AccreditationEntity])],
+  imports: [
+    AuthModule,
+    TypeOrmModule.forFeature([AccreditationEntity, GestionnairesEntity]),
+  ],
 })
 export class AccreditationsModule {}
