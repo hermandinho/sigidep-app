@@ -85,6 +85,10 @@ export class AccreditationsGestionnairesComponent
     this._dialogService.launchAccreditationsGestionnairesCreateDialog(item);
   }
 
+  listInputation(item: any) {
+    this._dialogService.launchAccreditationsGestionnairesListInputation(item);
+  }
+
   delete(item: GestionnaireModel) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteGestionnaire',

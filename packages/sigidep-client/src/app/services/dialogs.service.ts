@@ -66,6 +66,7 @@ export class DialogsService {
   private categorieAgentCreateComponent: any;
 
   private accreditationsGestionnairesCreateComponent: any;
+  private inputationComponent: any;
 
   private baremeCreateComponent: any;
   private typeProcedureCreateComponent: any;
@@ -700,6 +701,27 @@ export class DialogsService {
         },
       }
     );
+  }
+
+  public async launchAccreditationsGestionnairesListInputation(
+    item?: any
+  ): Promise<any> {
+    if (!this.inputationComponent) {
+      const { ImputationsComponent } = await import(
+        '@pages/accreditations-gestionnaires/imputations/imputations.component'
+      );
+      this.inputationComponent = ImputationsComponent;
+    }
+
+    return this._dialogService.open(this.inputationComponent, {
+      header: this._translateService.instant('dialogs.headers.listImputation'),
+      width: '80vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
   }
 
   public async launchBaremeCreateDialog(

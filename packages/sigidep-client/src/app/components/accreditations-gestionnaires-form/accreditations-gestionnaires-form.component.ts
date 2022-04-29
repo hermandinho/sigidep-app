@@ -13,7 +13,6 @@ import { BaseComponent } from './../base.component';
 import { Component, OnInit } from '@angular/core';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
 import { EncoursModel } from '@models/encours.model';
-import { FilterService } from './filter.service';
 import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -41,9 +40,6 @@ export class AccreditationsGestionnairesFormComponent
   exercicesInprogressList: ExerciseModel[] = [];
   subProgramsList: SubProgramModel[] = [];
   administrativeUnitList: AdministrativeUnitModel[] = [];
-  taskList: String[] = [];
-  actionList: String[] = [];
-  activityList: String[] = [];
 
   // imputationsOperationsList: any[] = [];
   imputationsOperationsList: AccreditationGestionnaireModel[] = [];
@@ -131,11 +127,6 @@ export class AccreditationsGestionnairesFormComponent
             endDate: new Date(),
           })),
         ];
-        this.allEncours.forEach((element) => {
-          this.taskList.push(element.element.task);
-          this.actionList.push(element.element.action);
-          this.activityList.push(element.element.activity);
-        });
         this.filteredEncours = [...this.allEncours];
       });
     this.loading$ = this._store.pipe(

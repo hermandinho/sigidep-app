@@ -50,6 +50,13 @@
         <td>{{ gestionnaire.count }}</td>
         <td>
           <button
+            (click)="listInputation(gestionnaire.id)"
+            class="p-button-rounded p-button-primary p-mr-2"
+            icon="pi pi-eye"
+            pButton
+            pRipple
+          ></button>
+          <button
             (click)="edit(gestionnaire)"
             class="p-button-rounded p-button-success p-mr-2"
             icon="pi pi-pencil"
