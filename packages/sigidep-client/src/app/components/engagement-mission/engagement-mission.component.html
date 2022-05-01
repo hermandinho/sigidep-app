@@ -1,0 +1,149 @@
+<div class="container">
+  <div class="form" [formGroup]="missionForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required"
+            >{{ "labels.matriculeBeneficiaire" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="agents"
+            [placeholder]="''"
+            optionLabel="matricule"
+            optionValue="matricule"
+            formControlName="matriculeBeneficiaire"
+            (onChange)="onMatriculeChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.nomBeneficaire" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="nomBeneficiaire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <ng-container>
+          <label class="required"
+            >{{ "labels.typeMission" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="typesMission"
+            [placeholder]="''"
+            optionLabel="label"
+            optionValue="value"
+            formControlName="typeMission"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.itineraire" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="itineraire"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label class="required">{{ "labels.dateDebut" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateDebut"
+          (blur)="onChangeDate($event)"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label class="required">{{ "labels.dateFin" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateFin"
+          (blur)="onChangeDate($event)"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-4">
+        <label class="required">{{ "labels.nombreJours" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="nombreJours"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required">{{ "labels.baremeJour" | translate }} </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="baremes"
+            [placeholder]="''"
+            optionLabel="montant"
+            optionValue="id"
+            (onChange)="onBaremeChange($event)"
+            formControlName="baremeJour"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required"
+          >{{ "labels.montantMission" | translate }}
+        </label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="montant"
+          [placeholder]="''"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+    <button
+      *ngIf="!readOnly"
+      (click)="submit()"
+      [disabled]="!missionForm?.valid"
+      [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+    <button
+      *ngIf="readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
+      (click)="submit()"
+      [disabled]="!missionForm?.valid && false"
+      [label]="'labels.book' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

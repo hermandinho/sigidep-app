@@ -37,7 +37,12 @@
     "taxes": "Taxes",
     "procedures": "Procédures",
     "engagements": "Engagements",
-    "consultation": "Consultations"
+    "consultation": "Consultations",
+    "engagementsjuridiques": "Engagements Juridiques",
+    "engagementsmandats": "Engagements Mandats",
+    "commandepublique": "Commande Publique",
+    "missions": "Missions",
+    "decisions": "Décisions"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -67,7 +72,8 @@
     "load": "Charger",
     "back": "Retour",
     "submit": "Soumettre",
-    "print":"Imprimer"
+    "print":"Imprimer",
+    "close": "Fermer"
   },
   "install": {
     "title": "Installation"
@@ -264,7 +270,51 @@
     "montantTTC": "Montant TTC",
     "imputationBudgetaire":"Imputation budgétaire",
     "certificatEngagement":"Certificat d’Engagement",
-    "mandats":"Mandat"
+    "mandats":"Mandat",
+    "selectimputation": "Choisir une imputation",
+    "signataire": "Signataire",
+    "dateSignature": "Date Signature",
+    "objet": "Objet",
+    "paragraphe": "Paragraphe",
+    "taxesApplicables": "Taxe Applicable",
+    "tauxTVA": "Taux TVA",
+    "all": "Tout",
+    "cancel": "Annulé",
+    "modify": "Modifié",
+    "save": "Enregistré",
+    "book": "Réservé",
+    "filterbyStatus": "Filtre Rapide",
+    "respectNonMorcellement": "Respect du non morcellement",
+    "disponibiltecredits": "Disponibilité des credits",
+    "nomBeneficaire": "Nom Bénéficiaire",
+    "matriculeBeneficaire": "Matricule Bénéficaire",
+    "netAPercevoir": "Net à percevoir",
+    "typeContribuable": "Type",
+    "codeUnitAdminBenef": "Code Unité Admin Bénéficaire",
+    "nomUnitAdminBenef": "Nom Unité Bénéficaire",
+    "exerciseBudgetaire": "Excercice Budgétaire",
+    "operation": "Opération",
+    "visa": "Visa du Responsable",
+    "autorisationEngagement": "Autorisation d'Engagement",
+    "print": "Imprimer",
+    "reserver": "Reserver",
+    "edit": "Editer",
+    "delete": "Supprimer",
+    "annuler": "Annuler",
+    "contribuableBudget": "Contribuable Budgétaire",
+    "contribuable": "Contribuable",
+    "niuContribuableBudget": "NUI contribubale Budgétaire",
+    "disponibiliteCredits": "Disponibilité des Crédits",
+    "priseEnCompteTaxes": "Prise en compte des taxes",
+    "respectQuotas": "Respect des quotas",
+    "matriculeBeneficiaire": "Matricule Bénéficaire",
+    "typeMission": "Type mission",
+    "itineraire": "Itinéraire",
+    "dateDebut": "Date début",
+    "dateFin": "Date de Fin",
+    "nombreJours": "Nombre jours",
+    "baremeJour": "Bareme jour",
+    "montantMission": "Montant Mission"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -468,7 +518,8 @@
     },
     "engagements": {
       "deleteSuccess": "Engagement supprimé avec succès.",
-      "createSuccess": "Engagement enregistré avec succès."
+      "createSuccess": "Engagement enregistré avec succès.",
+      "cancelSuccess": "Réservation annulée avec succès"
     }
   },
   "menus": {
@@ -671,7 +722,8 @@
       "cpDisponible": "CP Dispo",
       "aeDispoANouveau": "AE Disp à nouveau",
       "cpDispoANouveau": " CP Dispo à Nouveau",
-      "operation": "operation"
+      "operation": "operation",
+      "type": "Type"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -730,7 +782,10 @@
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
       "editEngagement": "Editer un Engagement",
-      "imputation":"Imputation"
+      "imputation":"Imputation",
+      "viewEngagement": "Engagement: {{numero}}",
+      "reserverEngagement": "Réservation de l'engagement No: {{numero}}",
+      "printEngagement": "Engagement"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -754,7 +809,9 @@
       "deleteContribuableBudgetaire": "Voulez-vous vraiment supprimer ce contribuable budgetaire? Cette action est irréversible",
       "deleteGestionnaire": "Voulez-vous vraiment supprimer ce gestionnaire? Cette action est irréversible",
       "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
-      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible"
+      "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible",
+      "reserveEngagement": "Etes-vous sûr de reserver cet engagement?",
+      "cancelEngagement": "Voulez-vous annuler cette Réservation ?"
     }
   },
   "exerciseStatuses": {

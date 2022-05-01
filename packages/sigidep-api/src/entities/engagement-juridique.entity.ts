@@ -1,102 +1,71 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  JoinColumn,
-  TableInheritance,
-} from 'typeorm';
-import {
-  AdministrativeUnitEntity,
-  ExerciseEntity,
-  SubProgramEntity,
-  BaseEntity,
-} from '.';
-import { SubProgramActivityEntity } from './sub-program-activity.entity';
-import { SubProgramActivityTaskEntity } from './sub-program-activity-task.entity';
-import { SubProgramActionEntity } from './sub-program-action.entity';
-import { ExecProcedureEntity } from './exec-procedure.entity';
+import { Column, Entity, TableInheritance } from 'typeorm';
+import { BaseEntity } from '.';
 
 export enum EtatEngagementEnum {
-  SAVE = 'SAVE',
-  MODIFY = 'MODIFY',
-  RESERVED = 'RESERVED',
-  CANCEL = 'CANCEL',
+  SAVE = 'labels.save',
+  MODIFY = 'labels.modify',
+  RESERVED = 'labels.book',
+  CANCEL = 'labels.cancel',
 }
 
-@Entity('engagementjuridiques')
+@Entity('engagement_juridique')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class EngagementJuridiqueEntity extends BaseEntity {
-  @ManyToOne(() => ExecProcedureEntity, (object) => object.id, {
-    eager: true,
-    nullable: true,
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'procedure_id' })
-  public procedure: ExecProcedureEntity;
+  @Column({ nullable: true, name: 'exercise' })
+  public exercise: string;
 
-  @ManyToOne(() => ExerciseEntity, (object) => object.id, {
-    eager: true,
-    nullable: false,
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'exercise_id' })
-  public exercise: ExerciseEntity;
-
-  @ManyToOne(() => SubProgramEntity, (object) => object.id, {
-    eager: true,
-    nullable: true,
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'sub_program_id' })
-  public sousProgramme: SubProgramEntity;
-
-  @ManyToOne(() => SubProgramActionEntity, (object) => object.id, {
-    eager: true,
-    nullable: true,
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'action_id' })
-  public action: SubProgramActionEntity;
-
-  @ManyToOne(() => SubProgramActivityEntity, (object) => object.id, {
-    eager: true,
-    nullable: true,
-  })
-  @JoinColumn({ name: 'activity_id' })
-  public activity: SubProgramActivityEntity;
-
-  @ManyToOne(() => SubProgramActivityTaskEntity, (object) => object.id, {
-    eager: true,
-    nullable: true,
-  })
-  @JoinColumn({ name: 'task_id' })
-  public task: SubProgramActivityTaskEntity;
+  @Column({ nullable: true, name: 'code_procedure' })
+  public codeProcedure: string;
 
   @Column({ nullable: true })
   public reference: string;
 
-  @Column({ nullable: true })
-  public numero: number;
+  @Column({ name: 'date_signature', nullable: true, type: 'date' })
+  public dateSignature: Date;
 
   @Column({ nullable: true })
+  public signataire: string;
+
+  @Column('text', { nullable: true })
+  public objet: string;
+
+  @Column('varchar', { nullable: true })
+  public subProgram: string;
+  @Column('varchar', { nullable: true })
+  public action: string;
+
+  @Column('varchar', { nullable: true })
+  public activity: string;
+
+  @Column('varchar', { nullable: true })
+  public task: string;
+
+  @Column('varchar', { nullable: true })
+  public adminUnit: string;
+
+  @Column('varchar', { nullable: true })
+  public paragraph: string;
+
+  @Column('varchar', { nullable: true })
   public imputation: string;
 
-  @ManyToOne(() => AdministrativeUnitEntity, (object) => object.id, {
-    eager: true,
-    nullable: true,
-  })
-  @JoinColumn({ name: 'admin_unit_id' })
-  public adminUnit: AdministrativeUnitEntity;
+  @Column({ nullable: true, unique: true })
+  public numero: string;
 
-  @Column({ type: 'float', nullable: false })
+  @Column({ type: 'float', nullable: false, name: 'montant_AE' })
   public montantAE: number;
 
   @Column({
     name: 'etat',
     type: 'enum',
     enum: EtatEngagementEnum,
-    default: EtatEngagementEnum.SAVE,
-    nullable: false,
+    nullable: true,
   })
   public etat: EtatEngagementEnum;
+
+  @Column({ nullable: false, name: 'operation_id' })
+  public operationId: number;
+
+  @Column({ nullable: true, name: 'ae_disponible' })
+  aeDisponible!: number;
 }
