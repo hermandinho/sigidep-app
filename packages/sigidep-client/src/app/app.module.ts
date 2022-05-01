@@ -48,12 +48,9 @@ import { TaxesModule } from '@pages/taxes/taxes.module';
 import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { RegionsModule } from './pages/regions/regions.module';
-<<<<<<< HEAD
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
-=======
 import { EngagementMissionComponent } from './components/engagement-mission/engagement-mission.component';
 import { ReservationEngagementComponent } from './components/reservation-engagement/reservation-engagement.component';
->>>>>>> 9406843a0e60c02530c6dafaeb32d73bd32ef850
 
 registerLocaleData(localeFr);
 
