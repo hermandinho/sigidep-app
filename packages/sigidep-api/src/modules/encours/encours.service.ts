@@ -80,26 +80,19 @@ export class EncoursService {
   }
 
   public async findByImputation(imputation: any): Promise<EncoursEntity[]> {
-    console.log(imputation.imputation);
     return this.encoursRepository
       .createQueryBuilder("encours")
       .where("encours.imputation like :name", { name:`%${imputation.imputation}%` })
       .getMany();
   }
 
-  async getByImputation(payload: any): Promise<any> {
-    const check = await this.encoursRepository.findOne(
-      { imputation: payload.imputation }
-    );
-
-    if (check) {
-      throw new ConflictException();
-    }
-    return check;
-   /*  return this.encoursRepository
+  public async getByImputationJoinEng(imputation: any): Promise<EncoursEntity[]> {
+    console.log(imputation.imputation)
+    return this.encoursRepository
       .createQueryBuilder('encours')
-      .where("encours.imputation = :imputation",{imputation: "55 01 04 330030 222210 911 - MAT, EQUIP TECH & ENGAG TRANSIT" })
-      .getOne(); */
+      .innerJoin('engagement_juridique', 'eng', 'encours.imputation = eng.imputation')
+      .where("encours.imputation = :name", { name:imputation.imputation })
+      .getMany();
   }
 
   public async create(

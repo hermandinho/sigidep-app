@@ -13,28 +13,23 @@ import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { UserEntity } from '@entities/user.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { EngagementJuridiqueService } from '../service/engagement-juridique.service';
-import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
+import { EngagementMandatsService } from '../service/engagement-mandats.service';
+import { CreateEngagementMandatDTO } from '../dto/create-engagement-mandats.dto';
 @Controller('engagements')
 @ApiTags('engagements')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
-export class EngagementJuridiqueController {
-  constructor(private readonly services: EngagementJuridiqueService) {}
+export class EngagementMandatController {
+  constructor(private readonly services: EngagementMandatsService) {}
 
-  @Get('/reserve')
+  @Get('/')
   public async filter() {
     return this.services.filter();
   }
 
-  @Get('/engagement/reserve')
-  public async findEngagement() {
-    return this.services.findEngagement();
-  }
-
   @Post('/')
   public async create(
-    @Body(ValidationPipe) payload: CreateEngagementJuridiqueDTO,
+    @Body(ValidationPipe) payload: CreateEngagementMandatDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.create(payload, user);
@@ -42,7 +37,7 @@ export class EngagementJuridiqueController {
 
   @Put('/')
   public async update(
-    @Body(ValidationPipe) payload: CreateEngagementJuridiqueDTO,
+    @Body(ValidationPipe) payload: CreateEngagementMandatDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.update(payload, user);
@@ -53,13 +48,4 @@ export class EngagementJuridiqueController {
     return this.services.deleteOne(id);
   }
 
-  @Put('/cancel/:id')
-  public async cancelReservation(
-    @Param('id') id: number,
-    @Body(ValidationPipe) payload: CreateEngagementJuridiqueDTO,
-  ) {
-    return this.services.cancelReservation(id);
-  }
-
- 
 }
