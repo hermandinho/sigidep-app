@@ -1,38 +1,40 @@
 <div class="container">
-  <div class="form" [formGroup]="commonForm">
+  <div class="form" [formGroup]="commonForm" [ngClass]="{ readonly: readOnly }">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "labels.numero" | translate }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          formControlName="numero"
-          [placeholder]="'000000'"
-        />
+        <ng-container>
+          <label class="required">{{ "labels.exercise" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="exercises"
+            [placeholder]="'labels.exercise' | translate"
+            (onChange)="onExerciseChange($event)"
+            formControlName="exercise"
+          >
+          </p-dropdown>
+        </ng-container>
       </div>
-
       <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="typeProcedure">
+        <ng-container>
           <label class="required">{{
             "labels.typeProcedure" | translate
           }}</label>
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="typesProcedures"
-            [placeholder]="'labels.typeProcedure' | translate"
-            (onChange)="onChangeType($event)"
+            [placeholder]="''"
             class="p-col-6"
             optionLabel="label"
             optionValue="code"
-            formControlName="code"
+            (onChange)="onChangeType($event)"
+            formControlName="codeProcedure"
           >
           </p-dropdown>
         </ng-container>
       </div>
 
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "labels.reference" | translate }}</label>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.reference" | translate }}</label>
         <input
           type="text"
           class="form-control"
@@ -43,6 +45,175 @@
       </div>
 
       <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.signataire" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="signataire"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.dateSignature" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateSignature"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.objet" | translate }}</label>
+        <textarea
+          rows="4"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="objet"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label>{{ "labels.adminUnit" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="adminUnits"
+            [placeholder]="'labels.adminUnit' | translate"
+            (onChange)="onAdminUnitChange($event)"
+            formControlName="adminUnit"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label>{{ "labels.paragraphe" | translate }}</label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="paragraphes"
+            [placeholder]="''"
+            (onChange)="onParagrapheChange($event)"
+            formControlName="paragraph"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <p-table
+        class="p-field p-col-12 p-md-12"
+        #dt
+        [globalFilterFields]="['subprogram']"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="encoursList"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+        [selectionMode]="'single'"
+        [(selection)]="selectedImputation"
+        (onRowSelect)="onRowSelect($event)"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "labels.selectimputation" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of imputationColumns">
+              <th
+                *ngIf="column.sortable"
+                [pSortableColumn]="column.field"
+                [ngClass]="{
+                  emphase:
+                    column.field === 'aeDisponible' ||
+                    column.field === 'cpDisponible'
+                }"
+              >
+                {{ column.title | translate }}
+                <p-sortIcon field="exercise"></p-sortIcon>
+              </th>
+              <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr [pSelectableRow]="item">
+            <td
+              *ngFor="let column of imputationColumns"
+              class="nowrap"
+              [ngClass]="{
+                emphase:
+                  column.field === 'aeDisponible' ||
+                  column.field === 'cpDisponible'
+              }"
+            >
+              <span
+                class="wrap"
+                *ngIf="
+                  column.field === 'puUnitePhys' ||
+                    column.field === 'montantUnitePhys' ||
+                    column.field === 'aeInitRevisee' ||
+                    column.field === 'cpInitRevisee' ||
+                    column.field === 'aeDisponible' ||
+                    column.field === 'cpDisponible' ||
+                    column.field === 'aeDispoANouveau' ||
+                    column.field === 'cpDispoANouveau' ||
+                    column.field === 'aeInitial' ||
+                    column.field === 'cpInitial';
+                  else simple_field
+                "
+              >
+                {{
+                  item[column.field]
+                    | currency: "":"":"":currentLangCurrencyFormat
+                }}
+              </span>
+              <ng-template #simple_field>
+                <span
+                  *ngIf="column.field !== 'operation'"
+                  data-title="{{ item[column.field] }}"
+                >
+                  {{
+                    item[column.field].length > 20
+                      ? (item[column.field] | slice: 0:20) + ".."
+                      : item[column.field]
+                  }}
+                </span>
+
+                <span *ngIf="column.field === 'operation'">
+                  {{ item[column.field]?.id }}
+                </span>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <div class="p-field p-col-12 p-md-12">
         <label class="required">{{ "labels.montantAE" | translate }}</label>
         <input
           type="number"
@@ -52,184 +223,6 @@
           [placeholder]="''"
         />
       </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="procedure">
-          <label class="required">{{ "labels.procedure" | translate }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="procedures"
-            [placeholder]="'labels.procedure' | translate"
-            class="p-col-6"
-            formControlName="id"
-            optionLabel="nomAgent"
-            optionValue="id"
-          >
-            <ng-template let-option pTemplate="selectedItem">
-              <div>
-                <div>{{ option.nomAgent | translate }}</div>
-              </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-              <div>
-                <div>{{ option.nomAgent | translate }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-        </ng-container>
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="exercise">
-          <label class="required">{{ "labels.exercise" | translate }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="exercises"
-            [placeholder]="'labels.exercise' | translate"
-            class="p-col-6"
-            optionLabel="year"
-            (onChange)="onChange($event)"
-            optionValue="id"
-            formControlName="id"
-          >
-          </p-dropdown>
-          <ng-template let-option pTemplate="selectedItem">
-            <div>
-              <div>{{ option.code | translate }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-option pTemplate="item">
-            <div>
-              <div>{{ option.code | translate }}</div>
-            </div>
-          </ng-template>
-        </ng-container>
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="sousProgramme">
-          <label class="required">{{
-            "labels.sousProgramme" | translate
-          }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="sousProgrammes"
-            [placeholder]="'labels.sousProgramme' | translate"
-            class="p-col-6"
-            formControlName="code"
-            optionLabel="code"
-            optionValue="code"
-          >
-            <ng-template let-option pTemplate="selectedItem">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-        </ng-container>
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="action">
-          <label class="required">{{ "labels.action" | translate }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="actions"
-            [placeholder]="'labels.action' | translate"
-            class="p-col-6"
-            formControlName="code"
-            optionLabel="code"
-            optionValue="code"
-          >
-            <ng-template let-option pTemplate="selectedItem">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-        </ng-container>
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="activity">
-          <label class="required">{{ "labels.activity" | translate }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="activities"
-            [placeholder]="'labels.activity' | translate"
-            class="p-col-6"
-            formControlName="code"
-            optionLabel="code"
-            optionValue="code"
-          >
-            <ng-template let-option pTemplate="selectedItem">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-        </ng-container>
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container formGroupName="adminUnit">
-          <label class="required">{{ "labels.adminUnit" | translate }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="adminUnits"
-            [placeholder]="'labels.adminUnit' | translate"
-            class="p-col-6"
-            formControlName="code"
-            optionLabel="code"
-            optionValue="code"
-          >
-            <ng-template let-option pTemplate="selectedItem">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-            <ng-template let-option pTemplate="item">
-              <div>
-                <div>{{ option.code | translate }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-        </ng-container>
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container>
-          <label class="required">{{ "labels.imputation" | translate }}</label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="imputations"
-            [placeholder]="'labels.adminUnit' | translate"
-            class="p-col-6"
-            formControlName="imputation"
-          >
-            <ng-template let-item pTemplate="selectedItem">
-              {{ item }}
-            </ng-template>
-            <ng-template let-item pTemplate="item">
-              {{ item }}
-            </ng-template>
-          </p-dropdown>
-        </ng-container>
-      </div>
     </div>
   </div>
 
@@ -238,8 +231,13 @@
       {{ "buttons.cancel" | translate }}
     </button>
     <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
       (click)="submit()"
-      [disabled]="!commonForm?.valid"
+      [disabled]="!commonForm?.valid && !readOnly"
       [label]="'buttons.next' | translate"
       pButton
     ></button>

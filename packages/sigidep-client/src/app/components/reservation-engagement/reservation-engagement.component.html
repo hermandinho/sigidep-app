@@ -1,0 +1,109 @@
+<div class="form" [formGroup]="form">
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="engagement.montantAE <= engagement?.aeDisponible"
+    formControlName="disponibiliteCredits"
+    [binary]="true"
+    label="{{ 'labels.disponibiliteCredits' | translate }}: Montant AE ({{
+      engagement.montantAE
+    }}) inférieur au montant  AE Disponible ({{ engagement?.aeDisponible }})"
+  >
+  </p-checkbox>
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="engagement.montantAE > engagement?.aeDisponible"
+    formControlName="disponibiliteCredits"
+    [binary]="true"
+    label="{{ 'labels.disponibiliteCredits' | translate }}: Montant AE ({{
+      engagement.montantAE
+    }}) supérieur au montant  AE Disponible ({{ engagement?.aeDisponible }})"
+  >
+  </p-checkbox>
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="type === 'command'"
+    formControlName="respectNonMorcellement"
+    [binary]="true"
+    label="{{
+      'labels.respectNonMorcellement' | translate
+    }}: Dernière Commande: {{ dernierCommande?.dateSignature ?? 'RAS' }}"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="
+      type === 'decision' &&
+      engagement.netAPercevoir ===
+        engagement?.montantBrut - engagement?.montantIRNC
+    "
+    formControlName="priseEnCompteTaxes"
+    [binary]="true"
+    label="{{
+      'labels.priseEnCompteTaxes' | translate
+    }}: Le montant net à percevoir ({{
+      engagement.netAPercevoir
+    }}) est égal au Montant Brut ({{
+      engagement?.montantBrut
+    }})  moins Montant IRNC ({{ engagement?.montantIRNC }})"
+  >
+  </p-checkbox>
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="
+      type === 'decision' &&
+      engagement.netAPercevoir !==
+        engagement?.montantBrut - engagement?.montantIRNC
+    "
+    formControlName="priseEnCompteTaxes"
+    [binary]="true"
+    label="{{ 'labels.priseEnCompteTaxes' | translate }}: NetAPercevoir ({{
+      engagement.netAPercevoir
+    }}) est différent du Montant Brut ({{
+      engagement?.montantBrut
+    }})  moins Montant IRNC ({{ engagement?.montantIRNC }})"
+  >
+  </p-checkbox>
+
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="type === 'mission'"
+    formControlName="respectQuotas"
+    [binary]="true"
+    label="{{
+      'labels.respectQuotas' | translate
+    }}: Cumul des Jours de Missions = {{ cumulJoursMissions }}"
+  >
+  </p-checkbox>
+  <div class="footer">
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-mr-3 p-button-danger"
+      [label]="'buttons.close' | translate"
+      pButton
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
+      [disabled]="isValid"
+      [label]="'Demande de levée' | translate"
+      pButton
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-check-square"
+      [disabled]="!isValid"
+      (click)="handleSubmit()"
+      [label]="'labels.book' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

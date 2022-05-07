@@ -259,11 +259,39 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         {
           routerLink: 'engagements',
           icon: 'pi pi-table',
-          label: translate.instant('sidebar.engagements'),
+          label: translate.instant('sidebar.engagementsjuridiques'),
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.engagements],
           },
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.engagementsmandats'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [],
+          },
+          items: [
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.commandepublique'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.missions'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: '#',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.decisions'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
         },
       ],
     },

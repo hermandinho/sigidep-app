@@ -2,7 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
-import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
+import {
+  EngagementJuridiqueEntity,
+  EtatEngagementEnum,
+} from '@entities/engagement-juridique.entity';
 import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
 
 @Injectable()
@@ -17,16 +20,7 @@ export class EngagementJuridiqueService {
   }
 
   public async filter(): Promise<EngagementJuridiqueEntity[]> {
-    return this.repository
-      .createQueryBuilder('ej')
-      .leftJoinAndSelect('ej.exercise', 'exercise')
-      .leftJoinAndSelect('ej.sousProgramme', 's')
-      .leftJoinAndSelect('ej.action', 'ac')
-      .leftJoinAndSelect('ej.activity', 'a')
-      .leftJoinAndSelect('ej.procedure', 'p')
-      .leftJoinAndSelect('p.typeProcedure', 'typ')
-      .leftJoinAndSelect('ej.task', 't')
-      .getMany();
+    return this.repository.createQueryBuilder('eng').getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -58,6 +52,19 @@ export class EngagementJuridiqueService {
     return this.repository.save({
       ...(payload as any),
       updateBy: user,
+    });
+  }
+
+  public async cancelReservation(
+    id: number,
+  ): Promise<EngagementJuridiqueEntity> {
+    const property = await this.repository.findOne({
+      id: id,
+    });
+
+    return this.repository.save({
+      ...property, // existing fields
+      etat: EtatEngagementEnum.CANCEL, // updated fields
     });
   }
 }

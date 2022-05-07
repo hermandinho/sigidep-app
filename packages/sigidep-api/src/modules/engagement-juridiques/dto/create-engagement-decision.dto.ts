@@ -1,57 +1,66 @@
-import { CreateBaremeMissionDTO } from '@modules/baremes/dto/create-bareme-mission.dto';
+import { CreateExecTaxesDTO } from '@modules/exec-taxes/dto/create-exec-taxes.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { CreateEngagementJuridiqueDTO } from './create-engagement-juridique.dto';
 
 export class EngagementDecisionDTO extends CreateEngagementJuridiqueDTO {
-  @ApiProperty({ example: '00001', required: false })
-  public numeroOM: string;
-
-  @ApiProperty({ example: 'TYPE1', required: false })
-  public type: string;
-
-  @ApiProperty({ example: 'MAT000015', required: false })
+  @ApiProperty({ example: '1100011', required: false })
   public matriculeBeneficiaire: string;
 
-  @ApiProperty({ example: '695425687', required: false })
-  public omBeneficiaire: string;
+  @ApiProperty({ example: 'JEAN LUC', required: false })
+  public nomBeneficiaire: string;
 
-  @ApiProperty({ example: 'OBJ', required: false })
-  public objet: string;
+  @ApiProperty({ example: '0200', required: false })
+  public numContribBudget: string;
 
-  @ApiProperty({ example: 'ITINERAIRE', required: false })
-  public itineraire: string;
+  @ApiProperty({ example: '0200', required: false })
+  public numContribuable: string;
 
-  @ApiProperty({ example: new Date().toISOString(), required: false })
-  public dateDebut: Date | string;
+  @ApiProperty({ example: 'JEAN LUC', required: false })
+  public nomContribBudget: string;
+
+  @ApiProperty({ example: '0200000', required: false })
+  public codeUnitAdminBenef: string;
+
+  @ApiProperty({ example: 'CCA', required: false })
+  nomUnitAdminBenef: string;
+
+  @ApiProperty({ example: '2000', required: false })
+  public montantBrut: number;
+
+  @ApiProperty({ example: '2000', required: false })
+  public montantIRNC: number;
+
+  @ApiProperty({ example: 'CCA', required: false })
+  public raisonSociale: string;
+
+  @ApiProperty({ example: '10000', required: false })
+  public codeBanqueContribuable: string;
+
+  @ApiProperty({ example: '12000', required: false })
+  public codeAgenceContribuable: string;
+
+  @ApiProperty({ example: '0000015', required: false })
+  public numeroCompteContribuable: string;
+
+  @ApiProperty({ example: '10', required: false })
+  public cleCompteContribuable: string;
+
+  @ApiProperty({ example: '19.86', required: false })
+  public tauxTVA: number;
+
+  @ApiProperty({ example: '2.2', required: false })
+  public tauxIR: number;
+
+  @ApiProperty({ example: '2000000', required: false })
+  public netAPercevoir: number;
 
   @ApiProperty({
-    type: 'date',
-    example: new Date().toISOString(),
-    required: false,
-  })
-  public dateFin: Date;
-
-  @ApiProperty({ example: 10, required: false })
-  public nombreJours: number;
-
-  @ApiProperty({ example: 200, required: false })
-  public cumulJours: number;
-
-  @ApiProperty({
-    type: () => CreateBaremeMissionDTO,
+    type: () => CreateExecTaxesDTO,
     nullable: true,
     required: false,
   })
+  @IsNotEmpty()
   @IsOptional()
-  public baremeJour: CreateBaremeMissionDTO;
-
-  @ApiProperty({ type: 'float', example: 200000.25, required: false })
-  public montant: number;
-
-  @ApiProperty({ type: 'boolean', example: false, required: false })
-  public chevauchement: boolean;
-
-  @ApiProperty({ type: 'boolean', example: false, required: false })
-  public quotaAtteint: boolean;
+  public taxesApplicable: CreateExecTaxesDTO;
 }

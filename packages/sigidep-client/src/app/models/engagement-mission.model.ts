@@ -1,34 +1,21 @@
 import { BaremeMissionModel } from '.';
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
 
+export enum TypeMissionEnum {
+  AVANCE_MISSION_ORDINAIRE = 'Avance Mission ordinaire',
+  AVANCE_MISSION_CONTROLE_RECOUVREMENT = 'Avance Mission de Contrôle-Recouvrement',
+  MISSION_EFFECTUEE = 'Mission Effectuée',
+}
 export class EngagementMissionModel extends EngagementJuridiqueModel {
-  numeroOM!: string;
-
-  type!: string;
-
+  typeMission!: TypeMissionEnum;
   matriculeBeneficiaire!: string;
-
-  omBeneficiaire!: string;
-
-  objet!: string;
-
+  nomBeneficiaire!: string;
   itineraire!: string;
-
   dateDebut!: Date;
-
   dateFin!: Date;
-
   nombreJours!: number;
-
-  cumulJours!: number;
-
-  BaremeJour!: BaremeMissionModel;
-
+  baremeJour!: BaremeMissionModel;
   montant!: number;
-
-  chevauchement!: boolean;
-
-  quotaAtteint!: boolean;
 
   constructor(params?: Partial<EngagementMissionModel>) {
     super();

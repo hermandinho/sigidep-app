@@ -1,85 +1,57 @@
-import { CreateAdministrativeUnitDto } from '@modules/administrative-units/dto/create-administrative-unit.dto';
-import { CreateExecProcedureDTO } from '@modules/exec-procedures/dto/create-exec-procedure.dto';
-import { CreateExerciseDto } from '@modules/exercises/dto/create-exercise.dto';
-import { CreateSubProgramActionDto } from '@modules/sub-programs/dto/create-sub-program-action.dto';
-import { CreateSubProgramActivityTaskDto } from '@modules/sub-programs/dto/create-sub-program-activity-task.dto';
-import { CreateSubProgramActivityDto } from '@modules/sub-programs/dto/create-sub-program-activity.dto';
-import { CreateSubProgramDto } from '@modules/sub-programs/dto/create-sub-program.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateEngagementJuridiqueDTO {
   id?: number;
-  @ApiProperty({
-    type: () => CreateExecProcedureDTO,
-    nullable: true,
-    required: false,
-  })
-  @IsNotEmpty()
-  @IsOptional()
-  public procedure: CreateExecProcedureDTO;
-
-  @ApiProperty({
-    type: () => CreateExerciseDto,
-    nullable: true,
-    required: false,
-  })
-  @IsNotEmpty()
-  @IsOptional()
-  public exercise: CreateExerciseDto;
-
-  @ApiProperty({
-    type: () => CreateSubProgramDto,
-    nullable: true,
-    required: false,
-  })
-  @IsOptional()
-  public sousProgramme: CreateSubProgramDto;
-
-  @ApiProperty({
-    type: () => CreateSubProgramActionDto,
-    nullable: true,
-    required: false,
-  })
-  @IsOptional()
-  public action: CreateSubProgramActionDto;
-
-  @ApiProperty({
-    type: () => CreateSubProgramActivityDto,
-    nullable: true,
-    required: false,
-  })
-  @IsOptional()
-  public activity: CreateSubProgramActivityDto;
-
-  @ApiProperty({
-    type: () => CreateSubProgramActivityTaskDto,
-    nullable: true,
-    required: false,
-  })
-  @IsOptional()
-  public task: CreateSubProgramActivityTaskDto;
-
-  @ApiProperty({ example: 'REF', required: false })
-  public reference: string;
-
-  @ApiProperty({ example: '1', required: false })
-  public numero: number;
-
-  @ApiProperty({ example: '00015-4521368', required: false })
-  public imputation: string;
-
-  @ApiProperty({
-    type: () => CreateAdministrativeUnitDto,
-    nullable: true,
-    required: false,
-  })
-  @IsOptional()
-  public adminUnit: CreateAdministrativeUnitDto;
-
-  @ApiProperty({ type: 'float', example: '00015-4521368', required: false })
+  @ApiProperty({ type: 'float', example: '521368', required: false })
   public montantAE: number;
 
   @ApiProperty({ type: 'enum', example: 'CANCEL', required: false })
   public etat: string;
+
+  @ApiProperty({ required: false })
+  public exercise: string;
+
+  @ApiProperty({ required: false })
+  public codeProcedure: string;
+
+  @ApiProperty({ required: false })
+  public reference: string;
+
+  @ApiProperty({ required: false })
+  public dateSignature: Date;
+
+  @ApiProperty({ required: false })
+  public signataire: string;
+
+  @ApiProperty({ required: false })
+  public objet: string;
+
+  @ApiProperty({ required: false })
+  public subProgram: string;
+  @ApiProperty({ required: false })
+  public action: string;
+
+  @ApiProperty({ required: false })
+  public activity: string;
+
+  @ApiProperty({ required: false })
+  public task: string;
+
+  @ApiProperty({ required: false })
+  public adminUnit: string;
+
+  @ApiProperty({ required: false })
+  public paragraph: string;
+
+  @ApiProperty({ required: false })
+  public imputation: string;
+
+  @ApiProperty({ example: '55CE00-00000', required: false })
+  public numero: string;
+
+  @ApiProperty({ required: true })
+  public operationId: number;
+
+  @ApiProperty({ type: 'float', example: '100000', required: false })
+  public aeDisponible: number;
 }
