@@ -22,14 +22,9 @@ import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique
 export class EngagementJuridiqueController {
   constructor(private readonly services: EngagementJuridiqueService) {}
 
-  @Get('/reserve')
+  @Get('/')
   public async filter() {
     return this.services.filter();
-  }
-
-  @Get('/engagement/reserve')
-  public async findEngagement() {
-    return this.services.findEngagement();
   }
 
   @Post('/')
@@ -61,5 +56,7 @@ export class EngagementJuridiqueController {
     return this.services.cancelReservation(id);
   }
 
+
+  
  
 }

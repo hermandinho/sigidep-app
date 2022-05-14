@@ -1,0 +1,187 @@
+<div class="container">
+  <div class="form" [formGroup]="engagementForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required"
+          >{{ "labels.numActeJuridiqueMandat" | translate }}
+        </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="engagements"
+            [placeholder]="''"
+            optionLabel="numero"
+            optionValue="numero"
+            formControlName="numActeJuridique"
+            (onChange)="onActeJuridiqueChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.codeProcedure" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="codeProcedure"
+          [placeholder]="''"
+          pInputText
+          [disabled]="disabled"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.reference" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="reference"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.dateSignature" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="dateSignature"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.signataire" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="signatairej"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.imputation" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="imputation"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.objet" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="objetj"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.matriculeBeneficaire" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="matriculeBeneficaire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.nomBeneficaire" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="nomBeneficaire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.itineraire" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="itineraire"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+
+      <div class="p-field p-col-12 p-md-4">
+        <label class="required">{{ "labels.dateDebut" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateDebut"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label class="required">{{ "labels.dateFin" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          pInputText
+          formControlName="dateFin"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-4">
+        <label class="required">{{ "labels.nombreJours" | translate }}</label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="nombreJours"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required"
+          >{{ "labels.baremeJour" | translate }}
+        </label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="baremeJour"
+          [placeholder]="''"
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required"
+          >{{ "labels.montantMission" | translate }}
+        </label>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          formControlName="montantMission"
+          [placeholder]="''"
+        />
+      </div>
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
+      (click)="doChangeStep('forward')"
+      [disabled]="!engagementForm?.valid && !readOnly"
+      [label]="'buttons.next' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

@@ -66,4 +66,12 @@ export class EngagementMissionService {
       updateBy: user,
     });
   }
+
+  public async findEngagement(): Promise<EngagementMissionEntity[]> {
+    return this.repository
+      .createQueryBuilder('engagement_juridique')
+      .where("engagement_juridique.etat = :name", { name:'labels.book' })
+      .where("engagement_juridique.code_procedure = :name", { name:'1121' })
+      .getMany();
+  }
 }

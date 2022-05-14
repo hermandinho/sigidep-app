@@ -51,6 +51,8 @@ import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
 import { EngagementMissionComponent } from './components/engagement-mission/engagement-mission.component';
 import { ReservationEngagementComponent } from './components/reservation-engagement/reservation-engagement.component';
+import { MandatsModule } from '@pages/primes/mandats.module';
+import { PrintEngagementMandatPrimeComponent } from './components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
 
 registerLocaleData(localeFr);
 
@@ -59,7 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PrintEngagementMandatPrimeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -120,7 +122,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TaxesModule,
     ProceduresModule,
     EngagementsModule,
-    ConsultationsModule
+    ConsultationsModule,
+    MandatsModule
   ],
   providers: [
     AppInstallCheckGuard,

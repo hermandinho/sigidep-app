@@ -68,11 +68,5 @@ export class EngagementJuridiqueService {
     });
   }
 
-  public async findEngagement(): Promise<EngagementJuridiqueEntity[]> {
-    return this.repository
-      .createQueryBuilder('engagement_juridique')
-      .where("engagement_juridique.etat = :name", { name:'Réservé' })
-      .andWhere("engagement_juridique.code_procedure = :name", { name:'1121' })
-      .getMany();
-  }
+
 }

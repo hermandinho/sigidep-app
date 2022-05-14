@@ -57,4 +57,9 @@ export class EngagementMissionController {
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
   }
+
+  @Get('/engagement/reserve')
+  public async findEngagement() {
+    return this.services.findEngagement();
+  }
 }
