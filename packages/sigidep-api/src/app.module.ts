@@ -33,7 +33,7 @@ import { RegionsModule } from './modules/regions/regions.module';
 import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
 import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
 import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
-import { EngagementMandatsModule } from '@modules/engagement-mandats/engagement-mandats.module';
+import { EngagementMandatsDecissionModule } from '@modules/engagement-mandats-decission/engagement-mandats-decission.module';
 
 @Module({
   imports: [
@@ -122,7 +122,7 @@ import { EngagementMandatsModule } from '@modules/engagement-mandats/engagement-
     EngagementJuridiqueModule,
     ExecProcedureModule,
     ExecTaxesModule,
-    EngagementMandatsModule
+    EngagementMandatsDecissionModule
   ],
   controllers: [AppController],
   providers: [AppService],
