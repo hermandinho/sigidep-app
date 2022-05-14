@@ -42,8 +42,8 @@ services:
         NODE_ENV: ${ENV}
     restart: unless-stopped
     env_file: .env
-    depends_on:
-      - sigidep-certbot
+    #depends_on:
+    #  - sigidep-certbot
     environment:
       - NODE_ENV=$ENV
     volumes:
