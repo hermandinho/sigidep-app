@@ -1,7 +1,7 @@
 import { BaseModel } from './base.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 
-export type Step = 'engagement' | 'mandat' | 'perform';
+export type StepMandat = 'engagement' | 'mandat' | 'perform';
 export enum EtatEngagementMandatEnum {
   ORDINAIRE ='labels.ordinaire',
   EFFECTUER='labels.effectuer',

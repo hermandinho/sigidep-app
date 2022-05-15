@@ -38,7 +38,7 @@ import {
   Step,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
-import { EngagementMandatModel } from '@models/engagement-mandat.model';
+import { EngagementMandatModel, StepMandat } from '@models/engagement-mandat.model';
 
 @Injectable({
   providedIn: 'root',
@@ -94,6 +94,7 @@ export class DialogsService {
   private etatImputationComponent: any;
 
   private createMandatFormComponent: any;
+  private reservationEngagementMandatDecisionComponent:any;
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService

@@ -318,7 +318,8 @@
     "montantMission": "Montant Mission",
     "numActeJuridiqueMandat":"Numéro Engagement Juridique",
     "codeProcedure":"Procédure",
-    "matriculeGestionnaire":"Gestionnaire",
+    "matriculeGestionnaire":"Matricule Gestionnaire",
+    "nomGestionnaire":"Nom Gestionnaire",
     "dateEngagement":"Date signature",
     "signature":"Signataire",
     "montantCPChiffres":"Montant Mandat(en chiffres)",
@@ -327,8 +328,8 @@
     "situationActuel":"Situation actuelle",
     "sourceVerif":"Source de vérification",
     "ordinaire":"Avance Mission ordinaire",
-    "effectuer":"Avance Mission Contrôle/Recouvrement",
-    "controle":"Mission effectuée"
+    "controle":"Avance Mission Contrôle/Recouvrement",
+    "effectuer":"Mission effectuée"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -571,7 +572,8 @@
     "encours": "Mise En ligne",
     "taxes": "Taxes",
     "procedures": "Procédures",
-    "engagements": "Engagements"
+    "engagements": "Engagements",
+    "mandatsprimes": "Engagement Mandat Prime"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -595,7 +597,8 @@
       "encours": "Budgets En Cours",
       "procdeures": "Procédures",
       "taxes": "Taxes",
-      "engagements": "Engagements"
+      "engagements": "Engagements",
+      "mandats":"Mandats primes"
     },
     "headers": {
       "exerciseCode": "Code",

@@ -2,7 +2,7 @@
   <div class="form" [formGroup]="engagementForm">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12 p-md-6">
-        <ng-container>
+        <ng-container formGroupName="numActeJuridique">
           <label class="required"
           >{{ "labels.numActeJuridiqueMandat" | translate }}
         </label>
@@ -11,8 +11,8 @@
             [options]="engagements"
             [placeholder]="''"
             optionLabel="numero"
-            optionValue="numero"
-            formControlName="numActeJuridique"
+            optionValue="id"
+            formControlName="id"
             (onChange)="onActeJuridiqueChange($event)"
           >
           </p-dropdown>

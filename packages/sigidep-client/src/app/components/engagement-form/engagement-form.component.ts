@@ -8,7 +8,9 @@ import { Observable, of } from 'rxjs';
 import { BaseComponent } from '@components/base.component';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { GetEngagementMissionPrime } from '@actions/engagement-mission.actions';
-import { getDataSelector as getPrimeDataSelector, getLoadingSelector } from '@reducers/engagement-mission.reducer';
+import { getDataSelector as getMissionDataSelector, getLoadingSelector } from '@reducers/engagement-mission.reducer';
+import { getDataSelector as getDecisionDataSelector } from '@reducers/engagement-decision.reducer';
+import { EngagementDecisionModel } from '@models/engagement-decision.model';
 
 @Component({
   selector: 'app-engagement-form',
@@ -29,7 +31,8 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   public form!: FormGroup;
   public disabled:boolean=true;
   loading$: Observable<boolean> = of(true);
-  engagements!: EngagementMissionModel[];
+  missions!: EngagementMissionModel[];
+  engagements!: EngagementDecisionModel[];
 
 
 
@@ -39,13 +42,12 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
   ) {
     super();
-
+    this._initListeners();
   }
 
   ngOnInit(): void {
-    this._initListeners()
+
     this.engagementForm = this.startingForm;
-    console.log(this.engagementForm.value.numActeJuridique)
     this.subformInitialized.emit(this.engagementForm);
     if (this.readOnly) this.engagementForm.disable();
     this._store.dispatch(GetEngagementMissionPrime());
@@ -75,12 +77,10 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   onActeJuridiqueChange = (event: any) => {
-    console.log(event)
-    const act = this.engagements.find((item) => item.numero === event.value);
-    console.log(act)
+    const act = this.engagements.find((item) => item.id === event.value);
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
 
-    if (act)
+    if (act){
       this.engagementForm.patchValue({
         codeProcedure: act.codeProcedure,
         reference: act.reference,
@@ -89,6 +89,19 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         objetj: act.objet,
         imputation: act.imputation,
         numeroj: act.numero,
+        montantAE:act.montantAE
+      });
+
+      this.onMissionChange(act.matriculeBeneficiaire);
+    }
+
+
+  };
+
+  onMissionChange = (event: any) => {
+    const act = this.missions.find((item) => item.matriculeBeneficiaire === event.value);
+    if (act)
+      this.engagementForm.patchValue({
         matriculeBeneficaire: act.matriculeBeneficiaire,
         nomBeneficaire: act.nomBeneficiaire,
         itineraire: act.itineraire,
@@ -101,7 +114,6 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   };
 
   doChangeStep = (direction:any) => {
-    console.log(direction)
     this.changeStep.emit(direction);
   };
   close() {
@@ -109,20 +121,25 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   private _initListeners() {
-    this._store
-      .pipe(this.takeUntilDestroy, select(getPrimeDataSelector))
+      this._store
+      .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((payload) => {
        this.engagements = [...payload];
-       console.log(this.engagements)
        if(this.engagementForm != undefined){
         this.scanneElt(this.engagementForm.value)
       }
       });
+
+      this._store
+      .pipe(this.takeUntilDestroy, select(getMissionDataSelector))
+      .subscribe((payload) => {
+       this.missions = [...payload];
+       console.log(this.missions)
+      });
   }
 
   scanneElt = (event:any) => {
-    console.log(event)
-    const act = this.engagements.find((item) => item.numero === event.numActeJuridique);
+    const act = this.engagements.find((item) => item.numero === event.numActeJuridique.numero);
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
 
     if (act)
@@ -134,14 +151,6 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         objetj: act.objet,
         imputation: act.imputation,
         numeroj: act.numero,
-        matriculeBeneficaire: act.matriculeBeneficiaire,
-        nomBeneficaire: act.nomBeneficiaire,
-        itineraire: act.itineraire,
-        dateDebut: act.dateDebut,
-        dateFin: act.dateFin,
-        nombreJours: act.nombreJours,
-        montantMission: act.montant,
-        baremeJour:act.baremeJour,
       });
   }
 

@@ -10,6 +10,8 @@ import { getDataSelector, getLoadingSelector } from '@reducers/carnets-mandats.r
 import { AppState } from '@reducers/index';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
+
 export class Type{
   name!:string;
 }
@@ -32,6 +34,7 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   data!: CarnetMandatModel[];
   types:Type[]=[];
+  carnet:any;
   constructor(
     private _store: Store<AppState>,
     private translate: TranslateService,
@@ -43,13 +46,13 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.types)
     this.mandatForm = this.startingForm;
     this.subformInitialized.emit(this.mandatForm);
     if (this.readOnly) this.mandatForm.disable();
     this._store.dispatch(GetCarnetMandats());
     this.mandatForm.controls['matriculeGestionnaire'].disable();
     this.mandatForm.controls['nomGestionnaire'].disable();
+    this.mandatForm.controls['montantCPChiffres'].disable();
 
     this.translate.get(EtatEngagementMandatEnum.CONTROLE).subscribe((res: string) => {
       const typemap:Type={
@@ -72,7 +75,6 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   }
 
   doChangeStep = (direction:any) => {
-
     this.changeStep.emit(direction);
   };
 
@@ -80,10 +82,7 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
-       // this.data = [...data];
-       console.log(data)
-        this.data = data;
-        console.log("data ",this.data );
+       this.data = [...data];
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
@@ -93,13 +92,13 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
 
   onNumeroMandatChange = (event: any) => {
     const act = this.data.find((item) => item.code === event.value);
-    console.log(act)
+    this.carnet = act;
     if (act)
       this.mandatForm.patchValue({
         numero: act.code,
         matriculeGestionnaire: act.gestionnaire.matricule,
         nomGestionnaire: act.gestionnaire.nom,
+        dateAffectation: act.dateAffectation
       });
   };
-
 }

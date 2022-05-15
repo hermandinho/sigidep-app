@@ -102,7 +102,6 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
             label: this.translate.instant('labels.annuler'),
             icon: 'pi pi-minus-circle',
             command: () => {
-              console.log('theo')
               this.handleCancel(this.currentItem);
             },
             disabled: this.currentItem?.etat !== EtatEngagementEnum.RESERVED,
@@ -174,7 +173,6 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
   }
 
   edit(item: EngagementMandatModel) {
-    console.log(item)
    this._dialogService.launchEngagementMandatCreateDialog(item);
   }
 
@@ -193,7 +191,6 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
     .subscribe((data) => {
       this.data = [...data];
       this.originalData = [...data];
-      console.log(this.data)
     });
 
     this.loading$ = this._store.pipe(

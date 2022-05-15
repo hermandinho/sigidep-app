@@ -1,8 +1,8 @@
 import { GetEngagementMandats } from '@actions/engagement-mandat.actions';
 import { Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
-import { EngagementMandatModel, Step } from '@models/engagement-mandat.model';
+import { EngagementMandatModel, EtatEngagementMandatEnum, StepMandat } from '@models/engagement-mandat.model';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
@@ -11,6 +11,9 @@ import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-mandat-form',
@@ -19,10 +22,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
-  private currentStepBs: BehaviorSubject<Step> = new BehaviorSubject<Step>(
+  private currentStepBs: BehaviorSubject<StepMandat> = new BehaviorSubject<StepMandat>(
     'engagement'
   );
-  public currentStep$: Observable<Step> = this.currentStepBs.asObservable();
+  public currentStep$: Observable<StepMandat> = this.currentStepBs.asObservable();
   public form!: FormGroup;
   public action!: 'book' | 'edit';
   public busy = false;
@@ -35,7 +38,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     private _appService: AppService,
     private _apisService: ApisService,
     private _store: Store<AppState>,
-    private readonly _dialogService: DialogsService
+    private readonly _dialogService: DialogsService,
+    private translate: TranslateService,
   ) {
     super();
   }
@@ -60,18 +64,28 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         nombreJours: [undefined],
         montantMission: [undefined],
         baremeJour:[undefined],
-        numActeJuridique:[undefined]
+        numActeJuridique: this._fb.group(
+          {
+            id: [null],
+            numero: [null],
+            imputation: [null],
+          },
+          null
+        ),
+        montantAE:[undefined]
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
         matriculeGestionnaire: [undefined],
         nomGestionnaire: [undefined],
         objet: [undefined],
-        dateEngagement: [undefined],
-        montantCPChiffres: [undefined],
+        dateEngagement: [undefined,[Validators.required, this.dateValidator]],
+        montantCPChiffres: [undefined,[this.montantAEValidator]],
         montantCPLettres: [undefined],
         signataire:[undefined],
-        typeMission:[undefined]
+        typeMission:[undefined,[this.montantAEValidator]],
+        dateAffectation:[undefined],
+
       }),
 
       performForm: this._fb.group({
@@ -116,6 +130,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         livrables,
         situationActuelle,
         sourceVerif,
+        dateAffectation,
+        montantAE
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -138,7 +154,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           nombreJours,
           montantMission,
           baremeJour,
-          numActeJuridique
+          numActeJuridique,
+          montantAE
         },
         mandatForm: {
           numero,
@@ -149,9 +166,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantCPChiffres,
           montantCPLettres,
           signataire,
-          typeMission
+          typeMission,
+          dateAffectation
         },
-
         performForm:{
           livrables,
           situationActuelle,
@@ -185,11 +202,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   }
 
   changeStep(currentStep: string, direction: 'forward' | 'back') {
-    console.log(currentStep)
     switch (currentStep) {
       case 'engagement':
         if(direction === 'forward'){
-          console.log(currentStep)
           this.currentStepBs.next('mandat');
         }
         break;
@@ -211,11 +226,47 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   bookProcess = (
     engagement:EngagementMandatModel
   ) => {
-    if (this.currentStepBs.value === 'perform')
-      this._store.dispatch(GetEngagementMandats());
-    this._dialogService.launchEngagementMandatCreateDialog(
-      engagement,
-    );
+      const method: Observable<any> =
+        this._apisService.put<EngagementMandatModel>(
+          '/engagements/mandats/reservation',
+          engagement
+        );
+
+        method.subscribe(
+          (res) => {
+            //this.busy = false;
+            this.ref.close(res);
+            this._store.dispatch(GetEngagementMandats())
+            this._dialogService.launchPrintEngagementMandatPrimeDialog(res);
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail:
+                'messages.engagementsreservationSuccess' +
+                ': numéro: ' +
+                res.numero,
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.engagements.conflict';
+            } else {
+              err = 'errors.unknown';
+            }
+            //this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+
   };
 
   submitForm() {
@@ -318,6 +369,52 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     }
 
   }
+
+  dateValidator = (control: FormControl): { [s: string]: any } | null => {
+    if (control.value) {
+      const date = moment(control.value);
+      const currentDate = moment(this.form.getRawValue()?.mandatForm.dateAffectation);
+      if (date < currentDate) {
+        return { invalidDate: 'errors.futureDate' };
+      }
+    }
+    return null;
+  };
+
+  montantAEValidator = (control: FormControl): { [s: string]: any } | null => {
+    if (control.value) {
+      const error = { invalidAmount: 'errors.invalidAmount' };
+      if(this.form.getRawValue()?.mandatForm.typeMission=== this.translate.instant(EtatEngagementMandatEnum.ORDINAIRE)){
+        const amount = 75/100*this.form.getRawValue()?.engagementForm.montantAE;
+        this.form.patchValue({
+          mandatForm:{
+            montantCPChiffres:amount
+          }
+        });
+        return null;
+      }
+      if(this.form.getRawValue()?.mandatForm.typeMission=== this.translate.instant(EtatEngagementMandatEnum.CONTROLE)){
+        const amount = 80/100*this.form.getRawValue()?.engagementForm.montantAE;
+        this.form.patchValue({
+          mandatForm:{
+            montantCPChiffres:amount
+          }
+        });
+        return null;
+      }
+      if(this.form.getRawValue()?.mandatForm.typeMission=== this.translate.instant(EtatEngagementMandatEnum.EFFECTUER)){
+        const amount = this.form.getRawValue()?.engagementForm.montantAE;
+        this.form.patchValue({
+          mandatForm:{
+            montantCPChiffres:amount
+          }
+        });
+        return null;
+      }
+      return error;
+    }
+    return null;
+  };
 
 
 

@@ -95,7 +95,7 @@ export class EngagementsMandatsEffects {
           switchMap((payload) => {
             return [
               CancelEngagementMandatsReservationSuccess({ payload }),
-              GetEngagementMandats
+              GetEngagementMandats()
             ];
           }),
           catchError((err: HttpErrorResponse) =>

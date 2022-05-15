@@ -19,6 +19,7 @@ import { EngagementFormComponent } from '@components/engagement-form/engagement-
 import { MandatFormComponent } from '@components/mandat-form/mandat-form.component';
 import { PerformFormComponent } from '@components/perform-form/perform-form.component';
 import { CreateMandatFormComponent } from '@components/create-mandat-form/create-mandat-form.component';
+import { PrintEngagementMandatPrimeComponent } from '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { CreateMandatFormComponent } from '@components/create-mandat-form/create
     EngagementFormComponent,
     MandatFormComponent,
     PerformFormComponent,
-    CreateMandatFormComponent
+    CreateMandatFormComponent,
+    PrintEngagementMandatPrimeComponent
   ],
   imports: [
     CommonModule,

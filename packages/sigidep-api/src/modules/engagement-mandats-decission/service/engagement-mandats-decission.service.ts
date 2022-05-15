@@ -17,7 +17,11 @@ export class EngagementMandatsDecissionService {
   }
 
   public async filter(): Promise<EngagementMandatDecissionEntity[]> {
-    return this.repository.createQueryBuilder('eng').getMany();
+    return this.repository
+      .createQueryBuilder('eng')
+      .leftJoinAndSelect('eng.numActeJuridique', 'gest')
+      //.leftJoinAndSelect('eng.traitement', 'code')
+      .getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {

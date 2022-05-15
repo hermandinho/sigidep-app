@@ -1,6 +1,8 @@
+import { IsOptional } from 'class-validator';
 import { ChildEntity, Column, Entity, JoinColumn, ManyToOne, TableInheritance } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
+import { TraitementEntity } from './traitement.entity';
 
 export enum EtatEngagementMandatDecissionEnum {
   SAVE = 'labels.save',
@@ -17,7 +19,7 @@ export enum EtatEngagementMandatDecissionEnum {
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class EngagementMandatDecissionEntity extends BaseEntity {
  
-  @Column({ name: 'numero', unique: true, nullable: true})
+  @Column({ name: 'numero', nullable: true})
   public numero: string;
 
   @Column('varchar', { nullable: true, name: 'matriculeGestionnaire' })
@@ -26,9 +28,9 @@ export class EngagementMandatDecissionEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'nomGestionnaire' })
   public nomGestionnaire: string;
 
-  @Column('varchar', { nullable: true, name: 'numActeJuridique' })
+  /* @Column('varchar', { nullable: true, name: 'numActeJuridique' })
   public numActeJuridique: string;
-
+ */
   @Column({ nullable: true, type: 'text', name: 'objet' })
   public objet: string;
 
@@ -82,5 +84,24 @@ export class EngagementMandatDecissionEntity extends BaseEntity {
 
   @Column({ nullable: true, type: 'boolean', name: 'paye' })
   public paye: boolean;
+
+  @ManyToOne(() => EngagementJuridiqueEntity, (object) => object.id, {
+    cascade: true,
+    eager: false,
+    nullable: true,
+  })
+  @IsOptional()
+  @JoinColumn({ name: 'numActeJuridique_id' })
+  /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
+  public numActeJuridique?: EngagementJuridiqueEntity;
+
+/*   @ManyToOne(() => TraitementEntity, (object) => object.id, {
+    cascade: true,
+    eager: false,
+    nullable: true,
+  })
+  @IsOptional()
+  @JoinColumn({ name: 'traitement_id' })
+  public traitement?: TraitementEntity; */
 
 }

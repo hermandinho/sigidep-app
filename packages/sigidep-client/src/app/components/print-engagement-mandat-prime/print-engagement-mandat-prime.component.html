@@ -14,48 +14,24 @@
       <dd>&nbsp;</dd>
       <dt>&nbsp;</dt>
       <dd>{{ "labels.imputation" | translate }}:</dd>
-      <dt>{{ prime.imputation }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.subProgram" | translate }}:</dd>
-      <dt>{{ prime.subProgram }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.action" | translate }}:</dd>
-      <dt>{{ prime.action }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.activity" | translate }}:</dd>
-      <dt>{{ prime.activity }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.task" | translate }}:</dd>
-      <dt>{{ prime.task }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.operation" | translate }}:</dd>
-      <dt>{{ prime.operationId }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.adminUnit" | translate }}:</dd>
-      <dt>{{ prime.adminUnit }}</dt>
-      <dd>&nbsp;</dd>
-      <dt>&nbsp;</dt>
-      <dd>{{ "labels.paragraph" | translate }}:</dd>
-      <dt>{{ prime.paragraph }}</dt>
+      <dt>{{ prime.numActeJuridique?.imputation }}</dt>
       <dd>&nbsp;</dd>
       <dt>&nbsp;</dt>
       <dd>{{ "labels.objet" | translate }}:</dd>
       <dt>{{ prime.objet }}</dt>
       <dd>&nbsp;</dd>
       <dt>&nbsp;</dt>
-      <dd>{{ "labels.montantAE" | translate }}:</dd>
-      <dt>
-        {{
-          prime.montantAE | currency: "":"":"":currentLangCurrencyFormat
-        }}
-        FCFA
-      </dt>
+      <dd>{{ "labels.etat" | translate }}:</dd>
+      <dt>{{ prime.etat | translate}}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.numActeJuridiqueMandat" | translate }}:</dd>
+      <dt>{{ prime.numActeJuridique?.numero }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.situationActuel" | translate }}:</dd>
+      <dt>{{ prime.situationActuelle }}</dt>
+      <dd>&nbsp;</dd>
     </dl>
     <div class="footer">
       {{ "labels.visa" | translate }}

@@ -63,7 +63,6 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        console.log(this.data)
         this.onEncourChange(this.data[0])
       });
     this.loading$ = this._store.pipe(
@@ -74,7 +73,6 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   }
 
   onEncourChange = (data: any) => {
-    console.log(data)
     if (data)
       this.performForm.patchValue({
         livrables: data.livrables,
