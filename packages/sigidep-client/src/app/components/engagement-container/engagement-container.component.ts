@@ -378,7 +378,6 @@ export class EngagementContainerComponent
   }
 
   submitForm() {
-    const formValues = this.form.getRawValue();
     this.busy = true;
     let editedEngagement;
     if (this.isMission) {
@@ -395,6 +394,10 @@ export class EngagementContainerComponent
       editedEngagement = {
         ...this.form.getRawValue()?.commonForm,
         ...this.form.getRawValue()?.decisionForm,
+        taxesApplicable:
+          this.currentProcedure !== '1126'
+            ? undefined
+            : this.form.getRawValue()?.decisionForm.taxesApplicable,
       } as EngagementDecisionModel;
     }
 
