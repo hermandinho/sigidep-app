@@ -1,0 +1,96 @@
+<div class="container">
+
+<div id="print-section">
+<p-card>
+  <div class="grid-container-header">
+
+    <div class="grid-fr">
+      <strong>REPUBLIQUE DU CAMEROUN</strong> <br>
+      <i>Paix-Travail-Patrie</i> <br>
+      ********* <br>
+      <strong>CHAMBRE D'AGRICULTURE, DES PECHES, DE <br>
+        L'ELEVAGE ET DES FORETS DU CAMEROUN</strong>
+    </div>
+    <div class="grid-img">
+      <img src="assets/img/logopdf.png" alt="logo pdf">
+    </div>
+    <div class="grid-en">
+      <strong>REPUBLIC OF CAMEROON</strong> <br>
+      <em>Peace-Work-Fatherland</em> <br>
+      ********* <br>
+      <strong>CHAMBER OF AGRICULTURE, FISHERIES, <br> LIVESTOCK AND FOREST OF CAMEROON</strong>
+    </div>
+  </div>
+  <h1>SITUATION DES CREDITS SUR IMPUTATION</h1>
+  <div class="grid-container">
+    <fieldset class="grid-item1">
+      <legend><i>Identification de l’imputation</i></legend>
+      <p>
+        N° imputation : <strong>{{imputation.imputation}}</strong><br>
+        <i>Frais de recherche pour investissement dans le secteur agricole, animal, sylvicole et faunique
+          Research costs for investment in the agricultural, animal, forestry and wildlife sector</i>
+        <br>
+        Opération: Frais d'appui
+      </p>
+
+    </fieldset>
+    <fieldset class="grid-item2">
+      <legend><i>Statistiques de consommation (en F CFA)</i></legend>
+      <table>
+        <tr>
+          <th></th>
+          <th>AE</th>
+          <th>CP</th>
+        </tr>
+        <tr>
+          <td><strong>Dotation Initiale :</strong></td>
+          <td>{{imputation.aeInitial}}</td>
+          <td>{{imputation.cpInitial}}</td>
+        </tr>
+        <tr>
+          <td><strong>Abattement :</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Dotation Init. Révisée :</strong></td>
+          <td>{{imputation.aeInitRevisee}}</td>
+          <td>{{imputation.cpInitRevisee}}</td>
+        </tr>
+        <tr>
+          <td><strong>Virement débiteur :</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Virement créditeur :</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Crédits consommés :</strong>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Taux consommation :</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+</p-card>
+
+</div>
+
+
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section"
+[useExistingCss]="true"
+ngxPrint>
+      {{ "buttons.print" | translate }}
+    </button>
+</div>

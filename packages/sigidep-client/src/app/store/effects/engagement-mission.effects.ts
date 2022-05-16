@@ -14,6 +14,9 @@ import {
   DeleteEngagementMission,
   DeleteEngagementMissionFailure,
   DeleteEngagementMissionSuccess,
+  GetEngagementMissionPrime,
+  GetEngagementMissionPrimeFailure,
+  GetEngagementMissionPrimeSuccess,
   GetEngagementMissions,
   GetEngagementMissionsFailure,
   GetEngagementMissionsSuccess,
@@ -99,5 +102,20 @@ export class EngagementsMissionsEffects {
     )
   );
 
+  mision1121$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(GetEngagementMissionPrime),
+    mergeMap((action) =>
+      this.apisService.get<EngagementMissionModel[]>('/engagements/missions/engagement/reserve').pipe(
+        switchMap((payload) => {
+          return [GetEngagementMissionPrimeSuccess({ payload })];
+        }),
+        catchError((err: HttpErrorResponse) =>
+          of(GetEngagementMissionPrimeFailure(err))
+        )
+      )
+    )
+  )
+);
   constructor(private actions$: Actions, private apisService: ApisService) {}
 }

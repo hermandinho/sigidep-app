@@ -49,3 +49,15 @@ export const UpdateEngagementMissionFailure = createAction(
   '[EngagementMissions] Update failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
+
+export const GetEngagementMissionPrime = createAction(
+  '[EngagementMissions] Filter'
+);
+export const GetEngagementMissionPrimeSuccess = createAction(
+  '[EngagementMissions] Filter success',
+  props<{ payload: EngagementMissionModel[] }>()
+);
+export const GetEngagementMissionPrimeFailure = createAction(
+  '[EngagementMissions] Filter failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

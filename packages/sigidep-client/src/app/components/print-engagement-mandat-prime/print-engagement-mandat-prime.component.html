@@ -1,0 +1,51 @@
+<div class="container">
+  <div id="print-section">
+    <h3>
+      {{ "labels.autorisationEngagement" | translate }} N<sup>o</sup>:
+      {{ prime.numero }}
+      <span *ngIf="!isBook" style="float: right; color: red"
+        >{{ "labels.etat" | translate }}:
+        {{ prime.etat | translate }}</span
+      >
+    </h3>
+    <dl class="p-fluid p-grid">
+      <dd>{{ "labels.matriculeGestionnaire" | translate }}:</dd>
+      <dt>{{ prime.matriculeGestionnaire }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.imputation" | translate }}:</dd>
+      <dt>{{ prime.numActeJuridique?.imputation }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.objet" | translate }}:</dd>
+      <dt>{{ prime.objet }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.etat" | translate }}:</dd>
+      <dt>{{ prime.etat | translate}}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.numActeJuridiqueMandat" | translate }}:</dd>
+      <dt>{{ prime.numActeJuridique?.numero }}</dt>
+      <dd>&nbsp;</dd>
+      <dt>&nbsp;</dt>
+      <dd>{{ "labels.situationActuel" | translate }}:</dd>
+      <dt>{{ prime.situationActuelle }}</dt>
+      <dd>&nbsp;</dd>
+    </dl>
+    <div class="footer">
+      {{ "labels.visa" | translate }}
+    </div>
+  </div>
+  <button
+    type="button"
+    [useExistingCss]="true"
+    pButton
+    pRipple
+    class="p-button left-down"
+    icon="pi pi-print"
+    printSectionId="print-section"
+    ngxPrint
+    [label]="'buttons.print' | translate"
+  ></button>
+</div>

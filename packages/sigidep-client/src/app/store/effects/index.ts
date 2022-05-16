@@ -33,6 +33,8 @@ import { EngagementsJuridiquesEffects } from '@effects/engagement-juridique.effe
 import { EngagementsMissionsEffects } from '@effects/engagement-mission.effects';
 import { TaxesEffects } from '@effects/exec-taxes.effects';
 import { ProceduresEffects } from '@effects/exec-procedure.effects';
+import { ConsultationsEffects } from './consultations.effects';
+import { EngagementsMandatsEffects } from './engagement-mandat.effects';
 
 export const Effects = [
   AuthEffects,
@@ -71,4 +73,6 @@ export const Effects = [
   ProceduresEffects,
   TaxesEffects,
   EngagementsJuridiquesEffects,
+  ConsultationsEffects,
+  EngagementsMandatsEffects
 ];
