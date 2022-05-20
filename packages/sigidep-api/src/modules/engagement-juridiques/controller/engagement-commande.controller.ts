@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -16,6 +17,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { EngagementCommandeDTO } from '../dto/create-engagement-commande.dto';
 import { EngagementCommandeService } from '../service/engagement-commande.service';
 import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
+import { ProcedureCommande } from '../types';
+import { EngagementFilter } from '@utils/engagement-filter';
 @Controller('engagements/commandes')
 @ApiTags('engagements/commandes')
 @UseGuards(AuthGuard())
@@ -24,8 +27,10 @@ export class EngagementCommandeController {
   constructor(private readonly services: EngagementCommandeService) {}
 
   @Get('/')
-  public async filter() {
-    return this.services.filter();
+  public async filter(
+    @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+  ) {
+    return this.services.filter(filter);
   }
 
   @Post('/')

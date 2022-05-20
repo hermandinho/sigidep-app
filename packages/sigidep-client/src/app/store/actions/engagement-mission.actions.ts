@@ -1,7 +1,8 @@
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementMissions = createAction(
-  '[EngagementMissions] Filter'
+  '[EngagementMissions] Filter',
+  props<{ procedures?: string[]; etats?: string[] }>()
 );
 export const GetEngagementMissionsSuccess = createAction(
   '[EngagementMissions] Filter success',
@@ -47,17 +48,5 @@ export const UpdateEngagementMissionSuccess = createAction(
 );
 export const UpdateEngagementMissionFailure = createAction(
   '[EngagementMissions] Update failure',
-  props<{ error?: any }>() // TODO defile errors global model here
-);
-
-export const GetEngagementMissionPrime = createAction(
-  '[EngagementMissions] Filter'
-);
-export const GetEngagementMissionPrimeSuccess = createAction(
-  '[EngagementMissions] Filter success',
-  props<{ payload: EngagementMissionModel[] }>()
-);
-export const GetEngagementMissionPrimeFailure = createAction(
-  '[EngagementMissions] Filter failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );

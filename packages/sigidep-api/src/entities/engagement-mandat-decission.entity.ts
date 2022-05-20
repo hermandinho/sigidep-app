@@ -1,5 +1,12 @@
 import { IsOptional } from 'class-validator';
-import { ChildEntity, Column, Entity, JoinColumn, ManyToOne, TableInheritance } from 'typeorm';
+import {
+  ChildEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  TableInheritance,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
 import { TraitementEntity } from './traitement.entity';
@@ -18,8 +25,7 @@ export enum EtatEngagementMandatDecissionEnum {
 })
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class EngagementMandatDecissionEntity extends BaseEntity {
- 
-  @Column({ name: 'numero', nullable: true})
+  @Column({ name: 'numero', nullable: true })
   public numero: string;
 
   @Column('varchar', { nullable: true, name: 'matriculeGestionnaire' })
@@ -34,10 +40,10 @@ export class EngagementMandatDecissionEntity extends BaseEntity {
   @Column({ nullable: true, type: 'text', name: 'objet' })
   public objet: string;
 
-  @Column({nullable: true, type: 'date', name: 'dateEngagement' })
+  @Column({ nullable: true, type: 'date', name: 'dateEngagement' })
   public dateEngagement: Date;
 
-  @Column('varchar', {nullable: true, name: 'signataire' })
+  @Column('varchar', { nullable: true, name: 'signataire' })
   public signataire: string;
 
   @Column({ nullable: true, type: 'float', name: 'montantCPChiffres' })
@@ -95,7 +101,7 @@ export class EngagementMandatDecissionEntity extends BaseEntity {
   /** TO BE CHANGED TO Gestionnaire entity later, at least a Gestionnaire is an agent */
   public numActeJuridique?: EngagementJuridiqueEntity;
 
-/*   @ManyToOne(() => TraitementEntity, (object) => object.id, {
+  /*   @ManyToOne(() => TraitementEntity, (object) => object.id, {
     cascade: true,
     eager: false,
     nullable: true,
@@ -103,5 +109,4 @@ export class EngagementMandatDecissionEntity extends BaseEntity {
   @IsOptional()
   @JoinColumn({ name: 'traitement_id' })
   public traitement?: TraitementEntity; */
-
 }

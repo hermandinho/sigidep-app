@@ -8,9 +8,8 @@ describe('EtatImputationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EtatImputationComponent ]
-    })
-    .compileComponents();
+      declarations: [EtatImputationComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

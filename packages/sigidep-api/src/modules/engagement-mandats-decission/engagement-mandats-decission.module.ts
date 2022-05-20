@@ -5,23 +5,13 @@ import { EngagementMandatsDecissionService } from './service/engagement-mandats-
 import { EngagementMandatDecissionEntity } from '@entities/engagement-mandat-decission.entity';
 import { EngagementMandatDecissionController } from './controller/engagement-mandats-decission.controller';
 
-
 @Module({
-  controllers: [
-    EngagementMandatDecissionController,
-  ],
-  providers: [
-    EngagementMandatsDecissionService,
-  ],
+  controllers: [EngagementMandatDecissionController],
+  providers: [EngagementMandatsDecissionService],
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([
-      EngagementMandatDecissionEntity,
-    ]),
+    TypeOrmModule.forFeature([EngagementMandatDecissionEntity]),
   ],
-  exports: [
-    TypeOrmModule,
-    EngagementMandatsDecissionService,
-  ],
+  exports: [TypeOrmModule, EngagementMandatsDecissionService],
 })
 export class EngagementMandatsDecissionModule {}

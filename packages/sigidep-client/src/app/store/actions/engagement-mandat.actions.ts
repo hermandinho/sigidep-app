@@ -1,7 +1,8 @@
 import { EngagementMandatModel } from '@models/engagement-mandat.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementMandats = createAction(
-  '[EngagementMandats] Filter'
+  '[EngagementMandats] Filter',
+  props<{ procedures?: string[]; etats?: string[] }>()
 );
 export const GetEngagementMandatsSuccess = createAction(
   '[EngagementMandats] Filter success',
@@ -52,7 +53,9 @@ export const UpdateEngagementMandatsFailure = createAction(
 
 export const CancelEngagementMandatsReservation = createAction(
   '[EngagementMandats] Cancel',
-  props<{ payload: EngagementMandatModel }>()
+  props<{
+    payload: EngagementMandatModel;
+  }>()
 );
 export const CancelEngagementMandatsReservationSuccess = createAction(
   '[EngagementMandats] Cancel success',
@@ -62,5 +65,3 @@ export const CancelEngagementMandatsReservationFailure = createAction(
   '[EngagementMandats] Cancel failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
-
-

@@ -38,7 +38,10 @@ import {
   Step,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
-import { EngagementMandatModel, StepMandat } from '@models/engagement-mandat.model';
+import {
+  EngagementMandatModel,
+  StepMandat,
+} from '@models/engagement-mandat.model';
 
 @Injectable({
   providedIn: 'root',
@@ -94,7 +97,7 @@ export class DialogsService {
   private etatImputationComponent: any;
 
   private createMandatFormComponent: any;
-  private reservationEngagementMandatDecisionComponent:any;
+  private reservationEngagementMandatDecisionComponent: any;
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
@@ -966,9 +969,7 @@ export class DialogsService {
       },
     });
   }
- public async launchImputationEtatDialog(
-    item?: EncoursModel
-  ): Promise<any> {
+  public async launchImputationEtatDialog(item?: EncoursModel): Promise<any> {
     if (!this.etatImputationComponent) {
       const { EtatImputationComponent } = await import(
         '@components/etat-imputation/etat-imputation.component'
@@ -1015,14 +1016,15 @@ export class DialogsService {
   }
 
   public async launchPrintEngagementMandatPrimeDialog(
-    item:EngagementMandatModel,
+    item: EngagementMandatModel,
     type?: Step
   ): Promise<any> {
     if (!this.printEngagementMandatPrimeComponent) {
       const { PrintEngagementMandatPrimeComponent } = await import(
         '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component'
       );
-      this.printEngagementMandatPrimeComponent = PrintEngagementMandatPrimeComponent;
+      this.printEngagementMandatPrimeComponent =
+        PrintEngagementMandatPrimeComponent;
     }
 
     return this._dialogService.open(this.printEngagementMandatPrimeComponent, {
@@ -1039,5 +1041,4 @@ export class DialogsService {
       },
     });
   }
-
 }

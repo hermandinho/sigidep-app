@@ -120,7 +120,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProceduresModule,
     EngagementsModule,
     ConsultationsModule,
-    MandatsModule
+    MandatsModule,
   ],
   providers: [
     AppInstallCheckGuard,

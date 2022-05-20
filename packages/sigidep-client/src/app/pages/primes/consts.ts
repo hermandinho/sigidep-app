@@ -33,6 +33,5 @@ export const TableColumns = [
     field: 'numActeJuridique',
     title: 'tables.headers.numeroJuridique',
     sortable: true,
-  }
-
+  },
 ];

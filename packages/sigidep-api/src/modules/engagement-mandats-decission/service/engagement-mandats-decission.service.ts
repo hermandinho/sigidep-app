@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { CreateEngagementMandatDecissionDTO } from '../dto/create-engagement-mandats-decission.dto';
-import { EngagementMandatDecissionEntity, EtatEngagementMandatDecissionEnum } from '@entities/engagement-mandat-decission.entity';
+import {
+  EngagementMandatDecissionEntity,
+  EtatEngagementMandatDecissionEnum,
+} from '@entities/engagement-mandat-decission.entity';
 
 @Injectable()
 export class EngagementMandatsDecissionService {
@@ -17,11 +20,13 @@ export class EngagementMandatsDecissionService {
   }
 
   public async filter(): Promise<EngagementMandatDecissionEntity[]> {
-    return this.repository
-      .createQueryBuilder('eng')
-      .leftJoinAndSelect('eng.numActeJuridique', 'gest')
-      //.leftJoinAndSelect('eng.traitement', 'code')
-      .getMany();
+    return (
+      this.repository
+        .createQueryBuilder('eng')
+        .leftJoinAndSelect('eng.numActeJuridique', 'gest')
+        //.leftJoinAndSelect('eng.traitement', 'code')
+        .getMany()
+    );
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -55,7 +60,9 @@ export class EngagementMandatsDecissionService {
 
     payload = {
       ...payload,
-      etat: reserve ? EtatEngagementMandatDecissionEnum.RESERVED : EtatEngagementMandatDecissionEnum.MODIFY,
+      etat: reserve
+        ? EtatEngagementMandatDecissionEnum.RESERVED
+        : EtatEngagementMandatDecissionEnum.MODIFY,
     };
 
     return this.repository.save({
@@ -76,7 +83,4 @@ export class EngagementMandatsDecissionService {
       etat: EtatEngagementMandatDecissionEnum.CANCEL, // updated fields
     });
   }
-
-
-
 }

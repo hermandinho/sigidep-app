@@ -426,10 +426,10 @@ export class EngagementContainerComponent
           this.busy = false;
           this.ref.close(res);
           this.isMission
-            ? this._store.dispatch(GetEngagementMissions())
+            ? this._store.dispatch(GetEngagementMissions({}))
             : this.isCommand
-            ? this._store.dispatch(GetEngagementCommandes())
-            : this._store.dispatch(GetEngagementDecisions());
+            ? this._store.dispatch(GetEngagementCommandes({}))
+            : this._store.dispatch(GetEngagementDecisions({}));
 
           this._appService.showToast({
             summary: 'messages.success',
@@ -476,10 +476,10 @@ export class EngagementContainerComponent
           this.busy = false;
           this.ref.close(res);
           this.isMission
-            ? this._store.dispatch(GetEngagementMissions())
+            ? this._store.dispatch(GetEngagementMissions({}))
             : this.isCommand
-            ? this._store.dispatch(GetEngagementCommandes())
-            : this._store.dispatch(GetEngagementDecisions());
+            ? this._store.dispatch(GetEngagementCommandes({}))
+            : this._store.dispatch(GetEngagementDecisions({}));
 
           this._appService.showToast({
             summary: 'messages.success',
@@ -517,9 +517,9 @@ export class EngagementContainerComponent
       | EngagementCommandeModel
   ) => {
     if (this.currentStepBs.value === 'command')
-      this._store.dispatch(GetEngagementCommandes());
+      this._store.dispatch(GetEngagementCommandes({}));
     if (this.currentStepBs.value === 'mission')
-      this._store.dispatch(GetEngagementMissions());
+      this._store.dispatch(GetEngagementMissions({}));
     this._dialogService.launchReservationEngagementDialog(
       engagement,
       this.currentStepBs.value

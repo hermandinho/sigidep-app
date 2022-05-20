@@ -6,8 +6,23 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { ApisService } from '@services/apis.service';
 import { EngagementMandatModel } from '@models/engagement-mandat.model';
-import { CancelEngagementMandatsReservation, CancelEngagementMandatsReservationFailure, CancelEngagementMandatsReservationSuccess, CreateEngagementMandats, CreateEngagementMandatsFailure, CreateEngagementMandatsSuccess, DeleteEngagementMandats, DeleteEngagementMandatsFailure, DeleteEngagementMandatsSuccess, GetEngagementMandats, GetEngagementMandatsFailure, GetEngagementMandatsSuccess, UpdateEngagementMandats, UpdateEngagementMandatsFailure, UpdateEngagementMandatsSuccess } from '@actions/engagement-mandat.actions';
-
+import {
+  CancelEngagementMandatsReservation,
+  CancelEngagementMandatsReservationFailure,
+  CancelEngagementMandatsReservationSuccess,
+  CreateEngagementMandats,
+  CreateEngagementMandatsFailure,
+  CreateEngagementMandatsSuccess,
+  DeleteEngagementMandats,
+  DeleteEngagementMandatsFailure,
+  DeleteEngagementMandatsSuccess,
+  GetEngagementMandats,
+  GetEngagementMandatsFailure,
+  GetEngagementMandatsSuccess,
+  UpdateEngagementMandats,
+  UpdateEngagementMandatsFailure,
+  UpdateEngagementMandatsSuccess,
+} from '@actions/engagement-mandat.actions';
 
 @Injectable()
 export class EngagementsMandatsEffects {
@@ -15,14 +30,23 @@ export class EngagementsMandatsEffects {
     this.actions$.pipe(
       ofType(GetEngagementMandats),
       mergeMap((action) =>
-        this.apisService.get<EngagementMandatModel[]>('/engagements/mandats').pipe(
-          switchMap((payload) => {
-            return [GetEngagementMandatsSuccess({ payload })];
-          }),
-          catchError((err: HttpErrorResponse) =>
-            of(GetEngagementMandatsFailure(err))
+        this.apisService
+          .get<EngagementMandatModel[]>('/mandats', {
+            ...(action.procedures && {
+              procedures: action.procedures.join(','),
+            }),
+            ...(action.etats && {
+              etats: action.etats.join(','),
+            }),
+          })
+          .pipe(
+            switchMap((payload) => {
+              return [GetEngagementMandatsSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetEngagementMandatsFailure(err))
+            )
           )
-        )
       )
     )
   );
@@ -32,7 +56,7 @@ export class EngagementsMandatsEffects {
       ofType(CreateEngagementMandats),
       mergeMap((action) =>
         this.apisService
-          .post<EngagementMandatModel>('/engagements/mandats', action.payload)
+          .post<EngagementMandatModel>('/mandats', action.payload)
           .pipe(
             switchMap((payload) => {
               return [CreateEngagementMandatsSuccess({ payload })];
@@ -50,7 +74,7 @@ export class EngagementsMandatsEffects {
       ofType(UpdateEngagementMandats),
       mergeMap((action) =>
         this.apisService
-          .post<EngagementMandatModel>('/engagements/mandats', action.payload)
+          .post<EngagementMandatModel>('/mandats', action.payload)
           .pipe(
             switchMap((payload) => {
               return [UpdateEngagementMandatsSuccess({ payload })];
@@ -67,12 +91,9 @@ export class EngagementsMandatsEffects {
     this.actions$.pipe(
       ofType(DeleteEngagementMandats),
       mergeMap((action) =>
-        this.apisService.delete<any>(`/engagements/mandats/${action.id}`, {}).pipe(
+        this.apisService.delete<any>(`/mandats/${action.id}`, {}).pipe(
           switchMap((payload) => {
-            return [
-              DeleteEngagementMandatsSuccess(),
-              GetEngagementMandats
-            ];
+            return [DeleteEngagementMandatsSuccess()];
           }),
           catchError((err: HttpErrorResponse) =>
             of(DeleteEngagementMandatsFailure(err))
@@ -83,31 +104,25 @@ export class EngagementsMandatsEffects {
   );
 
   cancel$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(CancelEngagementMandatsReservation),
-    mergeMap((action) =>
-      this.apisService
-        .put<EngagementMandatModel>(
-          `/engagements/mandats/cancel/${action.payload.id}`,
-          action.payload
-        )
-        .pipe(
-          switchMap((payload) => {
-            return [
-              CancelEngagementMandatsReservationSuccess({ payload }),
-              GetEngagementMandats()
-            ];
-          }),
-          catchError((err: HttpErrorResponse) =>
-            of(CancelEngagementMandatsReservationFailure(err))
+    this.actions$.pipe(
+      ofType(CancelEngagementMandatsReservation),
+      mergeMap((action) =>
+        this.apisService
+          .put<EngagementMandatModel>(
+            `/mandats/cancel/${action.payload.id}`,
+            action.payload
           )
-        )
+          .pipe(
+            switchMap((payload) => {
+              return [CancelEngagementMandatsReservationSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(CancelEngagementMandatsReservationFailure(err))
+            )
+          )
+      )
     )
-  )
-);
-
-
-
+  );
 
   constructor(private actions$: Actions, private apisService: ApisService) {}
 }

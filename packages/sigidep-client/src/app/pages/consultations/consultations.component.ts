@@ -9,15 +9,17 @@ import { AppState } from '@reducers/index';
 import { GetImputations } from '@actions/consultations.actions';
 import { DialogsService } from '@services/dialogs.service';
 import { EncoursModel } from '@models/encours.model';
-import { getDataSelector, getLoadingSelector } from '@reducers/consultations.reducer';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/consultations.reducer';
 
 @Component({
   selector: 'app-consultations',
   templateUrl: './consultations.component.html',
-  styleUrls: ['./consultations.component.scss']
+  styleUrls: ['./consultations.component.scss'],
 })
 export class ConsultationsComponent extends BaseComponent implements OnInit {
-
   public busy = false;
   selectedItems: any[] = [];
   tableColumns: any[] = [];
@@ -31,8 +33,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _store: Store<AppState>,
-    private readonly _dialogService: DialogsService,
-
+    private readonly _dialogService: DialogsService
   ) {
     super();
     this.formImputation = this._fb.group({
@@ -51,22 +52,19 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
     return this.formImputation.controls;
   }
 
-   get form2() {
+  get form2() {
     return this.formEngagement.controls;
-   }
+  }
 
-   get form3() {
+  get form3() {
     return this.formMandat.controls;
   }
 
-  ngOnInit(): void {
-
-
-  }
+  ngOnInit(): void {}
 
   initTable() {
-     this.tableColumns = [
-     {
+    this.tableColumns = [
+      {
         field: 'exercise', //TODO: exerciseCode
         title: 'tables.headers.exercice',
         sortable: true,
@@ -91,7 +89,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         field: 'task',
         title: 'tables.headers.task',
         sortable: true,
-       },
+      },
 
       {
         field: 'imputation',
@@ -102,44 +100,39 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         field: 'operation',
         title: 'tables.headers.operation',
         sortable: true,
-      }
-     ];
+      },
+    ];
     this.globalColumns = this.tableColumns.map((item) => item.field);
     this._initListeners();
   }
 
-
   submit() {
     this.busy = true;
-    const editedImputation =
-      this.form1.imputation.value
-    ;
-    console.log(editedImputation)
+    const editedImputation = this.form1.imputation.value;
+    console.log(editedImputation);
     this._store.dispatch(GetImputations({ imputation: editedImputation }));
     this.initTable();
-    console.log(this.data)
+    console.log(this.data);
     this.busy = false;
   }
-   submitMandat() {
+  submitMandat() {
     this.busy = true;
-    const editedMandat =
-      this.form3.mandat.value
-    ;
-    console.log(editedMandat)
+    const editedMandat = this.form3.mandat.value;
+    console.log(editedMandat);
     //this._store.dispatch(GetImputations({ mandat: editedMandat }));
     this.initTable();
-    console.log(this.data)
+    console.log(this.data);
     this.busy = false;
-   }
-   submitEngagement() {
+  }
+  submitEngagement() {
     this.busy = true;
-    const editedEngagement =
-      this.form2.engagement.value
-    ;
-    console.log(editedEngagement)
-    this._store.dispatch(GetCertificatEngagements({ engagement: editedEngagement }));
+    const editedEngagement = this.form2.engagement.value;
+    console.log(editedEngagement);
+    this._store.dispatch(
+      GetCertificatEngagements({ engagement: editedEngagement })
+    );
     this.initTable();
-    console.log(this.data)
+    console.log(this.data);
     this.busy = false;
   }
   private _initListeners() {
@@ -147,11 +140,9 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        if (this.data)
-          this.imputation = true;
-        else
-          this.imputation = false;
-        console.log("data ",this.data );
+        if (this.data) this.imputation = true;
+        else this.imputation = false;
+        console.log('data ', this.data);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
@@ -161,5 +152,4 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   detail(item: EncoursModel) {
     this._dialogService.launchImputationEtatDialog(item);
   }
-
 }

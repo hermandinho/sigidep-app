@@ -54,7 +54,10 @@ export class EngagementMandatDecissionController {
     @Body(ValidationPipe) payload: CreateEngagementMandatDecissionDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
-    const val = { ...payload, etat: EtatEngagementMandatDecissionEnum.RESERVED };
+    const val = {
+      ...payload,
+      etat: EtatEngagementMandatDecissionEnum.RESERVED,
+    };
     return this.services.update(val, user, true);
   }
 
@@ -65,5 +68,4 @@ export class EngagementMandatDecissionController {
   ) {
     return this.services.cancelReservation(id);
   }
-
 }

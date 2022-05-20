@@ -3,22 +3,24 @@ import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { BaseComponent } from '@components/base.component';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
-import { GetEngagementMissionPrime } from '@actions/engagement-mission.actions';
-import { getDataSelector as getMissionDataSelector, getLoadingSelector } from '@reducers/engagement-mission.reducer';
+import {
+  getDataSelector as getMissionDataSelector,
+  getLoadingSelector,
+} from '@reducers/engagement-mission.reducer';
 import { getDataSelector as getDecisionDataSelector } from '@reducers/engagement-decision.reducer';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
+import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
+import { EtatEngagementEnum } from '@models/engagement-juridique.model';
 
 @Component({
   selector: 'app-engagement-form',
   templateUrl: './engagement-form.component.html',
-  styleUrls: ['./engagement-form.component.scss']
+  styleUrls: ['./engagement-form.component.scss'],
 })
 export class EngagementFormComponent extends BaseComponent implements OnInit {
-
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
@@ -29,36 +31,35 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   public engagementForm!: FormGroup;
   public form!: FormGroup;
-  public disabled:boolean=true;
+  public disabled: boolean = true;
   loading$: Observable<boolean> = of(true);
   missions!: EngagementMissionModel[];
   engagements!: EngagementDecisionModel[];
 
-
-
-  constructor(
-    public ref: DynamicDialogRef,
-    private _store: Store<AppState>,
-
-  ) {
+  constructor(public ref: DynamicDialogRef, private _store: Store<AppState>) {
     super();
     this._initListeners();
   }
 
   ngOnInit(): void {
-
     this.engagementForm = this.startingForm;
     this.subformInitialized.emit(this.engagementForm);
     if (this.readOnly) this.engagementForm.disable();
-    this._store.dispatch(GetEngagementMissionPrime());
-    this.onDisable();
 
+    //prime procedure code is 1122
+    this._store.dispatch(
+      GetEngagementDecisions({
+        procedures: ['1122'],
+        etats: [EtatEngagementEnum.RESERVED],
+      })
+    );
+    this.onDisable();
   }
 
-/*   get engagementFormGroup(): FormGroup {
+  /*   get engagementFormGroup(): FormGroup {
     return this.form?.get('engagementForm') as FormGroup;
   } */
-  onDisable(){
+  onDisable() {
     this.engagementForm.controls['codeProcedure'].disable();
     this.engagementForm.controls['reference'].disable();
     this.engagementForm.controls['dateSignature'].disable();
@@ -73,14 +74,13 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['nombreJours'].disable();
     this.engagementForm.controls['montantMission'].disable();
     this.engagementForm.controls['baremeJour'].disable();
-
   }
 
   onActeJuridiqueChange = (event: any) => {
     const act = this.engagements.find((item) => item.id === event.value);
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
 
-    if (act){
+    if (act) {
       this.engagementForm.patchValue({
         codeProcedure: act.codeProcedure,
         reference: act.reference,
@@ -89,17 +89,17 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         objetj: act.objet,
         imputation: act.imputation,
         numeroj: act.numero,
-        montantAE:act.montantAE
+        montantAE: act.montantAE,
       });
 
       this.onMissionChange(act.matriculeBeneficiaire);
     }
-
-
   };
 
   onMissionChange = (event: any) => {
-    const act = this.missions.find((item) => item.matriculeBeneficiaire === event.value);
+    const act = this.missions.find(
+      (item) => item.matriculeBeneficiaire === event.value
+    );
     if (act)
       this.engagementForm.patchValue({
         matriculeBeneficaire: act.matriculeBeneficiaire,
@@ -109,11 +109,11 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         dateFin: act.dateFin,
         nombreJours: act.nombreJours,
         montantMission: act.montant,
-        baremeJour:act.baremeJour,
+        baremeJour: act.baremeJour,
       });
   };
 
-  doChangeStep = (direction:any) => {
+  doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);
   };
   close() {
@@ -121,25 +121,27 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   private _initListeners() {
-      this._store
+    this._store
       .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((payload) => {
-       this.engagements = [...payload];
-       if(this.engagementForm != undefined){
-        this.scanneElt(this.engagementForm.value)
-      }
+        this.engagements = [...payload];
+        if (this.engagementForm != undefined) {
+          this.scanneElt(this.engagementForm.value);
+        }
       });
 
-      this._store
+    this._store
       .pipe(this.takeUntilDestroy, select(getMissionDataSelector))
       .subscribe((payload) => {
-       this.missions = [...payload];
-       console.log(this.missions)
+        this.missions = [...payload];
+        console.log(this.missions);
       });
   }
 
-  scanneElt = (event:any) => {
-    const act = this.engagements.find((item) => item.numero === event.numActeJuridique.numero);
+  scanneElt = (event: any) => {
+    const act = this.engagements.find(
+      (item) => item.numero === event.numActeJuridique.numero
+    );
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
 
     if (act)
@@ -152,8 +154,5 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         imputation: act.imputation,
         numeroj: act.numero,
       });
-  }
-
-
-
+  };
 }

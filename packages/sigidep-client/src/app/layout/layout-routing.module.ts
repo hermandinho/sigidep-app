@@ -340,7 +340,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           permissions: [...MenuPermissions.consultations],
-        }
+        },
       },
       {
         path: 'mandats',
@@ -350,10 +350,8 @@ const routes: Routes = [
           permissions: [...MenuPermissions.mandats],
         },
         loadChildren: () =>
-          import('../pages/primes/mandats.module').then(
-            (m) => m.MandatsModule
-          ),
-      }
+          import('../pages/primes/mandats.module').then((m) => m.MandatsModule),
+      },
 
       /*{
         path: '**',

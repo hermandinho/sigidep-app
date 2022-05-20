@@ -4,8 +4,7 @@
       {{ "labels.autorisationEngagement" | translate }} N<sup>o</sup>:
       {{ prime.numero }}
       <span *ngIf="!isBook" style="float: right; color: red"
-        >{{ "labels.etat" | translate }}:
-        {{ prime.etat | translate }}</span
+        >{{ "labels.etat" | translate }}: {{ prime.etat | translate }}</span
       >
     </h3>
     <dl class="p-fluid p-grid">
@@ -22,7 +21,7 @@
       <dd>&nbsp;</dd>
       <dt>&nbsp;</dt>
       <dd>{{ "labels.etat" | translate }}:</dd>
-      <dt>{{ prime.etat | translate}}</dt>
+      <dt>{{ prime.etat | translate }}</dt>
       <dd>&nbsp;</dd>
       <dt>&nbsp;</dt>
       <dd>{{ "labels.numActeJuridiqueMandat" | translate }}:</dd>

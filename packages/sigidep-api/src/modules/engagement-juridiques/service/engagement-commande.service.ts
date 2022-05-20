@@ -5,6 +5,8 @@ import { UserEntity } from '@entities/user.entity';
 import { EngagementCommandeEntity } from '@entities/engagement-commande.entity';
 import { EngagementCommandeDTO } from '../dto/create-engagement-commande.dto';
 import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
+import { ProcedureCommande } from '../types';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementCommandeService {
@@ -17,10 +19,18 @@ export class EngagementCommandeService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementCommandeEntity[]> {
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementCommandeEntity[]> {
     return this.repository
       .createQueryBuilder('ej')
       .leftJoinAndSelect('ej.taxesApplicable', 'taxe')
+      .where(filter?.procedures ? 'ed.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'ed.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
       .getMany();
   }
 

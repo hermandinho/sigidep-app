@@ -7,6 +7,7 @@ import {
   EtatEngagementEnum,
 } from '@entities/engagement-juridique.entity';
 import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementJuridiqueService {
@@ -19,8 +20,18 @@ export class EngagementJuridiqueService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementJuridiqueEntity[]> {
-    return this.repository.createQueryBuilder('eng').getMany();
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementJuridiqueEntity[]> {
+    return this.repository
+      .createQueryBuilder('eng')
+      .where(filter?.procedures ? 'eng.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'eng.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
+      .getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -67,6 +78,4 @@ export class EngagementJuridiqueService {
       etat: EtatEngagementEnum.CANCEL, // updated fields
     });
   }
-
-
 }

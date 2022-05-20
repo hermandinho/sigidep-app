@@ -6,17 +6,19 @@ export class CreateEngagementMandatDecissionDTO {
 
   @ApiProperty({ example: 'CARNET0001', required: false })
   public numero: string;
- 
+
   @ApiProperty({ type: 'enum', example: 'CANCEL', required: false })
   public etat: string;
 
-  @ApiProperty({ type: () => CreateEngagementJuridiqueDTO, nullable: true, required: false })
+  @ApiProperty({
+    type: () => CreateEngagementJuridiqueDTO,
+    nullable: true,
+    required: false,
+  })
   @IsOptional()
   public numActeJuridique?: CreateEngagementJuridiqueDTO;
 
-/*   @ApiProperty({ nullable: true, required: false })
+  /*   @ApiProperty({ nullable: true, required: false })
   @IsOptional()
   public traitement?: any; */
-
-  
 }

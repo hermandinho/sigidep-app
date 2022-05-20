@@ -6,9 +6,6 @@ import {
   DeleteEngagementMission,
   DeleteEngagementMissionFailure,
   DeleteEngagementMissionSuccess,
-  GetEngagementMissionPrime,
-  GetEngagementMissionPrimeFailure,
-  GetEngagementMissionPrimeSuccess,
   GetEngagementMissions,
   GetEngagementMissionsFailure,
   GetEngagementMissionsSuccess,
@@ -51,16 +48,6 @@ const engagementMissionsReducer = createReducer(
     return { ...state, loading: false, data: payload };
   }),
   on(GetEngagementMissionsFailure, (state, { error }) => {
-    return { ...state, loading: false, error };
-  }),
-
-  on(GetEngagementMissionPrime, (state) => {
-    return { ...state, loading: true };
-  }),
-  on(GetEngagementMissionPrimeSuccess, (state, { payload }) => {
-    return { ...state, loading: false, data: payload };
-  }),
-  on(GetEngagementMissionPrimeFailure, (state, { error }) => {
     return { ...state, loading: false, error };
   }),
 

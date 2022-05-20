@@ -26,6 +26,3 @@ export const GetCertificatEngagementsFailure = createAction(
   '[EngagementJuridique] Filter failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
-
-
-

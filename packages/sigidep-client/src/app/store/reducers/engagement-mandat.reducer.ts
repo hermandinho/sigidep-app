@@ -1,5 +1,20 @@
-
-import { CancelEngagementMandatsReservation, CancelEngagementMandatsReservationFailure, CancelEngagementMandatsReservationSuccess, CreateEngagementMandats, CreateEngagementMandatsFailure, CreateEngagementMandatsSuccess, DeleteEngagementMandats, DeleteEngagementMandatsFailure, DeleteEngagementMandatsSuccess,  GetEngagementMandats, GetEngagementMandatsFailure, GetEngagementMandatsSuccess, UpdateEngagementMandats, UpdateEngagementMandatsFailure, UpdateEngagementMandatsSuccess } from '@actions/engagement-mandat.actions';
+import {
+  CancelEngagementMandatsReservation,
+  CancelEngagementMandatsReservationFailure,
+  CancelEngagementMandatsReservationSuccess,
+  CreateEngagementMandats,
+  CreateEngagementMandatsFailure,
+  CreateEngagementMandatsSuccess,
+  DeleteEngagementMandats,
+  DeleteEngagementMandatsFailure,
+  DeleteEngagementMandatsSuccess,
+  GetEngagementMandats,
+  GetEngagementMandatsFailure,
+  GetEngagementMandatsSuccess,
+  UpdateEngagementMandats,
+  UpdateEngagementMandatsFailure,
+  UpdateEngagementMandatsSuccess,
+} from '@actions/engagement-mandat.actions';
 import { EngagementMandatModel } from '@models/engagement-mandat.model';
 import {
   Action,
@@ -43,9 +58,13 @@ const engagementMandatsReducer = createReducer(
   on(DeleteEngagementMandats, (state, { id }) => {
     return { ...state, loading1: true };
   }),
-  on(DeleteEngagementMandatsSuccess, DeleteEngagementMandatsFailure, (state, {}) => {
-    return { ...state, loading1: false };
-  }),
+  on(
+    DeleteEngagementMandatsSuccess,
+    DeleteEngagementMandatsFailure,
+    (state, {}) => {
+      return { ...state, loading1: false };
+    }
+  ),
   on(UpdateEngagementMandats, (state) => {
     return { ...state, loading1: true };
   }),
@@ -78,8 +97,11 @@ export const featureKey = 'mandatsPrimes';
 
 const userState = createFeatureSelector<State>(featureKey);
 
-export const getLoadingSelectorm = createSelector(
+export const getLoadingSelector = createSelector(
   userState,
   (state) => state.loading1
 );
-export const getDataSelectorm = createSelector(userState, (state) => state.data1);
+export const getDataSelector = createSelector(
+  userState,
+  (state) => state.data1
+);

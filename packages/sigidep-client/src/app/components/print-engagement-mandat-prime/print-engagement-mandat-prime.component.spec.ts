@@ -8,9 +8,8 @@ describe('PrintEngagementMandatPrimeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PrintEngagementMandatPrimeComponent ]
-    })
-    .compileComponents();
+      declarations: [PrintEngagementMandatPrimeComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

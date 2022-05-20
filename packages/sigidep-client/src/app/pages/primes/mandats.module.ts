@@ -21,7 +21,6 @@ import { PerformFormComponent } from '@components/perform-form/perform-form.comp
 import { CreateMandatFormComponent } from '@components/create-mandat-form/create-mandat-form.component';
 import { PrintEngagementMandatPrimeComponent } from '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
 
-
 @NgModule({
   declarations: [
     MandatsComponent,
@@ -29,7 +28,7 @@ import { PrintEngagementMandatPrimeComponent } from '@components/print-engagemen
     MandatFormComponent,
     PerformFormComponent,
     CreateMandatFormComponent,
-    PrintEngagementMandatPrimeComponent
+    PrintEngagementMandatPrimeComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +44,7 @@ import { PrintEngagementMandatPrimeComponent } from '@components/print-engagemen
     RippleModule,
     PanelModule,
     CardModule,
-    TreeTableModule
-  ]
+    TreeTableModule,
+  ],
 })
-export class MandatsModule { }
+export class MandatsModule {}

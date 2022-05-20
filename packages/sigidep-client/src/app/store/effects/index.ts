@@ -74,5 +74,5 @@ export const Effects = [
   TaxesEffects,
   EngagementsJuridiquesEffects,
   ConsultationsEffects,
-  EngagementsMandatsEffects
+  EngagementsMandatsEffects,
 ];

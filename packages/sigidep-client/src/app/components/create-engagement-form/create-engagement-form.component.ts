@@ -125,7 +125,9 @@ export class CreateEngagementFormComponent
   };
   private _initListeners() {
     this._store.dispatch(GetEncours());
-    this._store.dispatch(GetEngagementJuridiques());
+    this._store.dispatch(
+      GetEngagementJuridiques({ etats: [EtatEngagementEnum.RESERVED] })
+    );
     this.loading$ = this._store.pipe(
       select(getEncoursLoadingSelector),
       map((status) => status)

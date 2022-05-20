@@ -34,6 +34,7 @@ import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engage
 import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
 import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
 import { EngagementMandatsDecissionModule } from '@modules/engagement-mandats-decission/engagement-mandats-decission.module';
+import { MandatsModule } from '@modules/mandats/mandats.module';
 
 @Module({
   imports: [
@@ -122,7 +123,8 @@ import { EngagementMandatsDecissionModule } from '@modules/engagement-mandats-de
     EngagementJuridiqueModule,
     ExecProcedureModule,
     ExecTaxesModule,
-    EngagementMandatsDecissionModule
+    EngagementMandatsDecissionModule,
+    MandatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

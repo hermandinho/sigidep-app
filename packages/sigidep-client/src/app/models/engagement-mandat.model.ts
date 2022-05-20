@@ -3,9 +3,9 @@ import { EngagementMissionModel } from './engagement-mission.model';
 
 export type StepMandat = 'engagement' | 'mandat' | 'perform';
 export enum EtatEngagementMandatEnum {
-  ORDINAIRE ='labels.ordinaire',
-  EFFECTUER='labels.effectuer',
-  CONTROLE='labels.controle'
+  ORDINAIRE = 'labels.ordinaire',
+  EFFECTUER = 'labels.effectuer',
+  CONTROLE = 'labels.controle',
 }
 export enum EtatEngagementEnum {
   SAVE = 'labels.save',
@@ -33,8 +33,8 @@ export class EngagementMandatModel extends BaseModel {
   encours!: boolean;
   ordonnance!: boolean;
   paye!: boolean;
-  numActeJuridique!:string;
-  situationActuelle!:string;
+  numActeJuridique!: string;
+  situationActuelle!: string;
 
   constructor(params?: Partial<EngagementMandatModel>) {
     super();

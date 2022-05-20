@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import { EngagementMandatModel, EtatEngagementEnum } from '@models/engagement-mandat.model';
+import {
+  EngagementMandatModel,
+  EtatEngagementEnum,
+} from '@models/engagement-mandat.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-print-engagement-mandat-prime',
   templateUrl: './print-engagement-mandat-prime.component.html',
-  styleUrls: ['./print-engagement-mandat-prime.component.scss']
+  styleUrls: ['./print-engagement-mandat-prime.component.scss'],
 })
-export class PrintEngagementMandatPrimeComponent extends BaseComponent implements OnInit {
+export class PrintEngagementMandatPrimeComponent
+  extends BaseComponent
+  implements OnInit
+{
   public prime!: any;
   constructor(
     public ref: DynamicDialogRef,
@@ -82,5 +88,4 @@ export class PrintEngagementMandatPrimeComponent extends BaseComponent implement
   close() {
     this.ref.close();
   }
-
 }

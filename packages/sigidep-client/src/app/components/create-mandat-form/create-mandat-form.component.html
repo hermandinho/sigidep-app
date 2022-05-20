@@ -1,25 +1,25 @@
 <ng-container [ngSwitch]="currentStep$ | async">
   <app-engagement-form
-  *ngSwitchCase="'engagement'"
-  [readOnly]="isBook"
-  [startingForm]="engagementFormGroup"
-  (subformInitialized)="subformInitialized('engagementForm', $event)"
-  (changeStep)="changeStep('engagement', 'forward')"
+    *ngSwitchCase="'engagement'"
+    [readOnly]="isBook"
+    [startingForm]="engagementFormGroup"
+    (subformInitialized)="subformInitialized('engagementForm', $event)"
+    (changeStep)="changeStep('engagement', 'forward')"
   ></app-engagement-form>
   <app-mandat-form
-  *ngSwitchCase="'mandat'"
-  [readOnly]="isBook"
-  [startingForm]="mandatFormGroup"
-  (subformInitialized)="subformInitialized('mandatForm', $event)"
-  (changeStep)="changeStep('mandat', 'back')"
-  (changeStep)="changeStep('mandat', 'forward')"
+    *ngSwitchCase="'mandat'"
+    [readOnly]="isBook"
+    [startingForm]="mandatFormGroup"
+    (subformInitialized)="subformInitialized('mandatForm', $event)"
+    (changeStep)="changeStep('mandat', 'back')"
+    (changeStep)="changeStep('mandat', 'forward')"
   ></app-mandat-form>
   <app-perform-form
-  *ngSwitchCase="'perform'"
-  [readOnly]="isBook"
-  [startingForm]="performFormGroup"
-  (subformInitialized)="subformInitialized('performForm', $event)"
-  (changeStep)="changeStep('perform', 'back')"
-  (submitForm)="submitForm()"
+    *ngSwitchCase="'perform'"
+    [readOnly]="isBook"
+    [startingForm]="performFormGroup"
+    (subformInitialized)="subformInitialized('performForm', $event)"
+    (changeStep)="changeStep('perform', 'back')"
+    (submitForm)="submitForm()"
   ></app-perform-form>
 </ng-container>

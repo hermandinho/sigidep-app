@@ -1,24 +1,48 @@
 <p-card>
   <p-toolbar styleClass="p-mb-2">
     <ng-template pTemplate="right">
-      <button (click)="openForm()" [label]="'buttons.create' | translate" class="p-button-success p-mr-2"
-        icon="pi pi-plus" pButton pRipple></button>
+      <button
+        (click)="openForm()"
+        [label]="'buttons.create' | translate"
+        class="p-button-success p-mr-2"
+        icon="pi pi-plus"
+        pButton
+        pRipple
+      ></button>
     </ng-template>
     <ng-template pTemplate="left">
       <div class="quick_filter">
         <div class="p-field">
           <label>{{ "labels.filterbyStatus" | translate }}:</label>
-          <p-multiSelect [filter]="false" [options]="filters" [(ngModel)]="selectedFilters" autoDisplayFirst="false"
-            optionValue="value" labelValue="label" defaultLabel="{{ 'labels.all' | translate }}"
-            (onChange)="handleFilter($event)">
+          <p-multiSelect
+            [filter]="false"
+            [options]="filters"
+            [(ngModel)]="selectedFilters"
+            autoDisplayFirst="false"
+            optionValue="value"
+            labelValue="label"
+            defaultLabel="{{ 'labels.all' | translate }}"
+            (onChange)="handleFilter($event)"
+          >
           </p-multiSelect>
         </div>
       </div>
     </ng-template>
   </p-toolbar>
-  <p-table #dt [globalFilterFields]="globalColumns" [loading]="(loading$ | async) || false" [paginator]="true"
-    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [sortMode]="'single'" [value]="data"
-    [currentPageReportTemplate]="'tables.stats.pager' | translate" dataKey="id" responsiveLayout="scroll">
+  <p-table
+    #dt
+    [globalFilterFields]="globalColumns"
+    [loading]="(loading$ | async) || false"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [sortMode]="'single'"
+    [value]="data"
+    [currentPageReportTemplate]="'tables.stats.pager' | translate"
+    dataKey="id"
+    responsiveLayout="scroll"
+  >
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
         <h5 class="p-m-0">
@@ -26,9 +50,14 @@
         </h5>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" (input)="
-            dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
-          " [placeholder]="'labels.search' | translate" />
+          <input
+            pInputText
+            type="text"
+            (input)="
+              dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+            "
+            [placeholder]="'labels.search' | translate"
+          />
         </span>
       </div>
     </ng-template>
@@ -47,12 +76,12 @@
       <tr>
         <td *ngFor="let column of tableColumns" class="nowrap">
           <span data-title="{{ item[column.field] }}">
-          <!--   {{
+            <!--   {{
             item[column.field].length > 20
               ? (item[column.field] | slice: 0:20) + ".."
               : item[column.field]
           }} -->
-           <!--  {{
+            <!--  {{
             item[column.field]
             }} -->
           </span>
@@ -62,35 +91,44 @@
             }}
           </span> -->
 
-
+          <span
+            *ngIf="
+              column.field !== 'objet' &&
+              column.field !== 'imputation' &&
+              column.field !== 'numActeJuridique'
+            "
+          >
+            {{ item[column.field] }}
+          </span>
+          <span *ngIf="column.field === 'numActeJuridique'">
+            {{ item["numActeJuridique"]?.numero }}
+          </span>
+          <span *ngIf="column.field === 'imputation'">
+            {{ item["numActeJuridique"]?.imputation }}
+          </span>
 
           <span
-          *ngIf="column.field !== 'objet' && column.field !== 'imputation' && column.field !== 'numActeJuridique'"
-        >
-          {{
-              item[column.field]
-          }}
-        </span>
-        <span *ngIf="column.field === 'numActeJuridique'">
-          {{ item['numActeJuridique']?.numero }}
-        </span>
-        <span *ngIf="column.field === 'imputation'">
-          {{ item['numActeJuridique']?.imputation }}
-        </span>
-
-        <span
-          *ngIf="column.field === 'objet'"
-          data-title="{{ item[column.field] }}"
-        >
-          {{
-            item[column.field].length > 20
-              ? (item[column.field] | slice: 0:20) + ".."
-              : item[column.field]
-          }}
-        </span>
+            *ngIf="column.field === 'objet'"
+            data-title="{{ item[column.field] }}"
+          >
+            {{
+              item[column.field].length > 20
+                ? (item[column.field] | slice: 0:20) + ".."
+                : item[column.field]
+            }}
+          </span>
         </td>
         <td class="actions_button">
-          <button type="button" pButton pRipple class="p-button-rounded p-button" icon="pi pi-ellipsis-h" (click)="currentItem=item;$event.stopPropagation();menu.toggle($event)"></button>
+          <button
+            type="button"
+            pButton
+            pRipple
+            class="p-button-rounded p-button"
+            icon="pi pi-ellipsis-h"
+            (click)="
+              currentItem = item; $event.stopPropagation(); menu.toggle($event)
+            "
+          ></button>
         </td>
       </tr>
     </ng-template>

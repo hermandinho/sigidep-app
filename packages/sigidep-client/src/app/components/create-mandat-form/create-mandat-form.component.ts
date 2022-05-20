@@ -1,8 +1,17 @@
 import { GetEngagementMandats } from '@actions/engagement-mandat.actions';
-import { Component, OnInit} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
-import { EngagementMandatModel, EtatEngagementMandatEnum, StepMandat } from '@models/engagement-mandat.model';
+import {
+  EngagementMandatModel,
+  EtatEngagementMandatEnum,
+  StepMandat,
+} from '@models/engagement-mandat.model';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
@@ -12,20 +21,18 @@ import { DialogsService } from '@services/dialogs.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-mandat-form',
   templateUrl: './create-mandat-form.component.html',
-  styleUrls: ['./create-mandat-form.component.scss']
+  styleUrls: ['./create-mandat-form.component.scss'],
 })
 export class CreateMandatFormComponent extends BaseComponent implements OnInit {
-
-  private currentStepBs: BehaviorSubject<StepMandat> = new BehaviorSubject<StepMandat>(
-    'engagement'
-  );
-  public currentStep$: Observable<StepMandat> = this.currentStepBs.asObservable();
+  private currentStepBs: BehaviorSubject<StepMandat> =
+    new BehaviorSubject<StepMandat>('engagement');
+  public currentStep$: Observable<StepMandat> =
+    this.currentStepBs.asObservable();
   public form!: FormGroup;
   public action!: 'book' | 'edit';
   public busy = false;
@@ -39,13 +46,12 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     private _apisService: ApisService,
     private _store: Store<AppState>,
     private readonly _dialogService: DialogsService,
-    private translate: TranslateService,
+    private translate: TranslateService
   ) {
     super();
   }
 
   ngOnInit(): void {
-
     this.form = this._fb.group({
       engagementForm: this._fb.group({
         id: [undefined],
@@ -63,7 +69,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         dateFin: [undefined],
         nombreJours: [undefined],
         montantMission: [undefined],
-        baremeJour:[undefined],
+        baremeJour: [undefined],
         numActeJuridique: this._fb.group(
           {
             id: [null],
@@ -72,20 +78,19 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           },
           null
         ),
-        montantAE:[undefined]
+        montantAE: [undefined],
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
         matriculeGestionnaire: [undefined],
         nomGestionnaire: [undefined],
         objet: [undefined],
-        dateEngagement: [undefined,[Validators.required, this.dateValidator]],
-        montantCPChiffres: [undefined,[this.montantAEValidator]],
+        dateEngagement: [undefined, [Validators.required, this.dateValidator]],
+        montantCPChiffres: [undefined, [this.montantAEValidator]],
         montantCPLettres: [undefined],
-        signataire:[undefined],
-        typeMission:[undefined,[this.montantAEValidator]],
-        dateAffectation:[undefined],
-
+        signataire: [undefined],
+        typeMission: [undefined, [this.montantAEValidator]],
+        dateAffectation: [undefined],
       }),
 
       performForm: this._fb.group({
@@ -131,13 +136,13 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         situationActuelle,
         sourceVerif,
         dateAffectation,
-        montantAE
+        montantAE,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
         | any;
       this.form.patchValue({
-        engagementForm:{
+        engagementForm: {
           id,
           codeProcedure,
           reference,
@@ -155,7 +160,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantMission,
           baremeJour,
           numActeJuridique,
-          montantAE
+          montantAE,
         },
         mandatForm: {
           numero,
@@ -167,9 +172,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantCPLettres,
           signataire,
           typeMission,
-          dateAffectation
+          dateAffectation,
         },
-        performForm:{
+        performForm: {
           livrables,
           situationActuelle,
           sourceVerif,
@@ -204,99 +209,95 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   changeStep(currentStep: string, direction: 'forward' | 'back') {
     switch (currentStep) {
       case 'engagement':
-        if(direction === 'forward'){
+        if (direction === 'forward') {
           this.currentStepBs.next('mandat');
         }
         break;
       case 'mandat':
-        if(direction === 'forward'){
+        if (direction === 'forward') {
           this.currentStepBs.next('perform');
         }
-        if(direction === 'back'){
+        if (direction === 'back') {
           this.currentStepBs.next('engagement');
         }
         break;
       case 'perform':
-        if(direction === 'back'){
+        if (direction === 'back') {
           this.currentStepBs.next('mandat');
         }
         break;
     }
   }
-  bookProcess = (
-    engagement:EngagementMandatModel
-  ) => {
-      const method: Observable<any> =
-        this._apisService.put<EngagementMandatModel>(
-          '/engagements/mandats/reservation',
-          engagement
-        );
+  bookProcess = (engagement: EngagementMandatModel) => {
+    const method: Observable<any> =
+      this._apisService.put<EngagementMandatModel>(
+        '/engagements/mandats/reservation',
+        engagement
+      );
 
-        method.subscribe(
-          (res) => {
-            //this.busy = false;
-            this.ref.close(res);
-            this._store.dispatch(GetEngagementMandats())
-            this._dialogService.launchPrintEngagementMandatPrimeDialog(res);
-            this._appService.showToast({
-              summary: 'messages.success',
-              detail:
-                'messages.engagementsreservationSuccess' +
-                ': numéro: ' +
-                res.numero,
-              severity: 'success',
-              life: 3000,
-              closable: true,
-            });
-          },
-          ({ error }) => {
-            let err = '';
-            if (error?.statusCode === 409) {
-              err = 'errors.engagements.conflict';
-            } else {
-              err = 'errors.unknown';
-            }
-            //this.busy = false;
-            this._appService.showToast({
-              detail: err,
-              summary: 'errors.error',
-              severity: 'error',
-              life: 5000,
-              closable: true,
-            });
-          }
-        );
-
+    method.subscribe(
+      (res) => {
+        //this.busy = false;
+        this.ref.close(res);
+        this._store.dispatch(GetEngagementMandats({}));
+        this._dialogService.launchPrintEngagementMandatPrimeDialog(res);
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail:
+            'messages.engagementsreservationSuccess' +
+            ': numéro: ' +
+            res.numero,
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.engagements.conflict';
+        } else {
+          err = 'errors.unknown';
+        }
+        //this.busy = false;
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
   };
 
   submitForm() {
     const formValues = this.form.getRawValue();
     this.busy = true;
     let editedEngagement: EngagementMandatModel;
-      editedEngagement = {
-        ...this.form.getRawValue()?.engagementForm,
-        ...this.form.getRawValue().mandatForm,
-        ...this.form.getRawValue().performForm,
-      } as EngagementMandatModel;
+    editedEngagement = {
+      ...this.form.getRawValue()?.engagementForm,
+      ...this.form.getRawValue().mandatForm,
+      ...this.form.getRawValue().performForm,
+    } as EngagementMandatModel;
 
     if (this.isBook) {
       this.bookProcess(editedEngagement);
       this.ref.close();
-
     }
 
     if (!this.isBook && this.isUpdateForm) {
       const method: Observable<any> =
         this._apisService.put<EngagementMandatModel>(
-            '/engagements/mandats',
-            editedEngagement
-          )
+          '/engagements/mandats',
+          editedEngagement
+        );
       method.subscribe(
         (res) => {
           this.busy = false;
           this.ref.close(res);
           localStorage.removeItem('imputation');
-          this._store.dispatch(GetEngagementMandats())
+          this._store.dispatch(GetEngagementMandats({}));
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'messages.engagements.createSuccess',
@@ -327,53 +328,57 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       this._appService.saveConfirmation({
         message: 'dialogs.messages.saveMandat',
         accept: () => {
-          const method: Observable<any> = this._apisService.post<EngagementMandatModel>(
-            '/engagements/mandats',
-            editedEngagement
-          )
-      method.subscribe(
-        (res) => {
-          this.busy = false;
+          const method: Observable<any> =
+            this._apisService.post<EngagementMandatModel>(
+              '/engagements/mandats',
+              editedEngagement
+            );
+          method.subscribe(
+            (res) => {
+              this.busy = false;
 
-          localStorage.removeItem('imputation');
-          this._store.dispatch(GetEngagementMandats())
+              localStorage.removeItem('imputation');
+              this._store.dispatch(GetEngagementMandats({}));
 
-          this._appService.showToast({
-            summary: 'messages.success',
-            detail:
-              'messages.engagements.createSuccess' + ': numéro: ' + res.numero,
-            severity: 'success',
-            life: 3000,
-            closable: true,
-          });
+              this._appService.showToast({
+                summary: 'messages.success',
+                detail:
+                  'messages.engagements.createSuccess' +
+                  ': numéro: ' +
+                  res.numero,
+                severity: 'success',
+                life: 3000,
+                closable: true,
+              });
+            },
+            ({ error }) => {
+              let err = '';
+              if (error?.statusCode === 409) {
+                err = 'errors.engagements.conflict';
+              } else {
+                err = 'errors.unknown';
+              }
+              this.busy = false;
+              this._appService.showToast({
+                detail: err,
+                summary: 'errors.error',
+                severity: 'error',
+                life: 5000,
+                closable: true,
+              });
+            }
+          );
         },
-        ({ error }) => {
-          let err = '';
-          if (error?.statusCode === 409) {
-            err = 'errors.engagements.conflict';
-          } else {
-            err = 'errors.unknown';
-          }
-          this.busy = false;
-          this._appService.showToast({
-            detail: err,
-            summary: 'errors.error',
-            severity: 'error',
-            life: 5000,
-            closable: true,
-          });
-        }
-      );        },
       });
-
     }
-
   }
 
   dateValidator = (control: FormControl): { [s: string]: any } | null => {
     if (control.value) {
       const date = moment(control.value);
-      const currentDate = moment(this.form.getRawValue()?.mandatForm.dateAffectation);
+      const currentDate = moment(
+        this.form.getRawValue()?.mandatForm.dateAffectation
+      );
       if (date < currentDate) {
         return { invalidDate: 'errors.futureDate' };
       }
@@ -384,30 +389,41 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   montantAEValidator = (control: FormControl): { [s: string]: any } | null => {
     if (control.value) {
       const error = { invalidAmount: 'errors.invalidAmount' };
-      if(this.form.getRawValue()?.mandatForm.typeMission=== this.translate.instant(EtatEngagementMandatEnum.ORDINAIRE)){
-        const amount = 75/100*this.form.getRawValue()?.engagementForm.montantAE;
+      if (
+        this.form.getRawValue()?.mandatForm.typeMission ===
+        this.translate.instant(EtatEngagementMandatEnum.ORDINAIRE)
+      ) {
+        const amount =
+          (75 / 100) * this.form.getRawValue()?.engagementForm.montantAE;
         this.form.patchValue({
-          mandatForm:{
-            montantCPChiffres:amount
-          }
+          mandatForm: {
+            montantCPChiffres: amount,
+          },
         });
         return null;
       }
-      if(this.form.getRawValue()?.mandatForm.typeMission=== this.translate.instant(EtatEngagementMandatEnum.CONTROLE)){
-        const amount = 80/100*this.form.getRawValue()?.engagementForm.montantAE;
+      if (
+        this.form.getRawValue()?.mandatForm.typeMission ===
+        this.translate.instant(EtatEngagementMandatEnum.CONTROLE)
+      ) {
+        const amount =
+          (80 / 100) * this.form.getRawValue()?.engagementForm.montantAE;
         this.form.patchValue({
-          mandatForm:{
-            montantCPChiffres:amount
-          }
+          mandatForm: {
+            montantCPChiffres: amount,
+          },
         });
         return null;
       }
-      if(this.form.getRawValue()?.mandatForm.typeMission=== this.translate.instant(EtatEngagementMandatEnum.EFFECTUER)){
+      if (
+        this.form.getRawValue()?.mandatForm.typeMission ===
+        this.translate.instant(EtatEngagementMandatEnum.EFFECTUER)
+      ) {
         const amount = this.form.getRawValue()?.engagementForm.montantAE;
         this.form.patchValue({
-          mandatForm:{
-            montantCPChiffres:amount
-          }
+          mandatForm: {
+            montantCPChiffres: amount,
+          },
         });
         return null;
       }
@@ -415,7 +431,4 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     }
     return null;
   };
-
-
-
 }

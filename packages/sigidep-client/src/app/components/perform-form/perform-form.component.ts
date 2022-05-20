@@ -4,7 +4,10 @@ import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
-import { getDataSelector, getLoadingSelector } from '@reducers/consultations.reducer';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/consultations.reducer';
 import { map } from 'rxjs/operators';
 import { EncoursModel } from '@models/encours.model';
 import { Observable, of } from 'rxjs';
@@ -12,10 +15,9 @@ import { Observable, of } from 'rxjs';
 @Component({
   selector: 'app-perform-form',
   templateUrl: './perform-form.component.html',
-  styleUrls: ['./perform-form.component.scss']
+  styleUrls: ['./perform-form.component.scss'],
 })
 export class PerformFormComponent extends BaseComponent implements OnInit {
-
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
@@ -27,9 +29,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   public performForm!: FormGroup;
   data: EncoursModel[] = [];
   loading$: Observable<boolean> = of(true);
-  constructor(
-    private _store: Store<AppState>,
-  ) {
+  constructor(private _store: Store<AppState>) {
     super();
     //this._initListeners()
   }
@@ -40,20 +40,17 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
     if (this.readOnly) this.performForm.disable();
     this.performForm.controls['livrables'].disable();
     this.performForm.controls['sourceVerif'].disable();
-    this.getEncour()
-
+    this.getEncour();
   }
-  doChangeStep = (direction:any) => {
-
+  doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);
   };
 
-  getEncour(){
+  getEncour() {
     const imputation = JSON.parse(localStorage.getItem('imputation')!!);
     this._store.dispatch(GetImputations({ imputation: imputation }));
-    this._initListeners()
+    this._initListeners();
   }
-
 
   submit = () => {
     this.submitForm.emit();
@@ -63,13 +60,12 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        this.onEncourChange(this.data[0])
+        this.onEncourChange(this.data[0]);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
       map((status) => status)
     );
-
   }
 
   onEncourChange = (data: any) => {

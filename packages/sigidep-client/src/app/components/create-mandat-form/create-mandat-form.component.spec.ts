@@ -8,9 +8,8 @@ describe('CreateMandatFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateMandatFormComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateMandatFormComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

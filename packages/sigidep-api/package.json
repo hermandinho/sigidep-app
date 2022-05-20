@@ -46,7 +46,8 @@
     "rxjs": "^7.2.0",
     "slugify": "^1.3.6",
     "swagger-ui-express": "^4.1.4",
-    "typeorm": "0.2.32"
+    "typeorm": "^0.2.32",
+    "typeorm-revisions": "^0.0.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

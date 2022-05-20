@@ -1,12 +1,32 @@
 import { SetAppBreadcrumb } from '@actions/app.actions';
-import { CancelEngagementMandatsReservation, CancelEngagementMandatsReservationFailure, CancelEngagementMandatsReservationSuccess, DeleteEngagementMandats, DeleteEngagementMandatsFailure, DeleteEngagementMandatsSuccess, GetEngagementMandats } from '@actions/engagement-mandat.actions';
-import { AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  CancelEngagementMandatsReservation,
+  CancelEngagementMandatsReservationFailure,
+  CancelEngagementMandatsReservationSuccess,
+  DeleteEngagementMandats,
+  DeleteEngagementMandatsFailure,
+  DeleteEngagementMandatsSuccess,
+  GetEngagementMandats,
+} from '@actions/engagement-mandat.actions';
+import {
+  AfterContentChecked,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import { EngagementMandatModel, EtatEngagementEnum } from '@models/engagement-mandat.model';
+import {
+  EngagementMandatModel,
+  EtatEngagementEnum,
+} from '@models/engagement-mandat.model';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { getDataSelectorm, getLoadingSelectorm } from '@reducers/engagement-mandat.reducer';
+import {
+  getDataSelector as getDataSelectorm,
+  getLoadingSelector as getLoadingSelectorm,
+} from '@reducers/engagement-mandat.reducer';
 import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
@@ -22,8 +42,10 @@ import { TableColumns } from './consts';
   providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MandatsComponent extends BaseComponent implements OnInit, AfterContentChecked {
-
+export class MandatsComponent
+  extends BaseComponent
+  implements OnInit, AfterContentChecked
+{
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: EngagementMandatModel[] = [];
@@ -33,7 +55,6 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
   menus!: MenuItem[];
   public globalColumns!: string[];
 
-
   public busy = false;
   /*
    quick filter
@@ -41,7 +62,7 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
 
   public filters: any[] = [];
   public selectedFilters!: string[];
-  public currentItem!:EngagementMandatModel
+  public currentItem!: EngagementMandatModel;
 
   public printing: boolean = false;
   constructor(
@@ -65,7 +86,8 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this._store.dispatch(GetEngagementMandats());
+    // code procedure  prime 1122
+    this._store.dispatch(GetEngagementMandats({ procedures: ['1122'] }));
 
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -126,16 +148,13 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
     ];
   }
 
-
   handleFilter = (event: any) => {
     this.data = this.originalData.filter((item) =>
       this.selectedFilters.includes(item.etat)
     );
   };
 
-  handleReservation(
-    item:EngagementMandatModel
-  ) {
+  handleReservation(item: EngagementMandatModel) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.reserveMandatEngagement',
       accept: () => {
@@ -144,20 +163,18 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
     });
   }
 
-  handleCancel(
-    item:EngagementMandatModel
-  ) {
+  handleCancel(item: EngagementMandatModel) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.cancelMandatEngagement',
       accept: () => {
-        this._store.dispatch(CancelEngagementMandatsReservation({ payload: item }));
+        this._store.dispatch(
+          CancelEngagementMandatsReservation({ payload: item })
+        );
       },
     });
   }
 
-  handlePrint(
-    item:EngagementMandatModel
-  ) {
+  handlePrint(item: EngagementMandatModel) {
     this._dialogService.launchPrintEngagementMandatPrimeDialog(item);
   }
 
@@ -169,11 +186,11 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
   async openForm() {
-   this._dialogService.launchEngagementMandatCreateDialog();
+    this._dialogService.launchEngagementMandatCreateDialog();
   }
 
   edit(item: EngagementMandatModel) {
-   this._dialogService.launchEngagementMandatCreateDialog(item);
+    this._dialogService.launchEngagementMandatCreateDialog(item);
   }
 
   delete(item: EngagementMandatModel) {
@@ -187,11 +204,11 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
 
   private _initListeners() {
     this._store
-    .pipe(this.takeUntilDestroy, select(getDataSelectorm))
-    .subscribe((data) => {
-      this.data = [...data];
-      this.originalData = [...data];
-    });
+      .pipe(this.takeUntilDestroy, select(getDataSelectorm))
+      .subscribe((data) => {
+        this.data = [...data];
+        this.originalData = [...data];
+      });
 
     this.loading$ = this._store.pipe(
       select(getLoadingSelectorm),
@@ -245,7 +262,9 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
               closable: true,
             });
           }
-        } else if (action.type === CancelEngagementMandatsReservationSuccess.type) {
+        } else if (
+          action.type === CancelEngagementMandatsReservationSuccess.type
+        ) {
           this._appService.showToast({
             severity: 'success',
             detail: 'messages.engagements.cancelSuccess',
@@ -254,7 +273,5 @@ export class MandatsComponent extends BaseComponent implements OnInit, AfterCont
           });
         }
       });
-
   }
-
 }

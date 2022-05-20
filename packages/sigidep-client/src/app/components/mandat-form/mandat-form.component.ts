@@ -6,22 +6,24 @@ import { CarnetMandatModel } from '@models/carnet-mandat.model';
 import { EtatEngagementMandatEnum } from '@models/engagement-mandat.model';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { getDataSelector, getLoadingSelector } from '@reducers/carnets-mandats.reducer';
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/carnets-mandats.reducer';
 import { AppState } from '@reducers/index';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-export class Type{
-  name!:string;
+export class Type {
+  name!: string;
 }
 @Component({
   selector: 'app-mandat-form',
   templateUrl: './mandat-form.component.html',
-  styleUrls: ['./mandat-form.component.scss']
+  styleUrls: ['./mandat-form.component.scss'],
 })
 export class MandatFormComponent extends BaseComponent implements OnInit {
-
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
@@ -33,17 +35,15 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   public mandatForm!: FormGroup;
   loading$: Observable<boolean> = of(true);
   data!: CarnetMandatModel[];
-  types:Type[]=[];
-  carnet:any;
+  types: Type[] = [];
+  carnet: any;
   constructor(
     private _store: Store<AppState>,
-    private translate: TranslateService,
-
+    private translate: TranslateService
   ) {
     super();
-    this._initListeners()
-   }
-
+    this._initListeners();
+  }
 
   ngOnInit(): void {
     this.mandatForm = this.startingForm;
@@ -54,27 +54,33 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
     this.mandatForm.controls['nomGestionnaire'].disable();
     this.mandatForm.controls['montantCPChiffres'].disable();
 
-    this.translate.get(EtatEngagementMandatEnum.CONTROLE).subscribe((res: string) => {
-      const typemap:Type={
-        'name':res
-      }
-      this.types.push(typemap)
-    });
-    this.translate.get(EtatEngagementMandatEnum.EFFECTUER).subscribe((res: string) => {
-      const typemap:Type={
-        'name':res
-      }
-      this.types.push(typemap)
-    });
-    this.translate.get(EtatEngagementMandatEnum.ORDINAIRE).subscribe((res: string) => {
-      const typemap:Type={
-        'name':res
-      }
-      this.types.push(typemap)
-    });
+    this.translate
+      .get(EtatEngagementMandatEnum.CONTROLE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.types.push(typemap);
+      });
+    this.translate
+      .get(EtatEngagementMandatEnum.EFFECTUER)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.types.push(typemap);
+      });
+    this.translate
+      .get(EtatEngagementMandatEnum.ORDINAIRE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.types.push(typemap);
+      });
   }
 
-  doChangeStep = (direction:any) => {
+  doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);
   };
 
@@ -82,7 +88,7 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
-       this.data = [...data];
+        this.data = [...data];
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),
@@ -98,7 +104,7 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
         numero: act.code,
         matriculeGestionnaire: act.gestionnaire.matricule,
         nomGestionnaire: act.gestionnaire.nom,
-        dateAffectation: act.dateAffectation
+        dateAffectation: act.dateAffectation,
       });
   };
 }

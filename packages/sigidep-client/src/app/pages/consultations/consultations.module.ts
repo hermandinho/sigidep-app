@@ -15,12 +15,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { EtatImputationComponent } from '@components/etat-imputation/etat-imputation.component';
 import { NgxPrintModule } from 'ngx-print';
 
-
 @NgModule({
-  declarations: [
-    ConsultationsComponent,
-    EtatImputationComponent
-  ],
+  declarations: [ConsultationsComponent, EtatImputationComponent],
   imports: [
     CommonModule,
     ConsultationsRoutingModule,
@@ -32,7 +28,7 @@ import { NgxPrintModule } from 'ngx-print';
     TreeTableModule,
     PanelModule,
     CardModule,
-    NgxPrintModule
-  ]
+    NgxPrintModule,
+  ],
 })
-export class ConsultationsModule { }
+export class ConsultationsModule {}
