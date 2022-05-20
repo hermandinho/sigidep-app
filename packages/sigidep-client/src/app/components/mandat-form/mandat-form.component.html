@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="form" [formGroup]="mandatForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required">{{ "labels.numero" | translate }} </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="data"
+            [placeholder]="''"
+            optionLabel="code"
+            optionValue="code"
+            formControlName="numero"
+            (onChange)="onNumeroMandatChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required"
+            >{{ "labels.typeMission" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="types"
+            [placeholder]="''"
+            optionLabel="name"
+            optionValue="name"
+            formControlName="typeMission"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.matriculeGestionnaire" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="matriculeGestionnaire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.nomGestionnaire" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="nomGestionnaire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.objet" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="objet"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.dateEngagement" | translate }}</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="dateEngagement"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.signature" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="signataire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.montantCPChiffres" | translate }}</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="montantCPChiffres"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.montantCPLettres" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="montantCPLettres"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
+      (click)="doChangeStep('forward')"
+      [disabled]="!mandatForm?.valid && !readOnly"
+      [label]="'buttons.next' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

@@ -68,4 +68,15 @@ export class AppService {
       message: input.message && this.translateService.instant(input.message),
     });
   }
+
+  public saveConfirmation(input: Confirmation) {
+    this._confirmationService.confirm({
+      header: this.translateService.instant('dialogs.headers.confirm'),
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectLabel: this.translateService.instant('buttons.cancel'),
+      acceptLabel: this.translateService.instant('buttons.confirm'),
+      ...input,
+      message: input.message && this.translateService.instant(input.message),
+    });
+  }
 }

@@ -5,6 +5,7 @@ import { UserEntity } from '@entities/user.entity';
 import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
 import { EngagementMissionEntity } from '@entities/engagement-mission.entity';
 import { EngagementMissionDTO } from '../dto/create-engagement-mission.dto';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementMissionService {
@@ -17,10 +18,18 @@ export class EngagementMissionService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementMissionEntity[]> {
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementMissionEntity[]> {
     return this.repository
       .createQueryBuilder('em')
       .leftJoinAndSelect('em.baremeJour', 'b')
+      .where(filter?.procedures ? 'em.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'em.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
       .getMany();
   }
 
@@ -65,5 +74,13 @@ export class EngagementMissionService {
       ...(payload as any),
       updateBy: user,
     });
+  }
+
+  public async findEngagement(): Promise<EngagementMissionEntity[]> {
+    return this.repository
+      .createQueryBuilder('engagement_juridique')
+      .where('engagement_juridique.etat = :name', { name: 'labels.book' })
+      .where('engagement_juridique.code_procedure = :name', { name: '1121' })
+      .getMany();
   }
 }

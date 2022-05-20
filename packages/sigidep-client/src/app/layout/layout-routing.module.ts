@@ -31,6 +31,8 @@ import { EngagementsComponent } from '@pages/engagements/engagements.component';
 import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
+import { ConsultationsComponent } from '@pages/consultations/consultations.component';
+import { MandatsComponent } from '@pages/primes/mandats.component';
 
 const routes: Routes = [
   {
@@ -332,6 +334,25 @@ const routes: Routes = [
             (m) => m.EngagementsModule
           ),
       },
+      {
+        path: 'consultations',
+        component: ConsultationsComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.consultations],
+        },
+      },
+      {
+        path: 'mandats',
+        canActivate: [AuthGuard],
+        component: MandatsComponent,
+        data: {
+          permissions: [...MenuPermissions.mandats],
+        },
+        loadChildren: () =>
+          import('../pages/primes/mandats.module').then((m) => m.MandatsModule),
+      },
+
       /*{
         path: '**',
         component: NotFoundComponent,

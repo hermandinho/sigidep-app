@@ -35,3 +35,5 @@ export * from './encours.model';
 export * from './exec-procedure.model';
 export * from './exec-taxes.model';
 export * from './traitement.model';
+export * from './mandat.model';
+export * from './traitement-mandat.model';

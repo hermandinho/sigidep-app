@@ -165,10 +165,10 @@ export class ReservationEngagementComponent
         //this.busy = false;
         this.ref.close(res);
         this.type === 'mission'
-          ? this._store.dispatch(GetEngagementMissions())
+          ? this._store.dispatch(GetEngagementMissions({}))
           : this.type === 'command'
-          ? this._store.dispatch(GetEngagementCommandes())
-          : this._store.dispatch(GetEngagementDecisions());
+          ? this._store.dispatch(GetEngagementCommandes({}))
+          : this._store.dispatch(GetEngagementDecisions({}));
         this._dialogService.launchPrintEngagementDialog(res);
         this._appService.showToast({
           summary: 'messages.success',

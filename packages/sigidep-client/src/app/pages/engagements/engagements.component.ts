@@ -116,9 +116,9 @@ export class EngagementsComponent
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this._store.dispatch(GetEngagementCommandes());
-    this._store.dispatch(GetEngagementMissions());
-    this._store.dispatch(GetEngagementDecisions());
+    this._store.dispatch(GetEngagementCommandes({}));
+    this._store.dispatch(GetEngagementMissions({}));
+    this._store.dispatch(GetEngagementDecisions({}));
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [

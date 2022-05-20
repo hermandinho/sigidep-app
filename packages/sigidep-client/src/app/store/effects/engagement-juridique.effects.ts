@@ -34,14 +34,23 @@ export class EngagementsJuridiquesEffects {
     this.actions$.pipe(
       ofType(GetEngagementJuridiques),
       mergeMap((action) =>
-        this.apisService.get<EngagementJuridiqueModel[]>('/engagements').pipe(
-          switchMap((payload) => {
-            return [GetEngagementJuridiquesSuccess({ payload })];
-          }),
-          catchError((err: HttpErrorResponse) =>
-            of(GetEngagementJuridiquesFailure(err))
+        this.apisService
+          .get<EngagementJuridiqueModel[]>('/engagements', {
+            ...(action.procedures && {
+              procedures: action.procedures.join(','),
+            }),
+            ...(action.etats && {
+              etats: action.etats.join(','),
+            }),
+          })
+          .pipe(
+            switchMap((payload) => {
+              return [GetEngagementJuridiquesSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetEngagementJuridiquesFailure(err))
+            )
           )
-        )
       )
     )
   );
@@ -96,10 +105,10 @@ export class EngagementsJuridiquesEffects {
               return [
                 CancelEngagementReservationSuccess({ payload }),
                 new EngagementJuridiqueModel(payload).isCommand
-                  ? GetEngagementCommandes()
+                  ? GetEngagementCommandes({})
                   : new EngagementJuridiqueModel(payload).isMission
-                  ? GetEngagementMissions()
-                  : GetEngagementDecisions(),
+                  ? GetEngagementMissions({})
+                  : GetEngagementDecisions({}),
               ];
             }),
             catchError((err: HttpErrorResponse) =>
@@ -118,10 +127,9 @@ export class EngagementsJuridiquesEffects {
           switchMap((payload) => {
             return [
               DeleteEngagementSuccess(),
-              //GetEngagementJuridiques(),
-              GetEngagementCommandes(),
-              GetEngagementMissions(),
-              GetEngagementDecisions(),
+              GetEngagementCommandes({}),
+              GetEngagementMissions({}),
+              GetEngagementDecisions({}),
             ];
           }),
           catchError((err: HttpErrorResponse) =>

@@ -60,7 +60,6 @@ export class EngagementDecisionDTO extends CreateEngagementJuridiqueDTO {
     nullable: true,
     required: false,
   })
-  @IsNotEmpty()
   @IsOptional()
   public taxesApplicable: CreateExecTaxesDTO;
 }

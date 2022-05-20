@@ -36,11 +36,14 @@
     "encours": "Mise En Ligne",
     "taxes": "Taxes",
     "procedures": "Procédures",
+    "engagements": "Engagements",
+    "consultation": "Consultations",
     "engagementsjuridiques": "Engagements Juridiques",
     "engagementsmandats": "Engagements Mandats",
     "commandepublique": "Commande Publique",
     "missions": "Missions",
-    "decisions": "Décisions"
+    "decisions": "Décisions",
+    "primes": "Primes"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -70,8 +73,8 @@
     "load": "Charger",
     "back": "Retour",
     "submit": "Soumettre",
-    "close": "Fermer",
-    "print": "Imprimer"
+    "print": "Imprimer",
+    "close": "Fermer"
   },
   "install": {
     "title": "Installation"
@@ -266,6 +269,9 @@
     "cleCompteContribuable": "Clé Compte",
     "numeroCompteContribuable": "Numéro Compte",
     "montantTTC": "Montant TTC",
+    "imputationBudgetaire": "Imputation budgétaire",
+    "certificatEngagement": "Certificat d’Engagement",
+    "mandats": "Mandat",
     "selectimputation": "Choisir une imputation",
     "signataire": "Signataire",
     "dateSignature": "Date Signature",
@@ -309,7 +315,49 @@
     "dateFin": "Date de Fin",
     "nombreJours": "Nombre jours",
     "baremeJour": "Bareme jour",
-    "montantMission": "Montant Mission"
+    "montantMission": "Montant Mission",
+    "numActeJuridiqueMandat": "Numéro Engagement Juridique",
+    "codeProcedure": "Procédure",
+    "matriculeGestionnaire": "Matricule Gestionnaire",
+    "nomGestionnaire": "Nom Gestionnaire",
+    "dateEngagement": "Date signature",
+    "signature": "Signataire",
+    "montantCPChiffres": "Montant Mandat(en chiffres)",
+    "montantCPLettres": "Montant Mandat (en lettres)",
+    "livrables": "Résultats attendus",
+    "situationActuel": "Situation actuelle",
+    "sourceVerif": "Source de vérification",
+    "ordinaire": "Avance Mission ordinaire",
+    "controle": "Avance Mission Contrôle/Recouvrement",
+    "effectuer": "Mission effectuée",
+    "annulationduMandat": "Annulation du Mandat",
+    "annulelorsdelareservation": "Annulé lors de la réservation",
+    "rejetlorsdelareservation": "Rejet lors de la réservation",
+    "rejetlorsduControleConformite": "Rejet lors du Contrôle Conformité",
+    "rejetlorsduControledeRegularite": "Rejet lors du Contrôle de Régularité",
+    "rejetlorsdelavalidationACT": "Rejet lors de la validation ACT",
+    "mandatModifie": "Mandat Modifié",
+    "mandatEnregistre": "Mandat Enregistré",
+    "mandatReserve": "Mandat Réservé",
+    "visaDAAF": "Visa DAAF",
+    "transmispourControleConformite": "Transmis pour Contrôle Conformité",
+    "receptionpourControleConformite": "Réception pour Contrôle Conformité",
+    "controledeConformite": "Contrôle de Conformité",
+    "editionduTitredeCreance": "Edition du Titre de Créance",
+    "transmissionpourLiquidation": "Transmission pour Liquidation",
+    "receptionpourLiquidation": " Réception pour Liquidation",
+    "saisiedesUnitesPhysiquesBIP": "Saisie des Unités Physiques (BIP)",
+    "enregistrementdelaliquidation": "Enregistrement de la liquidation",
+    "liquidationmodifiee": "Liquidation modifiée",
+    "validationdelaLiquidation": "Validation de la Liquidation",
+    "ordonnancement": "Ordonnancement",
+    "transmissionpourControledeRegularite": "Transmission pour Contrôle de Régularité",
+    "receptionpourControleRegularite": "Réception pour Contrôle Régularité",
+    "controledeRegularite": "Contrôle de Régularité",
+    "transmissionACT": "Transmission à l’ACT",
+    "receptionACT": "Réception à l’ACT",
+    "validationComptable": "Validation Comptable",
+    "paiement": "Paiement"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -552,7 +600,8 @@
     "encours": "Mise En ligne",
     "taxes": "Taxes",
     "procedures": "Procédures",
-    "engagements": "Engagements"
+    "engagements": "Engagements",
+    "mandatsprimes": "Engagement Mandat Prime"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -576,7 +625,8 @@
       "encours": "Budgets En Cours",
       "procdeures": "Procédures",
       "taxes": "Taxes",
-      "engagements": "Engagements"
+      "engagements": "Engagements",
+      "mandats": "Mandats primes"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -718,7 +768,13 @@
       "aeDispoANouveau": "AE Disp à nouveau",
       "cpDispoANouveau": " CP Dispo à Nouveau",
       "operation": "operation",
-      "type": "Type"
+      "type": "Type",
+      "numeroMandat": "Numéro Mandat",
+      "beneficiaire": "Bénéficiaire",
+      "objetMandat": "Objet de la dépense",
+      "dateEngagementMandat": "Date Engagement",
+      "montantCPChiffresMandat": "Montant Mandat",
+      "numeroJuridique": "N° Engagement Juridique"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -777,8 +833,12 @@
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
       "editEngagement": "Editer un Engagement",
+      "editEngagementMandat": "Editer un Engagement mandat",
+      "imputation": "Imputation",
       "viewEngagement": "Engagement: {{numero}}",
+      "viewEngagementMandat": "Engagement mandat: {{numero}}",
       "reserverEngagement": "Réservation de l'engagement No: {{numero}}",
+      "reserverEngagementMandat": "Réservation de l'engagement mandat No: {{numero}}",
       "printEngagement": "Engagement"
     },
     "messages": {
@@ -805,7 +865,10 @@
       "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
       "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible",
       "reserveEngagement": "Etes-vous sûr de reserver cet engagement?",
-      "cancelEngagement": "Voulez-vous annuler cette Réservation ?"
+      "reserveMandatEngagement": "Etes-vous sûr de reserver cet engagement?",
+      "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
+      "cancelMandatEngagement": "Voulez-vous annuler cette Réservation ?",
+      "saveMandat": "Etes-vous sûr(e) de vouloir enregistrer ce mandat ? Cette opération est irréversible !"
     }
   },
   "exerciseStatuses": {

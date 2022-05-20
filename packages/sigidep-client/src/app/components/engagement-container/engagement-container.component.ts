@@ -378,7 +378,6 @@ export class EngagementContainerComponent
   }
 
   submitForm() {
-    const formValues = this.form.getRawValue();
     this.busy = true;
     let editedEngagement;
     if (this.isMission) {
@@ -395,6 +394,10 @@ export class EngagementContainerComponent
       editedEngagement = {
         ...this.form.getRawValue()?.commonForm,
         ...this.form.getRawValue()?.decisionForm,
+        taxesApplicable:
+          this.currentProcedure !== '1126'
+            ? undefined
+            : this.form.getRawValue()?.decisionForm.taxesApplicable,
       } as EngagementDecisionModel;
     }
 
@@ -423,10 +426,10 @@ export class EngagementContainerComponent
           this.busy = false;
           this.ref.close(res);
           this.isMission
-            ? this._store.dispatch(GetEngagementMissions())
+            ? this._store.dispatch(GetEngagementMissions({}))
             : this.isCommand
-            ? this._store.dispatch(GetEngagementCommandes())
-            : this._store.dispatch(GetEngagementDecisions());
+            ? this._store.dispatch(GetEngagementCommandes({}))
+            : this._store.dispatch(GetEngagementDecisions({}));
 
           this._appService.showToast({
             summary: 'messages.success',
@@ -473,10 +476,10 @@ export class EngagementContainerComponent
           this.busy = false;
           this.ref.close(res);
           this.isMission
-            ? this._store.dispatch(GetEngagementMissions())
+            ? this._store.dispatch(GetEngagementMissions({}))
             : this.isCommand
-            ? this._store.dispatch(GetEngagementCommandes())
-            : this._store.dispatch(GetEngagementDecisions());
+            ? this._store.dispatch(GetEngagementCommandes({}))
+            : this._store.dispatch(GetEngagementDecisions({}));
 
           this._appService.showToast({
             summary: 'messages.success',
@@ -514,9 +517,9 @@ export class EngagementContainerComponent
       | EngagementCommandeModel
   ) => {
     if (this.currentStepBs.value === 'command')
-      this._store.dispatch(GetEngagementCommandes());
+      this._store.dispatch(GetEngagementCommandes({}));
     if (this.currentStepBs.value === 'mission')
-      this._store.dispatch(GetEngagementMissions());
+      this._store.dispatch(GetEngagementMissions({}));
     this._dialogService.launchReservationEngagementDialog(
       engagement,
       this.currentStepBs.value

@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="form" [formGroup]="performForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.livrables" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="livrables"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.situationActuel" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="situationActuelle"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.sourceVerif" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="sourceVerif"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+
+    <button
+      *ngIf="!readOnly"
+      (click)="submit()"
+      [disabled]="!performForm?.valid"
+      [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+    <button
+      *ngIf="readOnly"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-save"
+      (click)="submit()"
+      [disabled]="!performForm?.valid && false"
+      [label]="'labels.book' | translate"
+      pButton
+    ></button>
+  </div>
+</div>
