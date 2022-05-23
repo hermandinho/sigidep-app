@@ -72,9 +72,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         baremeJour: [undefined],
         numActeJuridique: this._fb.group(
           {
-            id: [null],
-            numero: [null],
-            imputation: [null],
+            id: [null]
           },
           null
         ),
@@ -231,7 +229,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   bookProcess = (engagement: EngagementMandatModel) => {
     const method: Observable<any> =
       this._apisService.put<EngagementMandatModel>(
-        '/engagements/mandats/reservation',
+        '/mandats/reservation',
         engagement
       );
 
@@ -289,7 +287,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     if (!this.isBook && this.isUpdateForm) {
       const method: Observable<any> =
         this._apisService.put<EngagementMandatModel>(
-          '/engagements/mandats',
+          '/mandats',
           editedEngagement
         );
       method.subscribe(
@@ -330,7 +328,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         accept: () => {
           const method: Observable<any> =
             this._apisService.post<EngagementMandatModel>(
-              '/engagements/mandats',
+              '/mandats',
               editedEngagement
             );
           method.subscribe(

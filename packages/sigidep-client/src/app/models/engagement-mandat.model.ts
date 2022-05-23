@@ -1,3 +1,4 @@
+import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { BaseModel } from './base.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 
@@ -6,12 +7,6 @@ export enum EtatEngagementMandatEnum {
   ORDINAIRE = 'labels.ordinaire',
   EFFECTUER = 'labels.effectuer',
   CONTROLE = 'labels.controle',
-}
-export enum EtatEngagementEnum {
-  SAVE = 'labels.save',
-  MODIFY = 'labels.modify',
-  RESERVED = 'labels.book',
-  CANCEL = 'labels.cancel',
 }
 export class EngagementMandatModel extends BaseModel {
   numero!: string;
@@ -28,7 +23,7 @@ export class EngagementMandatModel extends BaseModel {
   compteACrediter!: string;
   datePaiement!: Date;
   villePaiement!: string;
-  etat!: EtatEngagementEnum;
+  etat!: EtatMandatEnum;
   rejet!: boolean;
   encours!: boolean;
   ordonnance!: boolean;
