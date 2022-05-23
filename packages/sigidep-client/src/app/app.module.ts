@@ -50,6 +50,7 @@ import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
 import { MandatsModule } from '@pages/primes/mandats.module';
+import { MandatMissionsModule } from '@pages/mandat-missions/mandat-missions.module';
 
 registerLocaleData(localeFr);
 
@@ -121,6 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EngagementsModule,
     ConsultationsModule,
     MandatsModule,
+    MandatMissionsModule,
   ],
   providers: [
     AppInstallCheckGuard,

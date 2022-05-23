@@ -33,6 +33,7 @@ import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
 import { MandatsComponent } from '@pages/primes/mandats.component';
+import { MandatMissionsComponent } from '@pages/mandat-missions/mandat-missions.component';
 
 const routes: Routes = [
   {
@@ -351,6 +352,19 @@ const routes: Routes = [
         },
         loadChildren: () =>
           import('../pages/primes/mandats.module').then((m) => m.MandatsModule),
+      },
+
+      {
+        path: 'missions',
+        canActivate: [AuthGuard],
+        component: MandatMissionsComponent,
+        data: {
+          permissions: [...MenuPermissions.mandatMissions],
+        },
+        loadChildren: () =>
+          import('../pages/mandat-missions/mandat-missions.module').then(
+            (m) => m.MandatMissionsModule
+          ),
       },
 
       /*{
