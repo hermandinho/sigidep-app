@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import { EngagementMandatModel } from '@models/engagement-mandat.model';
+import {
+  EngagementMandatModel,
+} from '@models/engagement-mandat.model';
 import { TranslateService } from '@ngx-translate/core';
 import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';

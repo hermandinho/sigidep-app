@@ -9,11 +9,6 @@ export enum EtatEngagementMandatEnum {
   EFFECTUER = 'labels.effectuer',
   CONTROLE = 'labels.controle',
 }
-export enum TypeMarcheEngagementMandatEnum {
-  AVANCE = 'labels.avance',
-  DECOMPTE = 'labels.decompte',
-  MARCHE = 'labels.marche',
-}
 export class EngagementMandatModel extends BaseModel {
   numero!: string;
   matriculeGestionnaire!: string;

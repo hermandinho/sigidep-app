@@ -12,22 +12,14 @@ import {
 } from '@reducers/engagement-mission.reducer';
 import {
   getDataSelector as getDecisionDataSelector,
-  getLoadingSelector as getDecisionLoadingSelector,
+  getLoadingSelector as getDecisionLoadingSelector
 } from '@reducers/engagement-decision.reducer';
-
-import {
-  getDataSelector,
-  getLoadingSelector,
-} from '@reducers/engagements.reducer';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
-import {
-  EngagementJuridiqueModel,
-  EtatEngagementEnum,
-} from '@models/engagement-juridique.model';
+import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
+import { EtatEngagementEnum } from '@models/engagement-juridique.model';
 import { map } from 'rxjs/operators';
-import { EngagementCommandeModel } from '@models/engagement-commande.model';
-import { CategorieProcedure, Engagement } from 'app/utils/types';
-import { GetEngagementJuridiquesByCategory } from '@actions/engagements.actions';
+import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
+import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 
 @Component({
   selector: 'app-engagement-form',
@@ -71,6 +63,14 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
       GetEngagementJuridiquesByCategory({
         category: this.category,
         etats: [EtatEngagementEnum.RESERVED],
+      })
+    );
+
+     //mission procedure code is 112
+     this._store.dispatch(
+      GetEngagementMissions({
+        procedures: ['1121'],
+        //etats: [EtatEngagementEnum.SAVE],
       })
     );
     this.onDisable();
@@ -136,8 +136,33 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
           (act as any)?.cleCompteContribuable,
       });
 
-      this.subformInitialized.emit(this.engagementForm);
     }
+  };
+
+  onMissionChange = (event: any) => {
+    let act:any;
+    if(event.value != undefined){
+      act = this.missions.find(
+        (item) => item.matriculeBeneficiaire === event.value
+      );
+    }
+    else{
+      act = this.missions.find(
+        (item) => item.matriculeBeneficiaire === event
+      );
+    }
+
+    if (act)
+      this.engagementForm.patchValue({
+        matriculeBeneficaire: act.matriculeBeneficiaire,
+        nomBeneficaire: act.nomBeneficiaire,
+        itineraire: act.itineraire,
+        dateDebut: act.dateDebut,
+        dateFin: act.dateFin,
+        nombreJours: act.nombreJours,
+        montantMission: act.montant,
+        baremeJour: act.baremeJour?.montant,
+      });
   };
 
   doChangeStep = (direction: any) => {
@@ -149,7 +174,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
   private _initListeners() {
     this._store
-      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((data) => {
         this.engagements = [...data];
         if (this.engagementForm != undefined) {
@@ -174,13 +199,12 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   scanneElt = (event: any) => {
-    const act: Engagement | undefined = this.engagements.find(
+    const act = this.engagements.find(
       (item) => item.id === event.numActeJuridique.id
     );
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
-    this.procedure = act?.codeProcedure;
-    console.log('Data. Taxe..', (act as any)?.taxesApplicable);
-    if (act) {
+
+    if (act){
       this.engagementForm.patchValue({
         codeProcedure: act?.codeProcedure,
         reference: act?.reference,
@@ -209,6 +233,8 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
           (act as any)?.numeroCompteContribuable +
           (act as any)?.cleCompteContribuable,
       });
+      this.onMissionChange(act.matriculeBeneficiaire)
     }
+
   };
 }

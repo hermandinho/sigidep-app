@@ -75,7 +75,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         baremeJour: [undefined],
         numActeJuridique: this._fb.group(
           {
-            id: [null],
+            id: [null]
           },
           null
         ),

@@ -79,56 +79,22 @@
         >
         </textarea>
       </div>
-
-      <!-- Begin Decission -->
-      <div class="p-fluid p-grid" *ngIf="procedure === '1122'">
-        <div class="p-field p-col-12 p-md-6">
-          <label>{{ "labels.matriculeBeneficiaire" | translate }}</label>
-          <input
-            class="form-control"
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container>
+          <label class="required"
+            >{{ "labels.matriculeBeneficaire" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="missions"
+            [placeholder]="''"
+            optionLabel="matriculeBeneficiaire"
+            optionValue="matriculeBeneficiaire"
             formControlName="matriculeBeneficaire"
-            [placeholder]="''"
-            pInputText
-          />
-        </div>
-
-        <div class="p-field p-col-12 p-md-6">
-          <label>{{ "labels.nomBeneficaire" | translate }}</label>
-          <input
-            class="form-control"
-            formControlName="nomBeneficaire"
-            [placeholder]="''"
-            pInputText
-          />
-        </div>
-
-        <div class="p-field p-col-12 p-md-6">
-          <label>{{ "labels.montantBrut" | translate }}</label>
-          <input
-            class="form-control"
-            formControlName="montantBrut"
-            [placeholder]="''"
-            pInputText
-          />
-        </div>
-        <div class="p-field p-col-12 p-md-6">
-          <label>{{ "labels.montantIRNC" | translate }}</label>
-          <input
-            class="form-control"
-            formControlName="montantIRNC"
-            [placeholder]="''"
-            pInputText
-          />
-        </div>
-        <div class="p-field p-col-12 p-md-6">
-          <label>{{ "labels.netAPercevoir" | translate }}</label>
-          <input
-            class="form-control"
-            formControlName="netAPercevoir"
-            [placeholder]="''"
-            pInputText
-          />
-        </div>
+            (onChange)="onMissionChange($event)"
+          >
+          </p-dropdown>
+        </ng-container>
       </div>
       <!-- End Decission -->
 
