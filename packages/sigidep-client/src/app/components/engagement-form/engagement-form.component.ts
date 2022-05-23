@@ -77,6 +77,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['objetj'].disable();
     this.engagementForm.controls['imputation'].disable();
     this.engagementForm.controls['nomBeneficaire'].disable();
+    this.engagementForm.controls['matriculeBeneficaire'].disable();
     this.engagementForm.controls['itineraire'].disable();
     this.engagementForm.controls['dateDebut'].disable();
     this.engagementForm.controls['dateFin'].disable();
@@ -100,7 +101,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         numeroj: act.numero,
         montantAE: act.montantAE,
       });
-
+      this.onMissionChange(act.matriculeBeneficiaire)
     }
   };
 
