@@ -7,6 +7,9 @@ import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { ApisService } from '@services/apis.service';
 
 import {
+  CancelEngagementReservation,
+  CancelEngagementReservationFailure,
+  CancelEngagementReservationSuccess,
   CreateEngagementJuridique,
   CreateEngagementJuridiqueFailure,
   CreateEngagementJuridiqueSuccess,
@@ -21,6 +24,9 @@ import {
   UpdateEngagementSuccess,
 } from '@actions/engagement-juridique.actions';
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
+import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
+import { GetEngagementMissions } from '@actions/engagement-mission.actions';
+import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 
 @Injectable()
 export class EngagementsJuridiquesEffects {
@@ -28,14 +34,23 @@ export class EngagementsJuridiquesEffects {
     this.actions$.pipe(
       ofType(GetEngagementJuridiques),
       mergeMap((action) =>
-        this.apisService.get<EngagementJuridiqueModel[]>('/engagements').pipe(
-          switchMap((payload) => {
-            return [GetEngagementJuridiquesSuccess({ payload })];
-          }),
-          catchError((err: HttpErrorResponse) =>
-            of(GetEngagementJuridiquesFailure(err))
+        this.apisService
+          .get<EngagementJuridiqueModel[]>('/engagements', {
+            ...(action.procedures && {
+              procedures: action.procedures.join(','),
+            }),
+            ...(action.etats && {
+              etats: action.etats.join(','),
+            }),
+          })
+          .pipe(
+            switchMap((payload) => {
+              return [GetEngagementJuridiquesSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetEngagementJuridiquesFailure(err))
+            )
           )
-        )
       )
     )
   );
@@ -76,13 +91,46 @@ export class EngagementsJuridiquesEffects {
     )
   );
 
+  cancel$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CancelEngagementReservation),
+      mergeMap((action) =>
+        this.apisService
+          .put<EngagementJuridiqueModel>(
+            `/engagements/cancel/${action.payload.id}`,
+            action.payload
+          )
+          .pipe(
+            switchMap((payload) => {
+              return [
+                CancelEngagementReservationSuccess({ payload }),
+                new EngagementJuridiqueModel(payload).isCommand
+                  ? GetEngagementCommandes({})
+                  : new EngagementJuridiqueModel(payload).isMission
+                  ? GetEngagementMissions({})
+                  : GetEngagementDecisions({}),
+              ];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(CancelEngagementReservationFailure(err))
+            )
+          )
+      )
+    )
+  );
+
   delete$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DeleteEngagement),
       mergeMap((action) =>
         this.apisService.delete<any>(`/engagements/${action.id}`, {}).pipe(
           switchMap((payload) => {
-            return [DeleteEngagementSuccess(), GetEngagementJuridiques()];
+            return [
+              DeleteEngagementSuccess(),
+              GetEngagementCommandes({}),
+              GetEngagementMissions({}),
+              GetEngagementDecisions({}),
+            ];
           }),
           catchError((err: HttpErrorResponse) =>
             of(DeleteEngagementFailure(err))

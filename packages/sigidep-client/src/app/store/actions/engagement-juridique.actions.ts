@@ -1,7 +1,8 @@
 import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementJuridiques = createAction(
-  '[EngagementJuridiques] Filter'
+  '[EngagementJuridiques] Filter',
+  props<{ procedures?: string[]; etats?: string[] }>()
 );
 export const GetEngagementJuridiquesSuccess = createAction(
   '[EngagementJuridiques] Filter success',
@@ -47,5 +48,18 @@ export const UpdateEngagementSuccess = createAction(
 );
 export const UpdateEngagementFailure = createAction(
   '[EngagementJuridiques] Update failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);
+
+export const CancelEngagementReservation = createAction(
+  '[EngagementJuridiques] Cancel',
+  props<{ payload: EngagementJuridiqueModel }>()
+);
+export const CancelEngagementReservationSuccess = createAction(
+  '[EngagementJuridiques] Cancel success',
+  props<{ payload: EngagementJuridiqueModel }>()
+);
+export const CancelEngagementReservationFailure = createAction(
+  '[EngagementJuridiques] Cancel failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );

@@ -4,6 +4,9 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
 import { EngagementDecisionEntity } from '@entities/engagement-decision.entity';
 import { EngagementDecisionDTO } from '../dto/create-engagement-decision.dto';
+import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
+import { ProcedureDecision } from '../types';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementDecisionService {
@@ -16,8 +19,21 @@ export class EngagementDecisionService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementDecisionEntity[]> {
-    return this.repository.createQueryBuilder('ed').getMany();
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementDecisionEntity[]> {
+    console.log('............::: filter', filter);
+    return this.repository
+      .createQueryBuilder('ed')
+
+      .leftJoinAndSelect('ed.taxesApplicable', 'taxe')
+      .where(filter?.procedures ? 'ed.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'ed.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
+      .getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -28,6 +44,13 @@ export class EngagementDecisionService {
     payload: EngagementDecisionDTO,
     user: UserEntity,
   ): Promise<EngagementDecisionEntity> {
+    payload.etat = EtatEngagementEnum.SAVE;
+    const val1: string = payload.adminUnit?.substring(2, 4);
+    const val2: string = (
+      '00000' + Number(Math.floor(Math.random() * 100000))
+    ).slice(-5);
+
+    payload.numero = payload.exercise + 'CE' + val1 + '-' + val2;
     return this.repository.save({
       ...(payload as any),
       createdBy: user,
@@ -37,15 +60,19 @@ export class EngagementDecisionService {
   public async update(
     payload: EngagementDecisionDTO,
     user: UserEntity,
+    reserve: boolean = false,
   ): Promise<EngagementDecisionEntity> {
     const check = await this.repository.findOne({
-      id: payload.id,
+      numero: payload.numero,
     });
 
     if (!check) {
       throw new NotFoundException();
     }
-
+    payload = {
+      ...payload,
+      etat: reserve ? EtatEngagementEnum.RESERVED : EtatEngagementEnum.MODIFY,
+    };
     return this.repository.save({
       ...(payload as any),
       updateBy: user,

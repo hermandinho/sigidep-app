@@ -47,8 +47,9 @@ import { EncoursModule } from '@pages/encours/encours.module';
 import { TaxesModule } from '@pages/taxes/taxes.module';
 import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
-import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
 import { RegionsModule } from './pages/regions/regions.module';
+import { ConsultationsModule } from '@pages/consultations/consultations.module';
+import { MandatsModule } from '@pages/primes/mandats.module';
 
 registerLocaleData(localeFr);
 
@@ -118,6 +119,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TaxesModule,
     ProceduresModule,
     EngagementsModule,
+    ConsultationsModule,
+    MandatsModule,
   ],
   providers: [
     AppInstallCheckGuard,

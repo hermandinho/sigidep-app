@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -54,5 +55,14 @@ export class EncoursController {
       .where('exercise=:id', { id })
       .getMany();
   }
-  
+
+  @Get('/imputations/code')
+  public async getByImputation(@Query() imputation): Promise<any> {
+    return this.encoursServices.findByImputation(imputation);
+  }
+
+  @Get('/imputationJoinEngagement/join/one')
+  public async getByImputationJoinEng(@Query() imputation): Promise<any> {
+    return this.encoursServices.getByImputationJoinEng(imputation);
+  }
 }

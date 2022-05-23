@@ -1,14 +1,16 @@
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
+import { ExecTaxesModel } from './exec-taxes.model';
 
 export class EngagementCommandeModel extends EngagementJuridiqueModel {
-  montantTTC!: number;
   niuContribuable!: string;
-  raisonSocialeContribuable!: string;
+  raisonSociale!: string;
   codeBanqueContribuable!: string;
   codeAgenceContribuable!: string;
   numeroCompteContribuable!: string;
   cleCompteContribuable!: string;
-
+  tauxTVA!: number;
+  tauxIR!: number;
+  taxesApplicable!: ExecTaxesModel;
   constructor(params?: Partial<EngagementCommandeModel>) {
     super();
     if (params) {

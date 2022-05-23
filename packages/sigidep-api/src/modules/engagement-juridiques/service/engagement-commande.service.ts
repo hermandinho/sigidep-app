@@ -5,6 +5,8 @@ import { UserEntity } from '@entities/user.entity';
 import { EngagementCommandeEntity } from '@entities/engagement-commande.entity';
 import { EngagementCommandeDTO } from '../dto/create-engagement-commande.dto';
 import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
+import { ProcedureCommande } from '../types';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementCommandeService {
@@ -17,16 +19,18 @@ export class EngagementCommandeService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementCommandeEntity[]> {
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementCommandeEntity[]> {
     return this.repository
       .createQueryBuilder('ej')
-      .leftJoinAndSelect('ej.exercise', 'exercise')
-      .leftJoinAndSelect('ej.sousProgramme', 's')
-      .leftJoinAndSelect('ej.action', 'ac')
-      .leftJoinAndSelect('ej.activity', 'a')
-      .leftJoinAndSelect('ej.procedure', 'p')
-      .leftJoinAndSelect('p.typeProcedure', 'typ')
-      .leftJoinAndSelect('ej.task', 't')
+      .leftJoinAndSelect('ej.taxesApplicable', 'taxe')
+      .where(filter?.procedures ? 'ed.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'ed.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
       .getMany();
   }
 
@@ -39,6 +43,13 @@ export class EngagementCommandeService {
     user: UserEntity,
   ): Promise<EngagementCommandeEntity> {
     payload.etat = EtatEngagementEnum.SAVE;
+    const val1: string = payload.adminUnit?.substring(2, 4);
+    const val2: string = (
+      '00000' + Number(Math.floor(Math.random() * 100000))
+    ).slice(-5);
+
+    payload.numero = payload.exercise + 'CE' + val1 + '-' + val2;
+
     return this.repository.save({
       ...(payload as any),
       createdBy: user,
@@ -48,6 +59,7 @@ export class EngagementCommandeService {
   public async update(
     payload: EngagementCommandeDTO,
     user: UserEntity,
+    reserve: boolean = false,
   ): Promise<EngagementCommandeEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
@@ -56,6 +68,10 @@ export class EngagementCommandeService {
     if (!check) {
       throw new NotFoundException();
     }
+    payload = {
+      ...payload,
+      etat: reserve ? EtatEngagementEnum.RESERVED : EtatEngagementEnum.MODIFY,
+    };
 
     return this.repository.save({
       ...(payload as any),

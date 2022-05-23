@@ -38,6 +38,7 @@ import { StepsModule } from 'primeng/steps';
 import { EditorModule } from 'primeng/editor';
 import { OrderByPipe } from '../pipes/order-by.pipe';
 import { FieldsetModule } from 'primeng/fieldset';
+import { NgxPrintModule } from 'ngx-print';
 
 const declarations = [
   BaseComponent,
@@ -71,6 +72,7 @@ const shared = [
   StepsModule,
   EditorModule,
   FieldsetModule,
+  NgxPrintModule,
 ];
 @NgModule({
   declarations: [...declarations],

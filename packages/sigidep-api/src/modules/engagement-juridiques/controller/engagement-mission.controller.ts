@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,6 +16,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { EngagementMissionDTO } from '../dto/create-engagement-mission.dto';
 import { EngagementMissionService } from '../service/engagement-mission.service';
+import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
+import { EngagementFilter } from '@utils/engagement-filter';
 @Controller('engagements/missions')
 @ApiTags('engagements/missions')
 @UseGuards(AuthGuard())
@@ -23,8 +26,10 @@ export class EngagementMissionController {
   constructor(private readonly services: EngagementMissionService) {}
 
   @Get('/')
-  public async filter() {
-    return this.services.filter();
+  public async filter(
+    @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+  ) {
+    return this.services.filter(filter);
   }
 
   @Post('/')
@@ -43,8 +48,22 @@ export class EngagementMissionController {
     return this.services.update(payload, user);
   }
 
+  @Put('/reservation')
+  public async reserve(
+    @Body(ValidationPipe) payload: EngagementMissionDTO,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    const val = { ...payload, etat: EtatEngagementEnum.RESERVED };
+    return this.services.update(val, user, true);
+  }
+
   @Delete('/:id')
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
+  }
+
+  @Get('/engagement/reserve')
+  public async findEngagement() {
+    return this.services.findEngagement();
   }
 }

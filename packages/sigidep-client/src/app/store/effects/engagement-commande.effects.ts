@@ -29,7 +29,14 @@ export class EngagementsCommandesEffects {
       ofType(GetEngagementCommandes),
       mergeMap((action) =>
         this.apisService
-          .get<EngagementCommandeModel[]>('/engagements/commandes')
+          .get<EngagementCommandeModel[]>('/engagements/commandes', {
+            ...(action.procedures && {
+              procedures: action.procedures.join(','),
+            }),
+            ...(action.etats && {
+              etats: action.etats.join(','),
+            }),
+          })
           .pipe(
             switchMap((payload) => {
               return [GetEngagementCommandesSuccess({ payload })];
@@ -94,7 +101,7 @@ export class EngagementsCommandesEffects {
             switchMap((payload) => {
               return [
                 DeleteEngagementCommandeSuccess(),
-                GetEngagementCommandes(),
+                GetEngagementCommandes({}),
               ];
             }),
             catchError((err: HttpErrorResponse) =>

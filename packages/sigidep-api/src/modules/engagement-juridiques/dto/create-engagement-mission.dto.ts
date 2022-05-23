@@ -1,25 +1,20 @@
+import { TypeMissionEnum } from '@entities/engagement-mission.entity';
 import { CreateBaremeMissionDTO } from '@modules/baremes/dto/create-bareme-mission.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 import { CreateEngagementJuridiqueDTO } from './create-engagement-juridique.dto';
 
 export class EngagementMissionDTO extends CreateEngagementJuridiqueDTO {
-  @ApiProperty({ example: '002545', required: false })
-  public numeroOM: string;
+  @ApiProperty({ type: 'enum', example: 'MISSION_EFFECTUEE', required: false })
+  public typeMission: TypeMissionEnum;
 
-  @ApiProperty({ example: 'type1', required: false })
-  public type: string;
-
-  @ApiProperty({ example: 'MAT45216', required: false })
+  @ApiProperty({ example: 'MAT45216', required: true })
   public matriculeBeneficiaire: string;
 
-  @ApiProperty({ example: '689546214652', required: false })
-  public omBeneficiaire: string;
+  @ApiProperty({ example: 'JEAN TAMO', required: false })
+  public nomBeneficiaire: string;
 
-  @ApiProperty({ example: 'OBJET', required: false })
-  public objet: string;
-
-  @ApiProperty({ example: 'ITENERAIRE', required: false })
+  @ApiProperty({ example: 'BANDJOCK-BANGA', required: false })
   public itineraire: string;
 
   @ApiProperty({
@@ -43,12 +38,6 @@ export class EngagementMissionDTO extends CreateEngagementJuridiqueDTO {
   public nombreJours: number;
 
   @ApiProperty({
-    example: 10,
-    required: false,
-  })
-  public cumulJours: number;
-
-  @ApiProperty({
     type: () => CreateBaremeMissionDTO,
     nullable: true,
     required: false,
@@ -58,10 +47,4 @@ export class EngagementMissionDTO extends CreateEngagementJuridiqueDTO {
 
   @ApiProperty({ type: 'float', example: 5000.782, required: false })
   public montant: number;
-
-  @ApiProperty({ example: false, required: false })
-  public chevauchement: boolean;
-
-  @ApiProperty({ example: false, required: false })
-  public quotaAtteint: boolean;
 }

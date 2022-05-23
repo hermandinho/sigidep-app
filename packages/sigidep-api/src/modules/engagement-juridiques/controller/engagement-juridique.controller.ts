@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { EngagementJuridiqueService } from '../service/engagement-juridique.service';
 import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
+import { EngagementFilter } from '@utils/engagement-filter';
 @Controller('engagements')
 @ApiTags('engagements')
 @UseGuards(AuthGuard())
@@ -23,8 +25,10 @@ export class EngagementJuridiqueController {
   constructor(private readonly services: EngagementJuridiqueService) {}
 
   @Get('/')
-  public async filter() {
-    return this.services.filter();
+  public async filter(
+    @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+  ) {
+    return this.services.filter(filter);
   }
 
   @Post('/')
@@ -46,5 +50,13 @@ export class EngagementJuridiqueController {
   @Delete('/:id')
   public async deleteOne(@Param('id') id: number) {
     return this.services.deleteOne(id);
+  }
+
+  @Put('/cancel/:id')
+  public async cancelReservation(
+    @Param('id') id: number,
+    @Body(ValidationPipe) payload: CreateEngagementJuridiqueDTO,
+  ) {
+    return this.services.cancelReservation(id);
   }
 }

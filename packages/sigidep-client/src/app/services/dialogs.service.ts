@@ -1,4 +1,3 @@
-import { CreateContribuableBudgetaireFormComponent } from './../components/create-contribuable-budgetaire-form/create-contribuable-budgetaire-form.component';
 import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { Injectable } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -28,13 +27,22 @@ import {
   BaremeMissionModel,
   PieceJointeModel,
   TypeProcedureModel,
+  ExecTaxesModel,
+  RegionsModel,
+  ExecProcedureModel,
+  EncoursModel,
+  EngagementJuridiqueModel,
+  EngagementCommandeModel,
+  EngagementDecisionModel,
+  EngagementMissionModel,
+  Step,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
-import { EncoursModel } from '@models/encours.model';
-import { RegionsModel } from '@models/regions.model';
-import { ExecTaxesModel } from '@models/exec-taxes.model';
-import { ExecProcedureModel } from '@models/exec-procedure.model';
-import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
+import {
+  EngagementMandatModel,
+  StepMandat,
+} from '@models/engagement-mandat.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -82,7 +90,15 @@ export class DialogsService {
   private procedureCreateComponent: any;
 
   private engagementCreateComponent: any;
+  private reservationEngagementComponent: any;
 
+  private printEngagementComponent: any;
+  private printEngagementMandatPrimeComponent: any;
+
+  private etatImputationComponent: any;
+
+  private createMandatFormComponent: any;
+  private reservationEngagementMandatDecisionComponent: any;
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
@@ -887,7 +903,12 @@ export class DialogsService {
   }
 
   public async launchEngagementCreateDialog(
-    item?: EngagementJuridiqueModel
+    item?:
+      | EngagementJuridiqueModel
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel,
+    action?: string
   ): Promise<any> {
     if (!this.engagementCreateComponent) {
       const { EngagementContainerComponent } = await import(
@@ -897,12 +918,148 @@ export class DialogsService {
     }
 
     return this._dialogService.open(this.engagementCreateComponent, {
-      header: this._translateService.instant('dialogs.headers.editEngagement'),
-      width: '50vw',
+      header: this._translateService.instant(
+        action
+          ? 'dialogs.headers.viewEngagement'
+          : 'dialogs.headers.editEngagement',
+        { numero: item?.numero }
+      ),
+      width: '60vw',
       height: 'auto',
       modal: true,
       data: {
         item,
+        action,
+      },
+    });
+  }
+
+  public async launchReservationEngagementDialog(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel,
+    type: Step
+  ): Promise<any> {
+    if (!this.reservationEngagementComponent) {
+      const { ReservationEngagementComponent } = await import(
+        '@components/reservation-engagement/reservation-engagement.component'
+      );
+      this.reservationEngagementComponent = ReservationEngagementComponent;
+    }
+
+    return this._dialogService.open(this.reservationEngagementComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.reserverEngagement',
+        { numero: item?.numero }
+      ),
+      width: '40vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
+
+  public async launchPrintEngagementDialog(
+    item:
+      | EngagementCommandeModel
+      | EngagementDecisionModel
+      | EngagementMissionModel,
+    type?: Step
+  ): Promise<any> {
+    if (!this.printEngagementComponent) {
+      const { PrintEngagementComponent } = await import(
+        '@components/print-engagement/print-engagement.component'
+      );
+      this.printEngagementComponent = PrintEngagementComponent;
+    }
+
+    return this._dialogService.open(this.printEngagementComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.printEngagement',
+        { numero: item?.numero }
+      ),
+      width: '40vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
+  public async launchImputationEtatDialog(item?: EncoursModel): Promise<any> {
+    if (!this.etatImputationComponent) {
+      const { EtatImputationComponent } = await import(
+        '@components/etat-imputation/etat-imputation.component'
+      );
+      this.etatImputationComponent = EtatImputationComponent;
+    }
+    return this._dialogService.open(this.etatImputationComponent, {
+      header: this._translateService.instant('dialogs.headers.imputation'),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchEngagementMandatCreateDialog(
+    item?: EngagementMandatModel,
+    action?: string
+  ): Promise<any> {
+    if (!this.createMandatFormComponent) {
+      const { CreateMandatFormComponent } = await import(
+        '@components/create-mandat-form/create-mandat-form.component'
+      );
+      this.createMandatFormComponent = CreateMandatFormComponent;
+    }
+
+    return this._dialogService.open(this.createMandatFormComponent, {
+      header: this._translateService.instant(
+        action
+          ? 'dialogs.headers.viewEngagementMandat'
+          : 'dialogs.headers.editEngagementMandat',
+        { numero: item?.numero }
+      ),
+      width: '60vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        action,
+      },
+    });
+  }
+
+  public async launchPrintEngagementMandatPrimeDialog(
+    item: EngagementMandatModel,
+    type?: Step
+  ): Promise<any> {
+    if (!this.printEngagementMandatPrimeComponent) {
+      const { PrintEngagementMandatPrimeComponent } = await import(
+        '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component'
+      );
+      this.printEngagementMandatPrimeComponent =
+        PrintEngagementMandatPrimeComponent;
+    }
+
+    return this._dialogService.open(this.printEngagementMandatPrimeComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.printEngagement',
+        { numero: item?.numero }
+      ),
+      width: '40vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
       },
     });
   }
