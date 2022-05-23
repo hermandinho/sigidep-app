@@ -84,20 +84,12 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['imputation'].disable();
     this.engagementForm.controls['nomBeneficaire'].disable();
     this.engagementForm.controls['matriculeBeneficaire'].disable();
-    this.engagementForm.controls['montantBrut'].disable();
-    this.engagementForm.controls['montantIRNC'].disable();
-    this.engagementForm.controls['netAPercevoir'].disable();
-    this.engagementForm.controls['nomUnitAdminBenef'].disable();
-    this.engagementForm.controls['codeUnitAdminBenef'].disable();
-    this.engagementForm.controls['montantAE'].disable();
-    this.engagementForm.controls['montantBrut'].disable();
-    this.engagementForm.controls['montantIRNC'].disable();
-    this.engagementForm.controls['numContribuable'].disable();
-    this.engagementForm.controls['raisonSociale'].disable();
-    this.engagementForm.controls['taxesApplicable'].disable();
-    this.engagementForm.controls['tauxTVA'].disable();
-    this.engagementForm.controls['tauxIR'].disable();
-    this.engagementForm.controls['RIB'].disable();
+    this.engagementForm.controls['itineraire'].disable();
+    this.engagementForm.controls['dateDebut'].disable();
+    this.engagementForm.controls['dateFin'].disable();
+    this.engagementForm.controls['nombreJours'].disable();
+    this.engagementForm.controls['montantMission'].disable();
+    this.engagementForm.controls['baremeJour'].disable();
   }
 
   onActeJuridiqueChange = (event: any) => {
@@ -135,7 +127,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
           (act as any)?.numeroCompteContribuable +
           (act as any)?.cleCompteContribuable,
       });
-
+      this.onMissionChange(act.matriculeBeneficiaire)
     }
   };
 
