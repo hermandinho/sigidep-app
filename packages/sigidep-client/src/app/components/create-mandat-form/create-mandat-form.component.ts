@@ -265,9 +265,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         break;
       case 'mandat':
         if (direction === 'forward') {
+          console.log(direction)
           this.currentStepBs.next('perform');
         }
         if (direction === 'back') {
+          console.log(direction)
           this.currentStepBs.next('engagement');
         }
         break;
@@ -276,6 +278,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           this.currentStepBs.next('mandat');
         }
         break;
+
     }
   }
   bookProcess = (engagement: EngagementMandatModel) => {

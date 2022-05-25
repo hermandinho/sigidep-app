@@ -15,10 +15,11 @@ import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { TreeTableModule } from 'primeng/treetable';
 import { SharedModule } from '@modules/shared.module';
-import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
-  declarations: [MandatsComponent],
+  declarations: [
+    MandatsComponent
+  ],
   imports: [
     CommonModule,
     MandatsRoutingModule,

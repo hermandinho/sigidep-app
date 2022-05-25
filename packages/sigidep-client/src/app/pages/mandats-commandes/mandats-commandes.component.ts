@@ -137,7 +137,7 @@ export class MandatsCommandesComponent
             },
             disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
           },
-   /*        {
+          /*{
             label: this.translate.instant('labels.delete'),
             icon: 'pi pi-times',
             command: () => {
