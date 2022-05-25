@@ -78,14 +78,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         ),
         montantAE: [undefined],
         netAPercevoir: [undefined],
-        montantIRNC: [undefined],
-        montantBrut: [undefined],
-        numContribuable:[undefined],
-        raisonSociale:[undefined],
-        taxesApplicable:[undefined],
-        tauxTVA:[undefined],
-        tauxIR:[undefined],
-        RIB:[undefined],
         nomUnitAdminBenef:[undefined],
         codeUnitAdminBenef:[undefined]
       }),
@@ -95,12 +87,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         nomGestionnaire: [undefined],
         objet: [undefined],
         dateEngagement: [undefined, [Validators.required, this.dateValidator]],
-        montantCPChiffres: [undefined, [this.montantAEValidator]],
+        montantCPChiffres: [undefined],
         montantCPLettres: [undefined],
         signataire: [undefined],
-        typeMission: [undefined, [this.montantAEValidator]],
+        typeMission: [undefined],
         dateAffectation: [undefined],
-        typeMarche: [undefined]
       }),
 
       performForm: this._fb.group({
@@ -148,17 +139,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         dateAffectation,
         montantAE,
         netAPercevoir,
-        montantIRNC,
-        montantBrut,
-        numContribuable,
-        raisonSociale,
-        taxesApplicable,
-        tauxTVA,
-        tauxIR,
-        RIB,
         nomUnitAdminBenef,
         codeUnitAdminBenef,
-        typeMarche
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -184,14 +166,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           numActeJuridique,
           montantAE,
           netAPercevoir,
-          montantIRNC,
-          montantBrut,
-          numContribuable,
-          raisonSociale,
-          taxesApplicable,
-          tauxTVA,
-          tauxIR,
-          RIB,
           nomUnitAdminBenef,
           codeUnitAdminBenef
         },
@@ -205,8 +179,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantCPLettres,
           signataire,
           typeMission,
-          dateAffectation,
-          typeMarche
+          dateAffectation
         },
         performForm: {
           livrables,

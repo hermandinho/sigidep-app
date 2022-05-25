@@ -1,7 +1,7 @@
 <div class="container">
   <div class="form" [formGroup]="mandatForm">
     <div class="p-fluid p-grid">
-      <div class="p-field p-col-12 p-md-6">
+      <div class="p-field p-col-12 p-md-12">
         <ng-container>
           <label class="required">{{ "labels.numero" | translate }} </label>
           <p-dropdown
@@ -16,43 +16,7 @@
           </p-dropdown>
         </ng-container>
       </div>
-      <!-- begin type mission -->
-      <div *ngIf="procedure !=='1115'"  class="p-field p-col-12 p-md-6">
-        <ng-container>
-          <label class="required"
-            >{{ "labels.typeMission" | translate }}
-          </label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="typeMissions"
-            [placeholder]="''"
-            optionLabel="name"
-            optionValue="name"
-            formControlName="typeMission"
-          >
-          </p-dropdown>
-        </ng-container>
-      </div>
-      <!-- end type mission -->
 
-       <!-- begin type marché -->
-       <div *ngIf="procedure ==='1115'" class="p-field p-col-12 p-md-6">
-        <ng-container>
-          <label class="required"
-            >{{ "labels.typeMission" | translate }}
-          </label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="typeMarches"
-            [placeholder]="''"
-            optionLabel="name"
-            optionValue="name"
-            formControlName="typeMarche"
-          >
-          </p-dropdown>
-        </ng-container>
-      </div>
-      <!-- end type marché -->
       <div class="p-field p-col-12 p-md-6">
         <label>{{ "labels.matriculeGestionnaire" | translate }}</label>
         <input
@@ -102,7 +66,7 @@
           pInputText
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
+      <div class="p-field p-col-12 p-md-12">
         <label>{{ "labels.montantCPChiffres" | translate }}</label>
         <input
           type="number"
