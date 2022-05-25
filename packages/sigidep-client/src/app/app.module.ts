@@ -49,7 +49,10 @@ import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
-import { MandatsModule } from '@pages/primes/mandats.module';
+import { MandatsModule } from '@pages/mandats/primes/mandats.module';
+import { MiseADispositionStructureModule } from '@pages/mandats/mise-a-disposition-structure/mise-a-disposition-structure.module';
+import { MiseADispositionAgentModule } from '@pages/mandats/mise-a-disposition-agent/mise-a-disposition-agent.module';
+import { FraisDeReleveModule } from '@pages/mandats/frais-de-releve/frais-de-releve.module';
 
 registerLocaleData(localeFr);
 
@@ -121,6 +124,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     EngagementsModule,
     ConsultationsModule,
     MandatsModule,
+    MiseADispositionStructureModule,
+    MiseADispositionAgentModule,
+    FraisDeReleveModule
   ],
   providers: [
     AppInstallCheckGuard,

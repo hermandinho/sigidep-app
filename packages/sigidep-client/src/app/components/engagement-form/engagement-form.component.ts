@@ -89,6 +89,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['RIB'].disable();
     this.engagementForm.controls['nomUnitAdminBenef'].disable();
     this.engagementForm.controls['codeUnitAdminBenef'].disable();
+    this.engagementForm.controls['montantAE'].disable();
   }
 
   onActeJuridiqueChange = (event: any) => {
@@ -97,27 +98,27 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
     if (act) {
       this.engagementForm.patchValue({
-        codeProcedure: act.codeProcedure,
-        reference: act.reference,
-        dateSignature: act.dateSignature,
-        signatairej: act.signataire,
-        objetj: act.objet,
-        imputation: act.imputation,
-        numeroj: act.numero,
-        montantAE: act.montantAE,
-        matriculeBeneficaire: act.matriculeBeneficiaire,
-        nomBeneficaire: act.nomBeneficiaire,
-        montantBrut: act.montantBrut,
-        montantIRNC: act.montantIRNC,
-        netAPercevoir: act.netAPercevoir,
-        numContribuable: act.numContribuable,
-        raisonSociale: act.raisonSociale,
-        taxesApplicable: act.taxesApplicable,
-        tauxTVA: act.tauxTVA,
-        tauxIR: act.tauxIR,
-        RIB: act.codeBanqueContribuable + act.codeAgenceContribuable + act.numeroCompteContribuable + act.cleCompteContribuable,
-        nomUnitAdminBenef: act.nomUnitAdminBenef,
-        codeUnitAdminBenef:act.codeUnitAdminBenef
+        codeProcedure: act?.codeProcedure,
+        reference: act?.reference,
+        dateSignature: act?.dateSignature,
+        signatairej: act?.signataire,
+        objetj: act?.objet,
+        imputation: act?.imputation,
+        numeroj: act?.numero,
+        montantAE: act?.montantAE,
+        matriculeBeneficaire: act?.matriculeBeneficiaire,
+        nomBeneficaire: act?.nomBeneficiaire,
+        montantBrut: act?.montantBrut,
+        montantIRNC: act?.montantIRNC,
+        netAPercevoir: act?.netAPercevoir,
+        numContribuable: act?.numContribuable,
+        raisonSociale: act?.raisonSociale,
+        taxesApplicable: act?.taxesApplicable,
+        tauxTVA: act?.tauxTVA,
+        tauxIR: act?.tauxIR,
+        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
+        nomUnitAdminBenef: act?.nomUnitAdminBenef,
+        codeUnitAdminBenef:act?.codeUnitAdminBenef
 
       });
     }
@@ -165,27 +166,27 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
     if (act){
       this.engagementForm.patchValue({
-        codeProcedure: act.codeProcedure,
-        reference: act.reference,
-        dateSignature: act.dateSignature,
-        signatairej: act.signataire,
-        objetj: act.objet,
-        imputation: act.imputation,
-        numeroj: act.numero,
-        montantAE: act.montantAE,
-        matriculeBeneficaire: act.matriculeBeneficiaire,
-        nomBeneficaire: act.nomBeneficiaire,
-        montantBrut: act.montantBrut,
-        montantIRNC: act.montantIRNC,
-        netAPercevoir: act.netAPercevoir,
-        numContribuable: act.numContribuable,
-        raisonSociale: act.raisonSociale,
-        taxesApplicable: act.taxesApplicable,
-        tauxTVA: act.tauxTVA,
-        tauxIR: act.tauxIR,
-        RIB: act.codeBanqueContribuable + act.codeAgenceContribuable + act.numeroCompteContribuable + act.cleCompteContribuable,
-        nomUnitAdminBenef: act.nomUnitAdminBenef,
-        codeUnitAdminBenef: act.codeUnitAdminBenef
+        codeProcedure: act?.codeProcedure,
+        reference: act?.reference,
+        dateSignature: act?.dateSignature,
+        signatairej: act?.signataire,
+        objetj: act?.objet,
+        imputation: act?.imputation,
+        numeroj: act?.numero,
+        montantAE: act?.montantAE,
+        matriculeBeneficaire: act?.matriculeBeneficiaire,
+        nomBeneficaire: act?.nomBeneficiaire,
+        montantBrut: act?.montantBrut,
+        montantIRNC: act?.montantIRNC,
+        netAPercevoir: act?.netAPercevoir,
+        numContribuable: act?.numContribuable,
+        raisonSociale: act?.raisonSociale,
+        taxesApplicable: act?.taxesApplicable,
+        tauxTVA: act?.tauxTVA,
+        tauxIR: act?.tauxIR,
+        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
+        nomUnitAdminBenef: act?.nomUnitAdminBenef,
+        codeUnitAdminBenef: act?.codeUnitAdminBenef
       });
     }
 

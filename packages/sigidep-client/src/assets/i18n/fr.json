@@ -43,7 +43,10 @@
     "commandepublique": "Commande Publique",
     "missions": "Missions",
     "decisions": "Décisions",
-    "primes": "Primes"
+    "primes": "Primes",
+    "fraisreleve": "Frais de Relève",
+    "misedispositionagent": "Mise à Disposition - Agent ",
+    "misedispositionstructure": "Mise à Disposition - Structure"
   },
   "buttons": {
     "save": "Enregistrer",
