@@ -107,7 +107,6 @@ export class CreateMandatMissionFormComponent
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
       this.data = this.config.data?.item;
-      console.log(this.data);
     }
 
     if (this.data) {

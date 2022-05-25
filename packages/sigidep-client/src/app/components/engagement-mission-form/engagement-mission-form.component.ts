@@ -7,8 +7,6 @@ import { Observable, of } from 'rxjs';
 import { BaseComponent } from '@components/base.component';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { getDataSelector as getMissionDataSelector } from '@reducers/engagement-mission.reducer';
-import { getDataSelector as getDecisionDataSelector } from '@reducers/engagement-decision.reducer';
-import { EngagementDecisionModel } from '@models/engagement-decision.model';
 import { EtatEngagementEnum } from '@models/engagement-juridique.model';
 import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 
@@ -49,15 +47,12 @@ export class EngagementMissionFormComponent
     this._store.dispatch(
       GetEngagementMissions({
         procedures: ['1121'],
-        etats: [EtatEngagementEnum.SAVE],
+        etats: [EtatEngagementEnum.MODIFY],
       })
     );
     this.onDisable();
   }
 
-  /*   get engagementFormGroup(): FormGroup {
-    return this.form?.get('engagementForm') as FormGroup;
-  } */
   onDisable() {
     this.engagementForm.controls['codeProcedure'].disable();
     this.engagementForm.controls['reference'].disable();
@@ -114,10 +109,10 @@ export class EngagementMissionFormComponent
       .pipe(this.takeUntilDestroy, select(getMissionDataSelector))
       .subscribe((payload) => {
         this.missions = [...payload];
+        console.log(payload);
         if (this.engagementForm != undefined) {
           this.scanneElt(this.engagementForm.value);
         }
-        console.log(this.missions);
       });
   }
 
@@ -136,6 +131,15 @@ export class EngagementMissionFormComponent
         objetj: act.objet,
         imputation: act.imputation,
         numeroj: act.numero,
+        montantAE: act.montantAE,
+        matriculeBeneficaire: act.matriculeBeneficiaire,
+        nomBeneficaire: act.nomBeneficiaire,
+        itineraire: act.itineraire,
+        dateDebut: act.dateDebut,
+        dateFin: act.dateFin,
+        nombreJours: act.nombreJours,
+        montantMission: act.montant,
+        baremeJour: act.baremeJour.montant,
       });
   };
 }

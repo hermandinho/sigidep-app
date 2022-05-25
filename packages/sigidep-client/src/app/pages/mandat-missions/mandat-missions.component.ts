@@ -198,7 +198,7 @@ export class MandatMissionsComponent
   }
 
   edit(item: EngagementMandatModel) {
-    this._dialogService.launchEngagementMandatCreateDialog(item);
+    this._dialogService.launchEngagementMandatMissionCreateDialog(item);
   }
 
   delete(item: EngagementMandatModel) {
