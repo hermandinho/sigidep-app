@@ -17,7 +17,6 @@
           <p-multiSelect
             [filter]="false"
             [options]="filters"
-            [(ngModel)]="selectedFilters"
             autoDisplayFirst="false"
             optionValue="value"
             labelValue="label"
@@ -75,26 +74,11 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td *ngFor="let column of tableColumns" class="nowrap">
-          <span data-title="{{ item[column.field] }}">
-            <!--   {{
-            item[column.field].length > 20
-              ? (item[column.field] | slice: 0:20) + ".."
-              : item[column.field]
-          }} -->
-            <!--  {{
-            item[column.field]
-            }} -->
-          </span>
-          <!-- <span *ngIf="item[column.field]==='imputation'">
-            {{
-              item[column.field]?.numActeJuridique.imputation
-            }}
-          </span> -->
-
           <span
             *ngIf="
               column.field !== 'objet' &&
               column.field !== 'imputation' &&
+              column.field !== 'etat' &&
               column.field !== 'numActeJuridique'
             "
           >
@@ -107,6 +91,9 @@
             {{ item["numActeJuridique"]?.imputation }}
           </span>
 
+          <span *ngIf="column.field === 'etat'">
+            {{ item[column.field] | translate }}
+          </span>
           <span
             *ngIf="column.field === 'objet'"
             data-title="{{ item[column.field] }}"

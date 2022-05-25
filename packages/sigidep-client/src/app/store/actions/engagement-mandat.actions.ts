@@ -1,67 +1,67 @@
 import { EngagementMandatModel } from '@models/engagement-mandat.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementMandats = createAction(
-  '[EngagementMandats] Filter',
+  '[Mandats] Filter',
   props<{ procedures?: string[]; etats?: string[] }>()
 );
 export const GetEngagementMandatsSuccess = createAction(
-  '[EngagementMandats] Filter success',
+  '[Mandats] Filter success',
   props<{ payload: EngagementMandatModel[] }>()
 );
 export const GetEngagementMandatsFailure = createAction(
-  '[EngagementMandats] Filter failure',
+  '[Mandats] Filter failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
 
 export const CreateEngagementMandats = createAction(
-  '[EngagementMandats] Create engagement',
+  '[Mandats] Create engagement',
   props<{ payload: EngagementMandatModel }>()
 );
 export const CreateEngagementMandatsSuccess = createAction(
-  '[EngagementMandats] Create engagement',
+  '[Mandats] Create engagement',
   props<{ payload: EngagementMandatModel }>()
 );
 export const CreateEngagementMandatsFailure = createAction(
-  '[EngagementMandats] Create engagement',
+  '[Mandats] Create engagement',
   props<{ error?: any }>()
 );
 
 export const DeleteEngagementMandats = createAction(
-  '[EngagementMandats] Delete',
+  '[Mandats] Delete',
   props<{ id: number }>()
 );
 export const DeleteEngagementMandatsSuccess = createAction(
-  '[EngagementMandats] Delete success'
+  '[Mandats] Delete success'
 );
 export const DeleteEngagementMandatsFailure = createAction(
-  '[EngagementMandats] Delete failure',
+  '[Mandats] Delete failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
 
 export const UpdateEngagementMandats = createAction(
-  '[EngagementMandats] Update',
+  '[Mandats] Update',
   props<{ payload: EngagementMandatModel }>()
 );
 export const UpdateEngagementMandatsSuccess = createAction(
-  '[EngagementMandats] Update success',
+  '[Mandats] Update success',
   props<{ payload: EngagementMandatModel }>()
 );
 export const UpdateEngagementMandatsFailure = createAction(
-  '[EngagementMandats] Update failure',
+  '[Mandats] Update failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
 
 export const CancelEngagementMandatsReservation = createAction(
-  '[EngagementMandats] Cancel',
+  '[Mandats] Cancel',
   props<{
     payload: EngagementMandatModel;
   }>()
 );
 export const CancelEngagementMandatsReservationSuccess = createAction(
-  '[EngagementMandats] Cancel success',
+  '[Mandats] Cancel success',
   props<{ payload: EngagementMandatModel }>()
 );
 export const CancelEngagementMandatsReservationFailure = createAction(
-  '[EngagementMandats] Cancel failure',
+  '[Mandats] Cancel failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );

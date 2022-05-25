@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import {
   EngagementMandatModel,
-  EtatEngagementEnum,
 } from '@models/engagement-mandat.model';
 import { TranslateService } from '@ngx-translate/core';
+import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
@@ -29,7 +29,7 @@ export class PrintEngagementMandatPrimeComponent
   }
 
   get isBook() {
-    return this.prime.etat === EtatEngagementEnum.RESERVED;
+    return this.prime.etat === EtatMandatEnum.MANDATRESERVE;
   }
 
   get currentLangCurrencyFormat() {
