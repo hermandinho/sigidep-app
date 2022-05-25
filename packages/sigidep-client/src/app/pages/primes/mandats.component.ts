@@ -30,6 +30,7 @@ import {
 import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
+import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -110,7 +111,7 @@ export class MandatsComponent
             command: () => {
               this.edit(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.reserver'),
@@ -118,7 +119,7 @@ export class MandatsComponent
             command: () => {
               this.handleReservation(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.annuler'),
@@ -126,7 +127,7 @@ export class MandatsComponent
             command: () => {
               this.handleCancel(this.currentItem);
             },
-            disabled: this.currentItem?.etat !== EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.delete'),
@@ -134,7 +135,7 @@ export class MandatsComponent
             command: () => {
               this.delete(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.print'),

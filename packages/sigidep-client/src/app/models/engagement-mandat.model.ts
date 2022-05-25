@@ -1,3 +1,4 @@
+import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { BaseModel } from './base.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 
@@ -28,7 +29,7 @@ export class EngagementMandatModel extends BaseModel {
   compteACrediter!: string;
   datePaiement!: Date;
   villePaiement!: string;
-  etat!: EtatEngagementEnum;
+  etat!: EtatMandatEnum;
   rejet!: boolean;
   encours!: boolean;
   ordonnance!: boolean;
