@@ -97,6 +97,8 @@ export class DialogsService {
 
   private etatImputationComponent: any;
 
+  private printEngagementMandatMissionComponent: any;
+
   private createMandatFormComponent: any;
   private createMandatMissionFormComponent: any;
   constructor(

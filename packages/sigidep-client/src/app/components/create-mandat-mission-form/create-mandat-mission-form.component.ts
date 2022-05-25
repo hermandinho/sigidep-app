@@ -40,6 +40,7 @@ export class CreateMandatMissionFormComponent
   public action!: 'book' | 'edit';
   public busy = false;
   //bookProcess:any;
+  public data: any;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -105,9 +106,11 @@ export class CreateMandatMissionFormComponent
 
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
+      this.data = this.config.data?.item;
+      console.log(this.data);
     }
 
-    if (this.config.data?.item) {
+    if (this.data) {
       const {
         id,
         codeProcedure,
@@ -140,10 +143,7 @@ export class CreateMandatMissionFormComponent
         sourceVerif,
         dateAffectation,
         montantAE,
-      } = this.config.data?.item as
-        | EngagementMissionModel
-        | EngagementMandatModel
-        | any;
+      } = this.data as EngagementMissionModel | EngagementMandatModel | any;
       this.form.patchValue({
         engagementForm: {
           id,

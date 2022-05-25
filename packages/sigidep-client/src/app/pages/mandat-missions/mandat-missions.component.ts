@@ -11,7 +11,6 @@ import {
 import {
   AfterContentChecked,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
@@ -69,8 +68,7 @@ export class MandatMissionsComponent
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
     public translate: TranslateService,
-    private primengConfig: PrimeNGConfig,
-    private ref: ChangeDetectorRef
+    private primengConfig: PrimeNGConfig
   ) {
     super();
     this.filters = Object.entries(EtatMandatEnum).map(([key, value]) => ({
@@ -141,14 +139,6 @@ export class MandatMissionsComponent
             },
             disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
           },
-          /*        {
-            label: this.translate.instant('labels.delete'),
-            icon: 'pi pi-times',
-            command: () => {
-              this.delete(this.currentItem);
-            },
-            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE
-          }, */
           {
             label: this.translate.instant('labels.print'),
             icon: 'pi pi-print',
@@ -173,7 +163,10 @@ export class MandatMissionsComponent
     this._appService.showConfirmation({
       message: 'dialogs.messages.reserveMandatEngagement',
       accept: () => {
-        this._dialogService.launchEngagementMandatCreateDialog(item, 'book');
+        this._dialogService.launchEngagementMandatMissionCreateDialog(
+          item,
+          'book'
+        );
       },
     });
   }
