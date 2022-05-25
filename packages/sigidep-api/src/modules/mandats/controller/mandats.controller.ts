@@ -28,7 +28,7 @@ export class MandatController {
   public async filter(
     @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
   ) {
-    return this.services.filter();
+    return this.services.filter(filter);
   }
 
   @Post('/')
