@@ -361,12 +361,12 @@
     "receptionACT": "Réception à l’ACT",
     "validationComptable": "Validation Comptable",
     "paiement": "Paiement",
-    "montantAEJ": "Montant Engagement Juridique",
-    "montantBrut": "Montant Brut",
-    "montantIRNC": "Montant Taxes (IRNC)",
-    "avance": "Avance Démarrage",
-    "decompte": "Décompte",
-    "marche": "Marché réalisé en entier"
+    "montantAEJ":"Montant Engagement Juridique",
+    "montantBrut":"Montant Brut",
+    "montantIRNC":"Montant Taxes (IRNC)",
+    "avance":"Avance Démarrage",
+    "decompte":"Décompte",
+    "marche":"Marché réalisé en entier"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

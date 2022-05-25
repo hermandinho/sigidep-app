@@ -81,22 +81,16 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         ),
         montantAE: [undefined],
         netAPercevoir: [undefined],
-        nomUnitAdminBenef: [undefined],
-        codeUnitAdminBenef: [undefined],
         montantIRNC: [undefined],
         montantBrut: [undefined],
-        numContribuable: [undefined],
-        raisonSociale: [undefined],
-        taxesApplicable: this._fb.group({
-          id: '',
-          code: '',
-          label: '',
-          TxTVA: [{ value: '', disabled: true }],
-          TxIR: [{ value: '', disabled: true }],
-        }),
-        tauxTVA: [undefined],
-        tauxIR: [undefined],
-        RIB: [undefined],
+        numContribuable:[undefined],
+        raisonSociale:[undefined],
+        taxesApplicable:[undefined],
+        tauxTVA:[undefined],
+        tauxIR:[undefined],
+        RIB:[undefined],
+        nomUnitAdminBenef:[undefined],
+        codeUnitAdminBenef:[undefined]
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
@@ -109,7 +103,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         signataire: [undefined],
         typeMission: [undefined],
         dateAffectation: [undefined],
-        typeMarche: [undefined],
+        typeMarche: [undefined]
       }),
 
       performForm: this._fb.group({
@@ -160,8 +154,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         dateAffectation,
         montantAE,
         netAPercevoir,
-        nomUnitAdminBenef,
-        codeUnitAdminBenef,
         montantIRNC,
         montantBrut,
         numContribuable,
@@ -170,7 +162,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         tauxTVA,
         tauxIR,
         RIB,
-        typeMarche,
+        nomUnitAdminBenef,
+        codeUnitAdminBenef,
+        typeMarche
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -196,8 +190,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           numActeJuridique,
           montantAE,
           netAPercevoir,
-          nomUnitAdminBenef,
-          codeUnitAdminBenef,
           montantIRNC,
           montantBrut,
           numContribuable,
@@ -206,6 +198,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           tauxTVA,
           tauxIR,
           RIB,
+          nomUnitAdminBenef,
+          codeUnitAdminBenef
         },
         mandatForm: {
           numero,
@@ -218,7 +212,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           signataire,
           typeMission,
           dateAffectation,
-          typeMarche,
+          typeMarche
         },
         performForm: {
           livrables,
