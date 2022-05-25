@@ -77,6 +77,17 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           null
         ),
         montantAE: [undefined],
+        netAPercevoir: [undefined],
+        montantIRNC: [undefined],
+        montantBrut: [undefined],
+        numContribuable:[undefined],
+        raisonSociale:[undefined],
+        taxesApplicable:[undefined],
+        tauxTVA:[undefined],
+        tauxIR:[undefined],
+        RIB:[undefined],
+        nomUnitAdminBenef:[undefined],
+        codeUnitAdminBenef:[undefined]
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
@@ -89,6 +100,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         signataire: [undefined],
         typeMission: [undefined, [this.montantAEValidator]],
         dateAffectation: [undefined],
+        typeMarche: [undefined]
       }),
 
       performForm: this._fb.group({
@@ -135,6 +147,18 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         sourceVerif,
         dateAffectation,
         montantAE,
+        netAPercevoir,
+        montantIRNC,
+        montantBrut,
+        numContribuable,
+        raisonSociale,
+        taxesApplicable,
+        tauxTVA,
+        tauxIR,
+        RIB,
+        nomUnitAdminBenef,
+        codeUnitAdminBenef,
+        typeMarche
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -159,6 +183,17 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           baremeJour,
           numActeJuridique,
           montantAE,
+          netAPercevoir,
+          montantIRNC,
+          montantBrut,
+          numContribuable,
+          raisonSociale,
+          taxesApplicable,
+          tauxTVA,
+          tauxIR,
+          RIB,
+          nomUnitAdminBenef,
+          codeUnitAdminBenef
         },
         mandatForm: {
           numero,
@@ -171,6 +206,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           signataire,
           typeMission,
           dateAffectation,
+          typeMarche
         },
         performForm: {
           livrables,
@@ -284,6 +320,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
     if (this.isBook) {
       this.bookProcess(editedEngagement);
+      localStorage.removeItem('imputation');
       this.ref.close();
     }
 

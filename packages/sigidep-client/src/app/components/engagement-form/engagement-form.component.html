@@ -76,97 +76,288 @@
         >
         </textarea>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container>
-          <label class="required"
-            >{{ "labels.matriculeBeneficaire" | translate }}
-          </label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="missions"
-            [placeholder]="''"
-            optionLabel="matriculeBeneficiaire"
-            optionValue="matriculeBeneficiaire"
+
+      <!-- Begin Decission -->
+      <div class="p-fluid p-grid" *ngIf="procedure==='1122'">
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.matriculeBeneficiaire" | translate }}</label>
+          <input
+            class="form-control"
             formControlName="matriculeBeneficaire"
-            (onChange)="onMissionChange($event)"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomBeneficaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.montantBrut" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="montantBrut"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.montantIRNC" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="montantIRNC"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.netAPercevoir" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="netAPercevoir"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+      </div>
+      <!-- End Decission -->
+
+     <!-- Begin Mission -->
+      <div class="p-fluid p-grid" *ngIf="procedure==='1121'">
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.matriculeBeneficaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="matriculeBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomBeneficaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.itineraire" | translate }}</label>
+          <textarea
+            rows="3"
+            cols="35"
+            pInputTextarea
+            class="form-control"
+            formControlName="itineraire"
+            [placeholder]="''"
           >
-          </p-dropdown>
-        </ng-container>
+          </textarea>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <label class="required">{{ "labels.dateDebut" | translate }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateDebut"
+            [placeholder]="''"
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-4">
+          <label class="required">{{ "labels.dateFin" | translate }}</label>
+          <input
+            type="date"
+            class="form-control"
+            pInputText
+            formControlName="dateFin"
+            [placeholder]="''"
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <label class="required">{{ "labels.nombreJours" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            pInputText
+            formControlName="nombreJours"
+            [placeholder]="''"
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required">{{ "labels.baremeJour" | translate }} </label>
+          <input
+            type="number"
+            class="form-control"
+            pInputText
+            formControlName="baremeJour"
+            [placeholder]="''"
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required"
+            >{{ "labels.montantMission" | translate }}
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            pInputText
+            formControlName="montantMission"
+            [placeholder]="''"
+          />
+        </div>
       </div>
+     <!-- End Mission -->
+
+     <!-- Begin 1110 1111 1115 1126 -->
+
+     <div class="p-fluid p-grid" *ngIf="procedure==='1110' || procedure==='1111' || procedure==='1115' || procedure==='1126'">
       <div class="p-field p-col-12 p-md-6">
-        <label>{{ "labels.nomBeneficaire" | translate }}</label>
+        <label>{{ "labels.niuContribuable" | translate }}</label>
         <input
           class="form-control"
-          formControlName="nomBeneficaire"
+          formControlName="numContribuable"
           [placeholder]="''"
           pInputText
         />
       </div>
+
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="raisonSociale"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+
+      <div class="p-field p-col-12 p-md-4">
+        <label>{{ "labels.taxesApplicables" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="taxesApplicable"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label>{{ "labels.tauxTVA" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="tauxTVA"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label>{{ "labels.tauxIR" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="tauxIR"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label>{{ "labels.RIB" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="RIB"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+    </div>
+     <!-- End 1110 1111 1115 1126 -->
+
+      <!-- Begin 1123 1124 -->
+      <div class="p-fluid p-grid" *ngIf="procedure==='1123' || procedure==='1124'">
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.matriculeBeneficiaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="matriculeBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomBeneficaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.netAPercevoir" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="netAPercevoir"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+      </div>
+      <!-- End 1123 1124 -->
+       <!-- Begin 1125 -->
+       <div class="p-fluid p-grid" *ngIf="procedure==='1123' || procedure==='1124'">
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.codeUnitAdminBenef" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="codeUnitAdminBenef"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomUnitAdminBenef" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomUnitAdminBenef"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.netAPercevoir" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="netAPercevoir"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+      </div>
+      <!-- End 1125 -->
+      <!-- Montant Engagement Juridique -->
       <div class="p-field p-col-12 p-md-12">
-        <label>{{ "labels.itineraire" | translate }}</label>
-        <textarea
-          rows="3"
-          cols="35"
-          pInputTextarea
-          class="form-control"
-          formControlName="itineraire"
-          [placeholder]="''"
-        >
-        </textarea>
-      </div>
-
-      <div class="p-field p-col-12 p-md-4">
-        <label class="required">{{ "labels.dateDebut" | translate }}</label>
-        <input
-          type="date"
-          class="form-control"
-          pInputText
-          formControlName="dateDebut"
-          [placeholder]="''"
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-4">
-        <label class="required">{{ "labels.dateFin" | translate }}</label>
-        <input
-          type="date"
-          class="form-control"
-          pInputText
-          formControlName="dateFin"
-          [placeholder]="''"
-        />
-      </div>
-
-      <div class="p-field p-col-12 p-md-4">
-        <label class="required">{{ "labels.nombreJours" | translate }}</label>
-        <input
-          type="text"
-          class="form-control"
-          pInputText
-          formControlName="nombreJours"
-          [placeholder]="''"
-        />
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
-        <label class="required">{{ "labels.baremeJour" | translate }} </label>
-        <input
-          type="number"
-          class="form-control"
-          pInputText
-          formControlName="baremeJour"
-          [placeholder]="''"
-        />
-      </div>
-
-      <div class="p-field p-col-12 p-md-6">
         <label class="required"
-          >{{ "labels.montantMission" | translate }}
+          >{{ "labels.montantAEJ" | translate }}
         </label>
         <input
           type="number"
           class="form-control"
           pInputText
-          formControlName="montantMission"
+          formControlName="montantAE"
           [placeholder]="''"
         />
       </div>

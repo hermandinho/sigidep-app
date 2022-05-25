@@ -41,6 +41,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   missions!: EngagementMissionModel[];
   engagements!: EngagementDecisionModel[];
+  procedure:string='';
 
   constructor(public ref: DynamicDialogRef, private _store: Store<AppState>) {
     super();
@@ -48,23 +49,16 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const procedure = JSON.parse(localStorage.getItem('procedure')!!);
     this.engagementForm = this.startingForm;
     this.subformInitialized.emit(this.engagementForm);
     if (this.readOnly) this.engagementForm.disable();
-
+    this.procedure = procedure;
     //prime procedure code is 1122
     this._store.dispatch(
       GetEngagementDecisions({
-        procedures: ['1122'],
-        etats: [EtatEngagementEnum.RESERVED],
-      })
-    );
-
-     //mission procedure code is 112
-     this._store.dispatch(
-      GetEngagementMissions({
-        procedures: ['1121'],
-        //etats: [EtatEngagementEnum.SAVE],
+        procedures: [procedure],
+        etats: [EtatEngagementEnum.SAVE],
       })
     );
     this.onDisable();
@@ -84,6 +78,17 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['nombreJours'].disable();
     this.engagementForm.controls['montantMission'].disable();
     this.engagementForm.controls['baremeJour'].disable();
+    this.engagementForm.controls['montantBrut'].disable();
+    this.engagementForm.controls['montantIRNC'].disable();
+    this.engagementForm.controls['netAPercevoir'].disable();
+    this.engagementForm.controls['numContribuable'].disable();
+    this.engagementForm.controls['raisonSociale'].disable();
+    this.engagementForm.controls['taxesApplicable'].disable();
+    this.engagementForm.controls['tauxTVA'].disable();
+    this.engagementForm.controls['tauxIR'].disable();
+    this.engagementForm.controls['RIB'].disable();
+    this.engagementForm.controls['nomUnitAdminBenef'].disable();
+    this.engagementForm.controls['codeUnitAdminBenef'].disable();
   }
 
   onActeJuridiqueChange = (event: any) => {
@@ -100,35 +105,22 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         imputation: act.imputation,
         numeroj: act.numero,
         montantAE: act.montantAE,
-      });
-      this.onMissionChange(act.matriculeBeneficiaire)
-    }
-  };
-
-  onMissionChange = (event: any) => {
-    let act:any;
-    if(event.value != undefined){
-      act = this.missions.find(
-        (item) => item.matriculeBeneficiaire === event.value
-      );
-    }
-    else{
-      act = this.missions.find(
-        (item) => item.matriculeBeneficiaire === event
-      );
-    }
-
-    if (act)
-      this.engagementForm.patchValue({
         matriculeBeneficaire: act.matriculeBeneficiaire,
         nomBeneficaire: act.nomBeneficiaire,
-        itineraire: act.itineraire,
-        dateDebut: act.dateDebut,
-        dateFin: act.dateFin,
-        nombreJours: act.nombreJours,
-        montantMission: act.montant,
-        baremeJour: act.baremeJour?.montant,
+        montantBrut: act.montantBrut,
+        montantIRNC: act.montantIRNC,
+        netAPercevoir: act.netAPercevoir,
+        numContribuable: act.numContribuable,
+        raisonSociale: act.raisonSociale,
+        taxesApplicable: act.taxesApplicable,
+        tauxTVA: act.tauxTVA,
+        tauxIR: act.tauxIR,
+        RIB: act.codeBanqueContribuable + act.codeAgenceContribuable + act.numeroCompteContribuable + act.cleCompteContribuable,
+        nomUnitAdminBenef: act.nomUnitAdminBenef,
+        codeUnitAdminBenef:act.codeUnitAdminBenef
+
       });
+    }
   };
 
   doChangeStep = (direction: any) => {
@@ -143,6 +135,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((data) => {
         this.engagements = [...data];
+        console.log(this.engagements)
         if (this.engagementForm != undefined) {
           this.scanneElt(this.engagementForm.value);
         }
@@ -179,8 +172,21 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         objetj: act.objet,
         imputation: act.imputation,
         numeroj: act.numero,
+        montantAE: act.montantAE,
+        matriculeBeneficaire: act.matriculeBeneficiaire,
+        nomBeneficaire: act.nomBeneficiaire,
+        montantBrut: act.montantBrut,
+        montantIRNC: act.montantIRNC,
+        netAPercevoir: act.netAPercevoir,
+        numContribuable: act.numContribuable,
+        raisonSociale: act.raisonSociale,
+        taxesApplicable: act.taxesApplicable,
+        tauxTVA: act.tauxTVA,
+        tauxIR: act.tauxIR,
+        RIB: act.codeBanqueContribuable + act.codeAgenceContribuable + act.numeroCompteContribuable + act.cleCompteContribuable,
+        nomUnitAdminBenef: act.nomUnitAdminBenef,
+        codeUnitAdminBenef: act.codeUnitAdminBenef
       });
-      this.onMissionChange(act.matriculeBeneficiaire)
     }
 
   };

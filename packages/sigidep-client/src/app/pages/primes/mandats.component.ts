@@ -85,6 +85,7 @@ export class MandatsComponent
   }
 
   ngOnInit(): void {
+    localStorage.setItem('procedure', JSON.stringify('1122'));
     this.primengConfig.ripple = true;
     // code procedure  prime 1122
     this._store.dispatch(GetEngagementMandats({
