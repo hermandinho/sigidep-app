@@ -39,12 +39,22 @@ import { EditorModule } from 'primeng/editor';
 import { OrderByPipe } from '../pipes/order-by.pipe';
 import { FieldsetModule } from 'primeng/fieldset';
 import { NgxPrintModule } from 'ngx-print';
+import { EngagementFormComponent } from '@components/engagement-form/engagement-form.component';
+import { MandatFormComponent } from '@components/mandat-form/mandat-form.component';
+import { PerformFormComponent } from '@components/perform-form/perform-form.component';
+import { CreateMandatFormComponent } from '@components/create-mandat-form/create-mandat-form.component';
+import { PrintEngagementMandatPrimeComponent } from '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
 
 const declarations = [
   BaseComponent,
   CheckPermissionsDirective,
   I18nFormFieldComponent,
   OrderByPipe,
+  EngagementFormComponent,
+  MandatFormComponent,
+  PerformFormComponent,
+  CreateMandatFormComponent,
+  PrintEngagementMandatPrimeComponent,
 ];
 
 const shared = [
