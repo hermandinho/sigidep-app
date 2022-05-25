@@ -77,14 +77,6 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['nomUnitAdminBenef'].disable();
     this.engagementForm.controls['codeUnitAdminBenef'].disable();
     this.engagementForm.controls['montantAE'].disable();
-    this.engagementForm.controls['montantBrut'].disable();
-    this.engagementForm.controls['montantIRNC'].disable();
-    this.engagementForm.controls['numContribuable'].disable();
-    this.engagementForm.controls['raisonSociale'].disable();
-    this.engagementForm.controls['taxesApplicable'].disable();
-    this.engagementForm.controls['tauxTVA'].disable();
-    this.engagementForm.controls['tauxIR'].disable();
-    this.engagementForm.controls['RIB'].disable();
   }
 
   onActeJuridiqueChange = (event: any) => {
@@ -106,15 +98,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         nomBeneficaire: act?.nomBeneficiaire,
         netAPercevoir: act?.netAPercevoir,
         nomUnitAdminBenef: act?.nomUnitAdminBenef,
-        codeUnitAdminBenef:act?.codeUnitAdminBenef,
-        montantBrut: act?.montantBrut,
-        montantIRNC: act?.montantIRNC,
-        numContribuable: act?.numContribuable,
-        raisonSociale: act?.raisonSociale,
-        taxesApplicable: act?.taxesApplicable,
-        tauxTVA: act?.tauxTVA,
-        tauxIR: act?.tauxIR,
-        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
+        codeUnitAdminBenef:act?.codeUnitAdminBenef
 
       });
     }
@@ -174,15 +158,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         nomBeneficaire: act?.nomBeneficiaire,
         netAPercevoir: act?.netAPercevoir,
         nomUnitAdminBenef: act?.nomUnitAdminBenef,
-        codeUnitAdminBenef:act?.codeUnitAdminBenef,
-        montantBrut: act?.montantBrut,
-        montantIRNC: act?.montantIRNC,
-        numContribuable: act?.numContribuable,
-        raisonSociale: act?.raisonSociale,
-        taxesApplicable: act?.taxesApplicable,
-        tauxTVA: act?.tauxTVA,
-        tauxIR: act?.tauxIR,
-        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
+        codeUnitAdminBenef:act?.codeUnitAdminBenef
       });
     }
 
