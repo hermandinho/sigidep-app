@@ -41,9 +41,7 @@ export const MenuPermissions = {
   mandatMissions: [...simpleCrudPermissions('mandatMissions')],
   fraisreleve: [...simpleCrudPermissions('fraisreleve')],
   misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
-  misedispositionstructure: [
-    ...simpleCrudPermissions('misedispositionstructure'),
-  ],
+  misedispositionstructure: [...simpleCrudPermissions('misedispositionstructure')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -303,9 +301,27 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'mandat-decisions',
+              routerLink: 'mandats',
               icon: 'pi pi-table',
-              label: translate.instant('sidebar.decisions'),
+              label: translate.instant('sidebar.primes'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'fraisreleve',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.fraisreleve'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'misedispositionagent',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.misedispositionagent'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'misedispositionstructure',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.misedispositionstructure'),
               routerLinkActiveOptions: { exact: true },
             },
           ],

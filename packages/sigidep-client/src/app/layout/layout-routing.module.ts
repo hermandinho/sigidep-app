@@ -33,8 +33,9 @@ import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
 import { MandatMissionsComponent } from '@pages/mandat-missions/mandat-missions.component';
-import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
-import { MandatsCommandesComponent } from '@pages/mandats-commandes/mandats-commandes.component';
+import { FraisDeReleveComponent } from '@pages/mandats/frais-de-releve/frais-de-releve.component';
+import { MiseADispositionAgentComponent } from '@pages/mandats/mise-a-disposition-agent/mise-a-disposition-agent.component';
+import { MiseADispositionStructureComponent } from '@pages/mandats/mise-a-disposition-structure/mise-a-disposition-structure.component';
 
 const routes: Routes = [
   {
@@ -352,36 +353,38 @@ const routes: Routes = [
           permissions: [...MenuPermissions.mandats],
         },
         loadChildren: () =>
-          import('../pages/mandats/decision/mandats.module').then(
-            (m) => m.MandatsModule
-          ),
+          import('../pages/mandats/primes/mandats.module').then((m) => m.MandatsModule),
       },
       {
-        path: 'mandats-commandes',
+        path: 'fraisreleve',
         canActivate: [AuthGuard],
-        component: MandatsCommandesComponent,
+        component: FraisDeReleveComponent,
         data: {
-          permissions: [...MenuPermissions.mandats],
+          permissions: [...MenuPermissions.fraisreleve],
         },
         loadChildren: () =>
-          import('../pages/mandats-commandes/mandats-commandes.module').then(
-            (m) => m.MandatsCommandesModule
-          ),
+          import('../pages/mandats/frais-de-releve/frais-de-releve.module').then((m) => m.FraisDeReleveModule),
       },
-
       {
-        path: 'missions',
+        path: 'misedispositionagent',
         canActivate: [AuthGuard],
-        component: MandatMissionsComponent,
+        component: MiseADispositionAgentComponent,
         data: {
-          permissions: [...MenuPermissions.mandatMissions],
+          permissions: [...MenuPermissions.misedispositionagent],
         },
         loadChildren: () =>
-          import('../pages/mandat-missions/mandat-missions.module').then(
-            (m) => m.MandatMissionsModule
-          ),
+          import('../pages/mandats/mise-a-disposition-agent/mise-a-disposition-agent.module').then((m) => m.MiseADispositionAgentModule),
       },
-
+      {
+        path: 'misedispositionstructure',
+        canActivate: [AuthGuard],
+        component: MiseADispositionStructureComponent,
+        data: {
+          permissions: [...MenuPermissions.misedispositionstructure],
+        },
+        loadChildren: () =>
+          import('../pages/mandats/mise-a-disposition-structure/mise-a-disposition-structure.module').then((m) => m.MiseADispositionStructureModule),
+      },
       /*{
         path: '**',
         component: NotFoundComponent,
