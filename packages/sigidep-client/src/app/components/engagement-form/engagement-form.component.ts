@@ -77,6 +77,14 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['nomUnitAdminBenef'].disable();
     this.engagementForm.controls['codeUnitAdminBenef'].disable();
     this.engagementForm.controls['montantAE'].disable();
+    this.engagementForm.controls['montantBrut'].disable();
+    this.engagementForm.controls['montantIRNC'].disable();
+    this.engagementForm.controls['numContribuable'].disable();
+    this.engagementForm.controls['raisonSociale'].disable();
+    this.engagementForm.controls['taxesApplicable'].disable();
+    this.engagementForm.controls['tauxTVA'].disable();
+    this.engagementForm.controls['tauxIR'].disable();
+    this.engagementForm.controls['RIB'].disable();
   }
 
   onActeJuridiqueChange = (event: any) => {
