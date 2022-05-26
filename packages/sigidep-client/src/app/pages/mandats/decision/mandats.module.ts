@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MiseADispositionAgentRoutingModule } from './mise-a-disposition-agent-routing.module';
-import { MiseADispositionAgentComponent } from './mise-a-disposition-agent.component';
-
+import { MandatsRoutingModule } from './mandats-routing.module';
+import { MandatsComponent } from './mandats.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
@@ -16,14 +15,15 @@ import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { TreeTableModule } from 'primeng/treetable';
 import { SharedModule } from '@modules/shared.module';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
-    MiseADispositionAgentComponent
+    MandatsComponent
   ],
   imports: [
     CommonModule,
-    MiseADispositionAgentRoutingModule,
+    MandatsRoutingModule,
     SharedModule,
     CheckboxModule,
     InputMaskModule,
@@ -36,6 +36,8 @@ import { SharedModule } from '@modules/shared.module';
     PanelModule,
     CardModule,
     TreeTableModule,
-  ]
+    TabViewModule,
+    PanelModule,
+  ],
 })
-export class MiseADispositionAgentModule { }
+export class MandatsModule {}

@@ -79,7 +79,15 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         montantAE: [undefined],
         netAPercevoir: [undefined],
         nomUnitAdminBenef:[undefined],
-        codeUnitAdminBenef:[undefined]
+        codeUnitAdminBenef:[undefined],
+        montantIRNC: [undefined],
+        montantBrut: [undefined],
+        numContribuable:[undefined],
+        raisonSociale:[undefined],
+        taxesApplicable:[undefined],
+        tauxTVA:[undefined],
+        tauxIR:[undefined],
+        RIB:[undefined]
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
@@ -141,6 +149,14 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         netAPercevoir,
         nomUnitAdminBenef,
         codeUnitAdminBenef,
+        montantIRNC,
+        montantBrut,
+        numContribuable,
+        raisonSociale,
+        taxesApplicable,
+        tauxTVA,
+        tauxIR,
+        RIB,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -167,7 +183,15 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantAE,
           netAPercevoir,
           nomUnitAdminBenef,
-          codeUnitAdminBenef
+          codeUnitAdminBenef,
+          montantIRNC,
+          montantBrut,
+          numContribuable,
+          raisonSociale,
+          taxesApplicable,
+          tauxTVA,
+          tauxIR,
+          RIB
         },
         mandatForm: {
           numero,
@@ -249,7 +273,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       (res) => {
         //this.busy = false;
         this.ref.close(res);
-        this._store.dispatch(GetEngagementMandats({}));
+        this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
         this._dialogService.launchPrintEngagementMandatPrimeDialog(res);
         this._appService.showToast({
           summary: 'messages.success',
@@ -305,10 +329,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         );
       method.subscribe(
         (res) => {
+
           this.busy = false;
           this.ref.close(res);
           localStorage.removeItem('imputation');
-          this._store.dispatch(GetEngagementMandats({}));
+          this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'messages.engagements.createSuccess',
@@ -346,10 +371,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
             );
           method.subscribe(
             (res) => {
+              console.log(res)
               this.busy = false;
 
               localStorage.removeItem('imputation');
-              this._store.dispatch(GetEngagementMandats({}));
+              this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
 
               this._appService.showToast({
                 summary: 'messages.success',

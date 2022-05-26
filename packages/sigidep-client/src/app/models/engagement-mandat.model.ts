@@ -1,5 +1,6 @@
 import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { BaseModel } from './base.model';
+import { EngagementJuridiqueModel } from './engagement-juridique.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 
 export type StepMandat = 'engagement' | 'mandat' | 'perform';
@@ -33,7 +34,7 @@ export class EngagementMandatModel extends BaseModel {
   encours!: boolean;
   ordonnance!: boolean;
   paye!: boolean;
-  numActeJuridique!: string;
+  numActeJuridique!: EngagementJuridiqueModel;
   situationActuelle!: string;
 
   constructor(params?: Partial<EngagementMandatModel>) {

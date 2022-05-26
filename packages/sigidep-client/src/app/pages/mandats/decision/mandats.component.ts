@@ -14,6 +14,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import {
@@ -44,13 +45,21 @@ import { TableColumns } from './consts';
 })
 export class MandatsComponent
   extends BaseComponent
-  implements OnInit, AfterContentChecked
-{
+  implements OnInit, AfterContentChecked {
   selectedItems: any[] = [];
   tableColumns: any[] = [];
-  data: EngagementMandatModel[] = [];
+  data: any[] = [];
+  deblocages: EngagementMandatModel[] = [];
+  structures: EngagementMandatModel[] = [];
+  agents: EngagementMandatModel[] = [];
+  releves: EngagementMandatModel[] = [];
+  primes: EngagementMandatModel[] = [];
   originalData: EngagementMandatModel[] = [];
-
+  deblocagesData: EngagementMandatModel[] = [];
+  structuresData: EngagementMandatModel[] = [];
+  agentsData: EngagementMandatModel[] = [];
+  relevesData: EngagementMandatModel[] = [];
+  primesData: EngagementMandatModel[] = [];
   loading$: Observable<boolean> = of(true);
   menus!: MenuItem[];
   public globalColumns!: string[];
@@ -85,12 +94,13 @@ export class MandatsComponent
   }
 
   ngOnInit(): void {
-    localStorage.setItem('procedure', JSON.stringify('1122'));
     this.primengConfig.ripple = true;
     // code procedure  prime 1122
-    this._store.dispatch(GetEngagementMandats({
-    procedures: ['1122']
-    }));
+    this.getData('1122');
+    this.getData('1123');
+    this.getData('1124');
+    this.getData('1125');
+    this.getData('1126');
 
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -103,6 +113,11 @@ export class MandatsComponent
     );
   }
 
+  getData(item:any){
+    this._store.dispatch(GetEngagementMandats({
+      procedures: [item]
+    }));
+  }
   ngAfterContentChecked(): void {
     this.menus = [
       {
@@ -152,9 +167,27 @@ export class MandatsComponent
   }
 
   handleFilter = (event: any) => {
-    this.data = this.originalData;
-    if(event?.value[0]?.toLowerCase())
-      this.data = this.originalData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+    this.primes = this.primesData;
+    if (event?.value[0]?.toLowerCase())
+      this.primes = this.primesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+      this.releves = this.relevesData;
+      if (event?.value[0]?.toLowerCase())
+        this.releves = this.relevesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+        this.agents = this.agentsData;
+    if (event?.value[0]?.toLowerCase())
+      this.agents = this.agentsData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+      this.structures = this.structuresData;
+    if (event?.value[0]?.toLowerCase())
+      this.structures = this.structuresData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+      this.deblocages = this.deblocagesData;
+    if (event?.value[0]?.toLowerCase())
+      this.deblocages = this.deblocagesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+
   };
 
   handleReservation(item: EngagementMandatModel) {
@@ -210,8 +243,26 @@ export class MandatsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
-        this.originalData = [...data];
-        console.log(this.originalData)
+        if(this.data[0]?.numActeJuridique?.codeProcedure === "1122"){
+          this.primes = [...data];
+          this.primesData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1123"){
+          this.releves = [...data];
+          this.relevesData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1124"){
+          this.agents = [...data];
+          this.agentsData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1125"){
+          this.structures = [...data];
+          this.structuresData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1126"){
+          this.deblocages = [...data];
+          this.deblocagesData = [...data];
+        }
       });
 
     this.loading$ = this._store.pipe(

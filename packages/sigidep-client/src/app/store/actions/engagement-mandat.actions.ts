@@ -54,7 +54,7 @@ export const UpdateEngagementMandatsFailure = createAction(
 export const CancelEngagementMandatsReservation = createAction(
   '[Mandats] Cancel',
   props<{
-    payload: EngagementMandatModel;
+    payload: any;
   }>()
 );
 export const CancelEngagementMandatsReservationSuccess = createAction(
