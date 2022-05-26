@@ -98,7 +98,15 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         nomBeneficaire: act?.nomBeneficiaire,
         netAPercevoir: act?.netAPercevoir,
         nomUnitAdminBenef: act?.nomUnitAdminBenef,
-        codeUnitAdminBenef:act?.codeUnitAdminBenef
+        codeUnitAdminBenef:act?.codeUnitAdminBenef,
+        montantBrut: act?.montantBrut,
+        montantIRNC: act?.montantIRNC,
+        numContribuable: act?.numContribuable,
+        raisonSociale: act?.raisonSociale,
+        taxesApplicable: act?.taxesApplicable,
+        tauxTVA: act?.tauxTVA,
+        tauxIR: act?.tauxIR,
+        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
 
       });
     }
@@ -158,7 +166,15 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         nomBeneficaire: act?.nomBeneficiaire,
         netAPercevoir: act?.netAPercevoir,
         nomUnitAdminBenef: act?.nomUnitAdminBenef,
-        codeUnitAdminBenef:act?.codeUnitAdminBenef
+        codeUnitAdminBenef:act?.codeUnitAdminBenef,
+        montantBrut: act?.montantBrut,
+        montantIRNC: act?.montantIRNC,
+        numContribuable: act?.numContribuable,
+        raisonSociale: act?.raisonSociale,
+        taxesApplicable: act?.taxesApplicable,
+        tauxTVA: act?.tauxTVA,
+        tauxIR: act?.tauxIR,
+        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
       });
     }
 
