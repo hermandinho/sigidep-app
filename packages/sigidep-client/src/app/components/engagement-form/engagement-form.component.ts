@@ -41,7 +41,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   missions!: EngagementMissionModel[];
   engagements!: EngagementDecisionModel[];
-  procedure:string='';
+  procedure?:string;
 
   constructor(public ref: DynamicDialogRef, private _store: Store<AppState>) {
     super();
@@ -49,15 +49,14 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const procedure = JSON.parse(localStorage.getItem('procedure')!!);
     this.engagementForm = this.startingForm;
     this.subformInitialized.emit(this.engagementForm);
     if (this.readOnly) this.engagementForm.disable();
-    this.procedure = procedure;
+
     //prime procedure code is 1122
     this._store.dispatch(
       GetEngagementDecisions({
-        procedures: [procedure],
+        //procedures: [procedure],
         etats: [EtatEngagementEnum.SAVE],
       })
     );
@@ -81,9 +80,10 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   onActeJuridiqueChange = (event: any) => {
+
     const act = this.engagements.find((item) => item.id === event.value);
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
-
+    this.procedure = act?.codeProcedure;
     if (act) {
       this.engagementForm.patchValue({
         codeProcedure: act?.codeProcedure,
@@ -143,7 +143,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
       (item) => item.id === event.numActeJuridique.id
     );
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
-
+    this.procedure = act?.codeProcedure;
     if (act){
       this.engagementForm.patchValue({
         codeProcedure: act?.codeProcedure,
