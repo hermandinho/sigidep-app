@@ -79,7 +79,15 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         montantAE: [undefined],
         netAPercevoir: [undefined],
         nomUnitAdminBenef:[undefined],
-        codeUnitAdminBenef:[undefined]
+        codeUnitAdminBenef:[undefined],
+        montantIRNC: [undefined],
+        montantBrut: [undefined],
+        numContribuable:[undefined],
+        raisonSociale:[undefined],
+        taxesApplicable:[undefined],
+        tauxTVA:[undefined],
+        tauxIR:[undefined],
+        RIB:[undefined]
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
@@ -141,6 +149,14 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         netAPercevoir,
         nomUnitAdminBenef,
         codeUnitAdminBenef,
+        montantIRNC,
+        montantBrut,
+        numContribuable,
+        raisonSociale,
+        taxesApplicable,
+        tauxTVA,
+        tauxIR,
+        RIB,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -167,7 +183,15 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantAE,
           netAPercevoir,
           nomUnitAdminBenef,
-          codeUnitAdminBenef
+          codeUnitAdminBenef,
+          montantIRNC,
+          montantBrut,
+          numContribuable,
+          raisonSociale,
+          taxesApplicable,
+          tauxTVA,
+          tauxIR,
+          RIB
         },
         mandatForm: {
           numero,

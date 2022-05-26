@@ -57,7 +57,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this._store.dispatch(
       GetEngagementDecisions({
         //procedures: [procedure],
-        etats: [EtatEngagementEnum.SAVE],
+        etats: [EtatEngagementEnum.RESERVED],
       })
     );
     this.onDisable();
