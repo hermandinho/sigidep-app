@@ -43,7 +43,10 @@
     "commandepublique": "Commande Publique",
     "missions": "Missions",
     "decisions": "Décisions",
-    "primes": "Primes"
+    "primes": "Primes",
+    "fraisreleve": "Frais de Relève",
+    "misedispositionagent": "Mise à Disposition - Agent ",
+    "misedispositionstructure": "Mise à Disposition - Structure"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -357,7 +360,13 @@
     "transmissionACT": "Transmission à l’ACT",
     "receptionACT": "Réception à l’ACT",
     "validationComptable": "Validation Comptable",
-    "paiement": "Paiement"
+    "paiement": "Paiement",
+    "montantAEJ":"Montant Engagement Juridique",
+    "montantBrut":"Montant Brut",
+    "montantIRNC":"Montant Taxes (IRNC)",
+    "avance":"Avance Démarrage",
+    "decompte":"Décompte",
+    "marche":"Marché réalisé en entier"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

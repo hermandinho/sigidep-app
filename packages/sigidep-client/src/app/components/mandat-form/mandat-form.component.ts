@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { CarnetMandatModel } from '@models/carnet-mandat.model';
-import { EtatEngagementMandatEnum } from '@models/engagement-mandat.model';
+import { EtatEngagementMandatEnum, TypeMarcheEngagementMandatEnum } from '@models/engagement-mandat.model';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -35,8 +35,10 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   public mandatForm!: FormGroup;
   loading$: Observable<boolean> = of(true);
   data!: CarnetMandatModel[];
-  types: Type[] = [];
+  typeMissions: Type[] = [];
+  typeMarches: Type[] = [];
   carnet: any;
+  procedure:string='';
   constructor(
     private _store: Store<AppState>,
     private translate: TranslateService
@@ -46,40 +48,72 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.procedure = JSON.parse(localStorage.getItem('procedure')!!);
+
     this.mandatForm = this.startingForm;
     this.subformInitialized.emit(this.mandatForm);
     if (this.readOnly) this.mandatForm.disable();
     this._store.dispatch(GetCarnetMandats());
     this.mandatForm.controls['matriculeGestionnaire'].disable();
     this.mandatForm.controls['nomGestionnaire'].disable();
-    this.mandatForm.controls['montantCPChiffres'].disable();
+    //this.mandatForm.controls['montantCPChiffres'].disable();
+    this.setTypeMissions();
+    this.setTypeMarches();
 
-    this.translate
-      .get(EtatEngagementMandatEnum.CONTROLE)
-      .subscribe((res: string) => {
-        const typemap: Type = {
-          name: res,
-        };
-        this.types.push(typemap);
-      });
-    this.translate
-      .get(EtatEngagementMandatEnum.EFFECTUER)
-      .subscribe((res: string) => {
-        const typemap: Type = {
-          name: res,
-        };
-        this.types.push(typemap);
-      });
-    this.translate
-      .get(EtatEngagementMandatEnum.ORDINAIRE)
-      .subscribe((res: string) => {
-        const typemap: Type = {
-          name: res,
-        };
-        this.types.push(typemap);
-      });
   }
 
+  setTypeMarches(){
+    this.translate
+    .get(TypeMarcheEngagementMandatEnum.AVANCE)
+    .subscribe((res: string) => {
+      const typemap: Type = {
+        name: res,
+      };
+      this.typeMarches.push(typemap);
+    });
+  this.translate
+    .get(TypeMarcheEngagementMandatEnum.DECOMPTE)
+    .subscribe((res: string) => {
+      const typemap: Type = {
+        name: res,
+      };
+      this.typeMarches.push(typemap);
+    });
+  this.translate
+    .get(TypeMarcheEngagementMandatEnum.MARCHE)
+    .subscribe((res: string) => {
+      const typemap: Type = {
+        name: res,
+      };
+      this.typeMarches.push(typemap);
+    });
+  }
+  setTypeMissions(){
+    this.translate
+    .get(EtatEngagementMandatEnum.CONTROLE)
+    .subscribe((res: string) => {
+      const typemap: Type = {
+        name: res,
+      };
+      this.typeMissions.push(typemap);
+    });
+  this.translate
+    .get(EtatEngagementMandatEnum.EFFECTUER)
+    .subscribe((res: string) => {
+      const typemap: Type = {
+        name: res,
+      };
+      this.typeMissions.push(typemap);
+    });
+  this.translate
+    .get(EtatEngagementMandatEnum.ORDINAIRE)
+    .subscribe((res: string) => {
+      const typemap: Type = {
+        name: res,
+      };
+      this.typeMissions.push(typemap);
+    });
+  }
   doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);
   };

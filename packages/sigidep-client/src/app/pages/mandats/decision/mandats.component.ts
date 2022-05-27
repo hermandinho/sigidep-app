@@ -14,11 +14,11 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import {
-  EngagementMandatModel,
-  EtatEngagementEnum,
+  EngagementMandatModel
 } from '@models/engagement-mandat.model';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -30,6 +30,7 @@ import {
 import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
+import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -44,13 +45,21 @@ import { TableColumns } from './consts';
 })
 export class MandatsComponent
   extends BaseComponent
-  implements OnInit, AfterContentChecked
-{
+  implements OnInit, AfterContentChecked {
   selectedItems: any[] = [];
   tableColumns: any[] = [];
-  data: EngagementMandatModel[] = [];
+  data: any[] = [];
+  deblocages: EngagementMandatModel[] = [];
+  structures: EngagementMandatModel[] = [];
+  agents: EngagementMandatModel[] = [];
+  releves: EngagementMandatModel[] = [];
+  primes: EngagementMandatModel[] = [];
   originalData: EngagementMandatModel[] = [];
-
+  deblocagesData: EngagementMandatModel[] = [];
+  structuresData: EngagementMandatModel[] = [];
+  agentsData: EngagementMandatModel[] = [];
+  relevesData: EngagementMandatModel[] = [];
+  primesData: EngagementMandatModel[] = [];
   loading$: Observable<boolean> = of(true);
   menus!: MenuItem[];
   public globalColumns!: string[];
@@ -75,7 +84,7 @@ export class MandatsComponent
     private ref: ChangeDetectorRef
   ) {
     super();
-    this.filters = Object.entries(EtatEngagementEnum).map(([key, value]) => ({
+    this.filters = Object.entries(EtatMandatEnum).map(([key, value]) => ({
       value: key,
       label: this.translate.instant(value),
     }));
@@ -87,7 +96,11 @@ export class MandatsComponent
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     // code procedure  prime 1122
-    this._store.dispatch(GetEngagementMandats({ procedures: ['1122'] }));
+    this.getData('1122');
+    this.getData('1123');
+    this.getData('1124');
+    this.getData('1125');
+    this.getData('1126');
 
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -100,6 +113,11 @@ export class MandatsComponent
     );
   }
 
+  getData(item:any){
+    this._store.dispatch(GetEngagementMandats({
+      procedures: [item]
+    }));
+  }
   ngAfterContentChecked(): void {
     this.menus = [
       {
@@ -110,7 +128,7 @@ export class MandatsComponent
             command: () => {
               this.edit(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat !== EtatMandatEnum.ANNULATIONMANDAT && this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.REJETLORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.REJETCONTROLECONFORMITE && this.currentItem?.etat !== EtatMandatEnum.REJETCONTROLEREGULARITE && this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE && this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
           },
           {
             label: this.translate.instant('labels.reserver'),
@@ -118,7 +136,7 @@ export class MandatsComponent
             command: () => {
               this.handleReservation(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE && this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE
           },
           {
             label: this.translate.instant('labels.annuler'),
@@ -126,16 +144,16 @@ export class MandatsComponent
             command: () => {
               this.handleCancel(this.currentItem);
             },
-            disabled: this.currentItem?.etat !== EtatEngagementEnum.RESERVED,
+            disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
           },
-          {
+          /*{
             label: this.translate.instant('labels.delete'),
             icon: 'pi pi-times',
             command: () => {
               this.delete(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatEngagementEnum.RESERVED,
-          },
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE
+          }, */
           {
             label: this.translate.instant('labels.print'),
             icon: 'pi pi-print',
@@ -149,9 +167,27 @@ export class MandatsComponent
   }
 
   handleFilter = (event: any) => {
-    this.data = this.originalData.filter((item) =>
-      this.selectedFilters.includes(item.etat)
-    );
+    this.primes = this.primesData;
+    if (event?.value[0]?.toLowerCase())
+      this.primes = this.primesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+      this.releves = this.relevesData;
+      if (event?.value[0]?.toLowerCase())
+        this.releves = this.relevesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+        this.agents = this.agentsData;
+    if (event?.value[0]?.toLowerCase())
+      this.agents = this.agentsData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+      this.structures = this.structuresData;
+    if (event?.value[0]?.toLowerCase())
+      this.structures = this.structuresData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+      this.deblocages = this.deblocagesData;
+    if (event?.value[0]?.toLowerCase())
+      this.deblocages = this.deblocagesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+
+
   };
 
   handleReservation(item: EngagementMandatModel) {
@@ -207,7 +243,26 @@ export class MandatsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
-        this.originalData = [...data];
+        if(this.data[0]?.numActeJuridique?.codeProcedure === "1122"){
+          this.primes = [...data];
+          this.primesData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1123"){
+          this.releves = [...data];
+          this.relevesData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1124"){
+          this.agents = [...data];
+          this.agentsData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1125"){
+          this.structures = [...data];
+          this.structuresData = [...data];
+        }
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1126"){
+          this.deblocages = [...data];
+          this.deblocagesData = [...data];
+        }
       });
 
     this.loading$ = this._store.pipe(

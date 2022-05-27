@@ -11,8 +11,7 @@
     [readOnly]="isBook"
     [startingForm]="mandatFormGroup"
     (subformInitialized)="subformInitialized('mandatForm', $event)"
-    (changeStep)="changeStep('mandat', 'back')"
-    (changeStep)="changeStep('mandat', 'forward')"
+    (changeStep)="changeStep('mandat', $event)"
   ></app-mandat-form>
   <app-perform-form
     *ngSwitchCase="'perform'"
