@@ -45,6 +45,7 @@ export class MandatService {
     payload: CreateMandatDTO,
     user: UserEntity,
   ): Promise<MandatEntity> {
+    console.log(payload);
     return this.repository.save({
       ...(payload as any),
       createdBy: user,

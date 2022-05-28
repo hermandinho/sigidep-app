@@ -36,7 +36,6 @@ export * from './exec-taxes.entity';
 export * from './engagement-commande.entity';
 export * from './engagement-mission.entity';
 export * from './engagement-decision.entity';
-export * from './engagement-mandat-decission.entity';
 export * from './mandat.history.entity';
 export * from './mandat.entity';
 export * from './traitement-mandat.entity';

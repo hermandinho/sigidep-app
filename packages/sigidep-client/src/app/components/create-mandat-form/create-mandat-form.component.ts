@@ -72,13 +72,22 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         baremeJour: [undefined],
         numActeJuridique: this._fb.group(
           {
-            id: [null],
-            numero: [null],
-            imputation: [null],
+            id: [null]
           },
           null
         ),
         montantAE: [undefined],
+        netAPercevoir: [undefined],
+        nomUnitAdminBenef:[undefined],
+        codeUnitAdminBenef:[undefined],
+        montantIRNC: [undefined],
+        montantBrut: [undefined],
+        numContribuable:[undefined],
+        raisonSociale:[undefined],
+        taxesApplicable:[undefined],
+        tauxTVA:[undefined],
+        tauxIR:[undefined],
+        RIB:[undefined]
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
@@ -86,10 +95,10 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         nomGestionnaire: [undefined],
         objet: [undefined],
         dateEngagement: [undefined, [Validators.required, this.dateValidator]],
-        montantCPChiffres: [undefined, [this.montantAEValidator]],
+        montantCPChiffres: [undefined],
         montantCPLettres: [undefined],
         signataire: [undefined],
-        typeMission: [undefined, [this.montantAEValidator]],
+        typeMission: [undefined],
         dateAffectation: [undefined],
       }),
 
@@ -137,6 +146,17 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         sourceVerif,
         dateAffectation,
         montantAE,
+        netAPercevoir,
+        nomUnitAdminBenef,
+        codeUnitAdminBenef,
+        montantIRNC,
+        montantBrut,
+        numContribuable,
+        raisonSociale,
+        taxesApplicable,
+        tauxTVA,
+        tauxIR,
+        RIB,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -161,6 +181,17 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           baremeJour,
           numActeJuridique,
           montantAE,
+          netAPercevoir,
+          nomUnitAdminBenef,
+          codeUnitAdminBenef,
+          montantIRNC,
+          montantBrut,
+          numContribuable,
+          raisonSociale,
+          taxesApplicable,
+          tauxTVA,
+          tauxIR,
+          RIB
         },
         mandatForm: {
           numero,
@@ -172,7 +203,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantCPLettres,
           signataire,
           typeMission,
-          dateAffectation,
+          dateAffectation
         },
         performForm: {
           livrables,
@@ -206,7 +237,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     this.form.setControl(name, group);
   }
 
-  changeStep(currentStep: string, direction: 'forward' | 'back') {
+  changeStep(currentStep?: string, direction?: 'forward' | 'back') {
     switch (currentStep) {
       case 'engagement':
         if (direction === 'forward') {
@@ -215,9 +246,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         break;
       case 'mandat':
         if (direction === 'forward') {
+          console.log(direction)
           this.currentStepBs.next('perform');
         }
         if (direction === 'back') {
+          console.log(direction)
           this.currentStepBs.next('engagement');
         }
         break;
@@ -226,12 +259,13 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           this.currentStepBs.next('mandat');
         }
         break;
+
     }
   }
   bookProcess = (engagement: EngagementMandatModel) => {
     const method: Observable<any> =
       this._apisService.put<EngagementMandatModel>(
-        '/engagements/mandats/reservation',
+        '/mandats/reservation',
         engagement
       );
 
@@ -239,7 +273,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       (res) => {
         //this.busy = false;
         this.ref.close(res);
-        this._store.dispatch(GetEngagementMandats({}));
+        this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
         this._dialogService.launchPrintEngagementMandatPrimeDialog(res);
         this._appService.showToast({
           summary: 'messages.success',
@@ -283,21 +317,23 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
     if (this.isBook) {
       this.bookProcess(editedEngagement);
+      localStorage.removeItem('imputation');
       this.ref.close();
     }
 
     if (!this.isBook && this.isUpdateForm) {
       const method: Observable<any> =
         this._apisService.put<EngagementMandatModel>(
-          '/engagements/mandats',
+          '/mandats',
           editedEngagement
         );
       method.subscribe(
         (res) => {
+
           this.busy = false;
           this.ref.close(res);
           localStorage.removeItem('imputation');
-          this._store.dispatch(GetEngagementMandats({}));
+          this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'messages.engagements.createSuccess',
@@ -330,15 +366,16 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         accept: () => {
           const method: Observable<any> =
             this._apisService.post<EngagementMandatModel>(
-              '/engagements/mandats',
+              '/mandats',
               editedEngagement
             );
           method.subscribe(
             (res) => {
+              console.log(res)
               this.busy = false;
 
               localStorage.removeItem('imputation');
-              this._store.dispatch(GetEngagementMandats({}));
+              this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
 
               this._appService.showToast({
                 summary: 'messages.success',

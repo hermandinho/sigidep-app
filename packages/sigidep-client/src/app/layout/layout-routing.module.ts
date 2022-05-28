@@ -32,7 +32,7 @@ import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
-import { MandatsComponent } from '@pages/primes/mandats.component';
+import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
 
 const routes: Routes = [
   {
@@ -343,16 +343,15 @@ const routes: Routes = [
         },
       },
       {
-        path: 'mandats',
+        path: 'mandat-decisions',
         canActivate: [AuthGuard],
         component: MandatsComponent,
         data: {
           permissions: [...MenuPermissions.mandats],
         },
         loadChildren: () =>
-          import('../pages/primes/mandats.module').then((m) => m.MandatsModule),
+          import('../pages/mandats/decision/mandats.module').then((m) => m.MandatsModule),
       },
-
       /*{
         path: '**',
         component: NotFoundComponent,
