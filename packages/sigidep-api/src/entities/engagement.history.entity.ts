@@ -16,10 +16,10 @@ export class EngagementJuridiqueHistoryEntity
 {
   @Column()
   public originalID!: number;
+
   @HistoryActionColumn()
   public action!: HistoryActionType;
 
-  @Column()
   makeActionAt: Date;
 
   constructor(param?: Partial<EngagementJuridiqueHistoryEntity>) {

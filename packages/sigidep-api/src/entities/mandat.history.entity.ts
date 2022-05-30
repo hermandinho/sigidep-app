@@ -1,3 +1,4 @@
+import { EtatMandatEnum } from '@utils/etat-mandat.enum';
 import { Column, Entity } from 'typeorm';
 import {
   HistoryActionColumn,
@@ -16,7 +17,6 @@ export class MandatHistoryEntity
   @Column()
   originalID!: string;
 
-  @Column()
   makeActionAt!: Date;
 
   @HistoryActionColumn()

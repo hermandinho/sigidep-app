@@ -5,6 +5,9 @@
         <ng-container>
           <label class="required">{{ "labels.numero" | translate }} </label>
           <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'code'"
             [autoDisplayFirst]="false"
             [options]="data"
             [placeholder]="''"

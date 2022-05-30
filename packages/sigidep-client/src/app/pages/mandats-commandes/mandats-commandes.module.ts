@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { MandatsRoutingModule } from './mandats-routing.module';
-import { MandatsComponent } from './mandats.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
@@ -17,11 +14,14 @@ import { TreeTableModule } from 'primeng/treetable';
 import { SharedModule } from '@modules/shared.module';
 import { TabViewModule } from 'primeng/tabview';
 
+import { MandatsCommandesRoutingModule } from './mandats-commandes-routing.module';
+import { MandatsCommandesComponent } from './mandats-commandes.component';
+
 @NgModule({
-  declarations: [MandatsComponent],
+  declarations: [MandatsCommandesComponent],
   imports: [
     CommonModule,
-    MandatsRoutingModule,
+    MandatsCommandesRoutingModule,
     SharedModule,
     CheckboxModule,
     InputMaskModule,
@@ -38,4 +38,4 @@ import { TabViewModule } from 'primeng/tabview';
     PanelModule,
   ],
 })
-export class MandatsModule {}
+export class MandatsCommandesModule {}

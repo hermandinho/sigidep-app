@@ -5,6 +5,7 @@
     [startingForm]="engagementFormGroup"
     (subformInitialized)="subformInitialized('engagementForm', $event)"
     (changeStep)="changeStep('engagement', 'forward')"
+    [category]="categorieProcedure"
   ></app-engagement-form>
   <app-mandat-form
     *ngSwitchCase="'mandat'"
