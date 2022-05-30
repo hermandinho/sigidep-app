@@ -17,9 +17,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import {
-  EngagementMandatModel
-} from '@models/engagement-mandat.model';
+import { EngagementMandatModel } from '@models/engagement-mandat.model';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,7 +29,7 @@ import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
-import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
+import { MenuItem, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { codesProceduresCommandes, TableColumns } from './consts';
@@ -40,12 +38,11 @@ import { codesProceduresCommandes, TableColumns } from './consts';
   selector: 'app-mandats-commandes',
   templateUrl: './mandats-commandes.component.html',
   styleUrls: ['./mandats-commandes.component.scss'],
-  providers: [MessageService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MandatsCommandesComponent
   extends BaseComponent
-  implements OnInit, AfterContentChecked {
+  implements OnInit, AfterContentChecked
+{
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: any[] = [];
@@ -92,12 +89,12 @@ export class MandatsCommandesComponent
   }
 
   ngOnInit(): void {
-    localStorage.setItem('procedure', JSON.stringify('1122'));
     this.primengConfig.ripple = true;
-    // code procedure  prime 1122
-    this._store.dispatch(GetEngagementMandats({
-    procedures: ['1122']
-    }));
+    this._store.dispatch(
+      GetEngagementMandats({
+        procedures: codesProceduresCommandes,
+      })
+    );
 
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -120,7 +117,16 @@ export class MandatsCommandesComponent
             command: () => {
               this.edit(this.currentItem);
             },
-            disabled: this.currentItem?.etat !== EtatMandatEnum.ANNULATIONMANDAT && this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.REJETLORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.REJETCONTROLECONFORMITE && this.currentItem?.etat !== EtatMandatEnum.REJETCONTROLEREGULARITE && this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE && this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
+            disabled:
+              this.currentItem?.etat !== EtatMandatEnum.ANNULATIONMANDAT &&
+              this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION &&
+              this.currentItem?.etat !== EtatMandatEnum.REJETLORSRESERVATION &&
+              this.currentItem?.etat !==
+                EtatMandatEnum.REJETCONTROLECONFORMITE &&
+              this.currentItem?.etat !==
+                EtatMandatEnum.REJETCONTROLEREGULARITE &&
+              this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE &&
+              this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
           },
           {
             label: this.translate.instant('labels.reserver'),
@@ -128,7 +134,10 @@ export class MandatsCommandesComponent
             command: () => {
               this.handleReservation(this.currentItem);
             },
-            disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE && this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE
+            disabled:
+              this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE &&
+              this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION &&
+              this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
           },
           {
             label: this.translate.instant('labels.annuler'),
@@ -138,14 +147,6 @@ export class MandatsCommandesComponent
             },
             disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
           },
-          /*{
-            label: this.translate.instant('labels.delete'),
-            icon: 'pi pi-times',
-            command: () => {
-              this.delete(this.currentItem);
-            },
-            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE
-          }, */
           {
             label: this.translate.instant('labels.print'),
             icon: 'pi pi-print',
@@ -159,9 +160,23 @@ export class MandatsCommandesComponent
   }
 
   handleFilter = (event: any) => {
-    this.data = this.originalData;
-    if(event?.value[0]?.toLowerCase())
-      this.data = this.originalData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+    this.bonsCommandes = this.bonsCommandesData;
+    if (event?.value[0]?.toLowerCase())
+      this.bonsCommandes = this.bonsCommandesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+    this.lettresCommandes = this.lettresCommandesData;
+    if (event?.value[0]?.toLowerCase())
+      this.lettresCommandes = this.lettresCommandesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+    this.marches = this.marchesData;
+    if (event?.value[0]?.toLowerCase())
+      this.marches = this.marchesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
   };
 
   handleReservation(item: EngagementMandatModel) {
@@ -221,8 +236,18 @@ export class MandatsCommandesComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
-        this.originalData = [...data];
-        console.log(this.originalData)
+        if (this.data[0]?.numActeJuridique?.codeProcedure === '1110') {
+          this.bonsCommandes = [...data];
+          this.bonsCommandesData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1111') {
+          this.lettresCommandes = [...data];
+          this.lettresCommandesData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1115') {
+          this.marches = [...data];
+          this.marchesData = [...data];
+        }
       });
 
     this.loading$ = this._store.pipe(

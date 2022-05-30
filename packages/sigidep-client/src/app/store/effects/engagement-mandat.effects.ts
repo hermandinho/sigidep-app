@@ -116,12 +116,16 @@ export class EngagementsMandatsEffects {
             switchMap((payload) => {
               console.log(action);
 <<<<<<< HEAD
+<<<<<<< HEAD
               return [CancelEngagementMandatsReservationSuccess({ payload })];
 =======
               return [
                 CancelEngagementMandatsReservationSuccess({ payload }),
               ];
 >>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+              return [CancelEngagementMandatsReservationSuccess({ payload })];
+>>>>>>> 43cbcf5 (mandat-commandes)
             }),
             catchError((err: HttpErrorResponse) =>
               of(CancelEngagementMandatsReservationFailure(err))

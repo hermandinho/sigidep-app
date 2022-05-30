@@ -21,9 +21,7 @@ import { TabViewModule } from 'primeng/tabview';
 >>>>>>> 019fd3c (gestion des procedure mandat-decision)
 
 @NgModule({
-  declarations: [
-    MandatsComponent
-  ],
+  declarations: [MandatsComponent],
   imports: [
     CommonModule,
     MandatsRoutingModule,

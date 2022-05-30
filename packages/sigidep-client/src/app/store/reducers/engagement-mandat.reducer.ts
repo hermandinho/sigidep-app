@@ -101,8 +101,4 @@ export const getLoadingSelector = createSelector(
   userState,
   (state) => state.loading
 );
-export const getDataSelector = createSelector(
-  userState,
-  (state) => state.data
-);
-//export const getDataSelector = createSelector(userState, (state) => state.data);
+export const getDataSelector = createSelector(userState, (state) => state.data);

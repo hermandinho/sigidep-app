@@ -3,7 +3,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { CarnetMandatModel } from '@models/carnet-mandat.model';
-import { EtatEngagementMandatEnum, TypeMarcheEngagementMandatEnum } from '@models/engagement-mandat.model';
+import {
+  EtatEngagementMandatEnum,
+  TypeMarcheEngagementMandatEnum,
+} from '@models/engagement-mandat.model';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -13,7 +16,6 @@ import {
 import { AppState } from '@reducers/index';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as converter from 'number-to-words';
 
 export class Type {
   name!: string;
@@ -39,7 +41,7 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   typeMissions: Type[] = [];
   typeMarches: Type[] = [];
   carnet: any;
-  procedure:string='';
+  procedure: string = '';
   constructor(
     private _store: Store<AppState>,
     private translate: TranslateService
@@ -68,60 +70,59 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
     //this.mandatForm.controls['montantCPChiffres'].disable();
     this.setTypeMissions();
     this.setTypeMarches();
-
   }
 
-  setTypeMarches(){
+  setTypeMarches() {
     this.translate
-    .get(TypeMarcheEngagementMandatEnum.AVANCE)
-    .subscribe((res: string) => {
-      const typemap: Type = {
-        name: res,
-      };
-      this.typeMarches.push(typemap);
-    });
-  this.translate
-    .get(TypeMarcheEngagementMandatEnum.DECOMPTE)
-    .subscribe((res: string) => {
-      const typemap: Type = {
-        name: res,
-      };
-      this.typeMarches.push(typemap);
-    });
-  this.translate
-    .get(TypeMarcheEngagementMandatEnum.MARCHE)
-    .subscribe((res: string) => {
-      const typemap: Type = {
-        name: res,
-      };
-      this.typeMarches.push(typemap);
-    });
+      .get(TypeMarcheEngagementMandatEnum.AVANCE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.typeMarches.push(typemap);
+      });
+    this.translate
+      .get(TypeMarcheEngagementMandatEnum.DECOMPTE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.typeMarches.push(typemap);
+      });
+    this.translate
+      .get(TypeMarcheEngagementMandatEnum.MARCHE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.typeMarches.push(typemap);
+      });
   }
-  setTypeMissions(){
+  setTypeMissions() {
     this.translate
-    .get(EtatEngagementMandatEnum.CONTROLE)
-    .subscribe((res: string) => {
-      const typemap: Type = {
-        name: res,
-      };
-      this.typeMissions.push(typemap);
-    });
-  this.translate
-    .get(EtatEngagementMandatEnum.EFFECTUER)
-    .subscribe((res: string) => {
-      const typemap: Type = {
-        name: res,
-      };
-      this.typeMissions.push(typemap);
-    });
-  this.translate
-    .get(EtatEngagementMandatEnum.ORDINAIRE)
-    .subscribe((res: string) => {
-      const typemap: Type = {
-        name: res,
-      };
-      this.typeMissions.push(typemap);
-    });
+      .get(EtatEngagementMandatEnum.CONTROLE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.typeMissions.push(typemap);
+      });
+    this.translate
+      .get(EtatEngagementMandatEnum.EFFECTUER)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.typeMissions.push(typemap);
+      });
+    this.translate
+      .get(EtatEngagementMandatEnum.ORDINAIRE)
+      .subscribe((res: string) => {
+        const typemap: Type = {
+          name: res,
+        };
+        this.typeMissions.push(typemap);
+      });
   }
   doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);

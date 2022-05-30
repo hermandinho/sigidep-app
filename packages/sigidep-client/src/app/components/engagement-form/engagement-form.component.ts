@@ -12,14 +12,22 @@ import {
 } from '@reducers/engagement-mission.reducer';
 import {
   getDataSelector as getDecisionDataSelector,
-  getLoadingSelector as getDecisionLoadingSelector
+  getLoadingSelector as getDecisionLoadingSelector,
 } from '@reducers/engagement-decision.reducer';
+
+import {
+  getDataSelector,
+  getLoadingSelector,
+} from '@reducers/engagements.reducer';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
-import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
-import { EtatEngagementEnum } from '@models/engagement-juridique.model';
+import {
+  EngagementJuridiqueModel,
+  EtatEngagementEnum,
+} from '@models/engagement-juridique.model';
 import { map } from 'rxjs/operators';
-import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
-import { GetEngagementMissions } from '@actions/engagement-mission.actions';
+import { EngagementCommandeModel } from '@models/engagement-commande.model';
+import { CategorieProcedure, Engagement } from 'app/utils/types';
+import { GetEngagementJuridiquesByCategory } from '@actions/engagements.actions';
 
 @Component({
   selector: 'app-engagement-form',
@@ -41,8 +49,12 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   public disabled: boolean = true;
   loading$: Observable<boolean> = of(true);
   missions!: EngagementMissionModel[];
-  engagements!: EngagementDecisionModel[];
-  procedure?:string;
+  public engagements!: (
+    | EngagementCommandeModel
+    | EngagementDecisionModel
+    | EngagementMissionModel
+  )[];
+  procedure?: string;
 
   constructor(public ref: DynamicDialogRef, private _store: Store<AppState>) {
     super();
@@ -56,8 +68,8 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
     //prime procedure code is 1122
     this._store.dispatch(
-      GetEngagementDecisions({
-        //procedures: [procedure],
+      GetEngagementJuridiquesByCategory({
+        category: this.category,
         etats: [EtatEngagementEnum.RESERVED],
       })
     );
@@ -89,8 +101,9 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   onActeJuridiqueChange = (event: any) => {
-
-    const act = this.engagements.find((item) => item.id === event.value);
+    const act: Engagement | undefined = this.engagements.find(
+      (item) => item.id === event.value
+    );
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
     this.procedure = act?.codeProcedure;
     if (act) {
@@ -103,20 +116,24 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         imputation: act?.imputation,
         numeroj: act?.numero,
         montantAE: act?.montantAE,
-        matriculeBeneficaire: act?.matriculeBeneficiaire,
-        nomBeneficaire: act?.nomBeneficiaire,
-        netAPercevoir: act?.netAPercevoir,
-        nomUnitAdminBenef: act?.nomUnitAdminBenef,
-        codeUnitAdminBenef:act?.codeUnitAdminBenef,
-        montantBrut: act?.montantBrut,
-        montantIRNC: act?.montantIRNC,
-        numContribuable: act?.numContribuable,
-        raisonSociale: act?.raisonSociale,
-        taxesApplicable: act?.taxesApplicable,
-        tauxTVA: act?.tauxTVA,
-        tauxIR: act?.tauxIR,
-        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
-
+        matriculeBeneficaire: (act as any)?.matriculeBeneficiaire || '',
+        nomBeneficaire: (act as any)?.nomBeneficiaire,
+        netAPercevoir: (act as any)?.netAPercevoir,
+        nomUnitAdminBenef: (act as any)?.nomUnitAdminBenef,
+        codeUnitAdminBenef: (act as any)?.codeUnitAdminBenef,
+        montantBrut: (act as any)?.montantBrut,
+        montantIRNC: (act as any)?.montantIRNC,
+        numContribuable:
+          (act as any)?.numContribuable || (act as any)?.niuContribuable,
+        raisonSociale: (act as any)?.raisonSociale,
+        taxesApplicable: (act as any)?.taxesApplicable,
+        tauxTVA: (act as any)?.tauxTVA,
+        tauxIR: (act as any)?.tauxIR,
+        RIB:
+          (act as any)?.codeBanqueContribuable +
+          (act as any)?.codeAgenceContribuable +
+          (act as any)?.numeroCompteContribuable +
+          (act as any)?.cleCompteContribuable,
       });
     }
   };
@@ -130,10 +147,9 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
   private _initListeners() {
     this._store
-      .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.engagements = [...data];
-        console.log(this.engagements)
         if (this.engagementForm != undefined) {
           this.scanneElt(this.engagementForm.value);
         }
@@ -156,12 +172,13 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   scanneElt = (event: any) => {
-    const act = this.engagements.find(
+    const act: Engagement | undefined = this.engagements.find(
       (item) => item.id === event.numActeJuridique.id
     );
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
     this.procedure = act?.codeProcedure;
-    if (act){
+    console.log('Data. Taxe..', (act as any)?.taxesApplicable);
+    if (act) {
       this.engagementForm.patchValue({
         codeProcedure: act?.codeProcedure,
         reference: act?.reference,
@@ -171,21 +188,25 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         imputation: act?.imputation,
         numeroj: act?.numero,
         montantAE: act?.montantAE,
-        matriculeBeneficaire: act?.matriculeBeneficiaire,
-        nomBeneficaire: act?.nomBeneficiaire,
-        netAPercevoir: act?.netAPercevoir,
-        nomUnitAdminBenef: act?.nomUnitAdminBenef,
-        codeUnitAdminBenef:act?.codeUnitAdminBenef,
-        montantBrut: act?.montantBrut,
-        montantIRNC: act?.montantIRNC,
-        numContribuable: act?.numContribuable,
-        raisonSociale: act?.raisonSociale,
-        taxesApplicable: act?.taxesApplicable,
-        tauxTVA: act?.tauxTVA,
-        tauxIR: act?.tauxIR,
-        RIB: act?.codeBanqueContribuable + act?.codeAgenceContribuable + act?.numeroCompteContribuable + act?.cleCompteContribuable,
+        matriculeBeneficaire: (act as any)?.matriculeBeneficiaire,
+        nomBeneficaire: (act as any)?.nomBeneficiaire,
+        netAPercevoir: (act as any)?.netAPercevoir,
+        nomUnitAdminBenef: (act as any)?.nomUnitAdminBenef,
+        codeUnitAdminBenef: (act as any)?.codeUnitAdminBenef,
+        montantBrut: (act as any)?.montantBrut,
+        montantIRNC: (act as any)?.montantIRNC,
+        numContribuable:
+          (act as any)?.numContribuable || (act as any)?.niuContribuable,
+        raisonSociale: (act as any)?.raisonSociale,
+        taxesApplicable: (act as any)?.taxesApplicable,
+        tauxTVA: (act as any)?.tauxTVA,
+        tauxIR: (act as any)?.tauxIR,
+        RIB:
+          (act as any)?.codeBanqueContribuable +
+          (act as any)?.codeAgenceContribuable +
+          (act as any)?.numeroCompteContribuable +
+          (act as any)?.cleCompteContribuable,
       });
     }
-
   };
 }
