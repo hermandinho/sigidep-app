@@ -13,6 +13,7 @@
     [startingForm]="mandatFormGroup"
     (subformInitialized)="subformInitialized('mandatForm', $event)"
     (changeStep)="changeStep('mandat', $event)"
+    [procedure]="currentProcedure"
   ></app-mandat-form>
   <app-perform-form
     *ngSwitchCase="'perform'"

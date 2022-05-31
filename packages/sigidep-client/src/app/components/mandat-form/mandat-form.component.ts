@@ -16,6 +16,7 @@ import {
 import { AppState } from '@reducers/index';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as converter from 'number-to-words';
 
 export class Type {
   name!: string;
@@ -41,7 +42,8 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   typeMissions: Type[] = [];
   typeMarches: Type[] = [];
   carnet: any;
-  procedure: string = '';
+  // procedure: string = '';
+  public typesMarche: any[] = [];
   constructor(
     private _store: Store<AppState>,
     private translate: TranslateService
@@ -59,8 +61,8 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.procedure = JSON.parse(localStorage.getItem('procedure')!!);
-
+    //this.procedure = JSON.parse(localStorage.getItem('procedure')!!);
+    console.log('procedure.....', this.procedure);
     this.mandatForm = this.startingForm;
     this.subformInitialized.emit(this.mandatForm);
     if (this.readOnly) this.mandatForm.disable();
@@ -70,6 +72,10 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
     //this.mandatForm.controls['montantCPChiffres'].disable();
     this.setTypeMissions();
     this.setTypeMarches();
+  }
+
+  getMontantCPEnLettres() {
+    return;
   }
 
   setTypeMarches() {
