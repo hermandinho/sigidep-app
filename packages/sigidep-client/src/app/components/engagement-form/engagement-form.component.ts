@@ -135,6 +135,8 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
           (act as any)?.numeroCompteContribuable +
           (act as any)?.cleCompteContribuable,
       });
+
+      this.subformInitialized.emit(this.engagementForm);
     }
   };
 

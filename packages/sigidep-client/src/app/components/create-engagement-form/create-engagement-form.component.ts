@@ -82,7 +82,6 @@ export class CreateEngagementFormComponent
     public translate: TranslateService
   ) {
     super();
-    this._initListeners();
   }
 
   get isUpdateForm(): boolean {
@@ -101,6 +100,11 @@ export class CreateEngagementFormComponent
   }
 
   ngOnInit(): void {
+    this._store.dispatch(GetEncours());
+    this._store.dispatch(
+      GetEngagementJuridiques({ etats: [EtatEngagementEnum.RESERVED] })
+    );
+    this._initListeners();
     this.commonForm = this.startingForm;
     if (this.readOnly) this.commonForm.disable();
     this.subformInitialized.emit(this.commonForm);
@@ -124,10 +128,6 @@ export class CreateEngagementFormComponent
     return sommeMontantAE;
   };
   private _initListeners() {
-    this._store.dispatch(GetEncours());
-    this._store.dispatch(
-      GetEngagementJuridiques({ etats: [EtatEngagementEnum.RESERVED] })
-    );
     this.loading$ = this._store.pipe(
       select(getEncoursLoadingSelector),
       map((status) => status)
@@ -186,19 +186,22 @@ export class CreateEngagementFormComponent
   }
 
   onExerciseChange = (event: any) => {
-    this.encoursList = this.originalEncoursList.filter(
-      (item) => item.exercise === event.value
-    );
+    if (event.value)
+      this.encoursList = this.originalEncoursList.filter(
+        (item) => item.exercise === event.value
+      );
   };
   onAdminUnitChange = (event: any) => {
-    this.encoursList = this.originalEncoursList.filter(
-      (item) => item.adminUnit === event.value
-    );
+    if (event.value)
+      this.encoursList = this.originalEncoursList.filter(
+        (item) => item.adminUnit === event.value
+      );
   };
   onParagrapheChange = (event: any) => {
-    this.encoursList = this.originalEncoursList.filter(
-      (item) => item.paragraph === event.value
-    );
+    if (event.value)
+      this.encoursList = this.originalEncoursList.filter(
+        (item) => item.paragraph === event.value
+      );
   };
 
   onRowSelect = (event: any) => {
@@ -211,14 +214,6 @@ export class CreateEngagementFormComponent
       operationId: this.selectedImputation.operation.id,
       aeDisponible: this.selectedImputation.aeDisponible,
     });
-    /*this.commonForm.controls['montantAE'].setValidators(
-      Validators.max(this.selectedImputation.aeDisponible)
-    );
-    */
-  };
-
-  onChange = (event: any) => {
-    this._fetchItem(event.value);
   };
 
   onChangeType = (event: any) => {
@@ -228,25 +223,4 @@ export class CreateEngagementFormComponent
     this.commonForm.patchValue({ codeProcedure });
     this.subformInitialized.emit(this.commonForm);
   };
-
-  private _fetchItem(id: number) {
-    //this.loading = true;
-    this._apisService.get<EncoursModel>(`/encours/${id}`).subscribe(
-      (res) => {
-        //this.loading = false;
-        //this.encours = res;
-        /* console.log('EKIEEE ', res);
-        this.actions = res.actions;
-        this.sousProgrammes = [res.sousProgramme];
-        this.activities = res.activities;
-        this.tasks = res.tasks;
-        this.adminUnits = res.adminUnits;
-        this.imputations = res.imputations; */
-      },
-      (error) => {
-        //this.loading = false;
-        //this.notFound = true;
-      }
-    );
-  }
 }

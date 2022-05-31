@@ -16,6 +16,7 @@ import {
 import { AppState } from '@reducers/index';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as converter from 'number-to-words';
 
 export class Type {
   name!: string;
@@ -28,6 +29,7 @@ export class Type {
 export class MandatFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
+  @Input() procedure!: string;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -40,18 +42,27 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   typeMissions: Type[] = [];
   typeMarches: Type[] = [];
   carnet: any;
-  procedure: string = '';
+  // procedure: string = '';
+  public typesMarche: any[] = [];
   constructor(
     private _store: Store<AppState>,
     private translate: TranslateService
   ) {
     super();
+    this.typesMarche = Object.keys(TypeMarcheEngagementMandatEnum).map(
+      (key) => ({
+        label: this.translate.instant(
+          (TypeMarcheEngagementMandatEnum as any)[key]
+        ),
+        value: key,
+      })
+    );
     this._initListeners();
   }
 
   ngOnInit(): void {
-    this.procedure = JSON.parse(localStorage.getItem('procedure')!!);
-
+    //this.procedure = JSON.parse(localStorage.getItem('procedure')!!);
+    console.log('procedure.....', this.procedure);
     this.mandatForm = this.startingForm;
     this.subformInitialized.emit(this.mandatForm);
     if (this.readOnly) this.mandatForm.disable();
@@ -61,6 +72,10 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
     //this.mandatForm.controls['montantCPChiffres'].disable();
     this.setTypeMissions();
     this.setTypeMarches();
+  }
+
+  getMontantCPEnLettres() {
+    return;
   }
 
   setTypeMarches() {
@@ -141,5 +156,12 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
         nomGestionnaire: act.gestionnaire.nom,
         dateAffectation: act.dateAffectation,
       });
+  };
+
+  onBlur = () => {
+    const currentValue = this.mandatForm.value?.montantCPChiffres || 0;
+    this.mandatForm.patchValue({
+      montantCPLettres: converter.toWords(currentValue),
+    });
   };
 }

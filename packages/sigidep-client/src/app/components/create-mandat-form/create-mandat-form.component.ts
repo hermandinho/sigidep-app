@@ -37,7 +37,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   public form!: FormGroup;
   public action!: 'book' | 'edit';
   public busy = false;
-
+  public currentProcedure!: string;
   public categorieProcedure!: CategorieProcedure;
   //bookProcess:any;
 
@@ -109,6 +109,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         signataire: [undefined],
         typeMission: [undefined],
         dateAffectation: [undefined],
+        typeMarche: [undefined],
       }),
 
       performForm: this._fb.group({
@@ -169,6 +170,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         tauxTVA,
         tauxIR,
         RIB,
+        typeMarche,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -216,6 +218,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           signataire,
           typeMission,
           dateAffectation,
+          typeMarche,
         },
         performForm: {
           livrables,
@@ -247,6 +250,10 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
   subformInitialized(name: string, group: FormGroup) {
     this.form.setControl(name, group);
+    if (name === 'engagementForm') {
+      this.currentProcedure =
+        this.form.getRawValue()?.engagementForm?.codeProcedure;
+    }
   }
 
   changeStep(currentStep?: string, direction?: 'forward' | 'back') {

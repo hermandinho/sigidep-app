@@ -29,7 +29,7 @@ import { AppState } from '@reducers/index';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
-import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { codesProceduresCommandes, TableColumns } from './consts';
@@ -38,6 +38,8 @@ import { codesProceduresCommandes, TableColumns } from './consts';
   selector: 'app-mandats-commandes',
   templateUrl: './mandats-commandes.component.html',
   styleUrls: ['./mandats-commandes.component.scss'],
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MandatsCommandesComponent
   extends BaseComponent

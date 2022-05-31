@@ -1,17 +1,16 @@
-import { applyMixins } from '@utils/mixins';
 import { Column, Entity } from 'typeorm';
 import {
   HistoryActionColumn,
   HistoryActionType,
   HistoryEntityInterface,
 } from 'typeorm-revisions';
-import { EngagementMissionEntity } from './engagement-mission.entity';
+import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
 
 @Entity({
   name: 'engagement-history',
 })
 export class EngagementJuridiqueHistoryEntity
-  extends EngagementMissionEntity
+  extends EngagementJuridiqueEntity
   implements HistoryEntityInterface
 {
   @Column()
