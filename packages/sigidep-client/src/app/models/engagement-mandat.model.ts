@@ -36,6 +36,7 @@ export class EngagementMandatModel extends BaseModel {
   paye!: boolean;
   numActeJuridique!: EngagementJuridiqueModel;
   situationActuelle!: string;
+  typeMarche!: TypeMarcheEngagementMandatEnum;
 
   constructor(params?: Partial<EngagementMandatModel>) {
     super();

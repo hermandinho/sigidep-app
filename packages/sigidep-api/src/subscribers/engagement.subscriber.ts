@@ -1,18 +1,27 @@
-import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
+import {
+  EngagementJuridiqueEntity,
+  EtatEngagementEnum,
+} from '@entities/engagement-juridique.entity';
 import { EngagementMissionEntity } from '@entities/engagement-mission.entity';
 import { EngagementJuridiqueHistoryEntity } from '@entities/engagement.history.entity';
 import { EventSubscriber } from 'typeorm';
-import { HistorySubscriber } from 'typeorm-revisions';
+import { HistoryActionType, HistorySubscriber } from 'typeorm-revisions';
 
 @EventSubscriber()
 export class EngagementHistorySubscriber extends HistorySubscriber<
-  EngagementMissionEntity,
+  EngagementJuridiqueEntity,
   EngagementJuridiqueHistoryEntity
 > {
   public get entity() {
-    return EngagementMissionEntity;
+    return EngagementJuridiqueEntity;
   }
   public get historyEntity() {
     return EngagementJuridiqueHistoryEntity;
+  }
+  beforeHistory(
+    action: HistoryActionType | EtatEngagementEnum,
+    history: EngagementJuridiqueHistoryEntity,
+  ): void | Promise<void> {
+    history.makeActionAt = new Date();
   }
 }

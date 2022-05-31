@@ -33,6 +33,7 @@ import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
 import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
+import { MandatsCommandesComponent } from '@pages/mandats-commandes/mandats-commandes.component';
 
 const routes: Routes = [
   {
@@ -350,7 +351,21 @@ const routes: Routes = [
           permissions: [...MenuPermissions.mandats],
         },
         loadChildren: () =>
-          import('../pages/mandats/decision/mandats.module').then((m) => m.MandatsModule),
+          import('../pages/mandats/decision/mandats.module').then(
+            (m) => m.MandatsModule
+          ),
+      },
+      {
+        path: 'mandats-commandes',
+        canActivate: [AuthGuard],
+        component: MandatsCommandesComponent,
+        data: {
+          permissions: [...MenuPermissions.mandats],
+        },
+        loadChildren: () =>
+          import('../pages/mandats-commandes/mandats-commandes.module').then(
+            (m) => m.MandatsCommandesModule
+          ),
       },
       /*{
         path: '**',

@@ -7,6 +7,9 @@
             >{{ "labels.numActeJuridiqueMandat" | translate }}
           </label>
           <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'numero'"
             [autoDisplayFirst]="false"
             [options]="engagements"
             [placeholder]="''"
@@ -78,7 +81,7 @@
       </div>
 
       <!-- Begin Decission -->
-      <div class="p-fluid p-grid" *ngIf="procedure==='1122'">
+      <div class="p-fluid p-grid" *ngIf="procedure === '1122'">
         <div class="p-field p-col-12 p-md-6">
           <label>{{ "labels.matriculeBeneficiaire" | translate }}</label>
           <input
@@ -130,7 +133,10 @@
       <!-- End Decission -->
 
       <!-- Begin 1123 1124 -->
-      <div class="p-fluid p-grid" *ngIf="procedure==='1123' || procedure==='1124'">
+      <div
+        class="p-fluid p-grid"
+        *ngIf="procedure === '1123' || procedure === '1124'"
+      >
         <div class="p-field p-col-12 p-md-6">
           <label>{{ "labels.matriculeBeneficiaire" | translate }}</label>
           <input
@@ -162,8 +168,8 @@
         </div>
       </div>
       <!-- End 1123 1124 -->
-       <!-- Begin 1125 -->
-       <div class="p-fluid p-grid" *ngIf="procedure==='1125'">
+      <!-- Begin 1125 -->
+      <div class="p-fluid p-grid" *ngIf="procedure === '1125'">
         <div class="p-field p-col-12 p-md-6">
           <label>{{ "labels.codeUnitAdminBenef" | translate }}</label>
           <input
@@ -195,72 +201,78 @@
         </div>
       </div>
       <!-- End 1125 -->
-       <!-- Begin 1110 1111 1115 1126 -->
+      <!-- Begin 1110 1111 1115 1126 -->
 
-     <div class="p-fluid p-grid" *ngIf="procedure==='1110' || procedure==='1111' || procedure==='1115' || procedure==='1126'">
-      <div class="p-field p-col-12 p-md-6">
-        <label>{{ "labels.niuContribuable" | translate }}</label>
-        <input
-          class="form-control"
-          formControlName="numContribuable"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
+      <div
+        class="p-fluid p-grid"
+        *ngIf="
+          procedure === '1110' ||
+          procedure === '1111' ||
+          procedure === '1115' ||
+          procedure === '1126'
+        "
+      >
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.niuContribuable" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="numContribuable"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
 
-      <div class="p-field p-col-12 p-md-6">
-        <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
-        <input
-          class="form-control"
-          formControlName="raisonSociale"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.raisonSocialeContribuable" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="raisonSociale"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
 
-      <div class="p-field p-col-12 p-md-4">
-        <label>{{ "labels.taxesApplicables" | translate }}</label>
-        <input
-          class="form-control"
-          formControlName="taxesApplicable"
-          [placeholder]="''"
-          pInputText
-        />
+        <div class="p-field p-col-12 p-md-4" formGroupName="taxesApplicable">
+          <label>{{ "labels.taxesApplicables" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="label"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-4" formGroupName="taxesApplicable">
+          <label>{{ "labels.tauxTVA" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="TxTVA"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-4" formGroupName="taxesApplicable">
+          <label>{{ "labels.tauxIR" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="TxIR"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.RIB" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="RIB"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
       </div>
-      <div class="p-field p-col-12 p-md-4">
-        <label>{{ "labels.tauxTVA" | translate }}</label>
-        <input
-          class="form-control"
-          formControlName="tauxTVA"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-4">
-        <label>{{ "labels.tauxIR" | translate }}</label>
-        <input
-          class="form-control"
-          formControlName="tauxIR"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
-      <div class="p-field p-col-12 p-md-4">
-        <label>{{ "labels.RIB" | translate }}</label>
-        <input
-          class="form-control"
-          formControlName="RIB"
-          [placeholder]="''"
-          pInputText
-        />
-      </div>
-    </div>
-     <!-- End 1110 1111 1115 1126 -->
+      <!-- End 1110 1111 1115 1126 -->
       <!-- Montant Engagement Juridique -->
       <div class="p-field p-col-12 p-md-12">
-        <label class="required"
-          >{{ "labels.montantAEJ" | translate }}
-        </label>
+        <label class="required">{{ "labels.montantAEJ" | translate }} </label>
         <input
           type="number"
           class="form-control"

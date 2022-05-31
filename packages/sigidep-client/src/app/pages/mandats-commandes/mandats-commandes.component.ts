@@ -32,33 +32,31 @@ import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TableColumns } from './consts';
+import { codesProceduresCommandes, TableColumns } from './consts';
 
 @Component({
-  selector: 'app-mandats',
-  templateUrl: './mandats.component.html',
-  styleUrls: ['./mandats.component.scss'],
+  selector: 'app-mandats-commandes',
+  templateUrl: './mandats-commandes.component.html',
+  styleUrls: ['./mandats-commandes.component.scss'],
   providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MandatsComponent
+export class MandatsCommandesComponent
   extends BaseComponent
   implements OnInit, AfterContentChecked
 {
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: any[] = [];
-  deblocages: EngagementMandatModel[] = [];
-  structures: EngagementMandatModel[] = [];
-  agents: EngagementMandatModel[] = [];
-  releves: EngagementMandatModel[] = [];
-  primes: EngagementMandatModel[] = [];
+  bonsCommandes: EngagementMandatModel[] = [];
+  lettresCommandes: EngagementMandatModel[] = [];
+  marches: EngagementMandatModel[] = [];
   originalData: EngagementMandatModel[] = [];
-  deblocagesData: EngagementMandatModel[] = [];
-  structuresData: EngagementMandatModel[] = [];
-  agentsData: EngagementMandatModel[] = [];
-  relevesData: EngagementMandatModel[] = [];
-  primesData: EngagementMandatModel[] = [];
+  bonsCommandesData: EngagementMandatModel[] = [];
+
+  marchesData: EngagementMandatModel[] = [];
+  lettresCommandesData: EngagementMandatModel[] = [];
+
   loading$: Observable<boolean> = of(true);
   menus!: MenuItem[];
   public globalColumns!: string[];
@@ -94,31 +92,23 @@ export class MandatsComponent
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    // code procedure  prime 1122
-    this.getData('1122');
-    this.getData('1123');
-    this.getData('1124');
-    this.getData('1125');
-    this.getData('1126');
+    this._store.dispatch(
+      GetEngagementMandats({
+        procedures: codesProceduresCommandes,
+      })
+    );
 
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.mandatsPrimes',
+            label: 'breadcrumb.mandatsMissions',
           },
         ],
       })
     );
   }
 
-  getData(item: any) {
-    this._store.dispatch(
-      GetEngagementMandats({
-        procedures: [item],
-      })
-    );
-  }
   ngAfterContentChecked(): void {
     this.menus = [
       {
@@ -159,14 +149,6 @@ export class MandatsComponent
             },
             disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
           },
-          /*{
-            label: this.translate.instant('labels.delete'),
-            icon: 'pi pi-times',
-            command: () => {
-              this.delete(this.currentItem);
-            },
-            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE
-          }, */
           {
             label: this.translate.instant('labels.print'),
             icon: 'pi pi-print',
@@ -180,33 +162,21 @@ export class MandatsComponent
   }
 
   handleFilter = (event: any) => {
-    this.primes = this.primesData;
+    this.bonsCommandes = this.bonsCommandesData;
     if (event?.value[0]?.toLowerCase())
-      this.primes = this.primesData.filter((item) =>
+      this.bonsCommandes = this.bonsCommandesData.filter((item) =>
         item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
       );
 
-    this.releves = this.relevesData;
+    this.lettresCommandes = this.lettresCommandesData;
     if (event?.value[0]?.toLowerCase())
-      this.releves = this.relevesData.filter((item) =>
+      this.lettresCommandes = this.lettresCommandesData.filter((item) =>
         item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
       );
 
-    this.agents = this.agentsData;
+    this.marches = this.marchesData;
     if (event?.value[0]?.toLowerCase())
-      this.agents = this.agentsData.filter((item) =>
-        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
-      );
-
-    this.structures = this.structuresData;
-    if (event?.value[0]?.toLowerCase())
-      this.structures = this.structuresData.filter((item) =>
-        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
-      );
-
-    this.deblocages = this.deblocagesData;
-    if (event?.value[0]?.toLowerCase())
-      this.deblocages = this.deblocagesData.filter((item) =>
+      this.marches = this.marchesData.filter((item) =>
         item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
       );
   };
@@ -216,7 +186,7 @@ export class MandatsComponent
       message: 'dialogs.messages.reserveMandatEngagement',
       accept: () => {
         this._dialogService.launchEngagementMandatCreateDialog(
-          'decision',
+          'commande',
           item,
           'book'
         );
@@ -247,11 +217,11 @@ export class MandatsComponent
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
   async openForm() {
-    this._dialogService.launchEngagementMandatCreateDialog('decision');
+    this._dialogService.launchEngagementMandatCreateDialog('commande');
   }
 
   edit(item: EngagementMandatModel) {
-    this._dialogService.launchEngagementMandatCreateDialog('decision', item);
+    this._dialogService.launchEngagementMandatCreateDialog('commande', item);
   }
 
   delete(item: EngagementMandatModel) {
@@ -268,25 +238,17 @@ export class MandatsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
-        if (this.data[0]?.numActeJuridique?.codeProcedure === '1122') {
-          this.primes = [...data];
-          this.primesData = [...data];
+        if (this.data[0]?.numActeJuridique?.codeProcedure === '1110') {
+          this.bonsCommandes = [...data];
+          this.bonsCommandesData = [...data];
         }
-        if (this.data[0]?.numActeJuridique.codeProcedure === '1123') {
-          this.releves = [...data];
-          this.relevesData = [...data];
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1111') {
+          this.lettresCommandes = [...data];
+          this.lettresCommandesData = [...data];
         }
-        if (this.data[0]?.numActeJuridique.codeProcedure === '1124') {
-          this.agents = [...data];
-          this.agentsData = [...data];
-        }
-        if (this.data[0]?.numActeJuridique.codeProcedure === '1125') {
-          this.structures = [...data];
-          this.structuresData = [...data];
-        }
-        if (this.data[0]?.numActeJuridique.codeProcedure === '1126') {
-          this.deblocages = [...data];
-          this.deblocagesData = [...data];
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1115') {
+          this.marches = [...data];
+          this.marchesData = [...data];
         }
       });
 

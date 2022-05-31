@@ -88,10 +88,9 @@ export class ReservationEngagementComponent
     this._store
       .pipe(this.takeUntilDestroy, select(getEngagementCommandeDataSelector))
       .subscribe((payload) => {
-        if (payload && payload.length !== 0) {
-          this.dernierCommande = payload.reduce((acc, curr) =>
-            moment(acc.dateSignature).isAfter(curr.dateSignature) ? acc : curr
-          );
+        if (payload && payload.length > 1) {
+          //les commandes sont récuprées par ordre décroissant
+          this.dernierCommande = payload[0];
         }
       });
 
@@ -126,11 +125,9 @@ export class ReservationEngagementComponent
           (this.engagement as EngagementDecisionModel).montantIRNC,
       respectQuotas: this.cumulJoursMissions <= 100,
     });
-    //console.log('FORMULAIRE.....: ', this.form.getRawValue());
   }
 
   get isValid() {
-    console.log('CHECK ....: ', this.form);
     return this.form.valid;
   }
   close() {
@@ -138,7 +135,6 @@ export class ReservationEngagementComponent
   }
 
   handleSubmit = () => {
-    const formValues = this.form.getRawValue();
     //this.busy = true;
     let editedEngagement = {
       ...this.engagement,

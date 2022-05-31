@@ -5,6 +5,9 @@
         <ng-container>
           <label class="required">{{ "labels.numero" | translate }} </label>
           <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'code'"
             [autoDisplayFirst]="false"
             [options]="data"
             [placeholder]="''"
@@ -16,7 +19,6 @@
           </p-dropdown>
         </ng-container>
       </div>
-
       <div class="p-field p-col-12 p-md-6">
         <label>{{ "labels.matriculeGestionnaire" | translate }}</label>
         <input
@@ -74,6 +76,7 @@
           formControlName="montantCPChiffres"
           [placeholder]="''"
           pInputText
+          (blur)="onBlur()"
         />
       </div>
       <div class="p-field p-col-12 p-md-12">
@@ -87,6 +90,22 @@
           [placeholder]="''"
         >
         </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-12" *ngIf="procedure === '1115'">
+        <ng-container>
+          <label class="required"
+            >{{ "labels.typeMission" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="typesMarche"
+            [placeholder]="''"
+            optionLabel="label"
+            optionValue="value"
+            formControlName="typeMarche"
+          >
+          </p-dropdown>
+        </ng-container>
       </div>
     </div>
   </div>
