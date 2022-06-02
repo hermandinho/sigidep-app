@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import jsPDF from 'jspdf';
+//import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import html2canvas from 'html2canvas';
 import {
@@ -141,6 +141,8 @@ export class AccreditationsGestionnairesComponent
   }
   download() {
     // table_content
+    alert('coming soon')
+    /*
     let pdf = new jsPDF();
     let data: any = document.getElementById('table_content');
     html2canvas(data).then((canvas) => {
@@ -152,5 +154,6 @@ export class AccreditationsGestionnairesComponent
           '.pdf'
       );
     });
+    */
   }
 }
