@@ -43,10 +43,7 @@ export class EngagementsMandatsEffects {
               etats: action.etats.join(','),
             }),
             ...(action.numeros && {
-              numeros: action.numeros.join(','),
-            }),
-            ...(action.imputation && {
-              imputation: action.imputation.join(','),
+              numeros: action.numeros,
             }),
           })
           .pipe(
@@ -154,6 +151,8 @@ export class EngagementsMandatsEffects {
       )
     )
   );
+
+
 
   constructor(private actions$: Actions, private apisService: ApisService) {}
 }

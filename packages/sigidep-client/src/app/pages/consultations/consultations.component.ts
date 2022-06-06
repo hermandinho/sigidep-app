@@ -42,6 +42,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   mandat:boolean=true;
   consulterM:any;
   engagement:boolean=true;
+  //mandats: any;
   loading$: Observable<boolean> = of(true);
   public globalColumns!: string[];
   public form!: FormGroup;
@@ -130,20 +131,15 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   }
 
   submit() {
-    if(this.form1.imputation.value){
-      this.busy = true;
-      const editedImputation = this.form1.imputation.value;
-      console.log(editedImputation);
-      this._store.dispatch(GetImputations({ imputation: editedImputation }));
-      this.initTable();
-      this.busy = false;
-    }
-
-    if(this.form1.mandat.value){
-      this.busy = true;
-    this._dialogService.launchEngagementMandatCreateDialog('decision',this.consulterM,'consulterM');
+    this.busy = true;
+    const editedImputation = this.form1.imputation.value;
+    console.log(editedImputation);
+    this._store.dispatch(GetImputations({ imputation: editedImputation }));
+    this.initTable();
+    console.log(this.encours);
     this.busy = false;
-    }
+    this.busy = false;
+  ///}
 
     if(this.form1.engagement.value){
       this.busy = true;
@@ -151,35 +147,62 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         this.busy = false;
     }
   }
+  submitMandat() {
+    this.busy = true;
+    const editedMandat = this.form3.mandat.value;
+    console.log(editedMandat);
+    this._store.dispatch(GetEngagementMandats({ numeros: editedMandat }));
+    this.initTable();
+    this.busy = false;
+  }
+  submitEngagement() {
+    this.busy = true;
+    const editedEngagement:string = this.form2.engagement.value;
+    console.log(editedEngagement);
+    this._store.dispatch(
+      GetEngagementJuridiques({ numeros: editedEngagement })
+    );
+    this.initTable();
+
+  }
 
   private _initListeners() {
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataImpSelector))
+      .subscribe((data) => {
+        this.encours = [...data];
+        if (this.encours) this.imputation = true;
+        else this.imputation = false;
+        console.log('encours ', this.encours);
+      });
+    this.loading$ = this._store.pipe(
+      select(getLoadingImpSelector),
+      map((status) => status)
+    );
 
-      this._store
-        .pipe(this.takeUntilDestroy, select(getDataEngSelector))
-        .subscribe((data) => {
-          this.data = [...data];
-          console.log(this.data)
-        });
-      this.loading$ = this._store.pipe(
-        select(getLoadingEngSelector),
-        map((status) => status)
-      );
+    this._store
+    .pipe(this.takeUntilDestroy, select(getDataEngSelector))
+    .subscribe((data) => {
+      this.engagements = [...data];
+      if (this.engagements) this.imputation = false;
+      console.log('engagements ', this.engagements);
+    });
+  this.loading$ = this._store.pipe(
+    select(getLoadingEngSelector),
+    map((status) => status)
+  );
 
-
-
-      this._store
-        .pipe(this.takeUntilDestroy, select(getDataMadSelector))
-        .subscribe((data) => {
-          this.mandats = [...data];
-          if (this.mandats) this.imputation = false;
-          console.log('mandats ', this.mandats);
-        });
-      this.loading$ = this._store.pipe(
-        select(getLoadingMadSelector),
-        map((status) => status)
-      );
-
-
+  this._store
+  .pipe(this.takeUntilDestroy, select(getDataMadSelector))
+  .subscribe((data) => {
+    this.mandats = [...data];
+    if (this.mandats) this.imputation = false;
+    console.log('mandats ', this.mandats);
+  });
+this.loading$ = this._store.pipe(
+  select(getLoadingMadSelector),
+  map((status) => status)
+);
   }
   detail(item: EncoursModel) {
     this._dialogService.launchImputationEtatDialog(item);

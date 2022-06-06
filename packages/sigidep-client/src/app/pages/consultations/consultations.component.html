@@ -63,9 +63,19 @@
 </p-card>
 
 <p-card *ngIf="imputation">
-  <p-table #dt [globalFilterFields]="globalColumns" [paginator]="true" [rowHover]="true" [rows]="10"
-    [showCurrentPageReport]="true" [sortMode]="'single'" [value]="encours"
-    [currentPageReportTemplate]="'tables.stats.pager' | translate" dataKey="id" responsiveLayout="scroll">
+  <p-table
+    #dt
+    [globalFilterFields]="globalColumns"
+    [paginator]="true"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [sortMode]="'single'"
+    [value]="encours"
+    [currentPageReportTemplate]="'tables.stats.pager' | translate"
+    dataKey="id"
+    responsiveLayout="scroll"
+  >
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
         <h5 class="p-m-0">

@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
 import { DetailsVirementEntity } from './details-virement.entity';
+import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
 import { SubProgramActivityTaskOperationEntity } from './sub-program-activity-task-operation.entity';
 
 @Entity({

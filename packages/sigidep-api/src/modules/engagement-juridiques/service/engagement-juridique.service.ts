@@ -23,6 +23,7 @@ export class EngagementJuridiqueService {
   public async filter(
     filter?: EngagementFilter,
   ): Promise<EngagementJuridiqueEntity[]> {
+    console.log(filter.numeros)
     return this.repository
       .createQueryBuilder('eng')
       .where(filter?.procedures ? 'eng.codeProcedure IN(:...codes)' : 'true', {
@@ -31,8 +32,8 @@ export class EngagementJuridiqueService {
       .andWhere(filter?.etats ? 'eng.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
-      .andWhere(filter?.numeros ? 'eng.numero IN(:...numero)' : 'true', {
-        numero: filter?.numeros,
+      .andWhere(filter?.numeros ? 'eng.numero IN(:...code)' : 'true', {
+        code: filter?.numeros,
       })
       .andWhere(filter?.imputation ? 'eng.imputation IN(:...code)' : 'true', {
         code: filter?.imputation,
