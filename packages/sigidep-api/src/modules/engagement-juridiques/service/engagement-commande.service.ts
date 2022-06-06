@@ -25,10 +25,10 @@ export class EngagementCommandeService {
     return this.repository
       .createQueryBuilder('ej')
       .leftJoinAndSelect('ej.taxesApplicable', 'taxe')
-      .where(filter?.procedures ? 'ed.codeProcedure IN(:...codes)' : 'true', {
+      .where(filter?.procedures ? 'ej.codeProcedure IN(:...codes)' : 'true', {
         codes: filter?.procedures,
       })
-      .andWhere(filter?.etats ? 'ed.etat IN(:...etats)' : 'true', {
+      .andWhere(filter?.etats ? 'ej.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
       .getMany();

@@ -22,6 +22,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
+import { CategorieProcedure } from 'app/utils/types';
 
 @Component({
   selector: 'app-create-mandat-form',
@@ -36,6 +37,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   public form!: FormGroup;
   public action!: 'book' | 'edit';
   public busy = false;
+  public currentProcedure!: string;
+  public categorieProcedure!: CategorieProcedure;
   //bookProcess:any;
 
   constructor(
@@ -72,22 +75,28 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         baremeJour: [undefined],
         numActeJuridique: this._fb.group(
           {
-            id: [null]
+            id: [null],
           },
           null
         ),
         montantAE: [undefined],
         netAPercevoir: [undefined],
-        nomUnitAdminBenef:[undefined],
-        codeUnitAdminBenef:[undefined],
+        nomUnitAdminBenef: [undefined],
+        codeUnitAdminBenef: [undefined],
         montantIRNC: [undefined],
         montantBrut: [undefined],
-        numContribuable:[undefined],
-        raisonSociale:[undefined],
-        taxesApplicable:[undefined],
-        tauxTVA:[undefined],
-        tauxIR:[undefined],
-        RIB:[undefined]
+        numContribuable: [undefined],
+        raisonSociale: [undefined],
+        taxesApplicable: this._fb.group({
+          id: '',
+          code: '',
+          label: '',
+          TxTVA: [{ value: '', disabled: true }],
+          TxIR: [{ value: '', disabled: true }],
+        }),
+        tauxTVA: [undefined],
+        tauxIR: [undefined],
+        RIB: [undefined],
       }),
       mandatForm: this._fb.group({
         numero: [undefined],
@@ -100,6 +109,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         signataire: [undefined],
         typeMission: [undefined],
         dateAffectation: [undefined],
+        typeMarche: [undefined],
       }),
 
       performForm: this._fb.group({
@@ -109,6 +119,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       }),
     });
 
+    if (this.config.data?.category) {
+      this.categorieProcedure = this.config.data?.category;
+    }
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
     }
@@ -157,6 +170,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         tauxTVA,
         tauxIR,
         RIB,
+        typeMarche,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -191,7 +205,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           taxesApplicable,
           tauxTVA,
           tauxIR,
-          RIB
+          RIB,
         },
         mandatForm: {
           numero,
@@ -203,7 +217,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           montantCPLettres,
           signataire,
           typeMission,
-          dateAffectation
+          dateAffectation,
+          typeMarche,
         },
         performForm: {
           livrables,
@@ -235,6 +250,10 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
   subformInitialized(name: string, group: FormGroup) {
     this.form.setControl(name, group);
+    if (name === 'engagementForm') {
+      this.currentProcedure =
+        this.form.getRawValue()?.engagementForm?.codeProcedure;
+    }
   }
 
   changeStep(currentStep?: string, direction?: 'forward' | 'back') {
@@ -246,11 +265,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         break;
       case 'mandat':
         if (direction === 'forward') {
-          console.log(direction)
           this.currentStepBs.next('perform');
         }
         if (direction === 'back') {
-          console.log(direction)
           this.currentStepBs.next('engagement');
         }
         break;
@@ -259,7 +276,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           this.currentStepBs.next('mandat');
         }
         break;
-
     }
   }
   bookProcess = (engagement: EngagementMandatModel) => {
@@ -273,7 +289,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       (res) => {
         //this.busy = false;
         this.ref.close(res);
-        this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
+        this._store.dispatch(
+          GetEngagementMandats({ procedures: [res?.codeProcedure] })
+        );
         this._dialogService.launchPrintEngagementMandatPrimeDialog(res);
         this._appService.showToast({
           summary: 'messages.success',
@@ -329,11 +347,12 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         );
       method.subscribe(
         (res) => {
-
           this.busy = false;
           this.ref.close(res);
           localStorage.removeItem('imputation');
-          this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
+          this._store.dispatch(
+            GetEngagementMandats({ procedures: [res?.codeProcedure] })
+          );
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'messages.engagements.createSuccess',
@@ -371,11 +390,13 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
             );
           method.subscribe(
             (res) => {
-              console.log(res)
+              console.log(res);
               this.busy = false;
 
               localStorage.removeItem('imputation');
-              this._store.dispatch(GetEngagementMandats({procedures: [res?.codeProcedure]}));
+              this._store.dispatch(
+                GetEngagementMandats({ procedures: [res?.codeProcedure] })
+              );
 
               this._appService.showToast({
                 summary: 'messages.success',

@@ -118,9 +118,7 @@ export class EngagementsMandatsEffects {
           .pipe(
             switchMap((payload) => {
               console.log(action);
-              return [
-                CancelEngagementMandatsReservationSuccess({ payload }),
-              ];
+              return [CancelEngagementMandatsReservationSuccess({ payload })];
             }),
             catchError((err: HttpErrorResponse) =>
               of(CancelEngagementMandatsReservationFailure(err))

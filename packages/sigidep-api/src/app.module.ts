@@ -34,6 +34,8 @@ import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engage
 import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
 import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
 import { MandatsModule } from '@modules/mandats/mandats.module';
+import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
+import { TraitementMandatSubscriber } from '@subscribers/mandat.subscriber';
 
 @Module({
   imports: [
@@ -67,7 +69,10 @@ import { MandatsModule } from '@modules/mandats/mandats.module';
           password,
           username,
           entities: ['dist/**/*.entity.js'],
-          // subscribers: ['dist/subscribers/*.subscriber.js'],
+          subscribers: [
+            EngagementHistorySubscriber,
+            TraitementMandatSubscriber,
+          ],
           synchronize: true,
           type: 'postgres',
           port: 5432,

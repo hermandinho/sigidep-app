@@ -22,7 +22,6 @@ export class EngagementDecisionService {
   public async filter(
     filter?: EngagementFilter,
   ): Promise<EngagementDecisionEntity[]> {
-    console.log('............::: filter', filter);
     return this.repository
       .createQueryBuilder('ed')
       .leftJoinAndSelect('ed.taxesApplicable', 'taxe')

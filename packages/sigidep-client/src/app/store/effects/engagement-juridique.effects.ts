@@ -27,6 +27,7 @@ import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
 import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
 import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
+import { CategorieProcedure } from 'app/utils/types';
 
 @Injectable()
 export class EngagementsJuridiquesEffects {

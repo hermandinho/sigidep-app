@@ -334,8 +334,6 @@ export class EngagementContainerComponent
     if (name === 'commonForm') {
       this.currentProcedure =
         this.form.getRawValue()?.commonForm?.codeProcedure;
-      //this.form.controls['montantAE'].updateValueAndValidity();
-      //console.log("TYPE ", this.currentProcedure, this.form.value?.commonForm)
     }
   }
   changeStep(currentStep: string, direction: 'forward' | 'back') {
