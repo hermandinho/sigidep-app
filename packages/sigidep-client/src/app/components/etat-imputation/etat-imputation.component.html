@@ -32,12 +32,11 @@
             N° imputation : <strong>{{ imputation.imputation }}</strong
             ><br />
             <i
-              >Frais de recherche pour investissement dans le secteur agricole,
-              animal, sylvicole et faunique Research costs for investment in the
-              agricultural, animal, forestry and wildlife sector</i
+              >{{imputation?.paragraph}}</i
             >
             <br />
-            Opération: Frais d'appui
+            <br />
+            Opération: {{imputation?.operation?.labelFr}}
           </p>
         </fieldset>
         <fieldset class="grid-item2">
@@ -55,8 +54,8 @@
             </tr>
             <tr>
               <td><strong>Abattement :</strong></td>
-              <td></td>
-              <td></td>
+              <td> {{aeabattement}} </td>
+              <td>{{cpabattement}}</td>
             </tr>
             <tr>
               <td><strong>Dotation Init. Révisée :</strong></td>
@@ -88,6 +87,38 @@
           </table>
         </fieldset>
       </div>
+    </p-card>
+    <p-card>
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Certificat d’Engagement</th>
+          <th>Bénéficiaire</th>
+          <th>Procédure</th>
+          <th>Date engag.</th>
+          <th>Montant AE</th>
+          <th>Etat</th>
+          <th>Mandat</th>
+          <th>Date engag.</th>
+          <th>Montant CP</th>
+          <th>Situation traitement</th>
+          <th>Date</th>
+        </tr>
+        <tr *ngFor="let eng of engagements, let i=index">
+          <td>{{i+1}}</td>
+          <td>{{eng?.numero}}</td>
+          <td>{{eng?.signataire}}</td>
+          <td>{{eng?.codeProcedure}}</td>
+          <td>{{eng?.dateSignature}}</td>
+          <td>{{eng?.montantAE}}</td>
+          <td>{{eng?.etat | translate}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </p-card>
   </div>
 

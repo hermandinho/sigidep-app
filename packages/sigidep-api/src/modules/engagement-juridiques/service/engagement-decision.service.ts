@@ -25,7 +25,6 @@ export class EngagementDecisionService {
     console.log('............::: filter', filter);
     return this.repository
       .createQueryBuilder('ed')
-
       .leftJoinAndSelect('ed.taxesApplicable', 'taxe')
       .where(filter?.procedures ? 'ed.codeProcedure IN(:...codes)' : 'true', {
         codes: filter?.procedures,
