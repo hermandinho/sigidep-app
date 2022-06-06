@@ -44,7 +44,7 @@ export class EngagementsJuridiquesEffects {
               etats: action.etats.join(','),
             }),
             ...(action.numeros && {
-              numeros: action.numeros.join(','),
+              numeros: action.numeros,
             }),
             ...(action.imputation && {
               imputation: action.imputation,

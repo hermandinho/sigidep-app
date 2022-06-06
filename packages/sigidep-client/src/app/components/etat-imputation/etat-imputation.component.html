@@ -1,138 +1,125 @@
-<div class="page">
-  <div>
-    <div id="print-section" class="">
-      <p-card>
-        <div class="grid-container-header">
-          <div class="grid-fr">
-            <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
-            <i>Paix-Travail-Patrie</i> <br />
-            ********* <br />
-            <strong
-              >CHAMBRE D'AGRICULTURE, DES PECHES, DE <br />
-              L'ELEVAGE ET DES FORETS DU CAMEROUN</strong
-            >
-          </div>
-          <div class="grid-img">
-            <img src="assets/img/logopdf.png" alt="logo pdf" />
-          </div>
-          <div class="grid-en">
-            <strong>REPUBLIC OF CAMEROON</strong> <br />
-            <em>Peace-Work-Fatherland</em> <br />
-            ********* <br />
-            <strong
-              >CHAMBER OF AGRICULTURE, FISHERIES, <br />
-              LIVESTOCK AND FOREST OF CAMEROON</strong
-            >
-          </div>
+<div class="container">
+  <div id="print-section">
+    <p-card>
+      <div class="grid-container-header">
+        <div class="grid-fr">
+          <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+          <i>Paix-Travail-Patrie</i> <br />
+          ********* <br />
+          <strong
+            >CHAMBRE D'AGRICULTURE, DES PECHES, DE <br />
+            L'ELEVAGE ET DES FORETS DU CAMEROUN</strong
+          >
         </div>
-        <h1>SITUATION DES CREDITS SUR IMPUTATION</h1>
-        <div class="grid-container">
-          <fieldset class="grid-item1">
-            <legend><i>Identification de l’imputation</i></legend>
-            <p>
-              N° imputation : <strong>{{ imputation.imputation }}</strong
-              ><br />
-              <i
-                >{{imputation?.paragraph}}</i
-              >
-              <br />
-              <br />
-              Opération: {{imputation?.operation?.labelFr}}
-            </p>
-          </fieldset>
-          <fieldset class="grid-item2">
-            <legend><i>Statistiques de consommation (en F CFA)</i></legend>
-            <table>
-              <tr>
-                <th></th>
-                <th>AE</th>
-                <th>CP</th>
-              </tr>
-              <tr>
-                <td><strong>Dotation Initiale :</strong></td>
-                <td>{{ imputation.aeInitial }}</td>
-                <td>{{ imputation.cpInitial }}</td>
-              </tr>
-              <tr>
-                <td><strong>Abattement :</strong></td>
-                <td> {{aeabattement}} </td>
-                <td>{{cpabattement}}</td>
-              </tr>
-              <tr>
-                <td><strong>Dotation Init. Révisée :</strong></td>
-                <td>{{ imputation.aeInitRevisee }}</td>
-                <td>{{ imputation.cpInitRevisee }}</td>
-              </tr>
-              <tr>
-                <td><strong>Virement débiteur :</strong></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td><strong>Virement créditeur :</strong></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Crédits consommés :</strong>
-                </td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Taux consommation :</td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </fieldset>
+        <div class="grid-img">
+          <img src="assets/img/logopdf.png" alt="logo pdf" />
         </div>
-      </p-card>
-      <p-card>
-        <table>
-          <tr>
-            <th>N°</th>
-            <th>Certificat d’Engagement</th>
-            <th>Bénéficiaire</th>
-            <th>Procédure</th>
-            <th>Date engag.</th>
-            <th>Montant AE</th>
-            <th>Etat</th>
-            <th>Mandat</th>
-            <th>Date engag.</th>
-            <th>Montant CP</th>
-            <th>Situation traitement</th>
-            <th>Date</th>
-          </tr>
-          <tr *ngFor="let i=index, let mand of mandats">
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{i+1}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.numero}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.signataire}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.codeProcedure}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.dateSignature}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.montantAE}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.etat | translate}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.numero}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.dateEngagement}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.etat | translate }}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.situationActuelle}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.createdAt|date}}</span></td>
-          </tr>
-        </table>
-      </p-card>
-    </div>
-    <div>
-      <button
-        pButton
-        class="p-mr-3 p-button-warning"
-        printSectionId="print-section"
-        [useExistingCss]="true"
-        ngxPrint
-      >
-        {{ "buttons.print" | translate }}
-      </button>
-    </div>
+        <div class="grid-en">
+          <strong>REPUBLIC OF CAMEROON</strong> <br />
+          <em>Peace-Work-Fatherland</em> <br />
+          ********* <br />
+          <strong
+            >CHAMBER OF AGRICULTURE, FISHERIES, <br />
+            LIVESTOCK AND FOREST OF CAMEROON</strong
+          >
+        </div>
+      </div>
+      <h1>SITUATION DES CREDITS SUR IMPUTATION</h1>
+      <div class="grid-container">
+        <fieldset class="grid-item1">
+          <legend><i>Identification de l’imputation</i></legend>
+          <p>
+            N° imputation : <strong>{{ imputation.imputation }}</strong
+            ><br />
+            <i
+              >{{imputation?.paragraph}}</i
+            >
+            <br />
+            <br />
+            Opération: {{imputation?.operation?.labelFr}}
+          </p>
+        </fieldset>
+        <fieldset class="grid-item2">
+          <legend><i>Statistiques de consommation (en F CFA)</i></legend>
+          <table>
+            <tr>
+              <th></th>
+              <th>AE</th>
+              <th>CP</th>
+            </tr>
+            <tr>
+              <td><strong>Dotation Initiale :</strong></td>
+              <td>{{ imputation.aeInitial }}</td>
+              <td>{{ imputation.cpInitial }}</td>
+            </tr>
+            <tr>
+              <td><strong>Abattement :</strong></td>
+              <td> {{aeabattement}} </td>
+              <td>{{cpabattement}}</td>
+            </tr>
+            <tr>
+              <td><strong>Dotation Init. Révisée :</strong></td>
+              <td>{{ imputation.aeInitRevisee }}</td>
+              <td>{{ imputation.cpInitRevisee }}</td>
+            </tr>
+            <tr>
+              <td><strong>Virement débiteur :</strong></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Virement créditeur :</strong></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Crédits consommés :</strong>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Taux consommation :</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+    </p-card>
+    <p-card>
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Certificat d’Engagement</th>
+          <th>Bénéficiaire</th>
+          <th>Procédure</th>
+          <th>Date engag.</th>
+          <th>Montant AE</th>
+          <th>Etat</th>
+          <th>Mandat</th>
+          <th>Date engag.</th>
+          <th>Montant CP</th>
+          <th>Situation traitement</th>
+          <th>Date</th>
+        </tr>
+        <tr *ngFor="let eng of engagements, let i=index">
+          <td>{{i+1}}</td>
+          <td>{{eng?.numero}}</td>
+          <td>{{eng?.signataire}}</td>
+          <td>{{eng?.codeProcedure}}</td>
+          <td>{{eng?.dateSignature}}</td>
+          <td>{{eng?.montantAE}}</td>
+          <td>{{eng?.etat | translate}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </p-card>
   </div>
 
 
