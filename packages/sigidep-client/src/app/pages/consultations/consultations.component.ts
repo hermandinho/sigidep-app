@@ -4,15 +4,18 @@ import { BaseComponent } from '@components/base.component';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GetCertificatEngagements } from '../../store/actions/consultations.actions';
 import { AppState } from '@reducers/index';
 import { GetImputations } from '@actions/consultations.actions';
 import { DialogsService } from '@services/dialogs.service';
 import { EncoursModel } from '@models/encours.model';
 import {
-  getDataSelector,
-  getLoadingSelector,
+  getDataSelector as getDataImpSelector,
+  getLoadingSelector as getLoadingImpSelector,
 } from '@reducers/consultations.reducer';
+import { getDataSelector as getDataEngSelector, getLoadingSelector as getLoadingEngSelector} from '@reducers/engagement-juridique.reducer';
+import { getDataSelector as getDataMadSelector, getLoadingSelector as getLoadingMadSelector } from '@reducers/engagement-mandat.reducer';
+import { GetEngagementMandats } from '@actions/engagement-mandat.actions';
+import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
 
 @Component({
   selector: 'app-consultations',
@@ -23,7 +26,9 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   public busy = false;
   selectedItems: any[] = [];
   tableColumns: any[] = [];
-  data: EncoursModel[] = [];
+  encours: any[] = [];
+  engagements: any;
+  mandats: any;
   loading$: Observable<boolean> = of(true);
   public globalColumns!: string[];
   public formImputation!: FormGroup;
@@ -112,42 +117,64 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
     console.log(editedImputation);
     this._store.dispatch(GetImputations({ imputation: editedImputation }));
     this.initTable();
-    console.log(this.data);
+    console.log(this.encours);
     this.busy = false;
   }
   submitMandat() {
     this.busy = true;
     const editedMandat = this.form3.mandat.value;
     console.log(editedMandat);
-    //this._store.dispatch(GetImputations({ mandat: editedMandat }));
+    this._store.dispatch(GetEngagementMandats({ numeros: editedMandat }));
     this.initTable();
-    console.log(this.data);
     this.busy = false;
   }
   submitEngagement() {
     this.busy = true;
-    const editedEngagement = this.form2.engagement.value;
+    const editedEngagement:string = this.form2.engagement.value;
     console.log(editedEngagement);
     this._store.dispatch(
-      GetCertificatEngagements({ engagement: editedEngagement })
+      GetEngagementJuridiques({ numeros: editedEngagement })
     );
     this.initTable();
-    console.log(this.data);
     this.busy = false;
   }
   private _initListeners() {
     this._store
-      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .pipe(this.takeUntilDestroy, select(getDataImpSelector))
       .subscribe((data) => {
-        this.data = [...data];
-        if (this.data) this.imputation = true;
+        this.encours = [...data];
+        if (this.encours) this.imputation = true;
         else this.imputation = false;
-        console.log('data ', this.data);
+        console.log('encours ', this.encours);
       });
     this.loading$ = this._store.pipe(
-      select(getLoadingSelector),
+      select(getLoadingImpSelector),
       map((status) => status)
     );
+
+    this._store
+    .pipe(this.takeUntilDestroy, select(getDataEngSelector))
+    .subscribe((data) => {
+      this.engagements = [...data];
+      if (this.engagements) this.imputation = false;
+      console.log('engagements ', this.engagements);
+    });
+  this.loading$ = this._store.pipe(
+    select(getLoadingEngSelector),
+    map((status) => status)
+  );
+
+  this._store
+  .pipe(this.takeUntilDestroy, select(getDataMadSelector))
+  .subscribe((data) => {
+    this.mandats = [...data];
+    if (this.mandats) this.imputation = false;
+    console.log('mandats ', this.mandats);
+  });
+this.loading$ = this._store.pipe(
+  select(getLoadingMadSelector),
+  map((status) => status)
+);
   }
   detail(item: EncoursModel) {
     this._dialogService.launchImputationEtatDialog(item);

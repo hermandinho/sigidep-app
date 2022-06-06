@@ -13,16 +13,3 @@ export const GetImputationsFailure = createAction(
   props<{ error?: any }>() // TODO defile errors global model here
 );
 
-//certificat d'engagement
-export const GetCertificatEngagements = createAction(
-  '[EngagementJuridique] Filter',
-  props<{ engagement: string }>()
-);
-export const GetCertificatEngagementsSuccess = createAction(
-  '[EngagementJuridique] Filter success',
-  props<{ payload: EncoursModel[] }>()
-);
-export const GetCertificatEngagementsFailure = createAction(
-  '[EngagementJuridique] Filter failure',
-  props<{ error?: any }>() // TODO defile errors global model here
-);

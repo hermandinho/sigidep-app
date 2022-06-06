@@ -1,4 +1,6 @@
+import { CreateEncoursDTO } from '@modules/encours/dto/create-encours.dto';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
 export class CreateEngagementJuridiqueDTO {
   id?: number;

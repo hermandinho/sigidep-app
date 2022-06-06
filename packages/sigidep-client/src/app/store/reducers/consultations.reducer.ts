@@ -1,14 +1,4 @@
-import {
-  GetCertificatEngagements,
-  GetCertificatEngagementsSuccess,
-  GetCertificatEngagementsFailure,
-} from '../actions/consultations.actions';
 
-import {
-  GetEncours,
-  GetEncoursFailure,
-  GetEncoursSuccess,
-} from '@actions/encours.actions';
 import {
   GetImputations,
   GetImputationsFailure,
@@ -49,15 +39,6 @@ const consultationsReducer = createReducer(
     return { ...state, loading: false, data: payload };
   }),
   on(GetImputationsFailure, (state, { error }) => {
-    return { ...state, loading: false, error };
-  }),
-  on(GetCertificatEngagements, (state) => {
-    return { ...state, loading: true };
-  }),
-  on(GetCertificatEngagementsSuccess, (state, { payload }) => {
-    return { ...state, loading: false, data: payload };
-  }),
-  on(GetCertificatEngagementsFailure, (state, { error }) => {
     return { ...state, loading: false, error };
   })
 );
