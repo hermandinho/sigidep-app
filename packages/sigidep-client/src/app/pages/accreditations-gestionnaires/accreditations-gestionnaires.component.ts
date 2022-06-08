@@ -31,8 +31,7 @@ import {
 })
 export class AccreditationsGestionnairesComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   data: AccreditationGestionnaireModel[] = [];
   selectedItems: any[] = [];
   loading$: Observable<boolean> = of(true);
@@ -81,10 +80,6 @@ export class AccreditationsGestionnairesComponent
     this._dialogService.launchAccreditationsGestionnairesCreateDialog();
   }
 
-  edit(item: GestionnaireModel) {
-    this._dialogService.launchAccreditationsGestionnairesCreateDialog(item);
-  }
-
   listInputation(item: any) {
     this._dialogService.launchAccreditationsGestionnairesListInputation(item);
   }
@@ -109,7 +104,6 @@ export class AccreditationsGestionnairesComponent
               ...d,
             })
         );
-        console.log(data);
       });
 
     this.loading$ = this._store.pipe(
@@ -153,8 +147,8 @@ export class AccreditationsGestionnairesComponent
       pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95);
       pdf.save(
         'accreditations-' +
-          moment(new Date()).format('YYYY-MM-DD hh:mm:ss') +
-          '.pdf'
+        moment(new Date()).format('YYYY-MM-DD hh:mm:ss') +
+        '.pdf'
       );
     });
   }

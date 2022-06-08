@@ -62,7 +62,27 @@ export class ImputationsComponent extends BaseComponent implements OnInit {
   /**
    * delete
    */
-  public delete(item: any) {}
+  public delete(item: any) {
+    this._apiService.delete<any>(`/accreditations/deleteimputation/${item.id}`, undefined).subscribe((res) => {
+      this.data = res;
+    },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.dejaRegion';
+        } else {
+          err = 'errors.unknown';
+        }
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
+  }
 
   /**
    * getAccreditationByGestionnaire

@@ -25,8 +25,7 @@ import { GetEncourByExercice, GetEncours } from '@actions/encours.actions';
 })
 export class AccreditationsGestionnairesFormComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   public form: FormGroup;
   public busy = false;
   isEditMode = false;
@@ -81,6 +80,8 @@ export class AccreditationsGestionnairesFormComponent
       task: [undefined, []],
       administrativeUnit: [undefined, []],
       id: [undefined, []],
+      // startDate: [undefined, []],
+      // endDate: [undefined, []],
     });
 
     this.listenForm();
@@ -198,20 +199,20 @@ export class AccreditationsGestionnairesFormComponent
       .toPromise();
     this.imputationsOperationsList =
       agentWithAcrreditationResult &&
-      agentWithAcrreditationResult.accreditations.length > 0
+        agentWithAcrreditationResult.accreditations.length > 0
         ? agentWithAcrreditationResult.accreditations
         : [
-            // TODO: Juste pour le test, a retirer
-            {
-              createdAt: new Date(),
-              dateDebut: new Date(),
-              dateFin: new Date(),
-              imputation: 'yo',
-              labelOperation: 'test',
-              id: 1,
-              updatedAt: new Date(),
-            },
-          ];
+          // TODO: Juste pour le test, a retirer
+          {
+            createdAt: new Date(),
+            dateDebut: new Date(),
+            dateFin: new Date(),
+            imputation: 'yo',
+            labelOperation: 'test',
+            id: 1,
+            updatedAt: new Date(),
+          },
+        ];
   }
 
   async deleteAccreditation(item: AccreditationGestionnaireModel) {
@@ -288,7 +289,6 @@ export class AccreditationsGestionnairesFormComponent
           this.busy = false;
           this.ref.close();
           let err = '';
-          console.log(error);
           if (error?.statusCode === 409) {
             err = 'errors.dejaRegion';
           } else {

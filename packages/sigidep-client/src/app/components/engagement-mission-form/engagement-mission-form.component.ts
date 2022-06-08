@@ -47,7 +47,7 @@ export class EngagementMissionFormComponent
     this._store.dispatch(
       GetEngagementMissions({
         procedures: ['1121'],
-        etats: [EtatEngagementEnum.MODIFY],
+        etats: [EtatEngagementEnum.RESERVED],
       })
     );
     this.onDisable();

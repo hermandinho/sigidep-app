@@ -1,32 +1,15 @@
 <p-card>
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left">
-      <button
-        (click)="openForm()"
-        [label]="'buttons.create' | translate"
-        class="p-button-success p-mr-2"
-        icon="pi pi-plus"
-        pButton
-        pRipple
-      ></button>
-      <button
-        (click)="download()"
-        [label]="'buttons.download' | translate"
-        class="p-button-primary p-mr-2"
-        icon="pi pi-download"
-        pButton
-        pRipple
-      ></button>
+      <button (click)="openForm()" [label]="'buttons.create' | translate" class="p-button-success p-mr-2"
+        icon="pi pi-plus" pButton pRipple></button>
+      <button (click)="download()" [label]="'buttons.download' | translate" class="p-button-primary p-mr-2"
+        icon="pi pi-download" pButton pRipple></button>
     </ng-template>
     <ng-template pTemplate="right"> </ng-template>
   </p-toolbar>
 
-  <p-table
-    [id]="'table_content'"
-    [value]="data"
-    dataKey="code"
-    responsiveLayout="scroll"
-  >
+  <p-table [id]="'table_content'" [value]="data" dataKey="code" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
         <th></th>
@@ -49,27 +32,10 @@
         <td>{{ gestionnaire.prenom }}</td>
         <td>{{ gestionnaire.count }}</td>
         <td>
-          <button
-            (click)="listInputation(gestionnaire.id)"
-            class="p-button-rounded p-button-primary p-mr-2"
-            icon="pi pi-eye"
-            pButton
-            pRipple
-          ></button>
-          <button
-            (click)="edit(gestionnaire)"
-            class="p-button-rounded p-button-success p-mr-2"
-            icon="pi pi-pencil"
-            pButton
-            pRipple
-          ></button>
-          <button
-            (click)="delete(gestionnaire)"
-            class="p-button-rounded p-button-warning"
-            icon="pi pi-trash"
-            pButton
-            pRipple
-          ></button>
+          <button (click)="listInputation(gestionnaire.id)" class="p-button-rounded p-button-primary p-mr-2"
+            icon="pi pi-eye" pButton pRipple></button>
+          <button (click)="delete(gestionnaire)" class="p-button-rounded p-button-warning" icon="pi pi-trash" pButton
+            pRipple></button>
         </td>
       </tr>
     </ng-template>
