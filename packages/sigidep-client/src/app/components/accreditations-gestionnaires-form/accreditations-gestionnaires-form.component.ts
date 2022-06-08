@@ -17,6 +17,7 @@ import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { GetEncourByExercice, GetEncours } from '@actions/encours.actions';
+import { GetAccreditations } from '@actions/accreditaions.actions';
 
 @Component({
   selector: 'app-accreditations-gestionnaires-form',
@@ -284,6 +285,7 @@ export class AccreditationsGestionnairesFormComponent
             life: 3000,
             closable: true,
           });
+          this._store.dispatch(GetAccreditations());
         },
         ({ error }) => {
           this.busy = false;

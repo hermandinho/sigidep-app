@@ -1,4 +1,4 @@
-import { GetAccreditationsByGestionnaire } from '@actions/accreditaions.actions';
+import { GetAccreditations, GetAccreditationsByGestionnaire } from '@actions/accreditaions.actions';
 import { Component, Injectable, OnInit } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
 import { Store } from '@ngrx/store';
@@ -74,6 +74,7 @@ export class ImputationsComponent extends BaseComponent implements OnInit {
           life: 5000,
           closable: true,
         });
+        this._store.dispatch(GetAccreditations());
       },
       ({ error }) => {
         this._appService.showToast({
