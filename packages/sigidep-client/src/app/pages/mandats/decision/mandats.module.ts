@@ -38,4 +38,4 @@ import { TabViewModule } from 'primeng/tabview';
     PanelModule,
   ],
 })
-export class MandatsModule {}
+export class MandatsModule { }

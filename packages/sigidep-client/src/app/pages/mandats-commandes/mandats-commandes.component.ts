@@ -43,8 +43,7 @@ import { codesProceduresCommandes, TableColumns } from './consts';
 })
 export class MandatsCommandesComponent
   extends BaseComponent
-  implements OnInit, AfterContentChecked
-{
+  implements OnInit, AfterContentChecked {
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: any[] = [];
@@ -119,16 +118,7 @@ export class MandatsCommandesComponent
             command: () => {
               this.edit(this.currentItem);
             },
-            disabled:
-              this.currentItem?.etat !== EtatMandatEnum.ANNULATIONMANDAT &&
-              this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION &&
-              this.currentItem?.etat !== EtatMandatEnum.REJETLORSRESERVATION &&
-              this.currentItem?.etat !==
-                EtatMandatEnum.REJETCONTROLECONFORMITE &&
-              this.currentItem?.etat !==
-                EtatMandatEnum.REJETCONTROLEREGULARITE &&
-              this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE &&
-              this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.reserver'),
@@ -136,10 +126,7 @@ export class MandatsCommandesComponent
             command: () => {
               this.handleReservation(this.currentItem);
             },
-            disabled:
-              this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE &&
-              this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION &&
-              this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.annuler'),
@@ -148,6 +135,14 @@ export class MandatsCommandesComponent
               this.handleCancel(this.currentItem);
             },
             disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATRESERVE,
+          },
+          {
+            label: this.translate.instant('labels.delete'),
+            icon: 'pi pi-times',
+            command: () => {
+              this.delete(this.currentItem);
+            },
+            disabled: this.currentItem?.etat === EtatMandatEnum.MANDATRESERVE,
           },
           {
             label: this.translate.instant('labels.print'),

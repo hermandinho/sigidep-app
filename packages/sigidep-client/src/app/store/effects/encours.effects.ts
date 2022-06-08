@@ -12,6 +12,9 @@ import {
   DeleteEncours,
   DeleteEncoursFailure,
   DeleteEncoursSuccess,
+  GetEncourByExercice,
+  GetEncourByExerciceFailure,
+  GetEncourByExerciceSuccess,
   GetEncours,
   GetEncoursFailure,
   GetEncoursSuccess,
@@ -57,6 +60,22 @@ export class EncoursEffects {
             return [DeleteEncoursSuccess(), GetEncours()];
           }),
           catchError((err: HttpErrorResponse) => of(DeleteEncoursFailure(err)))
+        )
+      )
+    )
+  );
+
+  getByExercice$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GetEncourByExercice),
+      mergeMap((action) =>
+        this.apisService.get<any>(`/encours/exercice/${action.id}`, {}).pipe(
+          switchMap((payload) => {
+            return [GetEncourByExerciceSuccess({ payload })];
+          }),
+          catchError((err: HttpErrorResponse) =>
+            of(GetEncourByExerciceFailure(err))
+          )
         )
       )
     )

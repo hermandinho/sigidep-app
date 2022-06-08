@@ -44,6 +44,8 @@ import { MandatFormComponent } from '@components/mandat-form/mandat-form.compone
 import { PerformFormComponent } from '@components/perform-form/perform-form.component';
 import { CreateMandatFormComponent } from '@components/create-mandat-form/create-mandat-form.component';
 import { PrintEngagementMandatPrimeComponent } from '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
+import { CreateMandatMissionFormComponent } from '@components/create-mandat-mission-form/create-mandat-mission-form.component';
+import { EngagementMissionFormComponent } from '@components/engagement-mission-form/engagement-mission-form.component';
 
 const declarations = [
   BaseComponent,
@@ -55,6 +57,8 @@ const declarations = [
   PerformFormComponent,
   CreateMandatFormComponent,
   PrintEngagementMandatPrimeComponent,
+  CreateMandatMissionFormComponent,
+  EngagementMissionFormComponent,
 ];
 
 const shared = [
@@ -117,4 +121,4 @@ const shared = [
     ConfirmationService,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
