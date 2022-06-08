@@ -121,4 +121,4 @@ const shared = [
     ConfirmationService,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

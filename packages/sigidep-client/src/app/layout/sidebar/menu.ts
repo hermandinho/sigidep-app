@@ -39,6 +39,11 @@ export const MenuPermissions = {
   consultations: [...simpleCrudPermissions('consultations')],
   mandats: [...simpleCrudPermissions('mandats')],
   mandatMissions: [...simpleCrudPermissions('mandatMissions')],
+  fraisreleve: [...simpleCrudPermissions('fraisreleve')],
+  misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
+  misedispositionstructure: [
+    ...simpleCrudPermissions('misedispositionstructure'),
+  ],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -286,7 +291,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           },
           items: [
             {
-              routerLink: '#',
+              routerLink: 'mandats-commandes',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.commandepublique'),
               routerLinkActiveOptions: { exact: true },
@@ -298,15 +303,9 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: '#',
+              routerLink: 'mandat-decisions',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.decisions'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: 'mandats',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.primes'),
               routerLinkActiveOptions: { exact: true },
             },
           ],

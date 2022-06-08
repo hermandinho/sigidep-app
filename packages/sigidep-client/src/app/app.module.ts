@@ -49,8 +49,9 @@ import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
-import { MandatsModule } from '@pages/primes/mandats.module';
 import { MandatMissionsModule } from '@pages/mandat-missions/mandat-missions.module';
+import { MandatsModule } from '@pages/mandats/decision/mandats.module';
+import { MandatsCommandesModule } from '@pages/mandats-commandes/mandats-commandes.module';
 
 registerLocaleData(localeFr);
 
@@ -123,6 +124,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConsultationsModule,
     MandatsModule,
     MandatMissionsModule,
+    MandatsCommandesModule,
   ],
   providers: [
     AppInstallCheckGuard,
@@ -133,4 +135,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }

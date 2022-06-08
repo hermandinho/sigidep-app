@@ -32,8 +32,9 @@ import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
-import { MandatsComponent } from '@pages/primes/mandats.component';
 import { MandatMissionsComponent } from '@pages/mandat-missions/mandat-missions.component';
+import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
+import { MandatsCommandesComponent } from '@pages/mandats-commandes/mandats-commandes.component';
 
 const routes: Routes = [
   {
@@ -344,14 +345,28 @@ const routes: Routes = [
         },
       },
       {
-        path: 'mandats',
+        path: 'mandat-decisions',
         canActivate: [AuthGuard],
         component: MandatsComponent,
         data: {
           permissions: [...MenuPermissions.mandats],
         },
         loadChildren: () =>
-          import('../pages/primes/mandats.module').then((m) => m.MandatsModule),
+          import('../pages/mandats/decision/mandats.module').then(
+            (m) => m.MandatsModule
+          ),
+      },
+      {
+        path: 'mandats-commandes',
+        canActivate: [AuthGuard],
+        component: MandatsCommandesComponent,
+        data: {
+          permissions: [...MenuPermissions.mandats],
+        },
+        loadChildren: () =>
+          import('../pages/mandats-commandes/mandats-commandes.module').then(
+            (m) => m.MandatsCommandesModule
+          ),
       },
 
       {
@@ -380,4 +395,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

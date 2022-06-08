@@ -25,14 +25,14 @@ import {
 } from '@ngrx/store';
 
 export interface State {
-  data1: EngagementMandatModel[];
-  loading1: boolean;
+  data: EngagementMandatModel[];
+  loading: boolean;
   error: any;
 }
 
 export const initialState: State = {
-  data1: [],
-  loading1: false,
+  data: [],
+  loading: false,
   error: {
     error: '',
     message: '',
@@ -44,16 +44,16 @@ export const initialState: State = {
 const engagementMandatsReducer = createReducer(
   initialState,
   on(GetEngagementMandats, (state) => {
-    return { ...state, loading1: true };
+    return { ...state, loading: true };
   }),
   on(GetEngagementMandatsSuccess, (state, { payload }) => {
-    return { ...state, loading1: false, data1: payload };
+    return { ...state, loading: false, data: payload };
   }),
   on(GetEngagementMandatsFailure, (state, { error }) => {
-    return { ...state, loading1: false, error };
+    return { ...state, loading: false, error };
   }),
   on(CreateEngagementMandats, (state) => {
-    return { ...state, loading1: true };
+    return { ...state, loading: true };
   }),
   on(DeleteEngagementMandats, (state, { id }) => {
     return { ...state, loading1: true };
@@ -62,11 +62,11 @@ const engagementMandatsReducer = createReducer(
     DeleteEngagementMandatsSuccess,
     DeleteEngagementMandatsFailure,
     (state, {}) => {
-      return { ...state, loading1: false };
+      return { ...state, loading: false };
     }
   ),
   on(UpdateEngagementMandats, (state) => {
-    return { ...state, loading1: true };
+    return { ...state, loading: true };
   }),
   on(CancelEngagementMandatsReservation, (state) => {
     return { ...state, loading: true };
@@ -76,7 +76,7 @@ const engagementMandatsReducer = createReducer(
     UpdateEngagementMandatsSuccess,
     CancelEngagementMandatsReservationSuccess,
     (state, { payload }) => {
-      return { ...state, loading1: false, data1: [payload] };
+      return { ...state, loading: false, data: [payload] };
     }
   ),
   on(
@@ -84,7 +84,7 @@ const engagementMandatsReducer = createReducer(
     UpdateEngagementMandatsFailure,
     CancelEngagementMandatsReservationFailure,
     (state, { error }) => {
-      return { ...state, loading1: false, error: error };
+      return { ...state, loading: false, error: error };
     }
   )
 );
@@ -99,9 +99,6 @@ const userState = createFeatureSelector<State>(featureKey);
 
 export const getLoadingSelector = createSelector(
   userState,
-  (state) => state.loading1
+  (state) => state.loading
 );
-export const getDataSelector = createSelector(
-  userState,
-  (state) => state.data1
-);
+export const getDataSelector = createSelector(userState, (state) => state.data);

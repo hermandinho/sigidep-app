@@ -1,10 +1,13 @@
 <div class="container">
   <div class="form" [formGroup]="mandatForm">
     <div class="p-fluid p-grid">
-      <div class="p-field p-col-12 p-md-6">
+      <div class="p-field p-col-12 p-md-12">
         <ng-container>
           <label class="required">{{ "labels.numero" | translate }} </label>
           <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'code'"
             [autoDisplayFirst]="false"
             [options]="data"
             [placeholder]="''"
@@ -12,22 +15,6 @@
             optionValue="code"
             formControlName="numero"
             (onChange)="onNumeroMandatChange($event)"
-          >
-          </p-dropdown>
-        </ng-container>
-      </div>
-      <div class="p-field p-col-12 p-md-6">
-        <ng-container>
-          <label class="required"
-            >{{ "labels.typeMission" | translate }}
-          </label>
-          <p-dropdown
-            [autoDisplayFirst]="false"
-            [options]="types"
-            [placeholder]="''"
-            optionLabel="name"
-            optionValue="name"
-            formControlName="typeMission"
           >
           </p-dropdown>
         </ng-container>
@@ -81,7 +68,7 @@
           pInputText
         />
       </div>
-      <div class="p-field p-col-12 p-md-6">
+      <div class="p-field p-col-12 p-md-12">
         <label>{{ "labels.montantCPChiffres" | translate }}</label>
         <input
           type="number"
@@ -89,6 +76,7 @@
           formControlName="montantCPChiffres"
           [placeholder]="''"
           pInputText
+          (blur)="onBlur()"
         />
       </div>
       <div class="p-field p-col-12 p-md-12">
@@ -102,6 +90,22 @@
           [placeholder]="''"
         >
         </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-12" *ngIf="procedure === '1115'">
+        <ng-container>
+          <label class="required"
+            >{{ "labels.typeMission" | translate }}
+          </label>
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="typesMarche"
+            [placeholder]="''"
+            optionLabel="label"
+            optionValue="value"
+            formControlName="typeMarche"
+          >
+          </p-dropdown>
+        </ng-container>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { BaseModel } from './base.model';
+import { EngagementJuridiqueModel } from './engagement-juridique.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 
 export type StepMandat = 'engagement' | 'mandat' | 'perform';
@@ -8,11 +9,10 @@ export enum EtatEngagementMandatEnum {
   EFFECTUER = 'labels.effectuer',
   CONTROLE = 'labels.controle',
 }
-export enum EtatEngagementEnum {
-  SAVE = 'labels.save',
-  MODIFY = 'labels.modify',
-  RESERVED = 'labels.book',
-  CANCEL = 'labels.cancel',
+export enum TypeMarcheEngagementMandatEnum {
+  AVANCE = 'labels.avance',
+  DECOMPTE = 'labels.decompte',
+  MARCHE = 'labels.marche',
 }
 export class EngagementMandatModel extends BaseModel {
   numero!: string;
@@ -34,8 +34,9 @@ export class EngagementMandatModel extends BaseModel {
   encours!: boolean;
   ordonnance!: boolean;
   paye!: boolean;
-  numActeJuridique!: string;
+  numActeJuridique!: EngagementJuridiqueModel;
   situationActuelle!: string;
+  typeMarche!: TypeMarcheEngagementMandatEnum;
 
   constructor(params?: Partial<EngagementMandatModel>) {
     super();

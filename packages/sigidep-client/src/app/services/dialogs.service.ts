@@ -42,6 +42,7 @@ import {
   EngagementMandatModel,
   StepMandat,
 } from '@models/engagement-mandat.model';
+import { CategorieProcedure } from 'app/utils/types';
 
 @Injectable({
   providedIn: 'root',
@@ -1012,6 +1013,7 @@ export class DialogsService {
   }
 
   public async launchEngagementMandatCreateDialog(
+    category?: CategorieProcedure,
     item?: EngagementMandatModel,
     action?: string
   ): Promise<any> {
@@ -1033,6 +1035,7 @@ export class DialogsService {
       height: 'auto',
       modal: true,
       data: {
+        category,
         item,
         action,
       },

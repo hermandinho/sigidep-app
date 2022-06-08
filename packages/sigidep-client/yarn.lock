@@ -1367,6 +1367,11 @@
   "resolved" "https://registry.npmjs.org/@types/node/-/node-12.20.28.tgz"
   "version" "12.20.28"
 
+"@types/number-to-words@^1.2.1":
+  "integrity" "sha512-lwZhIftZ9f9NR6zfhgsH3lfRcmE/vpLSuGzKPQI7ypbVscoEWXMjp3dyC1xaPfolQZSqXszUwTtauMsS30OnWw=="
+  "resolved" "https://registry.npmjs.org/@types/number-to-words/-/number-to-words-1.2.1.tgz"
+  "version" "1.2.1"
+
 "@types/parse-json@^4.0.0":
   "integrity" "sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA=="
   "resolved" "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -5210,6 +5215,11 @@
   "integrity" "sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0="
   "resolved" "https://registry.npmjs.org/number-is-nan/-/number-is-nan-1.0.1.tgz"
   "version" "1.0.1"
+
+"number-to-words@^1.2.4":
+  "integrity" "sha512-/fYevVkXRcyBiZDg6yzZbm0RuaD6i0qRfn8yr+6D0KgBMOndFPxuW10qCHpzs50nN8qKuv78k8MuotZhcVX6Pw=="
+  "resolved" "https://registry.npmjs.org/number-to-words/-/number-to-words-1.2.4.tgz"
+  "version" "1.2.4"
 
 "oauth-sign@~0.9.0":
   "integrity" "sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ=="

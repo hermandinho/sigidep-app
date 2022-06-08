@@ -14,12 +14,10 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { BaseComponent } from '@components/base.component';
-import {
-  EngagementMandatModel,
-  EtatEngagementEnum,
-} from '@models/engagement-mandat.model';
+import { EngagementMandatModel } from '@models/engagement-mandat.model';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,23 +32,29 @@ import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TableColumns } from './consts';
+import { codesProceduresCommandes, TableColumns } from './consts';
 
 @Component({
-  selector: 'app-mandats',
-  templateUrl: './mandats.component.html',
-  styleUrls: ['./mandats.component.scss'],
+  selector: 'app-mandats-commandes',
+  templateUrl: './mandats-commandes.component.html',
+  styleUrls: ['./mandats-commandes.component.scss'],
   providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MandatsComponent
+export class MandatsCommandesComponent
   extends BaseComponent
-  implements OnInit, AfterContentChecked
-{
+  implements OnInit, AfterContentChecked {
   selectedItems: any[] = [];
   tableColumns: any[] = [];
-  data: EngagementMandatModel[] = [];
+  data: any[] = [];
+  bonsCommandes: EngagementMandatModel[] = [];
+  lettresCommandes: EngagementMandatModel[] = [];
+  marches: EngagementMandatModel[] = [];
   originalData: EngagementMandatModel[] = [];
+  bonsCommandesData: EngagementMandatModel[] = [];
+
+  marchesData: EngagementMandatModel[] = [];
+  lettresCommandesData: EngagementMandatModel[] = [];
 
   loading$: Observable<boolean> = of(true);
   menus!: MenuItem[];
@@ -76,7 +80,7 @@ export class MandatsComponent
     private ref: ChangeDetectorRef
   ) {
     super();
-    this.filters = Object.entries(EtatEngagementEnum).map(([key, value]) => ({
+    this.filters = Object.entries(EtatMandatEnum).map(([key, value]) => ({
       value: key,
       label: this.translate.instant(value),
     }));
@@ -87,14 +91,17 @@ export class MandatsComponent
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    // code procedure  prime 1122
-    this._store.dispatch(GetEngagementMandats({ procedures: ['1122'] }));
+    this._store.dispatch(
+      GetEngagementMandats({
+        procedures: codesProceduresCommandes,
+      })
+    );
 
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.mandatsPrimes',
+            label: 'breadcrumb.mandatsMissions',
           },
         ],
       })
@@ -150,16 +157,34 @@ export class MandatsComponent
   }
 
   handleFilter = (event: any) => {
-    this.data = this.originalData.filter((item) =>
-      this.selectedFilters.includes(item.etat)
-    );
+    this.bonsCommandes = this.bonsCommandesData;
+    if (event?.value[0]?.toLowerCase())
+      this.bonsCommandes = this.bonsCommandesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+    this.lettresCommandes = this.lettresCommandesData;
+    if (event?.value[0]?.toLowerCase())
+      this.lettresCommandes = this.lettresCommandesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+    this.marches = this.marchesData;
+    if (event?.value[0]?.toLowerCase())
+      this.marches = this.marchesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
   };
 
   handleReservation(item: EngagementMandatModel) {
     this._appService.showConfirmation({
       message: 'dialogs.messages.reserveMandatEngagement',
       accept: () => {
-        this._dialogService.launchEngagementMandatCreateDialog(item, 'book');
+        this._dialogService.launchEngagementMandatCreateDialog(
+          'commande',
+          item,
+          'book'
+        );
       },
     });
   }
@@ -187,11 +212,11 @@ export class MandatsComponent
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
   async openForm() {
-    this._dialogService.launchEngagementMandatCreateDialog();
+    this._dialogService.launchEngagementMandatCreateDialog('commande');
   }
 
   edit(item: EngagementMandatModel) {
-    this._dialogService.launchEngagementMandatCreateDialog(item);
+    this._dialogService.launchEngagementMandatCreateDialog('commande', item);
   }
 
   delete(item: EngagementMandatModel) {
@@ -208,7 +233,18 @@ export class MandatsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
-        this.originalData = [...data];
+        if (this.data[0]?.numActeJuridique?.codeProcedure === '1110') {
+          this.bonsCommandes = [...data];
+          this.bonsCommandesData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1111') {
+          this.lettresCommandes = [...data];
+          this.lettresCommandesData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1115') {
+          this.marches = [...data];
+          this.marchesData = [...data];
+        }
       });
 
     this.loading$ = this._store.pipe(
