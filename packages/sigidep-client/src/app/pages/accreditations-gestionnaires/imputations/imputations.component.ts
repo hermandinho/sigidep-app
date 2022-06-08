@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-imputations',
@@ -20,7 +20,8 @@ export class ImputationsComponent extends BaseComponent implements OnInit {
     public config: DynamicDialogConfig,
     private _store: Store<AppState>,
     private _apiService: ApisService,
-    private _appService: AppService
+    private _appService: AppService,
+    public ref: DynamicDialogRef,
   ) {
     super();
     this.tableColumns = [
@@ -63,18 +64,20 @@ export class ImputationsComponent extends BaseComponent implements OnInit {
    * delete
    */
   public delete(item: any) {
-    this._apiService.delete<any>(`/accreditations/deleteimputation/${item.id}`, undefined).subscribe((res) => {
-      this.data = res;
-    },
-      ({ error }) => {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.dejaRegion';
-        } else {
-          err = 'errors.unknown';
-        }
+    this._apiService.delete<any>(`/accreditations/${item.id}`, undefined).subscribe(
+      (res) => {
+        this.ref.close(res);
         this._appService.showToast({
-          detail: err,
+          detail: 'messages.gestionnaires.deleteSuccess',
+          summary: 'messages.success',
+          severity: 'success',
+          life: 5000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        this._appService.showToast({
+          detail: 'errors.gestionnaires.delete',
           summary: 'errors.error',
           severity: 'error',
           life: 5000,

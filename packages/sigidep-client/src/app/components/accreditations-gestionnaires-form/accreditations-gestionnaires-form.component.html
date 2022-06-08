@@ -61,7 +61,7 @@
       </div>
 
       <!-- *ngIf="form.get('typeAccreditation')?.value === 'sub-program'" -->
-      <ng-container>
+      <ng-container *ngIf="form.get('typeAccreditation')?.value === 'sub-program'">
         <div class="p-field p-col-12 p-md-12">
           <div class="p-field">
             <label class="required">{{
