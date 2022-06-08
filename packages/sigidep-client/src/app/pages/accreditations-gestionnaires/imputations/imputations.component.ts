@@ -18,10 +18,10 @@ export class ImputationsComponent extends BaseComponent implements OnInit {
   public data: any = [];
   constructor(
     public config: DynamicDialogConfig,
+    public ref: DynamicDialogRef,
     private _store: Store<AppState>,
     private _apiService: ApisService,
-    private _appService: AppService,
-    public ref: DynamicDialogRef,
+    private _appService: AppService
   ) {
     super();
     this.tableColumns = [
@@ -77,8 +77,14 @@ export class ImputationsComponent extends BaseComponent implements OnInit {
         this._store.dispatch(GetAccreditations());
       },
       ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.dejaRegion';
+        } else {
+          err = 'errors.unknown';
+        }
         this._appService.showToast({
-          detail: 'errors.gestionnaires.delete',
+          detail: err,
           summary: 'errors.error',
           severity: 'error',
           life: 5000,
