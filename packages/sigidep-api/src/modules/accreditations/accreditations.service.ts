@@ -8,6 +8,7 @@ import { CreateAccreditationDto } from './dto/create-accreditation.dto';
 import { AccreditationEntity } from '@entities/accreditation.entity';
 import { Repository, In } from 'typeorm';
 import { GestionnairesEntity } from '@entities/gestionnaire.entity';
+import { AgentEntity } from '@entities/agent.entity';
 
 @Injectable()
 export class AccreditationsService {
@@ -17,18 +18,39 @@ export class AccreditationsService {
 
     @InjectRepository(GestionnairesEntity)
     private readonly gestionnaireRepository: Repository<GestionnairesEntity>,
-  ) {}
+    @InjectRepository(AgentEntity)
+    private readonly agentRepository: Repository<AgentEntity>
+  ) { }
 
   async create(payload: CreateAccreditationDto) {
+    let gestionnaire = null;
+    gestionnaire = await this.gestionnaireRepository.createQueryBuilder('gestionnaire')
+      .where('gestionnaire.agentId = :id', { id: payload.gestionnaire.id })
+      .getOne();
+    if (!gestionnaire) {
+      const agent = await this.agentRepository.findOne(payload.gestionnaire.id);
+      if (!agent) {
+        throw new NotFoundException();
+      }
+
+      const gestionnaireData = {
+        matricule: agent.matricule,
+        nom: agent.nom,
+        prenom: agent.prenom,
+        fonction: agent.fonction,
+        agent: agent,
+      }
+      gestionnaire = await this.gestionnaireRepository.save(gestionnaireData);
+    }
     let res = null;
     for (let i = 0; i < payload.imputations.length; i++) {
       let data = {
-        startDate: payload.imputations[0].startDate,
-        endDate: payload.imputations[0].endDate,
-        imputation: payload.imputations[0].element.imputation,
-        tache: payload.imputations[0].element.task,
-        operation: payload.imputations[0].element.operation?.labelEn,
-        gestionnaire: payload.gestionnaire,
+        startDate: payload.imputations[i].startDate,
+        endDate: payload.imputations[i].endDate,
+        imputation: payload.imputations[i].element.imputation,
+        tache: payload.imputations[i].element.task,
+        operation: payload.imputations[i].element.operation?.labelEn,
+        gestionnaire: gestionnaire,
       };
       res = this.repository.save({ ...data });
     }
