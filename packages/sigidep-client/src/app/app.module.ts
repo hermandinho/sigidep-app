@@ -133,4 +133,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }

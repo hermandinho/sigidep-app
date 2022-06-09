@@ -32,6 +32,7 @@ import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+<<<<<<< HEAD
 import { TableColumns } from './consts';
 
 @Component({
@@ -45,9 +46,40 @@ export class MandatsComponent
   extends BaseComponent
   implements OnInit, AfterContentChecked
 {
+<<<<<<< HEAD
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   data: any[] = [];
+=======
+import { codesProceduresCommandes, TableColumns } from './consts';
+
+@Component({
+  selector: 'app-mandats-commandes',
+  templateUrl: './mandats-commandes.component.html',
+  styleUrls: ['./mandats-commandes.component.scss'],
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MandatsCommandesComponent
+  extends BaseComponent
+  implements OnInit, AfterContentChecked {
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
+  selectedItems: any[] = [];
+  tableColumns: any[] = [];
+  data: any[] = [];
+<<<<<<<< HEAD:packages/sigidep-client/src/app/pages/mandats/primes/mandats.component.ts
+  bonsCommandes: EngagementMandatModel[] = [];
+  lettresCommandes: EngagementMandatModel[] = [];
+  marches: EngagementMandatModel[] = [];
+  originalData: EngagementMandatModel[] = [];
+  bonsCommandesData: EngagementMandatModel[] = [];
+
+  marchesData: EngagementMandatModel[] = [];
+  lettresCommandesData: EngagementMandatModel[] = [];
+
+========
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
   deblocages: EngagementMandatModel[] = [];
   structures: EngagementMandatModel[] = [];
   agents: EngagementMandatModel[] = [];
@@ -59,6 +91,10 @@ export class MandatsComponent
   agentsData: EngagementMandatModel[] = [];
   relevesData: EngagementMandatModel[] = [];
   primesData: EngagementMandatModel[] = [];
+<<<<<<< HEAD
+=======
+>>>>>>>> 019fd3c (gestion des procedure mandat-decision):packages/sigidep-client/src/app/pages/mandats/decision/mandats.component.ts
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
   loading$: Observable<boolean> = of(true);
   menus!: MenuItem[];
   public globalColumns!: string[];
@@ -105,19 +141,36 @@ export class MandatsComponent
       SetAppBreadcrumb({
         breadcrumb: [
           {
+<<<<<<< HEAD
             label: 'breadcrumb.mandatsPrimes',
+=======
+            label: 'breadcrumb.mandatsMissions',
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
           },
         ],
       })
     );
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
   getData(item: any) {
     this._store.dispatch(
       GetEngagementMandats({
         procedures: [item],
       })
     );
+<<<<<<< HEAD
+=======
+  getData(item:any){
+    this._store.dispatch(GetEngagementMandats({
+      procedures: [item]
+    }));
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
   }
   ngAfterContentChecked(): void {
     this.menus = [
@@ -129,6 +182,10 @@ export class MandatsComponent
             command: () => {
               this.edit(this.currentItem);
             },
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
             disabled:
               this.currentItem?.etat !== EtatMandatEnum.ANNULATIONMANDAT &&
               this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION &&
@@ -139,6 +196,12 @@ export class MandatsComponent
                 EtatMandatEnum.REJETCONTROLEREGULARITE &&
               this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE &&
               this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
+<<<<<<< HEAD
+=======
+            disabled: this.currentItem?.etat !== EtatMandatEnum.ANNULATIONMANDAT && this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.REJETLORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.REJETCONTROLECONFORMITE && this.currentItem?.etat !== EtatMandatEnum.REJETCONTROLEREGULARITE && this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE && this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
           },
           {
             label: this.translate.instant('labels.reserver'),
@@ -146,10 +209,20 @@ export class MandatsComponent
             command: () => {
               this.handleReservation(this.currentItem);
             },
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
             disabled:
               this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE &&
               this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION &&
               this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE,
+<<<<<<< HEAD
+=======
+            disabled: this.currentItem?.etat !== EtatMandatEnum.MANDATENREGISTRE && this.currentItem?.etat !== EtatMandatEnum.ANNULELORSRESERVATION && this.currentItem?.etat !== EtatMandatEnum.MANDATMODIFIE
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
           },
           {
             label: this.translate.instant('labels.annuler'),
@@ -182,6 +255,8 @@ export class MandatsComponent
   handleFilter = (event: any) => {
     this.primes = this.primesData;
     if (event?.value[0]?.toLowerCase())
+<<<<<<< HEAD
+<<<<<<< HEAD
       this.primes = this.primesData.filter((item) =>
         item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
       );
@@ -209,6 +284,41 @@ export class MandatsComponent
       this.deblocages = this.deblocagesData.filter((item) =>
         item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
       );
+=======
+      this.primes = this.primesData.filter(item => item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase()));
+=======
+      this.primes = this.primesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+>>>>>>> 43cbcf5 (mandat-commandes)
+
+    this.releves = this.relevesData;
+    if (event?.value[0]?.toLowerCase())
+      this.releves = this.relevesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+    this.agents = this.agentsData;
+    if (event?.value[0]?.toLowerCase())
+      this.agents = this.agentsData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+    this.structures = this.structuresData;
+    if (event?.value[0]?.toLowerCase())
+      this.structures = this.structuresData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+
+<<<<<<< HEAD
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+    this.deblocages = this.deblocagesData;
+    if (event?.value[0]?.toLowerCase())
+      this.deblocages = this.deblocagesData.filter((item) =>
+        item.etat.toLowerCase().includes(event?.value[0]?.toLowerCase())
+      );
+>>>>>>> 43cbcf5 (mandat-commandes)
   };
 
   handleReservation(item: EngagementMandatModel) {
@@ -216,7 +326,15 @@ export class MandatsComponent
       message: 'dialogs.messages.reserveMandatEngagement',
       accept: () => {
         this._dialogService.launchEngagementMandatCreateDialog(
+<<<<<<< HEAD
+<<<<<<< HEAD
           'decision',
+=======
+          'commande',
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+          'decision',
+>>>>>>> 43cbcf5 (mandat-commandes)
           item,
           'book'
         );
@@ -247,11 +365,25 @@ export class MandatsComponent
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
   async openForm() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
     this._dialogService.launchEngagementMandatCreateDialog('decision');
   }
 
   edit(item: EngagementMandatModel) {
     this._dialogService.launchEngagementMandatCreateDialog('decision', item);
+<<<<<<< HEAD
+=======
+    this._dialogService.launchEngagementMandatCreateDialog('commande');
+  }
+
+  edit(item: EngagementMandatModel) {
+    this._dialogService.launchEngagementMandatCreateDialog('commande', item);
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+>>>>>>> 43cbcf5 (mandat-commandes)
   }
 
   delete(item: EngagementMandatModel) {
@@ -268,6 +400,8 @@ export class MandatsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
+<<<<<<< HEAD
+<<<<<<< HEAD
         if (this.data[0]?.numActeJuridique?.codeProcedure === '1122') {
           this.primes = [...data];
           this.primesData = [...data];
@@ -285,6 +419,32 @@ export class MandatsComponent
           this.structuresData = [...data];
         }
         if (this.data[0]?.numActeJuridique.codeProcedure === '1126') {
+=======
+        if(this.data[0]?.numActeJuridique?.codeProcedure === "1122"){
+=======
+        if (this.data[0]?.numActeJuridique?.codeProcedure === '1122') {
+>>>>>>> 43cbcf5 (mandat-commandes)
+          this.primes = [...data];
+          this.primesData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1123') {
+          this.releves = [...data];
+          this.relevesData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1124') {
+          this.agents = [...data];
+          this.agentsData = [...data];
+        }
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1125') {
+          this.structures = [...data];
+          this.structuresData = [...data];
+        }
+<<<<<<< HEAD
+        if(this.data[0]?.numActeJuridique.codeProcedure === "1126"){
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
+=======
+        if (this.data[0]?.numActeJuridique.codeProcedure === '1126') {
+>>>>>>> 43cbcf5 (mandat-commandes)
           this.deblocages = [...data];
           this.deblocagesData = [...data];
         }

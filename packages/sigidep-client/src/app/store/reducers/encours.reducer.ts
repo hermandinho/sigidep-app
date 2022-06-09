@@ -5,6 +5,9 @@ import {
   DeleteEncours,
   DeleteEncoursFailure,
   DeleteEncoursSuccess,
+  GetEncourByExercice,
+  GetEncourByExerciceFailure,
+  GetEncourByExerciceSuccess,
   GetEncours,
   GetEncoursFailure,
   GetEncoursSuccess,
@@ -61,6 +64,16 @@ const encoursReducer = createReducer(
     return { ...state, loading: false, data: [payload] };
   }),
   on(CreateEncoursFailure, (state, { error }) => {
+    return { ...state, loading: false, error: error };
+  }),
+
+  on(GetEncourByExercice, (state, { id }) => {
+    return { ...state, loading: true };
+  }),
+  on(GetEncourByExerciceSuccess, (state, { payload }) => {
+    return { ...state, loading: false, data: payload };
+  }),
+  on(GetEncourByExerciceFailure, (state, { error }) => {
     return { ...state, loading: false, error: error };
   })
 );

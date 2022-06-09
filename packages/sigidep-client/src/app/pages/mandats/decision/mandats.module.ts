@@ -15,7 +15,10 @@ import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { TreeTableModule } from 'primeng/treetable';
 import { SharedModule } from '@modules/shared.module';
+<<<<<<< HEAD
+=======
 import { TabViewModule } from 'primeng/tabview';
+>>>>>>> 019fd3c (gestion des procedure mandat-decision)
 
 @NgModule({
   declarations: [MandatsComponent],
@@ -38,4 +41,4 @@ import { TabViewModule } from 'primeng/tabview';
     PanelModule,
   ],
 })
-export class MandatsModule {}
+export class MandatsModule { }

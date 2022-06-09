@@ -1,13 +1,8 @@
 import { AdministrativeUnitModel } from '@models/index';
 import { GestionnaireModel } from './../../models/gestionnaire.model';
-import {
-  SubProgramActivityModel,
-  SubProgramActivityTaskModel,
-} from '@models/sub-program.model';
 import { SubProgramModel } from './../../models/sub-program.model';
 import { AgentModel } from '@models/agent.model';
 import { ExerciseModel } from './../../models/exercise.model';
-import { ContribuableBugetaireModel } from '@models/contribuable-budgetaire.model';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { AppService } from './../../services/app.service';
@@ -16,15 +11,13 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BaseComponent } from './../base.component';
 import { Component, OnInit } from '@angular/core';
-import { GetContribuablesBugetaires } from '@actions/contribuables-budgetaires.actions';
-import { BankModel } from '@models/banque.model';
 import { AccreditationGestionnaireModel } from '@models/accreditation-gestionnaire.model';
 import { EncoursModel } from '@models/encours.model';
-import { FilterService } from './filter.service';
 import { getDataSelector, getLoadingSelector } from '@reducers/encours.reducer';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { GetEncours } from '@actions/encours.actions';
+import { GetEncourByExercice, GetEncours } from '@actions/encours.actions';
+import { GetAccreditations } from '@actions/accreditaions.actions';
 
 @Component({
   selector: 'app-accreditations-gestionnaires-form',
@@ -33,13 +26,13 @@ import { GetEncours } from '@actions/encours.actions';
 })
 export class AccreditationsGestionnairesFormComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   public form: FormGroup;
   public busy = false;
   isEditMode = false;
   loadingRemoveAccreditation = false;
   loadingSaveAccreditation = false;
+  public exercice = null;
 
   public loading$: Observable<boolean> = of(true);
 
@@ -75,8 +68,7 @@ export class AccreditationsGestionnairesFormComponent
     public ref: DynamicDialogRef,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>,
-    private filterService: FilterService
+    private _store: Store<AppState>
   ) {
     super();
     this.form = this._fb.group({
@@ -89,6 +81,8 @@ export class AccreditationsGestionnairesFormComponent
       task: [undefined, []],
       administrativeUnit: [undefined, []],
       id: [undefined, []],
+      // startDate: [undefined, []],
+      // endDate: [undefined, []],
     });
 
     this.listenForm();
@@ -96,40 +90,34 @@ export class AccreditationsGestionnairesFormComponent
   private listenForm() {
     this.form.get('subProgram')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.subProgram == value
+        this.filteredEncours = this.allEncours.filter((e) =>
+          e.element.subProgram == value.subProgram ? e : null
         );
       }
     });
     this.form.get('action')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.action == value
-        );
+        this.filteredEncours = this.allEncours.filter((e) => {
+          return e.element.action == value.action ? e : null;
+        });
       }
     });
     this.form.get('task')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.task == value
+        this.filteredEncours = this.allEncours.filter((e) =>
+          e.element.task == value.task ? e : null
         );
       }
     });
     this.form.get('activity')?.valueChanges.subscribe((value) => {
       if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.activity == value
-        );
-      }
-    });
-    this.form.get('activity')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.filteredEncours = this.filteredEncours.filter(
-          (e) => e.element.activity == value
-        );
+        this.filteredEncours = this.allEncours.filter((e) => {
+          return e.element.activity == value.activity ? e : null;
+        });
       }
     });
   }
+
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
@@ -159,16 +147,6 @@ export class AccreditationsGestionnairesFormComponent
     this._store.dispatch(GetEncours());
     if (this.config.data?.item) {
       const { id, matricule } = this.config.data?.item as GestionnaireModel;
-      /* this.form.patchValue({
-        id,
-        code,
-        raisonSociale,
-        exercice,
-        banque,
-        agence,
-        numeroCompte,
-        cle,
-      }); */
       this.isEditMode = true;
 
       const a = this.agentsList.find((elt) => elt.matricule === matricule);
@@ -178,11 +156,13 @@ export class AccreditationsGestionnairesFormComponent
   }
 
   uniqueItemsWith(key: string) {
-    return [
+    let values = [
       ...new Map(
-        this.allEncours.map((item: any) => [item[key], item])
+        this.allEncours.map((item: any) => [item.element[key], item.element])
       ).values(),
     ] as EncoursModel[];
+
+    return values;
   }
 
   close() {
@@ -220,20 +200,20 @@ export class AccreditationsGestionnairesFormComponent
       .toPromise();
     this.imputationsOperationsList =
       agentWithAcrreditationResult &&
-      agentWithAcrreditationResult.accreditations.length > 0
+        agentWithAcrreditationResult.accreditations.length > 0
         ? agentWithAcrreditationResult.accreditations
         : [
-            // TODO: Juste pour le test, a retirer
-            {
-              createdAt: new Date(),
-              dateDebut: new Date(),
-              dateFin: new Date(),
-              imputation: 'yo',
-              labelOperation: 'test',
-              id: 1,
-              updatedAt: new Date(),
-            },
-          ];
+          // TODO: Juste pour le test, a retirer
+          {
+            createdAt: new Date(),
+            dateDebut: new Date(),
+            dateFin: new Date(),
+            imputation: 'yo',
+            labelOperation: 'test',
+            id: 1,
+            updatedAt: new Date(),
+          },
+        ];
   }
 
   async deleteAccreditation(item: AccreditationGestionnaireModel) {
@@ -305,12 +285,12 @@ export class AccreditationsGestionnairesFormComponent
             life: 3000,
             closable: true,
           });
+          this._store.dispatch(GetAccreditations());
         },
         ({ error }) => {
           this.busy = false;
           this.ref.close();
           let err = '';
-          console.log(error);
           if (error?.statusCode === 409) {
             err = 'errors.dejaRegion';
           } else {
@@ -325,5 +305,11 @@ export class AccreditationsGestionnairesFormComponent
           });
         }
       );
+  }
+  /**
+   * setOtherField
+   */
+  public setOtherField() {
+    this._store.dispatch(GetEncourByExercice({ id: this.exercice!['code'] }));
   }
 }
