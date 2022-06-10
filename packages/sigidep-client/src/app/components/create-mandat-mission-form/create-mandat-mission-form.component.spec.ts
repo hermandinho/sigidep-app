@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateMandatMissionFormComponent } from './create-mandat-mission-form.component';
 
 describe('CreateMandatMissionFormComponent', () => {
