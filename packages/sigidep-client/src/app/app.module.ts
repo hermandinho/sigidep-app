@@ -88,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     HomeModule,
     InstallModule,
+    CommonModule,
     AuthModule,
     ExercisesModule,
     RolesModule,
