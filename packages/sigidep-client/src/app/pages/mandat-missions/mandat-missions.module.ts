@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MandatMissionsComponent } from './mandat-missions.component';
 import { MandatMissionssRoutingModule } from './mandat-missions-routing.module';
@@ -18,6 +19,7 @@ import { TreeTableModule } from 'primeng/treetable';
 @NgModule({
   declarations: [MandatMissionsComponent],
   imports: [
+    BrowserModule,
     CommonModule,
     MandatMissionssRoutingModule,
     SharedModule,
