@@ -31,6 +31,9 @@ export class EngagementCommandeService {
       .andWhere(filter?.etats ? 'ej.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
+      .andWhere(filter?.numeros ? 'ej.numero IN(:...numero)' : 'true', {
+        numero: filter?.numeros,
+      })
       .getMany();
   }
 

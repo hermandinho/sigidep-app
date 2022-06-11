@@ -77,10 +77,12 @@
     "back": "Retour",
     "submit": "Soumettre",
     "print": "Imprimer",
-    "close": "Fermer"
+    "close": "Fermer",
+    "recherche":"Rechercher"
   },
   "install": {
     "title": "Installation"
+
   },
   "labels": {
     "structureCode": "Code Structure",
@@ -366,7 +368,20 @@
     "montantIRNC": "Montant Taxes (IRNC)",
     "avance": "Avance Démarrage",
     "decompte": "Décompte",
-    "marche": "Marché réalisé en entier"
+    "marche": "Marché réalisé en entier",
+    "paye_mandat": "Mandat Payé",
+    "validACT_mandat": "Validation ACT (en Attente Paiement)",
+    "ordonnance_mandat": "Ordonnancement Mandat",
+    "liquite_mandat": "Liquidation Mandat",
+    "editionTCC_mandat": "Edition Titre Créance",
+    "rejet_mandat": "Mandat Rejeté",
+    "datePaiement_mandat": "Date Paiement",
+    "dateValidACT_mandat": "Date Validation",
+    "dateOrdonnancement_mandat": "Date Ordonnancement",
+    "dateLiquidation_mandat": "Date Liquidation",
+    "dateEditionTCC_mandat": "Date Edition Titre CC",
+    "date_rejet": "Date Rejet",
+    "motif_rejet": "Motif"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -610,7 +625,7 @@
     "taxes": "Taxes",
     "procedures": "Procédures",
     "engagements": "Engagements",
-    "mandatsprimes": "Engagement Mandat Prime"
+    "mandatsprimes": "Engagement Mandat Decision"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -848,7 +863,9 @@
       "viewEngagementMandat": "Engagement mandat: {{numero}}",
       "reserverEngagement": "Réservation de l'engagement No: {{numero}}",
       "reserverEngagementMandat": "Réservation de l'engagement mandat No: {{numero}}",
-      "printEngagement": "Engagement"
+      "printEngagement": "Engagement",
+      "etatCertificat":"Etat de l'engagement Juridique: {{numero}}",
+      "etatMandat":"Etat de l'engagement Mandat: {{numero}}"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -964,7 +981,9 @@
     "deliverables": "Livrables",
     "chronogram": "Chronogramme",
     "physicalUnits": "Unités physiques",
-    "codofication": "Codofication"
+    "codofication": "Codofication",
+    "mandatSituation":"SITUATION SOMMAIRE DE TRAITEMENT MANDAT N°"
+
   },
   "measurementUnits": {
     "unit": "Unité",

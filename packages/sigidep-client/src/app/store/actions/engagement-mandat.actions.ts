@@ -2,7 +2,7 @@ import { EngagementMandatModel } from '@models/engagement-mandat.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementMandats = createAction(
   '[Mandats] Filter',
-  props<{ procedures?: string[]; etats?: string[]; numeros?: string }>()
+  props<{ procedures?: string[]; etats?: string[]; numeros?: string[]; imputation?: string[] }>()
 );
 export const GetEngagementMandatsSuccess = createAction(
   '[Mandats] Filter success',

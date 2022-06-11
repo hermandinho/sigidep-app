@@ -1,0 +1,175 @@
+
+<div class="container">
+  <p-card>
+    <h3>{{"steps.mandatSituation" | translate}}</h3>
+
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-1">
+        <button
+            class="p-button-rounded p-button-danger"
+            icon="pi pi-times"
+            pButton
+            pRipple
+
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+        <button
+            class="p-button-rounded p-button-success"
+            icon="pi pi-check"
+            pButton
+            pRipple
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span>{{"labels.paye_mandat" | translate}}</span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.datePaiement_mandat" | translate}}:10/06/2022</span>
+      </div>
+      <!--  -->
+      <div class="p-field p-col-12 p-md-1">
+        <button
+        class="p-button-rounded p-button-danger"
+        icon="pi pi-times"
+        pButton
+        pRipple
+      ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+         <button
+            class="p-button-rounded p-button-success"
+            icon="pi pi-check"
+            pButton
+            pRipple
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span>{{"labels.validACT_mandat" | translate}}</span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateValidACT_mandat" | translate}}:10/06/2022</span>
+      </div>
+      <!--  -->
+      <div class="p-field p-col-12 p-md-1">
+        <button
+        class="p-button-rounded p-button-danger"
+        icon="pi pi-times"
+        pButton
+        pRipple
+      ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+         <button
+            class="p-button-rounded p-button-success"
+            icon="pi pi-check"
+            pButton
+            pRipple
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span>{{"labels.ordonnance_mandat" | translate}}</span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateOrdonnancement_mandat" | translate}}:10/06/2022</span>
+      </div>
+      <!--  -->
+      <div class="p-field p-col-12 p-md-1">
+        <button
+        class="p-button-rounded p-button-danger"
+        icon="pi pi-times"
+        pButton
+        pRipple
+      ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+         <button
+            class="p-button-rounded p-button-success"
+            icon="pi pi-check"
+            pButton
+            pRipple
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span>{{"labels.liquite_mandat" | translate}}</span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateLiquidation_mandat" | translate}}:10/06/2022</span>
+      </div>
+      <!--  -->
+      <div class="p-field p-col-12 p-md-1">
+        <button
+        class="p-button-rounded p-button-danger"
+        icon="pi pi-times"
+        pButton
+        pRipple
+      ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+         <button
+            class="p-button-rounded p-button-success"
+            icon="pi pi-check"
+            pButton
+            pRipple
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span>{{"labels.editionTCC_mandat" | translate}}</span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateEditionTCC_mandat" | translate}}:10/06/2022</span>
+      </div>
+      <!--  -->
+      <div class="p-field p-col-12 p-md-1">
+        <button
+        class="p-button-rounded p-button-danger"
+        icon="pi pi-times"
+        pButton
+        pRipple
+      ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+         <button
+            class="p-button-rounded p-button-success"
+            icon="pi pi-check"
+            pButton
+            pRipple
+          ></button>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span>{{"labels.rejet_mandat" | translate}}</span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.date_rejet" | translate}}:10/06/2022</span>
+      </div>
+      <!--  -->
+      <div class="p-field p-col-12 p-md-1">
+
+      </div>
+      <div class="p-field p-col-12 p-md-1">
+
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span></span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.motif_rejet" | translate}}:10/06/2022</span>
+      </div>
+    </div>
+
+  </p-card>
+
+  <div class="footer">
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
+      (click)="doChangeStep('forward')"
+      [label]="'buttons.next' | translate"
+      pButton
+    ></button>
+  </div>
+</div>
+

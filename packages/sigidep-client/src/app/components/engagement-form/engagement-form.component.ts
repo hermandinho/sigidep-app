@@ -36,6 +36,7 @@ import { GetEngagementJuridiquesByCategory } from '@actions/engagements.actions'
 })
 export class EngagementFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
+  @Input() dataEngagement!: any;
   @Input() readOnly!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
@@ -49,6 +50,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   public disabled: boolean = true;
   loading$: Observable<boolean> = of(true);
   missions!: EngagementMissionModel[];
+  act:any;
   public engagements!: (
     | EngagementCommandeModel
     | EngagementDecisionModel
@@ -62,11 +64,13 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('engagements',this.engagements)
     this.engagementForm = this.startingForm;
+    console.log('engagementForm',this.engagementForm)
     this.subformInitialized.emit(this.engagementForm);
     if (this.readOnly) this.engagementForm.disable();
 
-    //prime procedure code is 1122
+    //prime procedure code is 1121
     this._store.dispatch(
       GetEngagementJuridiquesByCategory({
         category: this.category,
@@ -98,8 +102,14 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this.engagementForm.controls['tauxTVA'].disable();
     this.engagementForm.controls['tauxIR'].disable();
     this.engagementForm.controls['RIB'].disable();
+    this.engagementForm.controls['itineraire'].disable();
+    this.engagementForm.controls['dateDebut'].disable();
+    this.engagementForm.controls['dateFin'].disable();
+    this.engagementForm.controls['nombreJours'].disable();
+    this.engagementForm.controls['baremeJour'].disable();
+    this.engagementForm.controls['montantMission'].disable();
+    this.engagementForm.controls['numeroj'].disable();
   }
-
   onActeJuridiqueChange = (event: any) => {
     const act: Engagement | undefined = this.engagements.find(
       (item) => item.id === event.value
@@ -174,40 +184,91 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
 
   scanneElt = (event: any) => {
-    const act: Engagement | undefined = this.engagements.find(
-      (item) => item.id === event.numActeJuridique.id
-    );
-    localStorage.setItem('imputation', JSON.stringify(act?.imputation));
-    this.procedure = act?.codeProcedure;
-    console.log('Data. Taxe..', (act as any)?.taxesApplicable);
-    if (act) {
+    if(this.dataEngagement){
+      if(this.dataEngagement?.numActeJuridique){
+         const test =this.dataEngagement?.numActeJuridique;
+        if(test.codeProcedure==='1121'){
+          this._store.dispatch(
+            GetEngagementJuridiquesByCategory({
+              category: 'mission',
+            })
+          );
+          this.act = this.engagements.find(
+            (item) => item.id === event.numActeJuridique.id
+          );
+        }
+
+        if(test.codeProcedure==='1122'||test.codeProcedure==='1123'||test.codeProcedure==='1124'||test.codeProcedure==='1125'||test.codeProcedure==='1126'){
+          this._store.dispatch(
+            GetEngagementJuridiquesByCategory({
+              category: 'decision',
+            })
+          );
+          this.act = this.engagements.find(
+            (item) => item.id === event.numActeJuridique.id
+          );
+
+        }
+
+        if(test.codeProcedure==='1110'||test.codeProcedure==='1111'||test.codeProcedure==='1115'){
+          this._store.dispatch(
+            GetEngagementJuridiquesByCategory({
+              category: 'commande',
+            })
+          );
+          this.act = this.engagements.find(
+            (item) => item.id === event.numActeJuridique.id
+          );
+
+        }
+
+      }else{
+        this.engagements=this.dataEngagement;
+        this.act= this.dataEngagement;
+      }
+    }else{
+      this.act = this.engagements.find(
+        (item) => item.id === event.numActeJuridique.id
+      );
+    }
+    localStorage.setItem('imputation', JSON.stringify(this.act?.imputation));
+    this.procedure = this.act?.codeProcedure;
+    console.log('Data. Taxe..', (this.act as any)?.taxesApplicable);
+
+    if (this.act) {
       this.engagementForm.patchValue({
-        codeProcedure: act?.codeProcedure,
-        reference: act?.reference,
-        dateSignature: act?.dateSignature,
-        signatairej: act?.signataire,
-        objetj: act?.objet,
-        imputation: act?.imputation,
-        numeroj: act?.numero,
-        montantAE: act?.montantAE,
-        matriculeBeneficaire: (act as any)?.matriculeBeneficiaire,
-        nomBeneficaire: (act as any)?.nomBeneficiaire,
-        netAPercevoir: (act as any)?.netAPercevoir,
-        nomUnitAdminBenef: (act as any)?.nomUnitAdminBenef,
-        codeUnitAdminBenef: (act as any)?.codeUnitAdminBenef,
-        montantBrut: (act as any)?.montantBrut,
-        montantIRNC: (act as any)?.montantIRNC,
+        codeProcedure: this.act?.codeProcedure,
+        reference: this.act?.reference,
+        dateSignature: this.act?.dateSignature,
+        signatairej: this.act?.signataire,
+        objetj: this.act?.objet,
+        imputation: this.act?.imputation,
+        numeroj: this.act?.numero,
+        montantAE: this.act?.montantAE,
+        itineraire: this.act?.itineraire,
+        dateDebut: this.act?.dateDebut,
+        dateFin: this.act?.dateFin,
+        nombreJours: this.act?.nombreJours,
+        baremeJour: this.act?.baremeJour?.montant,
+        montantMission: this.act?.montant,
+        matriculeBeneficaire: (this.act as any)?.matriculeBeneficiaire,
+        nomBeneficaire: (this.act as any)?.nomBeneficiaire,
+        netAPercevoir: (this.act as any)?.netAPercevoir,
+        nomUnitAdminBenef: (this.act as any)?.nomUnitAdminBenef,
+        codeUnitAdminBenef: (this.act as any)?.codeUnitAdminBenef,
+        montantBrut: (this.act as any)?.montantBrut,
+        montantIRNC: (this.act as any)?.montantIRNC,
         numContribuable:
-          (act as any)?.numContribuable || (act as any)?.niuContribuable,
-        raisonSociale: (act as any)?.raisonSociale,
-        taxesApplicable: (act as any)?.taxesApplicable,
-        tauxTVA: (act as any)?.tauxTVA,
-        tauxIR: (act as any)?.tauxIR,
+          (this.act as any)?.numContribuable || (this.act as any)?.niuContribuable,
+        raisonSociale: (this.act as any)?.raisonSociale,
+        taxesApplicable: (this.act as any)?.taxesApplicable,
+        tauxTVA: (this.act as any)?.tauxTVA,
+        tauxIR: (this.act as any)?.tauxIR,
         RIB:
-          (act as any)?.codeBanqueContribuable +
-          (act as any)?.codeAgenceContribuable +
-          (act as any)?.numeroCompteContribuable +
-          (act as any)?.cleCompteContribuable,
+          (this.act as any)?.codeBanqueContribuable +
+          (this.act as any)?.codeAgenceContribuable +
+          (this.act as any)?.numeroCompteContribuable +
+          (this.act as any)?.cleCompteContribuable,
       });
     }
   };

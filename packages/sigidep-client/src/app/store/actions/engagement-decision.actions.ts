@@ -2,7 +2,7 @@ import { EngagementDecisionModel } from '@models/engagement-decision.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementDecisions = createAction(
   '[EngagementDecisions] Filter',
-  props<{ procedures?: string[]; etats?: string[] }>()
+  props<{ procedures?: string[]; etats?: string[]; numeros?: string[] }>()
 );
 export const GetEngagementDecisionsSuccess = createAction(
   '[EngagementDecisions] Filter success',
