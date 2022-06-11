@@ -1,10 +1,10 @@
 
 <div class="container">
   <p-card>
-    <h3>{{"steps.mandatSituation" | translate}}: {{traitement?.numero}}</h3>
+    <h3>{{"steps.mandatSituation" | translate}}</h3>
 
     <div class="p-fluid p-grid">
-      <div *ngIf="!traitement?.paiements[0]?.paye" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
             class="p-button-rounded p-button-danger"
             icon="pi pi-times"
@@ -13,7 +13,7 @@
 
           ></button>
       </div>
-      <div *ngIf="traitement?.paiements[0]?.paye" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -24,11 +24,11 @@
       <div class="p-field p-col-12 p-md-5">
         <span>{{"labels.paye_mandat" | translate}}</span>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{"labels.datePaiement_mandat" | translate}}:{{traitement?.paiements[0]?.datePaiement}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.datePaiement_mandat" | translate}}:10/06/2022</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement?.paiements[0]?.ValidACT" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -36,7 +36,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement?.paiements[0]?.ValidACT" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -47,11 +47,11 @@
       <div class="p-field p-col-12 p-md-5">
         <span>{{"labels.validACT_mandat" | translate}}</span>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{"labels.dateValidACT_mandat" | translate}}:{{traitement?.paiements[0]?.dateValidACT}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateValidACT_mandat" | translate}}:10/06/2022</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement?.traitements[0]?.ordonnancement" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -59,7 +59,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement?.traitements[0]?.ordonnancement" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -70,11 +70,11 @@
       <div class="p-field p-col-12 p-md-5">
         <span>{{"labels.ordonnance_mandat" | translate}}</span>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{"labels.dateOrdonnancement_mandat" | translate}}:{{traitement?.traitements[0]?.dateOrdonnancement}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateOrdonnancement_mandat" | translate}}:10/06/2022</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement?.traitements[0]?.liquidation" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -82,7 +82,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement?.traitements[0]?.liquidation" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -93,11 +93,11 @@
       <div class="p-field p-col-12 p-md-5">
         <span>{{"labels.liquite_mandat" | translate}}</span>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{"labels.dateLiquidation_mandat" | translate}}:{{traitement?.traitements[0]?.dateLiquidation}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateLiquidation_mandat" | translate}}:10/06/2022</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement.editionTCC" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -105,7 +105,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement.editionTCC" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -116,11 +116,11 @@
       <div class="p-field p-col-12 p-md-5">
         <span>{{"labels.editionTCC_mandat" | translate}}</span>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{"labels.dateEditionTCC_mandat" | translate}}:{{traitement?.dateEditionTCC}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.dateEditionTCC_mandat" | translate}}:10/06/2022</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement.rejet" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -128,7 +128,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement.rejet" class="p-field p-col-12 p-md-1">
+      <div class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -139,18 +139,21 @@
       <div class="p-field p-col-12 p-md-5">
         <span>{{"labels.rejet_mandat" | translate}}</span>
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{"labels.date_rejet" | translate}}:{{traitement?.dateRejet}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.date_rejet" | translate}}:10/06/2022</span>
       </div>
       <!--  -->
-      <div class="p-field p-col-12 p-md-4">
+      <div class="p-field p-col-12 p-md-1">
 
       </div>
-      <div class="p-field p-col-12 p-md-2">
-        <span class="color">{{"labels.motif_rejet" | translate}}:</span>
+      <div class="p-field p-col-12 p-md-1">
+
       </div>
-      <div class="p-field p-col-12 p-md-6">
-        <span class="color">{{traitement?.traitements[0]?.motif}}</span>
+      <div class="p-field p-col-12 p-md-5">
+        <span></span>
+      </div>
+      <div class="p-field p-col-12 p-md-5">
+        <span class="color">{{"labels.motif_rejet" | translate}}:10/06/2022</span>
       </div>
     </div>
 

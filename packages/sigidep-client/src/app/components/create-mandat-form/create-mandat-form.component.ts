@@ -42,8 +42,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   public categorieProcedure!: CategorieProcedure;
   public engagements!:any;
   public situations:any;
-  public isCheck=false;
-  public situationForm:any;
   //bookProcess:any;
 
   constructor(
@@ -123,6 +121,12 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         situationActuelle: [undefined],
         sourceVerif: [undefined],
       }),
+
+      situationForm: this._fb.group({
+        livrables: [undefined],
+        situationActuelle: [undefined],
+        sourceVerif: [undefined],
+      }),
     });
 
     if (this.config.data?.category) {
@@ -133,12 +137,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatMandat') {
-        this.engagements=this.config.data?.item;
-        this.isCheck=true;
         this.currentStepBs.next('situation');
-      }else if (this.situationAction === 'dialogs.headers.etatCertificat') {
-        this.engagements=this.config.data?.item;
       }
+      console.log(this.situationAction)
     }
 
     if (this.config.data?.item) {
@@ -191,7 +192,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         | EngagementMissionModel
         | EngagementMandatModel
         | any;
-
+      this.engagements=this.config.data?.item;
       this.form.patchValue({
         engagementForm: {
           id,
@@ -243,6 +244,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           sourceVerif,
         },
         situationForm: {
+          livrables,
+          situationActuelle,
+          sourceVerif,
         },
       });
 

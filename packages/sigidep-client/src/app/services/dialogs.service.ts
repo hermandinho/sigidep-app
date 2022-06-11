@@ -1054,7 +1054,6 @@ export class DialogsService {
         data: {
           category,
           item,
-          action
         },
       });
     }else{
@@ -1105,31 +1104,4 @@ export class DialogsService {
     });
   }
 
-  public async launchEngagementMandatMissionCreateDialog(
-    item?: EngagementMandatModel,
-    action?: string
-  ): Promise<any> {
-    if (!this.createMandatMissionFormComponent) {
-      const { CreateMandatMissionFormComponent } = await import(
-        '@components/create-mandat-mission-form/create-mandat-mission-form.component'
-      );
-      this.createMandatMissionFormComponent = CreateMandatMissionFormComponent;
-    }
-
-    return this._dialogService.open(this.createMandatMissionFormComponent, {
-      header: this._translateService.instant(
-        action
-          ? 'dialogs.headers.viewEngagementMandat'
-          : 'dialogs.headers.editEngagementMandat',
-        { numero: item?.numero }
-      ),
-      width: '60vw',
-      height: 'auto',
-      modal: true,
-      data: {
-        item,
-        action,
-      },
-    });
-  }
 }
