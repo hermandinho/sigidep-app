@@ -1,11 +1,19 @@
 <ng-container [ngSwitch]="currentStep$ | async">
+  <app-create-situation-traitement
+    *ngSwitchCase="'situation'"
+    (subformInitialized)="subformInitialized('situationForm', $event)"
+    (changeStep)="changeStep('situation', 'forward')"
+    [situation]="situations"
+  >
+  </app-create-situation-traitement>
   <app-engagement-form
     *ngSwitchCase="'engagement'"
     [readOnly]="isBook"
     [startingForm]="engagementFormGroup"
     (subformInitialized)="subformInitialized('engagementForm', $event)"
-    (changeStep)="changeStep('engagement', 'forward')"
+    (changeStep)="changeStep('engagement', $event)"
     [category]="categorieProcedure"
+    [dataEngagement]="engagements"
   ></app-engagement-form>
   <app-mandat-form
     *ngSwitchCase="'mandat'"
@@ -14,11 +22,13 @@
     (subformInitialized)="subformInitialized('mandatForm', $event)"
     (changeStep)="changeStep('mandat', $event)"
     [procedure]="currentProcedure"
+    [dataEngagement]="engagements"
   ></app-mandat-form>
   <app-perform-form
     *ngSwitchCase="'perform'"
     [readOnly]="isBook"
     [startingForm]="performFormGroup"
+    [dataEngagement]="engagements"
     (subformInitialized)="subformInitialized('performForm', $event)"
     (changeStep)="changeStep('perform', 'back')"
     (submitForm)="submitForm()"

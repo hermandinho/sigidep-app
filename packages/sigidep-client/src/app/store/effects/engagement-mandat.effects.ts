@@ -39,7 +39,10 @@ export class EngagementsMandatsEffects {
               etats: action.etats.join(','),
             }),
             ...(action.numeros && {
-              numeros: action.numeros,
+              numeros: action.numeros.join(','),
+            }),
+            ...(action.imputation && {
+              imputation: action.imputation.join(','),
             }),
           })
           .pipe(

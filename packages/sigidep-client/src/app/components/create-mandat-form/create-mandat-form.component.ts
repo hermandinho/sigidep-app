@@ -30,15 +30,18 @@ import { CategorieProcedure } from 'app/utils/types';
   styleUrls: ['./create-mandat-form.component.scss'],
 })
 export class CreateMandatFormComponent extends BaseComponent implements OnInit {
-  private currentStepBs: BehaviorSubject<StepMandat> =
+  public currentStepBs: BehaviorSubject<StepMandat> =
     new BehaviorSubject<StepMandat>('engagement');
   public currentStep$: Observable<StepMandat> =
     this.currentStepBs.asObservable();
   public form!: FormGroup;
   public action!: 'book' | 'edit';
+  public situationAction!:string;
   public busy = false;
   public currentProcedure!: string;
   public categorieProcedure!: CategorieProcedure;
+  public engagements!:any;
+  public situations:any;
   //bookProcess:any;
 
   constructor(
@@ -55,6 +58,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.form = this._fb.group({
       engagementForm: this._fb.group({
         id: [undefined],
@@ -117,6 +121,12 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         situationActuelle: [undefined],
         sourceVerif: [undefined],
       }),
+
+      situationForm: this._fb.group({
+        livrables: [undefined],
+        situationActuelle: [undefined],
+        sourceVerif: [undefined],
+      }),
     });
 
     if (this.config.data?.category) {
@@ -124,6 +134,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     }
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
+      this.situationAction = this.config.data?.action;
+      if (this.situationAction === 'dialogs.headers.etatMandat') {
+        this.currentStepBs.next('situation');
+      }
+      console.log(this.situationAction)
     }
 
     if (this.config.data?.item) {
@@ -175,6 +190,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         | EngagementMissionModel
         | EngagementMandatModel
         | any;
+      this.engagements=this.config.data?.item;
       this.form.patchValue({
         engagementForm: {
           id,
@@ -225,6 +241,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           situationActuelle,
           sourceVerif,
         },
+        situationForm: {
+          livrables,
+          situationActuelle,
+          sourceVerif,
+        },
       });
     }
   }
@@ -258,9 +279,17 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
   changeStep(currentStep?: string, direction?: 'forward' | 'back') {
     switch (currentStep) {
+      case 'situation':
+        if (direction === 'forward') {
+          this.currentStepBs.next('engagement');
+        }
+        break;
       case 'engagement':
         if (direction === 'forward') {
           this.currentStepBs.next('mandat');
+        }
+        if (direction === 'back') {
+          this.currentStepBs.next('situation');
         }
         break;
       case 'mandat':
@@ -390,7 +419,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
             );
           method.subscribe(
             (res) => {
-              console.log(res);
               this.busy = false;
 
               localStorage.removeItem('imputation');

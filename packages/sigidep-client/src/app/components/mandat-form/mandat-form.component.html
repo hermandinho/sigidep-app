@@ -117,6 +117,7 @@
       pButton
     ></button>
     <button
+    *ngIf="!dataEngagement"
       type="button"
       pButton
       pRipple
@@ -127,5 +128,16 @@
       [label]="'buttons.next' | translate"
       pButton
     ></button>
+    <button
+    *ngIf="dataEngagement?.numActeJuridique"
+    type="button"
+    pButton
+    pRipple
+    class="p-button"
+    icon="pi pi-angle-right"
+    (click)="doChangeStep('forward')"
+    [label]="'buttons.next' | translate"
+    pButton
+  ></button>
   </div>
 </div>
