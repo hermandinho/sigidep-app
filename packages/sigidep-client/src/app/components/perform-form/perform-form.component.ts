@@ -22,9 +22,7 @@ import { AppService } from '@services/app.service';
 export class PerformFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
-  @Input() procedure!: string;
   @Input() dataEngagement!: any;
-  @Input() isCheck!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<

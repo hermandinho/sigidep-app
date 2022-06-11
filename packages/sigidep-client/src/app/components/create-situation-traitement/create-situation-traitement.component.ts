@@ -9,25 +9,23 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./create-situation-traitement.component.scss']
 })
 export class CreateSituationTraitementComponent extends BaseComponent implements OnInit {
-  @Input() situation!: any;
   @Input() startingForm!: FormGroup;
+  @Input() situation!: any;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
     'back' | 'forward'
   >();
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
+  public engagementForm!: FormGroup;
   public form!: FormGroup;
   public disabled: boolean = true;
   loading$: Observable<boolean> = of(true);
-  public traitement:any;
   constructor() {
     super();
    }
 
   ngOnInit(): void {
-    console.log('traitement', this.situation)
-    this.traitement=this.situation;
   }
   doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);

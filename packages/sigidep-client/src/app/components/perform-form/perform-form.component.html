@@ -86,4 +86,11 @@
       {{ "buttons.cancel" | translate }}
     </button>
   </div>
+  <div class="footer" *ngIf="dataEngagement">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+  </div>
 </div>

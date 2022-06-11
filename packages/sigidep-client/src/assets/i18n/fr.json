@@ -381,12 +381,7 @@
     "dateLiquidation_mandat": "Date Liquidation",
     "dateEditionTCC_mandat": "Date Edition Titre CC",
     "date_rejet": "Date Rejet",
-    "motif_rejet": "Motif",
-    "montantTVA":"Montant TVA",
-    "montantIR":"Montant IR",
-    "montantTotalHT":"Montant Total HT",
-    "dateFacturation":"Date de Facturation",
-    "tauxIR":"Taux IR"
+    "motif_rejet": "Motif"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

@@ -4,12 +4,7 @@ import { EngagementJuridiqueModel } from './engagement-juridique.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 import { FactureModel } from './facture.model';
 
-export type StepMandat =
-  | 'engagement'
-  | 'mandat'
-  | 'perform'
-  | 'situation'
-  | 'facture';
+export type StepMandat = 'engagement' | 'mandat' | 'perform' | 'situation';
 export enum EtatEngagementMandatEnum {
   ORDINAIRE = 'labels.ordinaire',
   EFFECTUER = 'labels.effectuer',

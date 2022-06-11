@@ -43,7 +43,7 @@ export class MandatService {
   }
 
   public async filter(filter?: EngagementFilter): Promise<MandatEntity[]> {
-    console.log(filter.numeros)
+    console.log(filter.imputation)
     return this.repository
       .createQueryBuilder('mandat')
       .leftJoinAndSelect('mandat.numActeJuridique', 'eng')
@@ -57,8 +57,8 @@ export class MandatService {
       .andWhere(filter?.etats ? 'mandat.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
-      .andWhere(filter?.numeros ? 'mandat.numero IN(:...numero)' : 'true', {
-        numero: filter?.numeros,
+      .andWhere(filter?.imputation ? 'eng.imputation IN(:...numeroj)' : 'true', {
+        numeroj: filter?.imputation,
       })
       .getMany();
   }

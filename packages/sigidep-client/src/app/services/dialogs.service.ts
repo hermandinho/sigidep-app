@@ -104,7 +104,8 @@ export class DialogsService {
   private reservationEngagementMandatDecisionComponent: any;
   private etatCertificatEngagementComponent:any;
   private createMandatMissionFormComponent: any;
-
+  //private reservationEngagementMandatDecisionComponent: any;
+  //private etatCertificatEngagementComponent:any;
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
@@ -1053,7 +1054,6 @@ export class DialogsService {
         data: {
           category,
           item,
-          action
         },
       });
     }else{
