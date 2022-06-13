@@ -30,9 +30,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CreateMandatMissionFormComponent
   extends BaseComponent
-  implements OnInit
-{
-  private currentStepBs: BehaviorSubject<StepMandat> =
+  implements OnInit {
+  public currentStepBs: BehaviorSubject<StepMandat> =
     new BehaviorSubject<StepMandat>('engagement');
   public currentStep$: Observable<StepMandat> =
     this.currentStepBs.asObservable();
@@ -45,12 +44,12 @@ export class CreateMandatMissionFormComponent
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private _fb: FormBuilder,
-    private _appService: AppService,
-    private _apisService: ApisService,
-    private _store: Store<AppState>,
-    private readonly _dialogService: DialogsService,
-    private translate: TranslateService
+    public _fb: FormBuilder,
+    public _appService: AppService,
+    public _apisService: ApisService,
+    public _store: Store<AppState>,
+    public readonly _dialogService: DialogsService,
+    public translate: TranslateService
   ) {
     super();
   }
