@@ -383,7 +383,12 @@
   </div>
 
   <div class="footer">
-    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+    <button *ngIf="isCheck"
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+    <button *ngIf="!isCheck" pButton class="p-mr-3 p-button-warning" (click)="close()">
       {{ "buttons.cancel" | translate }}
     </button>
     <button *ngIf="!dataEngagement"

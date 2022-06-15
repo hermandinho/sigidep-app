@@ -381,7 +381,12 @@
     "dateLiquidation_mandat": "Date Liquidation",
     "dateEditionTCC_mandat": "Date Edition Titre CC",
     "date_rejet": "Date Rejet",
-    "motif_rejet": "Motif"
+    "motif_rejet": "Motif",
+    "montantTVA":"Montant TVA",
+    "montantIR":"Montant IR",
+    "montantTotalHT":"Montant Total HT",
+    "dateFacturation":"Date de Facturation",
+    "tauxIR":"Taux IR"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -798,7 +803,12 @@
       "objetMandat": "Objet de la dépense",
       "dateEngagementMandat": "Date Engagement",
       "montantCPChiffresMandat": "Montant Mandat",
-      "numeroJuridique": "N° Engagement Juridique"
+      "numeroJuridique": "N° Engagement Juridique",
+      "prixTotalHT":"Rrix Total HT",
+      "prixUnitaireHT":"Prix Unitaire HT",
+      "quantite":"Quantité",
+      "referenceMercuriale":"RéférenceMercuriale"
+
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

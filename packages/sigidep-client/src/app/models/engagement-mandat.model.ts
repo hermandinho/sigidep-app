@@ -3,7 +3,7 @@ import { BaseModel } from './base.model';
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
 import { EngagementMissionModel } from './engagement-mission.model';
 
-export type StepMandat = 'engagement' | 'mandat' | 'perform' | 'situation';
+export type StepMandat = 'engagement' | 'mandat' | 'perform' | 'situation' | 'facture';
 export enum EtatEngagementMandatEnum {
   ORDINAIRE = 'labels.ordinaire',
   EFFECTUER = 'labels.effectuer',
