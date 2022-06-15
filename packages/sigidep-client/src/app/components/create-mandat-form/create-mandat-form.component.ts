@@ -128,13 +128,16 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     if (this.config.data?.category) {
       this.categorieProcedure = this.config.data?.category;
     }
-    this.engagements=this.config.data?.item;
+
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatMandat') {
+        this.engagements=this.config.data?.item;
         this.isCheck=true;
         this.currentStepBs.next('situation');
+      }else if (this.situationAction === 'dialogs.headers.etatCertificat') {
+        this.engagements=this.config.data?.item;
       }
     }
 
