@@ -79,27 +79,13 @@ export class EncoursService {
     return this.encoursRepository.delete({ id });
   }
 
-  public async findByImputation(imputation: any): Promise<EncoursEntity[]> {
+  public async findByImputation(imputation: any): Promise<any[]> {
     return this.encoursRepository
       .createQueryBuilder('encours')
+      .leftJoinAndSelect('encours.operation', 'operation')
       .where('encours.imputation like :name', {
         name: `%${imputation.imputation}%`,
       })
-      .getMany();
-  }
-
-  public async getByImputationJoinEng(
-    imputation: any,
-  ): Promise<EncoursEntity[]> {
-    console.log(imputation.imputation);
-    return this.encoursRepository
-      .createQueryBuilder('encours')
-      .innerJoin(
-        'engagement_juridique',
-        'eng',
-        'encours.imputation = eng.imputation',
-      )
-      .where('encours.imputation = :name', { name: imputation.imputation })
       .getMany();
   }
 

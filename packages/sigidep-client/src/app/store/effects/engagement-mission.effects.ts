@@ -36,6 +36,9 @@ export class EngagementsMissionsEffects {
             ...(action.etats && {
               etats: action.etats.join(','),
             }),
+            ...(action.numeros && {
+              numeros: action.numeros.join(','),
+            }),
           })
           .pipe(
             switchMap((payload) => {

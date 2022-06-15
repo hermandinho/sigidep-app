@@ -11,6 +11,7 @@ import {
 import { map } from 'rxjs/operators';
 import { EncoursModel } from '@models/encours.model';
 import { Observable, of } from 'rxjs';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-perform-form',
@@ -20,6 +21,8 @@ import { Observable, of } from 'rxjs';
 export class PerformFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
+  @Input() dataEngagement!: any;
+  @Input() isCheck!:boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -29,7 +32,10 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   public performForm!: FormGroup;
   data: EncoursModel[] = [];
   loading$: Observable<boolean> = of(true);
-  constructor(private _store: Store<AppState>) {
+  constructor(
+    private _store: Store<AppState>,
+    public ref: DynamicDialogRef
+    ) {
     super();
     //this._initListeners()
   }
@@ -75,4 +81,8 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
         sourceVerif: data.sourceVerif,
       });
   };
+
+  close() {
+    this.ref.close();
+  }
 }

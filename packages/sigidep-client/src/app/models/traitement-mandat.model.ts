@@ -1,6 +1,6 @@
 import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
-import { MandatModel } from '.';
 import { BaseModel } from './base.model';
+import { MandatModel } from './mandat.model';
 
 export class TraitementMandatModel extends BaseModel {
   mandat!: MandatModel;

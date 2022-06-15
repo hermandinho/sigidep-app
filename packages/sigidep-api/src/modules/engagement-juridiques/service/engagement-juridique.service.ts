@@ -31,6 +31,12 @@ export class EngagementJuridiqueService {
       .andWhere(filter?.etats ? 'eng.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
+      .andWhere(filter?.numeros ? 'eng.numero IN(:...numero)' : 'true', {
+        numero: filter?.numeros,
+      })
+      .andWhere(filter?.imputation ? 'eng.imputation IN(:...code)' : 'true', {
+        code: filter?.imputation,
+      })
       .getMany();
   }
 
@@ -77,5 +83,12 @@ export class EngagementJuridiqueService {
       ...property, // existing fields
       etat: EtatEngagementEnum.CANCEL, // updated fields
     });
+  }
+
+  public async findByImputation(imputation: any): Promise<any[]> {
+    return this.repository
+      .createQueryBuilder('eng')
+      .where('eng.imputation = :codes', { codes: imputation?.imputation })
+      .getMany();
   }
 }

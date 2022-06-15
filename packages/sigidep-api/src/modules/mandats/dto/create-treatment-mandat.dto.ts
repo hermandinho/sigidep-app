@@ -6,10 +6,10 @@ import { EtatMandatEnum } from '@utils/etat-mandat.enum';
 export class CreateTraitementMandatDTO {
   id?: number;
   @ApiProperty({ example: '120', required: true })
-  mandatId!: number;
+  mandat!: number;
 
   @ApiProperty({ example: EtatMandatEnum.ANNULATIONMANDAT, required: false })
-  etat!: EtatMandatEnum;
+  typeTraitement!: EtatMandatEnum;
 
   @ApiProperty({ example: 'RAS', required: false })
   observation!: string;

@@ -40,3 +40,4 @@ export * from './mandat.history.entity';
 export * from './mandat.entity';
 export * from './traitement-mandat.entity';
 export * from './engagement.history.entity';
+export * from './paiement.entity';

@@ -2,7 +2,7 @@ import { EngagementJuridiqueModel } from '@models/engagement-juridique.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementJuridiques = createAction(
   '[EngagementJuridiques] Filter',
-  props<{ procedures?: string[]; etats?: string[] }>()
+  props<{ procedures?: string[]; etats?: string[]; numeros?: string[]; imputation?: string  }>()
 );
 export const GetEngagementJuridiquesSuccess = createAction(
   '[EngagementJuridiques] Filter success',
@@ -63,3 +63,5 @@ export const CancelEngagementReservationFailure = createAction(
   '[EngagementJuridiques] Cancel failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
+
+

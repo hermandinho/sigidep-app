@@ -38,6 +38,12 @@ export class EngagementsMandatsEffects {
             ...(action.etats && {
               etats: action.etats.join(','),
             }),
+            ...(action.numeros && {
+              numeros: action.numeros.join(','),
+            }),
+            ...(action.imputation && {
+              imputation: action.imputation.join(','),
+            }),
           })
           .pipe(
             switchMap((payload) => {
@@ -125,6 +131,8 @@ export class EngagementsMandatsEffects {
       )
     )
   );
+
+
 
   constructor(private actions$: Actions, private apisService: ApisService) {}
 }

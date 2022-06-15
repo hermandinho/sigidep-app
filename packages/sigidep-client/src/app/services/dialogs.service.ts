@@ -101,6 +101,8 @@ export class DialogsService {
   private printEngagementMandatMissionComponent: any;
 
   private createMandatFormComponent: any;
+  private reservationEngagementMandatDecisionComponent: any;
+  private etatCertificatEngagementComponent:any;
   private createMandatMissionFormComponent: any;
   constructor(
     private readonly _dialogService: DialogService,
@@ -1023,23 +1025,55 @@ export class DialogsService {
       );
       this.createMandatFormComponent = CreateMandatFormComponent;
     }
+    if(action=='consulterM'){
+      return this._dialogService.open(this.createMandatFormComponent, {
+        header: this._translateService.instant(
+          action='dialogs.headers.etatMandat',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          category,
+          item,
+          action
+        },
+      });
+    }else if(action=='consulterC'){
+      return this._dialogService.open(this.createMandatFormComponent, {
+        header: this._translateService.instant(
+          action='dialogs.headers.etatCertificat',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          category,
+          item,
+          action
+        },
+      });
+    }else{
+      return this._dialogService.open(this.createMandatFormComponent, {
+        header: this._translateService.instant(
+          action
+            ? 'dialogs.headers.viewEngagementMandat'
+            : 'dialogs.headers.editEngagementMandat',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          category,
+          item,
+          action,
+        },
+      });
+    }
 
-    return this._dialogService.open(this.createMandatFormComponent, {
-      header: this._translateService.instant(
-        action
-          ? 'dialogs.headers.viewEngagementMandat'
-          : 'dialogs.headers.editEngagementMandat',
-        { numero: item?.numero }
-      ),
-      width: '60vw',
-      height: 'auto',
-      modal: true,
-      data: {
-        category,
-        item,
-        action,
-      },
-    });
   }
 
   public async launchPrintEngagementMandatPrimeDialog(

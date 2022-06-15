@@ -43,6 +43,12 @@ export class EngagementsJuridiquesEffects {
             ...(action.etats && {
               etats: action.etats.join(','),
             }),
+            ...(action.numeros && {
+              numeros: action.numeros.join(','),
+            }),
+            ...(action.imputation && {
+              imputation: action.imputation,
+            }),
           })
           .pipe(
             switchMap((payload) => {

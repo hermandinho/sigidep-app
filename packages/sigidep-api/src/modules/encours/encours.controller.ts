@@ -60,9 +60,4 @@ export class EncoursController {
   public async getByImputation(@Query() imputation): Promise<any> {
     return this.encoursServices.findByImputation(imputation);
   }
-
-  @Get('/imputationJoinEngagement/join/one')
-  public async getByImputationJoinEng(@Query() imputation): Promise<any> {
-    return this.encoursServices.getByImputationJoinEng(imputation);
-  }
 }

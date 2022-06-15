@@ -24,6 +24,7 @@ import { NgxPrintModule } from 'ngx-print';
     InputMaskModule,
     SharedModule,
     ToastModule,
+
     ProgressSpinnerModule,
     TreeTableModule,
     PanelModule,

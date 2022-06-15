@@ -1,7 +1,7 @@
 <div class="container">
   <div class="form" [formGroup]="engagementForm">
     <div class="p-fluid p-grid">
-      <div class="p-field p-col-12 p-md-6">
+      <div *ngIf="!dataEngagement" class="p-field p-col-12 p-md-6">
         <ng-container formGroupName="numActeJuridique">
           <label class="required"
             >{{ "labels.numActeJuridiqueMandat" | translate }}
@@ -20,6 +20,16 @@
           >
           </p-dropdown>
         </ng-container>
+      </div>
+      <div *ngIf="dataEngagement" class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.numActeJuridiqueMandat" | translate }}</label>
+        <input
+          class="form-control"
+          formControlName="numeroj"
+          [placeholder]="''"
+          pInputText
+          [disabled]="disabled"
+        />
       </div>
       <div class="p-field p-col-12 p-md-6">
         <label>{{ "labels.codeProcedure" | translate }}</label>
@@ -270,6 +280,94 @@
         </div>
       </div>
       <!-- End 1110 1111 1115 1126 -->
+
+      <!-- Begin 1121 -->
+      <div class="p-fluid p-grid" *ngIf="procedure === '1121'">
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.matriculeBeneficiaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="matriculeBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomBeneficaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomBeneficaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.itineraire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="itineraire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <label>{{ "labels.dateDebut" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="dateDebut"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <label>{{ "labels.dateFin" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="dateFin"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+          <label>{{ "labels.nombreJours" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nombreJours"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+            <label class="required">{{ "labels.baremeJour" | translate }} </label>
+            <input
+            type="number"
+            class="form-control"
+            pInputText
+            formControlName="baremeJour"
+            [placeholder]="''"
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required"
+            >{{ "labels.montantMission" | translate }}
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            pInputText
+            formControlName="montantMission"
+            [placeholder]="''"
+          />
+        </div>
+      </div>
+      <!-- End 1211 -->
       <!-- Montant Engagement Juridique -->
       <div class="p-field p-col-12 p-md-12">
         <label class="required">{{ "labels.montantAEJ" | translate }} </label>
@@ -285,10 +383,26 @@
   </div>
 
   <div class="footer">
-    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+    <button *ngIf="isCheck"
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+    <button *ngIf="!isCheck" pButton class="p-mr-3 p-button-warning" (click)="close()">
       {{ "buttons.cancel" | translate }}
     </button>
-    <button
+    <button *ngIf="!dataEngagement"
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
+      (click)="doChangeStep('forward')"
+      [disabled]="!engagementForm?.valid && !readOnly"
+      [label]="'buttons.next' | translate"
+      pButton
+    ></button>
+    <button *ngIf="dataEngagement?.numActeJuridique"
       type="button"
       pButton
       pRipple

@@ -30,6 +30,9 @@ export class EngagementMissionService {
       .andWhere(filter?.etats ? 'em.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
+      .andWhere(filter?.numeros ? 'em.numero IN(:...numero)' : 'true', {
+        numero: filter?.numeros,
+      })
       .getMany();
   }
 
