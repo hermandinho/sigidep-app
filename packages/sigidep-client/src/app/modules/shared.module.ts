@@ -50,7 +50,7 @@ import { EngagementMissionFormComponent } from '@components/engagement-mission-f
 import { FactureComponent } from '@components/facture/facture.component';
 //import { CreateSituationTraitementComponent } from '@components/create-situation-traitement/create-situation-traitement.component';
 //import { CreateSituationTraitementComponent } from '@components/create-situation-traitement/create-situation-traitement.component';
-import { CreateFactureFormComponent } from '@components/create-facture-form/create-facture-form.component';
+//import { CreateFactureFormComponent } from '@components/create-facture-form/create-facture-form.component';
 
 const declarations = [
   BaseComponent,
@@ -66,7 +66,8 @@ const declarations = [
   CreateMandatMissionFormComponent,
   EngagementMissionFormComponent,
   //CreateSituationTraitementComponent,
-  CreateFactureFormComponent
+  //CreateFactureFormComponent
+  //CreateSituationTraitementComponent
 ];
 
 const shared = [
