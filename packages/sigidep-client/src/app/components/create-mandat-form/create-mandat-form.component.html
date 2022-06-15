@@ -37,12 +37,4 @@
     (changeStep)="changeStep('perform', $event)"
     (submitForm)="submitForm()"
   ></app-perform-form>
-  <app-create-facture-form
-  *ngSwitchCase="'facture'"
-    [startingForm]="factureFormGroup"
-    (subformInitialized)="subformInitialized('factureForm', $event)"
-    (changeStep)="changeStep('facture', $event)"
-    [facture]="engagements"
-  >
-  </app-create-facture-form>
 </ng-container>

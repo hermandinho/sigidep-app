@@ -123,11 +123,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         situationActuelle: [undefined],
         sourceVerif: [undefined],
       }),
-
-      situationForm: this._fb.group({
-      }),
-      factureForm: this._fb.group({
-      }),
     });
 
     if (this.config.data?.category) {
@@ -246,9 +241,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         },
         situationForm: {
         },
-        factureForm: {
-        },
-
       });
 
     }
@@ -256,10 +248,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
   get situationFormGroup(): FormGroup {
     return this.form?.get('situationForm') as FormGroup;
-  }
-
-  get factureFormGroup(): FormGroup {
-    return this.form?.get('factureForm') as FormGroup;
   }
 
   get engagementFormGroup(): FormGroup {
@@ -316,14 +304,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       case 'perform':
         if (direction === 'back') {
           this.currentStepBs.next('mandat');
-        }
-        if (direction === 'forward') {
-          this.currentStepBs.next('facture');
-        }
-        break;
-      case 'facture':
-        if (direction === 'back') {
-          this.currentStepBs.next('perform');
         }
         break;
     }
