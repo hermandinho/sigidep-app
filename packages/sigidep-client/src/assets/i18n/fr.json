@@ -858,6 +858,7 @@
       "editCarnet": "Editer un carnet",
       "assignCarnet": "Affecter le carnet {{code}}",
       "createAccreditationsGestionnaires": "Ajouter des accreditations aux gestionnaires",
+      "listImputation": "Liste des Accreditation du gestionnaires",
       "editAccreditationsGestionnaires": "Mettre à jour des accreditations",
       "editBareme": "Editer un Barème",
       "editTypeProcedure": "Editer un type de procédure",

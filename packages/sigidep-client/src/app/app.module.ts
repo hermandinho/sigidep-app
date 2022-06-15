@@ -31,7 +31,7 @@ import { ParagraphsModule } from '@pages/paragraphs/paragraphs.module';
 import { SubProgramsModule } from '@pages/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/reference-physical-units.module';
 import localeFr from '@angular/common/locales/fr';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CommonModule } from '@angular/common';
 import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
 import { AgentsModule } from '@pages/agents/agents.module';
 import { ArticlesModule } from '@pages/mercuriales/articles/articles.module';
@@ -88,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     HomeModule,
     InstallModule,
+    CommonModule,
     AuthModule,
     ExercisesModule,
     RolesModule,
@@ -133,4 +134,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }

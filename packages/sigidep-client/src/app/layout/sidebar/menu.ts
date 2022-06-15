@@ -38,6 +38,7 @@ export const MenuPermissions = {
   regions: [...simpleCrudPermissions('regions')],
   consultations: [...simpleCrudPermissions('consultations')],
   mandats: [...simpleCrudPermissions('mandats')],
+  mandatMissions: [...simpleCrudPermissions('mandatMissions')],
   fraisreleve: [...simpleCrudPermissions('fraisreleve')],
   misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
   misedispositionstructure: [
@@ -296,8 +297,8 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: '#',
-              icon: 'pi pi-table',
+              routerLink: 'missions',
+              icon: 'pi pi-shield',
               label: translate.instant('sidebar.missions'),
               routerLinkActiveOptions: { exact: true },
             },
