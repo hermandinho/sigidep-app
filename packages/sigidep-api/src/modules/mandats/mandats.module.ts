@@ -7,6 +7,7 @@ import { MandatEntity } from '@entities/mandat.entity';
 import { TraitementMandatService } from './service/traitement-mandat.service';
 import { MandatHistoryEntity } from '@entities/mandat.history.entity';
 import { TraitementMandatEntity } from '@entities/traitement-mandat.entity';
+import { PaiementEntity } from '@entities/paiement.entity';
 
 @Module({
   controllers: [MandatController],
@@ -17,6 +18,7 @@ import { TraitementMandatEntity } from '@entities/traitement-mandat.entity';
       MandatEntity,
       TraitementMandatEntity,
       MandatHistoryEntity,
+      PaiementEntity
     ]),
   ],
   exports: [TypeOrmModule, MandatService, TraitementMandatService],

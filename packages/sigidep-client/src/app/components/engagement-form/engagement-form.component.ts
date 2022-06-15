@@ -38,6 +38,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() dataEngagement!: any;
   @Input() readOnly!: boolean;
+  @Input() isCheck!:boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Input() category: CategorieProcedure = 'decision';

@@ -1,15 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'app-create-situation-traitement',
-  templateUrl: './create-situation-traitement.component.html',
-  styleUrls: ['./create-situation-traitement.component.scss']
+  selector: 'app-create-facture-form',
+  templateUrl: './create-facture-form.component.html',
+  styleUrls: ['./create-facture-form.component.scss']
 })
-export class CreateSituationTraitementComponent extends BaseComponent implements OnInit {
-  @Input() situation!: any;
+export class CreateFactureFormComponent extends BaseComponent implements OnInit {
+
+  @Input() facture!: any;
   @Input() startingForm!: FormGroup;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
@@ -21,15 +23,20 @@ export class CreateSituationTraitementComponent extends BaseComponent implements
   public disabled: boolean = true;
   loading$: Observable<boolean> = of(true);
   public traitement:any;
-  constructor() {
+  constructor(
+    public ref: DynamicDialogRef
+  ) {
     super();
    }
 
   ngOnInit(): void {
-    console.log('traitement', this.situation)
-    this.traitement=this.situation;
+    console.log('traitement', this.facture)
+    this.traitement=this.facture;
   }
   doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);
   };
+  close() {
+    this.ref.close();
+  }
 }

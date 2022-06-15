@@ -2,7 +2,9 @@ import { EtatMandatEnum } from '@utils/etat-mandat.enum';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
+import { PaiementEntity } from './paiement.entity';
 import { TraitementMandatEntity } from './traitement-mandat.entity';
+import { UserEntity } from './user.entity';
 
 @Entity({
   name: 'mandat',
@@ -35,30 +37,23 @@ export class MandatEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'montantCPLettres' })
   public montantCPLettres: string;
 
-  @Column({ nullable: true, type: 'date', name: 'dateLiquidation' })
-  public dateLiquidation: Date;
-
-  @Column({ nullable: true, type: 'date', name: 'dateOrdonnancement' })
-  public dateOrdonnancement: Date;
-
-  @Column('varchar', { nullable: true, name: 'modePaiement' })
-  public modePaiement: string;
-
-  @Column('varchar', { nullable: true, name: 'compteADebiter' })
-  public compteADebiter: string;
-
-  @Column('varchar', { nullable: true, name: 'compteACrediter' })
-  public compteACrediter: string;
-
-  @Column({ nullable: true, type: 'date', name: 'datePaiement' })
-  public datePaiement: Date;
-
-  @Column('varchar', { nullable: true, name: 'villePaiement' })
-  public villePaiement: string;
-
   @Column('varchar', { nullable: true, name: 'situationActuelle' })
   public situationActuelle: string;
 
+  @Column({ default: false, name: 'editionTCC' })
+  public editionTCC: boolean;
+
+  @Column({ type:'date', default: '2000-01-01', name: 'dateEditionTCC' })
+  public dateEditionTCC: Date;
+
+  @Column({ type:'date', default: '2000-01-01', name: 'dateRejet' })
+  public dateRejet: Date;
+
+  @Column({name: 'rejet',default: false })
+  public rejet: boolean;
+
+  @Column({default: false, name: 'encours' })
+  public encours: boolean;
   @Column({
     name: 'etat',
     type: 'enum',
@@ -74,18 +69,6 @@ export class MandatEntity extends BaseEntity {
   })
   public traitements?: Partial<TraitementMandatEntity>[];
 
-  @Column({ nullable: true, type: 'boolean', name: 'rejet' })
-  public rejet: boolean;
-
-  @Column({ nullable: true, type: 'boolean', name: 'encours' })
-  public encours: boolean;
-
-  @Column({ nullable: true, type: 'boolean', name: 'ordonnance' })
-  public ordonnance: boolean;
-
-  @Column({ nullable: true, type: 'boolean', name: 'paye' })
-  public paye: boolean;
-
   @ManyToOne(() => EngagementJuridiqueEntity, (object) => object.id, {
     cascade: true,
     eager: false,
@@ -93,4 +76,20 @@ export class MandatEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'numActeJuridique' })
   public numActeJuridique: EngagementJuridiqueEntity;
+
+  @OneToMany(() => PaiementEntity, (object) => object.mandat, {
+    cascade: true,
+    eager: false,
+    nullable: true,
+  })
+  public paiements?: Partial<PaiementEntity>[];
+
+    // RELATIONS
+    @ManyToOne(() => UserEntity, (object) => object.id, {
+      eager: false,
+      onDelete: 'SET NULL',
+      nullable: true,
+    })
+    @JoinColumn({ name: 'created_by' })
+    public createdBy: UserEntity;
 }
