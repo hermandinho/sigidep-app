@@ -23,6 +23,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
   @Input() dataEngagement!: any;
+  @Input() isCheck!:boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -34,17 +35,17 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   constructor(
     private _store: Store<AppState>,
-    public ref: DynamicDialogRef,
-    private _appService: AppService
+    public ref: DynamicDialogRef
+    //private _appService: AppService
   ) {
     super();
     //this._initListeners()
   }
 
   ngOnInit(): void {
-    this._appService.currentProcedureChange.subscribe((val) => {
-      this.procedure = val;
-    });
+    //this._appService.currentProcedureChange.subscribe((val) => {
+      //this.procedure = val;
+    //});
     this.performForm = this.startingForm;
     this.subformInitialized.emit(this.performForm);
     if (this.readOnly) this.performForm.disable();

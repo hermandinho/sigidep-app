@@ -40,6 +40,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   mandats: any;
   imputation1:boolean=true;
   mandat:boolean=true;
+  consulterM:any;
   engagement:boolean=true;
   loading$: Observable<boolean> = of(true);
   public globalColumns!: string[];
@@ -135,13 +136,12 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       console.log(editedImputation);
       this._store.dispatch(GetImputations({ imputation: editedImputation }));
       this.initTable();
-      console.log(this.encours);
       this.busy = false;
     }
 
     if(this.form1.mandat.value){
       this.busy = true;
-    this._dialogService.launchEngagementMandatCreateDialog('decision',this.mandats[0],'consulterM');
+    this._dialogService.launchEngagementMandatCreateDialog('decision',this.consulterM,'consulterM');
     this.busy = false;
     }
 
@@ -254,6 +254,13 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       }else if(name==='mandat' && value.value!==null){
         this.imputation1=false;
         this.engagement=false;
+        const act: Engagement | undefined = this.mandats.find(
+          (item:any) => item.id === event.value
+        );
+          console.log(act);
+        if (act) {
+          this.consulterM=act;
+        }
 
 
       }else if(name==='engagement' && value.value!==null){
@@ -261,7 +268,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         this.mandat=false;
 
         const act: Engagement | undefined = this.data.find(
-          (item) => item.id === event.value
+          (item:any) => item.id === event.value
         );
           console.log(act);
         if (act) {

@@ -6,8 +6,8 @@ import { CreateMandatDTO } from './create-mandat.dto';
 
 export class CreateTraitementMandatDTO {
   id?: number;
-  @ApiProperty({ required: true })
-  mandat!: CreateMandatDTO;
+  @ApiProperty({ example: '120', required: true })
+  mandat!: number;
 
   @ApiProperty({ example: EtatMandatEnum.ANNULATIONMANDAT, required: false })
   typeTraitement!: EtatMandatEnum;

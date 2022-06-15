@@ -42,6 +42,8 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   public categorieProcedure!: CategorieProcedure;
   public engagements!:any;
   public situations:any;
+  public isCheck=false;
+  public situationForm:any;
   //bookProcess:any;
 
   constructor(
@@ -123,23 +125,22 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       }),
 
       situationForm: this._fb.group({
-        livrables: [undefined],
-        situationActuelle: [undefined],
-        sourceVerif: [undefined],
+      }),
+      factureForm: this._fb.group({
       }),
     });
 
     if (this.config.data?.category) {
       this.categorieProcedure = this.config.data?.category;
     }
-
+    this.engagements=this.config.data?.item;
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatMandat') {
+        this.isCheck=true;
         this.currentStepBs.next('situation');
       }
-      console.log(this.situationAction)
     }
 
     if (this.config.data?.item) {
@@ -192,7 +193,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         | EngagementMissionModel
         | EngagementMandatModel
         | any;
-      this.engagements=this.config.data?.item;
+
       this.form.patchValue({
         engagementForm: {
           id,
@@ -244,16 +245,21 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           sourceVerif,
         },
         situationForm: {
-          livrables,
-          situationActuelle,
-          sourceVerif,
         },
+        factureForm: {
+        },
+
       });
+
     }
   }
 
   get situationFormGroup(): FormGroup {
     return this.form?.get('situationForm') as FormGroup;
+  }
+
+  get factureFormGroup(): FormGroup {
+    return this.form?.get('factureForm') as FormGroup;
   }
 
   get engagementFormGroup(): FormGroup {
@@ -265,9 +271,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
 
   get performFormGroup(): FormGroup {
     return this.form?.get('performForm') as FormGroup;
-  }
-  get factureFormGroup(): FormGroup {
-    return this.form?.get('factureForm') as FormGroup;
   }
 
   get isUpdateForm(): boolean {
@@ -314,12 +317,10 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         if (direction === 'back') {
           this.currentStepBs.next('mandat');
         }
-
         if (direction === 'forward') {
           this.currentStepBs.next('facture');
         }
         break;
-
       case 'facture':
         if (direction === 'back') {
           this.currentStepBs.next('perform');
