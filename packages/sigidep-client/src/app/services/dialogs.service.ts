@@ -1052,6 +1052,7 @@ export class DialogsService {
         data: {
           category,
           item,
+          action
         },
       });
     }else{
