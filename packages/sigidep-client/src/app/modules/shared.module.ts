@@ -45,7 +45,6 @@ import { PerformFormComponent } from '@components/perform-form/perform-form.comp
 import { CreateMandatFormComponent } from '@components/create-mandat-form/create-mandat-form.component';
 import { PrintEngagementMandatPrimeComponent } from '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
 import { CreateSituationTraitementComponent } from '@components/create-situation-traitement/create-situation-traitement.component';
-import { CreateFactureFormComponent } from '@components/create-facture-form/create-facture-form.component';
 
 const declarations = [
   BaseComponent,
@@ -57,8 +56,7 @@ const declarations = [
   PerformFormComponent,
   CreateMandatFormComponent,
   PrintEngagementMandatPrimeComponent,
-  CreateSituationTraitementComponent,
-  CreateFactureFormComponent
+  CreateSituationTraitementComponent
 ];
 
 const shared = [
