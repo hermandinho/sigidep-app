@@ -47,7 +47,6 @@ import { PrintEngagementMandatPrimeComponent } from '@components/print-engagemen
 import { CreateSituationTraitementComponent } from '@components/create-situation-traitement/create-situation-traitement.component';
 import { CreateMandatMissionFormComponent } from '@components/create-mandat-mission-form/create-mandat-mission-form.component';
 import { EngagementMissionFormComponent } from '@components/engagement-mission-form/engagement-mission-form.component';
-import { CreateSituationTraitementComponent } from '@components/create-situation-traitement/create-situation-traitement.component';
 
 const declarations = [
   BaseComponent,
