@@ -75,9 +75,17 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     this._store.dispatch(
       GetEngagementJuridiquesByCategory({
         category: this.category,
-        etats: [EtatEngagementEnum.RESERVED],
+        etats: [EtatEngagementEnum.RESERVED]
       })
-    );
+      
+      );
+
+    /*  
+    GetEngagementDecisions({
+      //procedures: [procedure],
+      etats: [EtatEngagementEnum.SAVE],
+    })
+    */
     this.onDisable();
   }
   onDisable() {

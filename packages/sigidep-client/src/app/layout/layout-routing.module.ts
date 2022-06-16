@@ -34,6 +34,7 @@ import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
 import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
 import { MandatsCommandesComponent } from '@pages/mandats-commandes/mandats-commandes.component';
+import { MandatMissionsComponent } from '@pages/mandat-missions/mandat-missions.component';
 
 const routes: Routes = [
   {
@@ -365,6 +366,18 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/mandats-commandes/mandats-commandes.module').then(
             (m) => m.MandatsCommandesModule
+          ),
+      },
+      {
+        path: 'mandats-missions',
+        canActivate: [AuthGuard],
+        component: MandatMissionsComponent,
+        data: {
+          permissions: [...MenuPermissions.mandatMissions],
+        },
+        loadChildren: () =>
+          import('../pages/mandat-missions/mandat-missions.module').then(
+            (m) => m.MandatMissionsModule
           ),
       },
       /*{

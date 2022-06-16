@@ -61,6 +61,7 @@ const declarations = [
   CreateSituationTraitementComponent,
   CreateMandatMissionFormComponent,
   EngagementMissionFormComponent,
+  CreateSituationTraitementComponent
 ];
 
 const shared = [
