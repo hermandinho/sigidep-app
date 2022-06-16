@@ -297,7 +297,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'missions',
+              routerLink: 'mandats-missions',
               icon: 'pi pi-shield',
               label: translate.instant('sidebar.missions'),
               routerLinkActiveOptions: { exact: true },
