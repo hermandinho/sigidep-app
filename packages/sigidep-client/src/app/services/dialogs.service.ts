@@ -101,6 +101,8 @@ export class DialogsService {
   private printEngagementMandatMissionComponent: any;
 
   private createMandatFormComponent: any;
+  private reservationEngagementMandatDecisionComponent: any;
+  private etatCertificatEngagementComponent:any;
   private createMandatMissionFormComponent: any;
   private reservationEngagementMandatDecisionComponent: any;
   private etatCertificatEngagementComponent:any;
