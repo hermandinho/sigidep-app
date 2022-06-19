@@ -41,6 +41,7 @@ export const MenuPermissions = {
   mandatMissions: [...simpleCrudPermissions('mandatMissions')],
   fraisreleve: [...simpleCrudPermissions('fraisreleve')],
   misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
+  virementModel: [...simpleCrudPermissions('virementModel')],
   misedispositionstructure: [
     ...simpleCrudPermissions('misedispositionstructure'),
   ],
@@ -306,6 +307,28 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLink: 'mandat-decisions',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.decisions'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: 'Gestion Virement',
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.virementModel],
+          },
+          items: [
+            {
+              routerLink: 'virement-model',
+              icon: 'pi pi-table',
+              label: 'virement model',
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'virement',
+              icon: 'pi pi-shield',
+              label: 'Virement',
               routerLinkActiveOptions: { exact: true },
             },
           ],

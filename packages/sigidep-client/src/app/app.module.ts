@@ -51,6 +51,8 @@ import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
 import { MandatsModule } from '@pages/mandats/decision/mandats.module';
 import { MandatsCommandesModule } from '@pages/mandats-commandes/mandats-commandes.module';
+import { ModelVirementFormComponent } from './components/virements-form/model-virement-form/model-virement-form.component';
+import { VirementFormComponent } from './components/virements-form/virement-form/virement-form.component';
 
 registerLocaleData(localeFr);
 
@@ -59,7 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ModelVirementFormComponent, VirementFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

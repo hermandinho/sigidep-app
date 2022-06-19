@@ -35,6 +35,8 @@ import { ConsultationsComponent } from '@pages/consultations/consultations.compo
 import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
 import { MandatsCommandesComponent } from '@pages/mandats-commandes/mandats-commandes.component';
 import { MandatMissionsComponent } from '@pages/mandat-missions/mandat-missions.component';
+import { ModelVirementComponent } from '@pages/model-virement/model-virement.component';
+import { VirementComponent } from '@pages/virement/virement.component';
 
 const routes: Routes = [
   {
@@ -378,6 +380,30 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/mandat-missions/mandat-missions.module').then(
             (m) => m.MandatMissionsModule
+          ),
+      },
+      {
+        path: 'virement-model',
+        canActivate: [AuthGuard],
+        component: ModelVirementComponent,
+        data: {
+          permissions: [...MenuPermissions.mandatMissions],
+        },
+        loadChildren: () =>
+          import('../pages/model-virement/model-virement.module').then(
+            (m) => m.ModelVirementModule
+          ),
+      },
+      {
+        path: 'virement',
+        canActivate: [AuthGuard],
+        component: VirementComponent,
+        data: {
+          permissions: [...MenuPermissions.mandatMissions],
+        },
+        loadChildren: () =>
+          import('../pages/virement/virement.module').then(
+            (m) => m.VirementModule
           ),
       },
       /*{
