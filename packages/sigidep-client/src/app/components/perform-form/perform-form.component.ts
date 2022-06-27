@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { EncoursModel } from '@models/encours.model';
 import { Observable, of } from 'rxjs';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AppService } from '@services/app.service';
 
 @Component({
   selector: 'app-perform-form',
@@ -35,12 +36,16 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   constructor(
     private _store: Store<AppState>,
     public ref: DynamicDialogRef
-    ) {
+    //private _appService: AppService
+  ) {
     super();
     //this._initListeners()
   }
 
   ngOnInit(): void {
+    //this._appService.currentProcedureChange.subscribe((val) => {
+      //this.procedure = val;
+    //});
     this.performForm = this.startingForm;
     this.subformInitialized.emit(this.performForm);
     if (this.readOnly) this.performForm.disable();

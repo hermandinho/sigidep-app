@@ -36,6 +36,8 @@ import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
 import { MandatsModule } from '@modules/mandats/mandats.module';
 import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
 import { TraitementMandatSubscriber } from '@subscribers/mandat.subscriber';
+import { VirementsModule } from './modules/virements/virements.module';
+import { ModelVirementsModule } from './modules/model-virements/model-virements.module';
 
 @Module({
   imports: [
@@ -128,6 +130,8 @@ import { TraitementMandatSubscriber } from '@subscribers/mandat.subscriber';
     ExecProcedureModule,
     ExecTaxesModule,
     MandatsModule,
+    VirementsModule,
+    ModelVirementsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -145,11 +145,6 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
     this.busy = false;
     }
 
-    if(this.form1.engagement.value){
-      this.busy = true;
-      this._dialogService.launchEngagementMandatCreateDialog('decision',this.engagements[0],'consulterC');
-        this.busy = false;
-    }
   }
 
   private _initListeners() {

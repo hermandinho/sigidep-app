@@ -31,6 +31,11 @@ export class MandatController {
     return this.services.filter(filter);
   }
 
+  @Get('/factures/:id/articles')
+  public async getFactureArticles(@Param('id') id: number) {
+    return this.services.getArticles(id);
+  }
+
   @Post('/')
   public async create(
     @Body(ValidationPipe) payload: CreateMandatDTO,
@@ -52,6 +57,13 @@ export class MandatController {
     return this.services.deleteOne(id);
   }
 
+  @Delete('/factures/:idf/articles/:ida')
+  public async deleteFActureArticle(
+    @Param('idf') idf: number,
+    @Param('ida') ida: number,
+  ) {
+    return this.services.deleteFactureArticle(ida);
+  }
   @Put('/reservation')
   public async reserve(
     @Body(ValidationPipe) payload: CreateMandatDTO,

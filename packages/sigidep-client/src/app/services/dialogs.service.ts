@@ -104,7 +104,8 @@ export class DialogsService {
   private reservationEngagementMandatDecisionComponent: any;
   private etatCertificatEngagementComponent:any;
   private createMandatMissionFormComponent: any;
-
+  //private reservationEngagementMandatDecisionComponent: any;
+  //private etatCertificatEngagementComponent:any;
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
@@ -1104,31 +1105,4 @@ export class DialogsService {
     });
   }
 
-  public async launchEngagementMandatMissionCreateDialog(
-    item?: EngagementMandatModel,
-    action?: string
-  ): Promise<any> {
-    if (!this.createMandatMissionFormComponent) {
-      const { CreateMandatMissionFormComponent } = await import(
-        '@components/create-mandat-mission-form/create-mandat-mission-form.component'
-      );
-      this.createMandatMissionFormComponent = CreateMandatMissionFormComponent;
-    }
-
-    return this._dialogService.open(this.createMandatMissionFormComponent, {
-      header: this._translateService.instant(
-        action
-          ? 'dialogs.headers.viewEngagementMandat'
-          : 'dialogs.headers.editEngagementMandat',
-        { numero: item?.numero }
-      ),
-      width: '60vw',
-      height: 'auto',
-      modal: true,
-      data: {
-        item,
-        action,
-      },
-    });
-  }
 }

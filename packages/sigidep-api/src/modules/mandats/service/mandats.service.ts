@@ -27,6 +27,17 @@ export class MandatService {
     return this.repository;
   }
 
+  public async getArticles(factureId: number): Promise<FactureArticleEntity[]> {
+    return this.articleRepo
+      .createQueryBuilder('art')
+      .leftJoinAndSelect('art.facture', 'facture')
+      .leftJoinAndSelect('art.article', 'article')
+      .where('facture.id IN(:...codes)', {
+        codes: [factureId],
+      })
+      .getMany();
+  }
+
   public async filter(filter?: EngagementFilter): Promise<MandatEntity[]> {
     console.log(filter.imputation)
     return this.repository
@@ -48,6 +59,14 @@ export class MandatService {
 
   public async deleteOne(id: number): Promise<any> {
     return this.repository.delete({ id });
+  }
+
+  public async deleteFactureArticle(id: number, ids?: number[]): Promise<any> {
+    if (!ids) {
+      return this.articleRepo.delete({ id });
+    } else {
+      return this.articleRepo.delete(ids);
+    }
   }
 
   public async create(

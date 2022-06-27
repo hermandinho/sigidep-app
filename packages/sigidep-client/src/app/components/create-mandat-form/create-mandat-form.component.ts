@@ -186,6 +186,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         tauxIR,
         RIB,
         typeMarche,
+        facture,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
@@ -248,7 +249,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     }
   }
 
-
   get situationFormGroup(): FormGroup {
     return this.form?.get('situationForm') as FormGroup;
   }
@@ -277,6 +277,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     if (name === 'engagementForm') {
       this.currentProcedure =
         this.form.getRawValue()?.engagementForm?.codeProcedure;
+      this._appService.setCurrentProcedure(this.currentProcedure);
     }
   }
 
@@ -363,8 +364,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       ...this.form.getRawValue()?.engagementForm,
       ...this.form.getRawValue().mandatForm,
       ...this.form.getRawValue().performForm,
+      facture: { ...this.form.getRawValue().factureForm },
     } as EngagementMandatModel;
-
+    console.log('..............FORMM.....', {
+      ...this.form.getRawValue().factureForm,
+    });
     if (this.isBook) {
       this.bookProcess(editedEngagement);
       localStorage.removeItem('imputation');
@@ -463,7 +467,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   }
 
   dateValidator = (control: FormControl): { [s: string]: any } | null => {
-    if (control.value) {
+    if (!this.isUpdateForm && control.value) {
       const date = moment(control.value);
       const currentDate = moment(
         this.form.getRawValue()?.mandatForm.dateAffectation

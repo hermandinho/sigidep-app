@@ -28,6 +28,7 @@
   ></app-mandat-form>
   <app-perform-form
     *ngSwitchCase="'perform'"
+    [procedure]="currentProcedure"
     [readOnly]="isBook"
     [startingForm]="performFormGroup"
     [dataEngagement]="engagements"

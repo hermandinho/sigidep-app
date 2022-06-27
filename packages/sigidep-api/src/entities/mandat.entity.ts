@@ -1,7 +1,15 @@
 import { EtatMandatEnum } from '@utils/etat-mandat.enum';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
+import { FactureEntity } from './facture.entity';
 import { PaiementEntity } from './paiement.entity';
 import { TraitementMandatEntity } from './traitement-mandat.entity';
 import { UserEntity } from './user.entity';

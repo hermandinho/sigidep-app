@@ -1,4 +1,5 @@
 import { EngagementMandatModel } from '@models/engagement-mandat.model';
+import { FactureArticleModel } from '@models/facture-article.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementMandats = createAction(
   '[Mandats] Filter',

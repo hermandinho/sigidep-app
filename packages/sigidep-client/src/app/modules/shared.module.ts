@@ -58,9 +58,6 @@ const declarations = [
   PerformFormComponent,
   CreateMandatFormComponent,
   PrintEngagementMandatPrimeComponent,
-  CreateSituationTraitementComponent,
-  CreateMandatMissionFormComponent,
-  EngagementMissionFormComponent,
   CreateSituationTraitementComponent
 ];
 
@@ -124,4 +121,4 @@ const shared = [
     ConfirmationService,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

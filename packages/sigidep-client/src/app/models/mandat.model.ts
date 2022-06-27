@@ -2,6 +2,7 @@ import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { BaseModel } from './base.model';
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
 import { TypeMarcheEngagementMandatEnum } from './engagement-mandat.model';
+import { FactureModel } from './facture.model';
 import { TraitementMandatModel } from './traitement-mandat.model';
 
 export class MandatModel extends BaseModel {
@@ -29,4 +30,5 @@ export class MandatModel extends BaseModel {
   paye!: boolean;
   numActeJuridique!: EngagementJuridiqueModel;
   typeMarche!: TypeMarcheEngagementMandatEnum;
+  facture?: FactureModel;
 }

@@ -20,5 +20,6 @@ export class TraitementMandatSubscriber extends HistorySubscriber<
     history: MandatHistoryEntity,
   ): void | Promise<void> {
     history.makeActionAt = new Date();
+    history.facture = null;
   }
 }

@@ -2,6 +2,7 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 import { EtatMandatEnum } from '@utils/etat-mandat.enum';
+import { CreateMandatDTO } from './create-mandat.dto';
 
 export class CreateTraitementMandatDTO {
   id?: number;
