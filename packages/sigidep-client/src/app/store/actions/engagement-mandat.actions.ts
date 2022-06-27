@@ -1,8 +1,29 @@
 import { EngagementMandatModel } from '@models/engagement-mandat.model';
+import { FactureArticleModel } from '@models/facture-article.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementMandats = createAction(
   '[Mandats] Filter',
-  props<{ procedures?: string[]; etats?: string[]; numeros?: string[]; imputation?: string[] }>()
+  props<{
+    procedures?: string[];
+    etats?: string[];
+    numeros?: string[];
+    imputation?: string[];
+  }>()
+);
+
+export const GetFactureArticles = createAction(
+  '[Mandat] Filter Facture Articles',
+  props<{
+    factureId?: number;
+  }>()
+);
+export const GetFactureArticlesSuccess = createAction(
+  '[Mandats] Filter Facture Articles success',
+  props<{ payload: FactureArticleModel[] }>()
+);
+export const GetFactureArticlesFailure = createAction(
+  '[Mandats]  Filter Facture Articles failure',
+  props<{ error?: any }>() // TODO defile errors global model here
 );
 export const GetEngagementMandatsSuccess = createAction(
   '[Mandats] Filter success',

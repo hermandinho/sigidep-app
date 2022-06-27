@@ -36,14 +36,14 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     this.currentStepBs.asObservable();
   public form!: FormGroup;
   public action!: 'book' | 'edit';
-  public situationAction!:string;
+  public situationAction!: string;
   public busy = false;
   public currentProcedure!: string;
   public categorieProcedure!: CategorieProcedure;
-  public engagements!:any;
-  public situations:any;
-  public isCheck=false;
-  public situationForm:any;
+  public engagements!: any;
+  public situations: any;
+  public isCheck = false;
+  public situationForm: any;
   //bookProcess:any;
 
   constructor(
@@ -60,7 +60,6 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.form = this._fb.group({
       engagementForm: this._fb.group({
         id: [undefined],
@@ -123,6 +122,21 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         situationActuelle: [undefined],
         sourceVerif: [undefined],
       }),
+      factureForm: this._fb.group({
+        id: [undefined],
+        date: [undefined],
+        reference: [undefined],
+        objet: [undefined],
+        tauxTVA: [undefined],
+        tauxIR: [undefined],
+        montantHT: [undefined],
+        montantTVA: [undefined],
+        montantIR: [undefined],
+        montantTotalHT: [undefined],
+        netAPercevoir: [undefined],
+        montantTTC: [undefined],
+        articles: this._fb.array([]),
+      }),
     });
 
     if (this.config.data?.category) {
@@ -133,11 +147,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatMandat') {
-        this.engagements=this.config.data?.item;
-        this.isCheck=true;
+        this.engagements = this.config.data?.item;
+        this.isCheck = true;
         this.currentStepBs.next('situation');
-      }else if (this.situationAction === 'dialogs.headers.etatCertificat') {
-        this.engagements=this.config.data?.item;
+      } else if (this.situationAction === 'dialogs.headers.etatCertificat') {
+        this.engagements = this.config.data?.item;
       }
     }
 
@@ -186,10 +200,14 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
         tauxIR,
         RIB,
         typeMarche,
+        facture,
       } = this.config.data?.item as
         | EngagementMissionModel
         | EngagementMandatModel
         | any;
+      this.currentProcedure =
+        this.config?.data?.item?.numActeJuridique?.codeProcedure;
+      this._appService.setCurrentProcedure(this.currentProcedure);
 
       this.form.patchValue({
         engagementForm: {
@@ -241,13 +259,25 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
           situationActuelle,
           sourceVerif,
         },
-        situationForm: {
+        situationForm: {},
+        factureForm: {
+          id: facture.id,
+          date: facture.date,
+          reference: facture.reference,
+          objet: facture.objet,
+          tauxTVA: facture.tauxTVA,
+          tauxIR: facture.tauxIR,
+          montantHT: facture.montantHT,
+          montantTVA: facture.montantTVA,
+          montantIR: facture.montantIR,
+          montantTotalHT: facture.montantHT,
+          netAPercevoir: facture.netAPercevoir,
+          montantTTC: facture.montantTTC,
+          articles: facture.articles,
         },
       });
-
     }
   }
-
 
   get situationFormGroup(): FormGroup {
     return this.form?.get('situationForm') as FormGroup;
@@ -263,6 +293,9 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   get performFormGroup(): FormGroup {
     return this.form?.get('performForm') as FormGroup;
   }
+  get factureFormGroup(): FormGroup {
+    return this.form?.get('factureForm') as FormGroup;
+  }
 
   get isUpdateForm(): boolean {
     return !!this.form?.value?.engagementForm?.id;
@@ -277,6 +310,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
     if (name === 'engagementForm') {
       this.currentProcedure =
         this.form.getRawValue()?.engagementForm?.codeProcedure;
+      this._appService.setCurrentProcedure(this.currentProcedure);
     }
   }
 
@@ -306,6 +340,16 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       case 'perform':
         if (direction === 'back') {
           this.currentStepBs.next('mandat');
+        }
+
+        if (direction === 'forward') {
+          this.currentStepBs.next('facture');
+        }
+        break;
+
+      case 'facture':
+        if (direction === 'back') {
+          this.currentStepBs.next('perform');
         }
         break;
     }
@@ -363,8 +407,11 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
       ...this.form.getRawValue()?.engagementForm,
       ...this.form.getRawValue().mandatForm,
       ...this.form.getRawValue().performForm,
+      facture: { ...this.form.getRawValue().factureForm },
     } as EngagementMandatModel;
-
+    console.log('..............FORMM.....', {
+      ...this.form.getRawValue().factureForm,
+    });
     if (this.isBook) {
       this.bookProcess(editedEngagement);
       localStorage.removeItem('imputation');
@@ -463,7 +510,7 @@ export class CreateMandatFormComponent extends BaseComponent implements OnInit {
   }
 
   dateValidator = (control: FormControl): { [s: string]: any } | null => {
-    if (control.value) {
+    if (!this.isUpdateForm && control.value) {
       const date = moment(control.value);
       const currentDate = moment(
         this.form.getRawValue()?.mandatForm.dateAffectation

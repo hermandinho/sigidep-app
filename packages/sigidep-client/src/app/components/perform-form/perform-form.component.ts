@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { EncoursModel } from '@models/encours.model';
 import { Observable, of } from 'rxjs';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AppService } from '@services/app.service';
 
 @Component({
   selector: 'app-perform-form',
@@ -21,8 +22,9 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 export class PerformFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
+  @Input() procedure!: string;
   @Input() dataEngagement!: any;
-  @Input() isCheck!:boolean;
+  @Input() isCheck!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -34,13 +36,17 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   constructor(
     private _store: Store<AppState>,
-    public ref: DynamicDialogRef
-    ) {
+    public ref: DynamicDialogRef,
+    private _appService: AppService
+  ) {
     super();
     //this._initListeners()
   }
 
   ngOnInit(): void {
+    this._appService.currentProcedureChange.subscribe((val) => {
+      this.procedure = val;
+    });
     this.performForm = this.startingForm;
     this.subformInitialized.emit(this.performForm);
     if (this.readOnly) this.performForm.disable();

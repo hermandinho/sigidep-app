@@ -37,3 +37,6 @@ export * from './exec-taxes.model';
 export * from './traitement.model';
 export * from './mandat.model';
 export * from './traitement-mandat.model';
+export * from './article-crud.model';
+export * from './facture-article.model';
+export * from './article-crud.model';

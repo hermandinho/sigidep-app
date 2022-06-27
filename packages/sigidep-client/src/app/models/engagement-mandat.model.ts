@@ -2,8 +2,14 @@ import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 import { BaseModel } from './base.model';
 import { EngagementJuridiqueModel } from './engagement-juridique.model';
 import { EngagementMissionModel } from './engagement-mission.model';
+import { FactureModel } from './facture.model';
 
-export type StepMandat = 'engagement' | 'mandat' | 'perform' | 'situation' | 'facture';
+export type StepMandat =
+  | 'engagement'
+  | 'mandat'
+  | 'perform'
+  | 'situation'
+  | 'facture';
 export enum EtatEngagementMandatEnum {
   ORDINAIRE = 'labels.ordinaire',
   EFFECTUER = 'labels.effectuer',
@@ -37,6 +43,7 @@ export class EngagementMandatModel extends BaseModel {
   numActeJuridique!: EngagementJuridiqueModel;
   situationActuelle!: string;
   typeMarche!: TypeMarcheEngagementMandatEnum;
+  facture?: FactureModel;
 
   constructor(params?: Partial<EngagementMandatModel>) {
     super();

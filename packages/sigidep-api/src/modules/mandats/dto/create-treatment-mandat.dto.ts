@@ -2,11 +2,12 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 import { EtatMandatEnum } from '@utils/etat-mandat.enum';
+import { CreateMandatDTO } from './create-mandat.dto';
 
 export class CreateTraitementMandatDTO {
   id?: number;
-  @ApiProperty({ example: '120', required: true })
-  mandat!: number;
+  @ApiProperty({ required: true })
+  mandat!: CreateMandatDTO;
 
   @ApiProperty({ example: EtatMandatEnum.ANNULATIONMANDAT, required: false })
   typeTraitement!: EtatMandatEnum;

@@ -19,10 +19,14 @@ import {
   GetEngagementMandats,
   GetEngagementMandatsFailure,
   GetEngagementMandatsSuccess,
+  GetFactureArticles,
+  GetFactureArticlesFailure,
+  GetFactureArticlesSuccess,
   UpdateEngagementMandats,
   UpdateEngagementMandatsFailure,
   UpdateEngagementMandatsSuccess,
 } from '@actions/engagement-mandat.actions';
+import { FactureArticleModel } from '@models/facture-article.model';
 
 @Injectable()
 export class EngagementsMandatsEffects {
@@ -57,6 +61,25 @@ export class EngagementsMandatsEffects {
     )
   );
 
+  fetchFactureArticles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GetFactureArticles),
+      mergeMap((action) =>
+        this.apisService
+          .get<FactureArticleModel[]>(
+            `/mandats/facture/${action.factureId}/articles`
+          )
+          .pipe(
+            switchMap((payload) => {
+              return [GetFactureArticlesSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetFactureArticlesFailure(err))
+            )
+          )
+      )
+    )
+  );
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CreateEngagementMandats),
@@ -131,8 +154,6 @@ export class EngagementsMandatsEffects {
       )
     )
   );
-
-
 
   constructor(private actions$: Actions, private apisService: ApisService) {}
 }

@@ -17,6 +17,7 @@ import { AppState } from '@reducers/index';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as converter from 'number-to-words';
+import { AppService } from '@services/app.service';
 
 export class Type {
   name!: string;
@@ -47,7 +48,8 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
   public typesMarche: any[] = [];
   constructor(
     private _store: Store<AppState>,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private _appService: AppService
   ) {
     super();
     this.typesMarche = Object.keys(TypeMarcheEngagementMandatEnum).map(
@@ -63,7 +65,9 @@ export class MandatFormComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     //this.procedure = JSON.parse(localStorage.getItem('procedure')!!);
-    console.log('procedure.....', this.procedure);
+    this._appService.currentProcedureChange.subscribe((val) => {
+      this.procedure = val;
+    });
     this.mandatForm = this.startingForm;
     this.subformInitialized.emit(this.mandatForm);
     if (this.readOnly) this.mandatForm.disable();

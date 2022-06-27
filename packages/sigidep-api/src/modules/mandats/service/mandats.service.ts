@@ -9,6 +9,7 @@ import { EtatMandatEnum } from '@utils/etat-mandat.enum';
 import { CreateTraitementMandatDTO } from '../dto/create-treatment-mandat.dto';
 import { TraitementMandatEntity } from '@entities/traitement-mandat.entity';
 import { PaiementEntity } from '@entities/paiement.entity';
+import { FactureArticleEntity } from '@entities/facture-article.entity';
 
 @Injectable()
 export class MandatService {
@@ -21,28 +22,46 @@ export class MandatService {
 
     @InjectRepository(PaiementEntity)
     private readonly paiementMandatRepository: Repository<PaiementEntity>,
+
+    @InjectRepository(FactureArticleEntity)
+    private readonly articleRepo: Repository<FactureArticleEntity>,
   ) {}
 
   public getRepository(): Repository<MandatEntity> {
     return this.repository;
   }
 
+  public async getArticles(factureId: number): Promise<FactureArticleEntity[]> {
+    return this.articleRepo
+      .createQueryBuilder('art')
+      .leftJoinAndSelect('art.facture', 'facture')
+      .leftJoinAndSelect('art.article', 'article')
+      .where('facture.id IN(:...codes)', {
+        codes: [factureId],
+      })
+      .getMany();
+  }
+
   public async filter(filter?: EngagementFilter): Promise<MandatEntity[]> {
-    console.log(filter.imputation)
     return this.repository
       .createQueryBuilder('mandat')
       .leftJoinAndSelect('mandat.numActeJuridique', 'eng')
       .leftJoinAndSelect('mandat.traitements', 'traitements')
       .leftJoinAndSelect('mandat.paiements', 'paiements')
+      .leftJoinAndSelect('mandat.facture', 'facture')
+      .leftJoinAndSelect('facture.articles', 'articles')
       .where(filter?.procedures ? 'eng.codeProcedure IN(:...codes)' : 'true', {
         codes: filter?.procedures,
       })
       .andWhere(filter?.etats ? 'mandat.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
-      .andWhere(filter?.imputation ? 'eng.imputation IN(:...numeroj)' : 'true', {
-        numeroj: filter?.imputation,
-      })
+      .andWhere(
+        filter?.imputation ? 'eng.imputation IN(:...numeroj)' : 'true',
+        {
+          numeroj: filter?.imputation,
+        },
+      )
       .getMany();
   }
 
@@ -50,29 +69,53 @@ export class MandatService {
     return this.repository.delete({ id });
   }
 
+  public async deleteFactureArticle(id: number, ids?: number[]): Promise<any> {
+    if (!ids) {
+      return this.articleRepo.delete({ id });
+    } else {
+      return this.articleRepo.delete(ids);
+    }
+  }
+
   public async create(
     payload: CreateMandatDTO,
     user: UserEntity,
   ): Promise<MandatEntity> {
-    console.log(payload);
-    
-    
-    const mandat = await this.repository.save({
+    let mandatPaylaod = {
       ...(payload as any),
       createdBy: user,
       etat: EtatMandatEnum.MANDATENREGISTRE, //-Mandat enregistré ref-table Traitement
-    });
-
-    const traitementPayload:CreateTraitementMandatDTO = {
-      mandat:mandat.id,
-      typeTraitement:EtatMandatEnum.MANDATENREGISTRE,
-      observation:'',
-      qteUnitePhysiqueReal:null,
-      montantTotalUnitPhysReal:null
-      
     };
-    this.ajouterTraitement(traitementPayload,user);
-    this.ajouterPaiement(traitementPayload,user)
+    if (payload.facture) {
+      const articles = payload.facture.articles.map((item) => {
+        return {
+          article: { ...item },
+          quantite: item.quantite,
+        };
+      });
+
+      mandatPaylaod = {
+        ...(payload as any),
+        facture: {
+          ...payload.facture,
+          articles: articles,
+        },
+        createdBy: user,
+        etat: EtatMandatEnum.MANDATENREGISTRE, //-Mandat enregistré ref-table Traitement
+      };
+    }
+
+    const mandat = await this.repository.save(mandatPaylaod);
+
+    const traitementPayload: CreateTraitementMandatDTO = {
+      mandat: mandat.id,
+      typeTraitement: EtatMandatEnum.MANDATENREGISTRE,
+      observation: '',
+      qteUnitePhysiqueReal: null,
+      montantTotalUnitPhysReal: null,
+    };
+    this.ajouterTraitement(traitementPayload, user);
+    this.ajouterPaiement(traitementPayload, user);
     return mandat;
   }
 
@@ -88,22 +131,64 @@ export class MandatService {
     if (!check) {
       throw new NotFoundException();
     }
-    const mandat = await this.repository.save({
+
+    let mandatPaylaod = {
       ...(payload as any),
       updateBy: user,
       etat: reserve
         ? EtatMandatEnum.MANDATRESERVE
-        : EtatMandatEnum.MANDATMODIFIE, //reservé ou modifié
-    });
-    const traitementPayload:CreateTraitementMandatDTO = {
-      mandat:mandat.id,
-      typeTraitement:EtatMandatEnum.MANDATENREGISTRE,
-      observation:'',
-      qteUnitePhysiqueReal:null,
-      montantTotalUnitPhysReal:null
-      
+        : EtatMandatEnum.MANDATMODIFIE,
     };
-    this.modifierTraitement(traitementPayload,user)
+    if (payload.facture) {
+      const oldArticles = await this.getArticles(payload.facture.id);
+      //removed articles should be removed
+      let ids: number[] = [];
+      if (
+        oldArticles &&
+        oldArticles.length !== payload.facture.articles.length
+      ) {
+        oldArticles.forEach((item) => {
+          if (!payload.facture.articles.find((it) => it.id === item.id)) {
+            ids.push(item.id);
+          }
+        });
+
+        if (ids.length > 0) await this.deleteFactureArticle(0, ids);
+      }
+      const articles = payload.facture.articles.map((item) => {
+        const artF = oldArticles.find((i) => i.id === item.id);
+        return {
+          id: artF ? item?.id : undefined,
+          article: {
+            ...item,
+            id: artF ? artF.article?.id : item.id,
+          },
+          quantite: item.quantite,
+        };
+      });
+
+      mandatPaylaod = {
+        ...(payload as any),
+        facture: {
+          ...payload.facture,
+          articles: articles,
+        },
+        updateBy: user,
+        etat: reserve
+          ? EtatMandatEnum.MANDATRESERVE
+          : EtatMandatEnum.MANDATMODIFIE,
+      };
+    }
+    const mandat = await this.repository.save(mandatPaylaod);
+
+    const traitementPayload: CreateTraitementMandatDTO = {
+      mandat: mandat.id,
+      typeTraitement: EtatMandatEnum.MANDATENREGISTRE,
+      observation: '',
+      qteUnitePhysiqueReal: null,
+      montantTotalUnitPhysReal: null,
+    };
+    this.modifierTraitement(traitementPayload, user);
     return mandat;
   }
 
@@ -133,11 +218,11 @@ export class MandatService {
       ...payload,
       createdBy: user,
       mandat: {
-        id: payload.mandat,
+        id: payload.mandat.id,
       } as MandatEntity,
     };
 
-    const mandat = await this.repository.findOne(payload.mandat);
+    const mandat = await this.repository.findOne(payload.mandat.id);
     const updatedMandat = await this.repository.save({
       ...mandat,
       updateBy: user,
@@ -152,7 +237,7 @@ export class MandatService {
       .of(updatedMandat)
       .add(traitement);
 
-    return await this.repository.findOne(payload.mandat);
+    return await this.repository.findOne(payload.mandat.id);
   }
 
   public async modifierTraitement(
@@ -163,11 +248,11 @@ export class MandatService {
       ...payload,
       updateBy: user,
       mandat: {
-        id: payload.mandat,
+        id: payload.mandat.id,
       } as MandatEntity,
     };
 
-    const mandat = await this.repository.findOne(payload.mandat);
+    const mandat = await this.repository.findOne(payload.mandat.id);
     const updatedMandat = await this.repository.save({
       ...mandat,
       updateBy: user,
@@ -182,7 +267,7 @@ export class MandatService {
       .of(updatedMandat)
       .add(traitement);
 
-    return await this.repository.findOne(payload.mandat);
+    return await this.repository.findOne(payload.mandat.id);
   }
 
   public async ajouterPaiement(
@@ -193,7 +278,7 @@ export class MandatService {
       ...payload,
       createdBy: user,
       mandat: {
-        id: payload.mandat,
+        id: payload.mandat.id,
       } as MandatEntity,
     };
 

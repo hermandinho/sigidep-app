@@ -12,6 +12,8 @@ export class AppService {
   public sideBarMinimized = new BehaviorSubject<boolean>(false);
   public appBreadcrumb = new BehaviorSubject<MenuItem[]>([]);
   private breadcrumb: MenuItem[] = [];
+  public currentProcedureChange = new BehaviorSubject<string>('');
+  public currentProcedure: string = '';
 
   constructor(
     private translateService: TranslateService,
@@ -52,6 +54,15 @@ export class AppService {
   public setAppBreadcrumb(items: MenuItem[]) {
     this.breadcrumb = items;
     this.appBreadcrumb.next(this.breadcrumb);
+  }
+
+  public setCurrentProcedure(procedure: string) {
+    this.currentProcedure = procedure;
+    this.currentProcedureChange.next(this.currentProcedure);
+  }
+
+  public getCurrentProcedure(): string {
+    return this.currentProcedure;
   }
 
   public getAppBreadcrumb(): MenuItem[] {

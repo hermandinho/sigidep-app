@@ -1,7 +1,15 @@
 import { EtatMandatEnum } from '@utils/etat-mandat.enum';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
+import { FactureEntity } from './facture.entity';
 import { PaiementEntity } from './paiement.entity';
 import { TraitementMandatEntity } from './traitement-mandat.entity';
 import { UserEntity } from './user.entity';
@@ -43,16 +51,16 @@ export class MandatEntity extends BaseEntity {
   @Column({ default: false, name: 'editionTCC' })
   public editionTCC: boolean;
 
-  @Column({ type:'date', default: '2000-01-01', name: 'dateEditionTCC' })
+  @Column({ type: 'date', default: '2000-01-01', name: 'dateEditionTCC' })
   public dateEditionTCC: Date;
 
-  @Column({ type:'date', default: '2000-01-01', name: 'dateRejet' })
+  @Column({ type: 'date', default: '2000-01-01', name: 'dateRejet' })
   public dateRejet: Date;
 
-  @Column({name: 'rejet',default: false })
+  @Column({ name: 'rejet', default: false })
   public rejet: boolean;
 
-  @Column({default: false, name: 'encours' })
+  @Column({ default: false, name: 'encours' })
   public encours: boolean;
   @Column({
     name: 'etat',
@@ -84,12 +92,20 @@ export class MandatEntity extends BaseEntity {
   })
   public paiements?: Partial<PaiementEntity>[];
 
-    // RELATIONS
-    @ManyToOne(() => UserEntity, (object) => object.id, {
-      eager: false,
-      onDelete: 'SET NULL',
-      nullable: true,
-    })
-    @JoinColumn({ name: 'created_by' })
-    public createdBy: UserEntity;
+  // RELATIONS
+  @ManyToOne(() => UserEntity, (object) => object.id, {
+    eager: false,
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'created_by' })
+  public createdBy: UserEntity;
+
+  @OneToOne(() => FactureEntity, (object) => object.mandat, {
+    eager: true,
+    nullable: true,
+    cascade: ['insert', 'update', 'remove'],
+  })
+  @JoinColumn({ name: 'facture_id' })
+  public facture: FactureEntity | null;
 }
