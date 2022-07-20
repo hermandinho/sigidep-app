@@ -1,16 +1,16 @@
 //ces champs sonts passés uniquement lors du traitement
 
 import { ApiProperty } from '@nestjs/swagger';
-import { EtatMandatEnum } from '@utils/etat-mandat.enum';
-import { CreateMandatDTO } from './create-mandat.dto';
+import { EtatBonEnum } from '@utils/etat-bon.enum';
+import { CreateBonEngagementDTO } from './create-bon-engagement.dto';
 
-export class CreateTraitementMandatDTO {
+export class CreateTraitementBonEngagementDTO {
   id?: number;
   @ApiProperty({ required: true })
-  mandat!: CreateMandatDTO;
+  bon!: CreateBonEngagementDTO;
 
-  @ApiProperty({ example: EtatMandatEnum.ANNULATIONMANDAT, required: false })
-  typeTraitement!: EtatMandatEnum;
+  @ApiProperty({ example: EtatBonEnum.ANNULELORSRESERVATION, required: false })
+  typeTraitement!: EtatBonEnum;
 
   @ApiProperty({ example: 'RAS', required: false })
   observation!: string;

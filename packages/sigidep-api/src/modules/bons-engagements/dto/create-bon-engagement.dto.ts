@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsOptional } from 'class-validator';
 import { CreateFactureDTO } from './create-facture.dto';
-export class CreateMandatDTO {
+export class CreateBonEngagementDTO {
   id?: number;
 
   @ApiProperty({ example: 'CARNET0001', required: false })

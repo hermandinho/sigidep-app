@@ -33,9 +33,9 @@ import { RegionsModule } from './modules/regions/regions.module';
 import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
 import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
 import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
-import { MandatsModule } from '@modules/mandats/mandats.module';
+import { BonsEngagementsModule } from '@modules/bons-engagements/bons-engagements.module';
 import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
-import { TraitementMandatSubscriber } from '@subscribers/mandat.subscriber';
+import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements.subscriber';
 
 @Module({
   imports: [
@@ -71,7 +71,7 @@ import { TraitementMandatSubscriber } from '@subscribers/mandat.subscriber';
           entities: ['dist/**/*.entity.js'],
           subscribers: [
             EngagementHistorySubscriber,
-            TraitementMandatSubscriber,
+            TraitementBonEngagementSubscriber,
           ],
           synchronize: true,
           type: 'postgres',
@@ -127,7 +127,7 @@ import { TraitementMandatSubscriber } from '@subscribers/mandat.subscriber';
     EngagementJuridiqueModule,
     ExecProcedureModule,
     ExecTaxesModule,
-    MandatsModule,
+    BonsEngagementsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

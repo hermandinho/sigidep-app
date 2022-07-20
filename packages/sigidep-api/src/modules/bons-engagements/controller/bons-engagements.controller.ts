@@ -14,15 +14,15 @@ import { GetCurrentUser } from '@decorators/get-current-user.decorator';
 import { UserEntity } from '@entities/user.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { MandatService } from '../service/mandats.service';
-import { CreateMandatDTO } from '../dto/create-mandat.dto';
+import { BonEngagementService } from '../service/bons-engagements.service';
+import { CreateBonEngagementDTO } from '../dto/create-bon-engagement.dto';
 import { EngagementFilter } from '@utils/engagement-filter';
-@Controller('mandats')
-@ApiTags('mandats')
+@Controller('bons-engagements')
+@ApiTags('bons-engagements')
 @UseGuards(AuthGuard())
 @ApiBearerAuth()
-export class MandatController {
-  constructor(private readonly services: MandatService) {}
+export class BonEngagementController {
+  constructor(private readonly services: BonEngagementService) {}
 
   @Get('/')
   public async filter(
@@ -38,7 +38,7 @@ export class MandatController {
 
   @Post('/')
   public async create(
-    @Body(ValidationPipe) payload: CreateMandatDTO,
+    @Body(ValidationPipe) payload: CreateBonEngagementDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.create(payload, user);
@@ -46,7 +46,7 @@ export class MandatController {
 
   @Put('/')
   public async update(
-    @Body(ValidationPipe) payload: CreateMandatDTO,
+    @Body(ValidationPipe) payload: CreateBonEngagementDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.update(payload, user);
@@ -66,7 +66,7 @@ export class MandatController {
   }
   @Put('/reservation')
   public async reserve(
-    @Body(ValidationPipe) payload: CreateMandatDTO,
+    @Body(ValidationPipe) payload: CreateBonEngagementDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.update(payload, user, true);
@@ -75,7 +75,7 @@ export class MandatController {
   @Put('/cancel/:id')
   public async cancelReservation(
     @Param('id') id: number,
-    @Body(ValidationPipe) payload: CreateMandatDTO,
+    @Body(ValidationPipe) payload: CreateBonEngagementDTO,
   ) {
     return this.services.cancelReservation(id);
   }

@@ -12,7 +12,8 @@ import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
 import { GradeEntity } from '@entities/grade.entity';
 import { TypeProcedureEntity } from '@entities/type-procedure.entity';
 import { TraitementEntity } from '@entities/traitement.entity';
-
+import { BonEngagementController } from '@modules/bons-engagements/controller/bons-engagements.controller';
+import * as etats from '../../utils/etat-bon.json';
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
   description:
@@ -5584,33 +5585,4 @@ export const PROCEDURESTYPES_DATA: Partial<TypeProcedureEntity>[] = [
   },
 ];
 
-export const TRAITMENTS_DATA: Partial<TraitementEntity>[] = [
-  { codeEtape: 0, label: 'Annulation du Mandat' },
-  { codeEtape: 1, label: 'Annulé lors de la réservation' },
-  { codeEtape: 2, label: 'Rejet lors de la réservation' },
-  { codeEtape: 3, label: 'Rejet lors du Contrôle Conformité' },
-  { codeEtape: 4, label: 'Rejet lors du Contrôle de Régularité' },
-  { codeEtape: 5, label: 'Rejet lors de la validation ACT' },
-  { codeEtape: 8, label: 'Mandat Modifié' },
-  { codeEtape: 9, label: 'Mandat Enregistré' },
-  { codeEtape: 10, label: 'Mandat Réservé' },
-  { codeEtape: 11, label: 'Visa DAAF' },
-  { codeEtape: 12, label: 'Transmis pour Contrôle Conformité' },
-  { codeEtape: 13, label: 'Réception pour Contrôle Conformité' },
-  { codeEtape: 14, label: 'Contrôle de Conformité' },
-  { codeEtape: 15, label: 'Edition du Titre de Créance' },
-  { codeEtape: 16, label: 'Transmission pour Liquidation' },
-  { codeEtape: 17, label: ' Réception pour Liquidation' },
-  { codeEtape: 18, label: 'Saisie des Unités Physiques (BIP)' },
-  { codeEtape: 19, label: 'Enregistrement de la liquidation' },
-  { codeEtape: 20, label: 'Liquidation modifiée' },
-  { codeEtape: 21, label: 'Validation de la Liquidation' },
-  { codeEtape: 22, label: 'Ordonnancement' },
-  { codeEtape: 23, label: 'Transmission pour Contrôle de Régularité' },
-  { codeEtape: 24, label: 'Réception pour Contrôle Régularit' },
-  { codeEtape: 25, label: 'Contrôle de Régularité' },
-  { codeEtape: 26, label: 'Transmission à l’ACT' },
-  { codeEtape: 27, label: 'Réception à l’ACT' },
-  { codeEtape: 28, label: 'Validation Comptable' },
-  { codeEtape: 29, label: 'Paiement' },
-];
+export const TRAITMENTS_DATA: Partial<TraitementEntity>[] = etats;

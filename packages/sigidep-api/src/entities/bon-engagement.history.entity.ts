@@ -1,17 +1,16 @@
-import { EtatMandatEnum } from '@utils/etat-mandat.enum';
 import { Column, Entity } from 'typeorm';
 import {
   HistoryActionColumn,
   HistoryActionType,
   HistoryEntityInterface,
 } from 'typeorm-revisions';
-import { MandatEntity } from './mandat.entity';
+import { BonEngagementEntity } from './bon-engagement.entity';
 
 @Entity({
-  name: 'mandat-history',
+  name: 'bon_engagement_history',
 })
-export class MandatHistoryEntity
-  extends MandatEntity
+export class BonEngagementHistoryEntity
+  extends BonEngagementEntity
   implements HistoryEntityInterface
 {
   @Column()
@@ -22,7 +21,7 @@ export class MandatHistoryEntity
   @HistoryActionColumn()
   action!: HistoryActionType;
 
-  constructor(param?: Partial<MandatHistoryEntity>) {
+  constructor(param?: Partial<BonEngagementHistoryEntity>) {
     super();
     if (param) {
       Object.assign(this, param);

@@ -2,32 +2,32 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
-import { MandatEntity } from '@entities/mandat.entity';
-import { CreateMandatDTO } from '../dto/create-mandat.dto';
+import { BonEngagementEntity } from '@entities/bon-engagement.entity';
+import { CreateBonEngagementDTO } from '../dto/create-bon-engagement.dto';
 import { EngagementFilter } from '@utils/engagement-filter';
-import { EtatMandatEnum } from '@utils/etat-mandat.enum';
-import { CreateTraitementMandatDTO } from '../dto/create-treatment-mandat.dto';
-import { TraitementMandatEntity } from '@entities/traitement-mandat.entity';
+import { EtatBonEnum } from '@utils/etat-bon.enum';
+import { CreateTraitementBonEngagementDTO } from '../dto/create-traitement-bon-engagement.dto';
+import { TraitementBonEngagementEntity } from '@entities/traitement-bon-engagement.entity';
 import { PaiementEntity } from '@entities/paiement.entity';
 import { FactureArticleEntity } from '@entities/facture-article.entity';
 
 @Injectable()
-export class MandatService {
+export class BonEngagementService {
   constructor(
-    @InjectRepository(MandatEntity)
-    private readonly repository: Repository<MandatEntity>,
+    @InjectRepository(BonEngagementEntity)
+    private readonly repository: Repository<BonEngagementEntity>,
 
-    @InjectRepository(TraitementMandatEntity)
-    private readonly traitementMandatRepository: Repository<TraitementMandatEntity>,
+    @InjectRepository(TraitementBonEngagementEntity)
+    private readonly traitementBonRepository: Repository<TraitementBonEngagementEntity>,
 
     @InjectRepository(PaiementEntity)
-    private readonly paiementMandatRepository: Repository<PaiementEntity>,
+    private readonly paiementBonRepository: Repository<PaiementEntity>,
 
     @InjectRepository(FactureArticleEntity)
     private readonly articleRepo: Repository<FactureArticleEntity>,
   ) {}
 
-  public getRepository(): Repository<MandatEntity> {
+  public getRepository(): Repository<BonEngagementEntity> {
     return this.repository;
   }
 
@@ -42,18 +42,20 @@ export class MandatService {
       .getMany();
   }
 
-  public async filter(filter?: EngagementFilter): Promise<MandatEntity[]> {
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<BonEngagementEntity[]> {
     return this.repository
-      .createQueryBuilder('mandat')
-      .leftJoinAndSelect('mandat.numActeJuridique', 'eng')
-      .leftJoinAndSelect('mandat.traitements', 'traitements')
-      .leftJoinAndSelect('mandat.paiements', 'paiements')
-      .leftJoinAndSelect('mandat.facture', 'facture')
+      .createQueryBuilder('bon')
+      .leftJoinAndSelect('bon.numActeJuridique', 'eng')
+      .leftJoinAndSelect('bon.traitements', 'traitements')
+      .leftJoinAndSelect('bon.paiements', 'paiements')
+      .leftJoinAndSelect('bon.facture', 'facture')
       .leftJoinAndSelect('facture.articles', 'articles')
       .where(filter?.procedures ? 'eng.codeProcedure IN(:...codes)' : 'true', {
         codes: filter?.procedures,
       })
-      .andWhere(filter?.etats ? 'mandat.etat IN(:...etats)' : 'true', {
+      .andWhere(filter?.etats ? 'bon.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
       })
       .andWhere(
@@ -78,13 +80,13 @@ export class MandatService {
   }
 
   public async create(
-    payload: CreateMandatDTO,
+    payload: CreateBonEngagementDTO,
     user: UserEntity,
-  ): Promise<MandatEntity> {
-    let mandatPaylaod = {
+  ): Promise<BonEngagementEntity> {
+    let bonPaylaod = {
       ...(payload as any),
       createdBy: user,
-      etat: EtatMandatEnum.MANDATENREGISTRE, //-Mandat enregistré ref-table Traitement
+      etat: EtatBonEnum.ENREGISTRE,
     };
     if (payload.facture) {
       const articles = payload.facture.articles.map((item) => {
@@ -94,36 +96,36 @@ export class MandatService {
         };
       });
 
-      mandatPaylaod = {
+      bonPaylaod = {
         ...(payload as any),
         facture: {
           ...payload.facture,
           articles: articles,
         },
         createdBy: user,
-        etat: EtatMandatEnum.MANDATENREGISTRE, //-Mandat enregistré ref-table Traitement
+        etat: EtatBonEnum.ENREGISTRE,
       };
     }
 
-    const mandat = await this.repository.save(mandatPaylaod);
+    const bon = await this.repository.save(bonPaylaod);
 
-    const traitementPayload: CreateTraitementMandatDTO = {
-      mandat: mandat.id,
-      typeTraitement: EtatMandatEnum.MANDATENREGISTRE,
+    const traitementPayload: CreateTraitementBonEngagementDTO = {
+      bon: bon.id,
+      typeTraitement: EtatBonEnum.ENREGISTRE,
       observation: '',
       qteUnitePhysiqueReal: null,
       montantTotalUnitPhysReal: null,
     };
     this.ajouterTraitement(traitementPayload, user);
     this.ajouterPaiement(traitementPayload, user);
-    return mandat;
+    return bon;
   }
 
   public async update(
-    payload: CreateMandatDTO,
+    payload: CreateBonEngagementDTO,
     user: UserEntity,
     reserve: boolean = false,
-  ): Promise<MandatEntity> {
+  ): Promise<BonEngagementEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
     });
@@ -132,12 +134,10 @@ export class MandatService {
       throw new NotFoundException();
     }
 
-    let mandatPaylaod = {
+    let bonPaylaod = {
       ...(payload as any),
       updateBy: user,
-      etat: reserve
-        ? EtatMandatEnum.MANDATRESERVE
-        : EtatMandatEnum.MANDATMODIFIE,
+      etat: reserve ? EtatBonEnum.RESERVE : EtatBonEnum.MODIFIE,
     };
     if (payload.facture) {
       const oldArticles = await this.getArticles(payload.facture.id);
@@ -167,136 +167,131 @@ export class MandatService {
         };
       });
 
-      mandatPaylaod = {
+      bonPaylaod = {
         ...(payload as any),
         facture: {
           ...payload.facture,
           articles: articles,
         },
         updateBy: user,
-        etat: reserve
-          ? EtatMandatEnum.MANDATRESERVE
-          : EtatMandatEnum.MANDATMODIFIE,
+        etat: reserve ? EtatBonEnum.RESERVE : EtatBonEnum.MODIFIE,
       };
     }
-    const mandat = await this.repository.save(mandatPaylaod);
+    const bon = await this.repository.save(bonPaylaod);
 
-    const traitementPayload: CreateTraitementMandatDTO = {
-      mandat: mandat.id,
-      typeTraitement: EtatMandatEnum.MANDATENREGISTRE,
+    const traitementPayload: CreateTraitementBonEngagementDTO = {
+      bon: bon.id,
+      typeTraitement: EtatBonEnum.ENREGISTRE,
       observation: '',
       qteUnitePhysiqueReal: null,
       montantTotalUnitPhysReal: null,
     };
     this.modifierTraitement(traitementPayload, user);
-    return mandat;
+    return bon;
   }
 
-  public async cancelReservation(id: number): Promise<MandatEntity> {
+  public async cancelReservation(id: number): Promise<BonEngagementEntity> {
     const property = await this.repository.findOne({
       id: id,
     });
 
     return this.repository.save({
       ...property, // existing fields
-      etat: EtatMandatEnum.ANNULATIONMANDAT, // annulation du mandat
+      etat: EtatBonEnum.ANNULELORSRESERVATION, // annulation du bon
     });
   }
 
   /**
-   * Cett méthode ajoute un traitement à la liste des traitemenst d'un mandat
+   * Cett méthode ajoute un traitement à la liste des traitemenst d'un bon
    * @param payload le traitement en question
    * @param user
    * @returns
    */
 
   public async ajouterTraitement(
-    payload: CreateTraitementMandatDTO,
+    payload: CreateTraitementBonEngagementDTO,
     user: UserEntity,
-  ): Promise<MandatEntity> {
+  ): Promise<BonEngagementEntity> {
     const traitementPayload = {
       ...payload,
       createdBy: user,
-      mandat: {
-        id: payload.mandat.id,
-      } as MandatEntity,
+      bon: {
+        id: payload.bon.id,
+      } as BonEngagementEntity,
     };
 
-    const mandat = await this.repository.findOne(payload.mandat.id);
-    const updatedMandat = await this.repository.save({
-      ...mandat,
+    const bon = await this.repository.findOne(payload.bon.id);
+    const updatedBon = await this.repository.save({
+      ...bon,
       updateBy: user,
       etat: payload.typeTraitement,
     });
-    const traitement = await this.traitementMandatRepository.save(
+    const traitement = await this.traitementBonRepository.save(
       traitementPayload,
     );
     await this.repository
       .createQueryBuilder()
-      .relation(MandatEntity, 'traitements')
-      .of(updatedMandat)
+      .relation(BonEngagementEntity, 'traitements')
+      .of(updatedBon)
       .add(traitement);
 
-    return await this.repository.findOne(payload.mandat.id);
+    return await this.repository.findOne(payload.bon.id);
   }
 
   public async modifierTraitement(
-    payload: CreateTraitementMandatDTO,
+    payload: CreateTraitementBonEngagementDTO,
     user: UserEntity,
-  ): Promise<MandatEntity> {
+  ): Promise<BonEngagementEntity> {
     const traitementPayload = {
       ...payload,
       updateBy: user,
-      mandat: {
-        id: payload.mandat.id,
-      } as MandatEntity,
+      bon: {
+        id: payload.bon.id,
+      } as BonEngagementEntity,
     };
 
-    const mandat = await this.repository.findOne(payload.mandat.id);
-    const updatedMandat = await this.repository.save({
-      ...mandat,
+    const bon = await this.repository.findOne(payload.bon.id);
+    const updatedBon = await this.repository.save({
+      ...bon,
       updateBy: user,
       etat: payload.typeTraitement,
     });
-    const traitement = await this.traitementMandatRepository.save(
+    const traitement = await this.traitementBonRepository.save(
       traitementPayload,
     );
     await this.repository
       .createQueryBuilder()
-      .relation(MandatEntity, 'traitements')
-      .of(updatedMandat)
+      .relation(BonEngagementEntity, 'traitements')
+      .of(updatedBon)
       .add(traitement);
 
-    return await this.repository.findOne(payload.mandat.id);
+    return await this.repository.findOne(payload.bon.id);
   }
 
   public async ajouterPaiement(
     payload: any,
     user: UserEntity,
-  ): Promise<MandatEntity> {
+  ): Promise<BonEngagementEntity> {
     const paiementPayload = {
       ...payload,
       createdBy: user,
-      mandat: {
-        id: payload.mandat.id,
-      } as MandatEntity,
+      bon: {
+        id: payload.bon.id,
+      } as BonEngagementEntity,
     };
 
-    const mandat = await this.repository.findOne(payload.mandat);
-    const updatedMandat = await this.repository.save({
-      ...mandat,
+    const bon = await this.repository.findOne(payload.bon);
+    const updatedBon = await this.repository.save({
+      ...bon,
       updateBy: user,
       //etat: payload.typeTraitement,
     });
-    const traitement = await this.paiementMandatRepository.save(
-      paiementPayload,
-    );
+    const traitement = await this.paiementBonRepository.save(paiementPayload);
     await this.repository
       .createQueryBuilder()
-      .relation(MandatEntity, 'paiements')
-      .of(updatedMandat)
+      .relation(BonEngagementEntity, 'paiements')
+      .of(updatedBon)
       .add(traitement);
-
-    return await this.repository.findOne(payload.mandat);
+    return await this.repository.findOne(payload.bon);
   }
 }

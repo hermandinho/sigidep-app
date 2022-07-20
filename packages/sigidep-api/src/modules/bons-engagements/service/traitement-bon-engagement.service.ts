@@ -2,23 +2,23 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
-import { TraitementMandatEntity } from '@entities/traitement-mandat.entity';
+import { TraitementBonEngagementEntity } from '@entities/traitement-bon-engagement.entity';
 
 @Injectable()
-export class TraitementMandatService {
+export class TraitementBonEngagementService {
   constructor(
-    @InjectRepository(TraitementMandatEntity)
-    private readonly repository: Repository<TraitementMandatEntity>,
+    @InjectRepository(TraitementBonEngagementEntity)
+    private readonly repository: Repository<TraitementBonEngagementEntity>,
   ) {}
 
-  public getRepository(): Repository<TraitementMandatEntity> {
+  public getRepository(): Repository<TraitementBonEngagementEntity> {
     return this.repository;
   }
 
-  public async filter(mandatId: number): Promise<TraitementMandatEntity[]> {
+  public async filter(bonId: number): Promise<TraitementBonEngagementEntity[]> {
     return this.repository
       .createQueryBuilder('traitement')
-      .where('traitement.mandat.id = :id', { id: mandatId })
+      .where('traitement.bon.id = :id', { id: bonId })
       .getMany();
   }
 
@@ -27,9 +27,9 @@ export class TraitementMandatService {
   }
 
   public async create(
-    payload: TraitementMandatEntity,
+    payload: TraitementBonEngagementEntity,
     user: UserEntity,
-  ): Promise<TraitementMandatEntity> {
+  ): Promise<TraitementBonEngagementEntity> {
     return this.repository.save({
       ...(payload as any),
       createdBy: user,
@@ -37,9 +37,9 @@ export class TraitementMandatService {
   }
 
   public async update(
-    payload: TraitementMandatEntity,
+    payload: TraitementBonEngagementEntity,
     user: UserEntity,
-  ): Promise<TraitementMandatEntity> {
+  ): Promise<TraitementBonEngagementEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
     });

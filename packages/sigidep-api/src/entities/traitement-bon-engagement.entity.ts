@@ -1,29 +1,29 @@
-import { EtatMandatEnum } from '@utils/etat-mandat.enum';
+import { EtatBonEnum } from '@utils/etat-bon.enum';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { MandatEntity } from './mandat.entity';
+import { BonEngagementEntity } from './bon-engagement.entity';
 import { UserEntity } from './user.entity';
 
 @Entity({
-  name: 'traitement-mandat',
+  name: 'traitements_bons_engagements',
 })
-export class TraitementMandatEntity extends BaseEntity {
-  @ManyToOne(() => MandatEntity, (object) => object.traitements, {
+export class TraitementBonEngagementEntity extends BaseEntity {
+  @ManyToOne(() => BonEngagementEntity, (object) => object.traitements, {
     eager: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'mandat_id' })
-  mandat!: MandatEntity;
+  @JoinColumn({ name: 'bon_id' })
+  bon!: BonEngagementEntity;
 
   @Column({
     name: 'typeTraitement',
     type: 'enum',
-    enum: EtatMandatEnum,
+    enum: EtatBonEnum,
     nullable: true,
   })
-  public typeTraitement!: EtatMandatEnum;
+  public typeTraitement!: EtatBonEnum;
 
-  @Column('varchar',{ nullable: true, name: 'observation' })
+  @Column('varchar', { nullable: true, name: 'observation' })
   observation!: string;
   @Column({ nullable: true, type: 'float', name: 'qteUnitePhysiqueReal' })
   qteUnitePhysiqueReal!: number;
@@ -62,19 +62,19 @@ export class TraitementMandatEntity extends BaseEntity {
 
   @Column('varchar', { nullable: true, name: 'motif' })
   public motif!: string;
-  
+
   @Column('varchar', { nullable: true, name: 'piecesJointe' })
   public piecesJointe!: string;
-    // RELATIONS
-    @ManyToOne(() => UserEntity, (object) => object.id, {
-      eager: false,
-      onDelete: 'SET NULL',
-      nullable: true,
-    })
-    @JoinColumn({ name: 'created_by' })
-    public createdBy!: UserEntity;
+  // RELATIONS
+  @ManyToOne(() => UserEntity, (object) => object.id, {
+    eager: false,
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  @JoinColumn({ name: 'created_by' })
+  public createdBy!: UserEntity;
 
-  constructor(param?: Partial<TraitementMandatEntity>) {
+  constructor(param?: Partial<TraitementBonEngagementEntity>) {
     super();
     if (param) {
       Object.assign(this, param);
