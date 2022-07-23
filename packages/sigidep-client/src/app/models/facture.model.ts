@@ -1,7 +1,7 @@
 import { ArticleCrudModel } from './article-crud.model';
 import { ArticleModel } from './article.model';
 import { BaseModel } from './base.model';
-import { EngagementMandatModel } from './engagement-mandat.model';
+import { BonEngagementModel } from './bon-engagement.model';
 
 export class FactureModel extends BaseModel {
   date!: Date;
@@ -17,7 +17,7 @@ export class FactureModel extends BaseModel {
   netAPercevoir!: number;
   surfracturation!: boolean;
   morcellement!: boolean;
-  mandat?: EngagementMandatModel;
+  mandat?: BonEngagementModel;
   articles!: ArticleModel[] | ArticleCrudModel[];
 
   constructor(params?: Partial<FactureModel>) {

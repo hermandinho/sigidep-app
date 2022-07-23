@@ -34,7 +34,7 @@ import { EngagementsMissionsEffects } from '@effects/engagement-mission.effects'
 import { TaxesEffects } from '@effects/exec-taxes.effects';
 import { ProceduresEffects } from '@effects/exec-procedure.effects';
 import { ConsultationsEffects } from './consultations.effects';
-import { EngagementsMandatsEffects } from './engagement-mandat.effects';
+import { BonsEngagementsEffects } from './bon-engagement.effects';
 import { EngagementsEffects } from './engagements.effects';
 
 export const Effects = [
@@ -75,6 +75,6 @@ export const Effects = [
   TaxesEffects,
   EngagementsJuridiquesEffects,
   ConsultationsEffects,
-  EngagementsMandatsEffects,
+  BonsEngagementsEffects,
   EngagementsEffects,
 ];

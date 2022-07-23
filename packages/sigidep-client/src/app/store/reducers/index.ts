@@ -37,7 +37,7 @@ import * as fromCommandes from '@reducers/engagement-commande.reducer';
 import * as fromDecisions from '@reducers/engagement-decision.reducer';
 import * as fromMissions from '@reducers/engagement-mission.reducer';
 import * as fromEngagements from '@reducers/engagement-juridique.reducer';
-import * as fromMandatsPrimes from '@reducers/engagement-mandat.reducer';
+import * as fromMandatsPrimes from '@reducers/bons-engagements.reducer';
 import * as fromProcedures from '@reducers/exec-procedure.reducer';
 import * as fromTaxes from '@reducers/exec-taxes.reducer';
 import * as fromConsultations from '@reducers/consultations.reducer';

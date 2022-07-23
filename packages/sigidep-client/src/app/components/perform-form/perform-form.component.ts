@@ -13,6 +13,7 @@ import { EncoursModel } from '@models/encours.model';
 import { Observable, of } from 'rxjs';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppService } from '@services/app.service';
+import { ConsultationsModule } from '@pages/consultations/consultations.module';
 
 @Component({
   selector: 'app-perform-form',
@@ -44,9 +45,9 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._appService.currentProcedureChange.subscribe((val) => {
-      this.procedure = val;
-    });
+    if (!this.procedure) {
+      this.procedure = this._appService.currentProcedure;
+    }
     this.performForm = this.startingForm;
     this.subformInitialized.emit(this.performForm);
     if (this.readOnly) this.performForm.disable();
@@ -55,6 +56,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
     this.getEncour();
   }
   doChangeStep = (direction: any) => {
+    this._appService.setCurrentProcedure(this.procedure);
     this.changeStep.emit(direction);
   };
 
@@ -65,6 +67,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   }
 
   submit = () => {
+    this._appService.setCurrentProcedure(this.procedure);
     this.submitForm.emit();
   };
   private _initListeners() {
