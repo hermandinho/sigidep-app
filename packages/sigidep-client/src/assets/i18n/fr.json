@@ -28,7 +28,7 @@
     "contribuablesBudgetaires": "contribuables Budgetaires",
     "agents": "Agents",
     "mercuriales": "Mercuriale",
-    "carnetsMandats": "Carnets Mandats",
+    "carnetsBons": "Carnets Bons",
     "accreditationsGestionnaires": "Accreditations des Gestionnaires",
     "baremes": "Barèmes",
     "typesProcedures": "Types Procédures",
@@ -39,14 +39,15 @@
     "engagements": "Engagements",
     "consultation": "Consultations",
     "engagementsjuridiques": "Engagements Juridiques",
-    "engagementsmandats": "Engagements Mandats",
+    "engagementsBons": "Engagements Bons",
     "commandepublique": "Commande Publique",
     "missions": "Missions",
     "decisions": "Décisions",
     "primes": "Primes",
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
-    "misedispositionstructure": "Mise à Disposition - Structure"
+    "misedispositionstructure": "Mise à Disposition - Structure",
+    "bonsengagements": "Engagements CP"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -78,11 +79,11 @@
     "submit": "Soumettre",
     "print": "Imprimer",
     "close": "Fermer",
-    "recherche":"Rechercher"
+    "recherche": "Rechercher",
+    "addArticle": "Ajouter un article"
   },
   "install": {
     "title": "Installation"
-
   },
   "labels": {
     "structureCode": "Code Structure",
@@ -276,7 +277,7 @@
     "montantTTC": "Montant TTC",
     "imputationBudgetaire": "Imputation budgétaire",
     "certificatEngagement": "Certificat d’Engagement",
-    "mandats": "Mandat",
+    "Bons": "Bon",
     "selectimputation": "Choisir une imputation",
     "signataire": "Signataire",
     "dateSignature": "Date Signature",
@@ -321,29 +322,29 @@
     "nombreJours": "Nombre jours",
     "baremeJour": "Bareme jour",
     "montantMission": "Montant Mission",
-    "numActeJuridiqueMandat": "Numéro Engagement Juridique",
+    "numActeJuridiqueBon": "Numéro Engagement Juridique",
     "codeProcedure": "Procédure",
     "matriculeGestionnaire": "Matricule Gestionnaire",
     "nomGestionnaire": "Nom Gestionnaire",
     "dateEngagement": "Date signature",
     "signature": "Signataire",
-    "montantCPChiffres": "Montant Mandat(en chiffres)",
-    "montantCPLettres": "Montant Mandat (en lettres)",
+    "montantCPChiffres": "Montant Bon(en chiffres)",
+    "montantCPLettres": "Montant Bon (en lettres)",
     "livrables": "Résultats attendus",
     "situationActuel": "Situation actuelle",
     "sourceVerif": "Source de vérification",
     "ordinaire": "Avance Mission ordinaire",
     "controle": "Avance Mission Contrôle/Recouvrement",
     "effectuer": "Mission effectuée",
-    "annulationduMandat": "Annulation du Mandat",
+    "annulationdu": "Annulation du Bon",
     "annulelorsdelareservation": "Annulé lors de la réservation",
     "rejetlorsdelareservation": "Rejet lors de la réservation",
     "rejetlorsduControleConformite": "Rejet lors du Contrôle Conformité",
     "rejetlorsduControledeRegularite": "Rejet lors du Contrôle de Régularité",
     "rejetlorsdelavalidationACT": "Rejet lors de la validation ACT",
-    "mandatModifie": "Mandat Modifié",
-    "mandatEnregistre": "Mandat Enregistré",
-    "mandatReserve": "Mandat Réservé",
+    "bonModifie": "Bon Modifié",
+    "bonEnregistre": "Bon Enregistré",
+    "bonReserve": "Bon Réservé",
     "visaDAAF": "Visa DAAF",
     "transmispourControleConformite": "Transmis pour Contrôle Conformité",
     "receptionpourControleConformite": "Réception pour Contrôle Conformité",
@@ -369,24 +370,24 @@
     "avance": "Avance Démarrage",
     "decompte": "Décompte",
     "marche": "Marché réalisé en entier",
-    "paye_mandat": "Mandat Payé",
-    "validACT_mandat": "Validation ACT (en Attente Paiement)",
-    "ordonnance_mandat": "Ordonnancement Mandat",
-    "liquite_mandat": "Liquidation Mandat",
-    "editionTCC_mandat": "Edition Titre Créance",
-    "rejet_mandat": "Mandat Rejeté",
-    "datePaiement_mandat": "Date Paiement",
-    "dateValidACT_mandat": "Date Validation",
-    "dateOrdonnancement_mandat": "Date Ordonnancement",
-    "dateLiquidation_mandat": "Date Liquidation",
-    "dateEditionTCC_mandat": "Date Edition Titre CC",
+    "paye_Bon": "Bon Payé",
+    "validACT_Bon": "Validation ACT (en Attente Paiement)",
+    "ordonnance_Bon": "Ordonnancement Bon",
+    "liquite_Bon": "Liquidation Bon",
+    "editionTCC_Bon": "Edition Titre Créance",
+    "rejet_Bon": "Bon Rejeté",
+    "datePaiement_Bon": "Date Paiement",
+    "dateValidACT_Bon": "Date Validation",
+    "dateOrdonnancement_Bon": "Date Ordonnancement",
+    "dateLiquidation_Bon": "Date Liquidation",
+    "dateEditionTCC_Bon": "Date Edition Titre CC",
     "date_rejet": "Date Rejet",
     "motif_rejet": "Motif",
-    "montantTVA":"Montant TVA",
-    "montantIR":"Montant IR",
-    "montantTotalHT":"Montant Total HT",
-    "dateFacturation":"Date de Facturation",
-    "tauxIR":"Taux IR"
+    "montantTVA": "Montant TVA",
+    "montantIR": "Montant IR",
+    "montantTotalHT": "Montant Total HT",
+    "dateFacturation": "Date de Facturation",
+    "tauxIR": "Taux IR"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -620,7 +621,7 @@
     "sous-rubriques": "Sous Rubriques",
     "grades": "Grades",
     "categories": "Catégories",
-    "carnets": "Carnets de Mandats",
+    "carnets": "Carnets de Bons",
     "categories-agents": "Catégories",
     "accreditationsgestionnaires": "Accreditations des Gestionnaires",
     "piecesjointes": "Pieces Jointes",
@@ -630,7 +631,10 @@
     "taxes": "Taxes",
     "procedures": "Procédures",
     "engagements": "Engagements",
-    "mandatsprimes": "Engagement Mandat Decision"
+    "Bonsprimes": "Engagement Bon Decision",
+    "bonsengagementsmissions": "Bons Engagements Missions",
+    "bonsengamentscommandes": "Bons Engagements Commandes",
+    "bonsPrimes": "Bons Engagements Primes"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -647,7 +651,7 @@
       "sousRubriques": "Sous Rubriques",
       "grades": "Grades",
       "categories": "Catégories",
-      "carnetsMandats": "Carnets de Mandats",
+      "carnetsBons": "Carnets de Bons",
       "typesProcedures": "Types de Procédures",
       "piecesJointes": "Pièces Jointes",
       "baremes": "Barèmes",
@@ -655,7 +659,7 @@
       "procdeures": "Procédures",
       "taxes": "Taxes",
       "engagements": "Engagements",
-      "mandats": "Mandats primes"
+      "Bons": "Bons primes"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -798,17 +802,16 @@
       "cpDispoANouveau": " CP Dispo à Nouveau",
       "operation": "operation",
       "type": "Type",
-      "numeroMandat": "Numéro Mandat",
+      "numeroBon": "Numéro Bon",
       "beneficiaire": "Bénéficiaire",
-      "objetMandat": "Objet de la dépense",
-      "dateEngagementMandat": "Date Engagement",
-      "montantCPChiffresMandat": "Montant Mandat",
+      "objetBon": "Objet de la dépense",
+      "dateEngagementBon": "Date Engagement",
+      "montantCPChiffresBon": "Montant Bon",
       "numeroJuridique": "N° Engagement Juridique",
-      "prixTotalHT":"Rrix Total HT",
-      "prixUnitaireHT":"Prix Unitaire HT",
-      "quantite":"Quantité",
-      "referenceMercuriale":"RéférenceMercuriale"
-
+      "prixTotalHT": "Rrix Total HT",
+      "prixUnitaireHT": "Prix Unitaire HT",
+      "quantite": "Quantité",
+      "referenceMercuriale": "RéférenceMercuriale"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -868,15 +871,15 @@
       "editProcedures": "Editer une procédure",
       "editTaxes": "Editer une taxe",
       "editEngagement": "Editer un Engagement",
-      "editEngagementMandat": "Editer un Engagement mandat",
+      "editEngagementBon": "Editer un Engagement Bon",
       "imputation": "Imputation",
       "viewEngagement": "Engagement: {{numero}}",
-      "viewEngagementMandat": "Engagement mandat: {{numero}}",
+      "viewEngagementBon": "Engagement Bon: {{numero}}",
       "reserverEngagement": "Réservation de l'engagement No: {{numero}}",
-      "reserverEngagementMandat": "Réservation de l'engagement mandat No: {{numero}}",
+      "reserverEngagementBon": "Réservation de l'engagement Bon No: {{numero}}",
       "printEngagement": "Engagement",
-      "etatCertificat":"Etat de l'engagement Juridique: {{numero}}",
-      "etatMandat":"Etat de l'engagement Mandat: {{numero}}"
+      "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
+      "etatBon": "Etat de l'engagement Bon: {{numero}}"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -902,10 +905,11 @@
       "deleteEncours": "Voulez-vous vraiment supprimer ce chargement? Cette action est irréversible",
       "deleteRegion": "Voulez vous vraiment supprimer cette région? Cette action est irréversible",
       "reserveEngagement": "Etes-vous sûr de reserver cet engagement?",
-      "reserveMandatEngagement": "Etes-vous sûr de reserver cet engagement?",
+      "reserveBonEngagement": "Etes-vous sûr de reserver cet engagement?",
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
-      "cancelMandatEngagement": "Voulez-vous annuler cette Réservation ?",
-      "saveMandat": "Etes-vous sûr(e) de vouloir enregistrer ce mandat ? Cette opération est irréversible !"
+      "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
+      "saveBon": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
+      "saveBon": "Etes-vous sûr d'enregistrer ce bon?"
     }
   },
   "exerciseStatuses": {
@@ -993,8 +997,7 @@
     "chronogram": "Chronogramme",
     "physicalUnits": "Unités physiques",
     "codofication": "Codofication",
-    "mandatSituation":"SITUATION SOMMAIRE DE TRAITEMENT MANDAT N°"
-
+    "BonSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°"
   },
   "measurementUnits": {
     "unit": "Unité",

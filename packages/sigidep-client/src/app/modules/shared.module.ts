@@ -40,12 +40,12 @@ import { OrderByPipe } from '../pipes/order-by.pipe';
 import { FieldsetModule } from 'primeng/fieldset';
 import { NgxPrintModule } from 'ngx-print';
 import { EngagementFormComponent } from '@components/engagement-form/engagement-form.component';
-import { MandatFormComponent } from '@components/mandat-form/mandat-form.component';
+import { BonEngagementFormComponent } from '@components/bon-engagement-form/bon-engagement-form.component';
 import { PerformFormComponent } from '@components/perform-form/perform-form.component';
-import { CreateMandatFormComponent } from '@components/create-mandat-form/create-mandat-form.component';
-import { PrintEngagementMandatPrimeComponent } from '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component';
+import { CreateBonEngagementFormComponent } from '@components/create-bon-engagement-form/create-bon-engagement-form.component';
+import { PrintBonEngagementPrimeComponent } from '@components/print-bon-engagement-prime/print-bon-engagement-prime.component';
 import { CreateSituationTraitementComponent } from '@components/create-situation-traitement/create-situation-traitement.component';
-import { CreateMandatMissionFormComponent } from '@components/create-mandat-mission-form/create-mandat-mission-form.component';
+import { CreateBonEngagementMissionFormComponent } from '@components/create-bon-engagement-mission-form/create-bon-engagement-mission-form.component';
 import { EngagementMissionFormComponent } from '@components/engagement-mission-form/engagement-mission-form.component';
 import { FactureComponent } from '@components/facture/facture.component';
 
@@ -55,12 +55,12 @@ const declarations = [
   I18nFormFieldComponent,
   OrderByPipe,
   EngagementFormComponent,
-  MandatFormComponent,
+  BonEngagementFormComponent,
   PerformFormComponent,
-  CreateMandatFormComponent,
-  PrintEngagementMandatPrimeComponent,
+  CreateBonEngagementFormComponent,
+  PrintBonEngagementPrimeComponent,
   CreateSituationTraitementComponent,
-  CreateMandatMissionFormComponent,
+  CreateBonEngagementMissionFormComponent,
   EngagementMissionFormComponent,
   CreateSituationTraitementComponent,
   FactureComponent,

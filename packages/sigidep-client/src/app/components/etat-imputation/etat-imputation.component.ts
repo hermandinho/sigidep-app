@@ -1,19 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { EncoursModel } from '@models/encours.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { getDataSelector as getDataEngSelector, getLoadingSelector as getLoadingEngSelector } from '@reducers/engagement-juridique.reducer';
+import {
+  getDataSelector as getDataEngSelector,
+  getLoadingSelector as getLoadingEngSelector,
+} from '@reducers/engagement-juridique.reducer';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppState } from '@reducers/index';
 import { BaseComponent } from '@components/base.component';
 import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
-import { GetEngagementMandats } from '@actions/engagement-mandat.actions';
-import { getDataSelector as getDataMadSelector, getDataSelector as getDataSelectorMandat, getLoadingSelector as getLoadingMadSelector, getLoadingSelector as getLoadingSelectorMandat} from '@reducers/engagement-mandat.reducer';
+import { GetBonsEngagements } from '@actions/bons-engagements.actions';
+import {
+  getDataSelector as getDataMadSelector,
+  getDataSelector as getDataSelectorMandat,
+  getLoadingSelector as getLoadingMadSelector,
+  getLoadingSelector as getLoadingSelectorMandat,
+} from '@reducers/bons-engagements.reducer';
 import { EtatEngagementEnum } from '@models/engagement-juridique.model';
-import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
-
-
+import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
 @Component({
   selector: 'app-etat-imputation',
@@ -22,33 +28,35 @@ import { EtatMandatEnum } from 'app/utils/etat-mandat.enum';
 })
 export class EtatImputationComponent extends BaseComponent implements OnInit {
   public imputation!: EncoursModel;
-  public engagements:any[]=[];
+  public engagements: any[] = [];
   loading$: Observable<boolean> = of(true);
-  public aeabattement:any=0;
-  public cpabattement:any=0;
-  public mandats:any;
+  public aeabattement: any = 0;
+  public cpabattement: any = 0;
+  public mandats: any;
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private _store: Store<AppState>,
+    private _store: Store<AppState>
   ) {
     super();
-    this._initListeners()
+    this._initListeners();
   }
 
   ngOnInit(): void {
     if (this.config.data?.item) {
       this.imputation = this.config.data?.item as EncoursModel;
       //console.log(this.imputation);
-      this._store.dispatch(GetEngagementJuridiques({
-        imputation: this.imputation?.imputation,
-        etats:[EtatEngagementEnum.RESERVED]
-       }));
-      this.aeabattement = this.imputation?.aeInitial-this.imputation?.aeInitRevisee
-      this.cpabattement = this.imputation?.cpInitial-this.imputation?.cpInitRevisee
-
+      this._store.dispatch(
+        GetEngagementJuridiques({
+          imputation: this.imputation?.imputation,
+          etats: [EtatEngagementEnum.RESERVED],
+        })
+      );
+      this.aeabattement =
+        this.imputation?.aeInitial - this.imputation?.aeInitRevisee;
+      this.cpabattement =
+        this.imputation?.cpInitial - this.imputation?.cpInitRevisee;
     }
-
   }
 
   close() {
@@ -56,26 +64,26 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
   }
 
   private _initListeners() {
-     this._store
-    .pipe(this.takeUntilDestroy, select(getDataEngSelector))
-    .subscribe((data) => {
-      this.engagements = [...data];
-      console.log('engagements ', this.engagements);
-      console.log('imputation ', this.engagements[0]?.imputation);
-      this.getDataMandat(this.engagements[0]?.imputation);
-    });
-  this.loading$ = this._store.pipe(
-    select(getLoadingEngSelector),
-    map((status) => status)
-  );
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataEngSelector))
+      .subscribe((data) => {
+        this.engagements = [...data];
+        console.log('engagements ', this.engagements);
+        console.log('imputation ', this.engagements[0]?.imputation);
+        this.getDataMandat(this.engagements[0]?.imputation);
+      });
+    this.loading$ = this._store.pipe(
+      select(getLoadingEngSelector),
+      map((status) => status)
+    );
   }
 
   getDataMandat(imputation: any) {
     if (imputation) {
       this._store.dispatch(
-        GetEngagementMandats({
+        GetBonsEngagements({
           imputation: [imputation],
-          //etats:[EtatMandatEnum.MANDATRESERVE]
+          //etats:[EtatBonEnum.RESERVE]
         })
       );
 
@@ -85,9 +93,9 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
           this.mandats = [...data];
         });
       this.loading$ = this._store.pipe(
-          select(getLoadingSelectorMandat),
-          map((status) => status)
-        );
+        select(getLoadingSelectorMandat),
+        map((status) => status)
+      );
     }
   }
 }
