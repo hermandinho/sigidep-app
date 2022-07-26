@@ -33,6 +33,9 @@ import { RegionsModule } from './modules/regions/regions.module';
 import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
 import { ExecProcedureModule } from '@modules/exec-procedures/exec-procedures.module';
 import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
+import { BonsEngagementsModule } from '@modules/bons-engagements/bons-engagements.module';
+import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
+import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements.subscriber';
 
 @Module({
   imports: [
@@ -66,7 +69,10 @@ import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
           password,
           username,
           entities: ['dist/**/*.entity.js'],
-          // subscribers: ['dist/subscribers/*.subscriber.js'],
+          subscribers: [
+            EngagementHistorySubscriber,
+            TraitementBonEngagementSubscriber,
+          ],
           synchronize: true,
           type: 'postgres',
           port: 5432,
@@ -121,6 +127,7 @@ import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
     EngagementJuridiqueModule,
     ExecProcedureModule,
     ExecTaxesModule,
+    BonsEngagementsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

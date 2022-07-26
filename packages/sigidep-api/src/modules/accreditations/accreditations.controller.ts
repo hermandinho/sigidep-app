@@ -14,7 +14,7 @@ import { CreateAccreditationDto } from './dto/create-accreditation.dto';
 
 @Controller('accreditations')
 export class AccreditationsController {
-  constructor(private readonly service: AccreditationsService) {}
+  constructor(private readonly service: AccreditationsService) { }
 
   @Post()
   create(@Body() createAccreditationDto: CreateAccreditationDto) {
@@ -23,7 +23,8 @@ export class AccreditationsController {
 
   @Get()
   findAll() {
-    return this.service.findAll();
+    let data = this.service.findAll();
+    return data;
   }
 
   @Get(':id')

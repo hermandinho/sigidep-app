@@ -9,24 +9,24 @@ export class CreateAccreditationDto {
   @IsNotEmpty()
   /*   @MinLength(5)
   @MaxLength(5) */
-  public imputations: {
-    startDate: Date;
-    endDate: Date;
-    element: EncoursEntity;
-  };
-
-  // @ApiProperty({ example: 'Tamo', required: true })
-  // @IsNotEmpty()
-  // public labelOperation: string;
-
-  // @ApiProperty({ example: '20/09/2022', required: true })
+  public imputations: [
+    {
+      startDate: Date;
+      endDate: Date;
+      element: EncoursEntity;
+    },
+  ];
   // @IsNotEmpty()
   // public startDate: Date;
 
-  // @ApiProperty({ example: '20/09/2022', required: true })
   // @IsNotEmpty()
   // public endDate: Date;
 
+  // @IsNotEmpty()
+  // public tache: string;
+
+  // @IsNotEmpty()
+  // public operation: string;
   @ApiProperty({ example: '2', required: true })
   @IsNotEmpty()
   public gestionnaire: GestionnairesEntity;

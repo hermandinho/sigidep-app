@@ -5,6 +5,8 @@ import { UserEntity } from '@entities/user.entity';
 import { EngagementDecisionEntity } from '@entities/engagement-decision.entity';
 import { EngagementDecisionDTO } from '../dto/create-engagement-decision.dto';
 import { EtatEngagementEnum } from '@entities/engagement-juridique.entity';
+import { ProcedureDecision } from '../types';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementDecisionService {
@@ -17,10 +19,21 @@ export class EngagementDecisionService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementDecisionEntity[]> {
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementDecisionEntity[]> {
     return this.repository
       .createQueryBuilder('ed')
       .leftJoinAndSelect('ed.taxesApplicable', 'taxe')
+      .where(filter?.procedures ? 'ed.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'ed.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
+      .andWhere(filter?.numeros ? 'ed.numero IN(:...numero)' : 'true', {
+        numero: filter?.numeros,
+      })
       .getMany();
   }
 

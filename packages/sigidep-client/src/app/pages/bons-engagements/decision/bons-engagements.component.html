@@ -1,0 +1,540 @@
+<p-card>
+  <p-toolbar styleClass="p-mb-2">
+    <ng-template pTemplate="right">
+      <button
+        (click)="openForm()"
+        [label]="'buttons.create' | translate"
+        class="p-button-success p-mr-2"
+        icon="pi pi-plus"
+        pButton
+        pRipple
+      ></button>
+    </ng-template>
+    <ng-template pTemplate="left">
+      <div class="quick_filter">
+        <div class="p-field">
+          <label>{{ "labels.filterbyStatus" | translate }}:</label>
+          <p-multiSelect
+            [filter]="false"
+            [options]="filters"
+            autoDisplayFirst="false"
+            optionValue="value"
+            labelValue="label"
+            defaultLabel="{{ 'labels.all' | translate }}"
+            (onChange)="handleFilter($event)"
+          >
+          </p-multiSelect>
+        </div>
+      </div>
+    </ng-template>
+  </p-toolbar>
+  <p-tabView>
+    <p-tabPanel header="Prime">
+      <p-table
+        #dt
+        [globalFilterFields]="globalColumns"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="primes"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.mandats" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="numero"></p-sortIcon>
+              </th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span
+                *ngIf="
+                  column.field !== 'objet' &&
+                  column.field !== 'imputation' &&
+                  column.field !== 'etat' &&
+                  column.field !== 'numActeJuridique'
+                "
+              >
+                {{ item[column.field] }}
+              </span>
+              <span *ngIf="column.field === 'numActeJuridique'">
+                {{ item["numActeJuridique"]?.numero }}
+              </span>
+              <span *ngIf="column.field === 'imputation'">
+                {{ item["numActeJuridique"]?.imputation }}
+              </span>
+
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
+              </span>
+              <span
+                *ngIf="column.field === 'objet'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-h"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Frais de releve">
+      <p-table
+        #dt
+        [globalFilterFields]="globalColumns"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="releves"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.mandats" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="numero"></p-sortIcon>
+              </th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span
+                *ngIf="
+                  column.field !== 'objet' &&
+                  column.field !== 'imputation' &&
+                  column.field !== 'etat' &&
+                  column.field !== 'numActeJuridique'
+                "
+              >
+                {{ item[column.field] }}
+              </span>
+              <span *ngIf="column.field === 'numActeJuridique'">
+                {{ item["numActeJuridique"]?.numero }}
+              </span>
+              <span *ngIf="column.field === 'imputation'">
+                {{ item["numActeJuridique"]?.imputation }}
+              </span>
+
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
+              </span>
+              <span
+                *ngIf="column.field === 'objet'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-h"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Mise à disposition agent">
+      <p-table
+        #dt
+        [globalFilterFields]="globalColumns"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="agents"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.mandats" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="numero"></p-sortIcon>
+              </th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span
+                *ngIf="
+                  column.field !== 'objet' &&
+                  column.field !== 'imputation' &&
+                  column.field !== 'etat' &&
+                  column.field !== 'numActeJuridique'
+                "
+              >
+                {{ item[column.field] }}
+              </span>
+              <span *ngIf="column.field === 'numActeJuridique'">
+                {{ item["numActeJuridique"]?.numero }}
+              </span>
+              <span *ngIf="column.field === 'imputation'">
+                {{ item["numActeJuridique"]?.imputation }}
+              </span>
+
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
+              </span>
+              <span
+                *ngIf="column.field === 'objet'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-h"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Mise à disposition Structure">
+      <p-table
+        #dt
+        [globalFilterFields]="globalColumns"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="structures"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.mandats" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="numero"></p-sortIcon>
+              </th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span
+                *ngIf="
+                  column.field !== 'objet' &&
+                  column.field !== 'imputation' &&
+                  column.field !== 'etat' &&
+                  column.field !== 'numActeJuridique'
+                "
+              >
+                {{ item[column.field] }}
+              </span>
+              <span *ngIf="column.field === 'numActeJuridique'">
+                {{ item["numActeJuridique"]?.numero }}
+              </span>
+              <span *ngIf="column.field === 'imputation'">
+                {{ item["numActeJuridique"]?.imputation }}
+              </span>
+
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
+              </span>
+              <span
+                *ngIf="column.field === 'objet'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-h"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Déblocage-Contrinuable">
+      <p-table
+        #dt
+        [globalFilterFields]="globalColumns"
+        [loading]="(loading$ | async) || false"
+        [paginator]="true"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [sortMode]="'single'"
+        [value]="deblocages"
+        [currentPageReportTemplate]="'tables.stats.pager' | translate"
+        dataKey="id"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <h5 class="p-m-0">
+              {{ "tables.titles.mandats" | translate }}
+            </h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                "
+                [placeholder]="'labels.search' | translate"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <ng-container *ngFor="let column of tableColumns">
+              <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                {{ column.title | translate }}
+                <p-sortIcon field="numero"></p-sortIcon>
+              </th>
+            </ng-container>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td *ngFor="let column of tableColumns" class="nowrap">
+              <span
+                *ngIf="
+                  column.field !== 'objet' &&
+                  column.field !== 'imputation' &&
+                  column.field !== 'etat' &&
+                  column.field !== 'numActeJuridique'
+                "
+              >
+                {{ item[column.field] }}
+              </span>
+              <span *ngIf="column.field === 'numActeJuridique'">
+                {{ item["numActeJuridique"]?.numero }}
+              </span>
+              <span *ngIf="column.field === 'imputation'">
+                {{ item["numActeJuridique"]?.imputation }}
+              </span>
+
+              <span *ngIf="column.field === 'etat'">
+                {{ item[column.field] | translate }}
+              </span>
+              <span
+                *ngIf="column.field === 'objet'"
+                data-title="{{ item[column.field] }}"
+              >
+                {{
+                  item[column.field].length > 20
+                    ? (item[column.field] | slice: 0:20) + ".."
+                    : item[column.field]
+                }}
+              </span>
+            </td>
+            <td class="actions_button">
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-rounded p-button"
+                icon="pi pi-ellipsis-h"
+                (click)="
+                  currentItem = item;
+                  $event.stopPropagation();
+                  menu.toggle($event)
+                "
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            <!--          In total there are {{products ? products.length : 0 }} products.-->
+          </div>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
+
+  <p-menu appendTo="body" #menu [popup]="true" [model]="menus"></p-menu>
+</p-card>

@@ -37,9 +37,11 @@ import * as fromCommandes from '@reducers/engagement-commande.reducer';
 import * as fromDecisions from '@reducers/engagement-decision.reducer';
 import * as fromMissions from '@reducers/engagement-mission.reducer';
 import * as fromEngagements from '@reducers/engagement-juridique.reducer';
+import * as fromMandatsPrimes from '@reducers/bons-engagements.reducer';
 import * as fromProcedures from '@reducers/exec-procedure.reducer';
 import * as fromTaxes from '@reducers/exec-taxes.reducer';
-
+import * as fromConsultations from '@reducers/consultations.reducer';
+import * as fromEngagementsByCategory from '@reducers/engagements.reducer';
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
   auth: fromAuth.State;
@@ -66,6 +68,7 @@ export interface AppState {
   carnetsMandats: fromCarnetsMandats.State;
   gestionnaires: fromGestionnaires.State;
   baremes: fromBaremes.State;
+  consultations: fromConsultations.State;
   typesProcedures: fromTypesProcedures.State;
   piecesJointes: fromPiecesJointes.State;
   encours: fromEncours.State;
@@ -74,8 +77,10 @@ export interface AppState {
   decisions: fromDecisions.State;
   missions: fromMissions.State;
   engagements: fromEngagements.State;
+  mandatsPrimes: fromMandatsPrimes.State;
   procedures: fromProcedures.State;
   taxes: fromTaxes.State;
+  engagementsByCategory: fromEngagementsByCategory.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -115,6 +120,9 @@ export const reducers: ActionReducerMap<AppState> = {
   engagements: fromEngagements.reducer,
   procedures: fromProcedures.reducer,
   taxes: fromTaxes.reducer,
+  consultations: fromConsultations.reducer,
+  mandatsPrimes: fromMandatsPrimes.reducer,
+  engagementsByCategory: fromEngagementsByCategory.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

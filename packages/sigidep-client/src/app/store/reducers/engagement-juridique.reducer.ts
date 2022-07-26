@@ -53,7 +53,6 @@ const engagementJuridiquesReducer = createReducer(
   on(GetEngagementJuridiquesFailure, (state, { error }) => {
     return { ...state, loading: false, error };
   }),
-
   on(CreateEngagementJuridique, (state) => {
     return { ...state, loading: true };
   }),
@@ -85,6 +84,10 @@ const engagementJuridiquesReducer = createReducer(
       return { ...state, loading: false, error: error };
     }
   )
+
+
+
+
 );
 
 export function reducer(state: State | undefined, action: Action): State {

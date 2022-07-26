@@ -36,6 +36,16 @@ export const MenuPermissions = {
   taxes: [...simpleCrudPermissions('taxes')],
   engagements: [...simpleCrudPermissions('engagements')],
   regions: [...simpleCrudPermissions('regions')],
+  consultations: [...simpleCrudPermissions('consultations')],
+  bonsEngagements: [...simpleCrudPermissions('bonsEngagements')],
+  bonsEngagementsMissions: [
+    ...simpleCrudPermissions('bonsEngagementsMissions'),
+  ],
+  fraisreleve: [...simpleCrudPermissions('fraisreleve')],
+  misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
+  misedispositionstructure: [
+    ...simpleCrudPermissions('misedispositionstructure'),
+  ],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -145,6 +155,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.contribuables],
+          },
+        },
+        {
+          routerLink: 'consultations',
+          icon: 'pi pi-eye',
+          label: translate.instant('sidebar.consultation'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.consultations],
           },
         },
         {
@@ -267,26 +286,26 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           icon: 'pi pi-money-bill',
-          label: translate.instant('sidebar.engagementsmandats'),
+          label: translate.instant('sidebar.bonsengagements'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [],
+            permissions: [...MenuPermissions.bonsEngagements],
           },
           items: [
             {
-              routerLink: '#',
+              routerLink: 'bons-commandes',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.commandepublique'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: '#',
-              icon: 'pi pi-table',
+              routerLink: 'bons-missions',
+              icon: 'pi pi-shield',
               label: translate.instant('sidebar.missions'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: '#',
+              routerLink: 'bons-decisions',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.decisions'),
               routerLinkActiveOptions: { exact: true },

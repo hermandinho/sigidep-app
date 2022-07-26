@@ -16,6 +16,9 @@ import {
   GetAccreditations,
   GetAccreditationsFailure,
   GetAccreditationsSuccess,
+  GetAccreditationsByGestionnaire,
+  GetAccreditationsByGestionnaireFailure,
+  GetAccreditationsByGestionnaireSuccess,
 } from '@actions/accreditaions.actions';
 
 @Injectable()
@@ -32,6 +35,23 @@ export class AccreditationEffects {
             }),
             catchError((err: HttpErrorResponse) =>
               of(GetAccreditationsFailure(err))
+            )
+          )
+      )
+    )
+  );
+  getone$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GetAccreditationsByGestionnaire),
+      mergeMap((action) =>
+        this.apisService
+          .get<any>(`/accreditations/gestionnaire/${action.id}`)
+          .pipe(
+            switchMap((payload) => {
+              return [GetAccreditationsByGestionnaireSuccess({ payload })];
+            }),
+            catchError((err: HttpErrorResponse) =>
+              of(GetAccreditationsByGestionnaireFailure(err))
             )
           )
       )

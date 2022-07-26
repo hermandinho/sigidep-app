@@ -2,7 +2,7 @@
   <ng-container *ngFor="let lang of languages">
     <ng-container *ngIf="['text'].includes(type) && currentLang === lang">
       <label [class.required]="required">{{
-        "labels." + getFormControlNameForLang | translate
+        " labels." + getFormControlNameForLang | translate
       }}</label>
 
       <input

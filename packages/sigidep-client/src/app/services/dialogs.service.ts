@@ -38,6 +38,11 @@ import {
   Step,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
+import {
+  BonEngagementModel,
+  StepBonEngagement,
+} from '@models/bon-engagement.model';
+import { CategorieProcedure } from 'app/utils/types';
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +75,7 @@ export class DialogsService {
   private categorieAgentCreateComponent: any;
 
   private accreditationsGestionnairesCreateComponent: any;
+  private inputationComponent: any;
 
   private baremeCreateComponent: any;
   private typeProcedureCreateComponent: any;
@@ -88,6 +94,16 @@ export class DialogsService {
   private reservationEngagementComponent: any;
 
   private printEngagementComponent: any;
+  private printBonEngagementPrimeComponent: any;
+
+  private etatImputationComponent: any;
+
+  private printBonEngagementMissionComponent: any;
+
+  private createBonEngagementFormComponent: any;
+  private reservationBonEngagementDecisionComponent: any;
+  private etatCertificatEngagementComponent: any;
+  private createBonEngagementMissionFormComponent: any;
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -709,6 +725,27 @@ export class DialogsService {
     );
   }
 
+  public async launchAccreditationsGestionnairesListInputation(
+    item?: any
+  ): Promise<any> {
+    if (!this.inputationComponent) {
+      const { ImputationsComponent } = await import(
+        '@pages/accreditations-gestionnaires/imputations/imputations.component'
+      );
+      this.inputationComponent = ImputationsComponent;
+    }
+
+    return this._dialogService.open(this.inputationComponent, {
+      header: this._translateService.instant('dialogs.headers.listImputation'),
+      width: '80vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
   public async launchBaremeCreateDialog(
     item?: BaremeMissionModel
   ): Promise<any> {
@@ -959,5 +996,141 @@ export class DialogsService {
         type,
       },
     });
+  }
+  public async launchImputationEtatDialog(item?: EncoursModel): Promise<any> {
+    if (!this.etatImputationComponent) {
+      const { EtatImputationComponent } = await import(
+        '@components/etat-imputation/etat-imputation.component'
+      );
+      this.etatImputationComponent = EtatImputationComponent;
+    }
+    return this._dialogService.open(this.etatImputationComponent, {
+      header: this._translateService.instant('dialogs.headers.imputation'),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchBonEngagementCreateDialog(
+    category?: CategorieProcedure,
+    item?: BonEngagementModel,
+    action?: string
+  ): Promise<any> {
+    if (!this.createBonEngagementFormComponent) {
+      const { CreateBonEngagementFormComponent } = await import(
+        '@components/create-bon-engagement-form/create-bon-engagement-form.component'
+      );
+      this.createBonEngagementFormComponent = CreateBonEngagementFormComponent;
+    }
+    if (action == 'consulterM') {
+      return this._dialogService.open(this.createBonEngagementFormComponent, {
+        header: this._translateService.instant(
+          (action = 'dialogs.headers.etatBonEngagement'),
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          category,
+          item,
+          action,
+        },
+      });
+    } else if (action == 'consulterC') {
+      return this._dialogService.open(this.createBonEngagementFormComponent, {
+        header: this._translateService.instant(
+          (action = 'dialogs.headers.etatCertificat'),
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          category,
+          item,
+          action,
+        },
+      });
+    } else {
+      return this._dialogService.open(this.createBonEngagementFormComponent, {
+        header: this._translateService.instant(
+          action
+            ? 'dialogs.headers.viewBonEngagement'
+            : 'dialogs.headers.editBonEngagement',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          category,
+          item,
+          action,
+        },
+      });
+    }
+  }
+
+  public async launchPrintBonEngagementPrimeDialog(
+    item: BonEngagementModel,
+    type?: Step
+  ): Promise<any> {
+    if (!this.printBonEngagementPrimeComponent) {
+      const { PrintBonEngagementPrimeComponent } = await import(
+        '@components/print-bon-engagement-prime/print-bon-engagement-prime.component'
+      );
+      this.printBonEngagementPrimeComponent = PrintBonEngagementPrimeComponent;
+    }
+
+    return this._dialogService.open(this.printBonEngagementPrimeComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.printEngagement',
+        { numero: item?.numero }
+      ),
+      width: '40vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
+
+  public async launchBonEngagementMissionCreateDialog(
+    item?: BonEngagementModel,
+    action?: string
+  ): Promise<any> {
+    if (!this.createBonEngagementMissionFormComponent) {
+      const { CreateBonEngagementMissionFormComponent } = await import(
+        '@components/create-bon-engagement-mission-form/create-bon-engagement-mission-form.component'
+      );
+      this.createBonEngagementMissionFormComponent =
+        CreateBonEngagementMissionFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.createBonEngagementMissionFormComponent,
+      {
+        header: this._translateService.instant(
+          action
+            ? 'dialogs.headers.viewBonEngagement'
+            : 'dialogs.headers.editBonEngagement',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action,
+        },
+      }
+    );
   }
 }

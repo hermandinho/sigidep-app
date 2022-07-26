@@ -5,8 +5,8 @@
 
   .footer {
     display: flex;
-    justify-content: end;
-    align-items: end;
+    align-items: flex-end;
+    justify-content: flex-end;
   }
 
   p-inputmask {

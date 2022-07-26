@@ -6,6 +6,9 @@ import {
   DeleteAccreditationsFailure,
   DeleteAccreditationsSuccess,
   GetAccreditations,
+  GetAccreditationsByGestionnaire,
+  GetAccreditationsByGestionnaireFailure,
+  GetAccreditationsByGestionnaireSuccess,
   GetAccreditationsFailure,
   GetAccreditationsSuccess,
 } from '@actions/accreditaions.actions';
@@ -62,6 +65,16 @@ const accreditationsReducer = createReducer(
   }),
   on(CreateAccreditationsFailure, (state, { error }) => {
     return { ...state, loading: false, error: error };
+  }),
+
+  on(GetAccreditationsByGestionnaire, (state, { id }) => {
+    return { ...state, loading: true };
+  }),
+  on(GetAccreditationsByGestionnaireSuccess, (state, { payload }) => {
+    return { ...state, loading: false, data: payload };
+  }),
+  on(GetAccreditationsByGestionnaireFailure, (state, { error }) => {
+    return { ...state, loading: false, error };
   })
 );
 

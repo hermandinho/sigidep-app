@@ -31,6 +31,10 @@ import { EngagementsComponent } from '@pages/engagements/engagements.component';
 import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
+import { ConsultationsComponent } from '@pages/consultations/consultations.component';
+import { BonsEngagementsComponent } from '@pages/bons-engagements/decision/bons-engagements.component';
+import { BonsEngagementsCommandesComponent } from '@pages/bons-engagements-commandes/bons-engagements-commandes.component';
+import { BonEngagementMissionsComponent } from '@pages/bons-engagements-missions/bons-engagements-missions.component';
 
 const routes: Routes = [
   {
@@ -331,6 +335,48 @@ const routes: Routes = [
           import('../pages/engagements/engagements.module').then(
             (m) => m.EngagementsModule
           ),
+      },
+      {
+        path: 'consultations',
+        component: ConsultationsComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.consultations],
+        },
+      },
+      {
+        path: 'bons-decisions',
+        canActivate: [AuthGuard],
+        component: BonsEngagementsComponent,
+        data: {
+          permissions: [...MenuPermissions.bonsEngagements],
+        },
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements/decision/bons-engagements.module'
+          ).then((m) => m.BonsEngagementsModule),
+      },
+      {
+        path: 'bons-commandes',
+        canActivate: [AuthGuard],
+        component: BonsEngagementsCommandesComponent,
+        data: {
+          permissions: [...MenuPermissions.bonsEngagements],
+        },
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-commandes/bons-engagements-commandes.module'
+          ).then((m) => m.BonsEngagementsCommandesModule),
+      },
+      {
+        path: 'bons-missions',
+        canActivate: [AuthGuard],
+        component: BonEngagementMissionsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-missions/bons-engagements-missions.module'
+          ).then((m) => m.BonsEngagementsMissionsModule),
       },
       /*{
         path: '**',

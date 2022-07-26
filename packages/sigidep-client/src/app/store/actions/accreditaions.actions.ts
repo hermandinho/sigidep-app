@@ -34,3 +34,16 @@ export const DeleteAccreditationsFailure = createAction(
   '[Accreditations] Delete failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
+
+export const GetAccreditationsByGestionnaire = createAction(
+  '[Accreditations] GetOne',
+  props<{ id: number }>()
+);
+export const GetAccreditationsByGestionnaireSuccess = createAction(
+  '[Accreditations] GetOne success',
+  props<{ payload: AccreditationGestionnaireModel[] }>()
+);
+export const GetAccreditationsByGestionnaireFailure = createAction(
+  '[Accreditations] GetOne failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

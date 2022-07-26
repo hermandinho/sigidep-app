@@ -9,7 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import jsPDF from 'jspdf';
+//import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import html2canvas from 'html2canvas';
 import {
@@ -31,8 +31,7 @@ import {
 })
 export class AccreditationsGestionnairesComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   data: AccreditationGestionnaireModel[] = [];
   selectedItems: any[] = [];
   loading$: Observable<boolean> = of(true);
@@ -81,8 +80,8 @@ export class AccreditationsGestionnairesComponent
     this._dialogService.launchAccreditationsGestionnairesCreateDialog();
   }
 
-  edit(item: GestionnaireModel) {
-    this._dialogService.launchAccreditationsGestionnairesCreateDialog(item);
+  listInputation(item: any) {
+    this._dialogService.launchAccreditationsGestionnairesListInputation(item);
   }
 
   delete(item: GestionnaireModel) {
@@ -141,6 +140,8 @@ export class AccreditationsGestionnairesComponent
   }
   download() {
     // table_content
+    alert('coming soon')
+    /*
     let pdf = new jsPDF();
     let data: any = document.getElementById('table_content');
     html2canvas(data).then((canvas) => {
@@ -148,9 +149,10 @@ export class AccreditationsGestionnairesComponent
       pdf.addImage(imgdata, 'PNG', 10, 10, 185, 95);
       pdf.save(
         'accreditations-' +
-          moment(new Date()).format('YYYY-MM-DD hh:mm:ss') +
-          '.pdf'
+        moment(new Date()).format('YYYY-MM-DD hh:mm:ss') +
+        '.pdf'
       );
     });
+    */
   }
 }

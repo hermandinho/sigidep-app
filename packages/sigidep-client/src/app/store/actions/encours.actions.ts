@@ -32,3 +32,17 @@ export const DeleteEncoursFailure = createAction(
   '[Encours] Delete failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
+export const GetEncourByExercice = createAction(
+  '[Encours] Get Encour By Exercice',
+  props<{ id: number }>()
+);
+
+export const GetEncourByExerciceSuccess = createAction(
+  '[Encours] Get Encour By Exercice success',
+  props<{ payload: EncoursModel[] }>()
+);
+
+export const GetEncourByExerciceFailure = createAction(
+  '[Encours] Get Encour By Exercice failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

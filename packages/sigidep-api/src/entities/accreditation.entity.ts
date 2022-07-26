@@ -7,18 +7,20 @@ import { EncoursEntity } from '.';
   name: 'accreditation',
 })
 export class AccreditationEntity extends BaseEntity {
-  @Column({ name: 'imputations', nullable: false, type: 'jsonb' })
-  public imputations: {
-    startDate: Date;
-    endDate: Date;
-    element: EncoursEntity;
-  };
+  @Column({ name: 'start_date', nullable: false, default: new Date() })
+  public startDate: Date;
 
-  // @Column({ nullable: false })
-  // public startDate: Date;
+  @Column({ name: 'end_date', nullable: false, default: new Date() })
+  public endDate: Date;
 
-  // @Column({ nullable: false })
-  // public endDate: Date;
+  @Column({ name: 'imputation', nullable: false, default: 'default value' })
+  public imputation: string;
+
+  @Column({ name: 'tache', nullable: false, default: 'default value' })
+  public tache: string;
+
+  @Column({ name: 'operation', nullable: true, default: 'default value' })
+  public operation: string;
 
   // RELATIONS
   @ManyToOne(() => GestionnairesEntity, (object) => object.id, {
