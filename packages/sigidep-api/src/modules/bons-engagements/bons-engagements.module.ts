@@ -10,6 +10,9 @@ import { FactureEntity } from '@entities/facture.entity';
 import { FactureArticleEntity } from '@entities/facture-article.entity';
 import { BonEngagementService } from './service/bons-engagements.service';
 import { BonEngagementController } from './controller/bons-engagements.controller';
+import { EngagementJuridiqueService } from '@modules/engagement-juridiques/service/engagement-juridique.service';
+import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
+import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
 
 @Module({
   controllers: [BonEngagementController],
@@ -23,6 +26,7 @@ import { BonEngagementController } from './controller/bons-engagements.controlle
       PaiementEntity,
       FactureEntity,
       FactureArticleEntity,
+      EngagementJuridiqueEntity,
     ]),
   ],
   exports: [
