@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserModel } from '@models/user.model';
-const BASE_KEY = 'SIGIDEP_';
+const BASE_KEY  = 'SIGIDEP_';
+const BASE_KEY1 = 'SIGIDEP__';
+
 @Injectable({
   providedIn: 'root',
 })
