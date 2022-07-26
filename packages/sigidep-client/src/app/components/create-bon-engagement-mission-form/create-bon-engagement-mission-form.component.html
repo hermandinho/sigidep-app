@@ -1,0 +1,25 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+  <app-engagement-mission-form
+    *ngSwitchCase="'engagement'"
+    [readOnly]="isBook"
+    [startingForm]="engagementFormGroup"
+    (subformInitialized)="subformInitialized('engagementForm', $event)"
+    (changeStep)="changeStep('engagement', 'forward')"
+  ></app-engagement-mission-form>
+  <app-bon-engagement-form
+    *ngSwitchCase="'mandat'"
+    [readOnly]="isBook"
+    [startingForm]="bonEngagementFormGroup"
+    (subformInitialized)="subformInitialized('bonEngagementForm', $event)"
+    (changeStep)="changeStep('mandat', 'back')"
+    (changeStep)="changeStep('mandat', 'forward')"
+  ></app-bon-engagement-form>
+  <app-perform-form
+    *ngSwitchCase="'perform'"
+    [readOnly]="isBook"
+    [startingForm]="performFormGroup"
+    (subformInitialized)="subformInitialized('performForm', $event)"
+    (changeStep)="changeStep('perform', 'back')"
+    (submitForm)="submitForm()"
+  ></app-perform-form>
+</ng-container>

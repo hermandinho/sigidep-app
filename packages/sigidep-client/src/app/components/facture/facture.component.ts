@@ -16,10 +16,7 @@ import {
 } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { CarnetMandatModel } from '@models/carnet-mandat.model';
-import {
-  EtatEngagementMandatEnum,
-  TypeMarcheEngagementMandatEnum,
-} from '@models/engagement-mandat.model';
+import { TypeMarcheBonEngagementEnum } from '@models/bon-engagement.model';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -88,14 +85,10 @@ export class FactureComponent extends BaseComponent implements OnInit {
     private _appService: AppService
   ) {
     super();
-    this.typesMarche = Object.keys(TypeMarcheEngagementMandatEnum).map(
-      (key) => ({
-        label: this.translate.instant(
-          (TypeMarcheEngagementMandatEnum as any)[key]
-        ),
-        value: key,
-      })
-    );
+    this.typesMarche = Object.keys(TypeMarcheBonEngagementEnum).map((key) => ({
+      label: this.translate.instant((TypeMarcheBonEngagementEnum as any)[key]),
+      value: key,
+    }));
     this._initListeners();
   }
 
@@ -104,6 +97,9 @@ export class FactureComponent extends BaseComponent implements OnInit {
     this.factureForm = this.startingForm;
     this.factureId = this.factureForm.value.id;
     this.getArticles();
+    if (!this.procedure) {
+      this.procedure = this._appService.currentProcedure;
+    }
     this.subformInitialized.emit(this.factureForm);
     if (this.readOnly) this.factureForm.disable();
     this._store.dispatch(GetCarnetMandats());
@@ -169,7 +165,7 @@ export class FactureComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onNumeroMandatChange = (event: any) => {
+  onnumeroBonChange = (event: any) => {
     const act = this.data.find((item) => item.code === event.value);
     this.carnet = act;
     if (act)
@@ -193,7 +189,7 @@ export class FactureComponent extends BaseComponent implements OnInit {
     /* if (this.factureId) {
       this._apiService
         .delete<void>(
-          `/mandats/factures/${this.factureId}/articles/${articleForm.value.id}`,
+          `/bons-engagements/factures/${this.factureId}/articles/${articleForm.value.id}`,
           {}
         )
         .subscribe(
@@ -296,7 +292,7 @@ export class FactureComponent extends BaseComponent implements OnInit {
   getArticles() {
     this._apiService
       .get<FactureArticleModel[]>(
-        `/mandats/factures/${this.factureId}/articles`
+        `/bons-engagements/factures/${this.factureId}/articles`
       )
       .subscribe(
         (res) => {
