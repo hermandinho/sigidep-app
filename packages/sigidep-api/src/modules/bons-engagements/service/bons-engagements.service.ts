@@ -10,6 +10,9 @@ import { CreateTraitementBonEngagementDTO } from '../dto/create-traitement-bon-e
 import { TraitementBonEngagementEntity } from '@entities/traitement-bon-engagement.entity';
 import { PaiementEntity } from '@entities/paiement.entity';
 import { FactureArticleEntity } from '@entities/facture-article.entity';
+import { getAbbreviation } from '@utils/functions';
+import { EngagementJuridiqueService } from '@modules/engagement-juridiques/service/engagement-juridique.service';
+import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
 
 @Injectable()
 export class BonEngagementService {
@@ -25,6 +28,9 @@ export class BonEngagementService {
 
     @InjectRepository(FactureArticleEntity)
     private readonly articleRepo: Repository<FactureArticleEntity>,
+
+    @InjectRepository(EngagementJuridiqueEntity)
+    private readonly engagementRepo: Repository<EngagementJuridiqueEntity>,
   ) {}
 
   public getRepository(): Repository<BonEngagementEntity> {
@@ -36,7 +42,7 @@ export class BonEngagementService {
       .createQueryBuilder('art')
       .leftJoinAndSelect('art.facture', 'facture')
       .leftJoinAndSelect('art.article', 'article')
-      .where('facture.id IN(:...codes)', {
+      .where(factureId != null ? 'facture.id IN(:...codes)' : 'true', {
         codes: [factureId],
       })
       .getMany();
@@ -83,6 +89,12 @@ export class BonEngagementService {
     payload: CreateBonEngagementDTO,
     user: UserEntity,
   ): Promise<BonEngagementEntity> {
+    const eng = await this.engagementRepo.findOne(payload.numActeJuridique.id);
+    const count = await this.repository.count();
+    const val1: string = getAbbreviation(eng.adminUnit.slice(8));
+    const val2: string = ('00000' + Number(count + 1)).slice(-5);
+
+    payload.numero = val1 + '-' + val2;
     let bonPaylaod = {
       ...(payload as any),
       createdBy: user,

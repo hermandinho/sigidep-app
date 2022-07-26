@@ -20,7 +20,7 @@ export class EngagementFilter {
   @IsArray()
   @IsString({ each: true })
   @Type(() => String)
-  @Transform((value: string) => (value !== '' ? value.split(','): undefined))
+  @Transform((value: string) => (value !== '' ? value.split(',') : undefined))
   numeros?: string[];
 
   @IsOptional()
@@ -30,4 +30,10 @@ export class EngagementFilter {
   @Transform((value: string) => (value !== '' ? value.split(',') : undefined))
   imputation?: string[];
 
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @Type(() => String)
+  @Transform((value: string) => (value !== '' ? value.split(',') : undefined))
+  ids?: number[];
 }

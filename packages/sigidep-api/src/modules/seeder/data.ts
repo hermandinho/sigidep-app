@@ -12,7 +12,6 @@ import { CategorieAgentEntity } from '@entities/categorie-agent.entity';
 import { GradeEntity } from '@entities/grade.entity';
 import { TypeProcedureEntity } from '@entities/type-procedure.entity';
 import { TraitementEntity } from '@entities/traitement.entity';
-import { BonEngagementController } from '@modules/bons-engagements/controller/bons-engagements.controller';
 import * as etats from '../../utils/etat-bon.json';
 export const ROOT_ROLE: Partial<RoleEntity> = {
   label: 'Root',
