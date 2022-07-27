@@ -47,7 +47,11 @@
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
-    "bonsengagements": "Engagements CP"
+    "bonsengagements": "Engagements CP",
+    "virements": "Virement",
+    "modelVirement": "Modèle virement",
+    "detailsVirement": "Details virement",
+    "virement": "Virements"
   },
   "buttons": {
     "save": "Enregistrer",

@@ -46,6 +46,7 @@ export const MenuPermissions = {
   misedispositionstructure: [
     ...simpleCrudPermissions('misedispositionstructure'),
   ],
+  virements: [...simpleCrudPermissions('virements')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -283,6 +284,34 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           state: {
             permissions: [...MenuPermissions.engagements],
           },
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.virements'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.virements],
+          },
+          items: [
+            {
+              routerLink: 'modele-virement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.modelVirement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'details-virement',
+              icon: 'pi pi-shield',
+              label: translate.instant('sidebar.detailsVirement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'virement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.virement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
         },
         {
           icon: 'pi pi-money-bill',

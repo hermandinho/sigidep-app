@@ -51,6 +51,9 @@ import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
 import { BonsEngagementsModule } from '@pages/bons-engagements/decision/bons-engagements.module';
 import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commandes/bons-engagements-commandes.module';
+import { VirementsModule } from '@pages/virements/virements.module';
+import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
+import { DetailsVirementModule } from '@pages/details-virement/details-virement.module';
 
 registerLocaleData(localeFr);
 
@@ -124,6 +127,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConsultationsModule,
     BonsEngagementsModule,
     BonsEngagementsCommandesModule,
+    VirementsModule,
+    ModeleVirementModule,
+    DetailsVirementModule
   ],
   providers: [
     AppInstallCheckGuard,
@@ -134,4 +140,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }
