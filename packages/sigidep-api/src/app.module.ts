@@ -37,6 +37,7 @@ import { BonsEngagementsModule } from '@modules/bons-engagements/bons-engagement
 import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
 import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements.subscriber';
 import { VirementsModule } from './modules/virements/virements.module';
+import { ModeleVirementsModule } from './modules/modele-virements/modele-virements.module';
 
 @Module({
   imports: [
@@ -130,6 +131,7 @@ import { VirementsModule } from './modules/virements/virements.module';
     ExecTaxesModule,
     BonsEngagementsModule,
     VirementsModule,
+    ModeleVirementsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
