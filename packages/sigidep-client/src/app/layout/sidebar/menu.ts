@@ -37,11 +37,12 @@ export const MenuPermissions = {
   engagements: [...simpleCrudPermissions('engagements')],
   regions: [...simpleCrudPermissions('regions')],
   consultations: [...simpleCrudPermissions('consultations')],
-  mandats: [...simpleCrudPermissions('mandats')],
-  mandatMissions: [...simpleCrudPermissions('mandatMissions')],
+  bonsEngagements: [...simpleCrudPermissions('bonsEngagements')],
+  bonsEngagementsMissions: [
+    ...simpleCrudPermissions('bonsEngagementsMissions'),
+  ],
   fraisreleve: [...simpleCrudPermissions('fraisreleve')],
   misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
-  virementModel: [...simpleCrudPermissions('virementModel')],
   misedispositionstructure: [
     ...simpleCrudPermissions('misedispositionstructure'),
   ],
@@ -285,50 +286,28 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           icon: 'pi pi-money-bill',
-          label: translate.instant('sidebar.engagementsmandats'),
+          label: translate.instant('sidebar.bonsengagements'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [...MenuPermissions.mandats],
+            permissions: [...MenuPermissions.bonsEngagements],
           },
           items: [
             {
-              routerLink: 'mandats-commandes',
+              routerLink: 'bons-commandes',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.commandepublique'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'mandats-missions',
+              routerLink: 'bons-missions',
               icon: 'pi pi-shield',
               label: translate.instant('sidebar.missions'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'mandat-decisions',
+              routerLink: 'bons-decisions',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.decisions'),
-              routerLinkActiveOptions: { exact: true },
-            },
-          ],
-        },
-        {
-          icon: 'pi pi-money-bill',
-          label: 'Gestion Virement',
-          routerLinkActiveOptions: { exact: true },
-          state: {
-            permissions: [...MenuPermissions.virementModel],
-          },
-          items: [
-            {
-              routerLink: 'virement-model',
-              icon: 'pi pi-table',
-              label: 'virement model',
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: 'virement',
-              icon: 'pi pi-shield',
-              label: 'Virement',
               routerLinkActiveOptions: { exact: true },
             },
           ],

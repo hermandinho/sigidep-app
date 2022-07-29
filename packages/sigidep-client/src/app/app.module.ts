@@ -49,10 +49,8 @@ import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
 import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
-import { MandatsModule } from '@pages/mandats/decision/mandats.module';
-import { MandatsCommandesModule } from '@pages/mandats-commandes/mandats-commandes.module';
-import { ModelVirementFormComponent } from './components/virements-form/model-virement-form/model-virement-form.component';
-import { VirementFormComponent } from './components/virements-form/virement-form/virement-form.component';
+import { BonsEngagementsModule } from '@pages/bons-engagements/decision/bons-engagements.module';
+import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commandes/bons-engagements-commandes.module';
 
 registerLocaleData(localeFr);
 
@@ -61,7 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, ModelVirementFormComponent, VirementFormComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -124,8 +122,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProceduresModule,
     EngagementsModule,
     ConsultationsModule,
-    MandatsModule,
-    MandatsCommandesModule,
+    BonsEngagementsModule,
+    BonsEngagementsCommandesModule,
   ],
   providers: [
     AppInstallCheckGuard,

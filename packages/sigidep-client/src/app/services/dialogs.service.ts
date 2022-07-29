@@ -39,9 +39,9 @@ import {
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
 import {
-  EngagementMandatModel,
-  StepMandat,
-} from '@models/engagement-mandat.model';
+  BonEngagementModel,
+  StepBonEngagement,
+} from '@models/bon-engagement.model';
 import { CategorieProcedure } from 'app/utils/types';
 
 @Injectable({
@@ -94,18 +94,17 @@ export class DialogsService {
   private reservationEngagementComponent: any;
 
   private printEngagementComponent: any;
-  private printEngagementMandatPrimeComponent: any;
+  private printBonEngagementPrimeComponent: any;
 
   private etatImputationComponent: any;
 
-  private printEngagementMandatMissionComponent: any;
+  private printBonEngagementMissionComponent: any;
 
-  private createMandatFormComponent: any;
-  private reservationEngagementMandatDecisionComponent: any;
-  private etatCertificatEngagementComponent:any;
-  private createMandatMissionFormComponent: any;
-  //private reservationEngagementMandatDecisionComponent: any;
-  //private etatCertificatEngagementComponent:any;
+  private createBonEngagementFormComponent: any;
+  private reservationBonEngagementDecisionComponent: any;
+  private etatCertificatEngagementComponent: any;
+  private createBonEngagementMissionFormComponent: any;
+
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
@@ -1016,21 +1015,21 @@ export class DialogsService {
     });
   }
 
-  public async launchEngagementMandatCreateDialog(
+  public async launchBonEngagementCreateDialog(
     category?: CategorieProcedure,
-    item?: EngagementMandatModel,
+    item?: BonEngagementModel,
     action?: string
   ): Promise<any> {
-    if (!this.createMandatFormComponent) {
-      const { CreateMandatFormComponent } = await import(
-        '@components/create-mandat-form/create-mandat-form.component'
+    if (!this.createBonEngagementFormComponent) {
+      const { CreateBonEngagementFormComponent } = await import(
+        '@components/create-bon-engagement-form/create-bon-engagement-form.component'
       );
-      this.createMandatFormComponent = CreateMandatFormComponent;
+      this.createBonEngagementFormComponent = CreateBonEngagementFormComponent;
     }
-    if(action=='consulterM'){
-      return this._dialogService.open(this.createMandatFormComponent, {
+    if (action == 'consulterM') {
+      return this._dialogService.open(this.createBonEngagementFormComponent, {
         header: this._translateService.instant(
-          action='dialogs.headers.etatMandat',
+          (action = 'dialogs.headers.etatBonEngagement'),
           { numero: item?.numero }
         ),
         width: '60vw',
@@ -1039,13 +1038,13 @@ export class DialogsService {
         data: {
           category,
           item,
-          action
+          action,
         },
       });
-    }else if(action=='consulterC'){
-      return this._dialogService.open(this.createMandatFormComponent, {
+    } else if (action == 'consulterC') {
+      return this._dialogService.open(this.createBonEngagementFormComponent, {
         header: this._translateService.instant(
-          action='dialogs.headers.etatCertificat',
+          (action = 'dialogs.headers.etatCertificat'),
           { numero: item?.numero }
         ),
         width: '60vw',
@@ -1054,15 +1053,15 @@ export class DialogsService {
         data: {
           category,
           item,
-          action
+          action,
         },
       });
-    }else{
-      return this._dialogService.open(this.createMandatFormComponent, {
+    } else {
+      return this._dialogService.open(this.createBonEngagementFormComponent, {
         header: this._translateService.instant(
           action
-            ? 'dialogs.headers.viewEngagementMandat'
-            : 'dialogs.headers.editEngagementMandat',
+            ? 'dialogs.headers.viewBonEngagement'
+            : 'dialogs.headers.editBonEngagement',
           { numero: item?.numero }
         ),
         width: '60vw',
@@ -1075,22 +1074,20 @@ export class DialogsService {
         },
       });
     }
-
   }
 
-  public async launchPrintEngagementMandatPrimeDialog(
-    item: EngagementMandatModel,
+  public async launchPrintBonEngagementPrimeDialog(
+    item: BonEngagementModel,
     type?: Step
   ): Promise<any> {
-    if (!this.printEngagementMandatPrimeComponent) {
-      const { PrintEngagementMandatPrimeComponent } = await import(
-        '@components/print-engagement-mandat-prime/print-engagement-mandat-prime.component'
+    if (!this.printBonEngagementPrimeComponent) {
+      const { PrintBonEngagementPrimeComponent } = await import(
+        '@components/print-bon-engagement-prime/print-bon-engagement-prime.component'
       );
-      this.printEngagementMandatPrimeComponent =
-        PrintEngagementMandatPrimeComponent;
+      this.printBonEngagementPrimeComponent = PrintBonEngagementPrimeComponent;
     }
 
-    return this._dialogService.open(this.printEngagementMandatPrimeComponent, {
+    return this._dialogService.open(this.printBonEngagementPrimeComponent, {
       header: this._translateService.instant(
         'dialogs.headers.printEngagement',
         { numero: item?.numero }
@@ -1105,4 +1102,35 @@ export class DialogsService {
     });
   }
 
+  public async launchBonEngagementMissionCreateDialog(
+    item?: BonEngagementModel,
+    action?: string
+  ): Promise<any> {
+    if (!this.createBonEngagementMissionFormComponent) {
+      const { CreateBonEngagementMissionFormComponent } = await import(
+        '@components/create-bon-engagement-mission-form/create-bon-engagement-mission-form.component'
+      );
+      this.createBonEngagementMissionFormComponent =
+        CreateBonEngagementMissionFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.createBonEngagementMissionFormComponent,
+      {
+        header: this._translateService.instant(
+          action
+            ? 'dialogs.headers.viewBonEngagement'
+            : 'dialogs.headers.editBonEngagement',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action,
+        },
+      }
+    );
+  }
 }

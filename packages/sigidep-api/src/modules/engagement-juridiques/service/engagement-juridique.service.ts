@@ -40,6 +40,10 @@ export class EngagementJuridiqueService {
       .getMany();
   }
 
+  public async getOne(id: number): Promise<EngagementJuridiqueEntity> {
+    return this.repository.findOne(id);
+  }
+
   public async deleteOne(id: number): Promise<any> {
     return this.repository.delete({ id });
   }

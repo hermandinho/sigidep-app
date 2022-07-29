@@ -1,6 +1,6 @@
-import {Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { MandatEntity } from './mandat.entity';
+import { BonEngagementEntity } from './bon-engagement.entity';
 
 @Entity({
   name: 'paiement',
@@ -9,15 +9,14 @@ import { MandatEntity } from './mandat.entity';
   },
 })
 export class PaiementEntity extends BaseEntity {
-
-  @ManyToOne(() => MandatEntity, (object) => object.paiements, {
+  @ManyToOne(() => BonEngagementEntity, (object) => object.paiements, {
     eager: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'mandat_id' })
-  mandat!: MandatEntity;
+  @JoinColumn({ name: 'bon_id' })
+  bon!: BonEngagementEntity;
 
-  @Column({ default:'2000-01-01', type: 'date', name: 'dateValidACT' })
+  @Column({ default: '2000-01-01', type: 'date', name: 'dateValidACT' })
   public dateValidACT: Date;
   @Column('varchar', { nullable: true, name: 'modePaiement' })
   public modePaiement!: string;
@@ -28,8 +27,8 @@ export class PaiementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'compteACrediter' })
   public compteACrediter!: string;
 
-  @Column({ default:'2000-01-01', type: 'date', name: 'datePaiement' })
-  public datePaiement:Date;
+  @Column({ default: '2000-01-01', type: 'date', name: 'datePaiement' })
+  public datePaiement: Date;
 
   @Column('varchar', { nullable: true, name: 'villePaiement' })
   public villePaiement!: string;

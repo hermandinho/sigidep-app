@@ -36,5 +36,5 @@ export * from '@actions/exec-taxes.actions';
 export * from '@actions/regions.actions';
 export * from '@actions/accreditaions.actions';
 export * from '@actions/consultations.actions';
-export * from '@actions/engagement-mandat.actions';
+export * from '@actions/bons-engagements.actions';
 export * from '@actions/engagements.actions';

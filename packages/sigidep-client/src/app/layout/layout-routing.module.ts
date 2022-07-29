@@ -32,11 +32,9 @@ import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
 import { ConsultationsComponent } from '@pages/consultations/consultations.component';
-import { MandatsComponent } from '@pages/mandats/decision/mandats.component';
-import { MandatsCommandesComponent } from '@pages/mandats-commandes/mandats-commandes.component';
-import { MandatMissionsComponent } from '@pages/mandat-missions/mandat-missions.component';
-import { ModelVirementComponent } from '@pages/model-virement/model-virement.component';
-import { VirementComponent } from '@pages/virement/virement.component';
+import { BonsEngagementsComponent } from '@pages/bons-engagements/decision/bons-engagements.component';
+import { BonsEngagementsCommandesComponent } from '@pages/bons-engagements-commandes/bons-engagements-commandes.component';
+import { BonEngagementMissionsComponent } from '@pages/bons-engagements-missions/bons-engagements-missions.component';
 
 const routes: Routes = [
   {
@@ -347,64 +345,38 @@ const routes: Routes = [
         },
       },
       {
-        path: 'mandat-decisions',
+        path: 'bons-decisions',
         canActivate: [AuthGuard],
-        component: MandatsComponent,
+        component: BonsEngagementsComponent,
         data: {
-          permissions: [...MenuPermissions.mandats],
+          permissions: [...MenuPermissions.bonsEngagements],
         },
         loadChildren: () =>
-          import('../pages/mandats/decision/mandats.module').then(
-            (m) => m.MandatsModule
-          ),
+          import(
+            '../pages/bons-engagements/decision/bons-engagements.module'
+          ).then((m) => m.BonsEngagementsModule),
       },
       {
-        path: 'mandats-commandes',
+        path: 'bons-commandes',
         canActivate: [AuthGuard],
-        component: MandatsCommandesComponent,
+        component: BonsEngagementsCommandesComponent,
         data: {
-          permissions: [...MenuPermissions.mandats],
+          permissions: [...MenuPermissions.bonsEngagements],
         },
         loadChildren: () =>
-          import('../pages/mandats-commandes/mandats-commandes.module').then(
-            (m) => m.MandatsCommandesModule
-          ),
+          import(
+            '../pages/bons-engagements-commandes/bons-engagements-commandes.module'
+          ).then((m) => m.BonsEngagementsCommandesModule),
       },
       {
-        path: 'mandats-missions',
+        path: 'bons-missions',
         canActivate: [AuthGuard],
-        component: MandatMissionsComponent,
-        data: {
-          permissions: [...MenuPermissions.mandatMissions],
-        },
+        component: BonEngagementMissionsComponent,
+        data: {},
         loadChildren: () =>
-          import('../pages/mandat-missions/mandat-missions.module').then(
-            (m) => m.MandatMissionsModule
-          ),
-      },
-      {
-        path: 'virement-model',
-        canActivate: [AuthGuard],
-        component: ModelVirementComponent,
-        data: {
-          permissions: [...MenuPermissions.mandatMissions],
-        },
-        loadChildren: () =>
-          import('../pages/model-virement/model-virement.module').then(
-            (m) => m.ModelVirementModule
-          ),
-      },
-      {
-        path: 'virement',
-        canActivate: [AuthGuard],
-        component: VirementComponent,
-        data: {
-          permissions: [...MenuPermissions.mandatMissions],
-        },
-        loadChildren: () =>
-          import('../pages/virement/virement.module').then(
-            (m) => m.VirementModule
-          ),
+          import(
+            '../pages/bons-engagements-missions/bons-engagements-missions.module'
+          ).then((m) => m.BonsEngagementsMissionsModule),
       },
       /*{
         path: '**',
@@ -419,4 +391,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule { }
+export class LayoutRoutingModule {}

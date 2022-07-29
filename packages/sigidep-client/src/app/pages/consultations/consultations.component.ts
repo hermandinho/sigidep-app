@@ -12,16 +12,33 @@ import {
   getDataSelector as getDataImpSelector,
   getLoadingSelector as getLoadingImpSelector,
 } from '@reducers/consultations.reducer';
-import { getDataSelector as getDataEngSelector, getLoadingSelector as getLoadingEngSelector } from '@reducers/engagement-juridique.reducer';
-import { getDataSelector as getDataMadSelector, getDataSelector as getDataSelectorMandat, getLoadingSelector as getLoadingMadSelector, getLoadingSelector as getLoadingSelectorMandat} from '@reducers/engagement-mandat.reducer';
-import { GetEngagementMandats } from '@actions/engagement-mandat.actions';
+import {
+  getDataSelector as getDataEngSelector,
+  getLoadingSelector as getLoadingEngSelector,
+} from '@reducers/engagement-juridique.reducer';
+import {
+  getDataSelector as getDataMadSelector,
+  getDataSelector as getDataSelectorMandat,
+  getLoadingSelector as getLoadingMadSelector,
+  getLoadingSelector as getLoadingSelectorMandat,
+} from '@reducers/bons-engagements.reducer';
+import { GetBonsEngagements } from '@actions/bons-engagements.actions';
 import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
 import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
-import { getDataSelector as getDataSelectorCommande, getLoadingSelector as getLoadingSelectorCommande } from '@reducers/engagement-commande.reducer';
-import { getDataSelector as getDataSelectorDecission, getLoadingSelector as getLoadingSelectorDecission } from '@reducers/engagement-decision.reducer';
-import { getDataSelector as getDataSelectorMission,getLoadingSelector as getLoadingSelectorMission} from '@reducers/engagement-mission.reducer';
+import {
+  getDataSelector as getDataSelectorCommande,
+  getLoadingSelector as getLoadingSelectorCommande,
+} from '@reducers/engagement-commande.reducer';
+import {
+  getDataSelector as getDataSelectorDecission,
+  getLoadingSelector as getLoadingSelectorDecission,
+} from '@reducers/engagement-decision.reducer';
+import {
+  getDataSelector as getDataSelectorMission,
+  getLoadingSelector as getLoadingSelectorMission,
+} from '@reducers/engagement-mission.reducer';
 import { Engagement } from 'app/utils/types';
 
 @Component({
@@ -37,11 +54,11 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   encours: any[] = [];
   engagements: any;
   mandatConsonEnga: any;
-  mandats: any;
-  imputation1:boolean=true;
-  mandat:boolean=true;
-  consulterM:any;
-  engagement:boolean=true;
+  bonsEngagements: any;
+  imputation1: boolean = true;
+  bon: boolean = true;
+  consulterM: any;
+  engagement: boolean = true;
   loading$: Observable<boolean> = of(true);
   public globalColumns!: string[];
   public form!: FormGroup;
@@ -54,10 +71,9 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
     super();
     this.form = this._fb.group({
       imputation: [undefined],
-      mandat: [undefined],
+      bonEngagement: [undefined],
       engagement: [undefined],
     });
-
   }
 
   get form1() {
@@ -65,11 +81,9 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   }
   ngOnInit(): void {
     this._initListeners();
-    this._store.dispatch(
-      GetEngagementJuridiques({})
-    );
-    this._store.dispatch(GetEngagementMandats({}));
-   }
+    this._store.dispatch(GetEngagementJuridiques({}));
+    this._store.dispatch(GetBonsEngagements({}));
+  }
 
   initTable() {
     this.tableColumns = [
@@ -125,12 +139,11 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         select(getLoadingImpSelector),
         map((status) => status)
       );
-
     }
   }
 
   submit() {
-    if(this.form1.imputation.value){
+    if (this.form1.imputation.value) {
       this.busy = true;
       const editedImputation = this.form1.imputation.value;
       console.log(editedImputation);
@@ -139,54 +152,62 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       this.busy = false;
     }
 
-    if(this.form1.mandat.value){
+    if (this.form1.mandat.value) {
       this.busy = true;
-    this._dialogService.launchEngagementMandatCreateDialog('decision',this.consulterM,'consulterM');
-    this.busy = false;
+      this._dialogService.launchBonEngagementCreateDialog(
+        'decision',
+        this.consulterM,
+        'consulterM'
+      );
+      this.busy = false;
     }
 
+    if (this.form1.engagement.value) {
+      this.busy = true;
+      this._dialogService.launchBonEngagementCreateDialog(
+        'decision',
+        this.engagements[0],
+        'consulterC'
+      );
+      this.busy = false;
+    }
   }
 
   private _initListeners() {
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataEngSelector))
+      .subscribe((data) => {
+        this.data = [...data];
+        console.log(this.data);
+      });
+    this.loading$ = this._store.pipe(
+      select(getLoadingEngSelector),
+      map((status) => status)
+    );
 
-      this._store
-        .pipe(this.takeUntilDestroy, select(getDataEngSelector))
-        .subscribe((data) => {
-          this.data = [...data];
-          console.log(this.data)
-        });
-      this.loading$ = this._store.pipe(
-        select(getLoadingEngSelector),
-        map((status) => status)
-      );
-
-
-
-      this._store
-        .pipe(this.takeUntilDestroy, select(getDataMadSelector))
-        .subscribe((data) => {
-          this.mandats = [...data];
-          if (this.mandats) this.imputation = false;
-          console.log('mandats ', this.mandats);
-        });
-      this.loading$ = this._store.pipe(
-        select(getLoadingMadSelector),
-        map((status) => status)
-      );
-
-
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataMadSelector))
+      .subscribe((data) => {
+        this.bonsEngagements = [...data];
+        if (this.bonsEngagements) this.imputation = false;
+        console.log('bons enagements ', this.bonsEngagements);
+      });
+    this.loading$ = this._store.pipe(
+      select(getLoadingMadSelector),
+      map((status) => status)
+    );
   }
   detail(item: EncoursModel) {
     this._dialogService.launchImputationEtatDialog(item);
   }
 
   getDataEngagement(item: any, numero: any) {
-    console.log('item ', item)
+    console.log('item ', item);
     if (item === '1110' || item === '1111' || item === '1115') {
       this._store.dispatch(
         GetEngagementCommandes({
           procedures: [item],
-          numeros: [numero]
+          numeros: [numero],
         })
       );
 
@@ -194,19 +215,25 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         .pipe(this.takeUntilDestroy, select(getDataSelectorCommande))
         .subscribe((data) => {
           this.engagements = [...data];
-         // this._dialogService.launchEngagementMandatCreateDialog('commande', this.engagements[0]);
+          // this._dialogService.launchBonEngagementCreateDialog('commande', this.engagements[0]);
         });
-        this.loading$ = this._store.pipe(
-          select(getLoadingSelectorCommande),
-          map((status) => status)
-        );
+      this.loading$ = this._store.pipe(
+        select(getLoadingSelectorCommande),
+        map((status) => status)
+      );
     }
 
-    if (item === '1122' || item === '1123' || item === '1124' || item === '1125' || item === '1126') {
+    if (
+      item === '1122' ||
+      item === '1123' ||
+      item === '1124' ||
+      item === '1125' ||
+      item === '1126'
+    ) {
       this._store.dispatch(
         GetEngagementDecisions({
           procedures: [item],
-          numeros: [numero]
+          numeros: [numero],
         })
       );
 
@@ -214,19 +241,19 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         .pipe(this.takeUntilDestroy, select(getDataSelectorDecission))
         .subscribe((data) => {
           this.engagements = [...data];
-         // this._dialogService.launchEngagementMandatCreateDialog('decision', this.engagements[0]);
+          // this._dialogService.launchBonEngagementCreateDialog('decision', this.engagements[0]);
         });
-        this.loading$ = this._store.pipe(
-          select(getLoadingSelectorDecission),
-          map((status) => status)
-        );
+      this.loading$ = this._store.pipe(
+        select(getLoadingSelectorDecission),
+        map((status) => status)
+      );
     }
 
     if (item === '1121') {
       this._store.dispatch(
         GetEngagementMissions({
           procedures: [item],
-          numeros: [numero]
+          numeros: [numero],
         })
       );
 
@@ -234,62 +261,54 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         .pipe(this.takeUntilDestroy, select(getDataSelectorMission))
         .subscribe((data) => {
           this.engagements = [...data];
-         // this._dialogService.launchEngagementMandatCreateDialog('mission', this.engagements[0]);
+          // this._dialogService.launchBonEngagementCreateDialog('mission', this.engagements[0]);
         });
 
-        this.loading$ = this._store.pipe(
-          select(getLoadingSelectorMission),
-          map((status) => status)
-        );
+      this.loading$ = this._store.pipe(
+        select(getLoadingSelectorMission),
+        map((status) => status)
+      );
     }
-
   }
 
-  modelChanged(event:any, name:string){
-    const value=event;
-    if(value){
-      if(name==='imputation'){
-        this.mandat=false;
-        this.engagement=false;
-      }else if(name==='mandat' && value.value!==null){
-        this.imputation1=false;
-        this.engagement=false;
-        const act: Engagement | undefined = this.mandats.find(
-          (item:any) => item.id === event.value
+  modelChanged(event: any, name: string) {
+    const value = event;
+    if (value) {
+      if (name === 'imputation') {
+        this.bon = false;
+        this.engagement = false;
+      } else if (name === 'mandat' && value.value !== null) {
+        this.imputation1 = false;
+        this.engagement = false;
+        const act: Engagement | undefined = this.bonsEngagements.find(
+          (item: any) => item.id === event.value
         );
-          console.log(act);
+        console.log(act);
         if (act) {
-          this.consulterM=act;
+          this.consulterM = act;
         }
-
-
-      }else if(name==='engagement' && value.value!==null){
-        this.imputation1=false;
-        this.mandat=false;
+      } else if (name === 'engagement' && value.value !== null) {
+        this.imputation1 = false;
+        this.bon = false;
 
         const act: Engagement | undefined = this.data.find(
-          (item:any) => item.id === event.value
+          (item: any) => item.id === event.value
         );
-          console.log(act);
+        console.log(act);
         if (act) {
-          this.getDataEngagement(act?.codeProcedure, act?.numero)
+          this.getDataEngagement(act?.codeProcedure, act?.numero);
         }
-      }else if(value.value===null){
-        console.log(value.value)
-        this.imputation1=true;
-        this.mandat=true;
-        this.engagement=true;
+      } else if (value.value === null) {
+        console.log(value.value);
+        this.imputation1 = true;
+        this.bon = true;
+        this.engagement = true;
       }
-    }else{
-      this.imputation1=true;
-      this.mandat=true;
-      this.engagement=true;
+    } else {
+      this.imputation1 = true;
+      this.bon = true;
+      this.engagement = true;
     }
-
-    console.log('value',event);
+    console.log('value', event);
   }
-
-
-
-
 }

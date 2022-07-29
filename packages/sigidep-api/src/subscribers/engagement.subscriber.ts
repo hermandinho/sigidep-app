@@ -2,7 +2,6 @@ import {
   EngagementJuridiqueEntity,
   EtatEngagementEnum,
 } from '@entities/engagement-juridique.entity';
-import { EngagementMissionEntity } from '@entities/engagement-mission.entity';
 import { EngagementJuridiqueHistoryEntity } from '@entities/engagement.history.entity';
 import { EventSubscriber } from 'typeorm';
 import { HistoryActionType, HistorySubscriber } from 'typeorm-revisions';

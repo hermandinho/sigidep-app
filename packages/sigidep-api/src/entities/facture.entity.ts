@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
-import { BaseEntity, MandatEntity, FactureArticleEntity } from '.';
+import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { BaseEntity, FactureArticleEntity } from '.';
+import { BonEngagementEntity } from './bon-engagement.entity';
 
 @Entity({
   name: 'factures',
@@ -32,10 +33,10 @@ export class FactureEntity extends BaseEntity {
   @Column({ name: 'morcellement', nullable: true })
   morcellement: boolean;
 
-  @OneToOne(() => MandatEntity, (object) => object.facture, {
+  @OneToOne(() => BonEngagementEntity, (object) => object.facture, {
     nullable: false,
   })
-  public mandat: MandatEntity;
+  public bon: BonEngagementEntity;
 
   @OneToMany(() => FactureArticleEntity, (object) => object.facture, {
     eager: true,

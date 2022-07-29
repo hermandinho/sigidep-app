@@ -13,6 +13,7 @@ import { EncoursModel } from '@models/encours.model';
 import { Observable, of } from 'rxjs';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AppService } from '@services/app.service';
+import { ConsultationsModule } from '@pages/consultations/consultations.module';
 
 @Component({
   selector: 'app-perform-form',
@@ -22,8 +23,9 @@ import { AppService } from '@services/app.service';
 export class PerformFormComponent extends BaseComponent implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
+  @Input() procedure!: string;
   @Input() dataEngagement!: any;
-  @Input() isCheck!:boolean;
+  @Input() isCheck!: boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -35,17 +37,17 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   constructor(
     private _store: Store<AppState>,
-    public ref: DynamicDialogRef
-    //private _appService: AppService
+    public ref: DynamicDialogRef,
+    private _appService: AppService
   ) {
     super();
     //this._initListeners()
   }
 
   ngOnInit(): void {
-    //this._appService.currentProcedureChange.subscribe((val) => {
-      //this.procedure = val;
-    //});
+    if (!this.procedure) {
+      this.procedure = this._appService.currentProcedure;
+    }
     this.performForm = this.startingForm;
     this.subformInitialized.emit(this.performForm);
     if (this.readOnly) this.performForm.disable();
@@ -54,6 +56,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
     this.getEncour();
   }
   doChangeStep = (direction: any) => {
+    this._appService.setCurrentProcedure(this.procedure);
     this.changeStep.emit(direction);
   };
 
@@ -64,6 +67,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   }
 
   submit = () => {
+    this._appService.setCurrentProcedure(this.procedure);
     this.submitForm.emit();
   };
   private _initListeners() {
