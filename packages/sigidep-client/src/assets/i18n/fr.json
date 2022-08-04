@@ -90,6 +90,10 @@
     "title": "Installation"
   },
   "labels": {
+    "nomModel": "Nom modèle",
+    "enteteModel": "Entête modèle",
+    "chapeauModel": "chapeau modèle",
+    "contenuModel": "Contenu modèle",
     "structureCode": "Code Structure",
     "structureNameFr": "Nom de structure(FR)",
     "structureNameEn": "Nom de structure(EN)",
@@ -421,6 +425,9 @@
     "exercises": {
       "conflict": "Cette plage de date n'est plus disponible."
     },
+    "modeleVirement": {
+      "notfound": "Cette plage de date n'est plus disponible."
+    },
     "permissions": {
       "apply": "Une erreur est survenue lors de la modification des permissions."
     },
@@ -521,6 +528,10 @@
     "articles": {
       "deleteSuccess": "Article supprimé avec succès.",
       "createSuccess": "Article crée avec succès."
+    },
+    "modeleVirement": {
+      "deleteSuccess": "Modèle Virement supprimé avec succès.",
+      "createSuccess": "Modèle Virement crée avec succès."
     },
     "rubriques": {
       "deleteSuccess": "Rubrique supprimée avec succès.",
@@ -638,7 +649,8 @@
     "Bonsprimes": "Engagement Bon Decision",
     "bonsengagementsmissions": "Bons Engagements Missions",
     "bonsengamentscommandes": "Bons Engagements Commandes",
-    "bonsPrimes": "Bons Engagements Primes"
+    "bonsPrimes": "Bons Engagements Primes",
+    "modelVirement": "Modèle virement"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -663,7 +675,8 @@
       "procdeures": "Procédures",
       "taxes": "Taxes",
       "engagements": "Engagements",
-      "Bons": "Bons primes"
+      "Bons": "Bons primes",
+      "modelVirement": "Modèle virement"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -815,7 +828,11 @@
       "prixTotalHT": "Rrix Total HT",
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
-      "referenceMercuriale": "RéférenceMercuriale"
+      "referenceMercuriale": "RéférenceMercuriale",
+      "nomModel": "Nom modèle",
+      "enteteModel": "Entête modèle",
+      "chapeauModel": "chapeau modèle",
+      "contenuModel": "Contenu modèle"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -912,8 +929,10 @@
       "reserveBonEngagement": "Etes-vous sûr de reserver cet engagement?",
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
-      "saveBon": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
-      "saveBon": "Etes-vous sûr d'enregistrer ce bon?"
+      "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
+      "saveBon": "Etes-vous sûr d'enregistrer ce bon?",
+      "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
+      "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?"
     }
   },
   "exerciseStatuses": {

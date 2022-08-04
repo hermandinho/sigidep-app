@@ -36,6 +36,7 @@ import {
   EngagementDecisionModel,
   EngagementMissionModel,
   Step,
+  ModeleVirementModel,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
 import {
@@ -67,6 +68,7 @@ export class DialogsService {
   private agenceBankCreateComponent: any;
   private contribuableBudgetaireCreateComponent: any;
   private agentCreateComponent: any;
+  private modelVirementCreateComponent: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
   private sousRubriqueCreateComponent: any;
@@ -108,7 +110,7 @@ export class DialogsService {
   constructor(
     private readonly _dialogService: DialogService,
     private readonly _translateService: TranslateService
-  ) {}
+  ) { }
 
   public async launchExerciseCreateDialog(item?: ExerciseModel): Promise<any> {
     if (!this.exerciseCreateComponent) {
@@ -165,7 +167,7 @@ export class DialogsService {
     return this._dialogService.open(this.financialSourcesCreateComponent, {
       header: this._translateService.instant(
         'dialogs.headers.' +
-          (item ? 'editFinancialSource' : 'createFinancialSource')
+        (item ? 'editFinancialSource' : 'createFinancialSource')
       ),
       width: '50vw',
       height: 'auto',
@@ -190,7 +192,7 @@ export class DialogsService {
     return this._dialogService.open(this.administrativeUnitCreateComponent, {
       header: this._translateService.instant(
         'dialogs.headers.' +
-          (item ? 'editAdministrativeUnit' : 'createAdministrativeUnit')
+        (item ? 'editAdministrativeUnit' : 'createAdministrativeUnit')
       ),
       width: '50vw',
       height: 'auto',
@@ -215,7 +217,7 @@ export class DialogsService {
     return this._dialogService.open(this.technicalSupervisorCreateComponent, {
       header: this._translateService.instant(
         'dialogs.headers.' +
-          (item ? 'editTechnicalSupervisor' : 'createTechnicalSupervisor')
+        (item ? 'editTechnicalSupervisor' : 'createTechnicalSupervisor')
       ),
       width: '50vw',
       height: 'auto',
@@ -285,7 +287,7 @@ export class DialogsService {
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
-            (item ? 'editObjectiveIndicator' : 'createObjectiveIndicator')
+          (item ? 'editObjectiveIndicator' : 'createObjectiveIndicator')
         ),
         width: '50vw',
         height: 'auto',
@@ -370,7 +372,7 @@ export class DialogsService {
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
-            (item ? 'editActivityTask' : 'createActivityTask')
+          (item ? 'editActivityTask' : 'createActivityTask')
         ),
         width: '50vw',
         height: 'auto',
@@ -399,7 +401,7 @@ export class DialogsService {
     return this._dialogService.open(this.referencePhysicalUnitComponent, {
       header: this._translateService.instant(
         'dialogs.headers.' +
-          (item ? 'editReferencePhysicalUnit' : 'createReferencePhysicalUnit')
+        (item ? 'editReferencePhysicalUnit' : 'createReferencePhysicalUnit')
       ),
       width: '50vw',
       height: 'auto',
@@ -432,7 +434,7 @@ export class DialogsService {
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
-            (item ? 'editActivityTaskOperation' : 'createActivityTaskOperation')
+          (item ? 'editActivityTaskOperation' : 'createActivityTaskOperation')
         ),
         width: '100%',
         height: '100%',
@@ -540,9 +542,9 @@ export class DialogsService {
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
-            (item
-              ? 'editContribuableBudgetaire'
-              : 'createContribuableBudgetaire')
+          (item
+            ? 'editContribuableBudgetaire'
+            : 'createContribuableBudgetaire')
         ),
         width: '70vw',
         height: 'auto',
@@ -711,9 +713,9 @@ export class DialogsService {
       {
         header: this._translateService.instant(
           'dialogs.headers.' +
-            (item
-              ? 'editAccreditationsGestionnaires'
-              : 'createAccreditationsGestionnaires')
+          (item
+            ? 'editAccreditationsGestionnaires'
+            : 'createAccreditationsGestionnaires')
         ),
         width: '70vw',
         height: 'auto',
@@ -1132,5 +1134,26 @@ export class DialogsService {
         },
       }
     );
+  }
+
+
+
+  public async launchModelVirementCreateDialog(item?: ModeleVirementModel): Promise<any> {
+    if (!this.modelVirementCreateComponent) {
+      const { ModelVirementFormComponent } = await import(
+        '@components/model-virement-form/model-virement-form.component'
+      );
+      this.modelVirementCreateComponent = ModelVirementFormComponent;
+    }
+
+    return this._dialogService.open(this.modelVirementCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editAgent'),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
   }
 }

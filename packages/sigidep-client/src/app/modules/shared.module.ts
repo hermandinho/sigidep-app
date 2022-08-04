@@ -48,6 +48,7 @@ import { CreateSituationTraitementComponent } from '@components/create-situation
 import { CreateBonEngagementMissionFormComponent } from '@components/create-bon-engagement-mission-form/create-bon-engagement-mission-form.component';
 import { EngagementMissionFormComponent } from '@components/engagement-mission-form/engagement-mission-form.component';
 import { FactureComponent } from '@components/facture/facture.component';
+import { ModelVirementFormComponent } from '@components/model-virement-form/model-virement-form.component';
 
 const declarations = [
   BaseComponent,
@@ -64,6 +65,7 @@ const declarations = [
   EngagementMissionFormComponent,
   CreateSituationTraitementComponent,
   FactureComponent,
+  ModelVirementFormComponent,
 ];
 
 const shared = [
@@ -126,4 +128,4 @@ const shared = [
     ConfirmationService,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

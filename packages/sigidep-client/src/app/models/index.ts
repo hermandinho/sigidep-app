@@ -40,3 +40,4 @@ export * from './traitement-bon-engagement.model';
 export * from './article-crud.model';
 export * from './facture-article.model';
 export * from './article-crud.model';
+export * from './modele-virement.model';

@@ -42,6 +42,7 @@ import * as fromProcedures from '@reducers/exec-procedure.reducer';
 import * as fromTaxes from '@reducers/exec-taxes.reducer';
 import * as fromConsultations from '@reducers/consultations.reducer';
 import * as fromEngagementsByCategory from '@reducers/engagements.reducer';
+import * as fromModeleVirement from '@reducers/modele-virement.reducer';
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
   auth: fromAuth.State;
@@ -81,6 +82,7 @@ export interface AppState {
   procedures: fromProcedures.State;
   taxes: fromTaxes.State;
   engagementsByCategory: fromEngagementsByCategory.State;
+  modeleVirement: fromModeleVirement.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -123,6 +125,7 @@ export const reducers: ActionReducerMap<AppState> = {
   consultations: fromConsultations.reducer,
   mandatsPrimes: fromMandatsPrimes.reducer,
   engagementsByCategory: fromEngagementsByCategory.reducer,
+  modeleVirement: fromModeleVirement.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
