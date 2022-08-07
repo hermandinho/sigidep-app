@@ -37,7 +37,6 @@ export class ModelVirementFormComponent
       nomModel: [undefined],
       enteteModel: [undefined],
       chapeauModel: [undefined],
-      contenuModel: [undefined, Validators.required],
     });
   }
 
@@ -52,14 +51,12 @@ export class ModelVirementFormComponent
         nomModel,
         enteteModel,
         chapeauModel,
-        contenuModel,
       } = this.config.data?.item as ModeleVirementModel;
       this.form.patchValue({
         id,
         nomModel,
         enteteModel,
         chapeauModel,
-        contenuModel,
       });
     }
   }

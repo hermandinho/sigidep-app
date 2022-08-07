@@ -1,24 +1,20 @@
 <div class="container">
     <div class="form" [formGroup]="form">
         <div class="p-fluid p-grid">
-            <div class="p-field p-col-12 p-md-6">
+            <div class="p-field p-col-12 p-md-12">
                 <label>{{ "labels.nomModel" | translate }}</label>
                 <input type="text" class="form-control" pInputText formControlName="nomModel" [placeholder]="" />
             </div>
 
-            <div class="p-field p-col-12 p-md-6">
+            <div class="p-field p-col-12 p-md-12">
                 <label>{{ "labels.enteteModel" | translate }}</label>
-                <input type="text" class="form-control" pInputText formControlName="enteteModel" [placeholder]="" />
+                <!-- <textarea class="form-control" pInputText formControlName="enteteModel" rows="7"></textarea> -->
+                <p-editor formControlName="enteteModel" [style]="{'height':'220px'}"></p-editor>
             </div>
 
             <div class="p-field p-col-12 p-md-12">
                 <label>{{ "labels.chapeauModel" | translate }}</label>
-                <input type="text" class="form-control" pInputText formControlName="chapeauModel" [placeholder]="" />
-            </div>
-
-            <div class="p-field p-col-12 p-md-12">
-                <label class="required">{{ "labels.contenuModel" | translate }}</label>
-                <textarea type="text" class="form-control" pInputText formControlName="contenuModel"></textarea>
+                <p-editor formControlName="chapeauModel" [style]="{'height':'220px'}"></p-editor>
             </div>
         </div>
     </div>
