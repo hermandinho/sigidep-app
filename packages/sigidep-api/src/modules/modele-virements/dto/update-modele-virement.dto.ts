@@ -18,7 +18,7 @@ export class UpdateModeleVirementDto extends PartialType(CreateModeleVirementDto
     @IsNotEmpty()
     public chapeauModel: string;
 
-    @ApiProperty({ required: true })
+    @ApiProperty({ required: false })
     @IsNotEmpty()
     public contenuModel: string;
 }
