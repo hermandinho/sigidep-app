@@ -48,6 +48,7 @@ export class CreateBonEngagementFormComponent
   public isCheck = false;
   public situationForm: any;
   //bookProcess:any;
+  public editedEngagement!: BonEngagementModel;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -149,7 +150,7 @@ export class CreateBonEngagementFormComponent
     if (this.config.data?.action) {
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
-      if (this.situationAction === 'dialogs.headers.etatBon') {
+      if (this.situationAction === 'dialogs.headers.etatBonEngagement') {
         this.engagements = this.config.data?.item;
         this.isCheck = true;
         this.currentStepBs.next('situation');
@@ -264,19 +265,19 @@ export class CreateBonEngagementFormComponent
         },
         situationForm: {},
         factureForm: {
-          id: facture.id,
-          date: facture.date,
-          reference: facture.reference,
-          objet: facture.objet,
-          tauxTVA: facture.tauxTVA,
-          tauxIR: facture.tauxIR,
-          montantHT: facture.montantHT,
-          montantTVA: facture.montantTVA,
-          montantIR: facture.montantIR,
-          montantTotalHT: facture.montantHT,
-          netAPercevoir: facture.netAPercevoir,
-          montantTTC: facture.montantTTC,
-          articles: facture.articles,
+          id: facture?.id,
+          date: facture?.date,
+          reference: facture?.reference,
+          objet: facture?.objet,
+          tauxTVA: facture?.tauxTVA,
+          tauxIR: facture?.tauxIR,
+          montantHT: facture?.montantHT,
+          montantTVA: facture?.montantTVA,
+          montantIR: facture?.montantIR,
+          montantTotalHT: facture?.montantHT,
+          netAPercevoir: facture?.netAPercevoir,
+          montantTTC: facture?.montantTTC,
+          articles: facture?.articles,
         },
       });
     }
@@ -402,19 +403,50 @@ export class CreateBonEngagementFormComponent
 
   submitForm() {
     const formValues = this.form.getRawValue();
-    this.busy = true;
-    let editedEngagement: BonEngagementModel;
-    editedEngagement = {
-      ...this.form.getRawValue()?.engagementForm,
-      ...this.form.getRawValue().bonEngagementForm,
-      ...this.form.getRawValue().performForm,
-      facture: { ...this.form.getRawValue().factureForm },
-    } as BonEngagementModel;
+    if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1122' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1123' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1124'){
+      this.form.patchValue({
+        bonEngagementForm: {
+          matriculeGestionnaire: this.form.getRawValue()?.engagementForm.matriculeBeneficaire,
+          nomGestionnaire: this.form.getRawValue()?.engagementForm.nomBeneficaire
+        },
+      });
+    }else if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1125'){
+      this.form.patchValue({
+        bonEngagementForm: {
+          matriculeGestionnaire: this.form.getRawValue()?.engagementForm.codeUnitAdminBenef,
+          nomGestionnaire: this.form.getRawValue()?.engagementForm.nomUnitAdminBenef
+        },
+      });
+    }else if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1126'){
+      this.form.patchValue({
+        bonEngagementForm: {
+          matriculeGestionnaire: this.form.getRawValue()?.engagementForm.numContribuable,
+        },
+      });
+    }
+
+    if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1110' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1111' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1115'){
+      this.editedEngagement = {
+        ...this.form.getRawValue()?.engagementForm,
+        ...this.form.getRawValue().bonEngagementForm,
+        ...this.form.getRawValue().performForm,
+
+        facture: { ...this.form.getRawValue().factureForm },
+      } as BonEngagementModel;
+    }else{
+      this.editedEngagement = {
+        ...this.form.getRawValue()?.engagementForm,
+        ...this.form.getRawValue().bonEngagementForm,
+        ...this.form.getRawValue().performForm,
+      } as BonEngagementModel;
+    }
+
+    console.log(this.editedEngagement)
     console.log('..............FORMM.....', {
       ...this.form.getRawValue().factureForm,
     });
     if (this.isBook) {
-      this.bookProcess(editedEngagement);
+      this.bookProcess(this.editedEngagement);
       localStorage.removeItem('imputation');
       this.ref.close();
     }
@@ -422,7 +454,7 @@ export class CreateBonEngagementFormComponent
     if (!this.isBook && this.isUpdateForm) {
       const method: Observable<any> = this._apisService.put<BonEngagementModel>(
         '/bons-engagements',
-        editedEngagement
+        this.editedEngagement
       );
       method.subscribe(
         (res) => {
@@ -465,7 +497,7 @@ export class CreateBonEngagementFormComponent
           const method: Observable<any> =
             this._apisService.post<BonEngagementModel>(
               '/bons-engagements',
-              editedEngagement
+              this.editedEngagement
             );
           method.subscribe(
             (res) => {

@@ -36,6 +36,7 @@ import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
 import { BonsEngagementsModule } from '@modules/bons-engagements/bons-engagements.module';
 import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
 import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements.subscriber';
+import { TransmissionReceptionModule } from '@modules/transmission-receptions/transmission-receptions.module';
 
 @Module({
   imports: [
@@ -128,6 +129,7 @@ import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements
     ExecProcedureModule,
     ExecTaxesModule,
     BonsEngagementsModule,
+    TransmissionReceptionModule
   ],
   controllers: [AppController],
   providers: [AppService],

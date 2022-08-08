@@ -22,6 +22,9 @@ import {
   GetFactureArticles,
   GetFactureArticlesFailure,
   GetFactureArticlesSuccess,
+  GetTransmissionsReceptionsBons,
+  GetTransmissionsReceptionsBonsFailure,
+  GetTransmissionsReceptionsBonsSuccess,
   UpdateBonsEngagements,
   UpdateBonsEngagementsFailure,
   UpdateBonsEngagementsSuccess,
@@ -154,6 +157,25 @@ export class BonsEngagementsEffects {
       )
     )
   );
+
+  bons$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(GetTransmissionsReceptionsBons),
+    mergeMap((action) =>
+      this.apisService.get<BonEngagementModel[]>('/transmissions-receptions/bon', {
+        ...(action.exercices && {
+          exercices: action.exercices.join(','),
+        })}).pipe(
+        switchMap((payload) => {
+          return [GetTransmissionsReceptionsBonsSuccess({ payload })];
+        }),
+        catchError((err: HttpErrorResponse) =>
+          of(GetTransmissionsReceptionsBonsFailure(err))
+        )
+      )
+    )
+  )
+);
 
   constructor(private actions$: Actions, private apisService: ApisService) {}
 }

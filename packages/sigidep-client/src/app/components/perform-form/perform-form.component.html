@@ -48,24 +48,45 @@
     ></button>
 
     <button
-      *ngIf="!readOnly && procedure !== '1110' && procedure !== '1111'"
-      (click)="submit()"
-      [disabled]="!performForm?.valid"
-      [label]="'buttons.submit' | translate"
-      pButton
-    ></button>
+    *ngIf="!readOnly && procedure !== '1110' && procedure !== '1111'"
+    (click)="submit()"
+    [disabled]="!performForm?.valid"
+    [label]="'buttons.submit' | translate"
+    pButton
+  ></button>
+
+  <button *ngIf="!readOnly && procedure === '1110' || procedure === '1111'"
+  type="button"
+  pButton
+  pRipple
+  class="p-button"
+  icon="pi pi-angle-right"
+  (click)="doChangeStep('forward')"
+  [disabled]="!performForm?.valid && !readOnly"
+  [label]="'buttons.next' | translate"
+  pButton
+></button>
+  <button
+    *ngIf="readOnly && procedure !== '1110' && procedure !== '1111'"
+    type="button"
+    pButton
+    pRipple
+    class="p-button"
+    icon="pi pi-save"
+    (click)="submit()"
+    [disabled]="!performForm?.valid && false"
+    [label]="'labels.book' | translate"
+    pButton
+  ></button>
+
+  </div>
+  <div class="footer" *ngIf="dataEngagement">
     <button
-      *ngIf="readOnly && procedure !== '1110' && procedure !== '1111'"
-      type="button"
-      pButton
-      pRipple
-      class="p-button"
-      icon="pi pi-save"
-      (click)="submit()"
-      [disabled]="!performForm?.valid && false"
-      [label]="'labels.book' | translate"
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
       pButton
     ></button>
+
     <button
       type="button"
       *ngIf="procedure === '1110' || procedure === '1111'"

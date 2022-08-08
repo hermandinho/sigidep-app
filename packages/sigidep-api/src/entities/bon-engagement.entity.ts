@@ -8,6 +8,7 @@ import {
   OneToOne,
 } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { DetailTransmissionReceptionEntity } from './detail-transmission-reception.entity';
 import { EngagementJuridiqueEntity } from './engagement-juridique.entity';
 import { FactureEntity } from './facture.entity';
 import { PaiementEntity } from './paiement.entity';
@@ -108,4 +109,11 @@ export class BonEngagementEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'facture_id' })
   public facture: FactureEntity | null;
+
+  @OneToMany(() => DetailTransmissionReceptionEntity, (object) => object.bon_engagement, {
+    eager: true,
+    nullable: true,
+    cascade: ['insert', 'update', 'remove'],
+  })
+  transmission_reception: DetailTransmissionReceptionEntity[];
 }

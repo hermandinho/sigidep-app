@@ -46,6 +46,7 @@ export const MenuPermissions = {
   misedispositionstructure: [
     ...simpleCrudPermissions('misedispositionstructure'),
   ],
+  transmissionsReceptions: [...simpleCrudPermissions('transmissionsReceptions')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -312,6 +313,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             },
           ],
         },
+        {
+          routerLink: 'transmissionsReceptions',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.transmissionsReceptions'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.transmissionsReceptions],
+          },
+        }
       ],
     },
     {

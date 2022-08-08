@@ -51,6 +51,7 @@ import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
 import { BonsEngagementsModule } from '@pages/bons-engagements/decision/bons-engagements.module';
 import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commandes/bons-engagements-commandes.module';
+import { TransmissionsReceptionsModule } from '@pages/transmissions-receptions/transmissions-receptions.module';
 
 registerLocaleData(localeFr);
 
@@ -124,6 +125,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConsultationsModule,
     BonsEngagementsModule,
     BonsEngagementsCommandesModule,
+    TransmissionsReceptionsModule
   ],
   providers: [
     AppInstallCheckGuard,

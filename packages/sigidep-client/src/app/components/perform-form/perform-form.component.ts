@@ -45,8 +45,10 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.procedure)
     if (!this.procedure) {
       this.procedure = this._appService.currentProcedure;
+      console.log(this.procedure)
     }
     this.performForm = this.startingForm;
     this.subformInitialized.emit(this.performForm);

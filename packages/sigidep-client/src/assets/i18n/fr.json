@@ -47,7 +47,8 @@
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
-    "bonsengagements": "Engagements CP"
+    "bonsengagements": "Engagements CP",
+    "transmissionsReceptions":"Transmissions Receptions"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -338,6 +339,7 @@
     "effectuer": "Mission effectuée",
     "annulationdu": "Annulation du Bon",
     "annulelorsdelareservation": "Annulé lors de la réservation",
+    "annuleTransmissionControleConformite":"Annulé transmission controle conformité",
     "rejetlorsdelareservation": "Rejet lors de la réservation",
     "rejetlorsduControleConformite": "Rejet lors du Contrôle Conformité",
     "rejetlorsduControledeRegularite": "Rejet lors du Contrôle de Régularité",
@@ -387,8 +389,19 @@
     "montantIR": "Montant IR",
     "montantTotalHT": "Montant Total HT",
     "dateFacturation": "Date de Facturation",
-    "tauxIR": "Taux IR"
-  },
+    "tauxIR": "Taux IR",
+    "paye_mandat":"Bon engagement payé",
+    "validACT_mandat":"Validation ACT (en Attente Paiement)",
+    "ordonnance_mandat":"Ordonnancement",
+    "liquite_mandat":"Liquidation",
+    "editionTCC_mandat":"Edition titre créance",
+    "rejet_mandat":"Bon engagement rejeté ",
+    "datePaiement_mandat":"Date paiement",
+    "dateValidACT_mandat":"Date validation",
+    "dateOrdonnancement_mandat":"Date ordonnancement",
+    "dateLiquidation_mandat":"Date liquidation",
+    "dateEditionTCC_mandat":"Date edition titre"
+    },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
     "deletePhysicalReferencesOnParagraphChange": "Toutes les unités physiques programmées seront supprimées suite à la modification de ce paragraphe.",
@@ -659,7 +672,9 @@
       "procdeures": "Procédures",
       "taxes": "Taxes",
       "engagements": "Engagements",
-      "Bons": "Bons primes"
+      "Bons": "Bons primes",
+      "dossiers": "Dossiers du Bordereau",
+      "transmission": "Listing des Bordereaux de Transmission"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -811,7 +826,15 @@
       "prixTotalHT": "Rrix Total HT",
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
-      "referenceMercuriale": "RéférenceMercuriale"
+      "referenceMercuriale": "RéférenceMercuriale",
+      "num":"N°",
+      "numeroBor":"Numero Bons",
+      "serviceEmetteur":"Service Emetteur",
+      "serviceDestination":"Service Destination",
+      "dateTransmission":"Date de Transmission",
+      "numeroEng":"Numéro Engag. Jurid.",
+      "dateEng":"Date engag.",
+      "montantCP":"montantCP"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -879,7 +902,7 @@
       "reserverEngagementBon": "Réservation de l'engagement Bon No: {{numero}}",
       "printEngagement": "Engagement",
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
-      "etatBon": "Etat de l'engagement Bon: {{numero}}"
+      "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -909,7 +932,7 @@
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
       "saveBon": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
-      "saveBon": "Etes-vous sûr d'enregistrer ce bon?"
+      "cancelTransmission":"Voulez-vous annuler cette Transmission? Cette opération est irréversible !"
     }
   },
   "exerciseStatuses": {
@@ -997,7 +1020,7 @@
     "chronogram": "Chronogramme",
     "physicalUnits": "Unités physiques",
     "codofication": "Codofication",
-    "BonSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°"
+    "mandatSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°"
   },
   "measurementUnits": {
     "unit": "Unité",

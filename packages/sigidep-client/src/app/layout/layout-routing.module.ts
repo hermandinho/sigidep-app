@@ -35,6 +35,7 @@ import { ConsultationsComponent } from '@pages/consultations/consultations.compo
 import { BonsEngagementsComponent } from '@pages/bons-engagements/decision/bons-engagements.component';
 import { BonsEngagementsCommandesComponent } from '@pages/bons-engagements-commandes/bons-engagements-commandes.component';
 import { BonEngagementMissionsComponent } from '@pages/bons-engagements-missions/bons-engagements-missions.component';
+import { TransmissionsReceptionsComponent } from '@pages/transmissions-receptions/transmissions-receptions.component';
 
 const routes: Routes = [
   {
@@ -292,6 +293,18 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/engagements/engagements.module').then(
             (m) => m.EngagementsModule
+          ),
+      },
+      {
+        path: 'transmissionsReceptions',
+        canActivate: [AuthGuard],
+        component: TransmissionsReceptionsComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionsReceptions],
+        },
+        loadChildren: () =>
+          import('../pages/transmissions-receptions/transmissions-receptions.module').then(
+            (m) => m.TransmissionsReceptionsModule
           ),
       },
       {

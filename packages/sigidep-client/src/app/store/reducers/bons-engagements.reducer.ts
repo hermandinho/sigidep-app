@@ -11,6 +11,9 @@ import {
   GetBonsEngagements,
   GetBonsEngagementsFailure,
   GetBonsEngagementsSuccess,
+  GetTransmissionsReceptionsBons,
+  GetTransmissionsReceptionsBonsFailure,
+  GetTransmissionsReceptionsBonsSuccess,
   UpdateBonsEngagements,
   UpdateBonsEngagementsFailure,
   UpdateBonsEngagementsSuccess,
@@ -50,6 +53,15 @@ const bonsEngagementsReducer = createReducer(
     return { ...state, loading: false, data: payload };
   }),
   on(GetBonsEngagementsFailure, (state, { error }) => {
+    return { ...state, loading: false, error };
+  }),
+  on(GetTransmissionsReceptionsBons, (state) => {
+    return { ...state, loading: true };
+  }),
+  on(GetTransmissionsReceptionsBonsSuccess, (state, { payload }) => {
+    return { ...state, loading: false, data: payload };
+  }),
+  on(GetTransmissionsReceptionsBonsFailure, (state, { error }) => {
     return { ...state, loading: false, error };
   }),
   on(CreateBonsEngagements, (state) => {
