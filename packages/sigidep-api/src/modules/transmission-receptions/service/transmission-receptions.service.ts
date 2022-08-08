@@ -69,8 +69,8 @@ export class TransmissionReceptionService {
   ): Promise<TransmissionReceptionEntity> {
     const count = await this.repository.count();
     //const val1: string = getAbbreviation(eng.adminUnit.slice(8));
-    const val1: string = '55';
-    const val2: string = ('0000000' + Number(count + 1)).slice(-5);
+    const val1: string = payload?.bon_engagement[0]?.numActeJuridique.exercise;
+    const val2: string = ('0000000' + Number(count + 1)).slice(-7);
 
     payload.numero = val1 + 'B' + val2;
     let transPaylaod = {

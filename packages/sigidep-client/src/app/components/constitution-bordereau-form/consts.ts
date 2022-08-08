@@ -1,4 +1,5 @@
 export const TableColumnsBordereau = [
+
   {
     field: 'numeroBon',
     title: 'tables.headers.numeroBon',

@@ -93,6 +93,13 @@ implements OnInit {
         this._store.dispatch(
           CreateTransmissionsReception({ payload: item })
         );
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail: 'messages.transmission.cancelSuccess',
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
       },
     });
   }

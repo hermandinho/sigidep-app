@@ -54,19 +54,19 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
+      <th></th>
       <ng-container *ngFor="let column of tableColumnsBordereau">
         <th *ngIf="column.sortable" [pSortableColumn]="column.field">
           {{ column.title | translate }}
           <p-sortIcon field="numeroEng"></p-sortIcon>
         </th>
       </ng-container>
-      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
-    <tr>
+    <tr (click)="fileInput110.click()" >
       <td class="actions">
-        <input type="checkbox" (click)="detail(item)" >
+        <input hidden type="checkbox" #fileInput110 (click)="detail(item)" (change)="selected($event)" >
       </td>
       <td *ngFor="let column of tableColumnsBordereau" class="nowrap">
         <span *ngIf="column.field === 'numeroBon'">
@@ -116,7 +116,7 @@
         [rows]="10"
         [showCurrentPageReport]="true"
         [sortMode]="'single'"
-        [value]="dossiersBordereaux"
+        [value]="bon_engagement"
         [currentPageReportTemplate]="'tables.stats.pager' | translate"
         dataKey="id"
         responsiveLayout="scroll"
@@ -126,7 +126,7 @@
             <h5 class="p-m-0">
               {{ "tables.titles.dossiers" | translate }}
             </h5>
-            <span class="p-input-icon-left">
+            <!-- <span class="p-input-icon-left">
               <i class="pi pi-search"></i>
               <input
                 pInputText
@@ -136,7 +136,7 @@
                 "
                 [placeholder]="'labels.search' | translate"
               />
-            </span>
+            </span> -->
           </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -155,31 +155,31 @@
 
             <td *ngFor="let column of tableColumnsBordereau" class="nowrap">
               <span *ngIf="column.field === 'numeroBon'">
-                {{ item["bon_engagement"]?.numero }}
+                {{ item["numero"] }}
               </span>
               <span *ngIf="column.field === 'numeroEng'">
-                {{ item["bon_engagement"]?.numActeJuridique?.numero }}
+                {{ item["numActeJuridique"]?.numero }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item["bon_engagement"]?.nomGestionnaire }}
+                {{ item["nomGestionnaire"] }}
               </span>
               <span *ngIf="column.field === 'imputation'">
-                {{ item["bon_engagement"]?.numActeJuridique?.imputation }}
+                {{ item["numActeJuridique"]?.imputation }}
               </span>
               <span *ngIf="column.field === 'montantAE'">
-                {{ item['bon_engagement']?.numActeJuridique?.montantAE }}
+                {{ item['numActeJuridique']?.montantAE }}
               </span>
               <span *ngIf="column.field === 'montantCP'">
-                {{ item['bon_engagement']?.montantCPChiffres }}
+                {{ item['montantCPChiffres'] }}
               </span>
               <span *ngIf="column.field === 'dateEng'">
-                {{ item['bon_engagement']?.dateEngagement }}
+                {{ item['dateEngagement'] }}
               </span>
               <span *ngIf="column.field === 'etat'">
-                {{ item['bon_engagement']?.etat | translate }}
+                {{ item['etat'] | translate }}
               </span>
               <span *ngIf="column.field === 'objet'">
-                {{ item['bon_engagement']?.objet }}
+                {{ item['objet'] }}
               </span>
             </td>
           </tr>

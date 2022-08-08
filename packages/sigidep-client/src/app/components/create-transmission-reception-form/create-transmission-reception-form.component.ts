@@ -176,17 +176,16 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
           );
           this._appService.showToast({
             summary: 'messages.success',
-            detail: 'messages.engagements.createSuccess',
+            detail: 'messages.transmission.createSuccess',
             severity: 'success',
             life: 3000,
             closable: true,
           });
-          this.currentStepBs.next('print');
         },
         ({ error }) => {
           let err = '';
           if (error?.statusCode === 409) {
-            err = 'errors.engagements.notfound';
+            err = 'errors.transmission.notfound';
           } else {
             err = 'errors.unknown';
           }
@@ -222,7 +221,7 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
               this._appService.showToast({
                 summary: 'messages.success',
                 detail:
-                  'messages.engagements.createSuccess' +
+                  'messages.transmission.createSuccess' +
                   ': numéro: ' +
                   res.numero,
                 severity: 'success',
@@ -234,7 +233,7 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
             ({ error }) => {
               let err = '';
               if (error?.statusCode === 409) {
-                err = 'errors.engagements.conflict';
+                err = 'errors.transmission.conflict';
               } else {
                 err = 'errors.unknown';
               }

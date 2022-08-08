@@ -53,6 +53,7 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   bons: any[] = [];
   bon_engagement: BonEngagementModel[]=[];
   exercices:any;
+  color:string='while';
 
 
 
@@ -113,6 +114,7 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
 
 };
 
+
   private _initListeners() {
 
     this._store
@@ -164,7 +166,17 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   }
 
   detail(item:any){
-    this.bon_engagement.push(item);
+    if(this.bon_engagement.includes(item)){
+      const index = this.bon_engagement.indexOf(item);
+      console.log('index ', index)
+      this.bon_engagement.splice(index,1);
+      this.color='while';
+    }else{
+      console.log("l'element n'existe pas")
+      this.bon_engagement.push(item)
+      this.color='blue';
+    }
+    //this.bon_engagement.push(item);
     console.log('bon_engagement',this.bon_engagement)
     this.constitutionForm.patchValue({
       bon_engagement:this.bon_engagement
@@ -172,5 +184,19 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
     console.log('constitutionForm',this.constitutionForm)
   }
 
+  selected(e:any) {
+    if (e.target.checked) {
+      console.log('selected')
+      e.currentTarget.parentNode.style.backgroundColor = 'rgb(0, 140, 255)'
+      const parent = e.currentTarget.parentNode;
+      parent.children[0].style.backgroundColor = 'rgb(0, 140, 255)';
+    }
+    else {
+      console.log('selected selected error')
+      e.currentTarget.parentNode.style.backgroundColor = 'white'
+      const parent = e.currentTarget.parentNode;
+      parent.children[0].style.backgroundColor = 'white';
+    }
+  }
 
 }

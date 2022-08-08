@@ -606,6 +606,10 @@
       "deleteSuccess": "Engagement supprimé avec succès.",
       "createSuccess": "Engagement enregistré avec succès.",
       "cancelSuccess": "Réservation annulée avec succès"
+    },
+    "transmission": {
+      "createSuccess": "Transmis pour controle conformité avec succès.",
+      "cancelSuccess": "Transmission annulée avec succès"
     }
   },
   "menus": {
@@ -647,7 +651,9 @@
     "Bonsprimes": "Engagement Bon Decision",
     "bonsengagementsmissions": "Bons Engagements Missions",
     "bonsengamentscommandes": "Bons Engagements Commandes",
-    "bonsPrimes": "Bons Engagements Primes"
+    "bonsPrimes": "Bons Engagements Primes",
+    "transmissionsreceptions":"Transmissions Receptions"
+
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -834,7 +840,8 @@
       "dateTransmission":"Date de Transmission",
       "numeroEng":"Numéro Engag. Jurid.",
       "dateEng":"Date engag.",
-      "montantCP":"montantCP"
+      "montantCP":"montantCP",
+      "objet":"Objet"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -902,7 +909,8 @@
       "reserverEngagementBon": "Réservation de l'engagement Bon No: {{numero}}",
       "printEngagement": "Engagement",
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
-      "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}"
+      "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}",
+      "editTransmissionReception":"Edit Transmission Reception"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
