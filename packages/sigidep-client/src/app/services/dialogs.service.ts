@@ -37,6 +37,7 @@ import {
   EngagementMissionModel,
   Step,
   ModeleVirementModel,
+  VirementModele,
 } from '@models/index';
 import { CreateEncoursModel } from '@models/create-encours.model';
 import {
@@ -69,6 +70,7 @@ export class DialogsService {
   private contribuableBudgetaireCreateComponent: any;
   private agentCreateComponent: any;
   private modelVirementCreateComponent: any;
+  private virementCreateComponent: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
   private sousRubriqueCreateComponent: any;
@@ -1149,6 +1151,26 @@ export class DialogsService {
     return this._dialogService.open(this.modelVirementCreateComponent, {
       header: this._translateService.instant('dialogs.headers.editAgent'),
       width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+
+  public async launchVirementCreateDialog(item?: VirementModele): Promise<any> {
+    if (!this.virementCreateComponent) {
+      const { VirementFormComponent } = await import(
+        '@components/virement-form/virement-form.component'
+      );
+      this.virementCreateComponent = VirementFormComponent;
+    }
+
+    return this._dialogService.open(this.virementCreateComponent, {
+      header: this._translateService.instant('dialogs.headers.editAgent'),
+      width: '60vw',
       height: 'auto',
       modal: true,
       data: {

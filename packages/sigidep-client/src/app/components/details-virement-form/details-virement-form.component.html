@@ -1,0 +1,106 @@
+<div class="container">
+    <form class="form" [formGroup]="detailVirementForm">
+
+        <!-- *ngIf="imputationsOperationsList.length>0" -->
+        <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
+        <p-table [value]="encourList" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Imputation</th>
+                    <th>libele Operation</th>
+                    <th>Montant</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex }}</td>
+                    <td>{{ item.imputation }}</td>
+                    <td>{{ item.operation.labelFr }}</td>
+                    <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" placeholder="montant" />
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                ecrire
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <button (click)="addToCredit(item)" class="p-button-success" icon="pi pi-plus" pButton
+                            pRipple></button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button (click)="addToDebit(item)" class="p-button-primary" icon="pi pi-minus" pButton
+                            pRipple></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <h3>{{ "tables.titles.debit" | translate }}</h3>
+        <p-table [value]="debitEncourList" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Imputation</th>
+                    <th>Libellé Operation</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex }}</td>
+                    <td>{{ item.imputation }}</td>
+                    <td>{{ item.operation.labelFr }}</td>
+
+                    <td>
+                        <button (click)="removeFromDebit(item)" class="p-button-rounded p-button-warning"
+                            icon="pi pi-trash" pButton pRipple></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="p-field p-col-12 p-md-12">
+            <div style="float: right;">
+                <label for="total_debit">Total Débit</label>
+                <input class="form-control" pInputText type="text" id="total_debit">
+            </div>
+        </div>
+        <h3>{{ "tables.titles.credit" | translate }}</h3>
+        <p-table [value]="creditEncourList" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Imputation</th>
+                    <th>libele Operation</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex }}</td>
+                    <td>{{ item.imputation }}</td>
+                    <td>{{ item.operation.labelFr }}</td>
+                    <td>
+                        <button (click)="removeFromCredit(item)" class="p-button-rounded p-button-warning"
+                            icon="pi pi-trash" pButton pRipple></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+        <div class="footer">
+            <div class="p-field p-col-7 p-md-7">
+                <button (click)="doChangeStep('back')" [label]="'buttons.back' | translate" pButton></button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                    [label]="'buttons.save' | translate" pButton></button>
+            </div>
+            <div class="p-field p-col-5 p-md-5">
+
+            </div>
+        </div>
+    </form>
+</div>

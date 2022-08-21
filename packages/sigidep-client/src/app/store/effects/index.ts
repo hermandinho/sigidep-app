@@ -37,6 +37,7 @@ import { ConsultationsEffects } from './consultations.effects';
 import { BonsEngagementsEffects } from './bon-engagement.effects';
 import { EngagementsEffects } from './engagements.effects';
 import { ModeleVirementEffects } from './modele-virement.effects';
+import { VirementEffects } from './virement.effects';
 
 export const Effects = [
   AuthEffects,
@@ -79,4 +80,5 @@ export const Effects = [
   BonsEngagementsEffects,
   EngagementsEffects,
   ModeleVirementEffects,
+  VirementEffects,
 ];

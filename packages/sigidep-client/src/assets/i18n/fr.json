@@ -159,6 +159,11 @@
     "unitPrice": "P.U",
     "totalPrice": "Montant Total",
     "subProgram": "Sous programme",
+    "typeVirement": "Type Virement",
+    "subProgramDestinataire": "Sous programme Cible",
+    "subProgramSource": "Sous programme Source",
+    "modelVirement": "Modèle virement",
+    "detailsVirement": "Détails du virement",
     "task": "Tâche",
     "activity": "Activité",
     "imputation": "Imputation",
@@ -650,7 +655,8 @@
     "bonsengagementsmissions": "Bons Engagements Missions",
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
-    "modelVirement": "Modèle virement"
+    "modelVirement": "Modèle virement",
+    "virement": "virement"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -676,7 +682,10 @@
       "taxes": "Taxes",
       "engagements": "Engagements",
       "Bons": "Bons primes",
-      "modelVirement": "Modèle virement"
+      "modelVirement": "Modèle virement",
+      "credit": "Tableau à créditer",
+      "debit": "Tableau à débiter",
+      "imputationsFiltres": "liste des imputations"
     },
     "headers": {
       "exerciseCode": "Code",
@@ -712,6 +721,12 @@
       "codeBanque": "Code Banque",
       "codeAgence": "Code Agence",
       "numeroCompte": "Numéro Compte",
+      "numeroVirement": "Numéro Virement",
+      "dateVirement": "Date de Virement",
+      "dateSignatureVirement": "Date Signature du Virement",
+      "signataireVirement": "Signataire du Virement",
+      "spSourceVirement": "Source du Virement",
+      "spCibleVirement": "Cible du Virement",
       "cle": "Clé",
       "email": "Email",
       "contact": "Contact",

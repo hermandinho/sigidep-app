@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VirementsComponent } from './virements.component';
+import { SharedModule } from '@modules/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -9,7 +11,7 @@ import { VirementsComponent } from './virements.component';
     VirementsComponent
   ],
   imports: [
-    CommonModule
+    SharedModule, CommonModule, FormsModule
   ]
 })
 export class VirementsModule { }

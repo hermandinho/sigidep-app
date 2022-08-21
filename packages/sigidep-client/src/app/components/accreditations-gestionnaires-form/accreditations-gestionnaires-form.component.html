@@ -68,7 +68,7 @@
               "labels.subProgram" | translate
               }}</label>
             <p-dropdown [autoDisplayFirst]="false" [options]="uniqueItemsWith('subProgram')"
-              formControlName="subProgram" optionLabel="labelFr">
+              formControlName="subProgram" optionLabel="subProgram">
               <ng-template let-option pTemplate="selectedItem">
                 <div>
                   <div>{{ option.subProgram }}</div>
@@ -87,7 +87,7 @@
           <div class="p-field">
             <label class="required">{{ "labels.action" | translate }}</label>
             <p-dropdown [autoDisplayFirst]="false" [options]="uniqueItemsWith('actions')" formControlName="action"
-              optionLabel="labelFr">
+              optionLabel="action">
               <ng-template let-option pTemplate="selectedItem">
                 <div>
                   <div>{{ option.action }}</div>
@@ -106,7 +106,7 @@
           <div class="p-field">
             <label class="required">{{ "labels.activity" | translate }}</label>
             <p-dropdown [autoDisplayFirst]="false" [options]="uniqueItemsWith('activity')" formControlName="activity"
-              optionLabel="labelFr">
+              optionLabel="activity">
               <ng-template let-option pTemplate="selectedItem">
                 <div>
                   <div>{{ option.activity }}</div>
@@ -125,7 +125,7 @@
           <div class="p-field">
             <label class="required">{{ "labels.task" | translate }}</label>
             <p-dropdown [autoDisplayFirst]="false" [options]="uniqueItemsWith('task')" formControlName="task"
-              optionLabel="labelFr">
+              optionLabel="task">
               <ng-template let-option pTemplate="selectedItem">
                 <div>
                   <div>{{ option.task }}</div>

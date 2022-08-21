@@ -39,3 +39,4 @@ export * from '@actions/consultations.actions';
 export * from '@actions/bons-engagements.actions';
 export * from '@actions/engagements.actions';
 export * from '@actions/model-virement.actions';
+export * from '@actions/virement.actions';

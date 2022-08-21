@@ -1,36 +1,50 @@
-import { Virement } from '@models/virement';
+import { VirementModele } from '@models/virement.model';
 import { createAction, props } from '@ngrx/store';
 
 export const GetVirement = createAction('[Virement] Filter');
-export const VirementsSuccess = createAction(
+export const GetVirementsSuccess = createAction(
     '[Virements] Filter success',
-    props<{ payload: Virement[] }>()
+    props<{ payload: VirementModele[] }>()
 );
-export const VirementsFailure = createAction(
+export const GetVirementsFailure = createAction(
     '[Virements] Filter failure',
     props<{ error?: any }>() // TODO defile errors global model here
 );
 
 export const UpdateVirement = createAction(
     '[Virements] Update',
-    props<{ id: number }>()
+    props<{ payload: VirementModele }>()
 );
 export const UpdateVirementSuccess = createAction(
-    '[Virements] Update success'
+    '[Virements] Update success',
+    props<{ payload: VirementModele }>()
 );
 export const UpdateVirementFailure = createAction(
     '[Virements] Update failure',
     props<{ error?: any }>() // TODO defile errors global model here
 );
 
-export const DeleteModelVirement = createAction(
+export const DeleteVirement = createAction(
     '[ModelVirements] Delete',
     props<{ id: number }>()
 );
-export const DeleteModelVirementSuccess = createAction(
+export const DeleteVirementSuccess = createAction(
     '[ModelVirements] Delete success'
 );
-export const DeleteModelVirementFailure = createAction(
+export const DeleteVirementFailure = createAction(
     '[ModelVirements] Delete failure',
     props<{ error?: any }>() // TODO defile errors global model here
+);
+
+export const CreateVirement = createAction(
+    '[modele virement] Create Modele Virement',
+    props<{ payload: VirementModele }>()
+);
+export const CreateVirementSuccess = createAction(
+    '[modele virement] Create Modele Virement successfully',
+    props<{ payload: VirementModele }>()
+);
+export const CreateVirementFailure = createAction(
+    '[modele virement] Create Modele Virement failure',
+    props<{ error?: any }>()
 );

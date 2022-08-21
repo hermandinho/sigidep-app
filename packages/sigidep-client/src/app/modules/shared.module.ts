@@ -49,6 +49,9 @@ import { CreateBonEngagementMissionFormComponent } from '@components/create-bon-
 import { EngagementMissionFormComponent } from '@components/engagement-mission-form/engagement-mission-form.component';
 import { FactureComponent } from '@components/facture/facture.component';
 import { ModelVirementFormComponent } from '@components/model-virement-form/model-virement-form.component';
+import { VirementFormComponent } from '@components/virement-form/virement-form.component';
+import { DetailsVirementFormComponent } from '@components/details-virement-form/details-virement-form.component';
+import { VirementBodyFormComponent } from '@components/virement-body-form/virement-body-form.component';
 
 const declarations = [
   BaseComponent,
@@ -66,6 +69,9 @@ const declarations = [
   CreateSituationTraitementComponent,
   FactureComponent,
   ModelVirementFormComponent,
+  VirementFormComponent,
+  DetailsVirementFormComponent,
+  VirementBodyFormComponent
 ];
 
 const shared = [
