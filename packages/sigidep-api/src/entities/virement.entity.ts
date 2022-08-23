@@ -7,6 +7,13 @@ export enum VirementEtatEnum {
     UPDATED = 'Modifier',
     RESERVED = 'Reserver',
     CANCELLED = 'Annuler',
+    VALIDATE = 'Validé',
+}
+export enum TypeVirementEnum {
+    BFToBF = '1-BF à BF', // Used when creating an Exercise automatically
+    BIPToBIP = '2-BIP à BIP',
+    BIPToBF = '3-BF à BIP',
+    BFToBIP = '4-BIP à BF',
 }
 
 @Entity({
@@ -26,13 +33,13 @@ export class VirementEntity extends BaseEntity {
     public dateSignatureVirement: Date;
     @Column({ name: 'signataire_virement', nullable: false, type: String })
     public signataireVirement: string;
-    @Column({ name: 'type_virement', nullable: false, type: String })
-    public typeVirement: string;
+    @Column({ name: 'type_virement', nullable: false, type: 'enum', enum: TypeVirementEnum })
+    public typeVirement: TypeVirementEnum;
     @Column({ name: 'sp_source_virement', nullable: false, type: String })
     public spSourceVirement: string;
-    @Column({ name: 'sp_cible_virement', nullable: false, type: 'enum', enum: VirementEtatEnum })
+    @Column({ name: 'sp_cible_virement', nullable: false, type: String })
     public spCibleVirement: string;
-    @Column({ name: 'etat_virement', nullable: false, type: 'enum', enum: VirementEtatEnum })
+    @Column({ name: 'etat_virement', nullable: false, type: 'enum', enum: VirementEtatEnum, default: VirementEtatEnum.SAVED })
     public etatVirement: VirementEtatEnum;
 
     // RELATIONS

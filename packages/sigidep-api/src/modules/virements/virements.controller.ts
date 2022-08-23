@@ -1,11 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { VirementsService } from './virements.service';
 import { CreateVirementDto } from './dto/create-virement.dto';
 import { UpdateVirementDto } from './dto/update-virement.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { PermissionsGuard } from '@guards/permissions.guard';
 
 @Controller('virements')
+// @ApiTags('Virements')
+// @UseGuards(AuthGuard())
+// @ApiBearerAuth()
 export class VirementsController {
-  constructor(private readonly virementsService: VirementsService) {}
+  constructor(private readonly virementsService: VirementsService) { }
 
   @Post()
   create(@Body() createVirementDto: CreateVirementDto) {
@@ -30,5 +36,17 @@ export class VirementsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.virementsService.remove(+id);
+  }
+
+
+
+  @Get('exercice/:id')
+  public async subProgramByExercise(@Param('id') id: number) {
+    return this.virementsService.getSubProgramByExercise(id);
+  }
+
+  @Get('encour/:id')
+  public async getEncourWithSubProgramActivity(@Param('id') id: number) {
+    return this.virementsService.getEncours(id);
   }
 }
