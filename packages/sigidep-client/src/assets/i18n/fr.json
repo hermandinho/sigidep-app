@@ -47,7 +47,6 @@
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
-    "bonsengagements": "Engagements CP",
     "transmissionsReceptions": "Transmissions Receptions",
     "bonsengagements": "Engagements CP",
     "virements": "Virement",
@@ -86,7 +85,6 @@
     "print": "Imprimer",
     "close": "Fermer",
     "recherche": "Rechercher",
-    "addArticle": "Ajouter un article",
     "addArticle": "Ajouter un article"
   },
   "install": {
@@ -659,10 +657,6 @@
     "taxes": "Taxes",
     "procedures": "Procédures",
     "engagements": "Engagements",
-    "Bonsprimes": "Engagement Bon Decision",
-    "bonsengagementsmissions": "Bons Engagements Missions",
-    "bonsengamentscommandes": "Bons Engagements Commandes",
-    "bonsPrimes": "Bons Engagements Primes",
     "modelVirement": "Modèle virement",
     "virement": "virement",
     "Bonsprimes": "Engagement Bon Decision",
@@ -694,14 +688,13 @@
       "procdeures": "Procédures",
       "taxes": "Taxes",
       "engagements": "Engagements",
-      "Bons": "Bons primes",
       "modelVirement": "Modèle virement",
       "credit": "Tableau à créditer",
       "debit": "Tableau à débiter",
       "imputationsFiltres": "liste des imputations",
       "Bons": "Bons primes",
       "dossiers": "Dossiers du Bordereau",
-      "transmission": "Listing des Bordere
+      "transmission": "Listing des Bordere"
     },
     "headers": {
       "exerciseCode": "Code",

@@ -34,22 +34,22 @@ export class ModeleVirementComponent extends BaseComponent implements OnInit {
     this.tableColumns = [
       {
         field: 'nomModel',
-        title: 'tables.headers.nomModel',
+        title: 'labels.nomModel',
         sortable: true,
       },
       {
         field: 'enteteModel',
-        title: 'tables.headers.enteteModel',
+        title: 'labels.enteteModel',
         sortable: true,
       },
       {
         field: 'chapeauModel',
-        title: 'tables.headers.chapeauModel',
+        title: 'labels.chapeauModel',
         sortable: true,
       },
       {
         field: 'contenuModel',
-        title: 'tables.headers.contenuModel',
+        title: 'labels.contenuModel',
         sortable: true,
       },
     ];

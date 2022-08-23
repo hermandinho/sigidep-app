@@ -10,7 +10,6 @@ export const TableColumns = [
     sortable: true,
   },
   {
-<<<<<<< HEAD
     field: 'objet',
     title: 'tables.headers.objetBon',
     sortable: true,
@@ -28,11 +27,6 @@ export const TableColumns = [
   {
     field: 'montantCPChiffres',
     title: 'tables.headers.montantCPChiffresBon',
-    sortable: true,
-  },
-  {
-    field: 'etat',
-    title: 'tables.headers.etat',
     sortable: true,
   },
   {
