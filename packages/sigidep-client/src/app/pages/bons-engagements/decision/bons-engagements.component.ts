@@ -267,6 +267,7 @@ export class BonsEngagementsComponent
         if (this.data[0]?.numActeJuridique?.codeProcedure === '1122') {
           this.primes = [...data];
           this.primesData = [...data];
+          console.log(this.primesData )
         }
         if (this.data[0]?.numActeJuridique.codeProcedure === '1123') {
           this.releves = [...data];
@@ -279,6 +280,7 @@ export class BonsEngagementsComponent
         if (this.data[0]?.numActeJuridique.codeProcedure === '1125') {
           this.structures = [...data];
           this.structuresData = [...data];
+          console.log(this.structuresData )
         }
         if (this.data[0]?.numActeJuridique.codeProcedure === '1126') {
           this.deblocages = [...data];

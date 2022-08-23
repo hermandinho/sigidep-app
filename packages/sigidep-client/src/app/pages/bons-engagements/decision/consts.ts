@@ -5,13 +5,19 @@ export const TableColumns = [
     sortable: true,
   },
   {
-    field: 'matriculeGestionnaire',
-    title: 'tables.headers.beneficiaire',
+    field: 'numActeJuridique',
+    title: 'tables.headers.numeroJuridique',
     sortable: true,
   },
   {
+<<<<<<< HEAD
     field: 'objet',
     title: 'tables.headers.objetBon',
+    sortable: true,
+  },
+  {
+    field: 'matriculeGestionnaire',
+    title: 'tables.headers.beneficiaire',
     sortable: true,
   },
   {
@@ -20,8 +26,13 @@ export const TableColumns = [
     sortable: true,
   },
   {
-    field: 'imputation',
-    title: 'tables.headers.imputation',
+    field: 'montantCPChiffres',
+    title: 'tables.headers.montantCPChiffresBon',
+    sortable: true,
+  },
+  {
+    field: 'etat',
+    title: 'tables.headers.etat',
     sortable: true,
   },
   {
@@ -29,14 +40,6 @@ export const TableColumns = [
     title: 'tables.headers.dateEngagementBon',
     sortable: true,
   },
-  {
-    field: 'montantCPChiffres',
-    title: 'tables.headers.montantCPChiffresBon',
-    sortable: true,
-  },
-  {
-    field: 'numActeJuridique',
-    title: 'tables.headers.numeroJuridique',
-    sortable: true,
-  },
+
+
 ];

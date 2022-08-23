@@ -38,6 +38,7 @@ import { BonEngagementMissionsComponent } from '@pages/bons-engagements-missions
 import { VirementsComponent } from '@pages/virements/virements.component';
 import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.component';
 import { DetailsVirementComponent } from '@pages/details-virement/details-virement.component';
+import { TransmissionsReceptionsComponent } from '@pages/transmissions-receptions/transmissions-receptions.component';
 
 const routes: Routes = [
   {
@@ -298,6 +299,18 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'transmissionsReceptions',
+        canActivate: [AuthGuard],
+        component: TransmissionsReceptionsComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionsReceptions],
+        },
+        loadChildren: () =>
+          import('../pages/transmissions-receptions/transmissions-receptions.module').then(
+            (m) => m.TransmissionsReceptionsModule
+          ),
+      },
+      {
         path: 'regions',
         canActivate: [AuthGuard],
         data: {
@@ -366,6 +379,26 @@ const routes: Routes = [
         data: {
           permissions: [...MenuPermissions.bonsEngagements],
         },
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-commandes/bons-engagements-commandes.module'
+          ).then((m) => m.BonsEngagementsCommandesModule),
+      },
+      {
+        path: 'bons-missions',
+        canActivate: [AuthGuard],
+        component: BonEngagementMissionsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-missions/bons-engagements-missions.module'
+          ).then((m) => m.BonsEngagementsMissionsModule),
+      },
+      {
+        path: 'modele-virement',
+        canActivate: [AuthGuard],
+        component: ModeleVirementComponent,
+        data: {},
         loadChildren: () =>
           import(
             '../pages/bons-engagements-commandes/bons-engagements-commandes.module'

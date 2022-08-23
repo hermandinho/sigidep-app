@@ -6,38 +6,20 @@
     <div class="form" [formGroup]="form">
       <div class="p-fluid p-grid">
         <div *ngIf="imputation1" class="p-field p-col-12 p-md-12">
-          <label class="required"
-            >{{ "labels.imputationBudgetaire" | translate }}:</label
-          >&nbsp;
-          <input
-            type="text"
-            class="form-control p-fluid"
-            pInputText
-            formControlName="imputation"
-            placeholder="Exemple : 55 01 02 330030 201100"
-            (ngModelChange)="modelChanged($event, 'imputation')"
-          /><br />
+          <label class="required">{{ "labels.imputationBudgetaire" | translate }}:</label>&nbsp;
+          <input type="text" class="form-control p-fluid" pInputText formControlName="imputation"
+            placeholder="Exemple : 55 03 01 04 02 330010 201100"
+            (ngModelChange)="modelChanged($event, 'imputation')" /><br />
         </div>
         <div *ngIf="bon" class="p-field p-col-12 p-md-12">
           <!-- <label class="required">{{ "labels.bonsEngagements" | translate }}:</label>&nbsp;
           <input type="text" class="form-control p-fluid" pInputText formControlName="bonEngagement"
             placeholder="Exemple : 0001024" (ngModelChange)="modelChanged($event,'bonEngagement')" /><br /> -->
           <ng-container>
-            <label class="required"
-              >{{ "labels.bonsEngagements" | translate }}:</label
-            >
-            <p-dropdown
-              [showClear]="true"
-              [filter]="true"
-              [filterBy]="'numero'"
-              [autoDisplayFirst]="false"
-              [options]="bonsEngagements"
-              [placeholder]="''"
-              optionLabel="numero"
-              optionValue="id"
-              formControlName="bonEngagement"
-              (onChange)="modelChanged($event, 'bonEngagement')"
-            >
+            <label class="required">{{ "labels.bonsEngagements" | translate }}:</label>
+            <p-dropdown [showClear]="true" [filter]="true" [filterBy]="'numero'" [autoDisplayFirst]="false"
+              [options]="bonsEngagements" [placeholder]="''" optionLabel="numero" optionValue="id"
+              formControlName="bonEngagement" (onChange)="modelChanged($event, 'bonEngagement')">
             </p-dropdown>
           </ng-container>
         </div>
@@ -47,31 +29,16 @@
             placeholder="Exemple :55CE00-00010" (ngModelChange)="modelChanged($event,'engagement')" /> -->
 
           <ng-container>
-            <label class="required"
-              >{{ "labels.certificatEngagement" | translate }}:</label
-            >
-            <p-dropdown
-              [showClear]="true"
-              [filter]="true"
-              [filterBy]="'numero'"
-              [autoDisplayFirst]="false"
-              [options]="data"
-              [placeholder]="''"
-              optionLabel="numero"
-              optionValue="id"
-              formControlName="engagement"
-              (onChange)="modelChanged($event, 'engagement')"
-            >
+            <label class="required">{{ "labels.certificatEngagement" | translate }}:</label>
+            <p-dropdown [showClear]="true" [filter]="true" [filterBy]="'numero'" [autoDisplayFirst]="false"
+              [options]="data" [placeholder]="''" optionLabel="numero" optionValue="id" formControlName="engagement"
+              (onChange)="modelChanged($event, 'engagement')">
             </p-dropdown>
           </ng-container>
         </div>
         <div class="p-field p-col-12 p-md-12">
-          <button
-            (click)="submit()"
-            [disabled]="!form?.valid || busy"
-            [label]="'buttons.' + 'recherche' | translate"
-            pButton
-          ></button>
+          <button (click)="submit()" [disabled]="!form?.valid || busy" [label]="'buttons.' + 'recherche' | translate"
+            pButton></button>
         </div>
       </div>
     </div>
@@ -79,19 +46,9 @@
 </p-card>
 
 <p-card *ngIf="imputation">
-  <p-table
-    #dt
-    [globalFilterFields]="globalColumns"
-    [paginator]="true"
-    [rowHover]="true"
-    [rows]="10"
-    [showCurrentPageReport]="true"
-    [sortMode]="'single'"
-    [value]="encours"
-    [currentPageReportTemplate]="'tables.stats.pager' | translate"
-    dataKey="id"
-    responsiveLayout="scroll"
-  >
+  <p-table #dt [globalFilterFields]="globalColumns" [paginator]="true" [rowHover]="true" [rows]="10"
+    [showCurrentPageReport]="true" [sortMode]="'single'" [value]="encours"
+    [currentPageReportTemplate]="'tables.stats.pager' | translate" dataKey="id" responsiveLayout="scroll">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
         <h5 class="p-m-0">
@@ -124,13 +81,8 @@
           </ng-template>
         </td>
         <td class="actions">
-          <button
-            (click)="detail(item)"
-            class="p-button-rounded p-button-warning"
-            icon="pi pi-eye"
-            pButton
-            pRipple
-          ></button>
+          <button (click)="detail(item)" class="p-button-rounded p-button-warning" icon="pi pi-eye" pButton
+            pRipple></button>
         </td>
       </tr>
     </ng-template>

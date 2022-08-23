@@ -38,6 +38,7 @@ import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber'
 import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements.subscriber';
 import { VirementsModule } from './modules/virements/virements.module';
 import { ModeleVirementsModule } from './modules/modele-virements/modele-virements.module';
+import { TransmissionReceptionModule } from '@modules/transmission-receptions/transmission-receptions.module';
 
 @Module({
   imports: [
@@ -58,12 +59,12 @@ import { ModeleVirementsModule } from './modules/modele-virements/modele-viremen
         // console.log(database, host, password, username);
         console.log(
           '******* Server running on Port : ' +
-            (config.get('API_PORT') ??
-              process.env.PORT ??
-              process.env.API_PORT) +
-            ' on ' +
-            env +
-            ' Environment ********',
+          (config.get('API_PORT') ??
+            process.env.PORT ??
+            process.env.API_PORT) +
+          ' on ' +
+          env +
+          ' Environment ********',
         );
         return {
           database,
@@ -89,12 +90,12 @@ import { ModeleVirementsModule } from './modules/modele-virements/modele-viremen
           ...(env !== 'production'
             ? {}
             : {
-                extra: {
-                  ssl: {
-                    rejectUnauthorized: false,
-                  },
+              extra: {
+                ssl: {
+                  rejectUnauthorized: false,
                 },
-              }),
+              },
+            }),
         } as TypeOrmModuleOptions;
       },
     }),
@@ -132,8 +133,9 @@ import { ModeleVirementsModule } from './modules/modele-virements/modele-viremen
     BonsEngagementsModule,
     VirementsModule,
     ModeleVirementsModule,
+    TransmissionReceptionModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

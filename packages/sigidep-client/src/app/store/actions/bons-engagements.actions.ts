@@ -86,3 +86,13 @@ export const CancelBonsEngagementsReservationFailure = createAction(
   '[Bons] Cancel failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );
+
+export const GetTransmissionsReceptionsBons = createAction('[Bons] Filter', props<{ exercices?: string[]; }>());
+export const GetTransmissionsReceptionsBonsSuccess = createAction(
+  '[Bons] Filter success',
+  props<{ payload: BonEngagementModel[] }>()
+);
+export const GetTransmissionsReceptionsBonsFailure = createAction(
+  '[Bons] Filter failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);

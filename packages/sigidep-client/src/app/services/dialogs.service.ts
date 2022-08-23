@@ -45,6 +45,7 @@ import {
   StepBonEngagement,
 } from '@models/bon-engagement.model';
 import { CategorieProcedure } from 'app/utils/types';
+import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
 
 @Injectable({
   providedIn: 'root',
@@ -101,13 +102,17 @@ export class DialogsService {
   private printBonEngagementPrimeComponent: any;
 
   private etatImputationComponent: any;
+  private printTransmissionReceptionComponent: any;
 
   private printBonEngagementMissionComponent: any;
 
   private createBonEngagementFormComponent: any;
+  private createTransmissionReceptionFormComponent: any;
   private reservationBonEngagementDecisionComponent: any;
   private etatCertificatEngagementComponent: any;
   private createBonEngagementMissionFormComponent: any;
+
+
 
   constructor(
     private readonly _dialogService: DialogService,
@@ -1080,6 +1085,36 @@ export class DialogsService {
     }
   }
 
+
+  public async launchTransmissionReceptionCreateDialog(
+    item?: TransmissionsReceptionModel,
+    action?: string
+  ): Promise<any> {
+    if (!this.createTransmissionReceptionFormComponent) {
+      const { CreateTransmissionReceptionFormComponent } = await import(
+        '@components/create-transmission-reception-form/create-transmission-reception-form.component'
+      );
+      this.createTransmissionReceptionFormComponent = CreateTransmissionReceptionFormComponent;
+    }
+    return this._dialogService.open(this.createTransmissionReceptionFormComponent, {
+      header: this._translateService.instant(
+        action
+          ? 'dialogs.headers.viewTransmissionReception'
+          : 'dialogs.headers.editTransmissionReception',
+        { numero: item?.numero }
+      ),
+      width: '60vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        action,
+      },
+    });
+
+  }
+
+
   public async launchPrintBonEngagementPrimeDialog(
     item: BonEngagementModel,
     type?: Step
@@ -1138,7 +1173,23 @@ export class DialogsService {
     );
   }
 
-
+  public async launchPrintTransmissionReceptionDialog(item?: any): Promise<any> {
+    if (!this.printTransmissionReceptionComponent) {
+      const { PrintBordereauxComponent } = await import(
+        '@components/print-bordereaux/print-bordereaux.component'
+      );
+      this.printTransmissionReceptionComponent = PrintBordereauxComponent;
+    }
+    return this._dialogService.open(this.printTransmissionReceptionComponent, {
+      header: this._translateService.instant('dialogs.headers.imputation'),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
 
   public async launchModelVirementCreateDialog(item?: ModeleVirementModel): Promise<any> {
     if (!this.modelVirementCreateComponent) {

@@ -54,6 +54,8 @@ import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commande
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
 import { DetailsVirementModule } from '@pages/details-virement/details-virement.module';
+import { TransmissionsReceptionsModule } from '@pages/transmissions-receptions/transmissions-receptions.module';
+
 
 registerLocaleData(localeFr);
 
@@ -129,7 +131,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     BonsEngagementsCommandesModule,
     VirementsModule,
     ModeleVirementModule,
-    DetailsVirementModule
+    DetailsVirementModule,
+    TransmissionsReceptionsModule
+
   ],
   providers: [
     AppInstallCheckGuard,

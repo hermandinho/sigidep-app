@@ -48,6 +48,8 @@
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
     "bonsengagements": "Engagements CP",
+    "transmissionsReceptions": "Transmissions Receptions",
+    "bonsengagements": "Engagements CP",
     "virements": "Virement",
     "modelVirement": "Modèle virement",
     "detailsVirement": "Details virement",
@@ -84,6 +86,7 @@
     "print": "Imprimer",
     "close": "Fermer",
     "recherche": "Rechercher",
+    "addArticle": "Ajouter un article",
     "addArticle": "Ajouter un article"
   },
   "install": {
@@ -351,6 +354,7 @@
     "effectuer": "Mission effectuée",
     "annulationdu": "Annulation du Bon",
     "annulelorsdelareservation": "Annulé lors de la réservation",
+    "annuleTransmissionControleConformite": "Annulé transmission controle conformité",
     "rejetlorsdelareservation": "Rejet lors de la réservation",
     "rejetlorsduControleConformite": "Rejet lors du Contrôle Conformité",
     "rejetlorsduControledeRegularite": "Rejet lors du Contrôle de Régularité",
@@ -613,6 +617,10 @@
       "deleteSuccess": "Engagement supprimé avec succès.",
       "createSuccess": "Engagement enregistré avec succès.",
       "cancelSuccess": "Réservation annulée avec succès"
+    },
+    "transmission": {
+      "createSuccess": "Transmis pour controle conformité avec succès.",
+      "cancelSuccess": "Transmission annulée avec succès"
     }
   },
   "menus": {
@@ -656,7 +664,12 @@
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
     "modelVirement": "Modèle virement",
-    "virement": "virement"
+    "virement": "virement",
+    "Bonsprimes": "Engagement Bon Decision",
+    "bonsengagementsmissions": "Bons Engagements Missions",
+    "bonsengamentscommandes": "Bons Engagements Commandes",
+    "bonsPrimes": "Bons Engagements Primes",
+    "transmissionsreceptions": "Transmissions Receptions"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -685,7 +698,10 @@
       "modelVirement": "Modèle virement",
       "credit": "Tableau à créditer",
       "debit": "Tableau à débiter",
-      "imputationsFiltres": "liste des imputations"
+      "imputationsFiltres": "liste des imputations",
+      "Bons": "Bons primes",
+      "dossiers": "Dossiers du Bordereau",
+      "transmission": "Listing des Bordere
     },
     "headers": {
       "exerciseCode": "Code",
@@ -843,11 +859,7 @@
       "prixTotalHT": "Rrix Total HT",
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
-      "referenceMercuriale": "RéférenceMercuriale",
-      "nomModel": "Nom modèle",
-      "enteteModel": "Entête modèle",
-      "chapeauModel": "chapeau modèle",
-      "contenuModel": "Contenu modèle"
+      "referenceMercuriale": "RéférenceMercuriale"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -915,7 +927,8 @@
       "reserverEngagementBon": "Réservation de l'engagement Bon No: {{numero}}",
       "printEngagement": "Engagement",
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
-      "etatBon": "Etat de l'engagement Bon: {{numero}}"
+      "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}",
+      "editTransmissionReception": "Edit Transmission Reception"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -1035,6 +1048,7 @@
     "chronogram": "Chronogramme",
     "physicalUnits": "Unités physiques",
     "codofication": "Codofication",
+    "mandatSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°",
     "BonSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°"
   },
   "measurementUnits": {

@@ -77,10 +77,10 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         category: this.category,
         etats: [EtatEngagementEnum.RESERVED]
       })
-      
+
       );
 
-    /*  
+    /*
     GetEngagementDecisions({
       //procedures: [procedure],
       etats: [EtatEngagementEnum.SAVE],
@@ -123,6 +123,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
     const act: Engagement | undefined = this.engagements.find(
       (item) => item.id === event.value
     );
+    console.log(act)
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
     this.procedure = act?.codeProcedure;
     if (act) {

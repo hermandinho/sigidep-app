@@ -46,6 +46,7 @@ export const MenuPermissions = {
   misedispositionstructure: [
     ...simpleCrudPermissions('misedispositionstructure'),
   ],
+  transmissionsReceptions: [...simpleCrudPermissions('transmissionsReceptions')],
   virements: [...simpleCrudPermissions('virements')],
 };
 
@@ -287,6 +288,34 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.bonsengagements'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.bonsEngagements],
+          },
+          items: [
+            {
+              routerLink: 'bons-commandes',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.commandepublique'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'bons-missions',
+              icon: 'pi pi-shield',
+              label: translate.instant('sidebar.missions'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'bons-decisions',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.decisions'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
+        },
+        {
+          icon: 'pi pi-money-bill',
           label: translate.instant('sidebar.virements'),
           routerLinkActiveOptions: { exact: true },
           state: {
@@ -314,33 +343,14 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           ],
         },
         {
-          icon: 'pi pi-money-bill',
-          label: translate.instant('sidebar.bonsengagements'),
+          routerLink: 'transmissionsReceptions',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.transmissionsReceptions'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [...MenuPermissions.bonsEngagements],
+            permissions: [...MenuPermissions.transmissionsReceptions],
           },
-          items: [
-            {
-              routerLink: 'bons-commandes',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.commandepublique'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: 'bons-missions',
-              icon: 'pi pi-shield',
-              label: translate.instant('sidebar.missions'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: 'bons-decisions',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.decisions'),
-              routerLinkActiveOptions: { exact: true },
-            },
-          ],
-        },
+        }
       ],
     },
     {

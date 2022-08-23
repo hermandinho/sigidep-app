@@ -48,7 +48,8 @@ import { Engagement } from 'app/utils/types';
 })
 export class ConsultationsComponent extends BaseComponent implements OnInit {
   public busy = false;
-  data: any[] = [];
+  data: any;
+  bons: any;
   selectedItems: any[] = [];
   tableColumns: any[] = [];
   encours: any[] = [];
@@ -74,13 +75,13 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       bonEngagement: [undefined],
       engagement: [undefined],
     });
+    this._initListeners();
   }
 
   get form1() {
     return this.form.controls;
   }
   ngOnInit(): void {
-    this._initListeners();
     this._store.dispatch(GetEngagementJuridiques({}));
     this._store.dispatch(GetBonsEngagements({}));
   }
@@ -152,7 +153,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       this.busy = false;
     }
 
-    if (this.form1.mandat.value) {
+    if (this.form1.bonEngagement.value) {
       this.busy = true;
       this._dialogService.launchBonEngagementCreateDialog(
         'decision',
@@ -164,6 +165,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
 
     if (this.form1.engagement.value) {
       this.busy = true;
+      console.log(this.form1.engagement.value)
       this._dialogService.launchBonEngagementCreateDialog(
         'decision',
         this.engagements[0],
@@ -178,7 +180,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataEngSelector))
       .subscribe((data) => {
         this.data = [...data];
-        console.log(this.data);
+        console.log("Eng ", this.data);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingEngSelector),
@@ -189,7 +191,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataMadSelector))
       .subscribe((data) => {
         this.bonsEngagements = [...data];
-        if (this.bonsEngagements) this.imputation = false;
+        // if (this.bonsEngagements) this.imputation = false;
         console.log('bons enagements ', this.bonsEngagements);
       });
     this.loading$ = this._store.pipe(
@@ -277,7 +279,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       if (name === 'imputation') {
         this.bon = false;
         this.engagement = false;
-      } else if (name === 'mandat' && value.value !== null) {
+      } else if (name === 'bonEngagement' && value.value !== null) {
         this.imputation1 = false;
         this.engagement = false;
         const act: Engagement | undefined = this.bonsEngagements.find(

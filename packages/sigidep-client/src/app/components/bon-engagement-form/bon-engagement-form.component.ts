@@ -29,8 +29,7 @@ export class Type {
 })
 export class BonEngagementFormComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
   @Input() procedure!: string;
@@ -65,8 +64,10 @@ export class BonEngagementFormComponent
   ngOnInit(): void {
     if (!this.procedure) {
       this.procedure = this._appService.currentProcedure;
+      console.log(this.procedure);
     }
     this.bonEngagementForm = this.startingForm;
+    console.log(this.bonEngagementForm);
     this.subformInitialized.emit(this.bonEngagementForm);
     if (this.readOnly) this.bonEngagementForm.disable();
     this._store.dispatch(GetCarnetMandats());

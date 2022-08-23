@@ -36,4 +36,11 @@ export class EngagementFilter {
   @Type(() => String)
   @Transform((value: string) => (value !== '' ? value.split(',') : undefined))
   ids?: number[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @Type(() => String)
+  @Transform((value: string) => (value !== '' ? value.split(',') : undefined))
+  exercices?: string[];
 }

@@ -43,3 +43,5 @@ export * from './paiement.entity';
 export * from './facture.entity';
 export * from './facture-article.entity';
 export * from './bon-engagement.entity';
+export * from './transmission-reception.entity';
+export * from './detail-transmission-reception.entity';

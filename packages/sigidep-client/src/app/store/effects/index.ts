@@ -36,6 +36,8 @@ import { ProceduresEffects } from '@effects/exec-procedure.effects';
 import { ConsultationsEffects } from './consultations.effects';
 import { BonsEngagementsEffects } from './bon-engagement.effects';
 import { EngagementsEffects } from './engagements.effects';
+import { TransmissionsReceptionsEffects } from './transmissions-receptions.effects';
+import { TransmissionsReceptionsDetailsEffects } from './detail-transmissions-receptions.effects';
 import { ModeleVirementEffects } from './modele-virement.effects';
 import { VirementEffects } from './virement.effects';
 
@@ -79,6 +81,8 @@ export const Effects = [
   ConsultationsEffects,
   BonsEngagementsEffects,
   EngagementsEffects,
+  TransmissionsReceptionsEffects,
+  TransmissionsReceptionsDetailsEffects,
   ModeleVirementEffects,
   VirementEffects,
 ];
