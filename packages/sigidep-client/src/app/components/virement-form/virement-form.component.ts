@@ -2,8 +2,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { EncoursModel } from '@models/encours.model';
-import { ExerciseModel } from '@models/exercise.model';
-import { SubProgramModel } from '@models/sub-program.model';
 import { StepVirement } from '@models/virement.model';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,6 +30,9 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   public isCheck = false;
   public situationForm: any;
   public encourData: EncoursModel[] = [];
+  public typeFinancement!: string;
+  public subProgrameSource: any = '####';
+  public subProgrameCible: any = '####';
   //bookProcess:any;
 
   constructor(
@@ -62,7 +63,7 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         code_input: [undefined, [Validators.required]]
       })
     });
-    this.getEncour(1);
+    this.typeFinancement = '';
   }
 
 
@@ -81,7 +82,26 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
       .get<EncoursModel[]>(`/virements/encour/${code}`) // TODO: reutiliser la ligne suivante
       .toPromise();
     this.encourData = encourResult;
+  }
+
+  async setTypeVirement(type: string) {
+    this.typeFinancement = type;
+  }
+
+  async filterEncourByPrograms(code: number, isSource: boolean = true) {
+    console.log(code);
+
+    if (isSource) {
+      this.subProgrameSource = code + '';
+    } else {
+      this.subProgrameCible = code + '';
+    }
+    this.encourData = this.encourData.filter((e) => {
+      e.subProgram.startsWith(this.subProgrameCible) || e.subProgram.startsWith(this.subProgrameSource)
+    })
+
     console.log(this.encourData);
+
   }
 
   subformInitialized(name: string, group: FormGroup) {

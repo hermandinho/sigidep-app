@@ -15,7 +15,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { UserService } from '@services/user.service';
@@ -100,6 +100,7 @@ const shared = [
   EditorModule,
   FieldsetModule,
   NgxPrintModule,
+  FormsModule
 ];
 @NgModule({
   declarations: [...declarations],

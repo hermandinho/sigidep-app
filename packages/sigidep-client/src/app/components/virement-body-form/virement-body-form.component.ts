@@ -4,13 +4,8 @@ import { BaseComponent } from '@components/base.component';
 import { ExerciseModel } from '@models/exercise.model';
 import { ModeleVirementModel } from '@models/modele-virement.model';
 import { SubProgramModel } from '@models/sub-program.model';
-import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { typeVirement } from '@pages/virements/tools/type-virement';
-import { AppState } from '@reducers/index';
+import { typeFinancementEnum, typeVirement, typeVirementEnum } from '@pages/virements/tools/type-virement';
 import { ApisService } from '@services/apis.service';
-import { AppService } from '@services/app.service';
-import { DialogsService } from '@services/dialogs.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
@@ -29,11 +24,20 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
 
   @Output() getEncour: EventEmitter<number> =
     new EventEmitter<number>();
-  exercicesInprogressList: ExerciseModel[] = [];
-  modelVirement: ModeleVirementModel[] = [];
+
+  @Output() filterEncour: EventEmitter<number> =
+    new EventEmitter<number>();
+
+  @Output() typeVirement: EventEmitter<string> =
+    new EventEmitter<string>();
+  public exercicesInprogressList: ExerciseModel[] = [];
+  public modelVirement: ModeleVirementModel[] = [];
   public exercice = null;
-  subProgramsList: SubProgramModel[] = [];
-  public typeVirement = typeVirement;
+  public subProgramsList: SubProgramModel[] = [];
+  public subProgramsListSource: SubProgramModel[] = [];
+  public subProgramsListCible: SubProgramModel[] = [];
+  public typeVirements = typeVirement;
+
 
 
   public virementForm!: FormGroup;
@@ -73,9 +77,49 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
       .get<SubProgramModel[]>(`/virements/exercice/${event.value.id}`)
       .toPromise().then((data) => {
         this.subProgramsList = data;
+        console.log(data);
+
+        this.subProgramsListSource = [...this.subProgramsList];
+        this.subProgramsListCible = [...this.subProgramsList];
       });
     this.getEncour.emit(event.value.code);
   }
 
+  filterEncourByProgram(event: any) {
+    this.filterEncour.emit(event.value.code);
+  }
+
+  setTypeVirement(event: any) {
+    let type = event.value.code;
+    if (type == typeVirementEnum.BF2BF || type == typeVirementEnum.BIP2BIP)
+      type = typeFinancementEnum.BF01;
+    this.typeVirement.emit(type);
+  }
+
+  filterProgrammeByTypeVirement(id: number) {
+    switch (id) {
+      case 1:
+
+        break;
+      case 2:
+
+        break;
+      case 3:
+
+        break;
+      case 4:
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  filterPrograme(type: string) {
+    return this.subProgramsList.filter((s) => {
+      return true;
+    })
+  }
 
 }

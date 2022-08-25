@@ -1220,7 +1220,7 @@ export class DialogsService {
     }
 
     return this._dialogService.open(this.virementCreateComponent, {
-      header: this._translateService.instant('dialogs.headers.editAgent'),
+      header: this._translateService.instant('labels.virement'),
       width: '60vw',
       height: 'auto',
       modal: true,

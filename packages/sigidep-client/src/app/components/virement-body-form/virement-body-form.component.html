@@ -26,8 +26,8 @@
             <div class="p-field p-col-6 p-md-6">
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramSource" | translate }}</label>
-                    <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsList"
-                        formControlName="sub_program_cource">
+                    <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListSource"
+                        formControlName="sub_program_cource" (onChange)="filterEncourByProgram($event)">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -48,8 +48,8 @@
             <div class="p-field p-col-6 p-md-6">
                 <div class="p-field">
                     <label class="required">{{ "labels.typeVirement" | translate }}</label>
-                    <p-dropdown [autoDisplayFirst]="false" [options]="typeVirement" formControlName="typeVirement"
-                        optionLabel="code">
+                    <p-dropdown [autoDisplayFirst]="false" [options]="typeVirements" formControlName="typeVirement"
+                        optionLabel="code" (onChange)="setTypeVirement($event)">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -70,8 +70,8 @@
             <div class="p-field p-col-6 p-md-6">
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramDestinataire" | translate }}</label>
-                    <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsList"
-                        formControlName="sub_program_destinataire">
+                    <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListCible"
+                        formControlName="sub_program_destinataire" (onChange)="filterEncourByProgram($event)">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>

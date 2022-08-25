@@ -1,8 +1,10 @@
 <ng-container [ngSwitch]="currentStep$ | async">
     <app-virement-body-form *ngSwitchCase="'virement'" [startingForm]="virementBodyForm"
-        (changeStep)="changeStep('virement', 'forward')" (getEncour)="getEncour($event)">
+        (changeStep)="changeStep('virement', 'forward')" (getEncour)="getEncour($event)"
+        (typeVirement)="setTypeVirement($event)" (filterEncour)="filterEncourByPrograms($event)">
     </app-virement-body-form>
     <app-details-virement-form *ngSwitchCase="'details-virement'" [startingForm]="detailsVirementForm"
-        (changeStep)="changeStep('details-virement', $event)" [encourList]="encourData">
+        (changeStep)="changeStep('details-virement', $event)" [encourList]="encourData"
+        [typeFinancement]="typeFinancement">
     </app-details-virement-form>
 </ng-container>
