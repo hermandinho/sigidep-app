@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
@@ -95,11 +95,51 @@ export class TransmissionReceptionService {
         const bont = await this.repositorydetail.save(detailtrans);
       }
     }
-  
-    
-
-
     return bon;
+  }
+
+  public async update(
+    payload: any,
+    user: UserEntity,
+  ): Promise<TransmissionReceptionEntity> {
+
+    const check = await this.repository.findOne({
+      id: payload?.data[0]?.transmission_reception?.id,
+    });
+
+    if (!check) {
+      throw new NotFoundException();
+    }
+    var etated = '';
+    if(payload?.action==='reception'){
+       etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE
+       for(let i=0; i<payload?.data?.length; i++){
+        const property = payload?.data[i]?.bon_engagement;
+        this.repositorybon.save({
+          ...(property as any), // existing fields
+          etat: etated,
+          updateBy:user
+        });
+      }
+    }else if(payload?.action==='rejet'){
+       etated = EtatBonEnum.REJETCONTROLEREGULARITE
+       const property = payload?.data[0]?.bon_engagement;
+       this.repositorybon.save({
+         ...(property as any), // existing fields
+         etat: etated,
+         updateBy:user
+       });
+    }else if(payload?.action==='controler'){
+       etated = EtatBonEnum.CONTROLECONFORMITE
+       const property = payload?.data?.bon_engagement;
+       this.repositorybon.save({
+         ...(property as any), // existing fields
+         etat: etated,
+         updateBy:user
+       });
+    }
+   
+    return check;
   }
 
   public async getDossierBor(filter?:any):Promise<DetailTransmissionReceptionEntity[]>{

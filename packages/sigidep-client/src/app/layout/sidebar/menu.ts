@@ -47,6 +47,8 @@ export const MenuPermissions = {
     ...simpleCrudPermissions('misedispositionstructure'),
   ],
   transmissionsReceptions: [...simpleCrudPermissions('transmissionsReceptions')],
+  visaetmiseenroute: [...simpleCrudPermissions('visaetmiseenroute')],
+  controledeconformite: [...simpleCrudPermissions('controledeconformite')],
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -322,6 +324,44 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             permissions: [...MenuPermissions.transmissionsReceptions],
           },
         }
+        ,
+        {
+          routerLink: 'visaetmiseenroute',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.visaetmiseenroute'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.visaetmiseenroute],
+          },
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.controledeconformite'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.controledeconformite],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionbordereaux'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'operation-de-controle',
+              icon: 'pi pi-shield',
+              label: translate.instant('sidebar.operationdecontrole'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'edition-des-tcc',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.editiondestcc'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
+        },
       ],
     },
     {

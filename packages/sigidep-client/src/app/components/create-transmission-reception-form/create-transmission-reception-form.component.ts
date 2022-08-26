@@ -9,7 +9,6 @@ import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
@@ -33,8 +32,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
   public currentProcedure:string='';
 
   constructor(
-    public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig,
     private _fb: FormBuilder,
     private _appService: AppService,
     private _apisService: ApisService,
@@ -65,7 +62,7 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
       }),
     });
 
-    if (this.config.data?.item) {
+  /*   if (this.config.data?.item) {
       const {
         id,
         numero,
@@ -95,7 +92,7 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
         },
         printForm: {},
       });
-    }
+    } */
   }
 
 
@@ -170,7 +167,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
       method.subscribe(
         (res) => {
           this.busy = false;
-          //this.ref.close(res);
           this._store.dispatch(
             GetTransmissionsReceptions({})
           );
@@ -201,7 +197,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
       );
     } else {
       console.log("isBook")
-      this.ref.close();
       this._appService.saveConfirmation({
         message: 'dialogs.messages.saveBon',
         accept: () => {

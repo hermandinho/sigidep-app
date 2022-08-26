@@ -1,0 +1,20 @@
+<!-- <ng-container [ngSwitch]="currentStep$ | async">
+  <app-constitution-bordereau-form
+    *ngSwitchCase="'constitution'"
+    [readOnly]="isBook"
+    [startingForm]="constitutionFormGroup"
+    (subformInitialized)="subformInitialized('constitutionForm', $event)"
+    (changeStep)="changeStep('constitution', $event)"
+    [isCheck]="isCheck"
+  ></app-constitution-bordereau-form>
+  <app-coordonnees-bordereau-form
+    *ngSwitchCase="'bordereau'"
+    [readOnly]="isBook"
+    [startingForm]="bordereauFormGroup"
+    [procedure]="currentProcedure"
+    (subformInitialized)="subformInitialized('bordereauForm', $event)"
+    (changeStep)="changeStep('bordereau', $event)"
+    (submitForm)="submitForm()"
+  ></app-coordonnees-bordereau-form>
+</ng-container> -->
+<app-create-transmission-reception-form></app-create-transmission-reception-form>

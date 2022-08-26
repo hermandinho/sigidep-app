@@ -1,0 +1,92 @@
+<div id="print-section">
+  <p-card>
+    <p-table
+          #dt
+          [globalFilterFields]="globalColumnsBordereaux"
+          [loading]="(loading1$ | async) || false"
+          [paginator]="true"
+          [rowHover]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [sortMode]="'single'"
+          [value]="dossiersBordereaux"
+          [currentPageReportTemplate]="'tables.stats.pager' | translate"
+          dataKey="id"
+          responsiveLayout="scroll"
+        >
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <h5 class="p-m-0">
+                {{ "tables.titles.dossiers" | translate }}
+              </h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                  "
+                  [placeholder]="'labels.search' | translate"
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <ng-container *ngFor="let column of tableColumnsBordereau">
+                <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                  {{ column.title | translate }}
+                  <p-sortIcon field="numeroEng"></p-sortIcon>
+                </th>
+              </ng-container>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td *ngFor="let column of tableColumnsBordereau let i=index" class="nowrap">
+                <span *ngIf="column.field === 'numeroBon'">
+                  {{ item["bon_engagement"]?.numero }}
+                </span>
+                <span *ngIf="column.field === 'numeroEng'">
+                  {{ item["bon_engagement"]?.numActeJuridique?.numero }}
+                </span>
+                <span *ngIf="column.field === 'matriculeGestionnaire'">
+                  {{ item["bon_engagement"]?.nomGestionnaire }}
+                </span>
+                <span *ngIf="column.field === 'imputation'">
+                  {{ item["bon_engagement"]?.numActeJuridique?.imputation }}
+                </span>
+                <span *ngIf="column.field === 'montantAE'">
+                  {{ item['bon_engagement']?.numActeJuridique?.montantAE }}
+                </span>
+                <span *ngIf="column.field === 'montantCP'">
+                  {{ item['bon_engagement']?.montantCPChiffres }}
+                </span>
+                <span *ngIf="column.field === 'dateEng'">
+                  {{ item['bon_engagement']?.dateEngagement }}
+                </span>
+                <span *ngIf="column.field === 'etat'">
+                  {{ item['bon_engagement']?.etat | translate }}
+                </span>
+                <span *ngIf="column.field === 'objet'">
+                  {{ item['bon_engagement']?.objet }}
+                </span>
+              </td>
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+            </div>
+          </ng-template>
+        </p-table>
+  </p-card>
+</div>
+
+<div>
+  <button pButton class="p-mr-3 p-button-danger">
+    {{ "buttons.controler" | translate }}
+  </button>
+</div>

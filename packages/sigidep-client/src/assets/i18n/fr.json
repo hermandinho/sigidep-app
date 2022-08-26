@@ -48,7 +48,11 @@
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
     "bonsengagements": "Engagements CP",
-    "transmissionsReceptions":"Transmissions Receptions"
+    "transmissionsReceptions":"Transmissions Receptions",
+    "controledeconformite":"Controle de conformité",
+    "receptionbordereaux":"Réception bordereaux",
+    "operationdecontrole":"Operation de contrôle",
+    "editiondestcc":"Edition des TCC"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -81,7 +85,11 @@
     "print": "Imprimer",
     "close": "Fermer",
     "recherche": "Rechercher",
-    "addArticle": "Ajouter un article"
+    "addArticle": "Ajouter un article",
+    "reception":"reception",
+    "controler":"Controler",
+    "rejeter":"Rejeter"
+
   },
   "install": {
     "title": "Installation"
@@ -940,7 +948,8 @@
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
       "saveBon": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
-      "cancelTransmission":"Voulez-vous annuler cette Transmission? Cette opération est irréversible !"
+      "cancelTransmission":"Voulez-vous annuler cette Transmission? Cette opération est irréversible !",
+      "reception":"Bordereau réceptionné avec succès au  Contrôle Financier "
     }
   },
   "exerciseStatuses": {

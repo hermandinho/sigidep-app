@@ -273,6 +273,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
 
   modelChanged(event: any, name: string) {
     const value = event;
+    console.log(value)
     if (value) {
       if (name === 'imputation') {
         this.bon = false;
@@ -280,7 +281,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       } else if (name === 'bonEngagement' && value.value !== null) {
         this.imputation1 = false;
         this.engagement = false;
-        const act: Engagement | undefined = this.bonsEngagements.find(
+        const act:any = this.bonsEngagements.find(
           (item: any) => item.id === event.value
         );
         console.log(act);

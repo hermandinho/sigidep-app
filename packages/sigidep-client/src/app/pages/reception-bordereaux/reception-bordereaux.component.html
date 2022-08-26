@@ -1,16 +1,6 @@
 <div id="print-section">
   <p-card >
     <p-toolbar styleClass="p-mb-2">
-      <ng-template pTemplate="right">
-        <button
-          (click)="openForm()"
-          [label]="'buttons.create' | translate"
-          class="p-button-success p-mr-2"
-          icon="pi pi-plus"
-          pButton
-          pRipple
-        ></button>
-      </ng-template>
       <ng-template pTemplate="left">
         <div class="quick_filter">
           <div class="p-field">
@@ -65,6 +55,7 @@
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
+
               <ng-container *ngFor="let column of tableColumnsTransmission">
                 <th *ngIf="column.sortable" [pSortableColumn]="column.field">
                   {{ column.title | translate }}
@@ -91,7 +82,9 @@
                 </span>
               </td>
               <td class="actions_button">
-                <button (click)="handleCancel(item)" class=" p-button-danger" pButton
+                <button (click)="add(item)" class=" p-button-success" pButton
+              pRipple>{{ 'buttons.cancel'|translate }}</button>
+              <button (click)="delete()" class=" p-button-warning" pButton
               pRipple>{{ 'buttons.cancel'|translate }}</button>
               </td>
             </tr>
@@ -191,7 +184,7 @@
 </div>
 
 <div>
-  <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
-    {{ "buttons.print" | translate }}
+  <button (click)="reception()" pButton class="p-mr-3 p-button-danger">
+    {{ "buttons.reception" | translate }}
   </button>
 </div>
