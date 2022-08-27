@@ -6,7 +6,7 @@ import { DetailsVirementModel } from '@models/detailsVirement';
 import { EncoursModel } from '@models/encours.model';
 import { StepVirement, VirementModele } from '@models/virement.model';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
+import { ModeVirementEnum } from '@pages/virements/tools/type-virement';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
@@ -33,10 +33,12 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   public situationForm: any;
   public encourData: EncoursModel[] = [];
   public detailsVirements: DetailsVirementModel[] = [];
+  public oldDetailsVirements: DetailsVirementModel[] = [];
   public typeFinancement!: string;
   public subProgrameSource: any = '####';
   public subProgrameCible: any = '####';
-  //bookProcess:any;
+  public mode!: ModeVirementEnum;
+  public virement?: VirementModele;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -51,17 +53,35 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this._fb.group({
-      exercice: [undefined, [Validators.required]],
-      spCibleVirement: [undefined, [Validators.required]],
-      spSourceVirement: [undefined, [Validators.required]],
-      typeVirement: [undefined, [Validators.required]],
-      modelVirement: [undefined, [Validators.required]],
-      dateVirement: [undefined, [Validators.required]],
-      objectVirement: [undefined, [Validators.required]],
-      detailsVirementsDebit: [undefined],
-      detailsVirementsCredit: [undefined]
-    });
+    this.mode = this.config.data?.mode as ModeVirementEnum;
+    if (this.mode != ModeVirementEnum.CREATION) {
+      this.virement = this.config.data?.item as VirementModele;
+      this.oldDetailsVirements = this.virement.detailsVirements;
+      console.log(this.virement);
+      this.form = this._fb.group({
+        exercice: this.virement.exercice,
+        spCibleVirement: this.virement.spCibleVirement,
+        spSourceVirement: this.virement.spSourceVirement,
+        typeVirement: this.virement.typeVirement,
+        modelVirement: this.virement.modelVirement,
+        dateVirement: this.virement.dateVirement,
+        objectVirement: this.virement.objectVirement,
+        detailsVirementsDebit: [],
+        detailsVirementsCredit: []
+      });
+    } else {
+      this.form = this._fb.group({
+        exercice: [undefined, [Validators.required]],
+        spCibleVirement: [undefined, [Validators.required]],
+        spSourceVirement: [undefined, [Validators.required]],
+        typeVirement: [undefined, [Validators.required]],
+        modelVirement: [undefined, [Validators.required]],
+        dateVirement: [undefined, [Validators.required]],
+        objectVirement: [undefined, [Validators.required]],
+        detailsVirementsDebit: [undefined],
+        detailsVirementsCredit: [undefined]
+      });
+    }
     this.typeFinancement = '';
   }
 

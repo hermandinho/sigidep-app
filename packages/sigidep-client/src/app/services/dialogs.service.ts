@@ -47,6 +47,7 @@ import {
 import { CategorieProcedure } from 'app/utils/types';
 import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
 import { VirementMessage } from '@models/virement-message';
+import { ModeVirementEnum } from '@pages/virements/tools/type-virement';
 
 @Injectable({
   providedIn: 'root',
@@ -1213,7 +1214,7 @@ export class DialogsService {
   }
 
 
-  public async launchVirementCreateDialog(item?: VirementModele): Promise<any> {
+  public async launchVirementCreateDialog(item?: VirementModele, mode: ModeVirementEnum = ModeVirementEnum.CREATION): Promise<any> {
     if (!this.virementCreateComponent) {
       const { VirementFormComponent } = await import(
         '@components/virement-form/virement-form.component'
@@ -1227,7 +1228,8 @@ export class DialogsService {
       height: 'auto',
       modal: true,
       data: {
-        item,
+        item: item,
+        mode: mode,
       },
     });
   }

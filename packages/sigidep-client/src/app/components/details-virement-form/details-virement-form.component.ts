@@ -5,6 +5,7 @@ import { DetailsVirementModel } from '@models/detailsVirement';
 import { EncoursModel } from '@models/encours.model';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { ModeVirementEnum } from '@pages/virements/tools/type-virement';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
@@ -19,6 +20,8 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   @Input() startingForm!: FormGroup;
   @Input() encourList!: DetailsVirementModel[];
   @Input() typeFinancement!: string;
+  @Input() mode!: ModeVirementEnum;
+  @Input() detailsVirement?: DetailsVirementModel[];
 
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
     'back' | 'forward'
@@ -32,6 +35,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public total_debit: number = 0;
   public total_credit: number = 0;
   public ecart_debit_credit: number = 0;
+  public show: boolean = true;
 
   constructor(
     private _apisService: ApisService,
@@ -40,7 +44,23 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit(): void {
+    this.show = this.mode == ModeVirementEnum.CREATION ? true : false;
     this.detailVirementForm = this.startingForm;
+
+    if (!this.show) {
+
+      this.detailsVirement?.forEach((d) => {
+        let details = new DetailsVirementModel(d);
+        details.montant = details.debit ?? details.credit;
+        if (d.debit) {
+          this.debitEncourList.push(details);
+        } else {
+          this.creditEncourList.push(details);
+        }
+      });
+      this.sumMontant(this.debitEncourList, true);
+      this.sumMontant(this.creditEncourList, false);
+    }
   }
 
 
@@ -94,6 +114,10 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     this.startingForm.controls.detailsVirementsDebit.setValue(this.debitEncourList);
     this.startingForm.controls.detailsVirementsCredit.setValue(this.creditEncourList);
     this.submit.emit();
+  }
+
+  reserver() {
+    alert('action a effectuer')
   }
 
 }

@@ -8,6 +8,8 @@ export class DetailsVirementModel extends BaseModel {
     isCredit: boolean = true;
     montant?: number;
     encour!: EncoursModel;
+    debit!: number;
+    credit!: number;
 
     constructor(params?: Partial<DetailsVirementModel>) {
         super();

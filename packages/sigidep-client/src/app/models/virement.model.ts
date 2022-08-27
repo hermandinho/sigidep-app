@@ -19,6 +19,7 @@ export class VirementModele extends BaseModel {
     etatVirement?: string;
     detailsVirementsDebit!: DetailsVirementModel[];
     detailsVirementsCredit!: DetailsVirementModel[];
+    detailsVirements!: DetailsVirementModel[];
     modelVirement!: ModeleVirementModel;
     exercice!: ExerciseModel;
 

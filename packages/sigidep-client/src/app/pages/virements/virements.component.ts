@@ -12,6 +12,7 @@ import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ModeVirementEnum } from './tools/type-virement';
 
 @Component({
   selector: 'app-virements',
@@ -104,6 +105,8 @@ export class VirementsComponent extends BaseComponent implements OnInit {
               ...d,
             })
         );
+
+        console.log(data);
       });
 
     this.loading$ = this._store.pipe(
@@ -137,5 +140,13 @@ export class VirementsComponent extends BaseComponent implements OnInit {
           });
         }
       });
+  }
+
+  reserver(item: VirementModele) {
+    this._dialogService.launchVirementCreateDialog(item, ModeVirementEnum.RESERVATION);
+  }
+
+  valider(item: VirementModele) {
+    this._dialogService.launchVirementCreateDialog(item, ModeVirementEnum.VALIDATION);
   }
 }

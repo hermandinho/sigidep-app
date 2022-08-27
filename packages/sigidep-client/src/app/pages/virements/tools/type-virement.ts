@@ -16,3 +16,7 @@ export enum typeVirementEnum {
     BF2BIP = "3-BF à BIP",
     BIP2BF = "4-BIP à BF",
 }
+
+export enum ModeVirementEnum {
+    CREATION, RESERVATION, VALIDATION
+}

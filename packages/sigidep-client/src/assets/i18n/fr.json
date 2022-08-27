@@ -664,7 +664,8 @@
     "bonsengagementsmissions": "Bons Engagements Missions",
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
-    "transmissionsreceptions": "Transmissions Receptions"
+    "transmissionsreceptions": "Transmissions Receptions",
+    "modelvirement": "Modèle Virements"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
