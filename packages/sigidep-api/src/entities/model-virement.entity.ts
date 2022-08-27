@@ -21,7 +21,11 @@ export class ModelVirementEntity extends BaseEntity {
     public contenuModel: string;
 
     // RELATIONS
-    @OneToMany(() => VirementEntity, (object) => object.modelVirement, { eager: false })
+    @OneToMany(() => VirementEntity, (object) => object.modelVirement, {
+        eager: false,
+        onDelete: 'CASCADE',
+        nullable: true,
+    })
     public detailsVirements: VirementEntity[];
 
 

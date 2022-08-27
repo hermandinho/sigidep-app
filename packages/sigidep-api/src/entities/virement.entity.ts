@@ -23,15 +23,15 @@ export enum TypeVirementEnum {
     },
 })
 export class VirementEntity extends BaseEntity {
-    @Column({ name: 'numero', nullable: false, type: 'int' })
-    public numero: number;
+    @Column({ name: 'numero', nullable: true, type: String })
+    public numero: string;
     @Column({ name: 'object_virement', nullable: false, type: String })
     public objectVirement: string;
     @Column({ name: 'date_virement', nullable: false, type: String })
     public dateVirement: string;
-    @Column({ name: 'date_signature_virement', nullable: false, type: Date })
+    @Column({ name: 'date_signature_virement', nullable: true, type: Date })
     public dateSignatureVirement: Date;
-    @Column({ name: 'signataire_virement', nullable: false, type: String })
+    @Column({ name: 'signataire_virement', nullable: true, type: String })
     public signataireVirement: string;
     @Column({ name: 'type_virement', nullable: false, type: 'enum', enum: TypeVirementEnum })
     public typeVirement: TypeVirementEnum;
@@ -47,11 +47,16 @@ export class VirementEntity extends BaseEntity {
     public detailsVirements: DetailsVirementEntity[];
 
 
-    @ManyToOne(() => ModelVirementEntity, (object) => object.id, {
-        eager: false,
-        onDelete: 'CASCADE',
-        nullable: true,
-    })
+    @ManyToOne(() => ModelVirementEntity, (object) => object.id, { eager: false })
     @JoinColumn({ name: 'model_virement_id', referencedColumnName: 'id' })
     public modelVirement: ModelVirementEntity;
+
+    constructor(
+        params?: Partial<VirementEntity>,
+    ) {
+        super();
+        if (params) {
+            Object.assign(this, params);
+        }
+    }
 }
