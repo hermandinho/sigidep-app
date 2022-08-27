@@ -1,6 +1,11 @@
-import { VirementEtatEnum } from "@entities/virement.entity";
+import { DetailsVirementEntity } from "@entities/details-virement.entity";
+import { ExerciseEntity } from "@entities/exercise.entity";
+import { ModelVirementEntity } from "@entities/model-virement.entity";
+import { SubProgramEntity } from "@entities/sub-program.entity";
+import { TypeVirementEnum, VirementEtatEnum } from "@entities/virement.entity";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
+import { DetailsVirementsDTO } from "./details-virement.dto";
 
 export class CreateVirementDto {
 
@@ -8,11 +13,11 @@ export class CreateVirementDto {
     @IsNotEmpty()
     public numero: number;
 
-    @ApiProperty({ required: false })
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     public objectVirement: string;
 
-    @ApiProperty({ required: false })
+    @ApiProperty({ required: true })
     @IsNotEmpty()
     public dateVirement: string;
 
@@ -24,19 +29,35 @@ export class CreateVirementDto {
     @IsNotEmpty()
     public signataireVirement: string;
 
-    @ApiProperty({ required: false })
+    @ApiProperty({ required: true })
     @IsNotEmpty()
-    public typeVirement: string;
+    public typeVirement: TypeVirementEnum;
 
-    @ApiProperty({ required: false })
+    @ApiProperty({ required: true })
     @IsNotEmpty()
-    public spSourceVirement: string;
+    public spSourceVirement: SubProgramEntity;
 
-    @ApiProperty({ required: false })
+    @ApiProperty({ required: true })
     @IsNotEmpty()
-    public spCibleVirement: string;
+    public spCibleVirement: SubProgramEntity;
 
     @ApiProperty({ required: false })
     @IsNotEmpty()
     public etatVirement: VirementEtatEnum;
+
+    @ApiProperty({ required: true })
+    @IsNotEmpty()
+    public detailsVirementsDebit: DetailsVirementsDTO[];
+
+    @ApiProperty({ required: true })
+    @IsNotEmpty()
+    public detailsVirementsCredit: DetailsVirementsDTO[];
+
+    @ApiProperty({ required: true })
+    @IsNotEmpty()
+    public modelVirement: ModelVirementEntity;
+
+    @ApiProperty({ required: true })
+    @IsNotEmpty()
+    public exercice: ExerciseEntity;
 }
