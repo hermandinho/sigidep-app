@@ -77,8 +77,6 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
       .get<SubProgramModel[]>(`/virements/exercice/${event.value.id}`)
       .toPromise().then((data) => {
         this.subProgramsList = data;
-        console.log(data);
-
         this.subProgramsListSource = [...this.subProgramsList];
         this.subProgramsListCible = [...this.subProgramsList];
       });

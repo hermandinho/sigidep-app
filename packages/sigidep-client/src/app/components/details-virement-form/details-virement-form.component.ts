@@ -23,6 +23,9 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
     'back' | 'forward'
   >();
+
+  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+
   public detailVirementForm!: FormGroup;
   public debitEncourList: DetailsVirementModel[] = [];
   public creditEncourList: DetailsVirementModel[] = [];
@@ -38,8 +41,6 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
 
   ngOnInit(): void {
     this.detailVirementForm = this.startingForm;
-    console.log(this.typeFinancement);
-
   }
 
 
@@ -49,26 +50,28 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
 
 
 
-  addToCredit(item: EncoursModel) {
+  addToCredit(item: DetailsVirementModel) {
+    item.isCredit = true;
     this.encourList = [...this.encourList.filter((e) => e != item)];
     this.creditEncourList = [...this.creditEncourList, item];
     this.sumMontant(this.creditEncourList, false);
   }
 
 
-  addToDebit(item: EncoursModel) {
+  addToDebit(item: DetailsVirementModel) {
+    item.isCredit = false;
     this.encourList = [...this.encourList.filter((e) => e != item)];
     this.debitEncourList = [...this.debitEncourList, item];
     this.sumMontant(this.debitEncourList, true);
   }
 
-  removeFromDebit(item: EncoursModel) {
+  removeFromDebit(item: DetailsVirementModel) {
     this.debitEncourList = [...this.debitEncourList.filter((e) => e != item)];
     this.encourList = [...this.encourList, item];
     this.sumMontant(this.debitEncourList, true);
   }
 
-  removeFromCredit(item: EncoursModel) {
+  removeFromCredit(item: DetailsVirementModel) {
     this.creditEncourList = [...this.creditEncourList.filter((e) => e != item)];
     this.encourList = [...this.encourList, item];
     this.sumMontant(this.creditEncourList, false);
@@ -85,6 +88,12 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
       this.total_credit = prix;
     }
     this.ecart_debit_credit = this.total_debit - this.total_credit;
+  }
+
+  submitForm() {
+    this.startingForm.controls.detailsVirementsDebit.setValue(this.debitEncourList);
+    this.startingForm.controls.detailsVirementsCredit.setValue(this.creditEncourList);
+    this.submit.emit();
   }
 
 }

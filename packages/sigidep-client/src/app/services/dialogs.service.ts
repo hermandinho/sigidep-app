@@ -46,6 +46,7 @@ import {
 } from '@models/bon-engagement.model';
 import { CategorieProcedure } from 'app/utils/types';
 import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
+import { VirementMessage } from '@models/virement-message';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +73,7 @@ export class DialogsService {
   private agentCreateComponent: any;
   private modelVirementCreateComponent: any;
   private virementCreateComponent: any;
+  private virementMessageComponent: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
   private sousRubriqueCreateComponent: any;
@@ -1226,6 +1228,24 @@ export class DialogsService {
       modal: true,
       data: {
         item,
+      },
+    });
+  }
+
+  public async launchVirementMessage(data: VirementMessage): Promise<any> {
+    if (!this.virementMessageComponent) {
+      const { ShowVirementMessageComponent } = await import(
+        '@components/show-virement-message/show-virement-message.component'
+      );
+      this.virementMessageComponent = ShowVirementMessageComponent;
+    }
+
+    return this._dialogService.open(this.virementMessageComponent, {
+      width: '20vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        data,
       },
     });
   }

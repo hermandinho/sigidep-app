@@ -16,8 +16,8 @@
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr>
                     <td>{{ rowIndex }}</td>
-                    <td>{{ item.imputation }}</td>
-                    <td>{{ item.operation.labelFr }}</td>
+                    <td>{{ item.codeInput }}</td>
+                    <td>{{ item.libelleInput }}</td>
                     <td pEditableColumn>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
@@ -25,16 +25,16 @@
                                     [ngModelOptions]="{standalone: true}" />
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{ item.montant | number }}
+                                {{ item.montant ?? 'entrez un montant' }}
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td>
-                        <button (click)="addToCredit(item)" class="p-button-success" icon="pi pi-plus" pButton
-                            pRipple></button>
+                        <button (click)="addToCredit(item)" class="p-button-success" icon="pi pi-plus" pButton pRipple
+                            [disabled]="null == item.montant"></button>
                         &nbsp;&nbsp;&nbsp;
-                        <button (click)="addToDebit(item)" class="p-button-primary" icon="pi pi-minus" pButton
-                            pRipple></button>
+                        <button (click)="addToDebit(item)" class="p-button-primary" icon="pi pi-minus" pButton pRipple
+                            [disabled]="null == item.montant"></button>
                     </td>
                 </tr>
             </ng-template>
@@ -53,8 +53,8 @@
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr>
                     <td>{{ rowIndex }}</td>
-                    <td>{{ item.imputation }}</td>
-                    <td>{{ item.operation.labelFr }}</td>
+                    <td>{{ item.codeInput }}</td>
+                    <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant | number }}</td>
                     <td>
                         <button (click)="removeFromDebit(item)" class="p-button-rounded p-button-warning"
@@ -85,8 +85,8 @@
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr>
                     <td>{{ rowIndex }}</td>
-                    <td>{{ item.imputation }}</td>
-                    <td>{{ item.operation.labelFr }}</td>
+                    <td>{{ item.codeInput }}</td>
+                    <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant ?? 0 }}</td>
                     <td>
                         <button (click)="removeFromCredit(item)" class="p-button-rounded p-button-warning"
@@ -116,7 +116,7 @@
                 <button (click)="doChangeStep('back')" [label]="'buttons.back' | translate" pButton></button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
-                    [label]="'buttons.save' | translate" pButton></button>
+                    [label]="'buttons.save' | translate" pButton (click)="submitForm()"></button>
             </div>
         </div>
     </form>

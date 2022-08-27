@@ -324,19 +324,13 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           items: [
             {
               routerLink: 'modele-virement',
-              icon: 'pi pi-table',
+              icon: 'pi pi-file-pdf',
               label: translate.instant('sidebar.modelVirement'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'details-virement',
-              icon: 'pi pi-shield',
-              label: translate.instant('sidebar.detailsVirement'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
               routerLink: 'virement',
-              icon: 'pi pi-table',
+              icon: 'pi pi-money-bill',
               label: translate.instant('sidebar.virement'),
               routerLinkActiveOptions: { exact: true },
             },

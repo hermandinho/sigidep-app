@@ -40,13 +40,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-item>
             <tr>
-                <td>{{ item?.nomModel }}</td>
-                <td>{{ item?.enteteModel }}</td>
-                <td>{{ item?.chapeauModel }}</td>
-                <td>{{ item.contenuModel }}</td>
+                <td>{{ item?.numero }}</td>
+                <td>{{ item?.dateVirement }}</td>
+                <td>{{ item?.dateSignatureVirement }}</td>
+                <td>{{ item?.signataireVirement }}</td>
+                <td>{{ item?.spSourceVirement }}</td>
+                <td>{{ item?.spCibleVirement }}</td>
                 <td>
-                    <button (click)="edit(item)" class="p-button-rounded p-button-success p-mr-2" icon="pi pi-pencil"
-                        pButton pRipple></button>
                     <button (click)="delete(item)" [disabled]="item?.status === 'active'"
                         class="p-button-rounded p-button-warning" icon="pi pi-trash" pButton pRipple></button>
                 </td>

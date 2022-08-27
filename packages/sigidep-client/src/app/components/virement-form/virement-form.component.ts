@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { GetVirement } from '@actions/virement.actions';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
+import { DetailsVirementModel } from '@models/detailsVirement';
 import { EncoursModel } from '@models/encours.model';
-import { StepVirement } from '@models/virement.model';
+import { StepVirement, VirementModele } from '@models/virement.model';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@reducers/index';
@@ -30,6 +32,7 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   public isCheck = false;
   public situationForm: any;
   public encourData: EncoursModel[] = [];
+  public detailsVirements: DetailsVirementModel[] = [];
   public typeFinancement!: string;
   public subProgrameSource: any = '####';
   public subProgrameCible: any = '####';
@@ -42,46 +45,45 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
     private _appService: AppService,
     private _apisService: ApisService,
     private _store: Store<AppState>,
-    private readonly _dialogService: DialogsService,
-    private translate: TranslateService
+    private _dialogService: DialogsService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.form = this._fb.group({
-      virement: this._fb.group({
-        exercice: [undefined, [Validators.required]],
-        sub_program_destinataire: [undefined, [Validators.required]],
-        sub_program_cource: [undefined, [Validators.required]],
-        typeVirement: [undefined, [Validators.required]],
-        modele_virement: [undefined, [Validators.required]],
-        dateVirement: [undefined, [Validators.required]],
-        objet: [undefined, [Validators.required]]
-      }),
-      detailsVirement: this._fb.group({
-        code_input: [undefined, [Validators.required]]
-      })
+      exercice: [undefined, [Validators.required]],
+      spCibleVirement: [undefined, [Validators.required]],
+      spSourceVirement: [undefined, [Validators.required]],
+      typeVirement: [undefined, [Validators.required]],
+      modelVirement: [undefined, [Validators.required]],
+      dateVirement: [undefined, [Validators.required]],
+      objectVirement: [undefined, [Validators.required]],
+      detailsVirementsDebit: [undefined],
+      detailsVirementsCredit: [undefined]
     });
     this.typeFinancement = '';
   }
 
 
   get virementBodyForm(): FormGroup {
-    return this.form?.get('virement') as FormGroup;
+    return this.form as FormGroup;
   }
-
-  get detailsVirementForm(): FormGroup {
-    return this.form?.get('detailsVirement') as FormGroup;
-  }
-
 
 
   async getEncour(code: number) {
     const encourResult = await this._apisService
       .get<EncoursModel[]>(`/virements/encour/${code}`) // TODO: reutiliser la ligne suivante
       .toPromise();
-    this.encourData = encourResult;
+    encourResult.forEach((e) => {
+      this.detailsVirements.push(
+        new DetailsVirementModel({
+          codeInput: e.imputation,
+          libelleInput: e.operation.labelFr,
+          encour: e
+        })
+      );
+    });
   }
 
   async setTypeVirement(type: string) {
@@ -89,18 +91,18 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   }
 
   async filterEncourByPrograms(code: number, isSource: boolean = true) {
-    console.log(code);
+    // console.log(code);
 
-    if (isSource) {
-      this.subProgrameSource = code + '';
-    } else {
-      this.subProgrameCible = code + '';
-    }
-    this.encourData = this.encourData.filter((e) => {
-      e.subProgram.startsWith(this.subProgrameCible) || e.subProgram.startsWith(this.subProgrameSource)
-    })
+    // if (isSource) {
+    //   this.subProgrameSource = code + '';
+    // } else {
+    //   this.subProgrameCible = code + '';
+    // }
+    // this.encourData = this.encourData.filter((e) => {
+    //   e.subProgram.startsWith(this.subProgrameCible) || e.subProgram.startsWith(this.subProgrameSource)
+    // })
 
-    console.log(this.encourData);
+    // console.log(this.encourData);
 
   }
 
@@ -130,6 +132,46 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         }
         break;
     }
+  }
+
+  submit() {
+    const virement = {
+      ...this.form.value,
+    } as VirementModele;
+    this._apisService
+      .post<VirementModele>('/virements', virement)
+      .subscribe(
+        (res) => {
+          this.busy = false;
+          this._dialogService.launchVirementMessage({ numero: res.numero ?? '', title: 'virement de credit enregistré sous le numero' })
+          this.ref.close(res);
+          this._appService.showToast({
+            summary: 'message.success',
+            detail: 'messages.accreditation.createSuccess',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+          this._store.dispatch(GetVirement());
+        },
+        ({ error }) => {
+          this.busy = false;
+          this.ref.close();
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.dejaRegion';
+          } else {
+            err = 'errors.unknown';
+          }
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
   }
 
 }

@@ -38,27 +38,27 @@ export class VirementsComponent extends BaseComponent implements OnInit {
         sortable: true,
       },
       {
-        field: 'date_virement',
+        field: 'dateVirement',
         title: 'tables.headers.dateVirement',
         sortable: true,
       },
       {
-        field: 'date_signature_virement',
+        field: 'dateSignatureVirement',
         title: 'tables.headers.dateSignatureVirement',
         sortable: true,
       },
       {
-        field: 'signataire_virement',
+        field: 'signataireVirement',
         title: 'tables.headers.signataireVirement',
         sortable: true,
       },
       {
-        field: 'sp_source_virement',
+        field: 'spSourceVirement',
         title: 'tables.headers.spSourceVirement',
         sortable: true,
       },
       {
-        field: 'sp_cible_virement',
+        field: 'spCibleVirement',
         title: 'tables.headers.spCibleVirement',
         sortable: true,
       },
@@ -77,10 +77,6 @@ export class VirementsComponent extends BaseComponent implements OnInit {
       })
     );
     this._initListeners();
-  }
-
-  edit(item: VirementModele) {
-    this._dialogService.launchVirementCreateDialog(item);
   }
 
   delete(item: VirementModele) {

@@ -53,8 +53,8 @@ import { BonsEngagementsModule } from '@pages/bons-engagements/decision/bons-eng
 import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commandes/bons-engagements-commandes.module';
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
-import { DetailsVirementModule } from '@pages/details-virement/details-virement.module';
 import { TransmissionsReceptionsModule } from '@pages/transmissions-receptions/transmissions-receptions.module';
+import { ShowVirementMessageComponent } from './components/show-virement-message/show-virement-message.component';
 
 
 registerLocaleData(localeFr);
@@ -64,7 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ShowVirementMessageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -131,7 +131,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BonsEngagementsCommandesModule,
     VirementsModule,
     ModeleVirementModule,
-    DetailsVirementModule,
     TransmissionsReceptionsModule
 
   ],

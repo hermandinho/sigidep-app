@@ -27,7 +27,7 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramSource" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListSource"
-                        formControlName="sub_program_cource" (onChange)="filterEncourByProgram($event)">
+                        formControlName="spSourceVirement" (onChange)="filterEncourByProgram($event)">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -49,18 +49,18 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.typeVirement" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="typeVirements" formControlName="typeVirement"
-                        optionLabel="code" (onChange)="setTypeVirement($event)">
-                        <ng-template let-option pTemplate="selectedItem">
+                        optionLabel="" (onChange)="setTypeVirement($event)">
+                        <ng-template let-code pTemplate="selectedItem">
                             <div>
                                 <div>
-                                    {{ option.code }}
+                                    {{ code }}
                                 </div>
                             </div>
                         </ng-template>
-                        <ng-template let-option pTemplate="item">
+                        <ng-template let-code pTemplate="item">
                             <div>
                                 <div>
-                                    {{ option.code }}
+                                    {{ code }}
                                 </div>
                             </div>
                         </ng-template>
@@ -71,7 +71,7 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramDestinataire" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListCible"
-                        formControlName="sub_program_destinataire" (onChange)="filterEncourByProgram($event)">
+                        formControlName="spCibleVirement" (onChange)="filterEncourByProgram($event)">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -92,7 +92,7 @@
             <div class="p-field p-col-6 p-md-6">
                 <div class="p-field">
                     <label class="required">{{ "labels.modelVirement" | translate }}</label>
-                    <p-dropdown [autoDisplayFirst]="false" [options]="modelVirement" formControlName="modele_virement"
+                    <p-dropdown [autoDisplayFirst]="false" [options]="modelVirement" formControlName="modelVirement"
                         optionLabel="nomModel">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
@@ -113,13 +113,14 @@
             </div>
             <div class="p-field p-col-6 p-md-6">
                 <div class="p-field">
-                    <label class="required">{{ "labels.detailsVirement" | translate }}</label>
+                    <label class="required">{{ "tables.headers.dateVirement" | translate }}</label>
                     <input type="date" class="form-control" pInputText formControlName="dateVirement">
                 </div>
             </div>
             <div class="p-field p-col-12 p-md-12">
                 <label>{{ "labels.sourceVerif" | translate }}</label>
-                <textarea rows="5" cols="35" pInputTextarea class="form-control" formControlName="objet"></textarea>
+                <textarea rows="5" cols="35" pInputTextarea class="form-control"
+                    formControlName="objectVirement"></textarea>
             </div>
             <div class="footer">
                 <button *ngIf="!dataVirement" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
