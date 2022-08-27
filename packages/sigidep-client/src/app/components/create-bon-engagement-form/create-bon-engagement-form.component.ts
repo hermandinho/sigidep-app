@@ -33,8 +33,7 @@ import { GetTransmissionsReceptionsDetails } from '@actions/detail-transmissions
 })
 export class CreateBonEngagementFormComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   public currentStepBs: BehaviorSubject<StepBonEngagement> =
     new BehaviorSubject<StepBonEngagement>('engagement');
   public currentStep$: Observable<StepBonEngagement> =
@@ -416,21 +415,21 @@ export class CreateBonEngagementFormComponent
       return;
     }
     const formValues = this.form.getRawValue();
-    if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1122' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1123' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1124'){
+    if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1122' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1123' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1124') {
       this.form.patchValue({
         bonEngagementForm: {
           matriculeGestionnaire: this.form.getRawValue()?.engagementForm.matriculeBeneficaire,
           nomGestionnaire: this.form.getRawValue()?.engagementForm.nomBeneficaire
         },
       });
-    }else if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1125'){
+    } else if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1125') {
       this.form.patchValue({
         bonEngagementForm: {
           matriculeGestionnaire: this.form.getRawValue()?.engagementForm.codeUnitAdminBenef,
           nomGestionnaire: this.form.getRawValue()?.engagementForm.nomUnitAdminBenef
         },
       });
-    }else if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1126'){
+    } else if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1126') {
       this.form.patchValue({
         bonEngagementForm: {
           matriculeGestionnaire: this.form.getRawValue()?.engagementForm.numContribuable,
@@ -438,7 +437,7 @@ export class CreateBonEngagementFormComponent
       });
     }
 
-    if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1110' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1111' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1115'){
+    if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1110' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1111' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1115') {
       this.editedEngagement = {
         ...this.form.getRawValue()?.engagementForm,
         ...this.form.getRawValue().bonEngagementForm,
@@ -446,7 +445,7 @@ export class CreateBonEngagementFormComponent
 
         facture: { ...this.form.getRawValue().factureForm },
       } as BonEngagementModel;
-    }else{
+    } else {
       this.editedEngagement = {
         ...this.form.getRawValue()?.engagementForm,
         ...this.form.getRawValue().bonEngagementForm,

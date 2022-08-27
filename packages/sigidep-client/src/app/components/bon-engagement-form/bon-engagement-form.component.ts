@@ -29,8 +29,7 @@ export class Type {
 })
 export class BonEngagementFormComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() readOnly!: boolean;
   @Input() procedure!: string;

@@ -18,7 +18,9 @@ import {
 } from '@reducers/engagement-juridique.reducer';
 import {
   getDataSelector as getDataMadSelector,
+  getDataSelector as getDataSelectorMandat,
   getLoadingSelector as getLoadingMadSelector,
+  getLoadingSelector as getLoadingSelectorMandat,
 } from '@reducers/bons-engagements.reducer';
 import { GetBonsEngagements } from '@actions/bons-engagements.actions';
 import { GetEngagementJuridiques } from '@actions/engagement-juridique.actions';
@@ -178,7 +180,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataEngSelector))
       .subscribe((data) => {
         this.data = [...data];
-        console.log("Eng ",this.data);
+        console.log("Eng ", this.data);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingEngSelector),

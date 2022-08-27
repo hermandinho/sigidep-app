@@ -8,7 +8,8 @@
         <div *ngIf="imputation1" class="p-field p-col-12 p-md-12">
           <label class="required">{{ "labels.imputationBudgetaire" | translate }}:</label>&nbsp;
           <input type="text" class="form-control p-fluid" pInputText formControlName="imputation"
-            placeholder="Exemple : 55 03 01 04 02 330010 201100" (ngModelChange)="modelChanged($event, 'imputation')" /><br />
+            placeholder="Exemple : 55 03 01 04 02 330010 201100"
+            (ngModelChange)="modelChanged($event, 'imputation')" /><br />
         </div>
         <div *ngIf="bon" class="p-field p-col-12 p-md-12">
           <!-- <label class="required">{{ "labels.bonsEngagements" | translate }}:</label>&nbsp;
@@ -87,5 +88,3 @@
     </ng-template>
   </p-table>
 </p-card>
-
-

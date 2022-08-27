@@ -47,14 +47,19 @@
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
+    "transmissionsReceptions": "Transmissions Receptions",
     "bonsengagements": "Engagements CP",
     "transmissionsReceptions":"Liste Visa et mise en route",
     "controledeconformite":"Controle de conformité",
     "receptionbordereaux":"Réception bordereaux",
     "operationdecontrole":"Operation de contrôle",
     "editiondestcc":"Edition des TCC",
-    "visaetmiseenroute":"Visa et mise en route"
+    "visaetmiseenroute":"Visa et mise en route",
 
+    "virements": "Virement",
+    "modelVirement": "Modèle virement",
+    "detailsVirement": "Details virement",
+    "virement": "Virements"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -97,6 +102,10 @@
     "title": "Installation"
   },
   "labels": {
+    "nomModel": "Nom modèle",
+    "enteteModel": "Entête modèle",
+    "chapeauModel": "chapeau modèle",
+    "contenuModel": "Contenu modèle",
     "structureCode": "Code Structure",
     "structureNameFr": "Nom de structure(FR)",
     "structureNameEn": "Nom de structure(EN)",
@@ -131,6 +140,7 @@
     "presentationFr": "Présentation (FR)",
     "presentationEn": "Présentation (EN)",
     "exercise": "Exercice",
+    "virement": "Virements",
     "chapter": "Chapitre",
     "strategiesFr": "Strategies (FR)",
     "strategiesEn": "Strategies (EN)",
@@ -162,6 +172,11 @@
     "unitPrice": "P.U",
     "totalPrice": "Montant Total",
     "subProgram": "Sous programme",
+    "typeVirement": "Type Virement",
+    "subProgramDestinataire": "Sous programme Cible",
+    "subProgramSource": "Sous programme Source",
+    "modelVirement": "Modèle virement",
+    "detailsVirement": "Détails du virement",
     "task": "Tâche",
     "activity": "Activité",
     "imputation": "Imputation",
@@ -349,7 +364,7 @@
     "effectuer": "Mission effectuée",
     "annulationdu": "Annulation du Bon",
     "annulelorsdelareservation": "Annulé lors de la réservation",
-    "annuleTransmissionControleConformite":"Annulé transmission controle conformité",
+    "annuleTransmissionControleConformite": "Annulé transmission controle conformité",
     "rejetlorsdelareservation": "Rejet lors de la réservation",
     "rejetlorsduControleConformite": "Rejet lors du Contrôle Conformité",
     "rejetlorsduControledeRegularite": "Rejet lors du Contrôle de Régularité",
@@ -440,6 +455,9 @@
     },
     "exercises": {
       "conflict": "Cette plage de date n'est plus disponible."
+    },
+    "modeleVirement": {
+      "notfound": "Cette plage de date n'est plus disponible."
     },
     "permissions": {
       "apply": "Une erreur est survenue lors de la modification des permissions."
@@ -541,6 +559,10 @@
     "articles": {
       "deleteSuccess": "Article supprimé avec succès.",
       "createSuccess": "Article crée avec succès."
+    },
+    "modeleVirement": {
+      "deleteSuccess": "Modèle Virement supprimé avec succès.",
+      "createSuccess": "Modèle Virement crée avec succès."
     },
     "rubriques": {
       "deleteSuccess": "Rubrique supprimée avec succès.",
@@ -659,12 +681,13 @@
     "taxes": "Taxes",
     "procedures": "Procédures",
     "engagements": "Engagements",
+    "modelVirement": "Modèle virement",
+    "virement": "virement",
     "Bonsprimes": "Engagement Bon Decision",
     "bonsengagementsmissions": "Bons Engagements Missions",
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
-    "transmissionsreceptions":"Transmissions Receptions"
-
+    "transmissionsreceptions": "Transmissions Receptions"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -689,6 +712,10 @@
       "procdeures": "Procédures",
       "taxes": "Taxes",
       "engagements": "Engagements",
+      "modelVirement": "Modèle virement",
+      "credit": "Tableau à créditer",
+      "debit": "Tableau à débiter",
+      "imputationsFiltres": "liste des imputations",
       "Bons": "Bons primes",
       "dossiers": "Dossiers du Bordereau",
       "transmission": "Listing des Bordereaux de Transmission",
@@ -728,6 +755,12 @@
       "codeBanque": "Code Banque",
       "codeAgence": "Code Agence",
       "numeroCompte": "Numéro Compte",
+      "numeroVirement": "Numéro Virement",
+      "dateVirement": "Date de Virement",
+      "dateSignatureVirement": "Date Signature du Virement",
+      "signataireVirement": "Signataire du Virement",
+      "spSourceVirement": "Source du Virement",
+      "spCibleVirement": "Cible du Virement",
       "cle": "Clé",
       "email": "Email",
       "contact": "Contact",
@@ -844,16 +877,7 @@
       "prixTotalHT": "Rrix Total HT",
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
-      "referenceMercuriale": "RéférenceMercuriale",
-      "num":"N°",
-      "numeroBor":"Numero Bons",
-      "serviceEmetteur":"Service Emetteur",
-      "serviceDestination":"Service Destination",
-      "dateTransmission":"Date de Transmission",
-      "numeroEng":"Numéro Engag. Jurid.",
-      "dateEng":"Date engag.",
-      "montantCP":"montantCP",
-      "objet":"Objet"
+      "referenceMercuriale": "RéférenceMercuriale"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -922,7 +946,7 @@
       "printEngagement": "Engagement",
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
       "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}",
-      "editTransmissionReception":"Edit Transmission Reception"
+      "editTransmissionReception": "Edit Transmission Reception"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -953,7 +977,10 @@
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
       "saveBon": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
       "cancelTransmission":"Voulez-vous annuler cette Transmission? Cette opération est irréversible !",
-      "reception":"Bordereau réceptionné avec succès au  Contrôle Financier "
+      "reception":"Bordereau réceptionné avec succès au  Contrôle Financier ",
+      "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
+      "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
+      "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?"
     }
   },
   "exerciseStatuses": {
@@ -1041,7 +1068,8 @@
     "chronogram": "Chronogramme",
     "physicalUnits": "Unités physiques",
     "codofication": "Codofication",
-    "mandatSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°"
+    "mandatSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°",
+    "BonSituation": "SITUATION SOMMAIRE DE TRAITEMENT Bon N°"
   },
   "measurementUnits": {
     "unit": "Unité",

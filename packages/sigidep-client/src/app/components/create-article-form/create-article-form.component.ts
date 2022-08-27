@@ -30,8 +30,7 @@ import { GetArticles } from '@actions/articles.actions';
 })
 export class CreateArticleFormComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   public rubriques: RubriqueModel[] = [];
   loading$: Observable<boolean> = of(true);
   public sousRubriques: SousRubriqueModel[] = [];

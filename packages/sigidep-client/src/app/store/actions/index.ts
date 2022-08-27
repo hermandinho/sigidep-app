@@ -40,3 +40,5 @@ export * from '@actions/bons-engagements.actions';
 export * from '@actions/engagements.actions';
 export * from '@actions/transmissions-receptions.actions';
 export * from '@actions/detail-transmissions-receptions.actions';
+export * from '@actions/model-virement.actions';
+export * from '@actions/virement.actions';

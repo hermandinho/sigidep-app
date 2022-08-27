@@ -15,7 +15,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { UserService } from '@services/user.service';
@@ -53,6 +53,10 @@ import { ConstitutionBordereauFormComponent } from '@components/constitution-bor
 import { CoordonneesBordereauFormComponent } from '@components/coordonnees-bordereau-form/coordonnees-bordereau-form.component';
 import { PrintBordereauxComponent } from '@components/print-bordereaux/print-bordereaux.component';
 import { CreateMotifRejetFormComponent } from '@components/create-motif-rejet-form/create-motif-rejet-form.component';
+import { ModelVirementFormComponent } from '@components/model-virement-form/model-virement-form.component';
+import { VirementFormComponent } from '@components/virement-form/virement-form.component';
+import { DetailsVirementFormComponent } from '@components/details-virement-form/details-virement-form.component';
+import { VirementBodyFormComponent } from '@components/virement-body-form/virement-body-form.component';
 
 const declarations = [
   BaseComponent,
@@ -73,7 +77,11 @@ const declarations = [
   ConstitutionBordereauFormComponent,
   CoordonneesBordereauFormComponent,
   PrintBordereauxComponent,
-  CreateMotifRejetFormComponent
+  CreateMotifRejetFormComponent,
+  ModelVirementFormComponent,
+  VirementFormComponent,
+  DetailsVirementFormComponent,
+  VirementBodyFormComponent
 ];
 
 const shared = [
@@ -102,6 +110,7 @@ const shared = [
   EditorModule,
   FieldsetModule,
   NgxPrintModule,
+  FormsModule
 ];
 @NgModule({
   declarations: [...declarations],
@@ -136,4 +145,4 @@ const shared = [
     ConfirmationService,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

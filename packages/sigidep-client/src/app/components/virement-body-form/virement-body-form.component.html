@@ -1,0 +1,134 @@
+<div class="container">
+    <form class="form" [formGroup]="virementForm">
+        <div class="p-fluid p-grid">
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.exercise" | translate }}</label>
+                    <p-dropdown [autoDisplayFirst]="false" [options]="exercicesInprogressList"
+                        formControlName="exercice" optionLabel="code" (onChange)="getSubProgramme($event)">
+                        <ng-template let-option pTemplate="selectedItem">
+                            <div>
+                                <div>
+                                    {{ option.code+'/'+option.startDate+'-'+option.endDate }}
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div>
+                                <div>
+                                    {{ option.code +'/'+option.startDate+'-'+option.endDate }}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.subProgramSource" | translate }}</label>
+                    <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListSource"
+                        formControlName="sub_program_cource" (onChange)="filterEncourByProgram($event)">
+                        <ng-template let-option pTemplate="selectedItem">
+                            <div>
+                                <div>
+                                    {{ option.code+'/'+option.labelFr }}
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div>
+                                <div>
+                                    {{ option.code+'/'+option.labelFr }}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.typeVirement" | translate }}</label>
+                    <p-dropdown [autoDisplayFirst]="false" [options]="typeVirements" formControlName="typeVirement"
+                        optionLabel="code" (onChange)="setTypeVirement($event)">
+                        <ng-template let-option pTemplate="selectedItem">
+                            <div>
+                                <div>
+                                    {{ option.code }}
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div>
+                                <div>
+                                    {{ option.code }}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.subProgramDestinataire" | translate }}</label>
+                    <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListCible"
+                        formControlName="sub_program_destinataire" (onChange)="filterEncourByProgram($event)">
+                        <ng-template let-option pTemplate="selectedItem">
+                            <div>
+                                <div>
+                                    {{ option.code+'/'+option.labelFr }}
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div>
+                                <div>
+                                    {{ option.code+'/'+option.labelFr }}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.modelVirement" | translate }}</label>
+                    <p-dropdown [autoDisplayFirst]="false" [options]="modelVirement" formControlName="modele_virement"
+                        optionLabel="nomModel">
+                        <ng-template let-option pTemplate="selectedItem">
+                            <div>
+                                <div>
+                                    {{ option.nomModel }}
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <div>
+                                <div>
+                                    {{ option.nomModel }}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.detailsVirement" | translate }}</label>
+                    <input type="date" class="form-control" pInputText formControlName="dateVirement">
+                </div>
+            </div>
+            <div class="p-field p-col-12 p-md-12">
+                <label>{{ "labels.sourceVerif" | translate }}</label>
+                <textarea rows="5" cols="35" pInputTextarea class="form-control" formControlName="objet"></textarea>
+            </div>
+            <div class="footer">
+                <button *ngIf="!dataVirement" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                    (click)="doChangeStep('forward')" [disabled]="!virementForm?.valid"
+                    [label]="'buttons.next' | translate" pButton></button>
+                <button *ngIf="dataVirement?.numActeJuridique" type="button" pButton pRipple class="p-button"
+                    icon="pi pi-angle-right" (click)="doChangeStep('forward')" [label]="'buttons.next' | translate"
+                    pButton></button>
+            </div>
+        </div>
+    </form>
+</div>

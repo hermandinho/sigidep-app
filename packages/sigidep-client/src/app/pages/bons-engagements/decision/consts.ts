@@ -20,18 +20,13 @@ export const TableColumns = [
     sortable: true,
   },
   {
-    field: 'imputation',
-    title: 'tables.headers.imputation',
+    field: 'etat',
+    title: 'tables.headers.etat',
     sortable: true,
   },
   {
     field: 'montantCPChiffres',
     title: 'tables.headers.montantCPChiffresBon',
-    sortable: true,
-  },
-  {
-    field: 'etat',
-    title: 'tables.headers.etat',
     sortable: true,
   },
   {

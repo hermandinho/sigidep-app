@@ -73,7 +73,7 @@ const bonsEngagementsReducer = createReducer(
   on(
     DeleteBonsEngagementsSuccess,
     DeleteBonsEngagementsFailure,
-    (state, {}) => {
+    (state, { }) => {
       return { ...state, loading: false };
     }
   ),

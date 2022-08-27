@@ -8,7 +8,7 @@ export enum EtatBonEnum {
   ENREGISTRE = 'labels.bonEnregistre',
   RESERVE = 'labels.bonReserve',
   VISADAAF = 'labels.visaDAAF',
-  TRANSMISCONTROLECONFORMITE = 'labels.transmispourControleConformite',
+  TRANSMISCONTROLECONFORMITE = 'labels.transmisControleConformite',
   ANNULETRANSMISSIONCONTROLECONFORMITE = 'labels.annuleTransmissionControleConformite',
   RECEPTIONCONTROLECONFORMITE = 'labels.receptionControleConformite',
   CONTROLECONFORMITE = 'labels.controledeConformite',

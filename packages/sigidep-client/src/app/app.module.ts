@@ -57,6 +57,9 @@ import { EditionDesTCCComponent } from './pages/edition-des-tcc/edition-des-tcc.
 import { ReceptionBordereauxModule } from '@pages/reception-bordereaux/reception-bordereaux.module';
 import { OperationDeControleModule } from '@pages/operation-de-controle/operation-de-controle.module';
 import { EditionDesTCCModule } from '@pages/edition-des-tcc/edition-des-tcc.module';
+import { VirementsModule } from '@pages/virements/virements.module';
+import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
+import { DetailsVirementModule } from '@pages/details-virement/details-virement.module';
 
 registerLocaleData(localeFr);
 
@@ -134,7 +137,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     VisaEtTransmisssionModule,
     ReceptionBordereauxModule,
     OperationDeControleModule,
-    EditionDesTCCModule
+    EditionDesTCCModule,
+    VirementsModule,
+    ModeleVirementModule,
+    DetailsVirementModule,
+    TransmissionsReceptionsModule
+
   ],
   providers: [
     AppInstallCheckGuard,
@@ -145,4 +153,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }

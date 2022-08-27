@@ -36,6 +36,8 @@ import { ExecTaxesModule } from '@modules/exec-taxes/exec-taxes.module';
 import { BonsEngagementsModule } from '@modules/bons-engagements/bons-engagements.module';
 import { EngagementHistorySubscriber } from '@subscribers/engagement.subscriber';
 import { TraitementBonEngagementSubscriber } from '@subscribers/bons-engagements.subscriber';
+import { VirementsModule } from './modules/virements/virements.module';
+import { ModeleVirementsModule } from './modules/modele-virements/modele-virements.module';
 import { TransmissionReceptionModule } from '@modules/transmission-receptions/transmission-receptions.module';
 
 @Module({
@@ -57,12 +59,12 @@ import { TransmissionReceptionModule } from '@modules/transmission-receptions/tr
         // console.log(database, host, password, username);
         console.log(
           '******* Server running on Port : ' +
-            (config.get('API_PORT') ??
-              process.env.PORT ??
-              process.env.API_PORT) +
-            ' on ' +
-            env +
-            ' Environment ********',
+          (config.get('API_PORT') ??
+            process.env.PORT ??
+            process.env.API_PORT) +
+          ' on ' +
+          env +
+          ' Environment ********',
         );
         return {
           database,
@@ -88,12 +90,12 @@ import { TransmissionReceptionModule } from '@modules/transmission-receptions/tr
           ...(env !== 'production'
             ? {}
             : {
-                extra: {
-                  ssl: {
-                    rejectUnauthorized: false,
-                  },
+              extra: {
+                ssl: {
+                  rejectUnauthorized: false,
                 },
-              }),
+              },
+            }),
         } as TypeOrmModuleOptions;
       },
     }),
@@ -129,9 +131,11 @@ import { TransmissionReceptionModule } from '@modules/transmission-receptions/tr
     ExecProcedureModule,
     ExecTaxesModule,
     BonsEngagementsModule,
+    VirementsModule,
+    ModeleVirementsModule,
     TransmissionReceptionModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

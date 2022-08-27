@@ -40,6 +40,9 @@ import { VisaEtTransmisssionComponent } from '@pages/visa-et-transmisssion/visa-
 import { EditionDesTCCComponent } from '@pages/edition-des-tcc/edition-des-tcc.component';
 import { OperationDeControleComponent } from '@pages/operation-de-controle/operation-de-controle.component';
 import { ReceptionBordereauxComponent } from '@pages/reception-bordereaux/reception-bordereaux.component';
+import { VirementsComponent } from '@pages/virements/virements.component';
+import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.component';
+import { DetailsVirementComponent } from '@pages/details-virement/details-virement.component';
 
 const routes: Routes = [
   {
@@ -443,6 +446,56 @@ const routes: Routes = [
             '../pages/bons-engagements-missions/bons-engagements-missions.module'
           ).then((m) => m.BonsEngagementsMissionsModule),
       },
+      {
+        path: 'modele-virement',
+        canActivate: [AuthGuard],
+        component: ModeleVirementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-commandes/bons-engagements-commandes.module'
+          ).then((m) => m.BonsEngagementsCommandesModule),
+      },
+      {
+        path: 'bons-missions',
+        canActivate: [AuthGuard],
+        component: BonEngagementMissionsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-missions/bons-engagements-missions.module'
+          ).then((m) => m.BonsEngagementsMissionsModule),
+      },
+      {
+        path: 'modele-virement',
+        canActivate: [AuthGuard],
+        component: ModeleVirementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/modele-virement/modele-virement.module'
+          ).then((m) => m.ModeleVirementModule),
+      },
+      {
+        path: 'details-virement',
+        canActivate: [AuthGuard],
+        component: DetailsVirementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/details-virement/details-virement.module'
+          ).then((m) => m.DetailsVirementModule),
+      },
+      {
+        path: 'virement',
+        canActivate: [AuthGuard],
+        component: VirementsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/virements/virements.module'
+          ).then((m) => m.VirementsModule),
+      },
       /*{
         path: '**',
         component: NotFoundComponent,
@@ -456,4 +509,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }
