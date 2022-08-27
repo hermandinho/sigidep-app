@@ -1,8 +1,10 @@
+import { DetailsVirementEntity } from '@entities/details-virement.entity';
 import { EncoursEntity } from '@entities/encours.entity';
 import { SubProgramEntity } from '@entities/sub-program.entity';
 import { VirementEntity } from '@entities/virement.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { genCode } from '@utils/functions';
 import { Repository } from 'typeorm';
 import { CreateVirementDto } from './dto/create-virement.dto';
 import { UpdateVirementDto } from './dto/update-virement.dto';
@@ -16,10 +18,50 @@ export class VirementsService {
     private readonly subProgram: Repository<SubProgramEntity>,
     @InjectRepository(EncoursEntity)
     private readonly encourRepository: Repository<EncoursEntity>,
+    @InjectRepository(DetailsVirementEntity)
+    private readonly detailsvirementRepository: Repository<DetailsVirementEntity>,
   ) { }
 
-  create(createVirementDto: CreateVirementDto) {
-    return 'This action adds a new virement';
+  async create(createVirementDto: CreateVirementDto) {
+    let virement = await this.repository.save(
+      new VirementEntity({
+        numero: null,
+        objectVirement: createVirementDto.objectVirement,
+        dateVirement: createVirementDto.dateVirement,
+        dateSignatureVirement: createVirementDto.dateSignatureVirement,
+        signataireVirement: createVirementDto.signataireVirement,
+        typeVirement: createVirementDto.typeVirement,
+        spSourceVirement: createVirementDto.spCibleVirement.code + '/' + createVirementDto.spSourceVirement.labelFr,
+        spCibleVirement: createVirementDto.spCibleVirement.code + '/' + createVirementDto.spCibleVirement.labelFr,
+        modelVirement: createVirementDto.modelVirement,
+      })
+    );
+    createVirementDto.detailsVirementsCredit.forEach((e) => {
+      this.detailsvirementRepository.save(
+        new DetailsVirementEntity({
+          codeInput: e.codeInput,
+          credit: e.montant,
+          debit: null,
+          libelleInput: e.libelleInput,
+          encour: e.encour,
+          virement: virement
+        })
+      );
+    });
+    createVirementDto.detailsVirementsDebit.forEach((e) => {
+      this.detailsvirementRepository.save(
+        new DetailsVirementEntity({
+          codeInput: e.codeInput,
+          debit: e.montant,
+          credit: null,
+          libelleInput: e.libelleInput,
+          encour: e.encour,
+          virement: virement
+        })
+      );
+    });
+    virement.numero = genCode(createVirementDto.exercice.code, virement.id);
+    return await this.repository.save(virement);
   }
 
   findAll() {
@@ -35,7 +77,7 @@ export class VirementsService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} virement`;
+    return this.repository.delete({ id });
   }
 
   getSubProgramByExercise(id: number) {
