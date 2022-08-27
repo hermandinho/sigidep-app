@@ -6,6 +6,7 @@ import { EncoursEntity } from '@entities/encours.entity';
 import { VirementEntity } from '@entities/virement.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SubProgramEntity } from '@entities/sub-program.entity';
+import { DetailsVirementEntity } from '@entities/details-virement.entity';
 
 @Module({
   controllers: [VirementsController],
@@ -16,6 +17,7 @@ import { SubProgramEntity } from '@entities/sub-program.entity';
       SubProgramEntity,
       VirementEntity,
       EncoursEntity,
+      DetailsVirementEntity,
     ]),
   ],
 })
