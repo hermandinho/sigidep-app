@@ -48,11 +48,13 @@
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
     "bonsengagements": "Engagements CP",
-    "transmissionsReceptions":"Transmissions Receptions",
+    "transmissionsReceptions":"Liste Visa et mise en route",
     "controledeconformite":"Controle de conformité",
     "receptionbordereaux":"Réception bordereaux",
     "operationdecontrole":"Operation de contrôle",
-    "editiondestcc":"Edition des TCC"
+    "editiondestcc":"Edition des TCC",
+    "visaetmiseenroute":"Visa et mise en route"
+
   },
   "buttons": {
     "save": "Enregistrer",
@@ -357,7 +359,7 @@
     "bonReserve": "Bon Réservé",
     "visaDAAF": "Visa DAAF",
     "transmispourControleConformite": "Transmis pour Contrôle Conformité",
-    "receptionpourControleConformite": "Réception pour Contrôle Conformité",
+    "receptionControleConformite": "Réception pour Contrôle Conformité",
     "controledeConformite": "Contrôle de Conformité",
     "editionduTitredeCreance": "Edition du Titre de Créance",
     "transmissionpourLiquidation": "Transmission pour Liquidation",
@@ -408,7 +410,8 @@
     "dateValidACT_mandat":"Date validation",
     "dateOrdonnancement_mandat":"Date ordonnancement",
     "dateLiquidation_mandat":"Date liquidation",
-    "dateEditionTCC_mandat":"Date edition titre"
+    "dateEditionTCC_mandat":"Date edition titre",
+    "filterCodeEx":"Code exercice"
     },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -688,7 +691,8 @@
       "engagements": "Engagements",
       "Bons": "Bons primes",
       "dossiers": "Dossiers du Bordereau",
-      "transmission": "Listing des Bordereaux de Transmission"
+      "transmission": "Listing des Bordereaux de Transmission",
+      "bon_controler":"Listing des Bons à Contrôler "
     },
     "headers": {
       "exerciseCode": "Code",

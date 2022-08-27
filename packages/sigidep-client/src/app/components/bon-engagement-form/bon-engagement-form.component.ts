@@ -145,6 +145,9 @@ export class BonEngagementFormComponent
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
+        if(this.dataEngagement){
+          this.scanneElt(this.dataEngagement)
+        }
         console.log(data);
       });
     this.loading$ = this._store.pipe(
@@ -158,5 +161,20 @@ export class BonEngagementFormComponent
     this.bonEngagementForm.patchValue({
       montantCPLettres: converter.toWords(currentValue),
     });
+  };
+
+
+  scanneElt = (dataEngagement: any) => {
+    if(dataEngagement){
+      this.bonEngagementForm.patchValue({
+        numero: dataEngagement?.numero,
+        matriculeGestionnaire: dataEngagement?.matriculeGestionnaire,
+        objet: dataEngagement?.objet,
+        dateEngagement: dataEngagement?.dateEngagement,
+        montantCPChiffres: dataEngagement?.montantCPChiffres,
+        montantCPLettres: dataEngagement?.montantCPLettres,
+        signataire: dataEngagement?.montantCPLettres,
+      });
+    }
   };
 }

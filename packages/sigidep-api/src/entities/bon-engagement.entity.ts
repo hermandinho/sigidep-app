@@ -109,11 +109,4 @@ export class BonEngagementEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'facture_id' })
   public facture: FactureEntity | null;
-
-  @OneToMany(() => DetailTransmissionReceptionEntity, (object) => object.bon_engagement, {
-    eager: true,
-    nullable: true,
-    cascade: ['insert', 'update', 'remove'],
-  })
-  transmission_reception: DetailTransmissionReceptionEntity[];
 }

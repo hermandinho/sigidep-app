@@ -121,7 +121,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   }
   onActeJuridiqueChange = (event: any) => {
     const act: Engagement | undefined = this.engagements.find(
-      (item) => item.id === event.value
+      (item:any) => item.id === event.value
     );
     console.log(act)
     localStorage.setItem('imputation', JSON.stringify(act?.imputation));
@@ -172,6 +172,9 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.engagements = [...data];
+        /* if(this.dataEngagement){
+          this.scanneEl();
+        } */
         if (this.engagementForm != undefined) {
           this.scanneElt(this.engagementForm.value);
         }
@@ -195,6 +198,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
   scanneElt = (event: any) => {
     if(this.dataEngagement){
+      console.log("existe")
       if(this.dataEngagement?.numActeJuridique){
          const test =this.dataEngagement?.numActeJuridique;
         if(test.codeProcedure==='1121'){
@@ -204,7 +208,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
             })
           );
           this.act = this.engagements.find(
-            (item) => item.id === event.numActeJuridique.id
+            (item:any) => item.id === test.id
           );
         }
 
@@ -215,7 +219,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
             })
           );
           this.act = this.engagements.find(
-            (item) => item.id === event.numActeJuridique.id
+            (item:any) => item.id === test.id
           );
 
         }
@@ -227,19 +231,21 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
             })
           );
           this.act = this.engagements.find(
-            (item) => item.id === event.numActeJuridique.id
+            (item:any) => item.id === test.id
           );
 
         }
 
       }else{
-        this.engagements=this.dataEngagement;
-        this.act= this.dataEngagement;
+        this.engagements = this.dataEngagement;
+        this.act = this.dataEngagement;
       }
     }else{
+      console.log("n'existe pas")
       this.act = this.engagements.find(
-        (item) => item.id === event.numActeJuridique.id
+        (item:any) => item.id === event.numActeJuridique.id
       );
+      console.log("n'existe pas ",this.act)
     }
     localStorage.setItem('imputation', JSON.stringify(this.act?.imputation));
     this.procedure = this.act?.codeProcedure;

@@ -40,7 +40,6 @@ export class CoordonneesBordereauFormComponent extends BaseComponent implements 
 
   constructor(
     private _store: Store<AppState>,
-    public ref: DynamicDialogRef,
     private _appService: AppService,
     public translate: TranslateService,
 
@@ -78,10 +77,6 @@ export class CoordonneesBordereauFormComponent extends BaseComponent implements 
     console.log("submit")
     this.submitForm.emit();
   };
-
-  close() {
-    this.ref.close();
-  }
 
   onDisable() {
     this.bordereauForm.controls['objet'].disable();

@@ -48,6 +48,11 @@ import { CreateSituationTraitementComponent } from '@components/create-situation
 import { CreateBonEngagementMissionFormComponent } from '@components/create-bon-engagement-mission-form/create-bon-engagement-mission-form.component';
 import { EngagementMissionFormComponent } from '@components/engagement-mission-form/engagement-mission-form.component';
 import { FactureComponent } from '@components/facture/facture.component';
+import { CreateTransmissionReceptionFormComponent } from '@components/create-transmission-reception-form/create-transmission-reception-form.component';
+import { ConstitutionBordereauFormComponent } from '@components/constitution-bordereau-form/constitution-bordereau-form.component';
+import { CoordonneesBordereauFormComponent } from '@components/coordonnees-bordereau-form/coordonnees-bordereau-form.component';
+import { PrintBordereauxComponent } from '@components/print-bordereaux/print-bordereaux.component';
+import { CreateMotifRejetFormComponent } from '@components/create-motif-rejet-form/create-motif-rejet-form.component';
 
 const declarations = [
   BaseComponent,
@@ -64,6 +69,11 @@ const declarations = [
   EngagementMissionFormComponent,
   CreateSituationTraitementComponent,
   FactureComponent,
+  CreateTransmissionReceptionFormComponent,
+  ConstitutionBordereauFormComponent,
+  CoordonneesBordereauFormComponent,
+  PrintBordereauxComponent,
+  CreateMotifRejetFormComponent
 ];
 
 const shared = [

@@ -19,6 +19,7 @@ import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 import { ApisService } from '@services/apis.service';
 import { DataModel } from '@models/data.model';
+import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
 @Component({
   selector: 'app-reception-bordereaux',
@@ -92,15 +93,9 @@ export class ReceptionBordereauxComponent extends BaseComponent
       this._store.dispatch(
         GetTransmissionsReceptions({ exercices: [event?.value[0]?.toLowerCase()] })
       );
-      this._store.dispatch(
-        GetTransmissionsReceptionsDetails({ exercices: [event?.value[0]?.toLowerCase()] })
-      );
     } else {
       this._store.dispatch(
         GetTransmissionsReceptions({})
-      );
-      this._store.dispatch(
-        GetTransmissionsReceptionsDetails({})
       );
     }
 
@@ -167,7 +162,7 @@ export class ReceptionBordereauxComponent extends BaseComponent
   async add(item: any) {
     this.click = true
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({ ids: [item.id] })
+      GetTransmissionsReceptionsDetails({ ids: [item.id]})
     );
   }
 
@@ -177,13 +172,12 @@ export class ReceptionBordereauxComponent extends BaseComponent
   }
 
   reception() {
-
     const data1:DataModel = {
       data : this.dossiersBordereaux,
-      action: 'reception'
+      action: 'reception',
+      motif:''
     }
-
-      console.log('data1 ',this.data1)
+    console.log('data1 ',this.data1)
     const method: Observable<any> = this._apisService.put<any>(
       '/transmissions-receptions',
       data1

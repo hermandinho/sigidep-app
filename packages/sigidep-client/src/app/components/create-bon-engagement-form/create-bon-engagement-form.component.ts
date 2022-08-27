@@ -23,6 +23,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { CategorieProcedure } from 'app/utils/types';
+import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
+import { GetTransmissionsReceptionsDetails } from '@actions/detail-transmissions-receptions.actions';
 
 @Component({
   selector: 'app-create-bon-engagement-form',
@@ -49,6 +51,7 @@ export class CreateBonEngagementFormComponent
   public situationForm: any;
   //bookProcess:any;
   public editedEngagement!: BonEngagementModel;
+  public validation:boolean=false;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -151,7 +154,12 @@ export class CreateBonEngagementFormComponent
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatBonEngagement') {
-        this.engagements = this.config.data?.item;
+        if(this.config.data?.item?.data !== undefined){
+          this.validation = true;
+          this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
+        }else{
+          this.engagements = this.config.data?.item;
+        }
         this.isCheck = true;
         this.currentStepBs.next('situation');
       } else if (this.situationAction === 'dialogs.headers.etatCertificat') {
@@ -402,6 +410,11 @@ export class CreateBonEngagementFormComponent
   };
 
   submitForm() {
+    if(this.validation===true){
+      this.controler(this.config.data?.item);
+      this.ref.close();
+      return;
+    }
     const formValues = this.form.getRawValue();
     if(this.form.getRawValue()?.engagementForm?.codeProcedure=='1122' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1123' || this.form.getRawValue()?.engagementForm?.codeProcedure=='1124'){
       this.form.patchValue({
@@ -599,4 +612,42 @@ export class CreateBonEngagementFormComponent
     }
     return null;
   };
+
+  controler(data:any){
+    const method: Observable<any> = this._apisService.put<any>(
+      '/transmissions-receptions',
+      data
+    );
+    method.subscribe(
+      (res) => {
+        this.busy = false;
+        this._store.dispatch(
+          GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE] })
+        );
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail: 'dialogs.messages.controler',
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.transmission.notfound';
+        } else {
+          err = 'errors.unknown';
+        }
+        this.busy = false;
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
+  }
 }

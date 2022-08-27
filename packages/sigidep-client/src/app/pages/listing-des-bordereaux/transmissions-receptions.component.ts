@@ -17,6 +17,7 @@ import { GetTransmissionsReceptionsDetails } from '@actions/detail-transmissions
 import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoadingSelectorDetail } from '@reducers/detail-transmissions-receptions.reducer';
 import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
+import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
 
 @Component({
@@ -68,7 +69,7 @@ implements OnInit {
       GetTransmissionsReceptions({})
     );
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.CONTROLECONFORMITE]})
     );
     this._store.dispatch(
       GetExercises({})

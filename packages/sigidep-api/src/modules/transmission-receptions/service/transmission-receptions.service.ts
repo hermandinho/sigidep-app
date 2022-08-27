@@ -102,14 +102,15 @@ export class TransmissionReceptionService {
     payload: any,
     user: UserEntity,
   ): Promise<TransmissionReceptionEntity> {
-
-    const check = await this.repository.findOne({
-      id: payload?.data[0]?.transmission_reception?.id,
+    const id = payload.data[0]?.transmission_reception?.id
+    const check = this.repository.findOne({
+      id: id,
     });
 
     if (!check) {
       throw new NotFoundException();
     }
+   
     var etated = '';
     if(payload?.action==='reception'){
        etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE
@@ -121,22 +122,41 @@ export class TransmissionReceptionService {
           updateBy:user
         });
       }
+      this.repository.save({
+        ...check, // existing fields
+        objet: etated, // annulation du bon
+      });
     }else if(payload?.action==='rejet'){
        etated = EtatBonEnum.REJETCONTROLEREGULARITE
        const property = payload?.data[0]?.bon_engagement;
+       this.repository.save({
+        ...check, // existing fields
+        objet: etated, // annulation du bon
+        motif: payload?.motif
+      });
        this.repositorybon.save({
          ...(property as any), // existing fields
          etat: etated,
-         updateBy:user
+         updateBy:user,
+         rejet:true
        });
+      
     }else if(payload?.action==='controler'){
        etated = EtatBonEnum.CONTROLECONFORMITE
+       console.log("je suis la")
+       console.log("payload?.motif ",etated)
        const property = payload?.data?.bon_engagement;
        this.repositorybon.save({
          ...(property as any), // existing fields
          etat: etated,
          updateBy:user
        });
+       console.log("test ",test)
+       this.repository.save({
+        ...check, // existing fields
+        objet: etated, // annulation du bon
+  
+      });
     }
    
     return check;
@@ -148,6 +168,10 @@ export class TransmissionReceptionService {
       .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
       .leftJoinAndSelect('detail.transmission_reception', 'transmission_reception')
       .leftJoinAndSelect('bon_engagement.numActeJuridique', 'eng')
+      .leftJoinAndSelect('bon_engagement.traitements', 'traitements')
+      .leftJoinAndSelect('bon_engagement.paiements', 'paiements')
+      .leftJoinAndSelect('bon_engagement.facture', 'facture')
+      .leftJoinAndSelect('facture.articles', 'articles')
       .where(filter?.ids ? 'transmission_reception.id IN(:...codes)' : 'true', {
         codes: filter?.ids,
       })
@@ -165,18 +189,21 @@ export class TransmissionReceptionService {
       exercices: filter?.exercices,
     })
     .getMany();
+    console.log("bons ",bons)
 
     var details = await this.repositorydetail
     .createQueryBuilder('detail')
     .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
     .leftJoinAndSelect('bon_engagement.numActeJuridique', 'eng')
     .getMany();
+    //console.log("details ",details)
     
     var result = bons.filter(function(o1){
       return !details.some(function(o2){
           return o1.id === o2.bon_engagement.id;
       });
-  });
+    });
+    //console.log("result ",result)
     return result;
   }
 }

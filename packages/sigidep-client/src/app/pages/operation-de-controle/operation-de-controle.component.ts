@@ -17,6 +17,9 @@ import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoad
 import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 import { TableColumnsBordereau } from './consts';
+import { DataModel } from '@models/data.model';
+import { ApisService } from '@services/apis.service';
+import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
 @Component({
   selector: 'app-operation-de-controle',
@@ -30,7 +33,6 @@ implements OnInit {
 
   public tableColumnsTransmission:any[]=[];
   public tableColumnsBordereau:any[]=[];
-  public bordereauxTransmissions:any[]=[];
   public dossiersBordereaux:any[]=[];
   public globalColumnsTransmission!: string[];
   public globalColumnsBordereaux!: string[];
@@ -40,8 +42,9 @@ implements OnInit {
   public currentItem!: TransmissionsReceptionModel;
   public filters: any[] = [];
   public selectedFilters!: string[];
-  data: any[] = [];
+  data: any[]=[];
   public exercices:any;
+  busy=false;
 
 
 
@@ -51,6 +54,8 @@ implements OnInit {
     private _store: Store<AppState>,
     public translate: TranslateService,
     private readonly _appService: AppService,
+    private _apisService: ApisService,
+
 
 
   ) {
@@ -63,14 +68,11 @@ implements OnInit {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptions({})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE],})
     );
-    this._store.dispatch(
-      GetTransmissionsReceptionsDetails({})
-    );
-    this._store.dispatch(
+  /*   this._store.dispatch(
       GetExercises({})
-    );
+    ); */
 
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -104,10 +106,7 @@ implements OnInit {
   handleFilter = (event: any) => {
       if(event?.value){
         this._store.dispatch(
-          GetTransmissionsReceptions({exercices:[event?.value[0]?.toLowerCase()]})
-        );
-        this._store.dispatch(
-          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()]})
+          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE]})
         );
       }else{
         this._store.dispatch(
@@ -120,10 +119,6 @@ implements OnInit {
 
   };
 
-  async openForm() {
-    this._dialogService.launchTransmissionReceptionCreateDialog();
-  }
-
   get currentLang() {
     return this.translate.currentLang;
   }
@@ -133,24 +128,6 @@ implements OnInit {
   }
 
   private _initListeners() {
-    this._store
-      .pipe(this.takeUntilDestroy, select(getDataSelectorTrans))
-      .subscribe((data) => {
-        console.log(data)
-        if(data !== null){
-          this.bordereauxTransmissions = [...data];
-          if(this.bordereauxTransmissions===[null]) this.bordereauxTransmissions=[];
-          console.log('bordereauxTransmissions ', this.bordereauxTransmissions)
-        }
-
-
-      });
-
-    this.loading$ = this._store.pipe(
-      select(getLoadingSelectorTrans),
-      map((status) => status)
-    );
-
     this._store
     .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
     .subscribe((data) => {
@@ -178,6 +155,48 @@ implements OnInit {
     );
 
 
+  }
+
+ /*  selected(item:any){
+    this.data = item;
+  } */
+  controler(){
+    const data1:any = {
+      data : this.data,
+      action: 'controler',
+      motif:''
+    }
+    console.log("data ",this.data)
+    this._appService.showConfirmation({
+      message: 'dialogs.messages.alertControler',
+      accept: () => {
+
+        this._dialogService.launchBonEngagementCreateDialog(
+          'decision',
+          data1,
+          'consulterM'
+        );
+
+      },
+    });
+
+  }
+
+  selected(e:any,item:any[]) {
+    if (e.target.checked) {
+      console.log('selected')
+      this.data.push(item);
+      e.currentTarget.parentNode.style.backgroundColor = 'rgb(0, 140, 255)'
+      const parent = e.currentTarget.parentNode;
+      parent.children[0].style.backgroundColor = 'rgb(0, 140, 255)';
+    }
+    else {
+      console.log('selected selected error')
+      this.data = [];
+      e.currentTarget.parentNode.style.backgroundColor = 'white'
+      const parent = e.currentTarget.parentNode;
+      parent.children[0].style.backgroundColor = 'white';
+    }
   }
 
 }

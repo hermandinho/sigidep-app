@@ -53,7 +53,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
   encours: any[] = [];
   engagements: any;
   mandatConsonEnga: any;
-  bonsEngagements: any;
+  bonsEngagements: any[]=[];
   imputation1: boolean = true;
   bon: boolean = true;
   consulterM: any;
@@ -189,8 +189,8 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataMadSelector))
       .subscribe((data) => {
         this.bonsEngagements = [...data];
-       // if (this.bonsEngagements) this.imputation = false;
-        console.log('bons enagements ', this.bonsEngagements);
+       if (this.bonsEngagements) this.imputation = false;
+  //      console.log('bons enagements ', this.bonsEngagements);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingMadSelector),
@@ -273,7 +273,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
 
   modelChanged(event: any, name: string) {
     const value = event;
-    console.log(value)
+    //console.log(value)
     if (value) {
       if (name === 'imputation') {
         this.bon = false;
@@ -281,10 +281,10 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       } else if (name === 'bonEngagement' && value.value !== null) {
         this.imputation1 = false;
         this.engagement = false;
-        const act:any = this.bonsEngagements.find(
+        const act = this.bonsEngagements.find(
           (item: any) => item.id === event.value
         );
-        console.log(act);
+        //console.log(act);
         if (act) {
           this.consulterM = act;
         }
@@ -295,7 +295,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         const act: Engagement | undefined = this.data.find(
           (item: any) => item.id === event.value
         );
-        console.log(act);
+       // console.log(act);
         if (act) {
           this.getDataEngagement(act?.codeProcedure, act?.numero);
         }

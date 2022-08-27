@@ -21,8 +21,15 @@ export class TransmissionReceptionDetailService {
       .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
       .leftJoinAndSelect('detail.transmission_reception', 'transmission_reception')
       .leftJoinAndSelect('bon_engagement.numActeJuridique', 'eng')
+      .leftJoinAndSelect('bon_engagement.traitements', 'traitements')
+      .leftJoinAndSelect('bon_engagement.paiements', 'paiements')
+      .leftJoinAndSelect('bon_engagement.facture', 'facture')
+      .leftJoinAndSelect('facture.articles', 'articles')
       .where(filter?.ids ? 'transmission_reception.id IN(:...codes)' : 'true', {
         codes: filter?.ids,
+      })
+      .andWhere(filter?.etats ? 'bon_engagement.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
       })
       .andWhere(filter?.exercices ? 'eng.numero like :exercices' : 'true', {
         exercices: filter?.exercices,

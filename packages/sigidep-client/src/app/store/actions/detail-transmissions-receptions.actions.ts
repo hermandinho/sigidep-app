@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 export const GetTransmissionsReceptionsDetails = createAction(
   '[transmissionsReceptionsDetails] Filter',
-  props<{ ids?: number[]; exercices?: string[];}>());
+  props<{ ids?: number[]; exercices?: string[]; etats?: string[]}>());
 export const GetTransmissionsReceptionsDetailsSuccess = createAction(
   '[transmissionsReceptionsDetails] Filter success',
   props<{ payload: any[] }>()

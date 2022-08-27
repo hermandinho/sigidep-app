@@ -1,5 +1,26 @@
 <div id="print-section">
   <p-card>
+    <p-toolbar styleClass="p-mb-2">
+      <ng-template pTemplate="left">
+        <div class="quick_filter">
+          <div class="p-field">
+            <label>{{ "labels.filterCodeEx" | translate }}:</label>
+            <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'numero'"
+            [autoDisplayFirst]="false"
+            [options]="exercices"
+            [placeholder]="''"
+            optionLabel="code"
+            optionValue="code"
+            (onChange)="handleFilter($event)"
+          >
+          </p-dropdown>
+          </div>
+        </div>
+      </ng-template>
+    </p-toolbar>
     <p-table
           #dt
           [globalFilterFields]="globalColumnsBordereaux"
@@ -17,7 +38,7 @@
           <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
               <h5 class="p-m-0">
-                {{ "tables.titles.dossiers" | translate }}
+                {{ "tables.titles.bon_controler" | translate }}
               </h5>
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
@@ -49,7 +70,7 @@
               <td class="actions">
                 <input hidden type="checkbox" #fileInput110 (change)="selected($event,item)" >
               </td>
-              <td *ngFor="let column of tableColumnsBordereau let i=index" class="nowrap">
+              <td *ngFor="let column of tableColumnsBordereau" class="nowrap">
                 <span *ngIf="column.field === 'numeroBon'">
                   {{ item["bon_engagement"]?.numero }}
                 </span>

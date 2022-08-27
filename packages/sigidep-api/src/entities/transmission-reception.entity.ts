@@ -1,19 +1,14 @@
 import {
+  ChildEntity,
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import { UserEntity } from './user.entity';
+import { TraitementBonEngagementEntity } from './traitement-bon-engagement.entity';
 
-@Entity({
-  name: 'transmissions_receptions',
-  orderBy: {
-    createdAt: 'DESC',
-  },
-})
-export class TransmissionReceptionEntity extends BaseEntity {
+@ChildEntity({ name: 'transmissions_receptions' })
+export class TransmissionReceptionEntity extends TraitementBonEngagementEntity {
   @Column({ name: 'numero', nullable: true })
   public numero: string;
 
@@ -28,14 +23,5 @@ export class TransmissionReceptionEntity extends BaseEntity {
 
   @Column('varchar',{ nullable: true, name: 'lieu' })
   public lieu: string;
-
-  // RELATIONS
-  @ManyToOne(() => UserEntity, (object) => object.id, {
-    eager: false,
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'created_by' })
-  public createdBy: UserEntity;
 
 }

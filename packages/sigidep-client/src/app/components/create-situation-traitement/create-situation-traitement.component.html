@@ -97,7 +97,7 @@
         <span class="color">{{"labels.dateLiquidation_mandat" | translate}}:{{traitement?.traitements[0]?.dateLiquidation}}</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement.editionTCC" class="p-field p-col-12 p-md-1">
+      <div *ngIf="!traitement?.editionTCC" class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -105,7 +105,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement.editionTCC" class="p-field p-col-12 p-md-1">
+      <div *ngIf="traitement?.editionTCC" class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
@@ -120,7 +120,7 @@
         <span class="color">{{"labels.dateEditionTCC_mandat" | translate}}:{{traitement?.dateEditionTCC}}</span>
       </div>
       <!--  -->
-      <div *ngIf="!traitement.rejet" class="p-field p-col-12 p-md-1">
+      <div *ngIf="!traitement?.rejet" class="p-field p-col-12 p-md-1">
         <button
         class="p-button-rounded p-button-danger"
         icon="pi pi-times"
@@ -128,7 +128,7 @@
         pRipple
       ></button>
       </div>
-      <div *ngIf="traitement.rejet" class="p-field p-col-12 p-md-1">
+      <div *ngIf="traitement?.rejet" class="p-field p-col-12 p-md-1">
          <button
             class="p-button-rounded p-button-success"
             icon="pi pi-check"
