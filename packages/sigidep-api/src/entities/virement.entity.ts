@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntity } from "./base.entity";
 import { DetailsVirementEntity } from "./details-virement.entity";
+import { ExerciseEntity } from "./exercise.entity";
 import { ModelVirementEntity } from "./model-virement.entity";
 export enum VirementEtatEnum {
     SAVED = 'Enregistrer', // Used when creating an Exercise automatically
@@ -50,6 +51,10 @@ export class VirementEntity extends BaseEntity {
     @ManyToOne(() => ModelVirementEntity, (object) => object.id, { eager: false })
     @JoinColumn({ name: 'model_virement_id', referencedColumnName: 'id' })
     public modelVirement: ModelVirementEntity;
+
+    @ManyToOne(() => ExerciseEntity, (object) => object.id, { eager: false })
+    @JoinColumn({ name: 'exercice_id', referencedColumnName: 'id' })
+    public exercice: ExerciseEntity;
 
     constructor(
         params?: Partial<VirementEntity>,

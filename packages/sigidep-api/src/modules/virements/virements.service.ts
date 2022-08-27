@@ -34,6 +34,7 @@ export class VirementsService {
         spSourceVirement: createVirementDto.spCibleVirement.code + '/' + createVirementDto.spSourceVirement.labelFr,
         spCibleVirement: createVirementDto.spCibleVirement.code + '/' + createVirementDto.spCibleVirement.labelFr,
         modelVirement: createVirementDto.modelVirement,
+        exercice: createVirementDto.exercice,
       })
     );
     createVirementDto.detailsVirementsCredit.forEach((e) => {
@@ -65,7 +66,7 @@ export class VirementsService {
   }
 
   findAll() {
-    return this.repository.find();
+    return this.repository.find({ relations: ['modelVirement', 'detailsVirements', 'exercice'] });
   }
 
   findOne(id: number) {
