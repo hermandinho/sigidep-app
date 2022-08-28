@@ -69,7 +69,7 @@ implements OnInit {
       GetTransmissionsReceptions({})
     );
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.CONTROLECONFORMITE]})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
     );
     this._store.dispatch(
       GetExercises({})
