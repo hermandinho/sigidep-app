@@ -2,7 +2,7 @@ import { DetailsVirementEntity } from "@entities/details-virement.entity";
 import { ExerciseEntity } from "@entities/exercise.entity";
 import { ModelVirementEntity } from "@entities/model-virement.entity";
 import { SubProgramEntity } from "@entities/sub-program.entity";
-import { TypeVirementEnum, VirementEtatEnum } from "@entities/virement.entity";
+import { TypeVirementEnum, EtatVirementEnum } from "@entities/virement.entity";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 import { DetailsVirementsDTO } from "./details-virement.dto";
@@ -43,7 +43,7 @@ export class CreateVirementDto {
 
     @ApiProperty({ required: false })
     @IsNotEmpty()
-    public etatVirement: VirementEtatEnum;
+    public etatVirement: EtatVirementEnum;
 
     @ApiProperty({ required: true })
     @IsNotEmpty()

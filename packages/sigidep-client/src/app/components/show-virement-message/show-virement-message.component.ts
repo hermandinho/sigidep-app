@@ -10,6 +10,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class ShowVirementMessageComponent implements OnInit {
   public message!: VirementMessage;
   ok: string = 'OK';
+  cancel: string = 'Anuler'
 
   constructor(
     public config: DynamicDialogConfig,
@@ -20,8 +21,12 @@ export class ShowVirementMessageComponent implements OnInit {
     this.message = this.config.data?.data;
   }
 
-  close() {
-    this.ref.close();
+  closeOk() {
+    this.ref.close(true);
+  }
+
+  closeCancel() {
+    this.ref.close(false);
   }
 
 }

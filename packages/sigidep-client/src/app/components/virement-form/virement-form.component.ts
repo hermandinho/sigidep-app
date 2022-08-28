@@ -6,7 +6,7 @@ import { DetailsVirementModel } from '@models/detailsVirement';
 import { EncoursModel } from '@models/encours.model';
 import { StepVirement, VirementModele } from '@models/virement.model';
 import { Store } from '@ngrx/store';
-import { ModeVirementEnum } from '@pages/virements/tools/type-virement';
+import { ModeVirementEnum } from '@pages/virements/tools/virement-tools';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
@@ -57,7 +57,6 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
     if (this.mode != ModeVirementEnum.CREATION) {
       this.virement = this.config.data?.item as VirementModele;
       this.oldDetailsVirements = this.virement.detailsVirements;
-      console.log(this.virement);
       this.form = this._fb.group({
         exercice: this.virement.exercice,
         spCibleVirement: this.virement.spCibleVirement,

@@ -4,7 +4,7 @@
         (typeVirement)="setTypeVirement($event)" (filterEncour)="filterEncourByPrograms($event)" [mode]="mode">
     </app-virement-body-form>
     <app-details-virement-form *ngSwitchCase="'details-virement'" [startingForm]="virementBodyForm"
-        (changeStep)="changeStep('details-virement', $event)" [encourList]="detailsVirements"
+        (changeStep)="changeStep('details-virement', $event)" [encourList]="detailsVirements" [virement]="virement"
         [typeFinancement]="typeFinancement" (submit)="submit()" [mode]="mode" [detailsVirement]="oldDetailsVirements">
     </app-details-virement-form>
 </ng-container>

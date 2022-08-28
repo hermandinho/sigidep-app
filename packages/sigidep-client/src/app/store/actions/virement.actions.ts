@@ -25,14 +25,14 @@ export const UpdateVirementFailure = createAction(
 );
 
 export const DeleteVirement = createAction(
-    '[ModelVirements] Delete',
+    '[Virement] Delete',
     props<{ id: number }>()
 );
 export const DeleteVirementSuccess = createAction(
-    '[ModelVirements] Delete success'
+    '[Virement] Delete success'
 );
 export const DeleteVirementFailure = createAction(
-    '[ModelVirements] Delete failure',
+    '[Virement] Delete failure',
     props<{ error?: any }>() // TODO defile errors global model here
 );
 

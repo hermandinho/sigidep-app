@@ -4,7 +4,7 @@ import { BaseComponent } from '@components/base.component';
 import { ExerciseModel } from '@models/exercise.model';
 import { ModeleVirementModel } from '@models/modele-virement.model';
 import { SubProgramModel } from '@models/sub-program.model';
-import { ModeVirementEnum, typeFinancementEnum, typeVirement, typeVirementEnum } from '@pages/virements/tools/type-virement';
+import { ModeVirementEnum, typeFinancementEnum, typeVirement, typeVirementEnum } from '@pages/virements/tools/virement-tools';
 import { ApisService } from '@services/apis.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -53,7 +53,6 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.show = this.mode == ModeVirementEnum.CREATION ? false : true;
-    console.log(this.show);
 
     this.virementForm = this.startingForm;
     this._initListener();

@@ -3,7 +3,7 @@ import { BaseEntity } from "./base.entity";
 import { DetailsVirementEntity } from "./details-virement.entity";
 import { ExerciseEntity } from "./exercise.entity";
 import { ModelVirementEntity } from "./model-virement.entity";
-export enum VirementEtatEnum {
+export enum EtatVirementEnum {
     SAVED = 'Enregistrer', // Used when creating an Exercise automatically
     UPDATED = 'Modifier',
     RESERVED = 'Reserver',
@@ -40,17 +40,18 @@ export class VirementEntity extends BaseEntity {
     public spSourceVirement: string;
     @Column({ name: 'sp_cible_virement', nullable: false, type: String })
     public spCibleVirement: string;
-    @Column({ name: 'etat_virement', nullable: false, type: 'enum', enum: VirementEtatEnum, default: VirementEtatEnum.SAVED })
-    public etatVirement: VirementEtatEnum;
+    @Column({ name: 'etat_virement', nullable: false, type: 'enum', enum: EtatVirementEnum, default: EtatVirementEnum.SAVED })
+    public etatVirement: EtatVirementEnum;
 
     // RELATIONS
     @OneToMany(() => DetailsVirementEntity, (object) => object.virement, { eager: false })
     public detailsVirements: DetailsVirementEntity[];
 
 
-    @ManyToOne(() => ModelVirementEntity, (object) => object.id, { eager: false })
-    @JoinColumn({ name: 'model_virement_id', referencedColumnName: 'id' })
+    @ManyToOne(() => ModelVirementEntity, (object) => object.id, { eager: false, onDelete: 'CASCADE', nullable: true })
+    @JoinColumn({ name: 'modelVirement', referencedColumnName: 'id' })
     public modelVirement: ModelVirementEntity;
+
 
     @ManyToOne(() => ExerciseEntity, (object) => object.id, { eager: false })
     @JoinColumn({ name: 'exercice_id', referencedColumnName: 'id' })

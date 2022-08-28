@@ -47,7 +47,7 @@ import {
 import { CategorieProcedure } from 'app/utils/types';
 import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
 import { VirementMessage } from '@models/virement-message';
-import { ModeVirementEnum } from '@pages/virements/tools/type-virement';
+import { ModeVirementEnum } from '@pages/virements/tools/virement-tools';
 
 @Injectable({
   providedIn: 'root',
@@ -1234,7 +1234,7 @@ export class DialogsService {
     });
   }
 
-  public async launchVirementMessage(data: VirementMessage): Promise<any> {
+  public async launchVirementMessage(data: VirementMessage, size: number = 20): Promise<any> {
     if (!this.virementMessageComponent) {
       const { ShowVirementMessageComponent } = await import(
         '@components/show-virement-message/show-virement-message.component'
@@ -1243,7 +1243,7 @@ export class DialogsService {
     }
 
     return this._dialogService.open(this.virementMessageComponent, {
-      width: '20vw',
+      width: size + 'vw',
       height: 'auto',
       modal: true,
       data: {

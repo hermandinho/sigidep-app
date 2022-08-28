@@ -1,3 +1,4 @@
+import { EtatVirementEnum } from '@pages/virements/tools/virement-tools';
 import { BaseModel } from './base.model';
 import { DetailsVirementModel } from './detailsVirement';
 import { ExerciseModel } from './exercise.model';
@@ -16,7 +17,7 @@ export class VirementModele extends BaseModel {
     typeVirement!: string;
     spSourceVirement!: string;
     spCibleVirement!: string;
-    etatVirement?: string;
+    etatVirement?: EtatVirementEnum;
     detailsVirementsDebit!: DetailsVirementModel[];
     detailsVirementsCredit!: DetailsVirementModel[];
     detailsVirements!: DetailsVirementModel[];

@@ -41,6 +41,11 @@
         <ng-template pTemplate="body" let-item>
             <tr>
                 <td>{{ item?.numero }}</td>
+                <td>
+                    <span>
+                        <p-tag [value]="item.etatVirement" [severity]="getItemClass(item)"></p-tag>
+                    </span>
+                </td>
                 <td>{{ item?.dateVirement }}</td>
                 <td>{{ item?.dateSignatureVirement }}</td>
                 <td>{{ item?.signataireVirement }}</td>

@@ -8,11 +8,12 @@ import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@reducers/index';
 import { getDataSelector, getLoadingSelector } from '@reducers/virement.reducer';
+import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ModeVirementEnum } from './tools/type-virement';
+import { EtatVirementEnum, ModeVirementEnum } from './tools/virement-tools';
 
 @Component({
   selector: 'app-virements',
@@ -29,6 +30,7 @@ export class VirementsComponent extends BaseComponent implements OnInit {
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
+    private _apisService: ApisService,
     public translate: TranslateService) {
     super();
 
@@ -36,6 +38,11 @@ export class VirementsComponent extends BaseComponent implements OnInit {
       {
         field: 'numero',
         title: 'tables.headers.numeroVirement',
+        sortable: true,
+      },
+      {
+        field: 'etatVirement',
+        title: 'tables.headers.etatVirement',
         sortable: true,
       },
       {
@@ -82,7 +89,7 @@ export class VirementsComponent extends BaseComponent implements OnInit {
 
   delete(item: VirementModele) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteModelVirement',
+      message: 'dialogs.messages.deleteVirement',
       accept: () => {
         this._store.dispatch(DeleteVirement({ id: item.id }));
       },
@@ -105,8 +112,6 @@ export class VirementsComponent extends BaseComponent implements OnInit {
               ...d,
             })
         );
-
-        console.log(data);
       });
 
     this.loading$ = this._store.pipe(
@@ -142,11 +147,28 @@ export class VirementsComponent extends BaseComponent implements OnInit {
       });
   }
 
-  reserver(item: VirementModele) {
-    this._dialogService.launchVirementCreateDialog(item, ModeVirementEnum.RESERVATION);
+  async reserver(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.RESERVATION);
   }
 
-  valider(item: VirementModele) {
-    this._dialogService.launchVirementCreateDialog(item, ModeVirementEnum.VALIDATION);
+  async valider(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.VALIDATION);
+  }
+
+  async getVirement(id: number) {
+    let virement = new VirementModele;
+    await this._apisService
+      .get<VirementModele>(`/virements/${id}`)
+      .toPromise().then((res) => {
+        virement = res;
+      });
+    return virement;
+  }
+
+  getItemClass(item: VirementModele) {
+    return item.etatVirement == EtatVirementEnum.SAVED ? 'success' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'primary' :
+      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'wargning' : 'info'))
   }
 }

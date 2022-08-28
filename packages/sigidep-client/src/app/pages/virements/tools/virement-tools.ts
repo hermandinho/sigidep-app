@@ -20,3 +20,11 @@ export enum typeVirementEnum {
 export enum ModeVirementEnum {
     CREATION, RESERVATION, VALIDATION
 }
+
+export enum EtatVirementEnum {
+    SAVED = 'Enregistrer', // Used when creating an Exercise automatically
+    UPDATED = 'Modifier',
+    RESERVED = 'Reserver',
+    CANCELLED = 'Annuler',
+    VALIDATE = 'Validé',
+}

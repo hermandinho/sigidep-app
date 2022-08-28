@@ -1,7 +1,7 @@
 import { DetailsVirementEntity } from '@entities/details-virement.entity';
 import { EncoursEntity } from '@entities/encours.entity';
 import { SubProgramEntity } from '@entities/sub-program.entity';
-import { VirementEntity } from '@entities/virement.entity';
+import { VirementEntity, EtatVirementEnum } from '@entities/virement.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { genCode } from '@utils/functions';
@@ -31,7 +31,7 @@ export class VirementsService {
         dateSignatureVirement: createVirementDto.dateSignatureVirement,
         signataireVirement: createVirementDto.signataireVirement,
         typeVirement: createVirementDto.typeVirement,
-        spSourceVirement: createVirementDto.spCibleVirement.code + '/' + createVirementDto.spSourceVirement.labelFr,
+        spSourceVirement: createVirementDto.spSourceVirement.code + '/' + createVirementDto.spSourceVirement.labelFr,
         spCibleVirement: createVirementDto.spCibleVirement.code + '/' + createVirementDto.spCibleVirement.labelFr,
         modelVirement: createVirementDto.modelVirement,
         exercice: createVirementDto.exercice,
@@ -70,7 +70,12 @@ export class VirementsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} virement`;
+    return this.repository.findOne({
+      where: {
+        id,
+      },
+      relations: ['modelVirement', 'detailsVirements', 'exercice']
+    });
   }
 
   update(id: number, updateVirementDto: UpdateVirementDto) {
@@ -90,5 +95,20 @@ export class VirementsService {
     return this.encourRepository.createQueryBuilder('e').where(
       'e.exercise = :id', { id: +id }
     ).leftJoinAndSelect('e.operation', 'o').getMany();
+  }
+
+  async reserver(id: number) {
+    let virement = await this.repository.findOne({ id });
+    virement.etatVirement = EtatVirementEnum.RESERVED;
+    this.repository.save(virement);
+    return virement;
+  }
+
+
+  async valider(id: number) {
+    let virement = await this.repository.findOne({ id });
+    virement.etatVirement = EtatVirementEnum.VALIDATE;
+    this.repository.save(virement);
+    return virement;
   }
 }
