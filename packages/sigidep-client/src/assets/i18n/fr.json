@@ -993,7 +993,8 @@
       "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
       "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?",
       "deleteVirement": "Etes-vous sûr de supprimer ce virement?",
-      "alertRejet":"Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!"
+      "alertRejet":"Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!",
+      "alertControler":"Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !"
     }
   },
   "exerciseStatuses": {
