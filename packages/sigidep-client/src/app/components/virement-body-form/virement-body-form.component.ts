@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { ExerciseModel } from '@models/exercise.model';
 import { ModeleVirementModel } from '@models/modele-virement.model';
 import { SubProgramModel } from '@models/sub-program.model';
-import { typeFinancementEnum, typeVirement, typeVirementEnum } from '@pages/virements/tools/type-virement';
+import { ModeVirementEnum, typeFinancementEnum, typeVirement, typeVirementEnum } from '@pages/virements/tools/virement-tools';
 import { ApisService } from '@services/apis.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -17,6 +17,7 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
 
   @Input() startingForm!: FormGroup;
   @Input() dataVirement!: any;
+  @Input() mode!: ModeVirementEnum;
 
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
     'back' | 'forward'
@@ -37,6 +38,7 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
   public subProgramsListSource: SubProgramModel[] = [];
   public subProgramsListCible: SubProgramModel[] = [];
   public typeVirements = typeVirement;
+  public show: boolean = false;
 
 
 
@@ -50,6 +52,8 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.show = this.mode == ModeVirementEnum.CREATION ? false : true;
+
     this.virementForm = this.startingForm;
     this._initListener();
   }
@@ -77,8 +81,6 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
       .get<SubProgramModel[]>(`/virements/exercice/${event.value.id}`)
       .toPromise().then((data) => {
         this.subProgramsList = data;
-        console.log(data);
-
         this.subProgramsListSource = [...this.subProgramsList];
         this.subProgramsListCible = [...this.subProgramsList];
       });

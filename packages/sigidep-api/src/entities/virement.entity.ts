@@ -1,8 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { BaseEntity } from "./base.entity";
 import { DetailsVirementEntity } from "./details-virement.entity";
+import { ExerciseEntity } from "./exercise.entity";
 import { ModelVirementEntity } from "./model-virement.entity";
-export enum VirementEtatEnum {
+export enum EtatVirementEnum {
     SAVED = 'Enregistrer', // Used when creating an Exercise automatically
     UPDATED = 'Modifier',
     RESERVED = 'Reserver',
@@ -23,15 +24,15 @@ export enum TypeVirementEnum {
     },
 })
 export class VirementEntity extends BaseEntity {
-    @Column({ name: 'numero', nullable: false, type: 'int' })
-    public numero: number;
+    @Column({ name: 'numero', nullable: true, type: String })
+    public numero: string;
     @Column({ name: 'object_virement', nullable: false, type: String })
     public objectVirement: string;
     @Column({ name: 'date_virement', nullable: false, type: String })
     public dateVirement: string;
-    @Column({ name: 'date_signature_virement', nullable: false, type: Date })
+    @Column({ name: 'date_signature_virement', nullable: true, type: Date })
     public dateSignatureVirement: Date;
-    @Column({ name: 'signataire_virement', nullable: false, type: String })
+    @Column({ name: 'signataire_virement', nullable: true, type: String })
     public signataireVirement: string;
     @Column({ name: 'type_virement', nullable: false, type: 'enum', enum: TypeVirementEnum })
     public typeVirement: TypeVirementEnum;
@@ -39,19 +40,29 @@ export class VirementEntity extends BaseEntity {
     public spSourceVirement: string;
     @Column({ name: 'sp_cible_virement', nullable: false, type: String })
     public spCibleVirement: string;
-    @Column({ name: 'etat_virement', nullable: false, type: 'enum', enum: VirementEtatEnum, default: VirementEtatEnum.SAVED })
-    public etatVirement: VirementEtatEnum;
+    @Column({ name: 'etat_virement', nullable: false, type: 'enum', enum: EtatVirementEnum, default: EtatVirementEnum.SAVED })
+    public etatVirement: EtatVirementEnum;
 
     // RELATIONS
     @OneToMany(() => DetailsVirementEntity, (object) => object.virement, { eager: false })
     public detailsVirements: DetailsVirementEntity[];
 
 
-    @ManyToOne(() => ModelVirementEntity, (object) => object.id, {
-        eager: false,
-        onDelete: 'CASCADE',
-        nullable: true,
-    })
-    @JoinColumn({ name: 'model_virement_id', referencedColumnName: 'id' })
+    @ManyToOne(() => ModelVirementEntity, (object) => object.id, { eager: false, onDelete: 'CASCADE', nullable: true })
+    @JoinColumn({ name: 'modelVirement', referencedColumnName: 'id' })
     public modelVirement: ModelVirementEntity;
+
+
+    @ManyToOne(() => ExerciseEntity, (object) => object.id, { eager: false })
+    @JoinColumn({ name: 'exercice_id', referencedColumnName: 'id' })
+    public exercice: ExerciseEntity;
+
+    constructor(
+        params?: Partial<VirementEntity>,
+    ) {
+        super();
+        if (params) {
+            Object.assign(this, params);
+        }
+    }
 }

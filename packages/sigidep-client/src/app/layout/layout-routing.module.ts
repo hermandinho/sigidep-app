@@ -42,7 +42,6 @@ import { OperationDeControleComponent } from '@pages/operation-de-controle/opera
 import { ReceptionBordereauxComponent } from '@pages/reception-bordereaux/reception-bordereaux.component';
 import { VirementsComponent } from '@pages/virements/virements.component';
 import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.component';
-import { DetailsVirementComponent } from '@pages/details-virement/details-virement.component';
 
 const routes: Routes = [
   {
@@ -475,16 +474,6 @@ const routes: Routes = [
           import(
             '../pages/modele-virement/modele-virement.module'
           ).then((m) => m.ModeleVirementModule),
-      },
-      {
-        path: 'details-virement',
-        canActivate: [AuthGuard],
-        component: DetailsVirementComponent,
-        data: {},
-        loadChildren: () =>
-          import(
-            '../pages/details-virement/details-virement.module'
-          ).then((m) => m.DetailsVirementModule),
       },
       {
         path: 'virement',

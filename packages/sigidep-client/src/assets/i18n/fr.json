@@ -687,7 +687,8 @@
     "bonsengagementsmissions": "Bons Engagements Missions",
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
-    "transmissionsreceptions": "Transmissions Receptions"
+    "transmissionsreceptions": "Transmissions Receptions",
+    "modelvirement": "Modèle Virements"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -723,6 +724,7 @@
     },
     "headers": {
       "exerciseCode": "Code",
+      "etatVirement": "Etat Virement",
       "code": "Code",
       "startDate": "Date début",
       "endDate": "Date fin",
@@ -980,7 +982,8 @@
       "reception":"Bordereau réceptionné avec succès au  Contrôle Financier ",
       "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
       "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
-      "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?"
+      "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?",
+      "deleteVirement": "Etes-vous sûr de supprimer ce virement?"
     }
   },
   "exerciseStatuses": {

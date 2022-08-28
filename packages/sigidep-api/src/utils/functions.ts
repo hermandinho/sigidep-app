@@ -13,3 +13,11 @@ export function getAbbreviation(text: string) {
     .toUpperCase();
   return acronym;
 }
+export function genCode(initialInt: number, endInt: number) {
+  let value = endInt + '';
+  while (value.length < 4) {
+    value = '0' + value;
+  }
+  value = initialInt + '-' + value;
+  return value;
+}

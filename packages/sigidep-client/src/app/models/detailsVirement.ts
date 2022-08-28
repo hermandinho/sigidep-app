@@ -1,10 +1,15 @@
 import { BaseModel } from './base.model';
+import { EncoursModel } from './encours.model';
 import { SubProgramActivityTaskOperationModel } from './sub-program.model';
 
 export class DetailsVirementModel extends BaseModel {
-    imputation!: string;
+    codeInput!: string;
+    libelleInput!: string;
+    isCredit: boolean = true;
     montant?: number;
-    operation!: SubProgramActivityTaskOperationModel;
+    encour!: EncoursModel;
+    debit!: number;
+    credit!: number;
 
     constructor(params?: Partial<DetailsVirementModel>) {
         super();

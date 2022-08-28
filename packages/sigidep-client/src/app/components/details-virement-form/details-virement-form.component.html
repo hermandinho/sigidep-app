@@ -1,44 +1,45 @@
 <div class="container">
     <form class="form" [formGroup]="detailVirementForm">
-
-        <!-- *ngIf="imputationsOperationsList.length>0" -->
-        <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
-        <p-table [value]="encourList" responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>#</th>
-                    <th>Imputation</th>
-                    <th>libele Operation</th>
-                    <th>Montant</th>
-                    <th></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-                <tr>
-                    <td>{{ rowIndex }}</td>
-                    <td>{{ item.imputation }}</td>
-                    <td>{{ item.operation.labelFr }}</td>
-                    <td pEditableColumn>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <input pInputText type="number" placeholder="montant" [(ngModel)]="item.montant"
-                                    [ngModelOptions]="{standalone: true}" />
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{ item.montant | number }}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                    <td>
-                        <button (click)="addToCredit(item)" class="p-button-success" icon="pi pi-plus" pButton
-                            pRipple></button>
-                        &nbsp;&nbsp;&nbsp;
-                        <button (click)="addToDebit(item)" class="p-button-primary" icon="pi pi-minus" pButton
-                            pRipple></button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+        <div *ngIf="show">
+            <!-- *ngIf="imputationsOperationsList.length>0" -->
+            <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
+            <p-table [value]="encourList" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>#</th>
+                        <th>Imputation</th>
+                        <th>libele Operation</th>
+                        <th>Montant</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{ rowIndex }}</td>
+                        <td>{{ item.codeInput }}</td>
+                        <td>{{ item.libelleInput }}</td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" placeholder="montant" [(ngModel)]="item.montant"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ item.montant ?? 'entrez un montant' }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <button (click)="addToCredit(item)" class="p-button-success" icon="pi pi-plus" pButton
+                                pRipple [disabled]="null == item.montant"></button>
+                            &nbsp;&nbsp;&nbsp;
+                            <button (click)="addToDebit(item)" class="p-button-primary" icon="pi pi-minus" pButton
+                                pRipple [disabled]="null == item.montant"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
         <h3>{{ "tables.titles.debit" | translate }}</h3>
         <p-table [value]="debitEncourList" responsiveLayout="scroll">
             <ng-template pTemplate="header">
@@ -47,16 +48,16 @@
                     <th>Imputation</th>
                     <th>Libellé Operation</th>
                     <th>Montant</th>
-                    <th></th>
+                    <th *ngIf="show"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr>
                     <td>{{ rowIndex }}</td>
-                    <td>{{ item.imputation }}</td>
-                    <td>{{ item.operation.labelFr }}</td>
+                    <td>{{ item.codeInput }}</td>
+                    <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant | number }}</td>
-                    <td>
+                    <td *ngIf="show">
                         <button (click)="removeFromDebit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
                     </td>
@@ -79,16 +80,16 @@
                     <th>Imputation</th>
                     <th>libele Operation</th>
                     <th>Montant</th>
-                    <th></th>
+                    <th *ngIf="show"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr>
                     <td>{{ rowIndex }}</td>
-                    <td>{{ item.imputation }}</td>
-                    <td>{{ item.operation.labelFr }}</td>
+                    <td>{{ item.codeInput }}</td>
+                    <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant ?? 0 }}</td>
-                    <td>
+                    <td *ngIf="show">
                         <button (click)="removeFromCredit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
                     </td>
@@ -115,8 +116,10 @@
             <div class="p-field p-col-7 p-md-7">
                 <button (click)="doChangeStep('back')" [label]="'buttons.back' | translate" pButton></button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
-                    [label]="'buttons.save' | translate" pButton></button>
+                <button *ngIf="show" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                    [label]="'buttons.save' | translate" pButton (click)="submitForm()"></button>
+                <button *ngIf="!show" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                    [label]="'reserver' | translate" pButton (click)="reserver()"></button>
             </div>
         </div>
     </form>

@@ -1,19 +1,28 @@
+import { EtatVirementEnum } from '@pages/virements/tools/virement-tools';
 import { BaseModel } from './base.model';
+import { DetailsVirementModel } from './detailsVirement';
+import { ExerciseModel } from './exercise.model';
+import { ModeleVirementModel } from './modele-virement.model';
 export type StepVirement =
     | 'virement'
     | 'details-virement'
     | 'validate';
 
 export class VirementModele extends BaseModel {
-    numero!: string;
-    object_virement!: string;
-    date_virement!: string;
-    date_signature_virement!: string;
-    signataire_virement!: string;
-    type_virement!: string;
-    sp_source_virement!: string;
-    sp_cible_virement!: string;
-    etat_virement!: string;
+    numero?: string;
+    objectVirement!: string;
+    dateVirement!: string;
+    dateSignatureVirement?: string;
+    signataireVirement?: string;
+    typeVirement!: string;
+    spSourceVirement!: string;
+    spCibleVirement!: string;
+    etatVirement?: EtatVirementEnum;
+    detailsVirementsDebit!: DetailsVirementModel[];
+    detailsVirementsCredit!: DetailsVirementModel[];
+    detailsVirements!: DetailsVirementModel[];
+    modelVirement!: ModeleVirementModel;
+    exercice!: ExerciseModel;
 
     constructor(params?: Partial<VirementModele>) {
         super();

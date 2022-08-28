@@ -49,4 +49,14 @@ export class VirementsController {
   public async getEncourWithSubProgramActivity(@Param('id') id: number) {
     return this.virementsService.getEncours(id);
   }
+
+  @Post('reserver/:id')
+  public async reserver(@Param('id') id: string) {
+    return this.virementsService.reserver(+id);
+  }
+
+  @Post('valider/:id')
+  public async valiter(@Param('id') id: string) {
+    return this.virementsService.valider(+id);
+  }
 }

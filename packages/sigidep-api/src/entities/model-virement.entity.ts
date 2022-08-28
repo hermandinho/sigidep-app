@@ -20,9 +20,9 @@ export class ModelVirementEntity extends BaseEntity {
     @Column({ name: 'contenu_model', type: 'text', nullable: true })
     public contenuModel: string;
 
-    // RELATIONS
+
     @OneToMany(() => VirementEntity, (object) => object.modelVirement, { eager: false })
-    public detailsVirements: VirementEntity[];
+    public virement: VirementEntity[];
 
 
 }

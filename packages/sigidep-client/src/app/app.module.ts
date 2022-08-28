@@ -59,7 +59,8 @@ import { OperationDeControleModule } from '@pages/operation-de-controle/operatio
 import { EditionDesTCCModule } from '@pages/edition-des-tcc/edition-des-tcc.module';
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
-import { DetailsVirementModule } from '@pages/details-virement/details-virement.module';
+import { ShowVirementMessageComponent } from './components/show-virement-message/show-virement-message.component';
+
 
 registerLocaleData(localeFr);
 
@@ -68,7 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ShowVirementMessageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -140,7 +141,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditionDesTCCModule,
     VirementsModule,
     ModeleVirementModule,
-    DetailsVirementModule,
     TransmissionsReceptionsModule
 
   ],

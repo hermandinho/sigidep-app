@@ -6,30 +6,30 @@ import { ModeleVirementsService } from './modele-virements.service';
 @Controller('modele-virements')
 export class ModeleVirementsController {
 
-    constructor(private readonly virementsService: ModeleVirementsService) { }
+    constructor(private readonly modelVirementService: ModeleVirementsService) { }
 
     @Post()
     create(@Body() createModelVirementDto: CreateModeleVirementDto) {
-        return this.virementsService.create(createModelVirementDto);
+        return this.modelVirementService.create(createModelVirementDto);
     }
 
     @Get()
     findAll() {
-        return this.virementsService.findAll();
+        return this.modelVirementService.findAll();
     }
 
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this.virementsService.findOne(+id);
+        return this.modelVirementService.findOne(+id);
     }
 
     @Put('/')
     update(@Body() updateVirementDto: UpdateModeleVirementDto) {
-        return this.virementsService.update(updateVirementDto);
+        return this.modelVirementService.update(updateVirementDto);
     }
 
     @Delete('/:id')
     remove(@Param('id') id: string) {
-        return this.virementsService.remove(+id);
+        return this.modelVirementService.remove(+id);
     }
 }

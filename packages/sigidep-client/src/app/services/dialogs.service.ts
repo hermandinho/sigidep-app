@@ -46,6 +46,8 @@ import {
 } from '@models/bon-engagement.model';
 import { CategorieProcedure } from 'app/utils/types';
 import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
+import { VirementMessage } from '@models/virement-message';
+import { ModeVirementEnum } from '@pages/virements/tools/virement-tools';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +74,7 @@ export class DialogsService {
   private agentCreateComponent: any;
   private modelVirementCreateComponent: any;
   private virementCreateComponent: any;
+  private virementMessageComponent: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
   private sousRubriqueCreateComponent: any;
@@ -1236,7 +1239,7 @@ export class DialogsService {
   }
 
 
-  public async launchVirementCreateDialog(item?: VirementModele): Promise<any> {
+  public async launchVirementCreateDialog(item?: VirementModele, mode: ModeVirementEnum = ModeVirementEnum.CREATION): Promise<any> {
     if (!this.virementCreateComponent) {
       const { VirementFormComponent } = await import(
         '@components/virement-form/virement-form.component'
@@ -1250,7 +1253,26 @@ export class DialogsService {
       height: 'auto',
       modal: true,
       data: {
-        item,
+        item: item,
+        mode: mode,
+      },
+    });
+  }
+
+  public async launchVirementMessage(data: VirementMessage, size: number = 20): Promise<any> {
+    if (!this.virementMessageComponent) {
+      const { ShowVirementMessageComponent } = await import(
+        '@components/show-virement-message/show-virement-message.component'
+      );
+      this.virementMessageComponent = ShowVirementMessageComponent;
+    }
+
+    return this._dialogService.open(this.virementMessageComponent, {
+      width: size + 'vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        data,
       },
     });
   }

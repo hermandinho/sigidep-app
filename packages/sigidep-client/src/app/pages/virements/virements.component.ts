@@ -8,10 +8,12 @@ import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@reducers/index';
 import { getDataSelector, getLoadingSelector } from '@reducers/virement.reducer';
+import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { EtatVirementEnum, ModeVirementEnum } from './tools/virement-tools';
 
 @Component({
   selector: 'app-virements',
@@ -28,6 +30,7 @@ export class VirementsComponent extends BaseComponent implements OnInit {
     private readonly _dialogService: DialogsService,
     private _store: Store<AppState>,
     private readonly dispatcher: Actions,
+    private _apisService: ApisService,
     public translate: TranslateService) {
     super();
 
@@ -38,27 +41,32 @@ export class VirementsComponent extends BaseComponent implements OnInit {
         sortable: true,
       },
       {
-        field: 'date_virement',
+        field: 'etatVirement',
+        title: 'tables.headers.etatVirement',
+        sortable: true,
+      },
+      {
+        field: 'dateVirement',
         title: 'tables.headers.dateVirement',
         sortable: true,
       },
       {
-        field: 'date_signature_virement',
+        field: 'dateSignatureVirement',
         title: 'tables.headers.dateSignatureVirement',
         sortable: true,
       },
       {
-        field: 'signataire_virement',
+        field: 'signataireVirement',
         title: 'tables.headers.signataireVirement',
         sortable: true,
       },
       {
-        field: 'sp_source_virement',
+        field: 'spSourceVirement',
         title: 'tables.headers.spSourceVirement',
         sortable: true,
       },
       {
-        field: 'sp_cible_virement',
+        field: 'spCibleVirement',
         title: 'tables.headers.spCibleVirement',
         sortable: true,
       },
@@ -79,13 +87,9 @@ export class VirementsComponent extends BaseComponent implements OnInit {
     this._initListeners();
   }
 
-  edit(item: VirementModele) {
-    this._dialogService.launchVirementCreateDialog(item);
-  }
-
   delete(item: VirementModele) {
     this._appService.showConfirmation({
-      message: 'dialogs.messages.deleteModelVirement',
+      message: 'dialogs.messages.deleteVirement',
       accept: () => {
         this._store.dispatch(DeleteVirement({ id: item.id }));
       },
@@ -141,5 +145,30 @@ export class VirementsComponent extends BaseComponent implements OnInit {
           });
         }
       });
+  }
+
+  async reserver(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.RESERVATION);
+  }
+
+  async valider(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.VALIDATION);
+  }
+
+  async getVirement(id: number) {
+    let virement = new VirementModele;
+    await this._apisService
+      .get<VirementModele>(`/virements/${id}`)
+      .toPromise().then((res) => {
+        virement = res;
+      });
+    return virement;
+  }
+
+  getItemClass(item: VirementModele) {
+    return item.etatVirement == EtatVirementEnum.SAVED ? 'success' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'primary' :
+      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'wargning' : 'info'))
   }
 }
