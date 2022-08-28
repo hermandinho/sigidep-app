@@ -5,7 +5,7 @@ import { BonEngagementEntity } from './bon-engagement.entity';
 import { UserEntity } from './user.entity';
 
 @Entity('traitements_bons_engagements')
-@TableInheritance({ column: { type: 'varchar', name: 'type',nullable: true } })
+@TableInheritance({ column: { type: 'varchar', name: 'type',nullable: true,default:'type' } })
 export class TraitementBonEngagementEntity extends BaseEntity {
   @ManyToOne(() => BonEngagementEntity, (object) => object.traitements, {
     eager: false,
@@ -64,4 +64,10 @@ export class TraitementBonEngagementEntity extends BaseEntity {
 
   @Column('varchar', { nullable: true, name: 'piecesJointe' })
   public piecesJointe!: string;
+  constructor(param?: Partial<TraitementBonEngagementEntity>) {
+    super();
+    if (param) {
+      Object.assign(this, param);
+    }
+  }
 }

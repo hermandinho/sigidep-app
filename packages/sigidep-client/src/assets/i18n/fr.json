@@ -47,7 +47,6 @@
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
-    "transmissionsReceptions": "Transmissions Receptions",
     "bonsengagements": "Engagements CP",
     "transmissionsReceptions":"Liste Visa et mise en route",
     "controledeconformite":"Controle de conformité",
@@ -688,7 +687,8 @@
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
     "transmissionsreceptions": "Transmissions Receptions",
-    "modelvirement": "Modèle Virements"
+    "modelvirement": "Modèle Virements",
+    "receptionbordereaux": "Reception Bordereaux"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -879,7 +879,15 @@
       "prixTotalHT": "Rrix Total HT",
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
-      "referenceMercuriale": "RéférenceMercuriale"
+      "referenceMercuriale": "RéférenceMercuriale",
+      "numeroBor":"Numero Bordereau",
+      "objet":"Objet",
+      "serviceEmetteur":"Service Emetteur",
+      "serviceDestination":"Service Destination",
+      "dateTransmission":"Date Transmission",
+      "numeroEng":"Numero Eng",
+      "montantCP":"MontantCP",
+      "dateEng":"Date Eng"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -948,7 +956,8 @@
       "printEngagement": "Engagement",
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
       "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}",
-      "editTransmissionReception": "Edit Transmission Reception"
+      "editTransmissionReception": "Edit Transmission Reception",
+      "viewTransmissionReception": "Entrez le Motif du Rejet :"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -983,7 +992,8 @@
       "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
       "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
       "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?",
-      "deleteVirement": "Etes-vous sûr de supprimer ce virement?"
+      "deleteVirement": "Etes-vous sûr de supprimer ce virement?",
+      "alertRejet":"Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!"
     }
   },
   "exerciseStatuses": {

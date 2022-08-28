@@ -109,4 +109,10 @@ export class BonEngagementEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'facture_id' })
   public facture: FactureEntity | null;
+  constructor(param?: Partial<BonEngagementEntity>) {
+    super();
+    if (param) {
+      Object.assign(this, param);
+    }
+  }
 }

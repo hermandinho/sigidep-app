@@ -166,14 +166,13 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
               '/transmissions-receptions',
               this.editedBordereau
             );
+
           method.subscribe(
             (res) => {
               this.busy = false;
 
-              this._store.dispatch(
-                GetTransmissionsReceptions({})
-              );
-
+              this.ngOnInit();
+              this.currentStepBs.next('constitution');
               this._appService.showToast({
                 summary: 'messages.success',
                 detail:

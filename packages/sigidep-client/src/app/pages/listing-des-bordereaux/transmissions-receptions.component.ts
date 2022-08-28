@@ -94,6 +94,9 @@ implements OnInit {
         this._store.dispatch(
           CreateTransmissionsReception({ payload: item })
         );
+        this._store.dispatch(
+          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
+        );
         this._appService.showToast({
           summary: 'messages.success',
           detail: 'messages.transmission.cancelSuccess',

@@ -23,5 +23,11 @@ export class TransmissionReceptionEntity extends TraitementBonEngagementEntity {
 
   @Column('varchar',{ nullable: true, name: 'lieu' })
   public lieu: string;
+  constructor(param?: Partial<TransmissionReceptionEntity>) {
+    super();
+    if (param) {
+      Object.assign(this, param);
+    }
+  }
 
 }

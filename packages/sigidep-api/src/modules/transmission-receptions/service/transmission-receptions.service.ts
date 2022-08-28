@@ -7,6 +7,7 @@ import { TransmissionReceptionDTO } from '../dto/transmission-receptions.dto';
 import { EtatBonEnum } from '@utils/etat-bon.enum';
 import { DetailTransmissionReceptionEntity } from '@entities/detail-transmission-reception.entity';
 import { BonEngagementEntity } from '@entities/bon-engagement.entity';
+import { CreateBonEngagementDTO } from '@modules/bons-engagements/dto/create-bon-engagement.dto';
 
 @Injectable()
 export class TransmissionReceptionService {
@@ -83,6 +84,8 @@ export class TransmissionReceptionService {
     if(payload){
       for(let i=0; i<payload?.bon_engagement?.length; i++){
         const property = payload?.bon_engagement[i];
+        console.log("property save ",property)
+
         this.repositorybon.save({
           ...(property as any), // existing fields
           etat: EtatBonEnum.TRANSMISCONTROLECONFORMITE,
@@ -112,26 +115,29 @@ export class TransmissionReceptionService {
     }
    
     var etated = '';
-    if(payload?.action==='reception'){
-       etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE
+    if(payload?.action === 'reception'){
+       etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE;
+       this.repository.save({
+        ...payload.data[0]?.transmission_reception, // existing fields
+        objet: EtatBonEnum.RECEPTIONCONTROLECONFORMITE,
+      });
        for(let i=0; i<payload?.data?.length; i++){
-        const property = payload?.data[i]?.bon_engagement;
+        const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
+        //const property:CreateBonEngagementDTO = payload?.data[i]?.bon_engagement;
+        console.log("property update ",property)
         this.repositorybon.save({
           ...(property as any), // existing fields
           etat: etated,
           updateBy:user
         });
       }
-      this.repository.save({
-        ...check, // existing fields
-        objet: etated, // annulation du bon
-      });
-    }else if(payload?.action==='rejet'){
+      
+    }else if(payload?.action === 'rejet'){
        etated = EtatBonEnum.REJETCONTROLEREGULARITE
-       const property = payload?.data[0]?.bon_engagement;
+       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
        this.repository.save({
-        ...check, // existing fields
-        objet: etated, // annulation du bon
+        ...payload.data[0]?.transmission_reception, // existing fields
+        objet: etated, 
         motif: payload?.motif
       });
        this.repositorybon.save({
@@ -141,19 +147,20 @@ export class TransmissionReceptionService {
          rejet:true
        });
       
-    }else if(payload?.action==='controler'){
+    }else if(payload?.action === 'controler'){
        etated = EtatBonEnum.CONTROLECONFORMITE
        console.log("je suis la")
        console.log("payload?.motif ",etated)
-       const property = payload?.data?.bon_engagement;
+       //console.log(payload)
+       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
+       console.log(property)
        this.repositorybon.save({
          ...(property as any), // existing fields
          etat: etated,
          updateBy:user
        });
-       console.log("test ",test)
        this.repository.save({
-        ...check, // existing fields
+        ...payload.data[0]?.transmission_reception, // existing fields
         objet: etated, // annulation du bon
   
       });

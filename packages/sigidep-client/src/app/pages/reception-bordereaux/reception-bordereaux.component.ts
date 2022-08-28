@@ -80,7 +80,7 @@ export class ReceptionBordereauxComponent extends BaseComponent
       SetAppBreadcrumb({
         breadcrumb: [
           {
-            label: 'breadcrumb.transmissionsReceptions',
+            label: 'breadcrumb.receptionBordereaux',
           },
         ],
       })
@@ -127,20 +127,6 @@ export class ReceptionBordereauxComponent extends BaseComponent
       select(getLoadingSelectorTrans),
       map((status) => status)
     );
-    if (this.click = true) {
-      this._store
-        .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
-        .subscribe((data) => {
-          this.dossiersBordereaux = [...data];
-          console.log('dossiersBordereaux ', this.dossiersBordereaux)
-
-        });
-
-      this.loading1$ = this._store.pipe(
-        select(getLoadingSelectorDetail),
-        map((status) => status)
-      );
-    }
 
 
     this._store
@@ -161,6 +147,18 @@ export class ReceptionBordereauxComponent extends BaseComponent
 
   async add(item: any) {
     this.click = true
+    this._store
+    .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
+    .subscribe((data) => {
+      this.dossiersBordereaux = [...data];
+      console.log('dossiersBordereaux ', this.dossiersBordereaux)
+
+    });
+
+  this.loading1$ = this._store.pipe(
+    select(getLoadingSelectorDetail),
+    map((status) => status)
+  );
     this._store.dispatch(
       GetTransmissionsReceptionsDetails({ ids: [item.id]})
     );
@@ -172,48 +170,51 @@ export class ReceptionBordereauxComponent extends BaseComponent
   }
 
   reception() {
-    const data1:DataModel = {
-      data : this.dossiersBordereaux,
-      action: 'reception',
-      motif:''
-    }
-    console.log('data1 ',this.data1)
-    const method: Observable<any> = this._apisService.put<any>(
-      '/transmissions-receptions',
-      data1
-    );
-    method.subscribe(
-      (res) => {
-        this.busy = false;
-
-        this._store.dispatch(
-          GetTransmissionsReceptions({})
-        );
-        this._appService.showToast({
-          summary: 'messages.success',
-          detail: 'dialogs.messages.reception',
-          severity: 'success',
-          life: 3000,
-          closable: true,
-        });
-      },
-      ({ error }) => {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.transmission.notfound';
-        } else {
-          err = 'errors.unknown';
-        }
-        this.busy = false;
-        this._appService.showToast({
-          detail: err,
-          summary: 'errors.error',
-          severity: 'error',
-          life: 5000,
-          closable: true,
-        });
+    if(this.dossiersBordereaux.length>0){
+      const data1:DataModel = {
+        data : this.dossiersBordereaux,
+        action: 'reception',
+        motif:''
       }
-    );
+      console.log('data1 ',this.data1)
+      const method: Observable<any> = this._apisService.put<any>(
+        '/transmissions-receptions',
+        data1
+      );
+      method.subscribe(
+        (res) => {
+          this.busy = false;
+
+          this._store.dispatch(
+            GetTransmissionsReceptions({})
+          );
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail: 'dialogs.messages.reception',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.transmission.notfound';
+          } else {
+            err = 'errors.unknown';
+          }
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
+    }
+
   }
 
 }
