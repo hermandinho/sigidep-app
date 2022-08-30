@@ -167,6 +167,11 @@ export class VirementsComponent extends BaseComponent implements OnInit {
     return virement;
   }
 
+  async annuler(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.CANCELLED);
+  }
+
   getItemClass(item: VirementModele) {
     return item.etatVirement == EtatVirementEnum.SAVED ? 'success' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'primary' :
       (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'wargning' : 'info'))

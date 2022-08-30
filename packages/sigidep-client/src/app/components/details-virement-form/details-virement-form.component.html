@@ -114,12 +114,12 @@
             <div class="p-field p-col-7 p-md-7">
                 <button (click)="doChangeStep('back')" [label]="'buttons.back' | translate" pButton></button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <button *ngIf="create" type="button" pButton pRipple class="p-button" icon="pi pi-plus"
+                <button *ngIf="create" type="button" pButton pRipple class="p-button p-button-success" icon="pi pi-plus"
                     [label]="'buttons.save' | translate" pButton (click)="submitForm()"></button>
-                <button *ngIf="reserved" type="button" pButton pRipple class="p-button" icon="pi pi-wallet"
-                    [label]="'reserver' | translate" pButton (click)="reserver()"></button>
-                <button *ngIf="cancel" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
-                    [label]="'Annuler' | translate" pButton (click)="cancelled()"></button>
+                <button *ngIf="reserved" type="button" pButton pRipple class="p-button p-button-success"
+                    icon="pi pi-wallet" [label]="'reserver' | translate" pButton (click)="reserver()"></button>
+                <button *ngIf="cancel" type="button" pButton pRipple class="p-button p-button-warning"
+                    icon="pi pi-angle-right" [label]="'Annuler' | translate" pButton (click)="cancelled()"></button>
                 <button *ngIf="validate" (click)="doChangeStep('forward')" icon="pi pi-angle-right"
                     [label]="'buttons.next' | translate" pButton></button>
             </div>
