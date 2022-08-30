@@ -181,7 +181,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
               this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Annulation du virement N°', subtitle: 'Effactué avec success' }, 18);
               this._appService.showToast({
                 summary: 'message.success',
-                detail: 'messages.accreditation.createSuccess',
+                detail: 'messages.virement.annulerSuccess',
                 severity: 'success',
                 life: 3000,
                 closable: true,
