@@ -26,6 +26,8 @@ export enum TypeVirementEnum {
 export class VirementEntity extends BaseEntity {
     @Column({ name: 'numero', nullable: true, type: String })
     public numero: string;
+    @Column({ name: 'reference', nullable: true, type: String })
+    public reference: string;
     @Column({ name: 'object_virement', nullable: false, type: String })
     public objectVirement: string;
     @Column({ name: 'date_virement', nullable: false, type: String })

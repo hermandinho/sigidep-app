@@ -5,6 +5,7 @@ import { UpdateVirementDto } from './dto/update-virement.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { PermissionsGuard } from '@guards/permissions.guard';
+import { ValidationVirementDTO } from './dto/validation-virement.dto';
 
 @Controller('virements')
 // @ApiTags('Virements')
@@ -55,8 +56,13 @@ export class VirementsController {
     return this.virementsService.reserver(+id);
   }
 
-  @Post('valider/:id')
-  public async valiter(@Param('id') id: string) {
-    return this.virementsService.valider(+id);
+  @Post('valider/')
+  public async valiter(@Body() validationDTO: ValidationVirementDTO) {
+    return this.virementsService.valider(validationDTO);
+  }
+
+  @Post('annuler/:id')
+  public async annuler(@Param('id') id: string) {
+    return this.virementsService.annuler(+id);
   }
 }

@@ -8,6 +8,7 @@ import { genCode } from '@utils/functions';
 import { Repository } from 'typeorm';
 import { CreateVirementDto } from './dto/create-virement.dto';
 import { UpdateVirementDto } from './dto/update-virement.dto';
+import { ValidationVirementDTO } from './dto/validation-virement.dto';
 
 @Injectable()
 export class VirementsService {
@@ -105,9 +106,19 @@ export class VirementsService {
   }
 
 
-  async valider(id: number) {
-    let virement = await this.repository.findOne({ id });
+  async valider(validationDTO: ValidationVirementDTO) {
+    let virement = validationDTO.virement as VirementEntity;
     virement.etatVirement = EtatVirementEnum.VALIDATE;
+    virement.dateSignatureVirement = validationDTO.dateSignatureVirement;
+    virement.signataireVirement = validationDTO.signataireVirement;
+    virement.reference = validationDTO.reference;
+    await this.repository.save(virement);
+    return virement;
+  }
+
+  async annuler(id: number) {
+    let virement = await this.repository.findOne({ id });
+    virement.etatVirement = EtatVirementEnum.CANCELLED;
     this.repository.save(virement);
     return virement;
   }
