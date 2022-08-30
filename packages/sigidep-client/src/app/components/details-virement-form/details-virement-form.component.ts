@@ -3,10 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { DetailsVirementModel } from '@models/detailsVirement';
-import { EncoursModel } from '@models/encours.model';
 import { VirementModele } from '@models/virement.model';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { ModeVirementEnum } from '@pages/virements/tools/virement-tools';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
@@ -40,7 +38,10 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public total_debit: number = 0;
   public total_credit: number = 0;
   public ecart_debit_credit: number = 0;
-  public show: boolean = true;
+  public create: boolean = true;
+  public validate: boolean = false;
+  public reserved: boolean = false;
+  public cancel: boolean = false;
 
   constructor(
     private _apisService: ApisService,
@@ -53,7 +54,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this.show = this.mode == ModeVirementEnum.CREATION ? true : false;
+    this.getMode();
     this._initialListener();
     this.detailVirementForm = this.startingForm;
   }
@@ -64,7 +65,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   };
 
   _initialListener() {
-    if (!this.show) {
+    if (!this.create) {
       this.detailsVirement?.forEach((d) => {
         let details = new DetailsVirementModel(d);
         details.montant = details.debit ?? details.credit;
@@ -140,7 +141,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
               this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Reservation du virement N°', subtitle: 'Effactué avec success' }, 18);
               this._appService.showToast({
                 summary: 'message.success',
-                detail: 'messages.accreditation.createSuccess',
+                detail: 'messages.virement.reserverSuccess',
                 severity: 'success',
                 life: 3000,
                 closable: true,
@@ -168,4 +169,73 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     });
   }
 
+  async cancelled() {
+    const modal = await this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Etes vous sur de vouloir annuler le Virement N°', subtitle: 'Cette Opperation mouvementera des credits', isConfirmation: true }, 25);
+    modal.onClose.subscribe((resp: boolean) => {
+      if (resp) {
+        this._apisService
+          .post<VirementModele>('/virements/annuler/' + this.virement?.id, null)
+          .subscribe(
+            (res) => {
+              this.ref.close(res);
+              this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Annulation du virement N°', subtitle: 'Effactué avec success' }, 18);
+              this._appService.showToast({
+                summary: 'message.success',
+                detail: 'messages.accreditation.createSuccess',
+                severity: 'success',
+                life: 3000,
+                closable: true,
+              });
+              this._store.dispatch(GetVirement());
+            },
+            ({ error }) => {
+              this.ref.close();
+              let err = '';
+              if (error?.statusCode === 409) {
+                err = 'errors.dejaRegion';
+              } else {
+                err = 'errors.unknown';
+              }
+              this._appService.showToast({
+                detail: err,
+                summary: 'errors.error',
+                severity: 'error',
+                life: 5000,
+                closable: true,
+              });
+            }
+          );
+      }
+    });
+
+  }
+
+  getMode() {
+    switch (this.mode) {
+      case ModeVirementEnum.CREATION:
+        this.create = true;
+        this.validate = false;
+        this.reserved = false;
+        this.cancel = false;
+        break;
+      case ModeVirementEnum.VALIDATION:
+        this.create = false;
+        this.validate = true;
+        this.reserved = false;
+        this.cancel = false;
+        break;
+      case ModeVirementEnum.RESERVATION:
+        this.create = false;
+        this.validate = false;
+        this.reserved = true;
+        this.cancel = false;
+        break;
+      case ModeVirementEnum.CANCELLED:
+        this.create = false;
+        this.validate = false;
+        this.reserved = false;
+        this.cancel = true;
+        break;
+    }
+  }
 }

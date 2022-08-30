@@ -56,6 +56,7 @@
   },
   "buttons": {
     "save": "Enregistrer",
+    "validate": "Valider",
     "busy": "En cours ...",
     "login": "Connexion",
     "create": "Créer",
@@ -493,6 +494,13 @@
     "exercises": {
       "createSuccess": "Exercices crée avec succès.",
       "deleteSuccess": "Exercice(s) supprimés avec succès."
+    },
+    "virement": {
+      "createSuccess": "Virement crée avec succès.",
+      "deleteSuccess": "Virement supprimés avec succès.",
+      "validationSuccess": "Virement Validé avec succès.",
+      "reserverSuccess": "Virement Reservé avec succès.",
+      "annulerSuccess": "Virement Annulé avec succès."
     },
     "permissions": {
       "applySuccess": "Permissions appliquées avec succès."

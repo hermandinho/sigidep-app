@@ -7,4 +7,7 @@
         (changeStep)="changeStep('details-virement', $event)" [encourList]="detailsVirements" [virement]="virement"
         [typeFinancement]="typeFinancement" (submit)="submit()" [mode]="mode" [detailsVirement]="oldDetailsVirements">
     </app-details-virement-form>
+    <app-virement-validation-form *ngSwitchCase="'validation-virement'" [startingForm]="validationFormBody"
+        (changeStep)="changeStep('validation-virement', $event)" [virement]="virement">
+    </app-virement-validation-form>
 </ng-container>

@@ -127,9 +127,6 @@
                 <button *ngIf="!dataVirement" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
                     (click)="doChangeStep('forward')" [disabled]="!virementForm?.valid"
                     [label]="'buttons.next' | translate" pButton></button>
-                <button *ngIf="dataVirement?.numActeJuridique" type="button" pButton pRipple class="p-button"
-                    icon="pi pi-angle-right" (click)="doChangeStep('forward')" [label]="'buttons.next' | translate"
-                    pButton></button>
             </div>
         </div>
     </form>

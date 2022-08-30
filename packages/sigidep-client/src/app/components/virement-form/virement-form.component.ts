@@ -23,6 +23,7 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   public currentStepBs: BehaviorSubject<StepVirement> = new BehaviorSubject<StepVirement>('virement');
   public currentStep$: Observable<StepVirement> = this.currentStepBs.asObservable();
   public form!: FormGroup;
+  public validationForm!: FormGroup;
   public action!: 'save' | 'edit' | 'book' | 'valid' | 'cancel';
   public situationAction!: string;
   public busy = false;
@@ -68,6 +69,14 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         detailsVirementsDebit: [],
         detailsVirementsCredit: []
       });
+      if (this.mode == ModeVirementEnum.VALIDATION) {
+        this.validationForm = this._fb.group({
+          virement: this.virement,
+          signataireVirement: [undefined, [Validators.required]],
+          dateSignatureVirement: [undefined, [Validators.required]],
+          reference: [undefined, [Validators.required]],
+        });
+      }
     } else {
       this.form = this._fb.group({
         exercice: [undefined, [Validators.required]],
@@ -87,6 +96,10 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
 
   get virementBodyForm(): FormGroup {
     return this.form as FormGroup;
+  }
+
+  get validationFormBody(): FormGroup {
+    return this.validationForm as FormGroup;
   }
 
 
@@ -139,13 +152,13 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         break;
       case 'details-virement':
         if (direction === 'forward') {
-          this.currentStepBs.next('validate');
+          this.currentStepBs.next('validation-virement');
         }
         if (direction === 'back') {
           this.currentStepBs.next('virement');
         }
         break;
-      case 'validate':
+      case 'validation-virement':
         if (direction === 'back') {
           this.currentStepBs.next('details-virement');
         }
@@ -166,7 +179,7 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
           this.ref.close(res);
           this._appService.showToast({
             summary: 'message.success',
-            detail: 'messages.accreditation.createSuccess',
+            detail: 'messages.virement.createSuccess',
             severity: 'success',
             life: 3000,
             closable: true,

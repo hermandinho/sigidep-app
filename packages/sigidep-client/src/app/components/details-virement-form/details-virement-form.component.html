@@ -1,6 +1,6 @@
 <div class="container">
     <form class="form" [formGroup]="detailVirementForm">
-        <div *ngIf="show">
+        <div *ngIf="create">
             <!-- *ngIf="imputationsOperationsList.length>0" -->
             <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
             <p-table [value]="encourList" responsiveLayout="scroll">
@@ -48,7 +48,7 @@
                     <th>Imputation</th>
                     <th>Libellé Operation</th>
                     <th>Montant</th>
-                    <th *ngIf="show"></th>
+                    <th *ngIf="create"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -57,7 +57,7 @@
                     <td>{{ item.codeInput }}</td>
                     <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant | number }}</td>
-                    <td *ngIf="show">
+                    <td *ngIf="create">
                         <button (click)="removeFromDebit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
                     </td>
@@ -80,7 +80,7 @@
                     <th>Imputation</th>
                     <th>libele Operation</th>
                     <th>Montant</th>
-                    <th *ngIf="show"></th>
+                    <th *ngIf="create"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -89,7 +89,7 @@
                     <td>{{ item.codeInput }}</td>
                     <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant ?? 0 }}</td>
-                    <td *ngIf="show">
+                    <td *ngIf="create">
                         <button (click)="removeFromCredit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
                     </td>
@@ -103,8 +103,6 @@
                     [ngModelOptions]="{standalone: true}">
             </div>
         </div>
-
-
         <div class="footer">
             <div class="p-field p-col-12 p-md-12">
                 <div>
@@ -116,10 +114,14 @@
             <div class="p-field p-col-7 p-md-7">
                 <button (click)="doChangeStep('back')" [label]="'buttons.back' | translate" pButton></button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <button *ngIf="show" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                <button *ngIf="create" type="button" pButton pRipple class="p-button" icon="pi pi-plus"
                     [label]="'buttons.save' | translate" pButton (click)="submitForm()"></button>
-                <button *ngIf="!show" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                <button *ngIf="reserved" type="button" pButton pRipple class="p-button" icon="pi pi-wallet"
                     [label]="'reserver' | translate" pButton (click)="reserver()"></button>
+                <button *ngIf="cancel" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
+                    [label]="'Annuler' | translate" pButton (click)="cancelled()"></button>
+                <button *ngIf="validate" (click)="doChangeStep('forward')" icon="pi pi-angle-right"
+                    [label]="'buttons.next' | translate" pButton></button>
             </div>
         </div>
     </form>

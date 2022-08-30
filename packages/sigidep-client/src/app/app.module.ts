@@ -54,7 +54,6 @@ import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commande
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
 import { TransmissionsReceptionsModule } from '@pages/transmissions-receptions/transmissions-receptions.module';
-import { ShowVirementMessageComponent } from './components/show-virement-message/show-virement-message.component';
 
 
 registerLocaleData(localeFr);
@@ -64,7 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, ShowVirementMessageComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

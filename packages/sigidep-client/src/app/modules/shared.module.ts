@@ -52,6 +52,8 @@ import { ModelVirementFormComponent } from '@components/model-virement-form/mode
 import { VirementFormComponent } from '@components/virement-form/virement-form.component';
 import { DetailsVirementFormComponent } from '@components/details-virement-form/details-virement-form.component';
 import { VirementBodyFormComponent } from '@components/virement-body-form/virement-body-form.component';
+import { ShowVirementMessageComponent } from '@components/show-virement-message/show-virement-message.component';
+import { VirementValidationFormComponent } from '@components/virement-validation-form/virement-validation-form.component';
 
 const declarations = [
   BaseComponent,
@@ -71,7 +73,9 @@ const declarations = [
   ModelVirementFormComponent,
   VirementFormComponent,
   DetailsVirementFormComponent,
-  VirementBodyFormComponent
+  VirementBodyFormComponent,
+  ShowVirementMessageComponent,
+  VirementValidationFormComponent
 ];
 
 const shared = [
