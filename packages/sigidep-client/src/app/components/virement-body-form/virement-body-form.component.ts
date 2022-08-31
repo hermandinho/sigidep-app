@@ -52,7 +52,7 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.show = this.mode == ModeVirementEnum.CREATION ? false : true;
+    this.show = (this.mode == ModeVirementEnum.CREATION || this.mode == ModeVirementEnum.UPDATED) ? false : true;
 
     this.virementForm = this.startingForm;
     this._initListener();
@@ -87,7 +87,12 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
     this.getEncour.emit(event.value.code);
   }
 
-  filterEncourByProgram(event: any) {
+  filterEncourByProgram(event: any, type: string) {
+    if (type == 'source') {
+      this.virementForm.controls.validSource.setValue(true);
+    } else {
+      this.virementForm.controls.validCible.setValue(true);
+    }
     this.filterEncour.emit(event.value.code);
   }
 

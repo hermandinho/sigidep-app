@@ -1,6 +1,6 @@
 <div class="container">
     <form class="form" [formGroup]="detailVirementForm">
-        <div *ngIf="create">
+        <div *ngIf="create || update">
             <!-- *ngIf="imputationsOperationsList.length>0" -->
             <h3>{{ "tables.titles.imputationsFiltres" | translate }}</h3>
             <p-table [value]="encourList" responsiveLayout="scroll">
@@ -57,7 +57,7 @@
                     <td>{{ item.codeInput }}</td>
                     <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant | number }}</td>
-                    <td *ngIf="create">
+                    <td *ngIf="create || update">
                         <button (click)="removeFromDebit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
                     </td>
@@ -89,7 +89,7 @@
                     <td>{{ item.codeInput }}</td>
                     <td>{{ item.libelleInput }}</td>
                     <td>{{ item.montant ?? 0 }}</td>
-                    <td *ngIf="create">
+                    <td *ngIf="create || update">
                         <button (click)="removeFromCredit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
                     </td>
@@ -116,6 +116,8 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button *ngIf="create" type="button" pButton pRipple class="p-button p-button-success" icon="pi pi-plus"
                     [label]="'buttons.save' | translate" pButton (click)="submitForm()"></button>
+                <button *ngIf="update" type="button" pButton pRipple class="p-button p-button-success" icon="pi pi-plus"
+                    [label]="'buttons.update' | translate" pButton (click)="submitForUpdate()"></button>
                 <button *ngIf="reserved" type="button" pButton pRipple class="p-button p-button-success"
                     icon="pi pi-wallet" [label]="'reserver' | translate" pButton (click)="reserver()"></button>
                 <button *ngIf="cancel" type="button" pButton pRipple class="p-button p-button-warning"

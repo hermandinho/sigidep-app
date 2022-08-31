@@ -102,6 +102,12 @@ export class VirementsComponent extends BaseComponent implements OnInit {
   }
 
 
+  async update(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.UPDATED);
+  }
+
+
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
@@ -174,6 +180,23 @@ export class VirementsComponent extends BaseComponent implements OnInit {
 
   getItemClass(item: VirementModele) {
     return item.etatVirement == EtatVirementEnum.SAVED ? 'success' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'primary' :
-      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'wargning' : 'info'))
+      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'warning' : 'info'))
   }
+
+  isSave(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.SAVED
+  }
+
+  isReservation(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.RESERVED
+  }
+
+  isCancel(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.CANCELLED
+  }
+
+  isUpdate(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.UPDATED
+  }
+
 }

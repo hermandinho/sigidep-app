@@ -28,7 +28,8 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramSource" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListSource"
-                        formControlName="spSourceVirement" (onChange)="filterEncourByProgram($event)" [disabled]="show">
+                        formControlName="spSourceVirement" (onChange)="filterEncourByProgram($event, 'source')"
+                        [disabled]="show">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -72,7 +73,8 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramDestinataire" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListCible"
-                        formControlName="spCibleVirement" (onChange)="filterEncourByProgram($event)" [disabled]="show">
+                        formControlName="spCibleVirement" (onChange)="filterEncourByProgram($event, 'cible')"
+                        [disabled]="show">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>

@@ -31,6 +31,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   >();
 
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateData: EventEmitter<any> = new EventEmitter<any>();
 
   public detailVirementForm!: FormGroup;
   public debitEncourList: DetailsVirementModel[] = [];
@@ -42,6 +43,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public validate: boolean = false;
   public reserved: boolean = false;
   public cancel: boolean = false;
+  public update: boolean = false;
 
   constructor(
     private _apisService: ApisService,
@@ -57,6 +59,9 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     this.getMode();
     this._initialListener();
     this.detailVirementForm = this.startingForm;
+    if (this.mode === ModeVirementEnum.UPDATED) {
+      this.filterSelectedDetailsVirement();
+    }
   }
 
 
@@ -65,7 +70,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   };
 
   _initialListener() {
-    if (!this.create) {
+    if (!this.create && !this.update) {
       this.detailsVirement?.forEach((d) => {
         let details = new DetailsVirementModel(d);
         details.montant = details.debit ?? details.credit;
@@ -80,7 +85,24 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     }
   }
 
-
+  async filterSelectedDetailsVirement() {
+    let details = this.virement?.detailsVirements;
+    await details?.forEach((d) => {
+      this.encourList = [...this.encourList.filter((e) => e.codeInput != d.codeInput)]
+      let statusDebit = d.credit != null ? false : true;
+      let detail = new DetailsVirementModel({
+        codeInput: d.codeInput,
+        libelleInput: d.libelleInput,
+        encour: d.encour,
+        montant: d.credit ?? d.debit
+      });
+      if (!statusDebit) {
+        this.addToCredit(detail);
+      } else {
+        this.addToDebit(detail);
+      }
+    })
+  }
 
   addToCredit(item: DetailsVirementModel) {
     item.isCredit = true;
@@ -217,25 +239,42 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
         this.validate = false;
         this.reserved = false;
         this.cancel = false;
+        this.update = false;
         break;
       case ModeVirementEnum.VALIDATION:
         this.create = false;
         this.validate = true;
         this.reserved = false;
         this.cancel = false;
+        this.update = false;
         break;
       case ModeVirementEnum.RESERVATION:
         this.create = false;
         this.validate = false;
         this.reserved = true;
         this.cancel = false;
+        this.update = false;
         break;
       case ModeVirementEnum.CANCELLED:
         this.create = false;
         this.validate = false;
         this.reserved = false;
         this.cancel = true;
+        this.update = false;
+        break;
+      case ModeVirementEnum.UPDATED:
+        this.create = false;
+        this.validate = false;
+        this.reserved = false;
+        this.cancel = false;
+        this.update = true;
         break;
     }
+  }
+
+  submitForUpdate() {
+    this.startingForm.controls.detailsVirementsDebit.setValue(this.debitEncourList);
+    this.startingForm.controls.detailsVirementsCredit.setValue(this.creditEncourList);
+    this.updateData.emit();
   }
 }

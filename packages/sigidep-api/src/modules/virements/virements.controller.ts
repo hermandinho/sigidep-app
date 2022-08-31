@@ -29,9 +29,9 @@ export class VirementsController {
     return this.virementsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVirementDto: UpdateVirementDto) {
-    return this.virementsService.update(+id, updateVirementDto);
+  @Post('/update')
+  update(@Body() updateVirementDto: UpdateVirementDto) {
+    return this.virementsService.update(updateVirementDto);
   }
 
   @Delete(':id')

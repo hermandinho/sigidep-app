@@ -62,6 +62,8 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         exercice: this.virement.exercice,
         spCibleVirement: this.virement.spCibleVirement,
         spSourceVirement: this.virement.spSourceVirement,
+        validSource: false,
+        validCible: false,
         typeVirement: this.virement.typeVirement,
         modelVirement: this.virement.modelVirement,
         dateVirement: this.virement.dateVirement,
@@ -69,6 +71,9 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         detailsVirementsDebit: [],
         detailsVirementsCredit: []
       });
+      if (this.mode == ModeVirementEnum.UPDATED) {
+        this.getEncour(this.virement.exercice.code);
+      }
       if (this.mode == ModeVirementEnum.VALIDATION) {
         this.validationForm = this._fb.group({
           virement: this.virement,
@@ -123,19 +128,6 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   }
 
   async filterEncourByPrograms(code: number, isSource: boolean = true) {
-    // console.log(code);
-
-    // if (isSource) {
-    //   this.subProgrameSource = code + '';
-    // } else {
-    //   this.subProgrameCible = code + '';
-    // }
-    // this.encourData = this.encourData.filter((e) => {
-    //   e.subProgram.startsWith(this.subProgrameCible) || e.subProgram.startsWith(this.subProgrameSource)
-    // })
-
-    // console.log(this.encourData);
-
   }
 
   subformInitialized(name: string, group: FormGroup) {
@@ -176,6 +168,50 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         (res) => {
           this.busy = false;
           this._dialogService.launchVirementMessage({ numero: res.numero ?? '', title: 'virement de credit enregistré sous le numero' })
+          this.ref.close(res);
+          this._appService.showToast({
+            summary: 'message.success',
+            detail: 'messages.virement.createSuccess',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+          this._store.dispatch(GetVirement());
+        },
+        ({ error }) => {
+          this.busy = false;
+          this.ref.close();
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.dejaRegion';
+          } else {
+            err = 'errors.unknown';
+          }
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
+  }
+
+  updateData() {
+    const virement = {
+      ...this.form.value,
+    } as VirementModele;
+    virement.id = this.virement?.id ?? -1;
+
+    this._apisService
+      .post<VirementModele>('/virements/update', virement)
+      .subscribe(
+        (res) => {
+          console.log(res);
+
+          this.busy = false;
+          this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Modification du virement N°', subtitle: 'effectué avec success!' }, 25)
           this.ref.close(res);
           this._appService.showToast({
             summary: 'message.success',

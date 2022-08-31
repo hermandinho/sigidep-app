@@ -54,12 +54,18 @@
                 <td>
                     <button (click)="delete(item)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                         pRipple></button>
-                    <button (click)="valider(item)" class="p-button-rounded p-button-primary" icon="pi pi-check" pButton
+                    <button *ngIf="isReservation(item.etatVirement)" (click)="valider(item)"
+                        class="p-button-rounded p-button-primary" icon="pi pi-check" pButton pRipple></button>
+                    <button
+                        *ngIf="isSave(item.etatVirement) || isUpdate(item.etatVirement)|| isCancel(item.etatVirement)"
+                        (click)="update(item)" class="p-button-rounded p-button-primary" icon="pi pi-pencil" pButton
                         pRipple></button>
-                    <button (click)="reserver(item)" class="p-button-rounded p-button-secondary" icon="pi pi-wallet"
-                        pButton pRipple></button>
-                    <button (click)="annuler(item)" class="p-button-rounded p-button-warning" icon="pi pi-wallet"
-                        pButton pRipple></button>
+                    <button
+                        *ngIf="isSave(item.etatVirement) || isUpdate(item.etatVirement)|| isCancel(item.etatVirement)"
+                        (click)="reserver(item)" class="p-button-rounded p-button-secondary" icon="pi pi-wallet" pButton
+                        pRipple></button>
+                    <button *ngIf="isReservation(item.etatVirement)" (click)="annuler(item)"
+                        class="p-button-rounded p-button-warning" icon="pi pi-times" pButton pRipple></button>
                 </td>
             </tr>
         </ng-template>

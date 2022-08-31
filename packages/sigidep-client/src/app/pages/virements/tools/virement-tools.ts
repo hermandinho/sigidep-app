@@ -18,7 +18,7 @@ export enum typeVirementEnum {
 }
 
 export enum ModeVirementEnum {
-    CREATION, RESERVATION, VALIDATION, CANCELLED
+    CREATION, RESERVATION, VALIDATION, CANCELLED, UPDATED
 }
 
 export enum EtatVirementEnum {
