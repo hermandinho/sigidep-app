@@ -88,10 +88,12 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
   }
 
   filterEncourByProgram(event: any, type: string) {
-    if (type == 'source') {
-      this.virementForm.controls.validSource.setValue(true);
-    } else {
-      this.virementForm.controls.validCible.setValue(true);
+    if (this.mode == ModeVirementEnum.UPDATED) {
+      if (type == 'source') {
+        this.virementForm.controls.validSource.setValue(true);
+      } else {
+        this.virementForm.controls.validCible.setValue(true);
+      }
     }
     this.filterEncour.emit(event.value.code);
   }

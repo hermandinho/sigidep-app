@@ -40,7 +40,6 @@ export class VirementsController {
   }
 
 
-
   @Get('exercice/:id')
   public async subProgramByExercise(@Param('id') id: number) {
     return this.virementsService.getSubProgramByExercise(id);
@@ -64,5 +63,10 @@ export class VirementsController {
   @Post('annuler/:id')
   public async annuler(@Param('id') id: string) {
     return this.virementsService.annuler(+id);
+  }
+
+  @Get('details/:id')
+  getDetailsVirement(@Param('id') id: string) {
+    return this.virementsService.getDetailsVirementByVirement(+id);
   }
 }

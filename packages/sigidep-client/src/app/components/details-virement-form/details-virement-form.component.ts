@@ -44,6 +44,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public reserved: boolean = false;
   public cancel: boolean = false;
   public update: boolean = false;
+  public detailsVirementList: DetailsVirementModel[] = [];
 
   constructor(
     private _apisService: ApisService,
@@ -60,7 +61,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     this._initialListener();
     this.detailVirementForm = this.startingForm;
     if (this.mode === ModeVirementEnum.UPDATED) {
-      this.filterSelectedDetailsVirement();
+      this.getDetailsVirementByVirement();
     }
   }
 
@@ -85,23 +86,46 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     }
   }
 
-  async filterSelectedDetailsVirement() {
-    let details = this.virement?.detailsVirements;
-    await details?.forEach((d) => {
-      this.encourList = [...this.encourList.filter((e) => e.codeInput != d.codeInput)]
-      let statusDebit = d.credit != null ? false : true;
-      let detail = new DetailsVirementModel({
-        codeInput: d.codeInput,
-        libelleInput: d.libelleInput,
-        encour: d.encour,
-        montant: d.credit ?? d.debit
-      });
-      if (!statusDebit) {
-        this.addToCredit(detail);
-      } else {
-        this.addToDebit(detail);
-      }
-    })
+  async getDetailsVirementByVirement() {
+    await this._apisService
+      .get<DetailsVirementModel[]>('/virements/details/' + this.virement?.id)
+      .subscribe(
+        (res) => {
+          this.detailsVirementList = [...res];
+          console.log(this.detailsVirementList);
+
+          this.detailsVirementList?.forEach((d) => {
+            this.encourList = [...this.encourList.filter((e) => e.codeInput != d.codeInput)]
+            let statusDebit = d.credit != null ? false : true;
+            let detail = new DetailsVirementModel({
+              codeInput: d.codeInput,
+              libelleInput: d.libelleInput,
+              encour: d.encour,
+              montant: d.credit ?? d.debit
+            });
+            if (!statusDebit) {
+              this.addToCredit(detail);
+            } else {
+              this.addToDebit(detail);
+            }
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.dejaRegion';
+          } else {
+            err = 'errors.unknown';
+          }
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
+        }
+      );
   }
 
   addToCredit(item: DetailsVirementModel) {
@@ -160,6 +184,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
           .subscribe(
             (res) => {
               this.ref.close(res);
+              this._store.dispatch(GetVirement());
               this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Reservation du virement N°', subtitle: 'Effactué avec success' }, 18);
               this._appService.showToast({
                 summary: 'message.success',
@@ -168,7 +193,6 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
                 life: 3000,
                 closable: true,
               });
-              this._store.dispatch(GetVirement());
             },
             ({ error }) => {
               this.ref.close();
@@ -200,6 +224,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
           .subscribe(
             (res) => {
               this.ref.close(res);
+              this._store.dispatch(GetVirement());
               this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Annulation du virement N°', subtitle: 'Effactué avec success' }, 18);
               this._appService.showToast({
                 summary: 'message.success',
@@ -208,7 +233,6 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
                 life: 3000,
                 closable: true,
               });
-              this._store.dispatch(GetVirement());
             },
             ({ error }) => {
               this.ref.close();

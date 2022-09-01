@@ -117,6 +117,9 @@ export class VirementsService {
         })
       );
     });
+
+    console.log(updateVirementDto.detailsVirementsDebit);
+
     await updateVirementDto.detailsVirementsDebit.forEach((e) => {
       this.detailsvirementRepository.save(
         new DetailsVirementEntity({
@@ -132,8 +135,11 @@ export class VirementsService {
     return virement;
   }
 
-  remove(id: number) {
-    return this.repository.delete({ id });
+  async remove(id: number) {
+    let virement = await this.repository.findOne({ id });
+    if (virement.etatVirement == EtatVirementEnum.SAVED || virement.etatVirement == EtatVirementEnum.UPDATED || virement.etatVirement == EtatVirementEnum.CANCELLED) {
+      return this.repository.delete({ id });
+    }
   }
 
   getSubProgramByExercise(id: number) {
@@ -154,10 +160,13 @@ export class VirementsService {
       this.repository.save(virement);
       await this.detailsvirementRepository.createQueryBuilder('d').where(
         'd.virement_id = :id', { id: +id }
-      ).getMany().then((details) => {
+      ).leftJoinAndSelect('d.encour', 'e').getMany().then((details) => {
         details.forEach((d) => {
+          console.log(d);
           this.encourRepository.findOne(d.encour.id).then((e) => {
-            e.aeDisponible -= d.debit ?? 0
+            e.aeDisponible -= d.debit ?? 0;
+            e.cpDisponible -= d.debit ?? 0;
+            this.encourRepository.save(e);
           })
         })
       });
@@ -174,6 +183,17 @@ export class VirementsService {
       virement.signataireVirement = validationDTO.signataireVirement;
       virement.reference = validationDTO.reference;
       await this.repository.save(virement);
+      await this.detailsvirementRepository.createQueryBuilder('d').where(
+        'd.virement_id = :id', { id: virement.id }
+      ).leftJoinAndSelect('d.encour', 'e').getMany().then((details) => {
+        details.forEach((d) => {
+          this.encourRepository.findOne(d.encour.id).then((e) => {
+            e.aeDisponible += d.credit ?? 0;
+            e.cpDisponible += d.credit ?? 0;
+            this.encourRepository.save(e);
+          })
+        })
+      });
     }
     return virement;
   }
@@ -183,7 +203,25 @@ export class VirementsService {
     if (virement.etatVirement == EtatVirementEnum.RESERVED) {
       virement.etatVirement = EtatVirementEnum.CANCELLED;
       this.repository.save(virement);
+      await this.detailsvirementRepository.createQueryBuilder('d').where(
+        'd.virement_id = :id', { id: +id }
+      ).leftJoinAndSelect('d.encour', 'e').getMany().then((details) => {
+        details.forEach((d) => {
+          this.encourRepository.findOne(d.encour.id).then((e) => {
+            e.aeDisponible += d.debit ?? 0;
+            e.cpDisponible += d.debit ?? 0;
+            this.encourRepository.save(e);
+          })
+        })
+      });
     }
     return virement;
+  }
+
+  async getDetailsVirementByVirement(id: number) {
+    let details = await this.detailsvirementRepository.createQueryBuilder('d').where(
+      'd.virement_id = :id', { id: +id }
+    ).leftJoinAndSelect('d.encour', 'e').getMany();
+    return details;
   }
 }

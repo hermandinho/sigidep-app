@@ -52,7 +52,9 @@
                 <td>{{ item?.spSourceVirement }}</td>
                 <td>{{ item?.spCibleVirement }}</td>
                 <td>
-                    <button (click)="delete(item)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
+                    <button
+                        *ngIf="isSave(item.etatVirement) || isUpdate(item.etatVirement)|| isCancel(item.etatVirement)"
+                        (click)="delete(item)" class="p-button-rounded p-button-danger" icon="pi pi-trash" pButton
                         pRipple></button>
                     <button *ngIf="isReservation(item.etatVirement)" (click)="valider(item)"
                         class="p-button-rounded p-button-primary" icon="pi pi-check" pButton pRipple></button>
