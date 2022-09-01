@@ -152,6 +152,15 @@ export class VirementsService {
     if (virement.etatVirement == EtatVirementEnum.SAVED || virement.etatVirement == EtatVirementEnum.UPDATED || virement.etatVirement == EtatVirementEnum.CANCELLED) {
       virement.etatVirement = EtatVirementEnum.RESERVED;
       this.repository.save(virement);
+      await this.detailsvirementRepository.createQueryBuilder('d').where(
+        'd.virement_id = :id', { id: +id }
+      ).getMany().then((details) => {
+        details.forEach((d) => {
+          this.encourRepository.findOne(d.encour.id).then((e) => {
+            e.aeDisponible -= d.debit ?? 0
+          })
+        })
+      });
     }
     return virement;
   }
