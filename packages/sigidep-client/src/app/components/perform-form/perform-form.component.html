@@ -106,5 +106,13 @@
     >
       {{ "buttons.cancel" | translate }}
     </button>
+    <button
+    *ngIf="procedure !== '1110' && procedure !== '1111' && validation"
+    (click)="submit()"
+    [disabled]="!performForm?.valid"
+    [label]="'buttons.submit' | translate"
+    pButton
+  ></button>
+
   </div>
 </div>

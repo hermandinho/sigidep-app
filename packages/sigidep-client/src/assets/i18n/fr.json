@@ -47,8 +47,14 @@
     "fraisreleve": "Frais de Relève",
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
-    "transmissionsReceptions": "Transmissions Receptions",
     "bonsengagements": "Engagements CP",
+    "transmissionsReceptions":"Liste Visa et mise en route",
+    "controledeconformite":"Controle de conformité",
+    "receptionbordereaux":"Réception bordereaux",
+    "operationdecontrole":"Operation de contrôle",
+    "editiondestcc":"Edition des TCC",
+    "visaetmiseenroute":"Visa et mise en route",
+
     "virements": "Virement",
     "modelVirement": "Modèle virement",
     "detailsVirement": "Details virement",
@@ -86,7 +92,11 @@
     "print": "Imprimer",
     "close": "Fermer",
     "recherche": "Rechercher",
-    "addArticle": "Ajouter un article"
+    "addArticle": "Ajouter un article",
+    "reception":"reception",
+    "controler":"Controler",
+    "rejeter":"Rejeter"
+
   },
   "install": {
     "title": "Installation"
@@ -364,7 +374,7 @@
     "bonReserve": "Bon Réservé",
     "visaDAAF": "Visa DAAF",
     "transmispourControleConformite": "Transmis pour Contrôle Conformité",
-    "receptionpourControleConformite": "Réception pour Contrôle Conformité",
+    "receptionControleConformite": "Réception pour Contrôle Conformité",
     "controledeConformite": "Contrôle de Conformité",
     "editionduTitredeCreance": "Edition du Titre de Créance",
     "transmissionpourLiquidation": "Transmission pour Liquidation",
@@ -404,8 +414,20 @@
     "montantIR": "Montant IR",
     "montantTotalHT": "Montant Total HT",
     "dateFacturation": "Date de Facturation",
-    "tauxIR": "Taux IR"
-  },
+    "tauxIR": "Taux IR",
+    "paye_mandat":"Bon engagement payé",
+    "validACT_mandat":"Validation ACT (en Attente Paiement)",
+    "ordonnance_mandat":"Ordonnancement",
+    "liquite_mandat":"Liquidation",
+    "editionTCC_mandat":"Edition titre créance",
+    "rejet_mandat":"Bon engagement rejeté ",
+    "datePaiement_mandat":"Date paiement",
+    "dateValidACT_mandat":"Date validation",
+    "dateOrdonnancement_mandat":"Date ordonnancement",
+    "dateLiquidation_mandat":"Date liquidation",
+    "dateEditionTCC_mandat":"Date edition titre",
+    "filterCodeEx":"Code exercice"
+    },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
     "deletePhysicalReferencesOnParagraphChange": "Toutes les unités physiques programmées seront supprimées suite à la modification de ce paragraphe.",
@@ -673,7 +695,8 @@
     "bonsengamentscommandes": "Bons Engagements Commandes",
     "bonsPrimes": "Bons Engagements Primes",
     "transmissionsreceptions": "Transmissions Receptions",
-    "modelvirement": "Modèle Virements"
+    "modelvirement": "Modèle Virements",
+    "receptionbordereaux": "Reception Bordereaux"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -704,7 +727,8 @@
       "imputationsFiltres": "liste des imputations",
       "Bons": "Bons primes",
       "dossiers": "Dossiers du Bordereau",
-      "transmission": "Listing des Bordere"
+      "transmission": "Listing des Bordereaux de Transmission",
+      "bon_controler":"Listing des Bons à Contrôler "
     },
     "headers": {
       "exerciseCode": "Code",
@@ -863,7 +887,15 @@
       "prixTotalHT": "Rrix Total HT",
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
-      "referenceMercuriale": "RéférenceMercuriale"
+      "referenceMercuriale": "RéférenceMercuriale",
+      "numeroBor":"Numero Bordereau",
+      "objet":"Objet",
+      "serviceEmetteur":"Service Emetteur",
+      "serviceDestination":"Service Destination",
+      "dateTransmission":"Date Transmission",
+      "numeroEng":"Numero Eng",
+      "montantCP":"MontantCP",
+      "dateEng":"Date Eng"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -932,7 +964,8 @@
       "printEngagement": "Engagement",
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
       "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}",
-      "editTransmissionReception": "Edit Transmission Reception"
+      "editTransmissionReception": "Edit Transmission Reception",
+      "viewTransmissionReception": "Entrez le Motif du Rejet :"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -961,11 +994,15 @@
       "reserveBonEngagement": "Etes-vous sûr de reserver cet engagement?",
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
+      "saveBon": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
+      "cancelTransmission":"Voulez-vous annuler cette Transmission? Cette opération est irréversible !",
+      "reception":"Bordereau réceptionné avec succès au  Contrôle Financier ",
       "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
-      "saveBon": "Etes-vous sûr d'enregistrer ce bon?",
       "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
       "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?",
-      "deleteVirement": "Etes-vous sûr de supprimer ce virement?"
+      "deleteVirement": "Etes-vous sûr de supprimer ce virement?",
+      "alertRejet":"Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!",
+      "alertControler":"Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !"
     }
   },
   "exerciseStatuses": {

@@ -39,6 +39,14 @@ export class TransmissionReceptionController {
     return this.services.create(payload, user);
   }
 
+  @Put('/')
+  public async update(
+    @Body(ValidationPipe) payload: any,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    return this.services.update(payload, user);
+  }
+
   @Put('/cancel/:id')
   public async cancel(
     @Param('id') id: number,

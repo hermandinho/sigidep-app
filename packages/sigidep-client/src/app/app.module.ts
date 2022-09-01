@@ -51,9 +51,14 @@ import { RegionsModule } from './pages/regions/regions.module';
 import { ConsultationsModule } from '@pages/consultations/consultations.module';
 import { BonsEngagementsModule } from '@pages/bons-engagements/decision/bons-engagements.module';
 import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commandes/bons-engagements-commandes.module';
+import { TransmissionsReceptionsModule } from '@pages/listing-des-bordereaux/transmissions-receptions.module';
+import { VisaEtTransmisssionModule } from '@pages/visa-et-transmisssion/visa-et-transmisssion.module';
+import { EditionDesTCCComponent } from './pages/edition-des-tcc/edition-des-tcc.component';
+import { ReceptionBordereauxModule } from '@pages/reception-bordereaux/reception-bordereaux.module';
+import { OperationDeControleModule } from '@pages/operation-de-controle/operation-de-controle.module';
+import { EditionDesTCCModule } from '@pages/edition-des-tcc/edition-des-tcc.module';
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
-import { TransmissionsReceptionsModule } from '@pages/transmissions-receptions/transmissions-receptions.module';
 
 
 registerLocaleData(localeFr);
@@ -128,6 +133,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConsultationsModule,
     BonsEngagementsModule,
     BonsEngagementsCommandesModule,
+    TransmissionsReceptionsModule,
+    VisaEtTransmisssionModule,
+    ReceptionBordereauxModule,
+    OperationDeControleModule,
+    EditionDesTCCModule,
     VirementsModule,
     ModeleVirementModule,
     TransmissionsReceptionsModule

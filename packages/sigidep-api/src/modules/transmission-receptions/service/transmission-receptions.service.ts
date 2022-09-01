@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user.entity';
@@ -7,6 +7,7 @@ import { TransmissionReceptionDTO } from '../dto/transmission-receptions.dto';
 import { EtatBonEnum } from '@utils/etat-bon.enum';
 import { DetailTransmissionReceptionEntity } from '@entities/detail-transmission-reception.entity';
 import { BonEngagementEntity } from '@entities/bon-engagement.entity';
+import { CreateBonEngagementDTO } from '@modules/bons-engagements/dto/create-bon-engagement.dto';
 
 @Injectable()
 export class TransmissionReceptionService {
@@ -83,6 +84,8 @@ export class TransmissionReceptionService {
     if(payload){
       for(let i=0; i<payload?.bon_engagement?.length; i++){
         const property = payload?.bon_engagement[i];
+        console.log("property save ",property)
+
         this.repositorybon.save({
           ...(property as any), // existing fields
           etat: EtatBonEnum.TRANSMISCONTROLECONFORMITE,
@@ -95,11 +98,75 @@ export class TransmissionReceptionService {
         const bont = await this.repositorydetail.save(detailtrans);
       }
     }
-  
-    
-
-
     return bon;
+  }
+
+  public async update(
+    payload: any,
+    user: UserEntity,
+  ): Promise<TransmissionReceptionEntity> {
+    const id = payload.data[0]?.transmission_reception?.id
+    const check = this.repository.findOne({
+      id: id,
+    });
+
+    if (!check) {
+      throw new NotFoundException();
+    }
+   
+    var etated = '';
+    if(payload?.action === 'reception'){
+       etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE;
+       this.repository.save({
+        ...payload.data[0]?.transmission_reception, // existing fields
+        objet: EtatBonEnum.RECEPTIONCONTROLECONFORMITE,
+      });
+       for(let i=0; i<payload?.data?.length; i++){
+        const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
+        //const property:CreateBonEngagementDTO = payload?.data[i]?.bon_engagement;
+        console.log("property update ",property)
+        this.repositorybon.save({
+          ...(property as any), // existing fields
+          etat: etated,
+          updateBy:user
+        });
+      }
+      
+    }else if(payload?.action === 'rejet'){
+       etated = EtatBonEnum.REJETCONTROLEREGULARITE
+       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
+       this.repository.save({
+        ...payload.data[0]?.transmission_reception, // existing fields
+        objet: etated, 
+        motif: payload?.motif
+      });
+       this.repositorybon.save({
+         ...(property as any), // existing fields
+         etat: etated,
+         updateBy:user,
+         rejet:true
+       });
+      
+    }else if(payload?.action === 'controler'){
+       etated = EtatBonEnum.CONTROLECONFORMITE
+       console.log("je suis la")
+       console.log("payload?.motif ",etated)
+       //console.log(payload)
+       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
+       console.log(property)
+       this.repositorybon.save({
+         ...(property as any), // existing fields
+         etat: etated,
+         updateBy:user
+       });
+       this.repository.save({
+        ...payload.data[0]?.transmission_reception, // existing fields
+        objet: etated, // annulation du bon
+  
+      });
+    }
+   
+    return check;
   }
 
   public async getDossierBor(filter?:any):Promise<DetailTransmissionReceptionEntity[]>{
@@ -108,6 +175,10 @@ export class TransmissionReceptionService {
       .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
       .leftJoinAndSelect('detail.transmission_reception', 'transmission_reception')
       .leftJoinAndSelect('bon_engagement.numActeJuridique', 'eng')
+      .leftJoinAndSelect('bon_engagement.traitements', 'traitements')
+      .leftJoinAndSelect('bon_engagement.paiements', 'paiements')
+      .leftJoinAndSelect('bon_engagement.facture', 'facture')
+      .leftJoinAndSelect('facture.articles', 'articles')
       .where(filter?.ids ? 'transmission_reception.id IN(:...codes)' : 'true', {
         codes: filter?.ids,
       })
@@ -125,18 +196,21 @@ export class TransmissionReceptionService {
       exercices: filter?.exercices,
     })
     .getMany();
+    console.log("bons ",bons)
 
     var details = await this.repositorydetail
     .createQueryBuilder('detail')
     .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
     .leftJoinAndSelect('bon_engagement.numActeJuridique', 'eng')
     .getMany();
+    //console.log("details ",details)
     
     var result = bons.filter(function(o1){
       return !details.some(function(o2){
           return o1.id === o2.bon_engagement.id;
       });
-  });
+    });
+    //console.log("result ",result)
     return result;
   }
 }

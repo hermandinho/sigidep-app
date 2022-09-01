@@ -26,6 +26,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   @Input() procedure!: string;
   @Input() dataEngagement!: any;
   @Input() isCheck!: boolean;
+  @Input() validation!:boolean;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -90,6 +91,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
       this.performForm.patchValue({
         livrables: data.livrables,
         sourceVerif: data.sourceVerif,
+        situationActuelle: this.dataEngagement?.situationActuelle,
       });
   };
 

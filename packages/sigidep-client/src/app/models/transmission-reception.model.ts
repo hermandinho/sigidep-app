@@ -3,8 +3,7 @@ import { BaseModel } from './base.model';
 import { BonEngagementModel } from './bon-engagement.model';
 export type StepTransmission =
   | 'constitution'
-  | 'bordereau'
-  | 'print';
+  | 'bordereau';
 export class TransmissionsReceptionModel extends BaseModel {
   numero!: string;
   objet?: string;

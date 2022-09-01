@@ -165,6 +165,9 @@ export class BonsEngagementsEffects {
         this.apisService.get<BonEngagementModel[]>('/transmissions-receptions/bon', {
           ...(action.exercices && {
             exercices: action.exercices.join(','),
+          }),
+          ...(action.etats && {
+            etats: action.etats.join(','),
           })
         }).pipe(
           switchMap((payload) => {

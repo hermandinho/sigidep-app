@@ -14,19 +14,11 @@ import { RippleModule } from 'primeng/ripple';
 import { TreeTableModule } from 'primeng/treetable';
 import { CardModule } from 'primeng/card';
 import { SharedModule } from '@modules/shared.module';
-import { CreateTransmissionReceptionFormComponent } from '@components/create-transmission-reception-form/create-transmission-reception-form.component';
-import { ConstitutionBordereauFormComponent } from '@components/constitution-bordereau-form/constitution-bordereau-form.component';
-import { CoordonneesBordereauFormComponent } from '@components/coordonnees-bordereau-form/coordonnees-bordereau-form.component';
-import { PrintBordereauxComponent } from '@components/print-bordereaux/print-bordereaux.component';
 
 
 @NgModule({
   declarations: [
-    TransmissionsReceptionsComponent,
-    CreateTransmissionReceptionFormComponent,
-    ConstitutionBordereauFormComponent,
-    CoordonneesBordereauFormComponent,
-    PrintBordereauxComponent
+    TransmissionsReceptionsComponent
   ],
   imports: [
     CommonModule,

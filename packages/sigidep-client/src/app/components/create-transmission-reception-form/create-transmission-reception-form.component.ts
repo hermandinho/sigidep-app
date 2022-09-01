@@ -9,7 +9,7 @@ import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
@@ -33,19 +33,17 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
   public currentProcedure:string='';
 
   constructor(
-    public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig,
     private _fb: FormBuilder,
     private _appService: AppService,
     private _apisService: ApisService,
     private _store: Store<AppState>,
     private readonly _dialogService: DialogsService,
-    private translate: TranslateService
   ) {
     super();
    }
 
   ngOnInit(): void {
+    console.log('currentStepBs ',this.currentStepBs, ' currentStep$ ',this.currentStep$)
     this.form = this._fb.group({
       constitutionForm: this._fb.group({
         bon_engagement: [undefined]
@@ -64,38 +62,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
       printForm: this._fb.group({
       }),
     });
-
-    if (this.config.data?.item) {
-      const {
-        id,
-        numero,
-        objet,
-        serviceSource,
-        serviceDestination,
-        lieu,
-        date,
-        bon_engagement,
-        valueobjet
-      } = this.config.data?.item as
-        | TransmissionsReceptionModel
-        | any;
-      this.form.patchValue({
-        constitutionForm: {
-          bon_engagement
-        },
-        bordereauForm: {
-          id,
-          numero,
-          objet,
-          serviceSource,
-          serviceDestination,
-          lieu,
-          date,
-          valueobjet
-        },
-        printForm: {},
-      });
-    }
   }
 
 
@@ -134,16 +100,8 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
         }
         break;
       case 'bordereau':
-        if (direction === 'forward') {
-          this.currentStepBs.next('print');
-        }
         if (direction === 'back') {
           this.currentStepBs.next('constitution');
-        }
-        break;
-      case 'print':
-        if (direction === 'back') {
-          this.currentStepBs.next('bordereau');
         }
         break;
     }
@@ -170,7 +128,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
       method.subscribe(
         (res) => {
           this.busy = false;
-          //this.ref.close(res);
           this._store.dispatch(
             GetTransmissionsReceptions({})
           );
@@ -201,7 +158,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
       );
     } else {
       console.log("isBook")
-      this.ref.close();
       this._appService.saveConfirmation({
         message: 'dialogs.messages.saveBon',
         accept: () => {
@@ -210,14 +166,13 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
               '/transmissions-receptions',
               this.editedBordereau
             );
+
           method.subscribe(
             (res) => {
               this.busy = false;
 
-              this._store.dispatch(
-                GetTransmissionsReceptions({})
-              );
-
+              this.ngOnInit();
+              this.currentStepBs.next('constitution');
               this._appService.showToast({
                 summary: 'messages.success',
                 detail:

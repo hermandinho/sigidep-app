@@ -3,7 +3,7 @@
     <ng-template pTemplate="left">
       <div class="quick_filter">
         <div class="p-field">
-          <label>{{ "labels.filterbyStatus" | translate }}:</label>
+          <label>{{ "labels.filterCodeEx" | translate }}:</label>
           <p-dropdown
           [showClear]="true"
           [filter]="true"
@@ -37,7 +37,7 @@
   <ng-template pTemplate="caption">
     <div class="p-d-flex p-ai-center p-jc-between">
       <h5 class="p-m-0">
-        {{ "tables.titles.dossiers" | translate }}
+        {{ "tables.titles.transmission" | translate }}
       </h5>
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
@@ -191,10 +191,6 @@
       </p-table>
 </p-card>
 <div class="footer">
-
-  <button pButton class="p-mr-3 p-button-warning" (click)="close()">
-    {{ "buttons.cancel" | translate }}
-  </button>
   <button
     type="button"
     pButton

@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <input
+              class=""
+              type="text"
+              pInputText
+              [placeholder]="''"
+              formControlName="motif"
+            />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer" id="conteneur">
+    <button pButton class="p-button-warning"  (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button
+    class="p-button-danger"
+      (click)="submit()"
+      pButton
+    >{{ "buttons.rejeter" | translate }}</button>
+  </div>
+</div>

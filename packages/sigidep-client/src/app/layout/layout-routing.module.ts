@@ -35,9 +35,13 @@ import { ConsultationsComponent } from '@pages/consultations/consultations.compo
 import { BonsEngagementsComponent } from '@pages/bons-engagements/decision/bons-engagements.component';
 import { BonsEngagementsCommandesComponent } from '@pages/bons-engagements-commandes/bons-engagements-commandes.component';
 import { BonEngagementMissionsComponent } from '@pages/bons-engagements-missions/bons-engagements-missions.component';
+import { TransmissionsReceptionsComponent } from '@pages/listing-des-bordereaux/transmissions-receptions.component';
+import { VisaEtTransmisssionComponent } from '@pages/visa-et-transmisssion/visa-et-transmisssion.component';
+import { EditionDesTCCComponent } from '@pages/edition-des-tcc/edition-des-tcc.component';
+import { OperationDeControleComponent } from '@pages/operation-de-controle/operation-de-controle.component';
+import { ReceptionBordereauxComponent } from '@pages/reception-bordereaux/reception-bordereaux.component';
 import { VirementsComponent } from '@pages/virements/virements.component';
 import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.component';
-import { TransmissionsReceptionsComponent } from '@pages/transmissions-receptions/transmissions-receptions.component';
 
 const routes: Routes = [
   {
@@ -305,8 +309,56 @@ const routes: Routes = [
           permissions: [...MenuPermissions.transmissionsReceptions],
         },
         loadChildren: () =>
-          import('../pages/transmissions-receptions/transmissions-receptions.module').then(
+          import('../pages/listing-des-bordereaux/transmissions-receptions.module').then(
             (m) => m.TransmissionsReceptionsModule
+          ),
+      },
+      {
+        path: 'visaetmiseenroute',
+        canActivate: [AuthGuard],
+        component: VisaEtTransmisssionComponent,
+        data: {
+          permissions: [...MenuPermissions.visaetmiseenroute],
+        },
+        loadChildren: () =>
+          import('../pages/visa-et-transmisssion/visa-et-transmisssion.module').then(
+            (m) => m.VisaEtTransmisssionModule
+          ),
+      },
+      {
+        path: 'reception-bordereaux',
+        canActivate: [AuthGuard],
+        component: ReceptionBordereauxComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/reception-bordereaux/reception-bordereaux.module').then(
+            (m) => m.ReceptionBordereauxModule
+          ),
+      },
+      {
+        path: 'operation-de-controle',
+        canActivate: [AuthGuard],
+        component: OperationDeControleComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/operation-de-controle/operation-de-controle.module').then(
+            (m) => m.OperationDeControleModule
+          ),
+      },
+      {
+        path: 'edition-des-tcc',
+        canActivate: [AuthGuard],
+        component: EditionDesTCCComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/edition-des-tcc/edition-des-tcc.module').then(
+            (m) => m.EditionDesTCCModule
           ),
       },
       {

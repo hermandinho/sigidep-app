@@ -16,6 +16,7 @@ import { GetTransmissionsReceptionsBons } from '@actions/bons-engagements.action
 import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
 import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
+import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
 
 
@@ -62,7 +63,6 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   constructor(
     private _store: Store<AppState>,
     public translate: TranslateService,
-    public ref: DynamicDialogRef
   ) {
     super();
     this.tableColumnsBordereau = TableColumnsBordereau;
@@ -75,11 +75,11 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
     console.log('constitutionForm',this.constitutionForm)
     this.subformInitialized.emit(this.constitutionForm);
     this._store.dispatch(
-      GetTransmissionsReceptionsBons({})
+      GetTransmissionsReceptionsBons({etats: [EtatBonEnum.RESERVE]})
     );
-    this._store.dispatch(
-      GetTransmissionsReceptionsDetails({})
-    );
+   /*  this._store.dispatch(
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.CONTROLECONFORMITE]})
+    ); */
     this._store.dispatch(
       GetExercises({})
     );
@@ -98,17 +98,11 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   handleFilter = (event: any) => {
     if(event?.value){
       this._store.dispatch(
-        GetTransmissionsReceptionsBons({exercices:[event?.value[0]?.toLowerCase()]})
-      );
-      this._store.dispatch(
-        GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()]})
+        GetTransmissionsReceptionsBons({exercices:[event?.value[0]?.toLowerCase()],etats: [EtatBonEnum.RESERVE]})
       );
     }else{
       this._store.dispatch(
-        GetTransmissionsReceptionsBons({})
-      );
-      this._store.dispatch(
-        GetTransmissionsReceptionsDetails({})
+        GetTransmissionsReceptionsBons({etats: [EtatBonEnum.RESERVE]})
       );
     }
 
@@ -161,9 +155,6 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   doChangeStep = (direction: any) => {
     this.changeStep.emit(direction);
   };
-  close() {
-    this.ref.close();
-  }
 
   detail(item:any){
     if(this.bon_engagement.includes(item)){

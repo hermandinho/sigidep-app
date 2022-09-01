@@ -190,15 +190,6 @@ export class BonEngagementService {
       };
     }
     const bon = await this.repository.save(bonPaylaod);
-
-    const traitementPayload: CreateTraitementBonEngagementDTO = {
-      bon: bon.id,
-      typeTraitement: EtatBonEnum.ENREGISTRE,
-      observation: '',
-      qteUnitePhysiqueReal: null,
-      montantTotalUnitPhysReal: null,
-    };
-    this.modifierTraitement(traitementPayload, user);
     return bon;
   }
 

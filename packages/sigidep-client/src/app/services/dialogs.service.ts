@@ -114,6 +114,7 @@ export class DialogsService {
   private reservationBonEngagementDecisionComponent: any;
   private etatCertificatEngagementComponent: any;
   private createBonEngagementMissionFormComponent: any;
+  private createMotifRejetFormComponent:any
 
 
 
@@ -1114,6 +1115,30 @@ export class DialogsService {
         action,
       },
     });
+
+  }
+
+  public async launchMotifRejetCreateDialog(
+    item?: any,
+  ): Promise<any> {
+    if (!this.createMotifRejetFormComponent) {
+      const { CreateMotifRejetFormComponent } = await import(
+        '@components/create-motif-rejet-form/create-motif-rejet-form.component'
+      );
+      this.createMotifRejetFormComponent = CreateMotifRejetFormComponent;
+    }
+      return this._dialogService.open(this.createMotifRejetFormComponent, {
+        header: this._translateService.instant(
+          'dialogs.headers.viewTransmissionReception',
+          { numero: item?.numero }
+        ),
+        width: '60vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+        },
+      });
 
   }
 

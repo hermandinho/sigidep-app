@@ -1,12 +1,11 @@
 import { EtatBonEnum } from '@utils/etat-bon.enum';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, TableInheritance } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { BonEngagementEntity } from './bon-engagement.entity';
 import { UserEntity } from './user.entity';
 
-@Entity({
-  name: 'traitements_bons_engagements',
-})
+@Entity('traitements_bons_engagements')
+@TableInheritance({ column: { type: 'varchar', name: 'type',nullable: true,default:'type' } })
 export class TraitementBonEngagementEntity extends BaseEntity {
   @ManyToOne(() => BonEngagementEntity, (object) => object.traitements, {
     eager: false,
@@ -65,15 +64,6 @@ export class TraitementBonEngagementEntity extends BaseEntity {
 
   @Column('varchar', { nullable: true, name: 'piecesJointe' })
   public piecesJointe!: string;
-  // RELATIONS
-  @ManyToOne(() => UserEntity, (object) => object.id, {
-    eager: false,
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'created_by' })
-  public createdBy!: UserEntity;
-
   constructor(param?: Partial<TraitementBonEngagementEntity>) {
     super();
     if (param) {
