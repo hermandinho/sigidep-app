@@ -35,7 +35,6 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
   public encourData: EncoursModel[] = [];
   public detailsVirements: DetailsVirementModel[] = [];
   public oldDetailsVirements: DetailsVirementModel[] = [];
-  public typeFinancement!: string;
   public subProgrameSource: any = '####';
   public subProgrameCible: any = '####';
   public mode!: ModeVirementEnum;
@@ -95,7 +94,6 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
         detailsVirementsCredit: [undefined]
       });
     }
-    this.typeFinancement = '';
   }
 
 
@@ -112,22 +110,17 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
     const encourResult = await this._apisService
       .get<EncoursModel[]>(`/virements/encour/${code}`) // TODO: reutiliser la ligne suivante
       .toPromise();
+    this.detailsVirements = [];
     encourResult.forEach((e) => {
       this.detailsVirements.push(
         new DetailsVirementModel({
           codeInput: e.imputation,
           libelleInput: e.operation.labelFr,
-          encour: e
+          encour: e,
+          typeVirement: e.sourceFinancement,
         })
       );
     });
-  }
-
-  async setTypeVirement(type: string) {
-    this.typeFinancement = type;
-  }
-
-  async filterEncourByPrograms(code: number, isSource: boolean = true) {
   }
 
   subformInitialized(name: string, group: FormGroup) {
@@ -208,8 +201,6 @@ export class VirementFormComponent extends BaseComponent implements OnInit {
       .post<VirementModele>('/virements/update', virement)
       .subscribe(
         (res) => {
-          console.log(res);
-
           this.busy = false;
           this._dialogService.launchVirementMessage({ numero: this.virement?.numero ?? '', title: 'Modification du virement N°', subtitle: 'effectué avec success!' }, 25)
           this.ref.close(res);

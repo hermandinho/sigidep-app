@@ -30,11 +30,11 @@
                             </p-cellEditor>
                         </td>
                         <td>
-                            <button (click)="addToCredit(item)" class="p-button-success" icon="pi pi-plus" pButton
-                                pRipple [disabled]="null == item.montant"></button>
+                            <button *ngIf="item.isCredit" (click)="addToCredit(item)" class="p-button-success"
+                                icon="pi pi-plus" pButton pRipple [disabled]="null == item.montant"></button>
                             &nbsp;&nbsp;&nbsp;
-                            <button (click)="addToDebit(item)" class="p-button-primary" icon="pi pi-minus" pButton
-                                pRipple [disabled]="null == item.montant"></button>
+                            <button *ngIf="item.isDebit" (click)="addToDebit(item)" class="p-button-primary"
+                                icon="pi pi-minus" pButton pRipple [disabled]="null == item.montant"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -48,7 +48,7 @@
                     <th>Imputation</th>
                     <th>Libellé Operation</th>
                     <th>Montant</th>
-                    <th *ngIf="create"></th>
+                    <th *ngIf="create || update"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -80,7 +80,7 @@
                     <th>Imputation</th>
                     <th>libele Operation</th>
                     <th>Montant</th>
-                    <th *ngIf="create"></th>
+                    <th *ngIf="create || update"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">

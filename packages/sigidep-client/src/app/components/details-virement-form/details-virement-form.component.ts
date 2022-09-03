@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { DetailsVirementModel } from '@models/detailsVirement';
+import { SubProgramModel } from '@models/sub-program.model';
 import { VirementModele } from '@models/virement.model';
 import { Store } from '@ngrx/store';
-import { ModeVirementEnum } from '@pages/virements/tools/virement-tools';
+import { ModeVirementEnum, typeVirementEnum } from '@pages/virements/tools/virement-tools';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
@@ -21,7 +22,6 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
 
   @Input() startingForm!: FormGroup;
   @Input() encourList!: DetailsVirementModel[];
-  @Input() typeFinancement!: string;
   @Input() mode!: ModeVirementEnum;
   @Input() detailsVirement?: DetailsVirementModel[];
   @Input() virement?: VirementModele;
@@ -45,6 +45,9 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public cancel: boolean = false;
   public update: boolean = false;
   public detailsVirementList: DetailsVirementModel[] = [];
+  public scSource!: SubProgramModel;
+  public scCible!: SubProgramModel;
+  public typeFinancement?: string;
 
   constructor(
     private _apisService: ApisService,
@@ -57,12 +60,14 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this.getMode();
+    this.setMode();
+    if (this.mode === ModeVirementEnum.CREATION) {
+      this.scSource = this.startingForm.value.spSourceVirement;
+      this.scCible = this.startingForm.value.spCibleVirement;
+      this.typeFinancement = this.startingForm.value.typeVirement;
+    }
     this._initialListener();
     this.detailVirementForm = this.startingForm;
-    if (this.mode === ModeVirementEnum.UPDATED) {
-      this.getDetailsVirementByVirement();
-    }
   }
 
 
@@ -71,6 +76,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   };
 
   _initialListener() {
+
     if (!this.create && !this.update) {
       this.detailsVirement?.forEach((d) => {
         let details = new DetailsVirementModel(d);
@@ -83,7 +89,53 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
       });
       this.sumMontant(this.debitEncourList, true);
       this.sumMontant(this.creditEncourList, false);
+    } else if (this.mode === ModeVirementEnum.CREATION) {
+      this.filterByTypeFiancement(this.scSource.labelFr, this.scCible.labelFr)
+    } else {
+      this.getDetailsVirementByVirement();
+      var scSourceText = this.startingForm.value.spSourceVirement as string;
+      var scCibleText = this.startingForm.value.spCibleVirement as string;
+      scSourceText = scSourceText.split('/')[1];
+      scCibleText = scCibleText.split('/')[1];
+      this.typeFinancement = this.virement?.typeVirement;
+      this.filterByTypeFiancement(scSourceText, scCibleText)
     }
+  }
+
+  filterByTypeFiancement(labelSource: string, labelCible: string) {
+    let encourTmp = this.encourList;
+
+    this.encourList = [];
+    encourTmp.forEach((e) => {
+      let isCredit = e.encour.subProgram.includes(labelCible) ? true : false;
+      let isDebit = e.encour.subProgram.includes(labelSource) ? true : false;
+      e.isCredit = isCredit;
+      e.isDebit = isDebit;
+      switch (this.typeFinancement) {
+        case typeVirementEnum.BF2BF:
+          if (e.encour.sourceFinancement.includes('BF')) {
+            this.encourList.push(e);
+          }
+          break;
+        case typeVirementEnum.BIP2BIP:
+          if (e.encour.sourceFinancement.includes('BIP')) {
+            this.encourList.push(e);
+          }
+          break;
+        case typeVirementEnum.BF2BIP:
+          if ((e.encour.sourceFinancement.includes('BF') && isDebit)
+            || (e.encour.sourceFinancement.includes('BIP') && isCredit)) {
+            this.encourList.push(e);
+          }
+          break;
+        case typeVirementEnum.BIP2BF:
+          if ((e.encour.sourceFinancement.includes('BIP') && isDebit)
+            || (e.encour.sourceFinancement.includes('BF') && isCredit)) {
+            this.encourList.push(e);
+          }
+          break;
+      }
+    });
   }
 
   async getDetailsVirementByVirement() {
@@ -92,16 +144,15 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
       .subscribe(
         (res) => {
           this.detailsVirementList = [...res];
-          console.log(this.detailsVirementList);
-
           this.detailsVirementList?.forEach((d) => {
-            this.encourList = [...this.encourList.filter((e) => e.codeInput != d.codeInput)]
+            this.encourList = [...this.encourList.filter((e) => e.libelleInput != d.libelleInput)]
             let statusDebit = d.credit != null ? false : true;
+            // let isCredit = d.libelleInput;
             let detail = new DetailsVirementModel({
               codeInput: d.codeInput,
               libelleInput: d.libelleInput,
               encour: d.encour,
-              montant: d.credit ?? d.debit
+              montant: d.credit ?? d.debit,
             });
             if (!statusDebit) {
               this.addToCredit(detail);
@@ -129,7 +180,6 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   }
 
   addToCredit(item: DetailsVirementModel) {
-    item.isCredit = true;
     this.encourList = [...this.encourList.filter((e) => e != item)];
     this.creditEncourList = [...this.creditEncourList, item];
     this.sumMontant(this.creditEncourList, false);
@@ -137,7 +187,6 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
 
 
   addToDebit(item: DetailsVirementModel) {
-    item.isCredit = false;
     this.encourList = [...this.encourList.filter((e) => e != item)];
     this.debitEncourList = [...this.debitEncourList, item];
     this.sumMontant(this.debitEncourList, true);
@@ -256,7 +305,7 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
 
   }
 
-  getMode() {
+  setMode() {
     switch (this.mode) {
       case ModeVirementEnum.CREATION:
         this.create = true;
