@@ -179,8 +179,8 @@ export class VirementsComponent extends BaseComponent implements OnInit {
   }
 
   getItemClass(item: VirementModele) {
-    return item.etatVirement == EtatVirementEnum.SAVED ? 'success' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'primary' :
-      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'warning' : 'info'))
+    return item.etatVirement == EtatVirementEnum.SAVED ? 'info' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'warning' :
+      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'success' : item.etatVirement == EtatVirementEnum.UPDATED ? 'primary' : 'danger'))
   }
 
   isSave(etatVirement: EtatVirementEnum): Boolean {
@@ -197,6 +197,14 @@ export class VirementsComponent extends BaseComponent implements OnInit {
 
   isUpdate(etatVirement: EtatVirementEnum): Boolean {
     return etatVirement == EtatVirementEnum.UPDATED
+  }
+
+  activeForReservation(item: VirementModele): Boolean {
+    var prix = 0;
+    item.detailsVirements.forEach((d) => {
+      prix += d.credit ?? 0 - d.debit ?? 0;
+    })
+    return prix != 0;
   }
 
 }
