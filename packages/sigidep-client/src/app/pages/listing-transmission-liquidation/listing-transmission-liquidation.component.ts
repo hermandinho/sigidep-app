@@ -19,15 +19,14 @@ import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
-
 @Component({
-  selector: 'app-transmissions-receptions',
-  templateUrl: './transmissions-receptions.component.html',
-  styleUrls: ['./transmissions-receptions.component.scss'],
+  selector: 'app-listing-transmission-liquidation',
+  templateUrl: './listing-transmission-liquidation.component.html',
+  styleUrls: ['./listing-transmission-liquidation.component.scss'],
   providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TransmissionsReceptionsComponent extends BaseComponent
+export class ListingTransmissionLiquidationComponent extends BaseComponent
 implements OnInit {
 
   public tableColumnsTransmission:any[]=[];
@@ -64,12 +63,12 @@ implements OnInit {
     this._initListeners();
   }
 
-  async ngOnInit(){
+  ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
+      GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION]})
     );
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.TRANSMISSIONLIQUIDATION]})
     );
     this._store.dispatch(
       GetExercises({})
@@ -95,7 +94,7 @@ implements OnInit {
           CreateTransmissionsReception({ payload: item })
         );
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
+          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.EDITIONTITRECREANCE]})
         );
         this._appService.showToast({
           summary: 'messages.success',
@@ -138,7 +137,7 @@ implements OnInit {
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
 
-  private async _initListeners() {
+  private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelectorTrans))
       .subscribe((data) => {

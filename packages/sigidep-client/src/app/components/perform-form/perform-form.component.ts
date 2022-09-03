@@ -36,17 +36,21 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   public performForm!: FormGroup;
   data: EncoursModel[] = [];
   loading$: Observable<boolean> = of(true);
+  open:boolean=false
   constructor(
     private _store: Store<AppState>,
     public ref: DynamicDialogRef,
     private _appService: AppService
   ) {
     super();
-    //this._initListeners()
+    this._initListeners()
   }
 
   ngOnInit(): void {
-    console.log(this.procedure)
+    console.log(this.dataEngagement)
+    if(this.dataEngagement!=undefined){
+      this.open=true;
+    }
     if (!this.procedure) {
       this.procedure = this._appService.currentProcedure;
       console.log(this.procedure)
@@ -57,6 +61,10 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
     this.performForm.controls['livrables'].disable();
     this.performForm.controls['sourceVerif'].disable();
     this.getEncour();
+    if (this.dataEngagement)
+    this.performForm.patchValue({
+     situationActuelle: this.dataEngagement?.situationActuelle,
+    });
   }
   doChangeStep = (direction: any) => {
     this._appService.setCurrentProcedure(this.procedure);
@@ -89,9 +97,8 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   onEncourChange = (data: any) => {
     if (data)
       this.performForm.patchValue({
-        livrables: data.livrables,
-        sourceVerif: data.sourceVerif,
-        situationActuelle: this.dataEngagement?.situationActuelle,
+        livrables: data?.livrables,
+        sourceVerif: data?.sourceVerif,
       });
   };
 

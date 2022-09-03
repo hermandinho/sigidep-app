@@ -81,7 +81,8 @@ const declarations = [
   ModelVirementFormComponent,
   VirementFormComponent,
   DetailsVirementFormComponent,
-  VirementBodyFormComponent
+  VirementBodyFormComponent,
+
 ];
 
 const shared = [

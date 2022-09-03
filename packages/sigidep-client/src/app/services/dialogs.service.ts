@@ -114,7 +114,8 @@ export class DialogsService {
   private reservationBonEngagementDecisionComponent: any;
   private etatCertificatEngagementComponent: any;
   private createBonEngagementMissionFormComponent: any;
-  private createMotifRejetFormComponent:any
+  private createMotifRejetFormComponent:any;
+  private printEditionCreanceComponent:any;
 
 
 
@@ -1273,6 +1274,30 @@ export class DialogsService {
       modal: true,
       data: {
         data,
+      },
+    });
+  }
+
+  public async launchPrintEditionCreanceDialog(
+    item:any
+  ): Promise<any> {
+    if (!this.printEditionCreanceComponent) {
+      const { PrintEditionTccCreanceComponent } = await import(
+        '@components/print-edition-tcc-creance/print-edition-tcc-creance.component'
+      );
+      this.printEditionCreanceComponent = PrintEditionTccCreanceComponent;
+    }
+
+    return this._dialogService.open(this.printEditionCreanceComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.printEditionCreance',
+        { numero: item?.numero }
+      ),
+      width: '100%',
+      height: '100%',
+      modal: true,
+      data: {
+        item,
       },
     });
   }

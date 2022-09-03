@@ -66,6 +66,17 @@
   [label]="'buttons.next' | translate"
   pButton
 ></button>
+<button *ngIf="readOnly && procedure === '1110'"
+type="button"
+pButton
+pRipple
+class="p-button"
+icon="pi pi-angle-right"
+(click)="doChangeStep('forward')"
+[disabled]="!performForm?.valid && !readOnly"
+[label]="'buttons.next' | translate"
+pButton
+></button>
   <button
     *ngIf="readOnly && procedure !== '1110' && procedure !== '1111'"
     type="button"
@@ -80,7 +91,7 @@
   ></button>
 
   </div>
-  <div class="footer" *ngIf="dataEngagement">
+  <!-- <div class="footer" *ngIf="dataEngagement">
     <button
       (click)="doChangeStep('back')"
       [label]="'buttons.back' | translate"
@@ -114,5 +125,5 @@
     pButton
   ></button>
 
-  </div>
+  </div> -->
 </div>

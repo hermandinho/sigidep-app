@@ -18,7 +18,11 @@ export class TransmissionsReceptionsEffects {
         this.apisService.get<TransmissionsReceptionModel[]>('/transmissions-receptions', {
           ...(action.exercices && {
             exercices: action.exercices.join(','),
-          })}).pipe(
+          }),
+          ...(action.objets && {
+            objets: action.objets.join(','),
+          }),
+        }).pipe(
           switchMap((payload) => {
             return [GetTransmissionsReceptionsSuccess({ payload })];
           }),

@@ -42,6 +42,9 @@ import { OperationDeControleComponent } from '@pages/operation-de-controle/opera
 import { ReceptionBordereauxComponent } from '@pages/reception-bordereaux/reception-bordereaux.component';
 import { VirementsComponent } from '@pages/virements/virements.component';
 import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.component';
+import { ControleConformiteComponent } from '@pages/controle-conformite/controle-conformite.component';
+import { TransmissionLiquidationComponent } from '@pages/transmission-liquidation/transmission-liquidation.component';
+import { ListingTransmissionLiquidationComponent } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.component';
 
 const routes: Routes = [
   {
@@ -338,7 +341,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'operation-de-controle',
+        path: 'controler-la-conformite',
         canActivate: [AuthGuard],
         component: OperationDeControleComponent,
         data: {
@@ -347,6 +350,18 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/operation-de-controle/operation-de-controle.module').then(
             (m) => m.OperationDeControleModule
+          ),
+      },
+      {
+        path: 'rejeter-lors-du-Controle',
+        canActivate: [AuthGuard],
+        component: ControleConformiteComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/controle-conformite/controle-conformite.module').then(
+            (m) => m.ControleConformiteModule
           ),
       },
       {
@@ -359,6 +374,30 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/edition-des-tcc/edition-des-tcc.module').then(
             (m) => m.EditionDesTCCModule
+          ),
+      },
+      {
+        path: 'listing-transmission-liquidation',
+        canActivate: [AuthGuard],
+        component: ListingTransmissionLiquidationComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionLiquidation],
+        },
+        loadChildren: () =>
+          import('../pages/listing-transmission-liquidation/listing-transmission-liquidation.module').then(
+            (m) => m.ListingTransmissionLiquidationModule
+          ),
+      },
+      {
+        path: 'transmission-liquidation',
+        canActivate: [AuthGuard],
+        component: TransmissionLiquidationComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionLiquidation],
+        },
+        loadChildren: () =>
+          import('../pages/transmission-liquidation/transmission-liquidation.module').then(
+            (m) => m.TransmissionLiquidationModule
           ),
       },
       {

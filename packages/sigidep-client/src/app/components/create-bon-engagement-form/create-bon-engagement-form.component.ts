@@ -220,6 +220,8 @@ export class CreateBonEngagementFormComponent
         this.config?.data?.item?.numActeJuridique?.codeProcedure;
       this._appService.setCurrentProcedure(this.currentProcedure);
 
+      console.log(this.currentProcedure)
+
       this.form.patchValue({
         engagementForm: {
           id,
@@ -453,10 +455,10 @@ export class CreateBonEngagementFormComponent
       } as BonEngagementModel;
     }
 
-    console.log(this.editedEngagement)
-    console.log('..............FORMM.....', {
+   // console.log(this.editedEngagement)
+    /* console.log('..............FORMM.....', {
       ...this.form.getRawValue().factureForm,
-    });
+    }); */
     if (this.isBook) {
       this.bookProcess(this.editedEngagement);
       localStorage.removeItem('imputation');

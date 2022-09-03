@@ -95,8 +95,11 @@ export class FactureComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this._store.dispatch(GetArticles());
     this.factureForm = this.startingForm;
+    console.log('this.factureForm ',this.factureForm)
     this.factureId = this.factureForm.value.id;
-    this.getArticles();
+    if(this.factureId){
+      this.getArticles();
+    }
     if (!this.procedure) {
       this.procedure = this._appService.currentProcedure;
     }
@@ -227,6 +230,7 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
   addArticleFormGroup(articleF?: FactureArticleModel): FormGroup {
     const total = (articleF?.quantite || 0) * (articleF?.article.prix || 0);
+    console.log(total)
     return this._fb.group({
       id: [articleF?.id],
       serie: [articleF?.article.serie],
@@ -297,6 +301,7 @@ export class FactureComponent extends BaseComponent implements OnInit {
       .subscribe(
         (res) => {
           res?.forEach((item: FactureArticleModel) => {
+
             (<FormArray>this.factureForm.get('articles')).push(
               this.addArticleFormGroup(item)
             );

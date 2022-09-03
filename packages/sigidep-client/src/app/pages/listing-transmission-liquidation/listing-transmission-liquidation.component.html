@@ -1,10 +1,10 @@
 <div id="print-section">
-  <p-card>
+  <p-card >
     <p-toolbar styleClass="p-mb-2">
       <ng-template pTemplate="left">
         <div class="quick_filter">
           <div class="p-field">
-            <label>{{ "labels.filterCodeEx" | translate }}:</label>
+            <label>{{ "labels.filterbyStatus" | translate }}:</label>
             <p-dropdown
             [showClear]="true"
             [filter]="true"
@@ -21,6 +21,80 @@
         </div>
       </ng-template>
     </p-toolbar>
+        <p-table
+          #dt1
+          [globalFilterFields]="globalColumnsTransmission"
+          [loading]="(loading$ | async) || false"
+          [paginator]="true"
+          [rowHover]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [sortMode]="'single'"
+          [value]="bordereauxTransmissions"
+          [currentPageReportTemplate]="'tables.stats.pager' | translate"
+          dataKey="id"
+          responsiveLayout="scroll"
+        >
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <h5 class="p-m-0">
+                {{ "tables.titles.transmission" | translate }}
+              </h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt1.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                  "
+                  [placeholder]="'labels.search' | translate"
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <ng-container *ngFor="let column of tableColumnsTransmission">
+                <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                  {{ column.title | translate }}
+                  <p-sortIcon field="numero"></p-sortIcon>
+                </th>
+              </ng-container>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td *ngFor="let column of tableColumnsTransmission; let i=index" class="nowrap">
+                <span *ngIf="column.field==='objet'">
+                  {{ item[column.field] | translate }}
+                </span>
+                <span *ngIf="column.field==='dateTransmission'">
+                  {{ item['createdAt'] | date}}
+                </span>
+                <span *ngIf="
+                column.field !== 'num' &&
+                column.field !== 'objet' &&
+                column.field !== 'dateTransmission'">
+                  {{ item[column.field] }}
+                </span>
+              </td>
+              <td class="actions_button">
+                <button (click)="handleCancel(item)" class=" p-button-danger" pButton
+              pRipple>{{ 'buttons.cancel'|translate }}</button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+            </div>
+          </ng-template>
+        </p-table>
+    <p-menu appendTo="body" #menu [popup]="true" [model]="menus"></p-menu>
+  </p-card>
+
+  <p-card>
     <p-table
           #dt
           [globalFilterFields]="globalColumnsBordereaux"
@@ -38,7 +112,7 @@
           <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
               <h5 class="p-m-0">
-                {{ "tables.titles.bon_controler" | translate }}
+                {{ "tables.titles.dossiers" | translate }}
               </h5>
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
@@ -54,23 +128,19 @@
             </div>
           </ng-template>
           <ng-template pTemplate="header">
-            <tr >
-              <th></th>
+            <tr>
               <ng-container *ngFor="let column of tableColumnsBordereau">
                 <th *ngIf="column.sortable" [pSortableColumn]="column.field">
                   {{ column.title | translate }}
                   <p-sortIcon field="numeroEng"></p-sortIcon>
                 </th>
               </ng-container>
+              <th></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-item>
-
-            <tr (click)="fileInput110.click()">
-              <td class="actions">
-                <input hidden type="checkbox" #fileInput110 (change)="selected($event,item)" >
-              </td>
-              <td *ngFor="let column of tableColumnsBordereau" class="nowrap">
+            <tr>
+              <td *ngFor="let column of tableColumnsBordereau let i=index" class="nowrap">
                 <span *ngIf="column.field === 'numeroBon'">
                   {{ item["bon_engagement"]?.numero }}
                 </span>
@@ -111,7 +181,7 @@
 </div>
 
 <div>
-  <button (click)="edition()" pButton class="p-mr-3 p-button-danger">
-    {{ "buttons.edition" | translate }}
+  <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+    {{ "buttons.print" | translate }}
   </button>
 </div>

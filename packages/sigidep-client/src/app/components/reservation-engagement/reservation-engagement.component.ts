@@ -109,7 +109,9 @@ export class ReservationEngagementComponent
             .reduce((acc, curr) => acc + curr, 0);
         });
     }
-
+    console.log('morcellement ',Math.abs(
+      moment(this.dernierCommande.dateSignature).diff(moment(), 'days')
+    ))
     this.form.patchValue({
       id: this.engagement.id,
       disponibiliteCredits:

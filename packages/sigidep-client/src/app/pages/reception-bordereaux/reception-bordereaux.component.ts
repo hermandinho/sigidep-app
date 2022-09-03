@@ -70,7 +70,7 @@ export class ReceptionBordereauxComponent extends BaseComponent
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptions({})
+      GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
     );
     this._store.dispatch(
       GetExercises({})
@@ -91,11 +91,11 @@ export class ReceptionBordereauxComponent extends BaseComponent
   handleFilter = (event: any) => {
     if (event?.value) {
       this._store.dispatch(
-        GetTransmissionsReceptions({ exercices: [event?.value[0]?.toLowerCase()] })
+        GetTransmissionsReceptions({ exercices: [event?.value[0]?.toLowerCase()],objets:[EtatBonEnum.TRANSMISCONTROLECONFORMITE] })
       );
     } else {
       this._store.dispatch(
-        GetTransmissionsReceptions({})
+        GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
       );
     }
 
@@ -186,7 +186,7 @@ export class ReceptionBordereauxComponent extends BaseComponent
           this.busy = false;
 
           this._store.dispatch(
-            GetTransmissionsReceptions({})
+            GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
           );
           this._appService.showToast({
             summary: 'messages.success',

@@ -17,4 +17,6 @@ export class TransmissionReceptionDTO {
   @IsOptional()
   bon_engagement?: CreateBonEngagementDTO[];
 
+  transmission?:string;
+
 }

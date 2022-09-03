@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EditionDesTCCRoutingModule } from './edition-des-tcc-routing.module';
+import { ControleConformiteRoutingModule } from './controle-conformite-routing.module';
+import { ControleConformiteComponent } from './controle-conformite.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
@@ -10,18 +11,18 @@ import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
-import { TreeTableModule } from 'primeng/treetable';
 import { CardModule } from 'primeng/card';
+import { TreeTableModule } from 'primeng/treetable';
 import { SharedModule } from '@modules/shared.module';
-import { EditionDesTCCComponent } from './edition-des-tcc.component';
-import { PrintEditionTccCreanceComponent } from '@components/print-edition-tcc-creance/print-edition-tcc-creance.component';
 
 
 @NgModule({
-  declarations: [EditionDesTCCComponent,PrintEditionTccCreanceComponent],
+  declarations: [
+    ControleConformiteComponent
+  ],
   imports: [
     CommonModule,
-    EditionDesTCCRoutingModule,
+    ControleConformiteRoutingModule,
     SharedModule,
     CheckboxModule,
     InputMaskModule,
@@ -35,4 +36,4 @@ import { PrintEditionTccCreanceComponent } from '@components/print-edition-tcc-c
     TreeTableModule,
   ]
 })
-export class EditionDesTCCModule { }
+export class ControleConformiteModule { }

@@ -6,10 +6,13 @@
     (subformInitialized)="subformInitialized('constitutionForm', $event)"
     (changeStep)="changeStep('constitution', $event)"
     [isCheck]="isCheck"
+    [transmission]="transmission"
+    [etat]="etat"
   ></app-constitution-bordereau-form>
   <app-coordonnees-bordereau-form
     *ngSwitchCase="'bordereau'"
     [readOnly]="isBook"
+    [transmission]="transmission"
     [startingForm]="bordereauFormGroup"
     [procedure]="currentProcedure"
     (subformInitialized)="subformInitialized('bordereauForm', $event)"

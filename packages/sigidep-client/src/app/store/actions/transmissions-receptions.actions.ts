@@ -1,7 +1,7 @@
 import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
 import { createAction, props } from '@ngrx/store';
 
-export const GetTransmissionsReceptions = createAction('[transmissionsReceptions] Filter',props<{ exercices?: string[];}>());
+export const GetTransmissionsReceptions = createAction('[transmissionsReceptions] Filter',props<{ exercices?: string[]; objets?: string[];}>());
 export const GetTransmissionsReceptionsSuccess = createAction(
   '[transmissionsReceptions] Filter success',
   props<{ payload: TransmissionsReceptionModel[] }>()

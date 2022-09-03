@@ -1,0 +1,27 @@
+p {
+  font-size: 1.5em;
+  color: #FE7F88;
+  background-color: transparent;
+  background-image: none;
+}
+
+.bg {
+  background-image: url("/assets/img/titrecreance.png");
+  height: 3000px
+}
+
+.page{
+  display: flex;
+  background-image: url("/assets/img/titrecreance.png");
+  background-repeat: no-repeat;
+  background-color: transparent;
+ // height: 3000px
+}
+
+@media (orientation: landscape) {
+  .page {
+    flex-direction: row;
+    height:7218.90px ;
+    width: 9000.48px ;
+  }
+}

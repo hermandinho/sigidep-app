@@ -26,6 +26,7 @@ export class CoordonneesBordereauFormComponent extends BaseComponent implements 
   @Input() readOnly!: boolean;
   @Input() isCheck!:boolean;
   @Input() procedure!:string;
+  @Input() transmission!:string;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -55,8 +56,8 @@ export class CoordonneesBordereauFormComponent extends BaseComponent implements 
     if (this.readOnly) this.bordereauForm.disable();
     this.onDisable()
     this.bordereauForm.patchValue({
-      valueobjet:this.translate.instant(EtatBonEnum.TRANSMISCONTROLECONFORMITE),
-      objet:EtatBonEnum.TRANSMISCONTROLECONFORMITE
+      valueobjet:this.translate.instant(this.transmission),
+      objet:this.transmission
     });
     if(this.procedure==="1125"){
       this._store.dispatch(

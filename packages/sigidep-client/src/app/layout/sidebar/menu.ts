@@ -49,7 +49,9 @@ export const MenuPermissions = {
   transmissionsReceptions: [...simpleCrudPermissions('transmissionsReceptions')],
   visaetmiseenroute: [...simpleCrudPermissions('visaetmiseenroute')],
   controledeconformite: [...simpleCrudPermissions('controledeconformite')],
+  transmissionLiquidation: [...simpleCrudPermissions('transmissionLiquidation')],
   virements: [...simpleCrudPermissions('virements')],
+
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -372,10 +374,23 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'operation-de-controle',
               icon: 'pi pi-shield',
               label: translate.instant('sidebar.operationdecontrole'),
               routerLinkActiveOptions: { exact: true },
+              items:[
+                {
+                  routerLink: 'controler-la-conformite',
+                  icon: 'pi pi-shield',
+                  label: translate.instant('sidebar.rejeterlorsduControle'),
+                  routerLinkActiveOptions: { exact: true },
+                },
+                {
+                  routerLink: 'rejeter-lors-du-Controle',
+                  icon: 'pi pi-shield',
+                  label: translate.instant('sidebar.controlerlaconformite'),
+                  routerLinkActiveOptions: { exact: true },
+                },
+              ]
             },
             {
               routerLink: 'edition-des-tcc',
@@ -383,8 +398,31 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               label: translate.instant('sidebar.editiondestcc'),
               routerLinkActiveOptions: { exact: true },
             },
+
           ],
         },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.transmissionLiquidation'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.transmissionLiquidation],
+          },
+          items: [
+            {
+              routerLink: 'listing-transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.listingTransmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ]
+        }
       ],
     },
     {

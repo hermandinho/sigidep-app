@@ -1,22 +1,18 @@
 import { SetAppBreadcrumb } from '@actions/app.actions';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@reducers/index';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TableColumnsBordereau } from './consts';
-import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoadingSelectorDetail } from '@reducers/detail-transmissions-receptions.reducer';
 import { BonEngagementModel } from '@models/bon-engagement.model';
-import { GetTransmissionsReceptionsDetails } from '@actions/detail-transmissions-receptions.actions';
 import { GetTransmissionsReceptionsBons } from '@actions/bons-engagements.actions';
 import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
 import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
-import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
 
 
@@ -30,6 +26,8 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   @Input() dataEngagement!: any;
   @Input() readOnly!: boolean;
   @Input() isCheck!:boolean;
+  @Input() transmission!:string;
+  @Input() etat!:string;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -56,10 +54,6 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   exercices:any;
   color:string='while';
 
-
-
-
-
   constructor(
     private _store: Store<AppState>,
     public translate: TranslateService,
@@ -70,18 +64,15 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
     this._initListeners();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(){
     this.constitutionForm = this.startingForm;
-    console.log('constitutionForm',this.constitutionForm)
     this.subformInitialized.emit(this.constitutionForm);
-    this._store.dispatch(
-      GetTransmissionsReceptionsBons({etats: [EtatBonEnum.RESERVE]})
-    );
-   /*  this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.CONTROLECONFORMITE]})
-    ); */
+
     this._store.dispatch(
       GetExercises({})
+    );
+    this._store.dispatch(
+      GetTransmissionsReceptionsBons({etats: [this.etat]})
     );
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -97,45 +88,20 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
 
   handleFilter = (event: any) => {
     if(event?.value){
-      this._store.dispatch(
-        GetTransmissionsReceptionsBons({exercices:[event?.value[0]?.toLowerCase()],etats: [EtatBonEnum.RESERVE]})
-      );
+        this._store.dispatch(
+          GetTransmissionsReceptionsBons({exercices:[event?.value[0]?.toLowerCase()],etats: [this.etat]})
+        );
     }else{
-      this._store.dispatch(
-        GetTransmissionsReceptionsBons({etats: [EtatBonEnum.RESERVE]})
-      );
+        this._store.dispatch(
+          GetTransmissionsReceptionsBons({etats: [this.etat]})
+        );
     }
 
 };
 
-
   private _initListeners() {
 
-    this._store
-    .pipe(this.takeUntilDestroy, select(getDataSelector))
-    .subscribe((data) => {
-      this.bons = [...data];
-      //this.bons = [...data];
-      console.log("bons ", this.bons)
-    });
 
-  this.loading$ = this._store.pipe(
-    select(getLoadingSelector),
-    map((status) => status)
-  );
-
-  this._store
-    .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
-    .subscribe((data) => {
-      this.dossiersBordereaux = [...data];
-      console.log('dossiersBordereaux ', this.dossiersBordereaux)
-
-    });
-
-    this.loading1$ = this._store.pipe(
-      select(getLoadingSelectorDetail),
-      map((status) => status)
-    );
 
     this._store
     .pipe(this.takeUntilDestroy, select(getDataSelectorEx))
@@ -149,6 +115,20 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
       select(getLoadingSelectorEx),
       map((status) => status)
     );
+
+      if(this.etat!=''){
+        this._store
+        .pipe(this.takeUntilDestroy, select(getDataSelector))
+        .subscribe((data) => {
+          this.bons = [...data];
+          console.log("bons ", this.bons)
+        });
+
+      this.loading$ = this._store.pipe(
+        select(getLoadingSelector),
+        map((status) => status)
+      );
+      }
 
   }
 
@@ -167,12 +147,10 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
       this.bon_engagement.push(item)
       this.color='blue';
     }
-    //this.bon_engagement.push(item);
-    console.log('bon_engagement',this.bon_engagement)
     this.constitutionForm.patchValue({
-      bon_engagement:this.bon_engagement
+      bon_engagement:this.bon_engagement,
+      transmission:this.transmission
     });
-    console.log('constitutionForm',this.constitutionForm)
   }
 
   selected(e:any) {

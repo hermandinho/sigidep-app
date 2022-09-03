@@ -61,7 +61,7 @@ export class TransmissionReceptionController {
     return this.services.getDossierBor(filter);
   }
   @Get('/bon')
-  public async getBonEnAttente() {
-    return this.services.getBonEnAttente();
+  public async getBonEnAttente( @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,) {
+    return this.services.getBonEnAttente(filter);
   }
 }

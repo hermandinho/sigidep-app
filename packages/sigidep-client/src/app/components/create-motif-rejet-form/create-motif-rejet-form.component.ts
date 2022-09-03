@@ -65,10 +65,10 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
       method.subscribe(
         (res) => {
           this.busy = false;
-          this.ref.close();
           this._store.dispatch(
             GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE] })
           );
+          this.ref.close();
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'dialogs.messages.rejeter',

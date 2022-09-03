@@ -13,6 +13,7 @@ import { FactureArticleEntity } from '@entities/facture-article.entity';
 import { getAbbreviation } from '@utils/functions';
 import { EngagementJuridiqueService } from '@modules/engagement-juridiques/service/engagement-juridique.service';
 import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
+import { response } from 'express';
 
 @Injectable()
 export class BonEngagementService {
@@ -38,14 +39,18 @@ export class BonEngagementService {
   }
 
   public async getArticles(factureId: number): Promise<FactureArticleEntity[]> {
-    return this.articleRepo
-      .createQueryBuilder('art')
-      .leftJoinAndSelect('art.facture', 'facture')
-      .leftJoinAndSelect('art.article', 'article')
-      .where(factureId != null ? 'facture.id IN(:...codes)' : 'true', {
-        codes: [factureId],
-      })
-      .getMany();
+    const response =  this.articleRepo
+    .createQueryBuilder('art')
+   .leftJoinAndSelect('art.facture', 'facture')
+   .leftJoinAndSelect('art.article', 'article')
+   /*  .where(factureId != null ? 'facture.id IN(:...codes)' : 'true', {
+      codes: [factureId],
+    }) */
+    .where('facture.id = :code', {
+      code: factureId
+    })
+    .getMany();
+    return response;
   }
 
   public async filter(

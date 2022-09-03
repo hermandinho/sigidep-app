@@ -8,6 +8,7 @@ import { EtatBonEnum } from '@utils/etat-bon.enum';
 import { DetailTransmissionReceptionEntity } from '@entities/detail-transmission-reception.entity';
 import { BonEngagementEntity } from '@entities/bon-engagement.entity';
 import { CreateBonEngagementDTO } from '@modules/bons-engagements/dto/create-bon-engagement.dto';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class TransmissionReceptionService {
@@ -26,11 +27,12 @@ export class TransmissionReceptionService {
     return this.repository;
   }
 
-  public async filter(filter?:any): Promise<TransmissionReceptionEntity[]> {
+  public async filter(filter?:EngagementFilter): Promise<TransmissionReceptionEntity[]> {
+    console.log(filter?.objets)
     return this.repository
       .createQueryBuilder('transmission')
-      .where('transmission.objet = :name', {
-        name: EtatBonEnum.TRANSMISCONTROLECONFORMITE,
+      .where(filter?.objets ? 'transmission.objet IN(:...codes)' : 'true', {
+        codes: filter?.objets,
       })
       .andWhere(filter?.exercices ? 'transmission.numero like :exercices' : 'true', {
         exercices: filter?.exercices,
@@ -80,16 +82,22 @@ export class TransmissionReceptionService {
     };
 
     const bon = await this.repository.save(transPaylaod);
-
+    console.log("payload?.transmission ",payload?.transmission)
     if(payload){
       for(let i=0; i<payload?.bon_engagement?.length; i++){
         const property = payload?.bon_engagement[i];
-        console.log("property save ",property)
-
-        this.repositorybon.save({
-          ...(property as any), // existing fields
-          etat: EtatBonEnum.TRANSMISCONTROLECONFORMITE,
-        });
+        if(payload?.transmission === EtatBonEnum.TRANSMISCONTROLECONFORMITE){
+          this.repositorybon.save({
+            ...(property as any), // existing fields
+            etat: EtatBonEnum.TRANSMISCONTROLECONFORMITE,
+          });
+        }else if(payload?.transmission === EtatBonEnum.TRANSMISSIONLIQUIDATION){
+          this.repositorybon.save({
+            ...(property as any), // existing fields
+            etat: EtatBonEnum.TRANSMISSIONLIQUIDATION,
+          });
+        }
+       
         let detailtrans = {
           ...(payload as any),
           bon_engagement:payload?.bon_engagement[i],
@@ -124,7 +132,6 @@ export class TransmissionReceptionService {
        for(let i=0; i<payload?.data?.length; i++){
         const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
         //const property:CreateBonEngagementDTO = payload?.data[i]?.bon_engagement;
-        console.log("property update ",property)
         this.repositorybon.save({
           ...(property as any), // existing fields
           etat: etated,
@@ -149,9 +156,6 @@ export class TransmissionReceptionService {
       
     }else if(payload?.action === 'controler'){
        etated = EtatBonEnum.CONTROLECONFORMITE
-       console.log("je suis la")
-       console.log("payload?.motif ",etated)
-       //console.log(payload)
        const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
        console.log(property)
        this.repositorybon.save({
@@ -164,7 +168,21 @@ export class TransmissionReceptionService {
         objet: etated, // annulation du bon
   
       });
-    }
+    }else if(payload?.action === 'edition'){
+      etated = EtatBonEnum.EDITIONTITRECREANCE
+      const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
+      this.repository.save({
+       ...payload.data[0]?.transmission_reception, // existing fields
+       objet: etated, 
+     });
+      this.repositorybon.save({
+        ...(property as any), // existing fields
+        etat: etated,
+        updateBy:user,
+        rejet:true
+      });
+     
+   }
    
     return check;
   }
@@ -179,24 +197,23 @@ export class TransmissionReceptionService {
       .leftJoinAndSelect('bon_engagement.paiements', 'paiements')
       .leftJoinAndSelect('bon_engagement.facture', 'facture')
       .leftJoinAndSelect('facture.articles', 'articles')
-      .where(filter?.ids ? 'transmission_reception.id IN(:...codes)' : 'true', {
-        codes: filter?.ids,
+      .where(filter ? 'transmission_reception.id IN(:...codes)' : 'true', {
+        codes: filter,
       })
       .getMany();
   }
 
-  public async getBonEnAttente(filter?:any){
+  public async getBonEnAttente(filter?:EngagementFilter){
     var bons= await this.repositorybon
     .createQueryBuilder('bon')
     .leftJoinAndSelect('bon.numActeJuridique', 'eng')
-    .where('bon.etat = :name', {
-      name: EtatBonEnum.RESERVE,
+    .where(filter?.etats ? 'bon.etat IN(:...codes)' : 'true', {
+      codes: filter?.etats,
     })
     .andWhere(filter?.exercices ? 'eng.numero like :exercices' : 'true', {
       exercices: filter?.exercices,
     })
     .getMany();
-    console.log("bons ",bons)
 
     var details = await this.repositorydetail
     .createQueryBuilder('detail')

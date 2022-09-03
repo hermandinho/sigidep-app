@@ -58,7 +58,11 @@
     "virements": "Virement",
     "modelVirement": "Modèle virement",
     "detailsVirement": "Details virement",
-    "virement": "Virements"
+    "virement": "Virements",
+    "controlerlaconformite":" Rejeter lors du Contrôle Conformité",
+    "rejeterlorsduControle":"Contrôler de Conformité",
+    "transmissionLiquidation":"Transmission Liquidation",
+    "listingTransmissionLiquidation":"Listing Transmission Liquidation"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -94,7 +98,8 @@
     "addArticle": "Ajouter un article",
     "reception":"reception",
     "controler":"Controler",
-    "rejeter":"Rejeter"
+    "rejeter":"Rejeter",
+    "edition":"Editer le TCC"
 
   },
   "install": {

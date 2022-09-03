@@ -1,5 +1,5 @@
 import { GetTransmissionsReceptions } from '@actions/transmissions-receptions.actions';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { StepTransmission, TransmissionsReceptionModel } from '@models/transmission-reception.model';
@@ -19,6 +19,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CreateTransmissionReceptionFormComponent extends BaseComponent implements OnInit {
 
+  @Input() transmission!:string
+  @Input() etat!:string
   public currentStepBs: BehaviorSubject<StepTransmission> =
     new BehaviorSubject<StepTransmission>('constitution');
   public currentStep$: Observable<StepTransmission> =
@@ -43,10 +45,11 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
    }
 
   ngOnInit(): void {
-    console.log('currentStepBs ',this.currentStepBs, ' currentStep$ ',this.currentStep$)
+    console.log(' currentStep$ ',this.transmission)
     this.form = this._fb.group({
       constitutionForm: this._fb.group({
-        bon_engagement: [undefined]
+        bon_engagement: [undefined],
+        transmission: [undefined],
       }),
       bordereauForm: this._fb.group({
         id: [undefined],

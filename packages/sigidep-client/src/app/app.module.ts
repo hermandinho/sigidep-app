@@ -60,6 +60,9 @@ import { EditionDesTCCModule } from '@pages/edition-des-tcc/edition-des-tcc.modu
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
 import { ShowVirementMessageComponent } from './components/show-virement-message/show-virement-message.component';
+import { ControleConformiteModule } from '@pages/controle-conformite/controle-conformite.module';
+import { ListingTransmissionLiquidationModule } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.module';
+import { TransmissionLiquidationModule } from '@pages/transmission-liquidation/transmission-liquidation.module';
 
 
 registerLocaleData(localeFr);
@@ -141,7 +144,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditionDesTCCModule,
     VirementsModule,
     ModeleVirementModule,
-    TransmissionsReceptionsModule
+    TransmissionsReceptionsModule,
+    ControleConformiteModule,
+    ListingTransmissionLiquidationModule,
+    TransmissionLiquidationModule
 
   ],
   providers: [

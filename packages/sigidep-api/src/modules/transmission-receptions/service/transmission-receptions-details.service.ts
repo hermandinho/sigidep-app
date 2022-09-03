@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetailTransmissionReceptionEntity } from '@entities/detail-transmission-reception.entity';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class TransmissionReceptionDetailService {
@@ -15,7 +16,7 @@ export class TransmissionReceptionDetailService {
   }
 
 
-  public async getDossierBor(filter?:any):Promise<DetailTransmissionReceptionEntity[]>{
+  public async getDossierBor(filter?:EngagementFilter):Promise<DetailTransmissionReceptionEntity[]>{
     return this.repositorydetail
       .createQueryBuilder('detail')
       .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
