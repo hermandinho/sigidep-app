@@ -94,7 +94,7 @@
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['numActeJuridique']?.adminUnit }}
               </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
@@ -198,7 +198,7 @@
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['numActeJuridique']?.adminUnit }}
               </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
@@ -302,7 +302,7 @@
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['numActeJuridique']?.adminUnit }}
               </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}

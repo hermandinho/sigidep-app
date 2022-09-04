@@ -46,7 +46,20 @@
             <td><span>{{i+1}}</span></td>
             <td><span>{{bon?.bon_engagement?.numero}}</span></td>
             <td><span>{{bon?.bon_engagement?.numActeJuridique?.numero}}</span></td>
-            <td><span>{{bon?.bon_engagement?.nomGestionnaire}}</span></td>
+            <td>
+              <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1110 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1111 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1115">
+              {{bon?.bon_engagement?.numActeJuridique?.adminUnit}}
+            </span>
+            <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1121 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1122 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1123 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1124">
+              {{bon?.bon_engagement?.numActeJuridique?.matriculeBeneficiaire}} &nbsp; {{bon?.bon_engagement?.numActeJuridique?.nomBeneficiaire}}
+            </span>
+            <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1125">
+              {{bon?.bon_engagement?.numActeJuridique?.codeUnitAdminBenef}} &nbsp; {{bon?.bon_engagement?.numActeJuridique?.nomUnitAdminBenef}}
+            </span>
+            <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1126">
+              {{bon?.bon_engagement?.numActeJuridique?.numContribuable}}
+            </span>
+          </td>
             <td><span>{{bon?.bon_engagement?.objet}}</span></td>
             <td><span>{{bon?.bon_engagement?.numActeJuridique?.imputation}}</span></td>
             <td><span>{{bon?.bon_engagement?.numActeJuridique?.montantAE }}</span></td>

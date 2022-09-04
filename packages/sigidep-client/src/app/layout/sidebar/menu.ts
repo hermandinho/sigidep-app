@@ -341,22 +341,21 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           ],
         },
         {
-          routerLink: 'transmissionsReceptions',
-          icon: 'pi pi-table',
-          label: translate.instant('sidebar.transmissionsReceptions'),
-          routerLinkActiveOptions: { exact: true },
-          state: {
-            permissions: [...MenuPermissions.transmissionsReceptions],
-          },
-        }
-        ,
-        {
           routerLink: 'visaetmiseenroute',
           icon: 'pi pi-table',
           label: translate.instant('sidebar.visaetmiseenroute'),
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.visaetmiseenroute],
+          },
+        },
+        {
+          routerLink: 'transmissionsReceptions',
+          icon: 'pi pi-table',
+          label: translate.instant('sidebar.transmissionsReceptions'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.transmissionsReceptions],
           },
         },
         {

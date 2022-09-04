@@ -47,7 +47,7 @@ export class TransmissionReceptionService {
         const property = res[i]?.bon_engagement;
         this.repositorybon.save({
           ...property, // existing fields
-          etat: EtatBonEnum.ANNULETRANSMISSIONCONTROLECONFORMITE, // annulation du bon
+          etat: EtatBonEnum.RESERVE, // annulation du bon
     
         });
       }

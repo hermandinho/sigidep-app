@@ -81,7 +81,7 @@ export class CoordonneesBordereauFormComponent extends BaseComponent implements 
 
   onDisable() {
     this.bordereauForm.controls['objet'].disable();
-    this.bordereauForm.controls['serviceDestination'].disable();
+   // this.bordereauForm.controls['serviceDestination'].disable();
   }
   private _initListeners() {
     this._store
