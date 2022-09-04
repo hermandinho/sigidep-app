@@ -430,7 +430,8 @@
     "dateOrdonnancement_mandat":"Date ordonnancement",
     "dateLiquidation_mandat":"Date liquidation",
     "dateEditionTCC_mandat":"Date edition titre",
-    "filterCodeEx":"Code exercice"
+    "filterCodeEx":"Code exercice",
+    "banqueEtAgence":"Il n'y a pas encore d'agence pour cette banque."
     },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -755,7 +756,7 @@
       "yearN1": "Année N + 1",
       "yearN2": "Année N + 2",
       "yearN3": "Année N + 3",
-      "codeContribuable": "Code",
+      "codeContribuable": "NIU",
       "raisonSociale": "Raison Sociale",
       "secteurActivite": "Secteur Activité",
       "regimeFiscal": "Régime Fiscal",

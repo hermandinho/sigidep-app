@@ -256,6 +256,7 @@ export class EngagementsComponent
       .pipe(this.takeUntilDestroy, select(getCommandeDataSelector))
       .subscribe((data) => {
         this.commandes = [...data];
+        console.log(this.commandes)
         this.originalCommandes = [...data];
       });
 
@@ -280,6 +281,7 @@ export class EngagementsComponent
       .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((data) => {
         this.decisions = [...data];
+        console.log(this.decisions)
         this.originalDecisions = [...data];
       });
 

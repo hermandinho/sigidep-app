@@ -1,12 +1,32 @@
 export const TableColumns = [
   {
-    field: 'codeProcedure',
-    title: 'tables.headers.type',
+    field: 'numero',
+    title: 'tables.headers.numero',
+    sortable: false,
+  },
+  {
+    field: 'reference',
+    title: 'tables.headers.reference',
+    sortable: false,
+  },
+  {
+    field: 'objet',
+    title: 'tables.headers.objet',
     sortable: true,
   },
   {
-    field: 'numero',
-    title: 'tables.headers.numero',
+    field: 'matriculeGestionnaire',
+    title: 'tables.headers.beneficiaire',
+    sortable: true,
+  },
+  {
+    field: 'imputation',
+    title: 'tables.headers.imputation',
+    sortable: true,
+  },
+  {
+    field: 'montantAE',
+    title: 'tables.headers.montantAE',
     sortable: false,
   },
   {
@@ -14,6 +34,10 @@ export const TableColumns = [
     title: 'tables.headers.etat',
     sortable: true,
   },
+
+
+
+/*
   {
     field: 'exercise',
     title: 'tables.headers.exercise',
@@ -40,25 +64,13 @@ export const TableColumns = [
     sortable: true,
   },
 
-  {
-    field: 'montantAE',
-    title: 'tables.headers.montantAE',
-    sortable: false,
-  },
+
   {
     field: 'adminUnit',
     title: 'tables.headers.adminUnit',
     sortable: false,
   },
-  {
-    field: 'imputation',
-    title: 'tables.headers.imputation',
-    sortable: true,
-  },
+ */
 
-  {
-    field: 'reference',
-    title: 'tables.headers.reference',
-    sortable: false,
-  },
+
 ];

@@ -81,6 +81,7 @@
                   column.field !== 'objet' &&
                   column.field !== 'imputation' &&
                   column.field !== 'etat' &&
+                  column.field !== 'matriculeGestionnaire' &&
                   column.field !== 'numActeJuridique'
                 "
               >
@@ -92,7 +93,9 @@
               <span *ngIf="column.field === 'imputation'">
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
-
+              <span *ngIf="column.field === 'matriculeGestionnaire'">
+                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+              </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
               </span>
@@ -182,6 +185,7 @@
                   column.field !== 'objet' &&
                   column.field !== 'imputation' &&
                   column.field !== 'etat' &&
+                  column.field !== 'matriculeGestionnaire' &&
                   column.field !== 'numActeJuridique'
                 "
               >
@@ -193,7 +197,9 @@
               <span *ngIf="column.field === 'imputation'">
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
-
+              <span *ngIf="column.field === 'matriculeGestionnaire'">
+                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+              </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
               </span>
@@ -283,6 +289,7 @@
                   column.field !== 'objet' &&
                   column.field !== 'imputation' &&
                   column.field !== 'etat' &&
+                  column.field !== 'matriculeGestionnaire' &&
                   column.field !== 'numActeJuridique'
                 "
               >
@@ -294,7 +301,9 @@
               <span *ngIf="column.field === 'imputation'">
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
-
+              <span *ngIf="column.field === 'matriculeGestionnaire'">
+                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+              </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
               </span>

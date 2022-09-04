@@ -235,6 +235,7 @@ export class BonsEngagementsCommandesComponent
         this.data = [...data];
         if (this.data[0]?.numActeJuridique?.codeProcedure === '1110') {
           this.bonsCommandes = [...data];
+          console.log( this.bonsCommandes)
           this.bonsCommandesData = [...data];
         }
         if (this.data[0]?.numActeJuridique.codeProcedure === '1111') {

@@ -95,6 +95,11 @@
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
               </span>
+              <span *ngIf="column.field === 'matriculeGestionnaire'">
+              <span >
+                {{ item['niuContribuable'] }}
+              </span>
+              </span>
               <span
                 *ngIf="column.field === 'subProgram'"
                 data-title="{{ item[column.field] }}"
@@ -194,6 +199,10 @@
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
               </span>
+
+              <span *ngIf="column.field === 'matriculeGestionnaire'">
+                  {{ item['matriculeBeneficiaire'] }} &nbsp;{{ item['nomBeneficiaire'] }}
+                </span>
               <span
                 *ngIf="column.field === 'subProgram'"
                 data-title="{{ item[column.field] }}"
@@ -293,6 +302,17 @@
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
               </span>
+
+              <span *ngIf="column.field === 'matriculeGestionnaire'">
+                <input id='myNumber' [value]="item['montantAE']" step='100'>
+
+                <span >
+                  {{ item['matriculeBeneficiaire'] }} &nbsp;{{ item['nomBeneficiaire'] }}
+                </span>
+                <span>
+                  {{ item['codeUnitAdminBenef'] }}
+                </span>
+                </span>
 
               <span
                 *ngIf="column.field === 'subProgram'"
