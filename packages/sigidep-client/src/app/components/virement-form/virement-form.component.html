@@ -1,10 +1,12 @@
 <ng-container [ngSwitch]="currentStep$ | async">
     <app-virement-body-form *ngSwitchCase="'virement'" [startingForm]="virementBodyForm"
-        (changeStep)="changeStep('virement', 'forward')" (getEncour)="getEncour($event)"
-        (typeVirement)="setTypeVirement($event)" (filterEncour)="filterEncourByPrograms($event)" [mode]="mode">
+        (changeStep)="changeStep('virement', 'forward')" (getEncour)="getEncour($event)" [mode]="mode">
     </app-virement-body-form>
     <app-details-virement-form *ngSwitchCase="'details-virement'" [startingForm]="virementBodyForm"
         (changeStep)="changeStep('details-virement', $event)" [encourList]="detailsVirements" [virement]="virement"
-        [typeFinancement]="typeFinancement" (submit)="submit()" [mode]="mode" [detailsVirement]="oldDetailsVirements">
+        (submit)="submit()" (updateData)="updateData()" [mode]="mode" [detailsVirement]="oldDetailsVirements">
     </app-details-virement-form>
+    <app-virement-validation-form *ngSwitchCase="'validation-virement'" [startingForm]="validationFormBody"
+        (changeStep)="changeStep('validation-virement', $event)" [virement]="virement">
+    </app-virement-validation-form>
 </ng-container>

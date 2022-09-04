@@ -7,9 +7,10 @@
         </div>
     </div>
     <div class="footer">
-        <button type="button" pButton pRipple class="p-button" style="float: right;" (click)="closeOk()" pButton
-            icon="pi pi-check">ok</button>
-        <button type="button" *ngIf="message.isConfirmation && message.subtitle" pButton pRipple class="p-button"
-            style="float: right; margin-inline: 2px;" (click)="closeCancel()" pButton icon="pi pi-check">Cancel</button>
+        <button type="button" pButton pRipple class="p-button" style="float: right; padding: 4px;" (click)="closeOk()"
+            pButton icon="pi pi-check"></button>
+        <button type="button" *ngIf="message.isConfirmation && message.subtitle" pButton pRipple
+            class="p-button p-button-danger" style="float: right; margin-inline: 2px; padding: 4px;"
+            (click)="closeCancel()" pButton icon="pi pi-times"></button>
     </div>
 </div>

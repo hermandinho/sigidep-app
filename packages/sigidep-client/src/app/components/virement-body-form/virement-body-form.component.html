@@ -28,7 +28,7 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramSource" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListSource"
-                        formControlName="spSourceVirement" (onChange)="filterEncourByProgram($event)" [disabled]="show">
+                        formControlName="spSourceVirement" [disabled]="show">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -50,7 +50,7 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.typeVirement" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="typeVirements" formControlName="typeVirement"
-                        optionLabel="" (onChange)="setTypeVirement($event)" [disabled]="show">
+                        optionLabel="" [disabled]="show">
                         <ng-template let-code pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -72,7 +72,7 @@
                 <div class="p-field">
                     <label class="required">{{ "labels.subProgramDestinataire" | translate }}</label>
                     <p-dropdown [autoDisplayFirst]="false" [options]="subProgramsListCible"
-                        formControlName="spCibleVirement" (onChange)="filterEncourByProgram($event)" [disabled]="show">
+                        formControlName="spCibleVirement" [disabled]="show">
                         <ng-template let-option pTemplate="selectedItem">
                             <div>
                                 <div>
@@ -127,9 +127,6 @@
                 <button *ngIf="!dataVirement" type="button" pButton pRipple class="p-button" icon="pi pi-angle-right"
                     (click)="doChangeStep('forward')" [disabled]="!virementForm?.valid"
                     [label]="'buttons.next' | translate" pButton></button>
-                <button *ngIf="dataVirement?.numActeJuridique" type="button" pButton pRipple class="p-button"
-                    icon="pi pi-angle-right" (click)="doChangeStep('forward')" [label]="'buttons.next' | translate"
-                    pButton></button>
             </div>
         </div>
     </form>

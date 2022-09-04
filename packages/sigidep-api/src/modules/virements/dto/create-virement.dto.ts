@@ -11,11 +11,16 @@ export class CreateVirementDto {
 
     @ApiProperty({ example: '123456', required: false })
     @IsNotEmpty()
-    public numero: number;
+    public numero: string;
 
     @ApiProperty({ required: true })
     @IsNotEmpty()
     public objectVirement: string;
+
+
+    @ApiProperty({ required: false })
+    @IsNotEmpty()
+    public id: number;
 
     @ApiProperty({ required: true })
     @IsNotEmpty()

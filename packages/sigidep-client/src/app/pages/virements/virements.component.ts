@@ -102,6 +102,12 @@ export class VirementsComponent extends BaseComponent implements OnInit {
   }
 
 
+  async update(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.UPDATED);
+  }
+
+
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))
@@ -167,8 +173,38 @@ export class VirementsComponent extends BaseComponent implements OnInit {
     return virement;
   }
 
-  getItemClass(item: VirementModele) {
-    return item.etatVirement == EtatVirementEnum.SAVED ? 'success' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'primary' :
-      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'danger' : item.etatVirement == EtatVirementEnum.UPDATED ? 'wargning' : 'info'))
+  async annuler(item: VirementModele) {
+    let virement = await this.getVirement(item.id);
+    this._dialogService.launchVirementCreateDialog(virement, ModeVirementEnum.CANCELLED);
   }
+
+  getItemClass(item: VirementModele) {
+    return item.etatVirement == EtatVirementEnum.SAVED ? 'info' : (item.etatVirement == EtatVirementEnum.RESERVED ? 'warning' :
+      (item.etatVirement == EtatVirementEnum.VALIDATE ? 'success' : item.etatVirement == EtatVirementEnum.UPDATED ? 'primary' : 'danger'))
+  }
+
+  isSave(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.SAVED
+  }
+
+  isReservation(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.RESERVED
+  }
+
+  isCancel(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.CANCELLED
+  }
+
+  isUpdate(etatVirement: EtatVirementEnum): Boolean {
+    return etatVirement == EtatVirementEnum.UPDATED
+  }
+
+  activeForReservation(item: VirementModele): Boolean {
+    var prix = 0;
+    item.detailsVirements.forEach((d) => {
+      prix += d.credit ?? 0 - d.debit ?? 0;
+    })
+    return prix != 0;
+  }
+
 }

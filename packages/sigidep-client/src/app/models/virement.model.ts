@@ -6,7 +6,7 @@ import { ModeleVirementModel } from './modele-virement.model';
 export type StepVirement =
     | 'virement'
     | 'details-virement'
-    | 'validate';
+    | 'validation-virement';
 
 export class VirementModele extends BaseModel {
     numero?: string;

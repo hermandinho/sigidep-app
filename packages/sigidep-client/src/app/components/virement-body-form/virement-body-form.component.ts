@@ -26,11 +26,6 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
   @Output() getEncour: EventEmitter<number> =
     new EventEmitter<number>();
 
-  @Output() filterEncour: EventEmitter<number> =
-    new EventEmitter<number>();
-
-  @Output() typeVirement: EventEmitter<string> =
-    new EventEmitter<string>();
   public exercicesInprogressList: ExerciseModel[] = [];
   public modelVirement: ModeleVirementModel[] = [];
   public exercice = null;
@@ -52,7 +47,7 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.show = this.mode == ModeVirementEnum.CREATION ? false : true;
+    this.show = (this.mode == ModeVirementEnum.CREATION || this.mode == ModeVirementEnum.UPDATED) ? false : true;
 
     this.virementForm = this.startingForm;
     this._initListener();
@@ -85,43 +80,6 @@ export class VirementBodyFormComponent extends BaseComponent implements OnInit {
         this.subProgramsListCible = [...this.subProgramsList];
       });
     this.getEncour.emit(event.value.code);
-  }
-
-  filterEncourByProgram(event: any) {
-    this.filterEncour.emit(event.value.code);
-  }
-
-  setTypeVirement(event: any) {
-    let type = event.value.code;
-    if (type == typeVirementEnum.BF2BF || type == typeVirementEnum.BIP2BIP)
-      type = typeFinancementEnum.BF01;
-    this.typeVirement.emit(type);
-  }
-
-  filterProgrammeByTypeVirement(id: number) {
-    switch (id) {
-      case 1:
-
-        break;
-      case 2:
-
-        break;
-      case 3:
-
-        break;
-      case 4:
-
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  filterPrograme(type: string) {
-    return this.subProgramsList.filter((s) => {
-      return true;
-    })
   }
 
 }
