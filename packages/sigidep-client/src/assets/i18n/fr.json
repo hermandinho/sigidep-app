@@ -48,21 +48,20 @@
     "misedispositionagent": "Mise à Disposition - Agent ",
     "misedispositionstructure": "Mise à Disposition - Structure",
     "bonsengagements": "Engagements CP",
-    "transmissionsReceptions":"Listing Bordereaux CC",
-    "controledeconformite":"Controle de conformité",
-    "receptionbordereaux":"Réception bordereaux",
-    "operationdecontrole":"Operation de contrôle",
-    "editiondestcc":"Edition des TCC",
-    "visaetmiseenroute":"Transmission CC",
-
+    "transmissionsReceptions": "Listing Bordereaux CC",
+    "controledeconformite": "Controle de conformité",
+    "receptionbordereaux": "Réception bordereaux",
+    "operationdecontrole": "Operation de contrôle",
+    "editiondestcc": "Edition des TCC",
+    "visaetmiseenroute": "Transmission CC",
     "virements": "Virement",
     "modelVirement": "Modèle virement",
     "detailsVirement": "Details virement",
     "virement": "Virements",
-    "controlerlaconformite":" Rejeter lors du Contrôle Conformité",
-    "rejeterlorsduControle":"Contrôler de Conformité",
-    "transmissionLiquidation":"Transmission Liquidation",
-    "listingTransmissionLiquidation":"Listing Transmission Liquidation"
+    "controlerlaconformite": " Rejeter lors du Contrôle Conformité",
+    "rejeterlorsduControle": "Contrôler de Conformité",
+    "transmissionLiquidation": "Transmission Liquidation",
+    "listingTransmissionLiquidation": "Listing Transmission Liquidation"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -97,17 +96,17 @@
     "close": "Fermer",
     "recherche": "Rechercher",
     "addArticle": "Ajouter un article",
-    "reception":"reception",
-    "controler":"Controler",
-    "rejeter":"Rejeter",
-    "edition":"Editer le TCC"
-
+    "reception": "reception",
+    "controler": "Controler",
+    "rejeter": "Rejeter",
+    "edition": "Editer le TCC"
   },
   "install": {
     "title": "Installation"
   },
   "labels": {
     "nomModel": "Nom modèle",
+    "printVirement": "Impression du Virement",
     "enteteModel": "Entête modèle",
     "chapeauModel": "chapeau modèle",
     "contenuModel": "Contenu modèle",
@@ -420,20 +419,20 @@
     "montantTotalHT": "Montant Total HT",
     "dateFacturation": "Date de Facturation",
     "tauxIR": "Taux IR",
-    "paye_mandat":"Bon engagement payé",
-    "validACT_mandat":"Validation ACT (en Attente Paiement)",
-    "ordonnance_mandat":"Ordonnancement",
-    "liquite_mandat":"Liquidation",
-    "editionTCC_mandat":"Edition titre créance",
-    "rejet_mandat":"Bon engagement rejeté ",
-    "datePaiement_mandat":"Date paiement",
-    "dateValidACT_mandat":"Date validation",
-    "dateOrdonnancement_mandat":"Date ordonnancement",
-    "dateLiquidation_mandat":"Date liquidation",
-    "dateEditionTCC_mandat":"Date edition titre",
-    "filterCodeEx":"Code exercice",
-    "banqueEtAgence":"Il n'y a pas encore d'agence pour cette banque."
-    },
+    "paye_mandat": "Bon engagement payé",
+    "validACT_mandat": "Validation ACT (en Attente Paiement)",
+    "ordonnance_mandat": "Ordonnancement",
+    "liquite_mandat": "Liquidation",
+    "editionTCC_mandat": "Edition titre créance",
+    "rejet_mandat": "Bon engagement rejeté ",
+    "datePaiement_mandat": "Date paiement",
+    "dateValidACT_mandat": "Date validation",
+    "dateOrdonnancement_mandat": "Date ordonnancement",
+    "dateLiquidation_mandat": "Date liquidation",
+    "dateEditionTCC_mandat": "Date edition titre",
+    "filterCodeEx": "Code exercice",
+    "banqueEtAgence": "Il n'y a pas encore d'agence pour cette banque."
+  },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
     "deletePhysicalReferencesOnParagraphChange": "Toutes les unités physiques programmées seront supprimées suite à la modification de ce paragraphe.",
@@ -734,7 +733,7 @@
       "Bons": "Bons primes",
       "dossiers": "Dossier du bordereau en constitution",
       "transmission": "Listing des Bons à Transmettre ",
-      "bon_controler":"Listing des Bons à Contrôler "
+      "bon_controler": "Listing des Bons à Contrôler "
     },
     "headers": {
       "exerciseCode": "Code",
@@ -894,14 +893,14 @@
       "prixUnitaireHT": "Prix Unitaire HT",
       "quantite": "Quantité",
       "referenceMercuriale": "RéférenceMercuriale",
-      "numeroBor":"Numero Bordereau",
-      "objet":"Objet",
-      "serviceEmetteur":"Service Emetteur",
-      "serviceDestination":"Service Destination",
-      "dateTransmission":"Date Transmission",
-      "numeroEng":"Numero Eng",
-      "montantCP":"MontantCP",
-      "dateEng":"Date Eng"
+      "numeroBor": "Numero Bordereau",
+      "objet": "Objet",
+      "serviceEmetteur": "Service Emetteur",
+      "serviceDestination": "Service Destination",
+      "dateTransmission": "Date Transmission",
+      "numeroEng": "Numero Eng",
+      "montantCP": "MontantCP",
+      "dateEng": "Date Eng"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -1001,14 +1000,14 @@
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
       "saveBon": "Etesvous sûr(e) de vouloir Transmettre ces Bons ?",
-      "cancelTransmission":"Voulez-vous annuler cette Transmission? Cette opération est irréversible !",
-      "reception":"Bordereau réceptionné avec succès au  Contrôle Financier ",
+      "cancelTransmission": "Voulez-vous annuler cette Transmission? Cette opération est irréversible !",
+      "reception": "Bordereau réceptionné avec succès au  Contrôle Financier ",
       "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
       "saveModelVirement": "Etes-vous sûr d'enregistrer ce modèle de virement?",
       "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?",
       "deleteVirement": "Etes-vous sûr de supprimer ce virement?",
-      "alertRejet":"Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!",
-      "alertControler":"Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !"
+      "alertRejet": "Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!",
+      "alertControler": "Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !"
     }
   },
   "exerciseStatuses": {

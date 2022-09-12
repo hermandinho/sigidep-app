@@ -63,6 +63,7 @@ import { ShowVirementMessageComponent } from './components/show-virement-message
 import { ControleConformiteModule } from '@pages/controle-conformite/controle-conformite.module';
 import { ListingTransmissionLiquidationModule } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.module';
 import { TransmissionLiquidationModule } from '@pages/transmission-liquidation/transmission-liquidation.module';
+import { PrintVirementComponent } from './components/print-virement/print-virement.component';
 
 
 registerLocaleData(localeFr);
@@ -72,7 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PrintVirementComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
