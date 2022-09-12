@@ -4,7 +4,7 @@ import { BaseEntity } from '.';
 @Entity({
   name: 'traitement',
 })
-@Unique('CODE_ETAPE', ['codeEtape'])
+//@Unique('CODE_ETAPE', ['codeEtape'])
 export class TraitementEntity extends BaseEntity {
   @Column({ name: 'code_etape', nullable: false })
   public codeEtape: number;
