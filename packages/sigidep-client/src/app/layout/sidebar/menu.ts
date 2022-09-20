@@ -51,6 +51,7 @@ export const MenuPermissions = {
   controledeconformite: [...simpleCrudPermissions('controledeconformite')],
   transmissionLiquidation: [...simpleCrudPermissions('transmissionLiquidation')],
   virements: [...simpleCrudPermissions('virements')],
+  liquidationMandatement: [...simpleCrudPermissions('liquidationMandatement')],
 
 };
 
@@ -418,6 +419,34 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLink: 'transmission-liquidation',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.transmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ]
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.liquidationMandatement'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.liquidationMandatement],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux-mandatement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionBordereauxMandatement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'traitement-liquidation-mandatement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.traitementLiquidationMandatement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-bordereaux-mandatement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionBordereauxMandatement'),
               routerLinkActiveOptions: { exact: true },
             },
           ]

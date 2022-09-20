@@ -126,15 +126,15 @@ export class BonEngagementService {
 
     const bon = await this.repository.save(bonPaylaod);
 
-    const traitementPayload: CreateTraitementBonEngagementDTO = {
+    /* const traitementPayload: CreateTraitementBonEngagementDTO = {
       bon: bon.id,
       typeTraitement: EtatBonEnum.ENREGISTRE,
       observation: '',
       qteUnitePhysiqueReal: null,
       montantTotalUnitPhysReal: null,
-    };
-    this.ajouterTraitement(traitementPayload, user);
-    this.ajouterPaiement(traitementPayload, user);
+    }; */
+   // this.ajouterTraitement(traitementPayload, user);
+   // this.ajouterPaiement(traitementPayload, user);
     return bon;
   }
 

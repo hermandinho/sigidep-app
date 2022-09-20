@@ -1,0 +1,31 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+  <app-rubrique-liquider-form
+  *ngSwitchCase="'rubrique'"
+  [startingForm]="traitementLiquidationFormGroup"
+  (subformInitialized)="subformInitialized('traitementLiquidationForm', $event)"
+  (changeStep)="changeStep('rubrique', $event)"
+  [data]="data"
+  >
+  </app-rubrique-liquider-form>
+  <app-piece-jointe-form
+  *ngSwitchCase="'piece'"
+  [startingForm]="traitementLiquidationFormGroup"
+  (subformInitialized)="subformInitialized('traitementLiquidationForm', $event)"
+  (changeStep)="changeStep('piece', $event)"
+  (submitForm)="submitForm()"
+  [data]="data"
+  [piecesJointes]="piecesJointe"
+  >
+  </app-piece-jointe-form>
+
+  <app-mandater-form
+  *ngSwitchCase="'mandater'"
+  [startingForm]="traitementLiquidationFormGroup"
+  (subformInitialized)="subformInitialized('traitementLiquidationForm', $event)"
+  (changeStep)="changeStep('piece', $event)"
+  (submitForm)="submitForm()"
+  [data]="data"
+
+  >
+  </app-mandater-form>
+</ng-container>

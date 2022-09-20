@@ -13,9 +13,10 @@ import { BonEngagementController } from './controller/bons-engagements.controlle
 import { EngagementJuridiqueService } from '@modules/engagement-juridiques/service/engagement-juridique.service';
 import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
 import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
+import { TraitementBonEngagementController } from './controller/traitement-bon-engagement.controller';
 
 @Module({
-  controllers: [BonEngagementController],
+  controllers: [BonEngagementController,TraitementBonEngagementController],
   providers: [BonEngagementService, TraitementBonEngagementService],
   imports: [
     AuthModule,

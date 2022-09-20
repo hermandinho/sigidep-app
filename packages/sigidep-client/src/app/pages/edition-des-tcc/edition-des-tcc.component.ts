@@ -68,7 +68,7 @@ export class EditionDesTCCComponent extends BaseComponent
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE], })
+      GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.CONTROLECONFORMITE] })
     );
     /*   this._store.dispatch(
         GetExercises({})

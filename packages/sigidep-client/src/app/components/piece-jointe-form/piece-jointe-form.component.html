@@ -1,0 +1,67 @@
+<div class="p-fluid p-grid">
+  <div class="p-field p-col-12 p-md-6">
+    <p-card>
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Code</th>
+          <th>Libellé</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of dataPieceJointes">
+          <td>{{ item?.order }}</td>
+          <td>{{ item?.code }}</td>
+          <td>{{ item?.label }}</td>
+          <td (click)="add(item)">
+            <button
+            (click)="remove(item)"
+            pButton
+            class="p-button-rounded p-button-success p-mr-2"
+          >Ajouter</button>
+          </td>
+        </tr>
+
+      </table>
+    </p-card>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <p-card>
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Code</th>
+          <th>Libellé</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of dataPieceJointesSelect">
+          <td>{{ item?.order }}</td>
+          <td>{{ item?.code }}</td>
+          <td>{{ item?.label }}</td>
+          <td>
+            <button
+            (click)="remove(item)"
+            pButton
+            class="p-button-rounded p-button-warning"
+          >Retirer</button>
+        </td>
+        </tr>
+
+      </table>
+    </p-card>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    (click)="doChangeStep('back')"
+    [label]="'buttons.back' | translate"
+    pButton
+  ></button>
+
+  <button
+  (click)="submit()"
+  [label]="'buttons.submit' | translate"
+  pButton
+></button>
+
+</div>

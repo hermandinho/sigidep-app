@@ -13,6 +13,8 @@ import { GetTransmissionsReceptionsBons } from '@actions/bons-engagements.action
 import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
 import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
+import { EtatBonEnum } from '../../utils/etat-bon-engagement.enum';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -28,6 +30,7 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   @Input() isCheck!:boolean;
   @Input() transmission!:string;
   @Input() etat!:string;
+  @Input() etatedOrd!:any;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -57,23 +60,37 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   constructor(
     private _store: Store<AppState>,
     public translate: TranslateService,
+    private route: ActivatedRoute
   ) {
     super();
     this.tableColumnsBordereau = TableColumnsBordereau;
     this.globalColumnsBordereaux = this.tableColumnsBordereau.map((item) => item.field);
-    this._initListeners();
+      this._initListeners();
+
   }
 
   async ngOnInit(){
+
     this.constitutionForm = this.startingForm;
     this.subformInitialized.emit(this.constitutionForm);
+
+    if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT){
+      console.log('1')
+      this.etat === EtatBonEnum.ORDONNANCEMENT
+      this._store.dispatch(
+        GetTransmissionsReceptionsBons({etats: [EtatBonEnum.ORDONNANCEMENT]})
+      );
+    }else {
+      console.log('11')
+      this._store.dispatch(
+        GetTransmissionsReceptionsBons({etats: [this.etat]})
+      );
+    }
 
     this._store.dispatch(
       GetExercises({})
     );
-    this._store.dispatch(
-      GetTransmissionsReceptionsBons({etats: [this.etat]})
-    );
+
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -85,7 +102,13 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
     );
 
   }
-
+test(){
+  this.etatedOrd = this.route.snapshot.queryParamMap.get('param');
+  if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT){
+    console.log('1')
+    this.etat === EtatBonEnum.ORDONNANCEMENT
+  }
+}
   handleFilter = (event: any) => {
     if(event?.value){
         this._store.dispatch(
@@ -99,10 +122,8 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
 
 };
 
-  private _initListeners() {
-
-
-
+  private async _initListeners() {
+   // await this.test();
     this._store
     .pipe(this.takeUntilDestroy, select(getDataSelectorEx))
     .subscribe((data) => {
@@ -116,7 +137,7 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
       map((status) => status)
     );
 
-      if(this.etat!=''){
+      if(this.etat !== ''){
         this._store
         .pipe(this.takeUntilDestroy, select(getDataSelector))
         .subscribe((data) => {

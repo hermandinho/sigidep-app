@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="form" [formGroup]="traitementLiquidationForm">
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.numeroBon" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="numeroBon"
+            [placeholder]="''"
+            pInputText
+          />
+      </div>
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label class="required"
+            >{{ "labels.matriculeGestionnaire" | translate }}
+          </label>
+          <input
+          class="form-control"
+          formControlName="matriculeGestionnaire"
+          [placeholder]="''"
+          pInputText
+        />
+      </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomGestionnaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomGestionnaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="footer">
+  <button
+    (click)="doChangeStep('back')"
+    [label]="'buttons.back' | translate"
+    pButton
+  ></button>
+
+  <button
+  (click)="submit()"
+  [label]="'buttons.submit' | translate"
+  pButton
+></button>
+
+</div>

@@ -145,7 +145,7 @@ implements OnInit {
         console.log(data)
         if(data !== null){
           this.bordereauxTransmissions = [...data];
-          if(this.bordereauxTransmissions===[null]) this.bordereauxTransmissions=[];
+          if(this.bordereauxTransmissions===null) this.bordereauxTransmissions=[];
           console.log('bordereauxTransmissions ', this.bordereauxTransmissions)
         }
 

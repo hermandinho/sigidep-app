@@ -33,5 +33,7 @@
   { "codeEtape": 29, "label": "Transmission à l’ACT" },
   { "codeEtape": 30, "label": "Réception à l’ACT" },
   { "codeEtape": 31, "label": "Validation Comptable" },
-  { "codeEtape": 32, "label": "Paiement" }
+  { "codeEtape": 32, "label": "Paiement" },
+  { "codeEtape": 33, "label": "Mandat de paiement" },
+  { "codeEtape": 34, "label": "Rapport de liquidation" }
 ]

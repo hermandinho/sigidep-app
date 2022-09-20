@@ -1,8 +1,9 @@
-import { EtatBonEnum } from '@utils/etat-bon.enum';
 import { Column, Entity, JoinColumn, ManyToOne, TableInheritance } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { BonEngagementEntity } from './bon-engagement.entity';
-import { UserEntity } from './user.entity';
+import { PieceJointeEntity } from './piece-jointe.entity';
+import { EtatBonEnum } from '@utils/etat-bon.enum';
+
 
 @Entity('traitements_bons_engagements')
 @TableInheritance({ column: { type: 'varchar', name: 'type',nullable: true,default:'type' } })
@@ -20,9 +21,9 @@ export class TraitementBonEngagementEntity extends BaseEntity {
     enum: EtatBonEnum,
     nullable: true,
   })
-  public typeTraitement!: EtatBonEnum;
+  public typeTraitement!: EtatBonEnum; 
 
-  @Column('varchar', { nullable: true, name: 'observation' })
+  @Column('varchar', { nullable: true, name: 'observation' }) 
   observation!: string;
   @Column({ nullable: true, type: 'float', name: 'qteUnitePhysiqueReal' })
   qteUnitePhysiqueReal!: number;
@@ -38,7 +39,7 @@ export class TraitementBonEngagementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'rubriqueLiquidation' })
   public rubriqueLiquidation!: string;
 
-  @Column({ nullable: true, type: 'float', name: 'montantLiquidation' })
+  @Column('varchar', { nullable: true, name: 'montantLiquidation' })
   montantLiquidation!: number;
 
   @Column({ default: false, type: 'boolean', name: 'liquidation' })
@@ -56,14 +57,14 @@ export class TraitementBonEngagementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'rubriqueOrdonnancement' })
   public rubriqueOrdonnancement!: string;
 
-  @Column({ nullable: true, type: 'float', name: 'montantOrdonnancement' })
+  @Column('varchar', { nullable: true, name: 'montantOrdonnancement' })
   montantOrdonnancement!: number;
 
   @Column('varchar', { nullable: true, name: 'motif' })
   public motif!: string;
 
   @Column('varchar', { nullable: true, name: 'piecesJointe' })
-  public piecesJointe!: string;
+  public piecesJointe!: PieceJointeEntity;
   constructor(param?: Partial<TraitementBonEngagementEntity>) {
     super();
     if (param) {

@@ -116,7 +116,6 @@ implements OnInit {
           GetTransmissionsReceptionsDetails({})
         );
       }
-
   };
 
   get currentLang() {
