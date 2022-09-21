@@ -1403,8 +1403,6 @@ export class DialogsService {
     );
   }
 
-
-
   public async launchPrintVirement(data: VirementModele): Promise<any> {
     if (!this.printEditionCreanceComponent) {
       const { PrintVirementComponent } = await import(
