@@ -56,7 +56,7 @@
                     <td>{{ rowIndex }}</td>
                     <td>{{ item.codeInput }}</td>
                     <td>{{ item.libelleInput }}</td>
-                    <td>{{ item.montant | number }}</td>
+                    <td>{{ format(item.montant) }}</td>
                     <td *ngIf="create || update">
                         <button (click)="removeFromDebit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>
@@ -88,7 +88,7 @@
                     <td>{{ rowIndex }}</td>
                     <td>{{ item.codeInput }}</td>
                     <td>{{ item.libelleInput }}</td>
-                    <td>{{ item.montant ?? 0 }}</td>
+                    <td>{{ format(item.montant ?? 0)}}</td>
                     <td *ngIf="create || update">
                         <button (click)="removeFromCredit(item)" class="p-button-rounded p-button-warning"
                             icon="pi pi-trash" pButton pRipple></button>

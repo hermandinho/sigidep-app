@@ -105,18 +105,11 @@
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{
             "labels.exercise" | translate
-          }}</label>
+            }}</label>
 
-          <p-dropdown
-            [filter]="false"
-            [optionLabel]="'label'"
-            [options]="exercisesSelectData"
-            [placeholder]="'labels.exercise' | translate"
-            [showClear]="false"
-            appendTo="body"
-            [formControlName]="'exercise'"
-            [optionValue]="'id'"
-          >
+          <p-dropdown [filter]="false" [optionLabel]="'label'" [options]="exercisesSelectData"
+            [placeholder]="'labels.exercise' | translate" [showClear]="false" appendTo="body"
+            [formControlName]="'exercise'" [optionValue]="'id'">
             <ng-template let-option pTemplate="item">
               <div>
                 <div>{{ option.label }}</div>
@@ -128,18 +121,11 @@
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{
             "labels.subProgram" | translate
-          }}</label>
+            }}</label>
 
-          <p-dropdown
-            [filter]="false"
-            [optionLabel]="'label'"
-            [options]="subProgramSelectData"
-            [placeholder]="'labels.subProgram' | translate"
-            [showClear]="false"
-            appendTo="body"
-            [formControlName]="'sp'"
-            [optionValue]="'id'"
-          >
+          <p-dropdown [filter]="false" [optionLabel]="'label'" [options]="subProgramSelectData"
+            [placeholder]="'labels.subProgram' | translate" [showClear]="false" appendTo="body" [formControlName]="'sp'"
+            [optionValue]="'id'">
             <ng-template let-option pTemplate="item">
               <div>
                 <div>{{ option.label }}</div>
@@ -153,18 +139,11 @@
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{
             "labels.action" | translate
-          }}</label>
+            }}</label>
 
-          <p-dropdown
-            [filter]="false"
-            [optionLabel]="'label'"
-            [options]="actionsSelectData"
-            [placeholder]="'labels.action' | translate"
-            [showClear]="false"
-            appendTo="body"
-            [formControlName]="'action'"
-            [optionValue]="'id'"
-          >
+          <p-dropdown [filter]="false" [optionLabel]="'label'" [options]="actionsSelectData"
+            [placeholder]="'labels.action' | translate" [showClear]="false" appendTo="body" [formControlName]="'action'"
+            [optionValue]="'id'">
             <ng-template let-option pTemplate="item">
               <div>
                 <div>{{ option.label }}</div>
@@ -175,18 +154,11 @@
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{
             "labels.activity" | translate
-          }}</label>
+            }}</label>
 
-          <p-dropdown
-            [filter]="false"
-            [optionLabel]="'label'"
-            [options]="activitiesSelectData"
-            [placeholder]="'labels.activity' | translate"
-            [showClear]="false"
-            appendTo="body"
-            [formControlName]="'activity'"
-            [optionValue]="'id'"
-          >
+          <p-dropdown [filter]="false" [optionLabel]="'label'" [options]="activitiesSelectData"
+            [placeholder]="'labels.activity' | translate" [showClear]="false" appendTo="body"
+            [formControlName]="'activity'" [optionValue]="'id'">
             <ng-template let-option pTemplate="item">
               <div>
                 <div>{{ option.label }}</div>
@@ -200,16 +172,9 @@
         <div class="p-col-6 p-m-auto">
           <label [class.required]="true">{{ "labels.task" | translate }}</label>
 
-          <p-dropdown
-            [filter]="false"
-            [optionLabel]="'label'"
-            [options]="tasksSelectData"
-            [placeholder]="'labels.task' | translate"
-            [showClear]="false"
-            appendTo="body"
-            [formControlName]="'task'"
-            [optionValue]="'id'"
-          >
+          <p-dropdown [filter]="false" [optionLabel]="'label'" [options]="tasksSelectData"
+            [placeholder]="'labels.task' | translate" [showClear]="false" appendTo="body" [formControlName]="'task'"
+            [optionValue]="'id'">
             <ng-template let-option pTemplate="item">
               <div>
                 <div>{{ option.label }}</div>
@@ -223,25 +188,14 @@
   </div>
 
   <div class="steps-container">
-    <p-steps
-      [model]="steps"
-      [readonly]="true"
-      [activeIndex]="activeStep"
-    ></p-steps>
+    <p-steps [model]="steps" [readonly]="true" [activeIndex]="activeStep"></p-steps>
   </div>
 
   <div class="steps">
-    <div
-      class="step-1 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
-      *ngIf="activeStep === 0"
-    >
+    <div class="step-1 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto" *ngIf="activeStep === 0">
       <div class="p-field">
-        <app-i18n-form-field
-          [baseFormControlName]="'label'"
-          [form]="form"
-          [type]="'text'"
-          [required]="true"
-        ></app-i18n-form-field>
+        <app-i18n-form-field [baseFormControlName]="'label'" [form]="form" [type]="'text'" [required]="true">
+        </app-i18n-form-field>
       </div>
 
       <!--<div class="p-field">
@@ -256,53 +210,34 @@
       <div class="p-field">
         <label class="required">{{ "labels.paragraph" | translate }}</label>
 
-        <p-dropdown
-          [filterBy]="
+        <p-dropdown [filterBy]="
             currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
-          "
-          [filter]="true"
-          [optionLabel]="
+          " [filter]="true" [optionLabel]="
             currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
-          "
-          [options]="paragraphs"
-          [placeholder]="'labels.paragraph' | translate"
-          [showClear]="false"
-          appendTo="body"
-          formControlName="paragraphId"
-          optionValue="id"
-        >
+          " [options]="paragraphs" [placeholder]="'labels.paragraph' | translate" [showClear]="false" appendTo="body"
+          formControlName="paragraphId" optionValue="id">
           <ng-template let-item pTemplate="item">
             <div>
               <div>
                 {{
-                  item[
-                    currentLang === "fr"
-                      ? "formattedLabelFr"
-                      : "formattedLabelEn"
-                  ]
+                item[
+                currentLang === "fr"
+                ? "formattedLabelFr"
+                : "formattedLabelEn"
+                ]
                 }}
               </div>
             </div>
           </ng-template>
         </p-dropdown>
-        <small
-          class="p-error"
-          *ngIf="stepButtons['5'] && physicalUnitsFormArray?.controls?.length"
-          >{{
-            "hints.deletePhysicalReferencesOnParagraphChange" | translate
-          }}</small
-        >
+        <small class="p-error" *ngIf="stepButtons['5'] && physicalUnitsFormArray?.controls?.length">{{
+          "hints.deletePhysicalReferencesOnParagraphChange" | translate
+          }}</small>
       </div>
 
       <div class="p-field">
         <label class="required">{{ "labels.imputation" | translate }}</label>
-        <input
-          [placeholder]="'labels.imputation' | translate"
-          [value]="imputation"
-          disabled
-          pInputText
-          type="text"
-        />
+        <input [placeholder]="'labels.imputation' | translate" [value]="imputation" disabled pInputText type="text" />
       </div>
 
       <p-footer>
@@ -312,27 +247,17 @@
       </p-footer>
     </div>
 
-    <div
-      class="step-2 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
-      *ngIf="activeStep === 1"
-    >
-      <div
-        class="p-field"
-        *ngFor="
+    <div class="step-2 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto" *ngIf="activeStep === 1">
+      <div class="p-field" *ngFor="
           let item of [
             'engagementAuthorization',
             'paymentCreditN1',
             'paymentCreditN2',
             'paymentCreditN3'
           ]
-        "
-      >
+        ">
         <label class="required">{{ "labels." + item | translate }}</label>
-        <p-inputNumber
-          [minFractionDigits]="2"
-          [formControlName]="item"
-          locale="fr-FR"
-        ></p-inputNumber>
+        <p-inputNumber [minFractionDigits]="2" [formControlName]="item" locale="fr-FR"></p-inputNumber>
       </div>
 
       <p-footer>
@@ -342,26 +267,17 @@
       </p-footer>
     </div>
 
-    <div
-      class="step-3 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
-      *ngIf="activeStep === 2"
-    >
+    <div class="step-3 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto" *ngIf="activeStep === 2">
       <p-fieldset [legend]="'labels.managementMode' | translate">
         <div class="p-grid">
           <div class="p-field p-col-6">
             <label class="required">{{
               "labels.managementMode" | translate
-            }}</label>
+              }}</label>
 
-            <p-dropdown
-              [optionLabel]="'label'"
-              [options]="managementModes"
-              [placeholder]="'labels.managementMode' | translate"
-              [showClear]="false"
-              appendTo="body"
-              formControlName="managementMode"
-              optionValue="value"
-            >
+            <p-dropdown [optionLabel]="'label'" [options]="managementModes"
+              [placeholder]="'labels.managementMode' | translate" [showClear]="false" appendTo="body"
+              formControlName="managementMode" optionValue="value">
               <ng-template let-option pTemplate="item">
                 <div>
                   <div>{{ option.label | translate }}</div>
@@ -377,12 +293,7 @@
 
           <div class="p-field p-col-6" *ngFor="let item of ['managerName']">
             <label class="required">{{ "labels." + item | translate }}</label>
-            <input
-              type="text"
-              pInputText
-              [placeholder]="'labels.' + item | translate"
-              [formControlName]="item"
-            />
+            <input type="text" pInputText [placeholder]="'labels.' + item | translate" [formControlName]="item" />
           </div>
         </div>
       </p-fieldset>
@@ -392,38 +303,21 @@
           <div class="p-field p-col-6">
             <label class="required">{{ "labels.region" | translate }}</label>
 
-            <p-dropdown
-              (ngModelChange)="handleRegionChange($event)"
-              [optionLabel]="
+            <p-dropdown (ngModelChange)="handleRegionChange($event)" [optionLabel]="
                 currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
-              "
-              [options]="regions"
-              [placeholder]="'labels.region' | translate"
-              [showClear]="false"
-              appendTo="body"
-              formControlName="regionId"
-              optionValue="id"
-            >
+              " [options]="regions" [placeholder]="'labels.region' | translate" [showClear]="false" appendTo="body"
+              formControlName="regionId" optionValue="id">
             </p-dropdown>
           </div>
 
           <div class="p-field p-col-6">
             <label class="required">{{
               "labels.department" | translate
-            }}</label>
+              }}</label>
 
-            <p-dropdown
-              (ngModelChange)="handleDepartmentChange($event)"
-              [filter]="true"
-              [optionLabel]="'label'"
-              [options]="departmentsSelectData"
-              [placeholder]="'labels.department' | translate"
-              [showClear]="false"
-              appendTo="body"
-              filterBy="label"
-              formControlName="departmentId"
-              optionValue="id"
-            >
+            <p-dropdown (ngModelChange)="handleDepartmentChange($event)" [filter]="true" [optionLabel]="'label'"
+              [options]="departmentsSelectData" [placeholder]="'labels.department' | translate" [showClear]="false"
+              appendTo="body" filterBy="label" formControlName="departmentId" optionValue="id">
             </p-dropdown>
           </div>
         </div>
@@ -432,28 +326,17 @@
           <div class="p-field p-col-6">
             <label class="required">{{
               "labels.arrondissement" | translate
-            }}</label>
+              }}</label>
 
-            <p-dropdown
-              (ngModelChange)="handleArrondissementChange($event)"
-              [optionLabel]="'label'"
-              [options]="arrondissementsSelectData"
-              [placeholder]="'labels.arrondissement' | translate"
-              [showClear]="false"
-              appendTo="body"
-              formControlName="arrondissementId"
-              optionValue="id"
-            ></p-dropdown>
+            <p-dropdown (ngModelChange)="handleArrondissementChange($event)" [optionLabel]="'label'"
+              [options]="arrondissementsSelectData" [placeholder]="'labels.arrondissement' | translate"
+              [showClear]="false" appendTo="body" formControlName="arrondissementId" optionValue="id"></p-dropdown>
           </div>
 
           <div class="p-field p-col-6">
             <label class="required">{{ "labels.locality" | translate }}</label>
-            <input
-              type="text"
-              pInputText
-              [placeholder]="'labels.locality' | translate"
-              [formControlName]="'locality'"
-            />
+            <input type="text" pInputText [placeholder]="'labels.locality' | translate"
+              [formControlName]="'locality'" />
           </div>
         </div>
       </p-fieldset>
@@ -465,26 +348,15 @@
       </p-footer>
     </div>
 
-    <div
-      class="step-3 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
-      *ngIf="activeStep === 3"
-    >
+    <div class="step-3 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto" *ngIf="activeStep === 3">
       <div class="p-field">
-        <app-i18n-form-field
-          [baseFormControlName]="'deliverables'"
-          [form]="form"
-          [type]="'textarea'"
-          [required]="true"
-        ></app-i18n-form-field>
+        <app-i18n-form-field [baseFormControlName]="'deliverables'" [form]="form" [type]="'textarea'" [required]="true">
+        </app-i18n-form-field>
       </div>
 
       <div class="p-field">
-        <app-i18n-form-field
-          [baseFormControlName]="'verificationSource'"
-          [form]="form"
-          [type]="'textarea'"
-          [required]="true"
-        ></app-i18n-form-field>
+        <app-i18n-form-field [baseFormControlName]="'verificationSource'" [form]="form" [type]="'textarea'"
+          [required]="true"></app-i18n-form-field>
       </div>
 
       <p-footer>
@@ -494,10 +366,8 @@
       </p-footer>
     </div>
 
-    <div
-      class="step-4 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
-      *ngIf="activeStep === 4 && chronogramFormArray"
-    >
+    <div class="step-4 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
+      *ngIf="activeStep === 4 && chronogramFormArray">
       <!--<pre>
         {{ chronogramFormArray?.value | json }}
       </pre>-->
@@ -506,38 +376,27 @@
         <div class="p-field">
           <label class="required">{{
             "labels.paymentCreditN1" | translate
-          }}</label>
+            }}</label>
 
           <!--          <input [value]="form?.value?.paymentCreditN1" disabled pInputText type="number">-->
-          <p-inputNumber
-            [minFractionDigits]="2"
-            [ngModelOptions]="{ standalone: true }"
-            [ngModel]="form?.value?.paymentCreditN1"
-            locale="fr-FR"
-          ></p-inputNumber>
+          <p-inputNumber [minFractionDigits]="2" [ngModelOptions]="{ standalone: true }"
+            [ngModel]="form?.value?.paymentCreditN1" locale="fr-FR"></p-inputNumber>
         </div>
 
         <div class="p-field">
           <label class="required">{{ "labels.spacing" | translate }}</label>
 
           <!--          <input [value]="calculateSpacing" disabled pInputText type="number">-->
-          <p-inputNumber
-            [minFractionDigits]="2"
-            [ngModelOptions]="{ standalone: true }"
-            [ngModel]="calculateSpacing"
-            locale="fr-FR"
-          ></p-inputNumber>
+          <p-inputNumber [minFractionDigits]="2" [ngModelOptions]="{ standalone: true }" [ngModel]="calculateSpacing"
+            locale="fr-FR"></p-inputNumber>
         </div>
       </div>
 
       <p-divider></p-divider>
 
       <div class="p-grid" formArrayName="chronogram">
-        <div
-          *ngFor="let ctl of chronogramFormArray?.controls; index as i"
-          [formGroup]="getChronogramControlAtIndex(i)"
-          class="p-field p-col-2"
-        >
+        <div *ngFor="let ctl of chronogramFormArray?.controls; index as i" [formGroup]="getChronogramControlAtIndex(i)"
+          class="p-field p-col-2">
           <label class="required">{{ ctl?.value?.label }}</label>
 
           <!--          <input type="number" formControlName="value" pInputText>-->
@@ -546,24 +405,12 @@
       </div>
 
       <div class="buttons p-d-flex p-jc-evenly">
-        <button
-          (click)="budgetBreakDown('month')"
-          [label]="'buttons.monthlyBreakdown' | translate"
-          class="p-button-rounded p-button-warning"
-          pButton
-        ></button>
-        <button
-          (click)="budgetBreakDown('trimester')"
-          [label]="'buttons.quarterlyBreakdown' | translate"
-          class="p-button-rounded p-button-help"
-          pButton
-        ></button>
-        <button
-          (click)="budgetBreakDown('semester')"
-          [label]="'buttons.halfYearlyBreakdown' | translate"
-          class="p-button-rounded p-button-danger"
-          pButton
-        ></button>
+        <button (click)="budgetBreakDown('month')" [label]="'buttons.monthlyBreakdown' | translate"
+          class="p-button-rounded p-button-warning" pButton></button>
+        <button (click)="budgetBreakDown('trimester')" [label]="'buttons.quarterlyBreakdown' | translate"
+          class="p-button-rounded p-button-help" pButton></button>
+        <button (click)="budgetBreakDown('semester')" [label]="'buttons.halfYearlyBreakdown' | translate"
+          class="p-button-rounded p-button-danger" pButton></button>
       </div>
 
       <p-footer>
@@ -573,40 +420,29 @@
       </p-footer>
     </div>
 
-    <div
-      class="step-5 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto"
-      *ngIf="activeStep === 5"
-    >
+    <div class="step-5 p-fluid p-d-flex p-jc-center p-flex-column p-m-auto" *ngIf="activeStep === 5">
       <p-fieldset [legend]="'labels.addReferencePhysicalUnit' | translate">
         <div class="p-grid">
           <div class="p-field p-col-12">
             <label class="required">{{
               "labels.referencePhysicalUnit" | translate
-            }}</label>
+              }}</label>
 
-            <p-dropdown
-              [(ngModel)]="
+            <p-dropdown [(ngModel)]="
                 addReferencePhysicalUnitFormItems.referencePhysicalUnitId
-              "
-              [ngModelOptions]="{ standalone: true }"
-              [optionLabel]="
+              " [ngModelOptions]="{ standalone: true }" [optionLabel]="
                 currentLang === 'fr' ? 'formattedLabelFr' : 'formattedLabelEn'
-              "
-              [options]="referencePhysicalUnitsSelectData"
-              [placeholder]="'labels.referencePhysicalUnit' | translate"
-              [showClear]="false"
-              appendTo="body"
-              optionValue="id"
-            >
+              " [options]="referencePhysicalUnitsSelectData" [placeholder]="'labels.referencePhysicalUnit' | translate"
+              [showClear]="false" appendTo="body" optionValue="id">
               <ng-template let-option pTemplate="item">
                 <div>
                   <div>
                     {{
-                      option[
-                        currentLang === "fr"
-                          ? "formattedLabelFr"
-                          : "formattedLabelEn"
-                      ]
+                    option[
+                    currentLang === "fr"
+                    ? "formattedLabelFr"
+                    : "formattedLabelEn"
+                    ]
                     }}
                   </div>
                 </div>
@@ -615,11 +451,11 @@
                 <div>
                   <div>
                     {{
-                      option[
-                        currentLang === "fr"
-                          ? "formattedLabelFr"
-                          : "formattedLabelEn"
-                      ]
+                    option[
+                    currentLang === "fr"
+                    ? "formattedLabelFr"
+                    : "formattedLabelEn"
+                    ]
                     }}
                   </div>
                 </div>
@@ -627,86 +463,52 @@
             </p-dropdown>
           </div>
 
-          <ng-container
-            *ngIf="addReferencePhysicalUnitFormItems.referencePhysicalUnitId"
-          >
+          <ng-container *ngIf="addReferencePhysicalUnitFormItems.referencePhysicalUnitId">
             <div class="p-field p-col-4">
               <label class="required">{{
                 "labels.quantity" | translate
-              }}</label>
-              <input
-                [(ngModel)]="addReferencePhysicalUnitFormItems.quantity"
-                [ngModelOptions]="{ standalone: true }"
-                [placeholder]="'labels.quantity' | translate"
-                min="0"
-                pInputText
-                type="number"
-              />
+                }}</label>
+              <input [(ngModel)]="addReferencePhysicalUnitFormItems.quantity" [ngModelOptions]="{ standalone: true }"
+                [placeholder]="'labels.quantity' | translate" min="0" pInputText type="number" />
             </div>
 
             <div class="p-field p-col-4">
               <label class="required">{{
                 "labels.unitPrice" | translate
-              }}</label>
-              <p-inputNumber
-                [minFractionDigits]="2"
-                [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="addReferencePhysicalUnitFormItems.unitPrice"
-                locale="fr-FR"
-              ></p-inputNumber>
+                }}</label>
+              <p-inputNumber [minFractionDigits]="2" [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="addReferencePhysicalUnitFormItems.unitPrice" locale="fr-FR"></p-inputNumber>
             </div>
 
             <div class="p-field p-col-4">
               <label class="required">{{
                 "labels.totalPrice" | translate
-              }}</label>
-              <p-inputNumber
-                [minFractionDigits]="2"
-                [ngModelOptions]="{ standalone: true }"
-                [ngModel]="referencePhysicalUnitAddTotalPrice"
-                locale="fr-FR"
-              ></p-inputNumber>
+                }}</label>
+              <p-inputNumber [minFractionDigits]="2" [ngModelOptions]="{ standalone: true }"
+                [ngModel]="referencePhysicalUnitAddTotalPrice" locale="fr-FR"></p-inputNumber>
             </div>
 
-            <div
-              class="p-col-12"
-              [class.as-flex]="addReferencePhysicalUnitFormItems.editItem"
-            >
-              <button
-                (click)="cancelPhysicalUnitUpdate()"
-                *ngIf="addReferencePhysicalUnitFormItems.editItem"
+            <div class="p-col-12" [class.as-flex]="addReferencePhysicalUnitFormItems.editItem">
+              <button (click)="cancelPhysicalUnitUpdate()" *ngIf="addReferencePhysicalUnitFormItems.editItem"
                 [disabled]="
                   !addReferencePhysicalUnitFormItems.quantity ||
                   !addReferencePhysicalUnitFormItems.unitPrice
-                "
-                [label]="'buttons.cancel' | translate"
-                class="p-button-warning"
-                pButton
-              ></button>
-              <button
-                (click)="addOrUpdatePhysicalUnitItem()"
-                [disabled]="
+                " [label]="'buttons.cancel' | translate" class="p-button-warning" pButton></button>
+              <button (click)="addOrUpdatePhysicalUnitItem()" [disabled]="
                   !addReferencePhysicalUnitFormItems.quantity ||
                   !addReferencePhysicalUnitFormItems.unitPrice
-                "
-                [label]="
+                " [label]="
                   'buttons.' +
                     (addReferencePhysicalUnitFormItems.editItem
                       ? 'update'
                       : 'program') | translate
-                "
-                class="p-button-success"
-                pButton
-              ></button>
+                " class="p-button-success" pButton></button>
             </div>
           </ng-container>
         </div>
       </p-fieldset>
 
-      <p-fieldset
-        [legend]="'labels.programmedReferencePhysicalUnit' | translate"
-        class="p-mt-5"
-      >
+      <p-fieldset [legend]="'labels.programmedReferencePhysicalUnit' | translate" class="p-mt-5">
         <table>
           <thead>
             <tr>
@@ -721,40 +523,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="
+            <tr *ngFor="
                 let item of physicalUnitsFormArray?.getRawValue();
                 index as i;
                 trackBy: trackByIndex
-              "
-              [class.editing]="
+              " [class.editing]="
                 addReferencePhysicalUnitFormItems.editItem?.id === item.id
-              "
-            >
+              ">
               <td>{{ i + 1 }}</td>
               <td>
                 {{
-                  currentLang === "fr"
-                    ? item.formattedLabelFr
-                    : item.formattedLabelEn
+                currentLang === "fr"
+                ? item.formattedLabelFr
+                : item.formattedLabelEn
                 }}
               </td>
               <td>{{ item.quantity }}</td>
               <td>{{ item.unitPrice | currency: "":"":"":"fr-FR" }}</td>
               <td>{{ item.totalPrice | currency: "":"":"":"fr-FR" }}</td>
               <td>
-                <button
-                  (click)="editProgrammedPhysicalUnit(item)"
-                  class="p-button-info p-mr-2"
-                  icon="pi pi-pencil"
-                  pButton
-                ></button>
-                <button
-                  (click)="removeProgrammedPhysicalUnit(i)"
-                  class="p-button-danger"
-                  icon="pi pi-trash"
-                  pButton
-                ></button>
+                <button (click)="editProgrammedPhysicalUnit(item)" class="p-button-info p-mr-2" icon="pi pi-pencil"
+                  pButton></button>
+                <button (click)="removeProgrammedPhysicalUnit(i)" class="p-button-danger" icon="pi pi-trash"
+                  pButton></button>
               </td>
             </tr>
           </tbody>
@@ -771,34 +562,16 @@
 </div>
 
 <ng-template #footerButtons>
-  <div
-    class="footer p-d-flex p-jc-between"
-    [class.multiple-buttons]="stepButtons[activeStep.toString()].back"
-  >
+  <div class="footer p-d-flex p-jc-between" [class.multiple-buttons]="stepButtons[activeStep.toString()].back">
     <span *ngIf="!stepButtons[activeStep.toString()].back"></span>
-    <button
-      (click)="goBack()"
-      *ngIf="stepButtons[activeStep.toString()].back"
-      [label]="'buttons.previous' | translate"
-      class="p-button-info"
-      pButton
-    ></button>
+    <button (click)="goBack()" *ngIf="stepButtons[activeStep.toString()].back" [label]="'buttons.previous' | translate"
+      class="p-button-info" pButton></button>
 
-    <button
-      (click)="goForward()"
-      *ngIf="stepButtons[activeStep.toString()].forward"
-      [disabled]="!currentStepFormValid"
-      [label]="'buttons.next' | translate"
-      pButton
-    ></button>
+    <button (click)="goForward()" *ngIf="stepButtons[activeStep.toString()].forward" [disabled]="!currentStepFormValid"
+      [label]="'buttons.next' | translate" pButton></button>
 
-    <button
-      (click)="submit()"
-      *ngIf="stepButtons[activeStep.toString()].submit"
+    <button (click)="submit()" *ngIf="stepButtons[activeStep.toString()].submit"
       [disabled]="!currentStepFormValid || busy || !form?.valid"
-      [label]="'buttons.' + (busy ? 'busy' : 'save') | translate"
-      class="p-button-success"
-      pButton
-    ></button>
+      [label]="'buttons.' + (busy ? 'busy' : 'save') | translate" class="p-button-success" pButton></button>
   </div>
 </ng-template>
