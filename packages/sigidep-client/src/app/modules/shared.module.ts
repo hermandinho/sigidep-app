@@ -59,6 +59,10 @@ import { DetailsVirementFormComponent } from '@components/details-virement-form/
 import { VirementBodyFormComponent } from '@components/virement-body-form/virement-body-form.component';
 import { ShowVirementMessageComponent } from '@components/show-virement-message/show-virement-message.component';
 import { VirementValidationFormComponent } from '@components/virement-validation-form/virement-validation-form.component';
+import { CreateTraitementLiquidationMandatementComponent } from '../components/create-traitement-liquidation-mandatement/create-traitement-liquidation-mandatement.component';
+import { RubriqueLiquiderFormComponent } from '../components/rubrique-liquider-form/rubrique-liquider-form.component';
+import { PieceJointeFormComponent } from '../components/piece-jointe-form/piece-jointe-form.component';
+import { MandaterFormComponent } from '../components/mandater-form/mandater-form.component';
 
 const declarations = [
   BaseComponent,
@@ -86,7 +90,11 @@ const declarations = [
   VirementBodyFormComponent,
 
   ShowVirementMessageComponent,
-  VirementValidationFormComponent
+  VirementValidationFormComponent,
+  CreateTraitementLiquidationMandatementComponent,
+  RubriqueLiquiderFormComponent,
+  PieceJointeFormComponent,
+  MandaterFormComponent
 ];
 
 const shared = [

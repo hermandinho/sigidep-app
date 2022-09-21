@@ -59,11 +59,13 @@ import { OperationDeControleModule } from '@pages/operation-de-controle/operatio
 import { EditionDesTCCModule } from '@pages/edition-des-tcc/edition-des-tcc.module';
 import { VirementsModule } from '@pages/virements/virements.module';
 import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
-import { ShowVirementMessageComponent } from './components/show-virement-message/show-virement-message.component';
 import { ControleConformiteModule } from '@pages/controle-conformite/controle-conformite.module';
 import { ListingTransmissionLiquidationModule } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.module';
 import { TransmissionLiquidationModule } from '@pages/transmission-liquidation/transmission-liquidation.module';
 import { PrintVirementComponent } from './components/print-virement/print-virement.component';
+import { ReceptionBordereauxMandatementModule } from './pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.module';
+import { TraitementDesLiquidationsMandatementModule } from './pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.module';
+import { TransmissionBordereauxModule } from './pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.module';
 
 
 registerLocaleData(localeFr);
@@ -148,7 +150,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransmissionsReceptionsModule,
     ControleConformiteModule,
     ListingTransmissionLiquidationModule,
-    TransmissionLiquidationModule
+    TransmissionLiquidationModule,
+    ReceptionBordereauxMandatementModule,
+    TraitementDesLiquidationsMandatementModule,
+    TransmissionBordereauxModule
 
   ],
   providers: [

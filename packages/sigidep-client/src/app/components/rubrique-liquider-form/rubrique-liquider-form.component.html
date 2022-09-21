@@ -1,0 +1,49 @@
+<p-card>
+  <table>
+    <tr>
+      <th>N°</th>
+      <th>Rubriques</th>
+      <th>Montant</th>
+    </tr>
+    <tr>
+      <td><span >1</span></td>
+      <td><span >Net à payer</span></td>
+      <td>
+        <span *ngIf="dataRubrique?.codeProcedure !== 1121">{{ dataRubrique?.netAPercevoir }}</span>
+        <span *ngIf="dataRubrique?.codeProcedure === 1121">{{ dataRubrique?.montant }}</span>
+      </td>
+    </tr>
+    <tr>
+      <td><span >2</span></td>
+      <td><span >Montant HT</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1110 || dataRubrique?.codeProcedure === 1111 || dataRubrique?.codeProcedure === 1115 || dataRubrique?.codeProcedure !== 1126"></span></td>
+    </tr>
+    <tr>
+      <td><span >3</span></td>
+      <td><span >Montant Taxes (TVA)</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1110 || dataRubrique?.codeProcedure === 1111 || dataRubrique?.codeProcedure === 1115 || dataRubrique?.codeProcedure !== 1126" >{{ dataRubrique?.tauxTVA }}</span></td>
+    </tr>
+    <tr>
+      <td><span >4</span></td>
+      <td><span >Montant Acomptes sur IR (AIR)</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1110 || dataRubrique?.codeProcedure === 1111 || dataRubrique?.codeProcedure === 1115 || dataRubrique?.codeProcedure !== 1126">{{ dataRubrique?.tauxIR }}</span></td>
+    </tr>
+    <tr>
+      <td><span >5</span></td>
+      <td><span >Montant IRNC</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1122">{{ dataRubrique?.montantIRNC }}</span></td>
+    </tr>
+  </table>
+</p-card>
+<div class="footer">
+  <button
+    type="button"
+    pButton
+    pRipple
+    class="p-button"
+    icon="pi pi-angle-right"
+    (click)="doChangeStep('forward')"
+    [label]="'buttons.next' | translate"
+    pButton
+  ></button>
+</div>

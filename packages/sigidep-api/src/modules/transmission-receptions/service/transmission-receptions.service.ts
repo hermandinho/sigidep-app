@@ -179,10 +179,24 @@ export class TransmissionReceptionService {
         ...(property as any), // existing fields
         etat: etated,
         updateBy:user,
-        rejet:true
       });
-     
+   }else if(payload?.action === 'reception-liquidation'){
+    etated = EtatBonEnum.RECEPTIONLIQUIDATION;
+    this.repository.save({
+     ...payload.data[0]?.transmission_reception, // existing fields
+     objet: EtatBonEnum.RECEPTIONLIQUIDATION,
+   });
+    for(let i=0; i<payload?.data?.length; i++){
+     const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
+     //const property:CreateBonEngagementDTO = payload?.data[i]?.bon_engagement;
+     this.repositorybon.save({
+       ...(property as any), // existing fields
+       etat: etated,
+       updateBy:user
+     });
    }
+   
+ }
    
     return check;
   }

@@ -1,0 +1,147 @@
+.grid-container {
+  display: grid;
+  grid-template-rows: 100% 50%;
+  grid-template-columns: 3fr 2fr;
+  grid-gap: 2%;
+}
+
+.grid-item1 {
+  border: black 1px solid;
+  border-radius: 10px;
+  height: auto;
+  text-justify: auto;
+  padding: 2%;
+  font-size: 1em;
+  //grid-area: area1;
+}
+
+.grid-item2 {
+  text-align: center;
+  border: black 1px solid;
+  border-radius: 10px;
+  height: auto;
+  padding: 1%;
+  font-size: 0.7em;
+  th,
+  td {
+  font-size: 90%;
+  border: 1px solid black;
+  padding: 5px;
+  // vertical-align: top;
+}
+  // grid-area: area2;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  font-size: 90%;
+  border: 1px solid black;
+  padding: 10px;
+  // vertical-align: top;
+}
+
+legend {
+  padding: 4px 7px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.grid-container-header {
+  display: grid;
+  grid-template-rows: 100% 50%;
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-gap: 2%;
+  //margin-bottom: 1%;
+}
+
+.grid-fr {
+  border: white 1px solid;
+  height: auto;
+  text-justify: auto;
+  padding: 5%;
+  font-size: 1em;
+  text-align: center;
+  //grid-area: area1;
+}
+
+.grid-en {
+  text-align: center;
+  border: white 1px solid;
+  height: auto;
+  padding: 5%;
+  font-size: 1em;
+  text-justify: auto;
+}
+
+.grid-img {
+  text-align: center;
+  border: white 1px solid;
+  height: auto;
+  padding: 5%;
+  // grid-area: area2;
+}
+
+h1 {
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bold;
+  i {
+    font-size: 1.2em;
+  }
+}
+
+/* .page
+    {
+     -webkit-transform: rotate(-90deg);
+     -moz-transform:rotate(-90deg);
+     filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    } */
+
+/*     .page{
+      display: flex;
+    }
+
+    @media (orientation: landscape) {
+      .page {
+        flex-direction: row;
+      }
+    } */
+    .title{
+      border: 1px solid black;
+      text-align: center;
+     // padding: 1px;
+    }
+
+    .info-trans{
+      border: 1px solid rgb(53, 51, 51);
+    margin-top: 3%;
+    margin-bottom: 2%;
+    padding: 1%;
+    font-size: 22px;
+    b{
+      font-weight: bold;
+    }
+    }
+
+    .date{
+      margin-left: 70%;
+      margin-top: 30px;
+      }
+
+      .visa{
+        text-align: center;
+        border: rgb(7, 7, 7) 1px solid;
+        height: 150px;
+        width: 300px;
+        margin-left: 48%;
+        margin-top: 25px;
+      }

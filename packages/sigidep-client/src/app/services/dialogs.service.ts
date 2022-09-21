@@ -117,6 +117,9 @@ export class DialogsService {
   private createBonEngagementMissionFormComponent: any;
   private createMotifRejetFormComponent: any;
   private printEditionCreanceComponent: any;
+  private traitementLiquidationMandatementCreateComponent: any;
+  private editerRapportTraitementLiquidationMandatementCreateComponent: any;
+  private editerPrintMandatPaiementComponent: any;
 
 
 
@@ -568,6 +571,7 @@ export class DialogsService {
       }
     );
   }
+
   public async launchAgentsCreateDialog(item?: AgentModel): Promise<any> {
     if (!this.agentCreateComponent) {
       const { CreateAgentFormComponent } = await import(
@@ -1302,6 +1306,103 @@ export class DialogsService {
       },
     });
   }
+
+  public async launchtraitementLiquidationMandatementCreateDialog(
+    item?: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.traitementLiquidationMandatementCreateComponent) {
+      const { CreateTraitementLiquidationMandatementComponent } = await import(
+        '@components/create-traitement-liquidation-mandatement/create-traitement-liquidation-mandatement.component'
+      );
+      this.traitementLiquidationMandatementCreateComponent =
+        CreateTraitementLiquidationMandatementComponent;
+    }
+
+    return this._dialogService.open(
+      this.traitementLiquidationMandatementCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editTraitementLiquidationMandatement'
+            : 'createTraitementLiquidationMandatement')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
+  public async launchEditerRapportTraitementLiquidationMandatementCreateDialog(
+    item?: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.editerRapportTraitementLiquidationMandatementCreateComponent) {
+      const { EditerRapportTraitementLiquidationMandatementComponent } = await import(
+        '@components/editer-rapport-traitement-liquidation-mandatement/editer-rapport-traitement-liquidation-mandatement.component'
+      );
+      this.editerRapportTraitementLiquidationMandatementCreateComponent =
+        EditerRapportTraitementLiquidationMandatementComponent;
+    }
+
+    return this._dialogService.open(
+      this.editerRapportTraitementLiquidationMandatementCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editTraitementLiquidationMandatement'
+            : 'createTraitementLiquidationMandatement')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
+  public async launchEditerPrintMandatPaiementComponentCreateDialog(
+    item?: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.editerPrintMandatPaiementComponent) {
+      const { PrintMandatPaiementComponent } = await import(
+        '@components/print-mandat-paiement/print-mandat-paiement.component'
+      );
+      this.editerPrintMandatPaiementComponent =
+        PrintMandatPaiementComponent;
+    }
+
+    return this._dialogService.open(
+      this.editerPrintMandatPaiementComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editPrintMandatPaiementComponent'
+            : 'createPrintMandatPaiementComponent')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
 
 
   public async launchPrintVirement(data: VirementModele): Promise<any> {

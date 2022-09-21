@@ -6,7 +6,7 @@ import { BonEngagementEntity } from './bon-engagement.entity';
   name: 'factures',
 })
 export class FactureEntity extends BaseEntity {
-  @Column({ name: 'date', type: 'date', nullable: false })
+  @Column({ name: 'date', type: 'date', nullable: true })
   date: Date;
   @Column({ name: 'reference', nullable: false })
   reference: string;

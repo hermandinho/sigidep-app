@@ -61,7 +61,11 @@
     "controlerlaconformite": " Rejeter lors du Contrôle Conformité",
     "rejeterlorsduControle": "Contrôler de Conformité",
     "transmissionLiquidation": "Transmission Liquidation",
-    "listingTransmissionLiquidation": "Listing Transmission Liquidation"
+    "listingTransmissionLiquidation": "Listing Transmission Liquidation",
+    "liquidationMandatement": "Liquidation & Mandatement",
+    "receptionBordereauxMandatement": "Réception Bordereaux",
+    "traitementLiquidationMandatement": "Traitements des Liquidation /Mandatements",
+    "transmissionBordereauxMandatement": "Transmission Bordereaux"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -432,7 +436,16 @@
     "dateLiquidation_mandat": "Date liquidation",
     "dateEditionTCC_mandat": "Date edition titre",
     "filterCodeEx": "Code exercice",
-    "banqueEtAgence": "Il n'y a pas encore d'agence pour cette banque."
+    "banqueEtAgence": "Il n'y a pas encore d'agence pour cette banque.",
+    "enregistrer": "Enregistrer",
+    "Modifier": "Modifier",
+    "Valider": "Valider",
+    "EditerRapport": "Editer le rapport",
+    "Mandater": "Mandater",
+    "EditerMandatPaiement": "Editer le Mandat Paiement",
+    "ControleRegularite": "Controle Regularité",
+    "mandatdepaiement": "Mandat de paiement",
+    "rapportdeliquidation": "Rapport de liquidation"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

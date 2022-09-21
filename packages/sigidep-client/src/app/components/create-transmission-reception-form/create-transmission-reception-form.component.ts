@@ -11,6 +11,8 @@ import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { EtatBonEnum } from '../../utils/etat-bon-engagement.enum';
 
 @Component({
   selector: 'app-create-transmission-reception-form',
@@ -33,6 +35,7 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
   //bookProcess:any;
   public editedBordereau!:TransmissionsReceptionModel;
   public currentProcedure:string='';
+  public etatedOrd!:any;
 
   constructor(
     private _fb: FormBuilder,
@@ -40,12 +43,17 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
     private _apisService: ApisService,
     private _store: Store<AppState>,
     private readonly _dialogService: DialogsService,
+    private route: ActivatedRoute
   ) {
     super();
    }
 
   ngOnInit(): void {
-    console.log(' currentStep$ ',this.transmission)
+    console.log(' this.route ',this.route.snapshot.queryParamMap.get('param'));
+    this.etatedOrd = this.route.snapshot.queryParamMap.get('param')
+      if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT) {
+        this.transmission = 'transmissionRegularite'
+      }
     this.form = this._fb.group({
       constitutionForm: this._fb.group({
         bon_engagement: [undefined],

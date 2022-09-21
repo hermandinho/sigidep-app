@@ -45,6 +45,10 @@ import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.
 import { ControleConformiteComponent } from '@pages/controle-conformite/controle-conformite.component';
 import { TransmissionLiquidationComponent } from '@pages/transmission-liquidation/transmission-liquidation.component';
 import { ListingTransmissionLiquidationComponent } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.component';
+import { TraitementDesLiquidationsMandatementComponent } from '../pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.component';
+import { TransmissionBordereauxComponent } from '../pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.component';
+import { ReceptionBordereauxMandatementComponent } from '../pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.component';
+import { CreateTransmissionReceptionFormComponent } from '../components/create-transmission-reception-form/create-transmission-reception-form.component';
 
 const routes: Routes = [
   {
@@ -524,6 +528,40 @@ const routes: Routes = [
             '../pages/virements/virements.module'
           ).then((m) => m.VirementsModule),
       },
+      {
+        path: 'reception-bordereaux-mandatement',
+        canActivate: [AuthGuard],
+        component: ReceptionBordereauxMandatementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.module'
+          ).then((m) => m.ReceptionBordereauxMandatementModule),
+      },
+      {
+        path: 'traitement-liquidation-mandatement',
+        canActivate: [AuthGuard],
+        component: TraitementDesLiquidationsMandatementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.module'
+          ).then((m) => m.TraitementDesLiquidationsMandatementModule),
+      },
+      {
+        path: 'transmission-bordereaux-mandatement',
+        canActivate: [AuthGuard],
+        component: TransmissionBordereauxComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.module'
+          ).then((m) => m.TransmissionBordereauxModule),
+      },
+      {
+        path: 'traitement-controle',
+        component: CreateTransmissionReceptionFormComponent,
+      }
       /*{
         path: '**',
         component: NotFoundComponent,

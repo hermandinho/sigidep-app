@@ -133,7 +133,7 @@ import { TransmissionReceptionModule } from '@modules/transmission-receptions/tr
     BonsEngagementsModule,
     VirementsModule,
     ModeleVirementsModule,
-    TransmissionReceptionModule
+    TransmissionReceptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
