@@ -1,25 +1,36 @@
 <div class="container">
   <div class="form" [formGroup]="traitementLiquidationForm">
         <div class="p-field p-col-12 p-md-12">
-          <label>{{ "labels.numeroBon" | translate }}</label>
+          <label>{{ "labels.numeroMandat" | translate }}</label>
           <input
+            minlength="7"
+            maxlength="7"
             class="form-control"
-            formControlName="numeroBon"
+            formControlName="numeroMandat"
             [placeholder]="''"
             pInputText
           />
       </div>
       <div class="p-fluid p-grid">
         <div class="p-field p-col-12 p-md-6">
-          <label class="required"
+          <ng-container formGroupName="matriculeGestionnaire">
+            <label class="required"
             >{{ "labels.matriculeGestionnaire" | translate }}
           </label>
-          <input
-          class="form-control"
-          formControlName="matriculeGestionnaire"
-          [placeholder]="''"
-          pInputText
-        />
+            <p-dropdown
+              [showClear]="true"
+              [filter]="true"
+              [filterBy]="'matricule'"
+              [autoDisplayFirst]="false"
+              [options]="gestionnaires"
+              [placeholder]="''"
+              optionLabel="matricule"
+              optionValue="matricule"
+              formControlName="matricule"
+              (onChange)="onGestionnaireChange($event)"
+            >
+            </p-dropdown>
+          </ng-container>
       </div>
         <div class="p-field p-col-12 p-md-6">
           <label>{{ "labels.nomGestionnaire" | translate }}</label>

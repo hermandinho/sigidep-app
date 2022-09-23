@@ -141,13 +141,6 @@ ngAfterContentChecked(): void {
             this.handleEditerMandatPaiement(this.currentItem);
           },
         },
-        {
-          label: this.translate.instant('labels.ControleRegularite'),
-          icon: 'pi pi-print',
-          command: () => {
-            this.handleControleRegularite(this.currentItem);
-          },
-        },
       ],
     },
   ];
@@ -339,19 +332,15 @@ handleEditerMandatPaiement(item: any) {
   });
 }
 
-handleControleRegularite(item: any) {
+/* handleControleRegularite(item: any) {
   const etat = EtatBonEnum.ORDONNANCEMENT;
   this._appService.showConfirmation({
     message: 'dialogs.messages.ControleRegulariteTraitementLiquidationMandatement',
     accept: () => {
-     /*  this._dialogService.launchtraitementLiquidationMandatementCreateDialog(
-        item,
-        'controle regularite'
-      ); */
       this.goToWithParams('traitement-controle', etat)
     },
   });
-}
+} */
 
 handleFilter = (event: any) => {
   if (event?.value) {

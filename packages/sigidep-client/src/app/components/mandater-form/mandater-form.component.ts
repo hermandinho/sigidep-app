@@ -11,10 +11,13 @@ import { EngagementMissionModel } from '../../models/engagement-mission.model';
 import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import {
-  getDataSelector,
-  getLoadingSelector,
+  getDataSelector as getDataSelectorM,
+  getLoadingSelector as getLoadingSelectorM,
 } from '@reducers/engagements.reducer';
 import { DatePipe } from '@angular/common';
+import { GetGestionnaires } from '../../store/actions/gestionnaires.actions';
+import { getDataSelector, getLoadingSelector } from '@reducers/gestionnaires.reducer';
+import { GestionnaireModel } from '../../models/gestionnaire.model';
 
 @Component({
   selector: 'app-mandater-form',
@@ -36,6 +39,7 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
     | EngagementDecisionModel
     | EngagementMissionModel
   )[];
+  public gestionnaires: GestionnaireModel[] = [];
 
   rubrique: string[] = [];
   montant: number[] = [];
@@ -52,18 +56,13 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this._store.dispatch(
+      GetGestionnaires()
+    );
     this.traitementLiquidationForm = this.startingForm;
-    this.traitementLiquidationForm.controls['matriculeGestionnaire'].disable();
     this.traitementLiquidationForm.controls['nomGestionnaire'].disable();
-    this.traitementLiquidationForm.controls['numeroBon'].disable();
     console.log('traitementLiquidationForm',this.traitementLiquidationForm)
     this.subformInitialized.emit(this.traitementLiquidationForm);
-    this.traitementLiquidationForm.patchValue({
-      matriculeGestionnaire:this.data?.item?.bon_engagement?.matriculeGestionnaire,
-      nomGestionnaire: this.data?.item?.bon_engagement?.nomGestionnaire,
-      numeroBon: this.data?.item?.bon_engagement?.numero
-    });
-
     console.log('item ',this.data.item)
     if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure === '1121'){
       this._store.dispatch(
@@ -104,7 +103,7 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
   }
   private async _initListeners() {
     this._store
-    .pipe(this.takeUntilDestroy, select(getDataSelector))
+    .pipe(this.takeUntilDestroy, select(getDataSelectorM))
     .subscribe((data) => {
       this.engagements = [...data];
       console.log(this.engagements)
@@ -180,9 +179,21 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
     });
 
     this.loading$ = this._store.pipe(
+      select(getLoadingSelectorM),
+      map((status) => status)
+    );
+
+    this._store
+    .pipe(this.takeUntilDestroy, select(getDataSelector))
+    .subscribe((data) => {
+      this.gestionnaires = [...data];
+    });
+
+    this.loading$ = this._store.pipe(
       select(getLoadingSelector),
       map((status) => status)
     );
+
   }
   setTraitementForm(){
     const pipe = new DatePipe('en-US');
@@ -199,4 +210,16 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
     console.log(this.traitementLiquidationForm)
   }
 
+  onGestionnaireChange(event:any){
+    const act: GestionnaireModel | undefined = this.gestionnaires.find(
+      (item:GestionnaireModel) => item.matricule === event.value
+    );
+    console.log(act)
+    if (act) {
+      this.traitementLiquidationForm.patchValue({
+        nomGestionnaire: act?.nom + '' + act?.prenom,
+        matriculeGestionnaire: act?.matricule
+      })
+    }
+  }
 }

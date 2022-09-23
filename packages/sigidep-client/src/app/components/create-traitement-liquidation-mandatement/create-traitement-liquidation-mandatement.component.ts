@@ -62,7 +62,7 @@ public currentStep$: Observable<StepLiquidation> =
           action: [undefined],
           matriculeGestionnaire: [undefined],
           nomGestionnaire: [undefined],
-          numeroBon: [undefined]
+          numeroMandat: [undefined],
 
         }),
       });
@@ -86,7 +86,7 @@ public currentStep$: Observable<StepLiquidation> =
           montantOrdonnancement,
           matriculeGestionnaire,
           nomGestionnaire,
-          numeroBon
+          numeroMandat
 
         } = this.config.data?.item?.bon_engagement?.traitements[0] as
           | TraitementBonEngagementModel
@@ -120,7 +120,7 @@ public currentStep$: Observable<StepLiquidation> =
             montantOrdonnancement,
             matriculeGestionnaire,
             nomGestionnaire,
-            numeroBon
+            numeroMandat
           },
 
         });

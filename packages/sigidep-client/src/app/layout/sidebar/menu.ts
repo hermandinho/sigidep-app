@@ -283,6 +283,28 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           },
         },
         {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.virements'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.virements],
+          },
+          items: [
+            {
+              routerLink: 'modele-virement',
+              icon: 'pi pi-file-pdf',
+              label: translate.instant('sidebar.modelVirement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'virement',
+              icon: 'pi pi-money-bill',
+              label: translate.instant('sidebar.virement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
+        },
+        {
           routerLink: 'engagements',
           icon: 'pi pi-table',
           label: translate.instant('sidebar.engagementsjuridiques'),
@@ -321,43 +343,31 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           icon: 'pi pi-money-bill',
-          label: translate.instant('sidebar.virements'),
-          routerLinkActiveOptions: { exact: true },
-          state: {
-            permissions: [...MenuPermissions.virements],
-          },
-          items: [
-            {
-              routerLink: 'modele-virement',
-              icon: 'pi pi-file-pdf',
-              label: translate.instant('sidebar.modelVirement'),
-              routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: 'virement',
-              icon: 'pi pi-money-bill',
-              label: translate.instant('sidebar.virement'),
-              routerLinkActiveOptions: { exact: true },
-            },
-          ],
-        },
-        {
-          routerLink: 'visaetmiseenroute',
-          icon: 'pi pi-table',
           label: translate.instant('sidebar.visaetmiseenroute'),
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.visaetmiseenroute],
           },
-        },
-        {
-          routerLink: 'transmissionsReceptions',
-          icon: 'pi pi-table',
-          label: translate.instant('sidebar.transmissionsReceptions'),
-          routerLinkActiveOptions: { exact: true },
-          state: {
-            permissions: [...MenuPermissions.transmissionsReceptions],
-          },
+          items: [
+            {
+              routerLink: 'visaetmiseenroute',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.visaetmiseenroute'),
+              routerLinkActiveOptions: { exact: true },
+              state: {
+                permissions: [...MenuPermissions.visaetmiseenroute],
+              },
+            },
+            {
+              routerLink: 'transmissionsReceptions',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionsReceptions'),
+              routerLinkActiveOptions: { exact: true },
+              state: {
+                permissions: [...MenuPermissions.transmissionsReceptions],
+              },
+            },
+          ]
         },
         {
           icon: 'pi pi-money-bill',
@@ -375,9 +385,10 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
             },
             {
               icon: 'pi pi-shield',
+              routerLink: 'controler-la-conformite',
               label: translate.instant('sidebar.operationdecontrole'),
               routerLinkActiveOptions: { exact: true },
-              items:[
+             /*  items:[
                 {
                   routerLink: 'controler-la-conformite',
                   icon: 'pi pi-shield',
@@ -390,14 +401,14 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
                   label: translate.instant('sidebar.controlerlaconformite'),
                   routerLinkActiveOptions: { exact: true },
                 },
-              ]
+              ] */
             },
-            {
+         /*    {
               routerLink: 'edition-des-tcc',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.editiondestcc'),
               routerLinkActiveOptions: { exact: true },
-            },
+            }, */
 
           ],
         },

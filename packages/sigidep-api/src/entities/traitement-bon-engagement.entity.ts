@@ -65,6 +65,16 @@ export class TraitementBonEngagementEntity extends BaseEntity {
 
   @Column('varchar', { nullable: true, name: 'piecesJointe' })
   public piecesJointe!: PieceJointeEntity;
+
+  @Column('varchar', { nullable: true, name: 'numeroMandat' })
+  public numeroMandat!: string;
+
+  @Column('varchar', { nullable: true, name: 'matriculeGestionnaire' })
+  public matriculeGestionnaire!: string;
+
+  @Column('varchar', { nullable: true, name: 'nomGestionnaire' })
+  public nomGestionnaire!: string;
+
   constructor(param?: Partial<TraitementBonEngagementEntity>) {
     super();
     if (param) {
