@@ -192,7 +192,7 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
       .subscribe((data) => {
         this.bonsEngagements = [...data];
        if (this.bonsEngagements) this.imputation = false;
-  //      console.log('bons enagements ', this.bonsEngagements);
+        console.log('bons enagements ', this.bonsEngagements);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingMadSelector),
@@ -286,7 +286,8 @@ export class ConsultationsComponent extends BaseComponent implements OnInit {
         const act = this.bonsEngagements.find(
           (item: any) => item.id === event.value
         );
-        //console.log(act);
+        console.log(this.bonsEngagements);
+        console.log(act);
         if (act) {
           this.consulterM = act;
         }

@@ -40,10 +40,10 @@ export class TraitementBonEngagementService {
     user: UserEntity,
   ): Promise<CreateTraitementBonEngagementDTO> {
     const count = await this.repository.count();
-    const val1: string = 'DAAF';
+    const val1: string = payload?.bon?.numActeJuridique.exercise;
     const val2: string = ('00000' + Number(count + 1)).slice(-5);
 
-    payload.numOrdreLiquidation = val1 + '-' + val2;
+    payload.numOrdreLiquidation = val1 + 'LQ' + val2;
     const traitement = this.repository.save({
       ...(payload as any),
       typeTraitement: EtatBonEnum.ENREGISTREMENTLIQUIDATION,

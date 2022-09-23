@@ -54,22 +54,19 @@
             </div>
           </ng-template>
           <ng-template pTemplate="header">
-            <tr >
-              <th></th>
+            <tr>
               <ng-container *ngFor="let column of tableColumnsBordereau">
                 <th *ngIf="column.sortable" [pSortableColumn]="column.field">
                   {{ column.title | translate }}
                   <p-sortIcon field="numeroEng"></p-sortIcon>
                 </th>
               </ng-container>
+              <th></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-item>
 
-            <tr (click)="fileInput110.click()">
-              <td class="actions">
-                <input hidden type="checkbox" #fileInput110 (change)="selected($event,item)" >
-              </td>
+            <tr>
               <td *ngFor="let column of tableColumnsBordereau" class="nowrap">
                 <span *ngIf="column.field === 'numeroBon'">
                   {{ item["bon_engagement"]?.numero }}
@@ -99,6 +96,20 @@
                   {{ item['bon_engagement']?.objet }}
                 </span>
               </td>
+              <td class="actions_button">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="p-button-rounded p-button"
+                  icon="pi pi-ellipsis-h"
+                  (click)="
+                    currentItem = item;
+                    $event.stopPropagation();
+                    menu.toggle($event)
+                  "
+                ></button>
+              </td>
 
             </tr>
           </ng-template>
@@ -107,11 +118,6 @@
             </div>
           </ng-template>
         </p-table>
+        <p-menu appendTo="body" #menu [popup]="true" [model]="menus"></p-menu>
   </p-card>
-</div>
-
-<div>
-  <button (click)="controler()" pButton class="p-mr-3 p-button-success">
-    {{ "buttons.controler" | translate }}
-  </button>
 </div>

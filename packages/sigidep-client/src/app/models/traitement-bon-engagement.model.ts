@@ -27,6 +27,9 @@ export class TraitementBonEngagementModel extends BaseModel {
   motif!: string;
   piecesJointe!: PieceJointeModel;
   action!: string;
+  numeroMandat!: string;
+  matriculeGestionnaire!: string;
+  nomGestionnaire!: string
   constructor(param?: Partial<TraitementBonEngagementModel>) {
     super();
     if (param) {

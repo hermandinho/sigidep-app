@@ -61,6 +61,9 @@ export class BonEngagementEntity extends BaseEntity {
   @Column({ name: 'rejet', default: false })
   public rejet: boolean;
 
+  @Column('varchar', { nullable: true, name: 'motif' })
+  public motif: boolean;
+
   @Column({ default: false, name: 'encours' })
   public encours: boolean;
   @Column({

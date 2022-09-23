@@ -26,14 +26,16 @@
           </div>
         </div>
         <div class="title">
-          <h3>MANDAT DE PAIEMENT N° {{ config.data?.item?.bon_engagement?.traitements[0]?.numOrdreLiquidation }}</h3>
+          <h3>MANDAT DE PAIEMENT N° {{ config.data?.item?.bon_engagement?.traitements[0]?.numeroMandat }}</h3>
         </div>
 
         <div>
-          &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.bon_engagement?.nomGestionnaire }}, en ma qualité de Gestionnaire accrédité certifie l'effectivité de
+          <p>
+            &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire}}, en ma qualité de Gestionnaire accrédité certifie l'effectivité de
           la présente créance et donne ordre à l'Agent Comptable Assignataire de la payer conformément aux détail suivants:
+          </p>
 
-          <table>
+          <table class="sans-ligne">
             <tr>
               <th>Certificat d'engagement N°</th>
               <th>Montant AE</th>
@@ -47,18 +49,18 @@
               <td>{{ config.data?.item?.bon_engagement?.montantCPChiffres }}</td>
             </tr>
           </table>
-          <table>
+          <table class="sans-ligne2">
             <tr>
-              <td>Liquidation de Réference N°</td>
+              <td><b>Liquidation de Réference N°</b></td>
               <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.numOrdreLiquidation }}</td>
             </tr>
             <tr>
-              <td>Unité Administrative d'origineM</td>
+              <td><b>Unité Administrative d'origine:</b></td>
               <td>{{ config.data?.item?.bon_engagement?.numActeJuridique?.adminUnit }}</td>
             </tr>
             <tr>
-              <td>OrdinateurM</td>
-              <td></td>
+              <td><b>Ordonateur:</b></td>
+              <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
             </tr>
           </table>
         </div>
@@ -70,26 +72,41 @@
             <th>Coordonnées bancaires</th>
           </tr>
           <tr>
-            <td></td>
-            <td></td>
+            <td>{{ config.data?.item?.bon_engagement?.matriculeGestionnaire }}</td>
+            <td>{{ config.data?.item?.bon_engagement?.nomGestionnaire }} </td>
             <td>
               <table>
-                <tr><td></td><td></td></tr>
-                <tr><td></td><td></td></tr>
-                <tr><td></td><td></td></tr>
+                <tr><td>RIB</td><td></td></tr>
+                <tr><td>Banque</td><td></td></tr>
+                <tr><td>Agence</td><td></td></tr>
               </table>
             </td>
           </tr>
         </table>
-        <div class="info-trans">
-          <label><b>Exercice: </b>{{ data?.numActeJuridique?.exercise}}</label><br><br>
-          <label><b>Ordinateur: </b></label><br><br>
-          <label><b>Montant Brut (en FCFA): </b></label><br><br>
-          <label><b>Objet de la dépense: </b>{{ data?.objet}}</label><br><br>
-          <label><b>Imputation: </b>{{ data?.numActeJuridique?.imputation}}</label><br>
-        </div>
-        <h1>Détails des rubrique du mandat</h1>
-        <p-card>
+        <table class="sans-ligne2">
+          <tr>
+            <td>Exercice: </td>
+            <td>{{ data?.bon_engagement?.numActeJuridique?.exercise}}-Budget {{ date }}</td>
+          </tr>
+          <tr>
+            <td>Ordonateur: </td>
+            <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
+          </tr>
+          <tr>
+            <td>Objet de la dépense: </td>
+            <td>{{ data?.bon_engagement?.objet}}</td>
+          </tr>
+          <tr>
+            <td>Imputation: </td>
+            <td>{{ data?.bon_engagement?.numActeJuridique?.imputation}}</td>
+          </tr>
+          <tr>
+            <td>Montant Brut (en FCFA): </td>
+            <td>{{ config.data?.item?.bon_engagement?.montantCPChiffres }}</td>
+          </tr>
+        </table>
+        <h4>Détails des rubrique du mandat</h4>
+
           <table>
             <tr>
               <th>N°</th>
@@ -97,7 +114,7 @@
               <th>Montant (FCFA)</th>
             </tr>
             <tr *ngIf="rubriques[0] && montants[0]">
-              <td><span >1</span></td>
+              <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-01</span></td>
               <td><span >{{ rubriques[0] }}</span></td>
               <td>
                 <span >{{ montants[0] }}</span>
@@ -105,7 +122,7 @@
             </tr>
 
             <tr *ngIf="rubriques[1] && montants[1]">
-              <td><span >2</span></td>
+              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-02</span></td>
               <td><span >{{ rubriques[1] }}</span></td>
               <td>
                 <span >{{ montants[1] }}</span>
@@ -113,7 +130,7 @@
             </tr>
 
             <tr *ngIf="rubriques[2] && montants[2]">
-              <td><span >3</span></td>
+              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-03</span></td>
               <td><span >{{ rubriques[2] }}</span></td>
               <td>
                 <span >{{ montants[2] }}</span>
@@ -121,7 +138,7 @@
             </tr>
 
             <tr *ngIf="rubriques[3] && montants[3]">
-              <td><span >4</span></td>
+              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-04</span></td>
               <td><span >{{ rubriques[3] }}</span></td>
               <td>
                 <span >{{ montants[3] }}</span>
@@ -129,45 +146,44 @@
             </tr>
 
             <tr *ngIf="rubriques[4] && montants[4]">
-              <td><span >5</span></td>
+              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-05</span></td>
               <td><span >{{ rubriques[4] }}</span></td>
               <td>
                 <span >{{ montants[4] }}</span>
               </td>
             </tr>
             <tr>
-              <td colspan="2">TOTAL A LIAUIDER</td>
+              <td colspan="2">TOTAL A LIQUIDER</td>
               <td>{{ totalLiquidation }}</td>
             </tr>
           </table>
-        </p-card>
-              <p-card>
-                <table>
-                  <tr>
-                    <th>Visa du controleur financier</th>
-                    <th rowspan="4">signature de l'ordinnateur <br> Arreté le présent mandat à la somme de: <br> {{ montant_en_lettre }}</th>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
+          <table style="margin-top: 2%;">
+            <tr>
+              <th>Visa du controleur financier</th>
+              <th rowspan="4">signature de l'ordinnateur <br> Arreté le présent mandat à la somme de: <br> {{ montant_en_lettre }}</th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
 
-                </table>
-              </p-card>
+          </table>
+
+          <div class="p-fluid p-grid" style="margin-top: 1%;">
+            <div class="p-field p-col-12 p-md-5 semi-card">
+              <span>A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , le  </span>
+            </div>
+            <div class="p-field p-col-12 p-md-5 semi-card">
+              <span>A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , le&nbsp;&nbsp;&nbsp;  </span>
+            </div>
+          </div>
       </p-card>
-      <div class="p-fluid p-grid">
-        <div class="p-field p-col-12 p-md-6">
-          <span>A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , le  </span>
-        </div>
-        <div class="p-field p-col-12 p-md-6">
-          <span>A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , le&nbsp;&nbsp;&nbsp;  </span>
-        </div>
-      </div>
+
     </div>
     <div>
       <button
