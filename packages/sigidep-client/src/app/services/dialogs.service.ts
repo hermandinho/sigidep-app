@@ -75,6 +75,7 @@ export class DialogsService {
   private modelVirementCreateComponent: any;
   private virementCreateComponent: any;
   private virementMessageComponent: any;
+  private printVirement: any;
   private articleCreateComponent: any;
   private rubriqueCreateComponent: any;
   private sousRubriqueCreateComponent: any;
@@ -114,8 +115,8 @@ export class DialogsService {
   private reservationBonEngagementDecisionComponent: any;
   private etatCertificatEngagementComponent: any;
   private createBonEngagementMissionFormComponent: any;
-  private createMotifRejetFormComponent:any;
-  private printEditionCreanceComponent:any;
+  private createMotifRejetFormComponent: any;
+  private printEditionCreanceComponent: any;
   private traitementLiquidationMandatementCreateComponent: any;
   private editerRapportTraitementLiquidationMandatementCreateComponent: any;
   private editerPrintMandatPaiementComponent: any;
@@ -1132,18 +1133,18 @@ export class DialogsService {
       );
       this.createMotifRejetFormComponent = CreateMotifRejetFormComponent;
     }
-      return this._dialogService.open(this.createMotifRejetFormComponent, {
-        header: this._translateService.instant(
-          'dialogs.headers.viewTransmissionReception',
-          { numero: item?.numero }
-        ),
-        width: '60vw',
-        height: 'auto',
-        modal: true,
-        data: {
-          item,
-        },
-      });
+    return this._dialogService.open(this.createMotifRejetFormComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.viewTransmissionReception',
+        { numero: item?.numero }
+      ),
+      width: '60vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
 
   }
 
@@ -1283,7 +1284,7 @@ export class DialogsService {
   }
 
   public async launchPrintEditionCreanceDialog(
-    item:any
+    item: any
   ): Promise<any> {
     if (!this.printEditionCreanceComponent) {
       const { PrintEditionTccCreanceComponent } = await import(
@@ -1308,7 +1309,7 @@ export class DialogsService {
 
   public async launchtraitementLiquidationMandatementCreateDialog(
     item?: any,
-    action?:string
+    action?: string
   ): Promise<any> {
     if (!this.traitementLiquidationMandatementCreateComponent) {
       const { CreateTraitementLiquidationMandatementComponent } = await import(
@@ -1340,7 +1341,7 @@ export class DialogsService {
 
   public async launchEditerRapportTraitementLiquidationMandatementCreateDialog(
     item?: any,
-    action?:string
+    action?: string
   ): Promise<any> {
     if (!this.editerRapportTraitementLiquidationMandatementCreateComponent) {
       const { EditerRapportTraitementLiquidationMandatementComponent } = await import(
@@ -1372,7 +1373,7 @@ export class DialogsService {
 
   public async launchEditerPrintMandatPaiementComponentCreateDialog(
     item?: any,
-    action?:string
+    action?: string
   ): Promise<any> {
     if (!this.editerPrintMandatPaiementComponent) {
       const { PrintMandatPaiementComponent } = await import(
@@ -1402,4 +1403,21 @@ export class DialogsService {
     );
   }
 
+  public async launchPrintVirement(data: VirementModele): Promise<any> {
+    if (!this.printEditionCreanceComponent) {
+      const { PrintVirementComponent } = await import(
+        '@components/print-virement/print-virement.component'
+      );
+      this.printVirement = PrintVirementComponent;
+    }
+    return this._dialogService.open(this.printVirement, {
+      header: this._translateService.instant('labels.printVirement'),
+      width: '690px',
+      height: '842px',
+      modal: true,
+      data: {
+        data,
+      },
+    });
+  }
 }

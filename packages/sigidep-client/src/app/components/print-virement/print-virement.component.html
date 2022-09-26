@@ -1,0 +1,83 @@
+<div class="content-show">
+    <div class="content-print" id="print-content">
+        <div class="header-print">
+            <div class="header header-left">
+                <p>REPUBLIQUE DU CAMEROUN</p>
+                <p>Paix - Travail- Patrie</p>
+                <p>---------------------</p>
+                <p class="print-text-wrap">
+                    CHAMBRE D’AGRICULTURE, DES PECHES, DE
+                    L’ELEVAGE ET DES FORETS DU CAMEROUN
+                </p>
+                <p>---------------------</p>
+            </div>
+            <div class="header-img">
+                <img src="assets/img/logopdf.png" alt="logo pdf" width="80" />
+            </div>
+            <div class="header header-rigth">
+                <p>REPUBLIC OF CAMEROON</p>
+                <p>Peace - Work - Fatherland</p>
+                <p>---------------------</p>
+                <p class="print-text-wrap">
+                    CHAMBER OF AGRICULTURE, FISHERIES,
+                    LIVESTOCK AND FORESTS OF CAMEROON
+                </p>
+                <p>---------------------</p>
+            </div>
+        </div>
+        <div class="body-print">
+            <div class="print-part">
+                <p id="entete">
+                </p>
+            </div>
+            <div class="print-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="print-width" rowspan="2">SOUS-PROG</th>
+                            <th class="print-width" rowspan="2">AC.</th>
+                            <th class="print-width" rowspan="2">ACT.</th>
+                            <th class="print-width" rowspan="2">TACHE</th>
+                            <th class="print-width-imput" colspan="2">IMPUTATION</th>
+                            <th class="print-width" colspan="2">MONTANT(EN CFA)</th>
+                        </tr>
+                        <tr>
+                            <th>CODE</th>
+                            <th>LIBELLE</th>
+                            <th>DEBIT</th>
+                            <th>CREDIT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of detailsVirement">
+                            <td class="print-width">03</td>
+                            <td class="print-width">01</td>
+                            <td class="print-width">01</td>
+                            <td class="print-width">02</td>
+                            <td class="print-width-imput">{{ item.codeInput }}</td>
+                            <td class="print-width-imput">{{ item.libelleInput }}</td>
+                            <td class="print-width">{{ item.debit ?? '' }}</td>
+                            <td class="print-width">{{ item.credit ?? '' }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="6"></th>
+                            <th>{{ debit }}</th>
+                            <th>{{ credit }}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="print-part">
+                <p id="chapeau">
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="print-footer">
+        <button type="button" pButton pRipple class="p-button left-down" icon="pi pi-print"
+            printSectionId="print-section" ngxPrint (click)="exportPdf()"> print</button>
+    </div>
+</div>

@@ -11,6 +11,7 @@ import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
+import { ParseAmount } from 'app/configs/parseAmountConfig';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
@@ -36,8 +37,8 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public detailVirementForm!: FormGroup;
   public debitEncourList: DetailsVirementModel[] = [];
   public creditEncourList: DetailsVirementModel[] = [];
-  public total_debit: number = 0;
-  public total_credit: number = 0;
+  public total_debit: string = '0';
+  public total_credit: string = '0';
   public ecart_debit_credit: number = 0;
   public create: boolean = true;
   public validate: boolean = false;
@@ -49,12 +50,16 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
   public scCible!: SubProgramModel;
   public typeFinancement?: string;
 
+  public debit: number = 0;
+  public credit: number = 0;
+
   constructor(
     private _apisService: ApisService,
     public ref: DynamicDialogRef,
     private _appService: AppService,
     private _store: Store<AppState>,
-    private _dialogService: DialogsService
+    private _dialogService: DialogsService,
+    private parseAmount: ParseAmount
   ) {
     super();
   }
@@ -210,11 +215,13 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
       prix += e.montant ?? 0;
     });
     if (isDebit) {
-      this.total_debit = prix;
+      this.debit = prix;
     } else {
-      this.total_credit = prix;
+      this.credit = prix;
     }
-    this.ecart_debit_credit = this.total_debit - this.total_credit;
+    this.ecart_debit_credit = this.debit - this.credit;
+    this.total_credit = this.format(this.credit);
+    this.total_debit = this.format(this.debit);
   }
 
   submitForm() {
@@ -349,5 +356,9 @@ export class DetailsVirementFormComponent extends BaseComponent implements OnIni
     this.startingForm.controls.detailsVirementsDebit.setValue(this.debitEncourList);
     this.startingForm.controls.detailsVirementsCredit.setValue(this.creditEncourList);
     this.updateData.emit();
+  }
+
+  format(value: number) {
+    return this.parseAmount.parseToXAF(value);
   }
 }
