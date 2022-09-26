@@ -384,35 +384,28 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
+              routerLink: 'listing-transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.listingTransmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
               icon: 'pi pi-shield',
               routerLink: 'controler-la-conformite',
               label: translate.instant('sidebar.operationdecontrole'),
               routerLinkActiveOptions: { exact: true },
-             /*  items:[
-                {
-                  routerLink: 'controler-la-conformite',
-                  icon: 'pi pi-shield',
-                  label: translate.instant('sidebar.rejeterlorsduControle'),
-                  routerLinkActiveOptions: { exact: true },
-                },
-                {
-                  routerLink: 'rejeter-lors-du-Controle',
-                  icon: 'pi pi-shield',
-                  label: translate.instant('sidebar.controlerlaconformite'),
-                  routerLinkActiveOptions: { exact: true },
-                },
-              ] */
             },
-         /*    {
-              routerLink: 'edition-des-tcc',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.editiondestcc'),
-              routerLinkActiveOptions: { exact: true },
-            }, */
+
 
           ],
         },
-        {
+       /*  {
           icon: 'pi pi-money-bill',
           label: translate.instant('sidebar.transmissionLiquidation'),
           routerLinkActiveOptions: { exact: true },
@@ -433,7 +426,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
           ]
-        },
+        }, */
         {
           icon: 'pi pi-money-bill',
           label: translate.instant('sidebar.liquidationMandatement'),

@@ -44,9 +44,7 @@
         <input
           pInputText
           type="text"
-          (input)="
-            dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
-          "
+          (keyup)="searchSelect($event)"
           [placeholder]="'labels.search' | translate"
         />
       </span>
@@ -126,17 +124,6 @@
             <h5 class="p-m-0">
               {{ "tables.titles.dossiers" | translate }}
             </h5>
-            <!-- <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input
-                pInputText
-                type="text"
-                (input)="
-                  dt1.filterGlobal(getTableGlobalSearchValue($event), 'contains')
-                "
-                [placeholder]="'labels.search' | translate"
-              />
-            </span> -->
           </div>
         </ng-template>
         <ng-template pTemplate="header">

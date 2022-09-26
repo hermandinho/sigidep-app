@@ -45,9 +45,7 @@
                 <input
                   pInputText
                   type="text"
-                  (input)="
-                    dt.filterGlobal(getTableGlobalSearchValue($event), 'contains')
-                  "
+                  (keyup)="searchSelect($event)"
                   [placeholder]="'labels.search' | translate"
                 />
               </span>

@@ -98,8 +98,8 @@
                     <th>Code</th>
                     <th>Libellé</th>
                   </tr>
-                  <tr *ngFor="let item of dataPieceJointes">
-                    <td>{{ item?.order }}</td>
+                  <tr *ngFor="let item of dataPieceJointes; let i = index">
+                    <td>{{ i+1 }}</td>
                     <td>{{ item?.code }}</td>
                     <td>{{ item?.label }}</td>
                   </tr>

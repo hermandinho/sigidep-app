@@ -34,6 +34,7 @@ implements OnInit, AfterContentChecked {
   public tableColumnsTransmission:any[]=[];
   public tableColumnsBordereau:any[]=[];
   public dossiersBordereaux:any[]=[];
+  public dossiersBordereaux_tmp:any[]=[];
   public globalColumnsTransmission!: string[];
   public globalColumnsBordereaux!: string[];
   menus!: MenuItem[];
@@ -70,9 +71,9 @@ implements OnInit, AfterContentChecked {
     this._store.dispatch(
       GetTransmissionsReceptionsDetails({/* etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE] */})
     );
-  /*   this._store.dispatch(
+    this._store.dispatch(
       GetExercises({})
-    ); */
+    );
 
     this._store.dispatch(
       SetAppBreadcrumb({
@@ -84,6 +85,21 @@ implements OnInit, AfterContentChecked {
       })
     );
 
+  }
+
+  searchSelect(event: any) {
+    this.dossiersBordereaux = this.dossiersBordereaux_tmp;
+    this.dossiersBordereaux = this.dossiersBordereaux_tmp.filter( (item) =>
+        (item.bon_engagement?.numero ? item.bon_engagement?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.numActeJuridique.numero ? item.bon_engagement?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.numActeJuridique.imputation ? item.bon_engagement?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
+        (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
+       (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
+    );
   }
 
   ngAfterContentChecked(): void {
@@ -237,6 +253,7 @@ implements OnInit, AfterContentChecked {
     .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
     .subscribe((data) => {
       this.dossiersBordereaux = [...data];
+      this.dossiersBordereaux_tmp = [...data];
       console.log('dossiersBordereaux ', this.dossiersBordereaux)
 
     });
