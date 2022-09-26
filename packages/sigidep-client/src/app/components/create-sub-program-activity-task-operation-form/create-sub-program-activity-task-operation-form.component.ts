@@ -421,7 +421,6 @@ export class CreateSubProgramActivityTaskOperationFormComponent
 	ngOnInit(): void {
 		this._store.dispatch(GetParagraphs());
 		this._store.dispatch(GetReferencePhysicalUnits());
-		console.log(this.config?.data);
 
 		const sp: SubProgramModel =
 			this.config?.data?.subProgram &&
@@ -588,8 +587,6 @@ export class CreateSubProgramActivityTaskOperationFormComponent
 		totalPrice,
 	}: any) {
 		const unit = this.referencePhysicalUnits.find((u) => u.id === +id);
-		console.log({ id, quantity, unitPrice, totalPrice });
-		console.log(unit);
 		this.addReferencePhysicalUnitFormItems = {
 			referencePhysicalUnitId: id,
 			quantity,
