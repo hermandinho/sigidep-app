@@ -140,18 +140,20 @@ export class TransmissionReceptionService {
       }
       
     }else if(payload?.action === 'rejet'){
-       etated = EtatBonEnum.REJETCONTROLEREGULARITE
+      const date = new Date();
+       etated = EtatBonEnum.REJETCONTROLECONFORMITE
        const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
        this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
         objet: etated, 
-        motif: payload?.motif
       });
        this.repositorybon.save({
          ...(property as any), // existing fields
          etat: etated,
          updateBy:user,
-         rejet:true
+         rejet:true,
+         dateRejet: date,
+         motif: payload?.motif
        });
       
     }else if(payload?.action === 'controler'){
@@ -169,6 +171,7 @@ export class TransmissionReceptionService {
   
       });
     }else if(payload?.action === 'edition'){
+      const date = new Date();
       etated = EtatBonEnum.EDITIONTITRECREANCE
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
@@ -178,7 +181,9 @@ export class TransmissionReceptionService {
       this.repositorybon.save({
         ...(property as any), // existing fields
         etat: etated,
-        updateBy:user,
+        dateEditionTCC: date,
+        editionTCC: true,
+        updateBy: user,
       });
    }else if(payload?.action === 'reception-liquidation'){
     etated = EtatBonEnum.RECEPTIONLIQUIDATION;

@@ -154,9 +154,14 @@ export class CreateBonEngagementFormComponent
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatBonEngagement') {
         if(this.config.data?.item?.data !== undefined){
+          console.log(this.config.data?.item)
           this.validation = true;
           this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
+          if(this.config.data?.item?.action === 'controler'){
+            this.engagements = this.config.data?.item?.data?.bon_engagement;
+          }
         }else{
+          console.log('1')
           this.engagements = this.config.data?.item;
         }
         this.isCheck = true;
@@ -165,6 +170,13 @@ export class CreateBonEngagementFormComponent
         this.engagements = this.config.data?.item;
       }
     }
+
+    this.currentProcedure =
+    this.config?.data?.item?.numActeJuridique?.codeProcedure;
+  this._appService.setCurrentProcedure(this.currentProcedure);
+
+  console.log(this.currentProcedure)
+
 
     if (this.config.data?.item) {
       const {
@@ -216,11 +228,6 @@ export class CreateBonEngagementFormComponent
         | EngagementMissionModel
         | BonEngagementModel
         | any;
-      this.currentProcedure =
-        this.config?.data?.item?.numActeJuridique?.codeProcedure;
-      this._appService.setCurrentProcedure(this.currentProcedure);
-
-      console.log(this.currentProcedure)
 
       this.form.patchValue({
         engagementForm: {

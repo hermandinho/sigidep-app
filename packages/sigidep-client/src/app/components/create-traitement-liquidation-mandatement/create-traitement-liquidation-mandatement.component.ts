@@ -62,7 +62,7 @@ public currentStep$: Observable<StepLiquidation> =
           action: [undefined],
           matriculeGestionnaire: [undefined],
           nomGestionnaire: [undefined],
-          numeroBon: [undefined]
+          numeroMandat: [undefined],
 
         }),
       });
@@ -86,7 +86,7 @@ public currentStep$: Observable<StepLiquidation> =
           montantOrdonnancement,
           matriculeGestionnaire,
           nomGestionnaire,
-          numeroBon
+          numeroMandat
 
         } = this.config.data?.item?.bon_engagement?.traitements[0] as
           | TraitementBonEngagementModel
@@ -96,11 +96,6 @@ public currentStep$: Observable<StepLiquidation> =
           console.log('action ',this.config.data?.action)
           if(this.config.data?.action !== 'enregistrer'){
             this.piecesJointe = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe);
-            this.test = JSON.stringify([1,2,3,4,5,6])
-            console.log(this.test);
-            console.log(JSON.parse(this.test));
-            console.log('rubriqueLiquidation', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation))
-            console.log('pieceJointe', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe))
           }
         this.form.patchValue({
           traitementLiquidationForm: {
@@ -120,7 +115,7 @@ public currentStep$: Observable<StepLiquidation> =
             montantOrdonnancement,
             matriculeGestionnaire,
             nomGestionnaire,
-            numeroBon
+            numeroMandat
           },
 
         });

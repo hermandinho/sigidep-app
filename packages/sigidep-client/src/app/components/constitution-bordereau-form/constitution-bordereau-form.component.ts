@@ -53,6 +53,7 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   public selectedFilters!: string[];
   data: any[] = [];
   bons: any[] = [];
+  bons_tmp: any[] = [];
   bon_engagement: BonEngagementModel[]=[];
   exercices:any;
   color:string='while';
@@ -102,6 +103,21 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
     );
 
   }
+
+  searchSelect(event: any) {
+    this.bons = this.bons_tmp;
+    this.bons = this.bons_tmp.filter( (item) =>
+        (item.bon_engagement?.numero ? item.bon_engagement?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.numActeJuridique.numero ? item.bon_engagement?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.numActeJuridique.imputation ? item.bon_engagement?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
+        (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
+       (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
+    );
+  }
 test(){
   this.etatedOrd = this.route.snapshot.queryParamMap.get('param');
   if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT){
@@ -142,6 +158,7 @@ test(){
         .pipe(this.takeUntilDestroy, select(getDataSelector))
         .subscribe((data) => {
           this.bons = [...data];
+          this.bons_tmp = [...data];
           console.log("bons ", this.bons)
         });
 

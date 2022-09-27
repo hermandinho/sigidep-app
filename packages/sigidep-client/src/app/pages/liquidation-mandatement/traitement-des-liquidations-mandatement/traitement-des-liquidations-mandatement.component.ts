@@ -37,6 +37,7 @@ public tableColumnsTransmission: any[] = [];
 public tableColumnsBordereau: any[] = [];
 public bordereauxTransmissions: any[] = [];
 public dossiersBordereaux: any[] = [];
+public dossiersBordereaux_tmp: any[] = [];
 public globalColumnsTransmission!: string[];
 public globalColumnsBordereaux!: string[];
 menus!: MenuItem[];
@@ -68,6 +69,7 @@ constructor(
   this.tableColumnsBordereau = TableColumnsBordereau;
   this.globalColumnsTransmission = this.tableColumnsTransmission.map((item) => item.field);
   this.globalColumnsBordereaux = this.tableColumnsBordereau.map((item) => item.field);
+  console.log(this.globalColumnsBordereaux)
   this._initListeners();
 }
 
@@ -89,6 +91,21 @@ ngOnInit(): void {
     })
   );
 
+}
+
+searchSelect(event: any) {
+  this.dossiersBordereaux = this.dossiersBordereaux_tmp;
+  this.dossiersBordereaux = this.dossiersBordereaux_tmp.filter( (item) =>
+      (item.bon_engagement?.numero ? item.bon_engagement?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.bon_engagement?.numActeJuridique.numero ? item.bon_engagement?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.bon_engagement?.numActeJuridique.imputation ? item.bon_engagement?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
+      (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
+      (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
+     (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
+  );
 }
 
 ngAfterContentChecked(): void {
@@ -139,13 +156,6 @@ ngAfterContentChecked(): void {
           icon: 'pi pi-print',
           command: () => {
             this.handleEditerMandatPaiement(this.currentItem);
-          },
-        },
-        {
-          label: this.translate.instant('labels.ControleRegularite'),
-          icon: 'pi pi-print',
-          command: () => {
-            this.handleControleRegularite(this.currentItem);
           },
         },
       ],
@@ -339,19 +349,15 @@ handleEditerMandatPaiement(item: any) {
   });
 }
 
-handleControleRegularite(item: any) {
+/* handleControleRegularite(item: any) {
   const etat = EtatBonEnum.ORDONNANCEMENT;
   this._appService.showConfirmation({
     message: 'dialogs.messages.ControleRegulariteTraitementLiquidationMandatement',
     accept: () => {
-     /*  this._dialogService.launchtraitementLiquidationMandatementCreateDialog(
-        item,
-        'controle regularite'
-      ); */
       this.goToWithParams('traitement-controle', etat)
     },
   });
-}
+} */
 
 handleFilter = (event: any) => {
   if (event?.value) {
@@ -379,6 +385,7 @@ private _initListeners() {
   .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
   .subscribe((data) => {
     this.dossiersBordereaux = [...data];
+    this.dossiersBordereaux_tmp = [...data];
     console.log('dossiersBordereaux ', this.dossiersBordereaux)
 
   });
