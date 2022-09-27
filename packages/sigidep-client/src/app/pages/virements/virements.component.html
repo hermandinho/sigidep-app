@@ -67,7 +67,7 @@
                         (click)="reserver(item)" class="p-button-rounded p-button-secondary" icon="pi pi-wallet" pButton
                         pRipple [disabled]="activeForReservation(item)"></button>
                     <button *ngIf="isReservation(item.etatVirement) || isVaidate(item.etatVirement)"
-                        (click)="print(item)" class="p-button-rounded p-button-secondary" icon="pi pi-wallet" pButton
+                        (click)="print(item)" class="p-button-rounded p-button-secondary" icon="pi pi-print" pButton
                         pRipple>
                     </button>
                     <button *ngIf="isReservation(item.etatVirement)" (click)="annuler(item)"
