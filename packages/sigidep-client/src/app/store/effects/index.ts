@@ -40,6 +40,7 @@ import { TransmissionsReceptionsEffects } from './transmissions-receptions.effec
 import { TransmissionsReceptionsDetailsEffects } from './detail-transmissions-receptions.effects';
 import { ModeleVirementEffects } from './modele-virement.effects';
 import { VirementEffects } from './virement.effects';
+import { TransmissionReceptionBonsEffects } from './transmission-reception-bons.effects';
 
 export const Effects = [
   AuthEffects,
@@ -85,4 +86,5 @@ export const Effects = [
   TransmissionsReceptionsDetailsEffects,
   ModeleVirementEffects,
   VirementEffects,
+  TransmissionReceptionBonsEffects
 ];

@@ -164,6 +164,7 @@ ngAfterContentChecked(): void {
 }
 
 handleEnregistrer(item: any) {
+  console.log('item', item)
   this._appService.showConfirmation({
     message: 'dialogs.messages.EnregistrerTraitementLiquidationMandatement',
     accept: () => {

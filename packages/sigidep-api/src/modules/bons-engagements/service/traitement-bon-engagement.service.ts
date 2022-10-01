@@ -48,10 +48,12 @@ export class TraitementBonEngagementService {
       ...(payload as any),
       typeTraitement: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
       createdBy: user,
+      dateOrdonnancement:'2000-01-01',
+      ordonnancement:false
     });
 
     const property = await this.repositoryBon.findOne({
-      id: payload.bon.id,
+      id: payload?.bon.id,
     });
 
     const bon = this.repositoryBon.save({
@@ -66,17 +68,26 @@ export class TraitementBonEngagementService {
     payload: CreateTraitementBonEngagementDTO,
     user: UserEntity,
   ): Promise<CreateTraitementBonEngagementDTO> {
-    console.log(payload)
-    const check = await this.repository.findOne({
-      id: payload.id,
-    });
-
-    if (!check) {
-      throw new NotFoundException();
+    
+    if(payload?.data?.action === 'rejet-controle-regulariter'){
+      const check = await this.repository.findOne({
+        id: payload?.data?.id,
+      });
+      if (!check) {
+        throw new NotFoundException();
+      }
+    } else {
+      const check = await this.repository.findOne({
+        id: payload?.id,
+      });
+      if (!check) {
+        throw new NotFoundException();
+      }
     }
-    if(payload.action === 'modifier'){
+   
+    if(payload?.action === 'modifier'){
       const property = await this.repositoryBon.findOne({
-        id: payload.bon.id,
+        id: payload?.bon.id,
       });
   
       const bon = this.repositoryBon.save({
@@ -89,9 +100,9 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.LIQUIDATIONMODIFIEE,
         updateBy: user,
       });
-    }else if(payload.action === 'valider'){
+    }else if(payload?.action === 'valider'){
       const property = await this.repositoryBon.findOne({
-        id: payload.bon.id,
+        id: payload?.bon.id,
       });
   
       const bon = this.repositoryBon.save({
@@ -104,9 +115,9 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.VALIDATIONLIQUIDATION,
         updateBy: user,
       });
-    }else if(payload.action === 'mandater'){
+    }else if(payload?.action === 'mandater'){
       const property = await this.repositoryBon.findOne({
-        id: payload.bon.id,
+        id: payload?.bon.id,
       });
   
       const bon = this.repositoryBon.save({
@@ -119,9 +130,9 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.ORDONNANCEMENT,
         updateBy: user,
       });
-    }else if(payload.action === 'editer_mandat_paiement'){
+    }else if(payload?.action === 'editer_mandat_paiement'){
       const property = await this.repositoryBon.findOne({
-        id: payload.bon.id,
+        id: payload?.bon.id,
       });
   
       const bon = this.repositoryBon.save({
@@ -134,9 +145,9 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.MANDATDEPAIEMENT,
         updateBy: user,
       });
-    }else if(payload.action === 'editer_rapport'){
+    }else if(payload?.action === 'editer_rapport'){
       const property = await this.repositoryBon.findOne({
-        id: payload.bon.id,
+        id: payload?.bon.id,
       });
   
       const bon = this.repositoryBon.save({
@@ -149,10 +160,70 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.RAPPORTDELIQUIDATION,
         updateBy: user,
       });
+    }else if(payload?.action === 'controle-regulariter'){
+      const property = await this.repositoryBon.findOne({
+        id: payload?.bon.id,
+      });
+  
+      const bon = this.repositoryBon.save({
+        ...property,
+        etat: EtatBonEnum.CONTROLEREGULARITE,
+      })
+
+      return this.repository.save({
+        ...(payload as any),
+        typeTraitement: EtatBonEnum.CONTROLEREGULARITE,
+        updateBy: user,
+      });
+    }else if(payload?.action === 'reception-liquidation'){
+      const property = await this.repositoryBon.findOne({
+        id: payload?.bon.id,
+      });
+  
+      const bon = this.repositoryBon.save({
+        ...property,
+        etat: EtatBonEnum.RECEPTIONLIQUIDATION,
+      })
+
+      return this.repository.save({
+        ...(payload as any),
+        typeTraitement: EtatBonEnum.RECEPTIONLIQUIDATION,
+        updateBy: user,
+      });
+    }/* else if(payload?.action === 'reception-borbereaux-regularite'){
+      console.log('reception-borbereaux-regularite', payload)
+      const property = await this.repositoryBon.findOne({
+        id: payload?.bon.id,
+      });
+  
+      const bon = this.repositoryBon.save({
+        ...property,
+        etat: EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
+      })
+
+      return this.repository.save({
+        ...(payload as any),
+        typeTraitement: EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
+        updateBy: user,
+      });
+    } */
+    else if(payload?.data.action === 'rejet-controle-regulariter'){
+      console.log(payload)
+      const property = await this.repositoryBon.findOne({
+        id: payload?.data?.bon.id,
+      });
+  
+      const bon = this.repositoryBon.save({
+        ...property,
+        etat: EtatBonEnum.REJETCONTROLEREGULARITE,
+      })
+
+      return this.repository.save({
+        ...(payload?.data as any),
+        typeTraitement: EtatBonEnum.REJETCONTROLEREGULARITE,
+        updateBy: user,
+        motifRejetRegulariter: payload.motifRejetRegulariter
+      });
     }
-
-    
-
-    
   }
 }

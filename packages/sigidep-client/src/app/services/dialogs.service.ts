@@ -120,6 +120,8 @@ export class DialogsService {
   private traitementLiquidationMandatementCreateComponent: any;
   private editerRapportTraitementLiquidationMandatementCreateComponent: any;
   private editerPrintMandatPaiementComponent: any;
+  private decisionControleRegulariteComponent: any;
+  private printFileRejetControleRegularite: any;
 
 
 
@@ -1420,4 +1422,66 @@ export class DialogsService {
       },
     });
   }
+
+  public async launchDecisionControleRegularite(
+    item: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.decisionControleRegulariteComponent) {
+      const { DecisionControleRegulariteComponent } = await import(
+        '@components/decision-controle-regularite/decision-controle-regularite.component'
+      );
+      this.decisionControleRegulariteComponent =
+      DecisionControleRegulariteComponent;
+    }
+
+    return this._dialogService.open(
+      this.decisionControleRegulariteComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'decisionControleRegulariteComponent'
+            : 'decisionControleRegulariteComponent')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
+
+  public async launchPrintFileRejetControleRegulariteDialog(
+    item: BonEngagementModel,
+    type?: Step
+  ): Promise<any> {
+    if (!this.printFileRejetControleRegularite) {
+      const { PrintFileRejetControleRegulariteComponent } = await import(
+        '@components/print-file-rejet-controle-regularite/print-file-rejet-controle-regularite.component'
+      );
+      this.printFileRejetControleRegularite = PrintFileRejetControleRegulariteComponent;
+    }
+
+    return this._dialogService.open(this.printFileRejetControleRegularite, {
+      header: this._translateService.instant(
+        'dialogs.headers.PrintFileRejetControleRegularite',
+        { numero: item?.numero }
+      ),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
+
 }
+
+

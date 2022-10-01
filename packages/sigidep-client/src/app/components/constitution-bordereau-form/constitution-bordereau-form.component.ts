@@ -9,12 +9,12 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TableColumnsBordereau } from './consts';
 import { BonEngagementModel } from '@models/bon-engagement.model';
-import { GetTransmissionsReceptionsBons } from '@actions/bons-engagements.actions';
-import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
+import { getDataSelector, getLoadingSelector } from '@reducers/transmission-reception-bons.reducer';
 import { GetExercises } from '@actions/exercises.actions';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 import { EtatBonEnum } from '../../utils/etat-bon-engagement.enum';
 import { ActivatedRoute } from '@angular/router';
+import { GetTransmissionsReceptionsBons } from '../../store/actions/transmission-reception-bons.actions';
 
 
 
@@ -30,7 +30,6 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
   @Input() isCheck!:boolean;
   @Input() transmission!:string;
   @Input() etat!:string;
-  @Input() etatedOrd!:any;
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -74,19 +73,9 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
 
     this.constitutionForm = this.startingForm;
     this.subformInitialized.emit(this.constitutionForm);
-
-    if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT){
-      console.log('1')
-      this.etat === EtatBonEnum.ORDONNANCEMENT
-      this._store.dispatch(
-        GetTransmissionsReceptionsBons({etats: [EtatBonEnum.ORDONNANCEMENT]})
-      );
-    }else {
-      console.log('11')
       this._store.dispatch(
         GetTransmissionsReceptionsBons({etats: [this.etat]})
       );
-    }
 
     this._store.dispatch(
       GetExercises({})
@@ -118,13 +107,6 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
         (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
     );
   }
-test(){
-  this.etatedOrd = this.route.snapshot.queryParamMap.get('param');
-  if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT){
-    console.log('1')
-    this.etat === EtatBonEnum.ORDONNANCEMENT
-  }
-}
   handleFilter = (event: any) => {
     if(event?.value){
         this._store.dispatch(

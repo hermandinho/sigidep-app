@@ -49,11 +49,6 @@ export class CreateTransmissionReceptionFormComponent extends BaseComponent impl
    }
 
   ngOnInit(): void {
-    console.log(' this.route ',this.route.snapshot.queryParamMap.get('param'));
-    this.etatedOrd = this.route.snapshot.queryParamMap.get('param')
-      if(this.etatedOrd === EtatBonEnum.ORDONNANCEMENT) {
-        this.transmission = 'transmissionRegularite'
-      }
     this.form = this._fb.group({
       constitutionForm: this._fb.group({
         bon_engagement: [undefined],

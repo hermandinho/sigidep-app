@@ -54,7 +54,7 @@ export class RubriqueLiquiderFormComponent extends BaseComponent implements OnIn
   ngOnInit() {
 
     //this.getData();
-    console.log('item ',this.data.item)
+    console.log('item ',this.data)
     if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure === '1121'){
       this._store.dispatch(
         GetEngagementJuridiquesByCategory({

@@ -59,4 +59,10 @@ export class CreateTraitementBonEngagementDTO {
 
   @ApiProperty({ required: false })
   action!: string;
+
+  @ApiProperty({ required: false })
+  data!: any;
+
+  @ApiProperty({ required: false })
+  motifRejetRegulariter!: string;
 }

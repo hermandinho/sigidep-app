@@ -21,13 +21,13 @@ import { PieceJointeModel } from '@models/piece-jointe.model';
 })
 export class CreateTraitementLiquidationMandatementComponent extends BaseComponent implements OnInit {
   public currentStepBs: BehaviorSubject<StepLiquidation> =
-  new BehaviorSubject<StepLiquidation>('rubrique');
-public currentStep$: Observable<StepLiquidation> =
-  this.currentStepBs.asObservable();
+    new BehaviorSubject<StepLiquidation>('rubrique');
+  public currentStep$: Observable<StepLiquidation> =
+    this.currentStepBs.asObservable();
   public form!: FormGroup;
   public data: any;
   public busy!: boolean;
-  public test: string='';
+  public test: string = '';
   piecesJointe!: PieceJointeModel[]
 
   constructor(
@@ -44,32 +44,62 @@ public currentStep$: Observable<StepLiquidation> =
   }
 
   ngOnInit(): void {
-      this.form = this._fb.group({
-        traitementLiquidationForm: this._fb.group({
-          id: [undefined],
-          dateLiquidation: [undefined],
-          numOrdreLiquidation: [undefined],
-          rubriqueLiquidation: [undefined],
-          montantLiquidation: [undefined],
-          liquidation: [undefined],
-          dateOrdonnancement: [undefined],
-          ordonnancement: [undefined],
-          numOrdreOrdonnancement: [undefined],
-          rubriqueOrdonnancement: [undefined],
-          montantOrdonnancement: [undefined],
-          bon: [undefined],
-          piecesJointe: [undefined],
-          action: [undefined],
-          matriculeGestionnaire: [undefined],
-          nomGestionnaire: [undefined],
-          numeroMandat: [undefined],
+    this.data = this.config.data;
+      console.log('item ', this.config.data?.item)
+      console.log('action ', this.config.data?.action)
+      if (this.config.data?.action !== 'enregistrer') {
+        this.piecesJointe = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe);
+      }
+    this.form = this._fb.group({
+      traitementLiquidationForm: this._fb.group({
+        id: [undefined],
+        dateLiquidation: [undefined],
+        numOrdreLiquidation: [undefined],
+        rubriqueLiquidation: [undefined],
+        montantLiquidation: [undefined],
+        liquidation: [undefined],
+        dateOrdonnancement: [undefined],
+        ordonnancement: [undefined],
+        numOrdreOrdonnancement: [undefined],
+        rubriqueOrdonnancement: [undefined],
+        montantOrdonnancement: [undefined],
+        bon: [undefined],
+        piecesJointe: [undefined],
+        action: [undefined],
+        matriculeGestionnaire: [undefined],
+        nomGestionnaire: [undefined],
+        numeroMandat: [undefined],
 
-        }),
-      });
+      }),
+    });
 
 
-      if (this.config.data?.item?.bon_engagement?.traitements[0]) {
-        const {
+    if (this.config.data?.item?.bon_engagement?.traitements[0]) {
+      const {
+        id,
+        dateLiquidation,
+        numOrdreLiquidation,
+        rubriqueLiquidation,
+        montantLiquidation,
+        liquidation,
+        piecesJointe,
+        bon,
+        action,
+        dateOrdonnancement,
+        ordonnancement,
+        numOrdreOrdonnancement,
+        rubriqueOrdonnancement,
+        montantOrdonnancement,
+        matriculeGestionnaire,
+        nomGestionnaire,
+        numeroMandat
+
+      } = this.config.data?.item?.bon_engagement?.traitements[0] as
+        | TraitementBonEngagementModel
+        | any
+
+      this.form.patchValue({
+        traitementLiquidationForm: {
           id,
           dateLiquidation,
           numOrdreLiquidation,
@@ -87,39 +117,10 @@ public currentStep$: Observable<StepLiquidation> =
           matriculeGestionnaire,
           nomGestionnaire,
           numeroMandat
+        },
 
-        } = this.config.data?.item?.bon_engagement?.traitements[0] as
-          | TraitementBonEngagementModel
-          | any
-          this.data = this.config.data;
-          console.log('item ',this.config.data?.item)
-          console.log('action ',this.config.data?.action)
-          if(this.config.data?.action !== 'enregistrer'){
-            this.piecesJointe = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe);
-          }
-        this.form.patchValue({
-          traitementLiquidationForm: {
-            id,
-            dateLiquidation,
-            numOrdreLiquidation,
-            rubriqueLiquidation,
-            montantLiquidation,
-            liquidation,
-            piecesJointe,
-            bon,
-            action,
-            dateOrdonnancement,
-            ordonnancement,
-            numOrdreOrdonnancement,
-            rubriqueOrdonnancement,
-            montantOrdonnancement,
-            matriculeGestionnaire,
-            nomGestionnaire,
-            numeroMandat
-          },
-
-        });
-      }
+      });
+    }
   }
 
   get traitementLiquidationFormGroup(): FormGroup {
@@ -132,9 +133,9 @@ public currentStep$: Observable<StepLiquidation> =
     switch (currentStep) {
       case 'rubrique':
         if (direction === 'forward') {
-          if(this.data?.action === 'mandater') {
+          if (this.data?.action === 'mandater') {
             this.currentStepBs.next('mandater');
-          }else {
+          } else {
             this.currentStepBs.next('piece');
           }
 
@@ -146,10 +147,10 @@ public currentStep$: Observable<StepLiquidation> =
         }
         break;
       case 'mandater':
-          if (direction === 'back') {
-            this.currentStepBs.next('rubrique');
-          }
-          break;
+        if (direction === 'back') {
+          this.currentStepBs.next('rubrique');
+        }
+        break;
     }
   }
 
@@ -162,87 +163,87 @@ public currentStep$: Observable<StepLiquidation> =
     this.busy = true;
     const editedEngagement = {
       ...this.form.getRawValue()?.traitementLiquidationForm,
-   } as TraitementBonEngagementModel;
+    } as TraitementBonEngagementModel;
 
-   console.log('editedEngagement ', editedEngagement)
+    console.log('editedEngagement ', editedEngagement)
 
-   if (this.data?.action === 'enregistrer') {
-    const method: Observable<any> = this._apisService.post<TraitementBonEngagementModel>(
-      '/traitement-bon-engagements',
-      editedEngagement
-    );
-    method.subscribe(
-      (res) => {
-        this.busy = false;
-        this.ref.close(res);
-        this._store.dispatch(
-          GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONLIQUIDATION]})
-        );
-        this._appService.showToast({
-          summary: 'messages.success',
-          detail: 'messages.engagements.createSuccess',
-          severity: 'success',
-          life: 3000,
-          closable: true,
-        });
-      },
-      ({ error }) => {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.engagements.notfound';
-        } else {
-          err = 'errors.unknown';
+    if (this.data?.action === 'enregistrer') {
+      const method: Observable<any> = this._apisService.post<TraitementBonEngagementModel>(
+        '/traitement-bon-engagements',
+        editedEngagement
+      );
+      method.subscribe(
+        (res) => {
+          this.busy = false;
+          this.ref.close(res);
+          this._store.dispatch(
+            GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONLIQUIDATION] })
+          );
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail: 'messages.engagements.createSuccess',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.engagements.notfound';
+          } else {
+            err = 'errors.unknown';
+          }
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
         }
-        this.busy = false;
-        this._appService.showToast({
-          detail: err,
-          summary: 'errors.error',
-          severity: 'error',
-          life: 5000,
-          closable: true,
-        });
-      }
-    );
-  }
+      );
+    }
 
-  if (this.data?.action !== 'enregistrer') {
-    const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
-      '/traitement-bon-engagements',
-      editedEngagement
-    );
-    method.subscribe(
-      (res) => {
-        this.busy = false;
-        this.ref.close(res);
-        this._store.dispatch(
-          GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONLIQUIDATION]})
-        );
-        this._appService.showToast({
-          summary: 'messages.success',
-          detail: 'messages.engagements.createSuccess',
-          severity: 'success',
-          life: 3000,
-          closable: true,
-        });
-      },
-      ({ error }) => {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.engagements.notfound';
-        } else {
-          err = 'errors.unknown';
+    if (this.data?.action !== 'enregistrer') {
+      const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
+        '/traitement-bon-engagements',
+        editedEngagement
+      );
+      method.subscribe(
+        (res) => {
+          this.busy = false;
+          this.ref.close(res);
+          this._store.dispatch(
+            GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONLIQUIDATION] })
+          );
+          this._appService.showToast({
+            summary: 'messages.success',
+            detail: 'messages.engagements.createSuccess',
+            severity: 'success',
+            life: 3000,
+            closable: true,
+          });
+        },
+        ({ error }) => {
+          let err = '';
+          if (error?.statusCode === 409) {
+            err = 'errors.engagements.notfound';
+          } else {
+            err = 'errors.unknown';
+          }
+          this.busy = false;
+          this._appService.showToast({
+            detail: err,
+            summary: 'errors.error',
+            severity: 'error',
+            life: 5000,
+            closable: true,
+          });
         }
-        this.busy = false;
-        this._appService.showToast({
-          detail: err,
-          summary: 'errors.error',
-          severity: 'error',
-          life: 5000,
-          closable: true,
-        });
-      }
-    );
-  }
+      );
+    }
   }
 
 }

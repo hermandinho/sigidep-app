@@ -63,6 +63,8 @@ import { CreateTraitementLiquidationMandatementComponent } from '../components/c
 import { RubriqueLiquiderFormComponent } from '../components/rubrique-liquider-form/rubrique-liquider-form.component';
 import { PieceJointeFormComponent } from '../components/piece-jointe-form/piece-jointe-form.component';
 import { MandaterFormComponent } from '../components/mandater-form/mandater-form.component';
+import { DecisionControleRegulariteComponent } from '../components/decision-controle-regularite/decision-controle-regularite.component';
+import { PrintFileRejetControleRegulariteComponent } from '../components/print-file-rejet-controle-regularite/print-file-rejet-controle-regularite.component';
 
 const declarations = [
   BaseComponent,
@@ -94,7 +96,9 @@ const declarations = [
   CreateTraitementLiquidationMandatementComponent,
   RubriqueLiquiderFormComponent,
   PieceJointeFormComponent,
-  MandaterFormComponent
+  MandaterFormComponent,
+  DecisionControleRegulariteComponent,
+  PrintFileRejetControleRegulariteComponent
 ];
 
 const shared = [
