@@ -49,7 +49,10 @@ import { TraitementDesLiquidationsMandatementComponent } from '../pages/liquidat
 import { TransmissionBordereauxComponent } from '../pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.component';
 import { ReceptionBordereauxMandatementComponent } from '../pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.component';
 import { CreateTransmissionReceptionFormComponent } from '../components/create-transmission-reception-form/create-transmission-reception-form.component';
-
+import { ReceptionBordereauxComponent as ReceptionBordereauxRegulariteComponent} from '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.component';
+import { ControleRegulariteComponent } from '../pages/controle_de_regularites/controle-regularite/controle-regularite.component';
+import { TransmissionBordereauxComponent as TransmissionBordereauxRegulariteComponent } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.component';
+import { TransmissionAACTComponent } from '../pages/controle_de_regularites/transmission-a-act/transmission-a-act.component';
 const routes: Routes = [
   {
     path: '',
@@ -561,7 +564,43 @@ const routes: Routes = [
       {
         path: 'traitement-controle',
         component: CreateTransmissionReceptionFormComponent,
-      }
+      },
+      {
+        path: 'transmission-bordereaux-regularite',
+        canActivate: [AuthGuard],
+        component: TransmissionBordereauxRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.module'
+          ).then((m) => m.TransmissionBordereauxModule),
+      },
+      {
+        path: 'controle-regularite',
+        canActivate: [AuthGuard],
+        component: ControleRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/controle_de_regularites/controle-regularite/controle-regularite.module'
+          ).then((m) => m.ControleRegulariteModule),
+      },
+      {
+        path: 'reception-bordereaux-regularite',
+        canActivate: [AuthGuard],
+        component: ReceptionBordereauxRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.module'
+          ).then((m) => m.ReceptionBordereauxModule),
+      },
+      {
+        path: 'transmission-ACT',
+        canActivate: [AuthGuard],
+        component: TransmissionAACTComponent,
+        data: {},
+      },
       /*{
         path: '**',
         component: NotFoundComponent,

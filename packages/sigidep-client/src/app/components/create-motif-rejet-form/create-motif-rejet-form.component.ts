@@ -10,6 +10,8 @@ import { AppService } from '@services/app.service';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { TraitementBonEngagementModel } from '../../models/traitement-bon-engagement.model';
+import { DialogsService } from '../../services/dialogs.service';
 
 @Component({
   selector: 'app-create-motif-rejet-form',
@@ -19,6 +21,7 @@ import { Observable } from 'rxjs';
 export class CreateMotifRejetFormComponent extends BaseComponent implements OnInit {
 
   public form: FormGroup;
+  public formControle!: FormGroup;
   public busy = false;
   data!: DataModel;
   constructor(
@@ -27,7 +30,8 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
     private _fb: FormBuilder,
     private _appService: AppService,
     private _apisService: ApisService,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    private readonly _dialogService: DialogsService,
   ) {
     super();
     this.form = this._fb.group({
@@ -36,6 +40,7 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
   }
 
   ngOnInit(): void {
+    console.log(this.config.data?.item)
     if (this.config.data?.item) {
       this.data = this.config.data?.item;
       console.log(this.data)
@@ -48,7 +53,9 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
 
   submit() {
     this.busy = true;
-    if (this.form.value.motif) {
+    if( this.config.data?.item.action ==='rejet-controle-regulariter') {
+      this.submitRejetForm()
+    }else if (this.form.value.motif) {
       const data1: DataModel = {
         data: this.data.data,
         action: this.data.action,
@@ -95,6 +102,52 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
         }
       );
     }
+  }
+
+  submitRejetForm() {
+        const editedEngagement = {
+          data: this.config.data?.item,
+          motifRejetRegulariter: this.form.value.motif
+        }
+        console.log('editedEngagement ', editedEngagement)
+
+          const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
+            '/traitement-bon-engagements',
+            editedEngagement
+          );
+          method.subscribe(
+            (res) => {
+              console.log('res = ', res)
+              this.busy = false;
+              this.ref.close(res);
+              this._dialogService.launchPrintFileRejetControleRegulariteDialog(
+                res,
+              );
+              this._appService.showToast({
+                summary: 'messages.success',
+                detail: 'messages.engagements.createSuccess',
+                severity: 'success',
+                life: 3000,
+                closable: true,
+              });
+            },
+            ({ error }) => {
+              let err = '';
+              if (error?.statusCode === 409) {
+                err = 'errors.engagements.notfound';
+              } else {
+                err = 'errors.unknown';
+              }
+              this.busy = false;
+              this._appService.showToast({
+                detail: err,
+                summary: 'errors.error',
+                severity: 'error',
+                life: 5000,
+                closable: true,
+              });
+            }
+          );
   }
 
 }

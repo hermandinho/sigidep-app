@@ -52,6 +52,7 @@ export const MenuPermissions = {
   transmissionLiquidation: [...simpleCrudPermissions('transmissionLiquidation')],
   virements: [...simpleCrudPermissions('virements')],
   liquidationMandatement: [...simpleCrudPermissions('liquidationMandatement')],
+  controleRegularite: [...simpleCrudPermissions('controleRegularite')],
 
 };
 
@@ -453,6 +454,41 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               label: translate.instant('sidebar.transmissionBordereauxMandatement'),
               routerLinkActiveOptions: { exact: true },
             },
+          ]
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.controleRegularite'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.controleRegularite],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux-regularite',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionBordereauxRegularite'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'controle-regularite',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.controleRegularite'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-ACT',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmission-ACT'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-bordereaux-regularite',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionBordereauxRegularite'),
+              routerLinkActiveOptions: { exact: true },
+            },
+
           ]
         }
       ],

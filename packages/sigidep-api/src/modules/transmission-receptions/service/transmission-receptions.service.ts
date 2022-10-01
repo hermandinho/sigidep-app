@@ -96,6 +96,16 @@ export class TransmissionReceptionService {
             ...(property as any), // existing fields
             etat: EtatBonEnum.TRANSMISSIONLIQUIDATION,
           });
+        }else if(payload?.transmission === EtatBonEnum.TRANSMISSIONCONTROLEDEREGULARITE){
+          this.repositorybon.save({
+            ...(property as any), // existing fields
+            etat: EtatBonEnum.TRANSMISSIONCONTROLEDEREGULARITE,
+          });
+        }else if(payload?.transmission === EtatBonEnum.TRANSMISSIONACT){
+          this.repositorybon.save({
+            ...(property as any), // existing fields
+            etat: EtatBonEnum.TRANSMISSIONACT,
+          });
         }
        
         let detailtrans = {
@@ -110,7 +120,7 @@ export class TransmissionReceptionService {
   }
 
   public async update(
-    payload: any,
+    payload: TransmissionReceptionDTO,
     user: UserEntity,
   ): Promise<TransmissionReceptionEntity> {
     const id = payload.data[0]?.transmission_reception?.id
@@ -124,6 +134,7 @@ export class TransmissionReceptionService {
    
     var etated = '';
     if(payload?.action === 'reception'){
+      console.log('reception', payload)
        etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE;
        this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
@@ -140,6 +151,7 @@ export class TransmissionReceptionService {
       }
       
     }else if(payload?.action === 'rejet'){
+      console.log('rejet', payload)
       const date = new Date();
        etated = EtatBonEnum.REJETCONTROLECONFORMITE
        const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
@@ -157,6 +169,7 @@ export class TransmissionReceptionService {
        });
       
     }else if(payload?.action === 'controler'){
+      console.log('controler', payload)
        etated = EtatBonEnum.CONTROLECONFORMITE
        const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
        console.log(property)
@@ -173,6 +186,7 @@ export class TransmissionReceptionService {
     }else if(payload?.action === 'edition'){
       const date = new Date();
       etated = EtatBonEnum.EDITIONTITRECREANCE
+      console.log('edition',payload)
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
        ...payload.data[0]?.transmission_reception, // existing fields
@@ -185,22 +199,19 @@ export class TransmissionReceptionService {
         editionTCC: true,
         updateBy: user,
       });
-   }else if(payload?.action === 'reception-liquidation'){
-    etated = EtatBonEnum.RECEPTIONLIQUIDATION;
+   }else if(payload?.action === 'reception-borbereaux-regularite'){
+    etated = EtatBonEnum.RECEPTIONCONTROLEREGULARITE
+    console.log('reception-borbereaux-regularite',payload)
+    const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
     this.repository.save({
      ...payload.data[0]?.transmission_reception, // existing fields
-     objet: EtatBonEnum.RECEPTIONLIQUIDATION,
+     objet: etated, 
    });
-    for(let i=0; i<payload?.data?.length; i++){
-     const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
-     //const property:CreateBonEngagementDTO = payload?.data[i]?.bon_engagement;
-     this.repositorybon.save({
-       ...(property as any), // existing fields
-       etat: etated,
-       updateBy:user
-     });
-   }
-   
+    this.repositorybon.save({
+      ...(property as any), // existing fields
+      etat: etated,
+      updateBy: user,
+    });
  }
    
     return check;
@@ -223,6 +234,7 @@ export class TransmissionReceptionService {
   }
 
   public async getBonEnAttente(filter?:EngagementFilter){
+    console.log('filter ', filter)
     var bons= await this.repositorybon
     .createQueryBuilder('bon')
     .leftJoinAndSelect('bon.numActeJuridique', 'eng')
@@ -233,20 +245,27 @@ export class TransmissionReceptionService {
       exercices: filter?.exercices,
     })
     .getMany();
+    console.log("bons ",bons)
 
     var details = await this.repositorydetail
     .createQueryBuilder('detail')
     .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
     .leftJoinAndSelect('bon_engagement.numActeJuridique', 'eng')
+    .where(filter?.etats ? 'bon_engagement.etat IN(:...codes)' : 'true', {
+      codes: filter?.etats,
+    })
+    .andWhere(filter?.exercices ? 'eng.numero like :exercices' : 'true', {
+      exercices: filter?.exercices,
+    })
     .getMany();
-    //console.log("details ",details)
+    console.log("details ",details)
     
     var result = bons.filter(function(o1){
       return !details.some(function(o2){
           return o1.id === o2.bon_engagement.id;
       });
     });
-    //console.log("result ",result)
-    return result;
+    console.log("result ",result)
+    return bons;
   }
 }

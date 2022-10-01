@@ -17,6 +17,17 @@ export class TransmissionReceptionDTO {
   @IsOptional()
   bon_engagement?: CreateBonEngagementDTO[];
 
+  @ApiProperty({ example: '', required: false })
   transmission?:string;
+
+  @ApiProperty({ example: '', required: false })
+  data!: any[];
+
+  @ApiProperty({ example: '', required: false })
+  action!: string;
+
+  @ApiProperty({ example: '', required: false })
+  motif!: string;
+
 
 }

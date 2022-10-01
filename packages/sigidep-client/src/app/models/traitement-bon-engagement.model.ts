@@ -30,6 +30,8 @@ export class TraitementBonEngagementModel extends BaseModel {
   numeroMandat!: string;
   matriculeGestionnaire!: string;
   nomGestionnaire!: string
+  DecisionControleRegularite!: string
+  motifRejetRegulariter!: string
   constructor(param?: Partial<TraitementBonEngagementModel>) {
     super();
     if (param) {

@@ -25,6 +25,10 @@ export class TraitementBonEngagementEntity extends BaseEntity {
 
   @Column('varchar', { nullable: true, name: 'observation' }) 
   observation!: string;
+  @Column('varchar', { nullable: true, name: 'motifRejetRegulariter' }) 
+  motifRejetRegulariter!: string;
+  @Column('varchar', { nullable: true, name: 'DecisionControleRegularite' }) 
+  DecisionControleRegularite!: string;
   @Column({ nullable: true, type: 'float', name: 'qteUnitePhysiqueReal' })
   qteUnitePhysiqueReal!: number;
   @Column({ nullable: true, type: 'float', name: 'montantTotalUnitPhysReal' })

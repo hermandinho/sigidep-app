@@ -65,7 +65,11 @@
     "liquidationMandatement": "Liquidation & Mandatement",
     "receptionBordereauxMandatement": "Réception Bordereaux",
     "traitementLiquidationMandatement": "Traitements des Liquidation /Mandatements",
-    "transmissionBordereauxMandatement": "Transmission Bordereaux"
+    "transmissionBordereauxMandatement": "Transmission Bordereaux",
+    "receptionBordereauxRegularite": "Reception boerdereaux ",
+    "controleRegularite": "Controle regularité",
+    "transmissionBordereauxRegularite": "Transmission Bordereaux",
+    "transmission-ACT": "Transmission à l'ACT"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -1021,7 +1025,9 @@
       "deleteModelVirement": "Etes-vous sûr de supprimer ce modèle de virement?",
       "deleteVirement": "Etes-vous sûr de supprimer ce virement?",
       "alertRejet": "Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!",
-      "alertControler": "Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !"
+      "alertControler": "Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !",
+      "controleBonRegularite": "Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !",
+      "RejetcontroleBonRegularite": "Etes-vous sûr de vouloir Rejeter le Bon"
     }
   },
   "exerciseStatuses": {

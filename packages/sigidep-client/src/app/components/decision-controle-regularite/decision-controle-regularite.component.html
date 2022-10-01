@@ -1,0 +1,105 @@
+<div class="form" [formGroup]="form">
+  <div class="p-fluid p-grid">
+    <div class="p-field p-col-12 p-md-6">
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Rubriques</th>
+          <th>Montant (FCFA)</th>
+        </tr>
+        <tr *ngIf="rubriques[0] && montants[0]">
+          <td><span>1</span></td>
+          <td><span>{{ rubriques[0] }}</span></td>
+          <td>
+            <span>{{ montants[0] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[1] && montants[1]">
+          <td><span>2</span></td>
+          <td><span>{{ rubriques[1] }}</span></td>
+          <td>
+            <span>{{ montants[1] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[2] && montants[2]">
+          <td><span>3</span></td>
+          <td><span>{{ rubriques[2] }}</span></td>
+          <td>
+            <span>{{ montants[2] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[3] && montants[3]">
+          <td><span>4</span></td>
+          <td><span>{{ rubriques[3] }}</span></td>
+          <td>
+            <span>{{ montants[3] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[4] && montants[4]">
+          <td><span>5</span></td>
+          <td><span>{{ rubriques[4] }}</span></td>
+          <td>
+            <span>{{ montants[4] }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">TOTAL A LIAUIDER</td>
+          <td>{{ totalLiquidation }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <div class="container">
+        <div>
+          <div class="p-field p-col-12 p-md-12">
+            <label>{{ "labels.numeroMandat" | translate }}</label>
+            <input minlength="7" maxlength="7" class="form-control" formControlName="numeroMandat" [placeholder]="''"
+              pInputText />
+          </div>
+          <div class="p-fluid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+              <label class="required">{{ "labels.matriculeGestionnaire" | translate }}
+              </label>
+              <input  class="form-control" formControlName="matriculeGestionnaire" [placeholder]="''" pInputText />
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+              <label>{{ "labels.nomGestionnaire" | translate }}</label>
+              <input class="form-control" formControlName="nomGestionnaire" [placeholder]="''" pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-fluid p-grid">
+    <div class="p-field p-col-12 p-md-6">
+      <label>Validé</label>
+      <input [disabled]="config.data?.action === 'rejet'" type="checkbox" name="valide" (change)="onObservation($event,'valider')" />
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <label>Validé avec observations</label>
+      <input [disabled]="config.data?.action === 'rejet'" type="checkbox" name="valide" (change)="onObservation($event,'observation')" />
+    </div>
+  </div>
+  <div class="p-field p-col-12 p-md-12">
+    <label>observations</label>
+    <textarea [disabled]="config.data?.action === 'rejet'" rows="3" cols="50" pInputTextarea class="form-control" formControlName="observation" [placeholder]="''">
+    </textarea>
+  </div>
+</div>
+
+<div class="footer">
+  <button *ngIf="config.data?.action === 'rejet'" (click)="submitRejetForm()" pButton class="p-mr-3 p-button-danger">
+    {{ "buttons.rejeter" | translate }}
+  </button>
+  <button *ngIf="observation === true" (click)="submitForm()" pButton class="p-mr-3 p-button-danger">
+    {{ "buttons.controler" | translate }}
+  </button>
+</div>

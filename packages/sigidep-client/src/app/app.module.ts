@@ -66,7 +66,9 @@ import { PrintVirementComponent } from './components/print-virement/print-vireme
 import { ReceptionBordereauxMandatementModule } from './pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.module';
 import { TraitementDesLiquidationsMandatementModule } from './pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.module';
 import { TransmissionBordereauxModule } from './pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.module';
-
+import { ReceptionBordereauxModule as ReceptionBordereauxRegulariteModule } from '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.module';
+import { ControleRegulariteModule } from './pages/controle_de_regularites/controle-regularite/controle-regularite.module';
+import { TransmissionBordereauxModule as TransmissionBordereauxRegulariteModule } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.module';
 
 registerLocaleData(localeFr);
 
@@ -153,7 +155,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransmissionLiquidationModule,
     ReceptionBordereauxMandatementModule,
     TraitementDesLiquidationsMandatementModule,
-    TransmissionBordereauxModule
+    TransmissionBordereauxModule,
+    ReceptionBordereauxRegulariteModule,
+    ControleRegulariteModule,
+    TransmissionBordereauxRegulariteModule
 
   ],
   providers: [
