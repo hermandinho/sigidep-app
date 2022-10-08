@@ -1,0 +1,110 @@
+<div class="form" [formGroup]="form">
+  <div class="p-fluid p-grid">
+    <div class="p-field p-col-12 p-md-6">
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Rubriques</th>
+          <th>Montant (FCFA)</th>
+        </tr>
+        <tr *ngIf="rubriques[0] && montants[0]">
+          <td><span>1</span></td>
+          <td><span>{{ rubriques[0] }}</span></td>
+          <td>
+            <span>{{ montants[0] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[1] && montants[1]">
+          <td><span>2</span></td>
+          <td><span>{{ rubriques[1] }}</span></td>
+          <td>
+            <span>{{ montants[1] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[2] && montants[2]">
+          <td><span>3</span></td>
+          <td><span>{{ rubriques[2] }}</span></td>
+          <td>
+            <span>{{ montants[2] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[3] && montants[3]">
+          <td><span>4</span></td>
+          <td><span>{{ rubriques[3] }}</span></td>
+          <td>
+            <span>{{ montants[3] }}</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="rubriques[4] && montants[4]">
+          <td><span>5</span></td>
+          <td><span>{{ rubriques[4] }}</span></td>
+          <td>
+            <span>{{ montants[4] }}</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="p-field p-col-12 p-md-6">
+      <div class="container">
+        <div>
+          <div class="p-field p-col-12 p-md-12">
+            <label>{{ "labels.numeroMandat" | translate }}</label>
+            <input minlength="7" maxlength="7" class="form-control" formControlName="numeroMandat" [placeholder]="''"
+              pInputText />
+          </div>
+          <div style="background-color: rgb(194, 185, 185);">
+            <label for="">Montant Brut Mandaté (en F CFA) : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ totalLiquidation }}</label> <br>
+            <label for=""> {{ montant_en_lettre }}</label>
+          </div>
+          <div class="p-fluid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+              <label class="required">{{ "labels.matriculeGestionnaire" | translate }}
+              </label>
+              <input  class="form-control" formControlName="matriculeGestionnaire" [placeholder]="''" pInputText />
+            </div>
+            <div class="p-field p-col-12 p-md-6">
+              <label>{{ "labels.nomGestionnaire" | translate }}</label>
+              <input class="form-control" formControlName="nomGestionnaire" [placeholder]="''" pInputText />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <label for="" style="text-align: center; margin-top:2%; margin-left: 20%;">----------------------------------------------------------Décision Comptable --------------------------------------------------------------</label>
+  <div style="background-color: rgb(194, 185, 185); text-align: center; margin-top:2%">
+    <label for="">Montant Net à Payer : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{  montants[0] }}</label> <br><br>
+    <label for=""> ({{ netAPayer_en_lettre }})</label>
+  </div>
+  <div style="background-color: rgb(194, 185, 185); text-align: center; margin-top:2%">
+    <label for="">Montant Taxes (TVA + AIR, ou IRNC) :  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ montant_taxes }}</label> <br><br>
+    <label for=""> ({{ montant_taxes_en_lettre }})</label>
+  </div>
+  <div class="p-fluid p-grid" style="text-align: center; margin-top:2%" >
+    <div class="p-field p-col-12 p-md-6">
+      <label>Validé</label>
+      <input [disabled]="config.data.item.action === 'rejeter-mandat'" type="checkbox" name="valide" formControlName="validACT" (change)="onObservation($event,'valider')" />
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <div class="p-field p-col-12 p-md-6" *ngIf="observation === true">
+        <label>Date Validation :</label>
+        <input class="form-control" formControlName="dateValidACT" [placeholder]="''" pInputText />
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <button *ngIf="config.data.item.action === 'rejeter-mandat'" (click)="submitRejetForm()" pButton class="p-mr-3 p-button-danger">
+    {{ "buttons.rejeter" | translate }}
+  </button>
+  <button *ngIf="observation === true && config.data.item.action !== 'rejeter-mandat'" (click)="submitForm()" pButton class="p-mr-3 p-button-danger">
+    {{ "buttons.controler" | translate }}
+  </button>
+</div>

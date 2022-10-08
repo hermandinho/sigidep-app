@@ -65,6 +65,12 @@ import { PieceJointeFormComponent } from '../components/piece-jointe-form/piece-
 import { MandaterFormComponent } from '../components/mandater-form/mandater-form.component';
 import { DecisionControleRegulariteComponent } from '../components/decision-controle-regularite/decision-controle-regularite.component';
 import { PrintFileRejetControleRegulariteComponent } from '../components/print-file-rejet-controle-regularite/print-file-rejet-controle-regularite.component';
+import { CreateValiderRejeterMandatComponent } from '../components/create-valider-rejeter-mandat/create-valider-rejeter-mandat.component';
+import { CreatePayerMandatComponent } from '../components/create-payer-mandat/create-payer-mandat.component';
+import { DetailsValidationDeACTComponent } from '../components/details-validation-de-act/details-validation-de-act.component';
+import { ModeEtCoordonneesDePaiementComponent } from '../components/mode-et-coordonnees-de-paiement/mode-et-coordonnees-de-paiement.component';
+import { FichePaiementComponent } from '../components/fiche-paiement/fiche-paiement.component';
+import { InputMaskModule } from 'primeng/inputmask';
 
 const declarations = [
   BaseComponent,
@@ -98,7 +104,12 @@ const declarations = [
   PieceJointeFormComponent,
   MandaterFormComponent,
   DecisionControleRegulariteComponent,
-  PrintFileRejetControleRegulariteComponent
+  PrintFileRejetControleRegulariteComponent,
+  CreateValiderRejeterMandatComponent,
+  CreatePayerMandatComponent,
+  DetailsValidationDeACTComponent,
+  ModeEtCoordonneesDePaiementComponent,
+  FichePaiementComponent
 ];
 
 const shared = [
@@ -127,7 +138,8 @@ const shared = [
   EditorModule,
   FieldsetModule,
   NgxPrintModule,
-  FormsModule
+  FormsModule,
+  InputMaskModule
 ];
 @NgModule({
   declarations: [...declarations],

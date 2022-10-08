@@ -53,6 +53,7 @@ export const MenuPermissions = {
   virements: [...simpleCrudPermissions('virements')],
   liquidationMandatement: [...simpleCrudPermissions('liquidationMandatement')],
   controleRegularite: [...simpleCrudPermissions('controleRegularite')],
+  paiementDesDepenses: [...simpleCrudPermissions('paiementDesDepenses')],
 
 };
 
@@ -447,13 +448,7 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               icon: 'pi pi-table',
               label: translate.instant('sidebar.traitementLiquidationMandatement'),
               routerLinkActiveOptions: { exact: true },
-            },
-            {
-              routerLink: 'transmission-bordereaux-mandatement',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.transmissionBordereauxMandatement'),
-              routerLinkActiveOptions: { exact: true },
-            },
+            }
           ]
         },
         {
@@ -488,6 +483,35 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               label: translate.instant('sidebar.transmissionBordereauxRegularite'),
               routerLinkActiveOptions: { exact: true },
             },
+
+          ]
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.paiementDesDepenses'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.paiementDesDepenses],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux-paiement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionBordereauxPaiement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'operations-validation-paiement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.OperationsValidationPaiement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'edition-des-listings-de-paiement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.EditiondeslistingsdePaiement'),
+              routerLinkActiveOptions: { exact: true },
+            }
 
           ]
         }

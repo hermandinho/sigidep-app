@@ -175,47 +175,20 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.CONTROLEREGULARITE,
         updateBy: user,
       });
-    }else if(payload?.action === 'reception-liquidation'){
-      const property = await this.repositoryBon.findOne({
-        id: payload?.bon.id,
-      });
-  
-      const bon = this.repositoryBon.save({
-        ...property,
-        etat: EtatBonEnum.RECEPTIONLIQUIDATION,
-      })
-
-      return this.repository.save({
-        ...(payload as any),
-        typeTraitement: EtatBonEnum.RECEPTIONLIQUIDATION,
-        updateBy: user,
-      });
-    }/* else if(payload?.action === 'reception-borbereaux-regularite'){
-      console.log('reception-borbereaux-regularite', payload)
-      const property = await this.repositoryBon.findOne({
-        id: payload?.bon.id,
-      });
-  
-      const bon = this.repositoryBon.save({
-        ...property,
-        etat: EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
-      })
-
-      return this.repository.save({
-        ...(payload as any),
-        typeTraitement: EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
-        updateBy: user,
-      });
-    } */
+    }
     else if(payload?.data.action === 'rejet-controle-regulariter'){
+      const date = new Date();
       console.log(payload)
       const property = await this.repositoryBon.findOne({
         id: payload?.data?.bon.id,
       });
   
       const bon = this.repositoryBon.save({
-        ...property,
+        ...(property as any),
         etat: EtatBonEnum.REJETCONTROLEREGULARITE,
+        rejet: true,
+        dateRejet: date,
+        motif: payload.motifRejetRegulariter
       })
 
       return this.repository.save({

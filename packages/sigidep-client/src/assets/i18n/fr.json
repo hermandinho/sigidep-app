@@ -69,7 +69,11 @@
     "receptionBordereauxRegularite": "Reception boerdereaux ",
     "controleRegularite": "Controle regularité",
     "transmissionBordereauxRegularite": "Transmission Bordereaux",
-    "transmission-ACT": "Transmission à l'ACT"
+    "transmission-ACT": "Transmission à l'ACT",
+    "receptionBordereauxPaiement": "Réception Bordereaux",
+    "OperationsValidationPaiement": "Opérations Validation /Paiement",
+    "EditiondeslistingsdePaiement": "Edition des listings de Paiement",
+    "paiementDesDepenses": "Paiement des Dépenses"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -449,7 +453,10 @@
     "EditerMandatPaiement": "Editer le Mandat Paiement",
     "ControleRegularite": "Controle Regularité",
     "mandatdepaiement": "Mandat de paiement",
-    "rapportdeliquidation": "Rapport de liquidation"
+    "rapportdeliquidation": "Rapport de liquidation",
+    "valider": "Valider",
+    "rejeter": "Rejeter",
+    "payers": "Payer"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -918,7 +925,10 @@
       "dateTransmission": "Date Transmission",
       "numeroEng": "Numero Eng",
       "montantCP": "MontantCP",
-      "dateEng": "Date Eng"
+      "dateEng": "Date Eng",
+      "dateMandatement": "Date Paiement",
+      "montantMandate": "Montant Mandaté",
+      "numeroMandat": "Numéro Mandat"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

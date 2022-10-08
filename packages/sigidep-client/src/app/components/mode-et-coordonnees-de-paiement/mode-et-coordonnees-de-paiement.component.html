@@ -1,0 +1,123 @@
+<div class="container">
+  <div class="form" [formGroup]="paiementForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <ng-container formGroupName="modePaiement">
+          <label class="required"
+            >{{ "labels.modePaiement" | translate }}
+          </label>
+          <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'libelle'"
+            [autoDisplayFirst]="false"
+            [options]="modes"
+            [placeholder]="''"
+            optionLabel="libelle"
+            optionValue="libelle"
+            (onChange)="onChangeMode($event)"
+          >
+          </p-dropdown>
+        </ng-container>
+      </div>
+
+      <!-- Begin Virement ou chèque (dont Titre) -->
+      <div class="p-fluid p-grid" *ngIf="cheque">
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.compteADebiter" | translate }}</label>
+          <p-inputMask
+          class=""
+          formControlName="compteADebiter"
+          mask="99999-99999-99999999999-99"
+          [placeholder]="''"
+        ></p-inputMask>
+        </div>
+
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.compteACrediter" | translate }}</label>
+          <p-inputMask
+          class=""
+          formControlName="compteACrediter"
+          mask="99999-99999-99999999999-99"
+          [placeholder]="''"
+        ></p-inputMask>
+        </div>
+      </div>
+      <!-- End Virement ou chèque (dont Titre) -->
+      <!-- En Numéraire -->
+        <div class="p-fluid p-grid" *ngIf="numerique">
+          <div class="p-field p-col-12 p-md-6">
+            <label>{{ "labels.numeroCNI" | translate }}</label>
+            <input
+              class="form-control"
+              formControlName="numeroCNI"
+              [placeholder]="''"
+              pInputText
+            />
+          </div>
+          <div class="p-field p-col-12 p-md-6">
+            <label>{{ "labels.dateDelivrance" | translate }}</label>
+            <input
+              class="form-control"
+              formControlName="dateDelivrance"
+              [placeholder]="''"
+              pInputText
+            />
+          </div>
+          <div class="p-field p-col-12 p-md-12">
+            <label>{{ "labels.lieuDelivrance" | translate }}</label>
+            <input
+              class="form-control"
+              formControlName="lieuDelivrance"
+              [placeholder]="''"
+              pInputText
+            />
+          </div>
+        </div>
+      <!--En Numéraire -->
+
+      <!--  -->
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.villePaiement" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="villePaiement"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.datePaiement" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="datePaiement"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+      </div>
+      <!--  -->
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-angle-right"
+      (click)="submit()"
+      [disabled]="!paiementForm.valid"
+      [label]="'buttons.submit' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

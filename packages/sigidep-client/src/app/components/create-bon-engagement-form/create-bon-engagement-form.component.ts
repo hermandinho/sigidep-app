@@ -50,7 +50,7 @@ export class CreateBonEngagementFormComponent
   public situationForm: any;
   //bookProcess:any;
   public editedEngagement!: BonEngagementModel;
-  public validation:boolean=false;
+  public validation: boolean = false;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -153,14 +153,14 @@ export class CreateBonEngagementFormComponent
       this.action = this.config.data?.action;
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatBonEngagement') {
-        if(this.config.data?.item?.data !== undefined){
+        if (this.config.data?.item?.data !== undefined) {
           console.log(this.config.data?.item)
           this.validation = true;
           this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
-          if(this.config.data?.item?.action === 'controler'){
+          if (this.config.data?.item?.action === 'controler') {
             this.engagements = this.config.data?.item?.data?.bon_engagement;
           }
-        }else{
+        } else {
           console.log('1')
           this.engagements = this.config.data?.item;
         }
@@ -172,10 +172,10 @@ export class CreateBonEngagementFormComponent
     }
 
     this.currentProcedure =
-    this.config?.data?.item?.numActeJuridique?.codeProcedure;
-  this._appService.setCurrentProcedure(this.currentProcedure);
+      this.config?.data?.item?.numActeJuridique?.codeProcedure;
+    this._appService.setCurrentProcedure(this.currentProcedure);
 
-  console.log(this.currentProcedure)
+    console.log(this.currentProcedure)
 
 
     if (this.config.data?.item) {
@@ -418,7 +418,7 @@ export class CreateBonEngagementFormComponent
   };
 
   submitForm() {
-    if(this.validation===true){
+    if (this.validation === true) {
       this.controler(this.config.data?.item);
       this.ref.close();
       return;
@@ -462,7 +462,7 @@ export class CreateBonEngagementFormComponent
       } as BonEngagementModel;
     }
 
-   // console.log(this.editedEngagement)
+    // console.log(this.editedEngagement)
     /* console.log('..............FORMM.....', {
       ...this.form.getRawValue().factureForm,
     }); */
@@ -621,7 +621,7 @@ export class CreateBonEngagementFormComponent
     return null;
   };
 
-  controler(data:any){
+  controler(data: any) {
     const method: Observable<any> = this._apisService.put<any>(
       '/transmissions-receptions',
       data

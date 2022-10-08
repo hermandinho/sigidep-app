@@ -10,14 +10,14 @@ import { FactureEntity } from '@entities/facture.entity';
 import { FactureArticleEntity } from '@entities/facture-article.entity';
 import { BonEngagementService } from './service/bons-engagements.service';
 import { BonEngagementController } from './controller/bons-engagements.controller';
-import { EngagementJuridiqueService } from '@modules/engagement-juridiques/service/engagement-juridique.service';
-import { EngagementJuridiqueModule } from '@modules/engagement-juridiques/engagement-juridique.module';
 import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
 import { TraitementBonEngagementController } from './controller/traitement-bon-engagement.controller';
+import { PaiementController } from './controller/paiement.controller';
+import { PaiementService } from './service/paiement.service';
 
 @Module({
-  controllers: [BonEngagementController,TraitementBonEngagementController],
-  providers: [BonEngagementService, TraitementBonEngagementService],
+  controllers: [BonEngagementController,TraitementBonEngagementController,PaiementController],
+  providers: [BonEngagementService, TraitementBonEngagementService,PaiementService],
   imports: [
     AuthModule,
     TypeOrmModule.forFeature([
@@ -34,6 +34,7 @@ import { TraitementBonEngagementController } from './controller/traitement-bon-e
     TypeOrmModule,
     BonEngagementService,
     TraitementBonEngagementService,
+    PaiementService
   ],
 })
 export class BonsEngagementsModule {}

@@ -56,6 +56,7 @@ export class BonEngagementService {
   public async filter(
     filter?: EngagementFilter,
   ): Promise<BonEngagementEntity[]> {
+    console.log(filter)
     return this.repository
       .createQueryBuilder('bon')
       .leftJoinAndSelect('bon.numActeJuridique', 'eng')
@@ -68,6 +69,9 @@ export class BonEngagementService {
       })
       .andWhere(filter?.etats ? 'bon.etat IN(:...etats)' : 'true', {
         etats: filter?.etats,
+      })
+      .andWhere(filter?.numeros ? 'bon.numero IN(:...numero)' : 'true', {
+        numero: filter?.numeros,
       })
       .andWhere(
         filter?.imputation ? 'eng.imputation IN(:...numeroj)' : 'true',

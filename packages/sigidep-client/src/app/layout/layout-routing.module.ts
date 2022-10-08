@@ -53,6 +53,9 @@ import { ReceptionBordereauxComponent as ReceptionBordereauxRegulariteComponent}
 import { ControleRegulariteComponent } from '../pages/controle_de_regularites/controle-regularite/controle-regularite.component';
 import { TransmissionBordereauxComponent as TransmissionBordereauxRegulariteComponent } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.component';
 import { TransmissionAACTComponent } from '../pages/controle_de_regularites/transmission-a-act/transmission-a-act.component';
+import { ReceptionPourControleDeRegulariteComponent } from '../pages/paiement/reception-pour-controle-de-regularite/reception-pour-controle-de-regularite.component';
+import { OperationsValidationPaiementComponent } from '../pages/paiement/operations-validation-paiement/operations-validation-paiement.component';
+import { EditionDesListingsDePaiementComponent } from '@pages/paiement/edition-des-listings-de-paiement/edition-des-listings-de-paiement.component';
 const routes: Routes = [
   {
     path: '',
@@ -600,6 +603,36 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: TransmissionAACTComponent,
         data: {},
+      },
+      {
+        path: 'edition-des-listings-de-paiement',
+        canActivate: [AuthGuard],
+        component: EditionDesListingsDePaiementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/paiement/edition-des-listings-de-paiement/edition-des-listings-de-paiement.module'
+          ).then((m) => m.EditionDesListingsDePaiementModule),
+      },
+      {
+        path: 'operations-validation-paiement',
+        canActivate: [AuthGuard],
+        component: OperationsValidationPaiementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/paiement/operations-validation-paiement/operations-validation-paiement.module'
+          ).then((m) => m.OperationsValidationPaiementModule),
+      },
+      {
+        path: 'reception-bordereaux-paiement',
+        canActivate: [AuthGuard],
+        component: ReceptionPourControleDeRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/paiement/reception-pour-controle-de-regularite/reception-pour-controle-de-regularite.module'
+          ).then((m) => m.ReceptionPourControleDeRegulariteModule),
       },
       /*{
         path: '**',

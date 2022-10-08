@@ -12,6 +12,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { TraitementBonEngagementModel } from '../../models/traitement-bon-engagement.model';
 import { DialogsService } from '../../services/dialogs.service';
+import { PaiementModel } from '../../models/paiement.model';
 
 @Component({
   selector: 'app-create-motif-rejet-form',
@@ -53,9 +54,11 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
 
   submit() {
     this.busy = true;
-    if( this.config.data?.item.action ==='rejet-controle-regulariter') {
+    if (this.config.data?.item.action === 'rejet-controle-regulariter') {
       this.submitRejetForm()
-    }else if (this.form.value.motif) {
+    }else if (this.config.data?.item.action === 'rejeter-mandat'){
+      this.submitRejetValidationACT()
+    } else if (this.form.value.motif) {
       const data1: DataModel = {
         data: this.data.data,
         action: this.data.action,
@@ -105,49 +108,96 @@ export class CreateMotifRejetFormComponent extends BaseComponent implements OnIn
   }
 
   submitRejetForm() {
-        const editedEngagement = {
-          data: this.config.data?.item,
-          motifRejetRegulariter: this.form.value.motif
-        }
-        console.log('editedEngagement ', editedEngagement)
+    const editedEngagement = {
+      data: this.config.data?.item,
+      motifRejetRegulariter: this.form.value.motif
+    }
+    console.log('editedEngagement ', editedEngagement)
 
-          const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
-            '/traitement-bon-engagements',
-            editedEngagement
-          );
-          method.subscribe(
-            (res) => {
-              console.log('res = ', res)
-              this.busy = false;
-              this.ref.close(res);
-              this._dialogService.launchPrintFileRejetControleRegulariteDialog(
-                res,
-              );
-              this._appService.showToast({
-                summary: 'messages.success',
-                detail: 'messages.engagements.createSuccess',
-                severity: 'success',
-                life: 3000,
-                closable: true,
-              });
-            },
-            ({ error }) => {
-              let err = '';
-              if (error?.statusCode === 409) {
-                err = 'errors.engagements.notfound';
-              } else {
-                err = 'errors.unknown';
-              }
-              this.busy = false;
-              this._appService.showToast({
-                detail: err,
-                summary: 'errors.error',
-                severity: 'error',
-                life: 5000,
-                closable: true,
-              });
-            }
-          );
+    const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
+      '/traitement-bon-engagements',
+      editedEngagement
+    );
+    method.subscribe(
+      (res) => {
+        console.log('res = ', res)
+        this.busy = false;
+        this.ref.close(res);
+        this._dialogService.launchPrintFileRejetControleRegulariteDialog(
+          res,
+        );
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail: 'messages.engagements.createSuccess',
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.engagements.notfound';
+        } else {
+          err = 'errors.unknown';
+        }
+        this.busy = false;
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
+  }
+
+
+  submitRejetValidationACT() {
+    const editedPaiement = {
+      data: this.config.data?.item,
+      motif: this.form.value.motif
+    }
+    console.log('editedPaiement ', editedPaiement)
+
+    const method: Observable<any> = this._apisService.put<PaiementModel>(
+      '/paiements',
+      editedPaiement
+    );
+    method.subscribe(
+      (res) => {
+        console.log('res = ', res)
+        this.busy = false;
+        this.ref.close(res);
+        this._dialogService.launchPrintFileRejetControleRegulariteDialog(
+          res,
+        );
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail: 'messages.rejet.createSuccess',
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.rejet.notfound';
+        } else {
+          err = 'errors.unknown';
+        }
+        this.busy = false;
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
   }
 
 }

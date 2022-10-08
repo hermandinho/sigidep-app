@@ -22,13 +22,13 @@ import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoad
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 
 @Component({
-  selector: 'app-reception-bordereaux-mandatement',
-  templateUrl: './reception-bordereaux-mandatement.component.html',
-  styleUrls: ['./reception-bordereaux-mandatement.component.scss'],
+  selector: 'app-reception-pour-controle-de-regularite',
+  templateUrl: './reception-pour-controle-de-regularite.component.html',
+  styleUrls: ['./reception-pour-controle-de-regularite.component.scss'],
   providers: [MessageService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReceptionBordereauxMandatementComponent extends BaseComponent
+export class ReceptionPourControleDeRegulariteComponent extends BaseComponent
 implements OnInit {
 public busy = false;
 public tableColumnsTransmission: any[] = [];
@@ -70,7 +70,7 @@ constructor(
 
 ngOnInit(): void {
   this._store.dispatch(
-    GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION]})
+    GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONACT]})
   );
   this._store.dispatch(
     GetExercises({})
@@ -80,7 +80,7 @@ ngOnInit(): void {
     SetAppBreadcrumb({
       breadcrumb: [
         {
-          label: 'breadcrumb.receptionBordereaux',
+          label: 'breadcrumb.transmissionACT',
         },
       ],
     })
@@ -91,11 +91,11 @@ ngOnInit(): void {
 handleFilter = (event: any) => {
   if (event?.value) {
     this._store.dispatch(
-      GetTransmissionsReceptions({ exercices: [event?.value[0]?.toLowerCase()],objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION] })
+      GetTransmissionsReceptions({ exercices: [event?.value[0]?.toLowerCase()],objets:[EtatBonEnum.TRANSMISSIONACT] })
     );
   } else {
     this._store.dispatch(
-      GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION]})
+      GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONACT]})
     );
   }
 
@@ -173,7 +173,7 @@ reception() {
   if(this.dossiersBordereaux.length>0){
     const data1:DataModel = {
       data : this.dossiersBordereaux,
-      action: 'reception-liquidation',
+      action: 'reception-regularite',
       motif:''
     }
     console.log('data1 ',this.data1)
@@ -184,9 +184,9 @@ reception() {
     method.subscribe(
       (res) => {
         this.busy = false;
-
+        this.dossiersBordereaux = [];
         this._store.dispatch(
-          GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION]})
+          GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONACT]})
         );
         this._appService.showToast({
           summary: 'messages.success',

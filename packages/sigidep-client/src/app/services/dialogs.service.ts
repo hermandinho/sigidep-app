@@ -122,6 +122,9 @@ export class DialogsService {
   private editerPrintMandatPaiementComponent: any;
   private decisionControleRegulariteComponent: any;
   private printFileRejetControleRegularite: any;
+  private payerMandatComponent: any;
+  private createValiderRejeterMandatComponent:any;
+  private fichePaiement:any;
 
 
 
@@ -1470,6 +1473,96 @@ export class DialogsService {
     return this._dialogService.open(this.printFileRejetControleRegularite, {
       header: this._translateService.instant(
         'dialogs.headers.PrintFileRejetControleRegularite',
+        { numero: item?.numero }
+      ),
+      width: '70vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
+
+  public async launchValiderRejeterMandatCreateDialog(
+    item: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.createValiderRejeterMandatComponent) {
+      const { CreateValiderRejeterMandatComponent } = await import(
+        '@components/create-valider-rejeter-mandat/create-valider-rejeter-mandat.component'
+      );
+      this.createValiderRejeterMandatComponent =
+      CreateValiderRejeterMandatComponent;
+    }
+
+    return this._dialogService.open(
+      this.createValiderRejeterMandatComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editCreateValiderRejeterMandatComponent'
+            : 'createValiderRejeterMandatComponent')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
+  public async launchPayerMandatCreateDialog(
+    item: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.payerMandatComponent) {
+      const { CreatePayerMandatComponent } = await import(
+        '@components/create-payer-mandat/create-payer-mandat.component'
+      );
+      this.payerMandatComponent =
+      CreatePayerMandatComponent;
+    }
+
+    return this._dialogService.open(
+      this.payerMandatComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editPayerMandatComponent'
+            : 'payerMandatComponent')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
+  public async launchFichePaiementComponentDialog(
+    item: any,
+    type?: Step
+  ): Promise<any> {
+    if (!this.fichePaiement) {
+      const { FichePaiementComponent } = await import(
+        '@components/fiche-paiement/fiche-paiement.component'
+      );
+      this.fichePaiement = FichePaiementComponent;
+    }
+
+    return this._dialogService.open(this.fichePaiement, {
+      header: this._translateService.instant(
+        'dialogs.headers.fichePaiement',
         { numero: item?.numero }
       ),
       width: '70vw',
