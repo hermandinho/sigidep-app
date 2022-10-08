@@ -7,10 +7,8 @@
             <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
             <i>Paix-Travail-Patrie</i> <br />
             ********* <br />
-            <strong
-              >CHAMBRE D'AGRICULTURE, DES PECHES, DE <br />
-              L'ELEVAGE ET DES FORETS DU CAMEROUN</strong
-            >
+            <strong>CHAMBRE D'AGRICULTURE, DES PECHES, DE <br />
+              L'ELEVAGE ET DES FORETS DU CAMEROUN</strong>
           </div>
           <div class="grid-img">
             <img src="assets/img/logopdf.png" alt="logo pdf" />
@@ -19,10 +17,8 @@
             <strong>REPUBLIC OF CAMEROON</strong> <br />
             <em>Peace-Work-Fatherland</em> <br />
             ********* <br />
-            <strong
-              >CHAMBER OF AGRICULTURE, FISHERIES, <br />
-              LIVESTOCK AND FOREST OF CAMEROON</strong
-            >
+            <strong>CHAMBER OF AGRICULTURE, FISHERIES, <br />
+              LIVESTOCK AND FOREST OF CAMEROON</strong>
           </div>
         </div>
         <div class="title">
@@ -31,8 +27,10 @@
 
         <div>
           <p>
-            &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire}}, en ma qualité de Gestionnaire accrédité certifie l'effectivité de
-          la présente créance et donne ordre à l'Agent Comptable Assignataire de la payer conformément aux détail suivants:
+            &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire}}, en ma
+            qualité de Gestionnaire accrédité certifie l'effectivité de
+            la présente créance et donne ordre à l'Agent Comptable Assignataire de la payer conformément aux détail
+            suivants:
           </p>
 
           <table class="sans-ligne">
@@ -60,7 +58,8 @@
             </tr>
             <tr>
               <td><b>Ordonateur:</b></td>
-              <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
+              <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
+                config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
             </tr>
           </table>
         </div>
@@ -76,9 +75,18 @@
             <td>{{ config.data?.item?.bon_engagement?.nomGestionnaire }} </td>
             <td>
               <table>
-                <tr><td>RIB</td><td></td></tr>
-                <tr><td>Banque</td><td></td></tr>
-                <tr><td>Agence</td><td></td></tr>
+                <tr>
+                  <td>RIB</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Banque</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Agence</td>
+                  <td></td>
+                </tr>
               </table>
             </td>
           </tr>
@@ -90,7 +98,8 @@
           </tr>
           <tr>
             <td>Ordonateur: </td>
-            <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
+            <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
+              config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
           </tr>
           <tr>
             <td>Objet de la dépense: </td>
@@ -107,92 +116,91 @@
         </table>
         <h4>Détails des rubrique du mandat</h4>
 
-          <table>
-            <tr>
-              <th>N°</th>
-              <th>Rubriques</th>
-              <th>Montant (FCFA)</th>
-            </tr>
-            <tr *ngIf="rubriques[0] && montants[0]">
-              <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-01</span></td>
-              <td><span >{{ rubriques[0] }}</span></td>
-              <td>
-                <span >{{ montants[0] }}</span>
-              </td>
-            </tr>
+        <table>
+          <tr>
+            <th>N°</th>
+            <th>Rubriques</th>
+            <th>Montant (FCFA)</th>
+          </tr>
+          <tr *ngIf="rubriques[0] && montants[0]">
+            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-01</span></td>
+            <td><span>{{ rubriques[0] }}</span></td>
+            <td>
+              <span>{{ montants[0] }}</span>
+            </td>
+          </tr>
 
-            <tr *ngIf="rubriques[1] && montants[1]">
-              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-02</span></td>
-              <td><span >{{ rubriques[1] }}</span></td>
-              <td>
-                <span >{{ montants[1] }}</span>
-              </td>
-            </tr>
+          <tr *ngIf="rubriques[1] && montants[1]">
+            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-02</span></td>
+            <td><span>{{ rubriques[1] }}</span></td>
+            <td>
+              <span>{{ montants[1] }}</span>
+            </td>
+          </tr>
 
-            <tr *ngIf="rubriques[2] && montants[2]">
-              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-03</span></td>
-              <td><span >{{ rubriques[2] }}</span></td>
-              <td>
-                <span >{{ montants[2] }}</span>
-              </td>
-            </tr>
+          <tr *ngIf="rubriques[2] && montants[2]">
+            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-03</span></td>
+            <td><span>{{ rubriques[2] }}</span></td>
+            <td>
+              <span>{{ montants[2] }}</span>
+            </td>
+          </tr>
 
-            <tr *ngIf="rubriques[3] && montants[3]">
-              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-04</span></td>
-              <td><span >{{ rubriques[3] }}</span></td>
-              <td>
-                <span >{{ montants[3] }}</span>
-              </td>
-            </tr>
+          <tr *ngIf="rubriques[3] && montants[3]">
+            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-04</span></td>
+            <td><span>{{ rubriques[3] }}</span></td>
+            <td>
+              <span>{{ montants[3] }}</span>
+            </td>
+          </tr>
 
-            <tr *ngIf="rubriques[4] && montants[4]">
-              <td><span >{{ data?.bon_engagement?.numActeJuridique?.numero }}-05</span></td>
-              <td><span >{{ rubriques[4] }}</span></td>
-              <td>
-                <span >{{ montants[4] }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">TOTAL A LIQUIDER</td>
-              <td>{{ totalLiquidation }}</td>
-            </tr>
-          </table>
-          <table style="margin-top: 2%;">
-            <tr>
-              <th>Visa du controleur financier</th>
-              <th rowspan="4">signature de l'ordinnateur <br> Arreté le présent mandat à la somme de: <br> {{ montant_en_lettre }}</th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
+          <tr *ngIf="rubriques[4] && montants[4]">
+            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-05</span></td>
+            <td><span>{{ rubriques[4] }}</span></td>
+            <td>
+              <span>{{ montants[4] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">TOTAL A LIQUIDER</td>
+            <td>{{ totalLiquidation }}</td>
+          </tr>
+        </table>
+        <table style="margin-top: 2%;">
+          <tr>
+            <th>Visa du controleur financier</th>
+            <th rowspan="4">signature de l'ordinnateur <br> Arreté le présent mandat à la somme de: <br> {{
+              montant_en_lettre }}</th>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
 
-          </table>
+        </table>
 
-          <div class="p-fluid p-grid" style="margin-top: 1%;">
-            <div class="p-field p-col-12 p-md-5 semi-card">
-              <span>A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , le  </span>
-            </div>
-            <div class="p-field p-col-12 p-md-5 semi-card">
-              <span>A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , le&nbsp;&nbsp;&nbsp;  </span>
-            </div>
+        <div class="p-fluid p-grid" style="margin-top: 1%;">
+          <div class="p-field p-col-12 p-md-5 semi-card">
+            <span>A
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              , le </span>
           </div>
+          <div class="p-field p-col-12 p-md-5 semi-card">
+            <span>A
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              , le&nbsp;&nbsp;&nbsp; </span>
+          </div>
+        </div>
       </p-card>
 
     </div>
     <div>
-      <button
-        pButton
-        class="p-mr-3 p-button-warning"
-        printSectionId="print-section"
-        [useExistingCss]="true"
-        ngxPrint
-      >
+      <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
         {{ "buttons.print" | translate }}
       </button>
     </div>
