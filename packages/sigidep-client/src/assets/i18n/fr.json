@@ -456,7 +456,19 @@
     "rapportdeliquidation": "Rapport de liquidation",
     "valider": "Valider",
     "rejeter": "Rejeter",
-    "payers": "Payer"
+    "payers": "Payer",
+    "serviceSource": "Service Source (Unité Administrative)",
+    "serviceDestination": "Service Destinataire",
+    "lieu": "Lieu de Transmission (Ville)",
+    "controler":"Controler",
+    "editionTCC": "Edition TCC",
+    "controlerRegularite": "Controler",
+    "modePaiement": "Mode de paiement",
+    "compteADebiter": "Compte A Debiter",
+    "compteACrediter": "Compte A Crediter",
+    "villePaiement": "Ville Paiement",
+    "datePaiement": "Date Paiement",
+    "numeroMandat":"Numéro Mandat"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -726,7 +738,8 @@
     "bonsPrimes": "Bons Engagements Primes",
     "transmissionsreceptions": "Transmissions Receptions",
     "modelvirement": "Modèle Virements",
-    "receptionbordereaux": "Reception Bordereaux"
+    "receptionbordereaux": "Reception Bordereaux",
+    "transmispourControleConformite": "Transmettre pour Contrôle Conformité"
   },
   "tables": {
     "emptyMessage": "Aucun élément",
@@ -754,10 +767,10 @@
       "modelVirement": "Modèle virement",
       "credit": "Tableau à créditer",
       "debit": "Tableau à débiter",
-      "imputationsFiltres": "liste des imputations",
+      "imputationsFiltres": "Liste des imputations",
       "Bons": "Bons primes",
       "dossiers": "Dossier du bordereau en constitution",
-      "transmission": "Listing des Bons à Transmettre ",
+      "transmission": "Listing des dossiers en attente transmission ",
       "bon_controler": "Listing des Bons à Contrôler "
     },
     "headers": {
@@ -998,7 +1011,9 @@
       "etatCertificat": "Etat de l'engagement Juridique: {{numero}}",
       "etatBonEngagement": "Etat de l'engagement Bon: {{numero}}",
       "editTransmissionReception": "Edit Transmission Reception",
-      "viewTransmissionReception": "Entrez le Motif du Rejet :"
+      "viewTransmissionReception": "Entrez le Motif du Rejet :",
+      "editPayerMandatComponent": "Editer paiement",
+      "editCreateValiderRejeterMandatComponent": "Edition de la validation"
     },
     "messages": {
       "deleteExercise": "Voulez-vous vraiment supprimer cette exercise? Cette action est irréversible.",
@@ -1027,7 +1042,7 @@
       "reserveBonEngagement": "Etes-vous sûr de reserver cet engagement?",
       "cancelEngagement": "Voulez-vous annuler cette Réservation ?",
       "cancelBonEngagement": "Voulez-vous annuler cette Réservation ?",
-      "saveBon": "Etesvous sûr(e) de vouloir Transmettre ces Bons ?",
+      "saveBon": "Etes-vous sûr(e) de vouloir Transmettre ces Bons ?",
       "cancelTransmission": "Voulez-vous annuler cette Transmission? Cette opération est irréversible !",
       "reception": "Bordereau réceptionné avec succès au  Contrôle Financier ",
       "saveBon1": "Etes-vous sûr(e) de vouloir enregistrer ce Bon ? Cette opération est irréversible !",
@@ -1037,7 +1052,11 @@
       "alertRejet": "Etes-vous sûr de vouloir Rejeter ce Bon? Cette opération est irréversible !!!",
       "alertControler": "Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !",
       "controleBonRegularite": "Etes-vous sûr de vouloir Contrôler le Bon? Cette opération a une incidence financière !",
-      "RejetcontroleBonRegularite": "Etes-vous sûr de vouloir Rejeter le Bon"
+      "RejetcontroleBonRegularite": "Etes-vous sûr de vouloir Rejeter le Bon",
+      "editionTCC": "Edition TCC",
+      "alertPayerMandat":"Etes-vous sûr(e) de vouloir Editer le paiement du Bon ?",
+      "alertValiderMandat":"Etes-vous sûr(e) de vouloir Valider le Bon ?",
+      "alertRejeterMandat":"Etes-vous sûr(e) de vouloir rejeter le Bon ?"
     }
   },
   "exerciseStatuses": {

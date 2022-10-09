@@ -184,10 +184,10 @@ reception() {
     method.subscribe(
       (res) => {
         this.busy = false;
-
         this._store.dispatch(
           GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONCONTROLEDEREGULARITE]})
         );
+        this.dossiersBordereaux = [];
         this._appService.showToast({
           summary: 'messages.success',
           detail: 'dialogs.messages.reception',

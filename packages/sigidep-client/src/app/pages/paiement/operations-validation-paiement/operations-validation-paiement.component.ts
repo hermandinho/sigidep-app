@@ -67,7 +67,7 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({/* etats: [EtatBonEnum.RECEPTIONACT]  */})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
     );
     this._store.dispatch(
       GetExercises({})
@@ -212,14 +212,11 @@ implements OnInit, AfterContentChecked {
   handleFilter = (event: any) => {
       if(event?.value){
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE]})
+          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
         );
       }else{
         this._store.dispatch(
-          GetTransmissionsReceptions({})
-        );
-        this._store.dispatch(
-          GetTransmissionsReceptionsDetails({})
+          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
         );
       }
   };

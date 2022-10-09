@@ -86,7 +86,9 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        this.onEncourChange(this.data[0]);
+        if(this.data){
+          this.onEncourChange(this.data[0]);
+        }
       });
     this.loading$ = this._store.pipe(
       select(getLoadingSelector),

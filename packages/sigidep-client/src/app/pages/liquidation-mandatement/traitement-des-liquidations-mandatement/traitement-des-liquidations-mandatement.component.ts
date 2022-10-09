@@ -75,7 +75,7 @@ constructor(
 
 ngOnInit(): void {
   this._store.dispatch(
-    GetTransmissionsReceptionsDetails({})
+    GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RESERVE, EtatBonEnum.RECEPTIONLIQUIDATION,EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION,EtatBonEnum.MANDATDEPAIEMENT,EtatBonEnum.RAPPORTDELIQUIDATION,EtatBonEnum.ORDONNANCEMENT]})
   );
   this._store.dispatch(
     GetExercises({})
@@ -118,7 +118,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleEnregistrer(this.currentItem);
           },
-          disabled: this.currentItem?.bon_engagement[0]?.etat === EtatBonEnum.RECEPTIONLIQUIDATION
+          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.RECEPTIONLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RESERVE): true
         },
         {
           label: this.translate.instant('labels.Modifier'),
@@ -126,7 +126,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleModifier(this.currentItem);
           },
-          disabled: this.currentItem?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE
+          disabled:this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE) : true
         },
         {
           label: this.translate.instant('labels.Valider'),
@@ -134,7 +134,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleValider(this.currentItem);
           },
-          disabled: this.currentItem?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE
+          disabled:this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE) : true
         },
         {
           label: this.translate.instant('labels.EditerRapport'),
@@ -142,7 +142,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleEditerRapport (this.currentItem);
           },
-          disabled: this.currentItem?.etat === EtatBonEnum.VALIDATIONLIQUIDATION
+          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.VALIDATIONLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
         },
         {
           label: this.translate.instant('labels.Mandater'),
@@ -150,6 +150,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleMandater(this.currentItem);
           },
+          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.VALIDATIONLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
         },
         {
           label: this.translate.instant('labels.EditerMandatPaiement'),
@@ -157,6 +158,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleEditerMandatPaiement(this.currentItem);
           },
+          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.ORDONNANCEMENT || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
         },
       ],
     },

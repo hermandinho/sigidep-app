@@ -188,6 +188,7 @@ reception() {
         this._store.dispatch(
           GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION]})
         );
+        this.dossiersBordereaux = [];
         this._appService.showToast({
           summary: 'messages.success',
           detail: 'dialogs.messages.reception',

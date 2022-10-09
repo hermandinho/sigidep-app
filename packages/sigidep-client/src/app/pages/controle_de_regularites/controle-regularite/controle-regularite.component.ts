@@ -72,7 +72,7 @@ constructor(
 
 ngOnInit(): void {
   this._store.dispatch(
-    GetTransmissionsReceptionsDetails({})
+    GetTransmissionsReceptionsDetails({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
   );
   this._store.dispatch(
     GetExercises({})
@@ -157,11 +157,14 @@ handleRejeter(item: any) {
 handleFilter = (event: any) => {
   if (event?.value) {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({ exercices: [event?.value[0]?.toLowerCase()],etats:[EtatBonEnum.RECEPTIONLIQUIDATION] })
+      GetTransmissionsReceptionsDetails({
+        exercices: [event?.value[0]?.toLowerCase()],
+        etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]
+      })
     );
   } else {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats:[EtatBonEnum.RECEPTIONLIQUIDATION]})
+      GetTransmissionsReceptionsDetails({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
     );
   }
 

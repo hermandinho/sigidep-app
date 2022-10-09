@@ -184,7 +184,7 @@ export class ReceptionBordereauxComponent extends BaseComponent
       method.subscribe(
         (res) => {
           this.busy = false;
-
+          this.dossiersBordereaux = [];
           this._store.dispatch(
             GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISCONTROLECONFORMITE]})
           );

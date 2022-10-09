@@ -56,7 +56,7 @@ export class TransmissionReceptionController {
   }
 
   @Get('/detail')
-  public async getDossierBor(@Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+  public async getDossierBor(@Query(new ValidationPipe({ transform: true })) filter: number,
   ) {
     return this.services.getDossierBor(filter);
   }

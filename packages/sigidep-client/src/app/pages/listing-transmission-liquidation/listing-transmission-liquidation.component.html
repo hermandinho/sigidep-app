@@ -81,7 +81,9 @@
                 </span>
               </td>
               <td class="actions_button">
-                <button (click)="handleCancel(item)" class=" p-button-danger" pButton
+                <button (click)="add(item)" class=" p-button-success" pButton
+              pRipple>{{ 'buttons.new'|translate }}</button>
+              <button (click)="delete()" class=" p-button-warning" pButton
               pRipple>{{ 'buttons.cancel'|translate }}</button>
               </td>
             </tr>

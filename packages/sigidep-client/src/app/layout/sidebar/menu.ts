@@ -386,9 +386,9 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: 'listing-transmission-liquidation',
-              icon: 'pi pi-table',
-              label: translate.instant('sidebar.listingTransmissionLiquidation'),
+              icon: 'pi pi-shield',
+              routerLink: 'controler-la-conformite',
+              label: translate.instant('sidebar.operationdecontrole'),
               routerLinkActiveOptions: { exact: true },
             },
             {
@@ -398,12 +398,11 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               routerLinkActiveOptions: { exact: true },
             },
             {
-              icon: 'pi pi-shield',
-              routerLink: 'controler-la-conformite',
-              label: translate.instant('sidebar.operationdecontrole'),
+              routerLink: 'listing-transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.listingTransmissionLiquidation'),
               routerLinkActiveOptions: { exact: true },
             },
-
 
           ],
         },
@@ -477,12 +476,12 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
               label: translate.instant('sidebar.transmission-ACT'),
               routerLinkActiveOptions: { exact: true },
             },
-            {
+        /*     {
               routerLink: 'transmission-bordereaux-regularite',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.transmissionBordereauxRegularite'),
               routerLinkActiveOptions: { exact: true },
-            },
+            }, */
 
           ]
         },

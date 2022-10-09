@@ -101,15 +101,6 @@ implements OnInit {
     if(this.date1 && this.date2){
       console.log('date1 ',this.date1, ' date2', this.date2)
       this.dossiersBordereaux = [];
-/*       this.dossiersBordereaux = this.dossiersBordereaux_tmp.filter( (item) =>
-          (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-          (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
-          (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
-          (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
-         (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-          (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
-      );
- */
       this.dossiersBordereaux_tmp.forEach(element => {
         if (element?.bon_engagement?.paiements[0]?.datePaiement?.toLowerCase()<=this.date2 && element?.bon_engagement?.paiements[0]?.datePaiement?.toLowerCase()>=this.date1){
           this.dossiersBordereaux.push(element)
@@ -141,14 +132,11 @@ implements OnInit {
   handleFilter = (event: any) => {
       if(event?.value){
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE]})
+          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.PAIEMENT]})
         );
       }else{
         this._store.dispatch(
-          GetTransmissionsReceptions({})
-        );
-        this._store.dispatch(
-          GetTransmissionsReceptionsDetails({})
+          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.PAIEMENT]})
         );
       }
   };

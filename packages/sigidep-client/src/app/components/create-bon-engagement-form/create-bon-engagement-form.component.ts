@@ -158,7 +158,7 @@ export class CreateBonEngagementFormComponent
           this.validation = true;
           this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
           if (this.config.data?.item?.action === 'controler') {
-            this.engagements = this.config.data?.item?.data?.bon_engagement;
+            this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
           }
         } else {
           console.log('1')
@@ -419,6 +419,7 @@ export class CreateBonEngagementFormComponent
 
   submitForm() {
     if (this.validation === true) {
+      console.log(this.config.data?.item)
       this.controler(this.config.data?.item);
       this.ref.close();
       return;

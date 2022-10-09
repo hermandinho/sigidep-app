@@ -91,10 +91,10 @@ implements OnInit {
       message: 'dialogs.messages.cancelTransmission',
       accept: () => {
         this._store.dispatch(
-          CreateTransmissionsReception({ payload: item })
+          GetTransmissionsReceptions({objets:[EtatBonEnum.TRANSMISSIONLIQUIDATION]})
         );
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.EDITIONTITRECREANCE]})
+          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.TRANSMISSIONLIQUIDATION]})
         );
         this._appService.showToast({
           summary: 'messages.success',
@@ -137,14 +137,36 @@ implements OnInit {
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
 
+  async add(item: any) {
+   // this.click = true
+    this._store
+    .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
+    .subscribe((data) => {
+      this.dossiersBordereaux = [...data];
+      console.log('dossiersBordereaux ', this.dossiersBordereaux)
+
+    });
+
+  this.loading1$ = this._store.pipe(
+    select(getLoadingSelectorDetail),
+    map((status) => status)
+  );
+    this._store.dispatch(
+      GetTransmissionsReceptionsDetails({ ids: [item.id]})
+    );
+  }
+
+  delete() {
+    //this.click = false
+    this.dossiersBordereaux = [];
+  }
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelectorTrans))
       .subscribe((data) => {
         console.log(data)
-        if(data !== null){
+        if(data){
           this.bordereauxTransmissions = [...data];
-          if(this.bordereauxTransmissions) this.bordereauxTransmissions = [];
           console.log('bordereauxTransmissions ', this.bordereauxTransmissions)
         }
 
@@ -156,7 +178,7 @@ implements OnInit {
       map((status) => status)
     );
 
-    this._store
+   /*  this._store
     .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
     .subscribe((data) => {
       this.dossiersBordereaux = [...data];
@@ -167,7 +189,7 @@ implements OnInit {
     this.loading1$ = this._store.pipe(
       select(getLoadingSelectorDetail),
       map((status) => status)
-    );
+    ); */
 
     this._store
     .pipe(this.takeUntilDestroy, select(getDataSelectorEx))

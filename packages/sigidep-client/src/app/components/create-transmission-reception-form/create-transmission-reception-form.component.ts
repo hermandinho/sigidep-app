@@ -4,15 +4,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseComponent } from '@components/base.component';
 import { StepTransmission, TransmissionsReceptionModel } from '@models/transmission-reception.model';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
 import { DialogsService } from '@services/dialogs.service';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { EtatBonEnum } from '../../utils/etat-bon-engagement.enum';
 
 @Component({
   selector: 'app-create-transmission-reception-form',

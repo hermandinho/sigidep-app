@@ -7,7 +7,6 @@ import { TransmissionReceptionDTO } from '../dto/transmission-receptions.dto';
 import { EtatBonEnum } from '@utils/etat-bon.enum';
 import { DetailTransmissionReceptionEntity } from '@entities/detail-transmission-reception.entity';
 import { BonEngagementEntity } from '@entities/bon-engagement.entity';
-import { CreateBonEngagementDTO } from '@modules/bons-engagements/dto/create-bon-engagement.dto';
 import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
@@ -41,9 +40,11 @@ export class TransmissionReceptionService {
   }
 
   public async cancel(id: number): Promise<TransmissionReceptionEntity> {
+    console.log('id ',id)
     this.getDossierBor(id).then((res: any) => {
+      console.log('res ')
       for (let i = 0; i < res?.length; i++) {
-        console.log(res[i]?.bon_engagement)
+        console.log('Bon annuler',res[i]?.bon_engagement)
         const property = res[i]?.bon_engagement;
         this.repositorybon.save({
           ...property, // existing fields
@@ -71,8 +72,8 @@ export class TransmissionReceptionService {
     user: UserEntity,
   ): Promise<TransmissionReceptionEntity> {
     const count = await this.repository.count();
-    //const val1: string = getAbbreviation(eng.adminUnit.slice(8));
-    const val1: string = payload?.bon_engagement[0]?.numActeJuridique.exercise;
+    console.log('resultat payload ',payload)
+    const val1: string = (payload?.bon_engagement ? payload?.bon_engagement[0]?.numActeJuridique?.exercise : '55');
     const val2: string = ('0000000' + Number(count + 1)).slice(-7);
 
     payload.numero = val1 + 'B' + val2;
@@ -142,7 +143,6 @@ export class TransmissionReceptionService {
       });
       for (let i = 0; i < payload?.data?.length; i++) {
         const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
-        //const property:CreateBonEngagementDTO = payload?.data[i]?.bon_engagement;
         this.repositorybon.save({
           ...(property as any), // existing fields
           etat: etated,
@@ -172,15 +172,16 @@ export class TransmissionReceptionService {
       console.log('controler', payload)
       etated = EtatBonEnum.CONTROLECONFORMITE
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
-      console.log(property)
-      this.repositorybon.save({
-        ...(property as any), // existing fields
+      console.log('avant ',property)
+       const apres = this.repositorybon.save({
+        ...(property as any),
         etat: etated,
         updateBy: user
       });
+      console.log('apres ',apres)
       this.repository.save({
-        ...payload.data[0]?.transmission_reception, // existing fields
-        objet: etated, // annulation du bon
+        ...payload.data[0]?.transmission_reception,
+        objet: etated,
 
       });
     } else if (payload?.action === 'edition') {
@@ -243,8 +244,9 @@ export class TransmissionReceptionService {
     return check;
   }
 
-  public async getDossierBor(filter?: any): Promise<DetailTransmissionReceptionEntity[]> {
-    return this.repositorydetail
+  public async getDossierBor(filter?: number): Promise<DetailTransmissionReceptionEntity[]> {
+    console.log('detait resul ',filter)
+   const detait = this.repositorydetail
       .createQueryBuilder('detail')
       .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
       .leftJoinAndSelect('detail.transmission_reception', 'transmission_reception')
@@ -257,6 +259,8 @@ export class TransmissionReceptionService {
         codes: filter,
       })
       .getMany();
+      console.log('detait resul ',detait)
+    return detait
   }
 
   public async getBonEnAttente(filter?: EngagementFilter) {

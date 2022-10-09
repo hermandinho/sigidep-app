@@ -45,6 +45,7 @@ implements OnInit, AfterContentChecked {
   data: any[]=[];
   public exercices:any;
   busy=false;
+  dataTansmis: any[]=[];
 
 
 
@@ -68,7 +69,7 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({/* etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE] */})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
     );
     this._store.dispatch(
       GetExercises({})
@@ -136,8 +137,10 @@ implements OnInit, AfterContentChecked {
   }
 
   handleControler(item: any) {
+    this.dataTansmis = []
+    this.dataTansmis.push(item);
     const data1:any = {
-      data : item,
+      data : this.dataTansmis,
       action: 'controler',
       motif:''
     }
@@ -157,8 +160,10 @@ implements OnInit, AfterContentChecked {
   }
 
   handleRejeter(item: any) {
+    this.dataTansmis = []
+    this.dataTansmis.push(item);
     const data1:DataModel = {
-      data : item,
+      data : this.dataTansmis,
       action: 'rejet',
       motif:''
     }
@@ -174,11 +179,13 @@ implements OnInit, AfterContentChecked {
   }
 
   handleEditionTCC(item: any) {
+    this.dataTansmis = []
+    this.dataTansmis.push(item);
     this._appService.showConfirmation({
-      message: 'dialogs.messages.EnregistrerTraitementLiquidationMandatement',
+      message: 'dialogs.messages.editionTCC',
       accept: () => {
         const data1: DataModel = {
-          data: item,
+          data: this.dataTansmis,
           action: 'edition',
           motif: ''
         }
@@ -192,9 +199,8 @@ implements OnInit, AfterContentChecked {
             console.log(res)
             this.busy = false;
             this._store.dispatch(
-              GetTransmissionsReceptionsDetails({/*  etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE]  */})
+              GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE]})
             );
-            //this._dialogService.launchPrintEditionCreanceDialog(res)
             this._appService.showToast({
               summary: 'messages.success',
               detail: 'dialogs.messages.edition-tcc',
