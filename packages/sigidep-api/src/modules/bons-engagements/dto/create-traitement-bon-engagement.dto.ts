@@ -65,4 +65,13 @@ export class CreateTraitementBonEngagementDTO {
 
   @ApiProperty({ required: false })
   motifRejetRegulariter!: string;
+  @ApiProperty({ required: false })
+  nomGestionnaire!: string;
+  @ApiProperty({ required: false })
+  matriculeGestionnaire!: string;
+  @ApiProperty({ required: false })
+  numeroMandat!: string;
+  @ApiProperty({ required: false })
+  DecisionControleRegularite!: string;
+  
 }

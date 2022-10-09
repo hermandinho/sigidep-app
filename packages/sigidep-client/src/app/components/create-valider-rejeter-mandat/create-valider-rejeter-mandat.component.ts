@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { Observable, of } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../store/reducers/index';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AppService } from '../../services/app.service';
 import * as converter from 'number-to-words';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { TraitementBonEngagementModel } from '../../models/traitement-bon-engagement.model';
 import { GetTransmissionsReceptionsDetails } from '../../store/actions/detail-transmissions-receptions.actions';
 import { EtatBonEnum } from '../../utils/etat-bon-engagement.enum';
 import { ApisService } from '../../services/apis.service';
@@ -48,27 +47,27 @@ export class CreateValiderRejeterMandatComponent extends BaseComponent implement
   ngOnInit() {
     console.log(this.config.data)
     this.form = this._fb.group({
-      bon: [this.config.data.item.data ? this.config.data.item.data.bon_engagement : null],
-      action: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.traitements[0].action : null],
-      motif: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.motif : null],
-      dateValidACT: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.paiements[0]?.dateValidACT : null],
-      validACT: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.paiements[0]?.validACT : null],
-      matriculeGestionnaire: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.traitements[0].matriculeGestionnaire : null],
-      nomGestionnaire: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.traitements[0].nomGestionnaire : null],
-      numeroMandat: [this.config.data.item.data ? this.config.data.item.data.bon_engagement?.traitements[0].numeroMandat : null],
+      bon: [this.config.data.item.data ? this.config.data.item.data : null],
+      action: [this.config.data.item.data ? this.config.data.item.data?.traitements[0].action : null],
+      motif: [this.config.data.item.data ? this.config.data.item.data?.motif : null],
+      dateValidACT: [this.config.data.item.data ? this.config.data.item.data?.paiements[0]?.dateValidACT : null],
+      validACT: [this.config.data.item.data ? this.config.data.item.data?.paiements[0]?.validACT : null],
+      matriculeGestionnaire: [this.config.data.item.data ? this.config.data.item.data?.traitements[0].matriculeGestionnaire : null],
+      nomGestionnaire: [this.config.data.item.data ? this.config.data.item.data?.traitements[0].nomGestionnaire : null],
+      numeroMandat: [this.config.data.item.data ? this.config.data.item.data?.traitements[0].numeroMandat : null],
     });
     this.form.controls['dateValidACT'].disable()
-    this.data = this.config.data?.item?.bon_engagement;
-    this.rubriques = JSON.parse(this.config.data?.item?.data.bon_engagement?.traitements[0]?.rubriqueLiquidation);
-    this.montants = JSON.parse(this.config.data?.item?.data.bon_engagement?.traitements[0]?.montantLiquidation);
+    this.data = this.config.data?.item;
+    this.rubriques = JSON.parse(this.config.data?.item?.data?.traitements[0]?.rubriqueLiquidation);
+    this.montants = JSON.parse(this.config.data?.item?.data?.traitements[0]?.montantLiquidation);
 
-    for (let i = 0; i < this.montants.length; i++) {
+    for (let i = 0; i < this.montants?.length; i++) {
       this.totalLiquidation += parseInt(this.montants[i]);
       console.log(this.totalLiquidation)
       this.montant_en_lettre = converter.toWords(this.totalLiquidation)
     }
 
-    if(this.config.data.item.data?.bon_engagement?.paiements[0]?.validACT){
+    if(this.config.data.item.data?.paiements[0]?.validACT){
       this.observation = true
     }
 
@@ -81,8 +80,8 @@ export class CreateValiderRejeterMandatComponent extends BaseComponent implement
     this.form.controls['numeroMandat'].disable()
     this.form.controls['nomGestionnaire'].disable()
 
-    this.netAPayer_en_lettre = converter.toWords(this.montants[0]);
-    this.montant_taxes = this.montants[2] ? this.montants[2] : 0 + this.montants[3] ? this.montants[3] : 0 + this.montants[4] ? this.montants[4] : 0
+    this.netAPayer_en_lettre = converter.toWords(this.montants ? this.montants[0] : 0);
+    this.montant_taxes = this.montants ? (this.montants[2] ? this.montants[2] : 0 + this.montants[3] ? this.montants[3] : 0 + this.montants[4] ? this.montants[4] : 0) : 0
     this.montant_taxes_en_lettre = converter.toWords(this.montant_taxes);
   }
   get f() {

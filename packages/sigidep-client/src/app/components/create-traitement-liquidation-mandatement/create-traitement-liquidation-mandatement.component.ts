@@ -48,7 +48,7 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
       console.log('item ', this.config.data?.item)
       console.log('action ', this.config.data?.action)
       if (this.config.data?.action !== 'enregistrer') {
-        this.piecesJointe = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe);
+        this.piecesJointe = JSON.parse(this.config.data?.item?.traitements[0]?.piecesJointe);
       }
     this.form = this._fb.group({
       traitementLiquidationForm: this._fb.group({
@@ -74,7 +74,7 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
     });
 
 
-    if (this.config.data?.item?.bon_engagement?.traitements[0]) {
+    if (this.config.data?.item?.traitements[0]) {
       const {
         id,
         dateLiquidation,
@@ -94,7 +94,7 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
         nomGestionnaire,
         numeroMandat
 
-      } = this.config.data?.item?.bon_engagement?.traitements[0] as
+      } = this.config.data?.item?.traitements[0] as
         | TraitementBonEngagementModel
         | any
 

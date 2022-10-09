@@ -22,6 +22,9 @@ export class TransmissionsReceptionsDetailsEffects {
           }),
           ...(action.etats && {
             etats: action.etats.join(','),
+          }),
+          ...(action.objets && {
+            objets: action.objets.join(','),
           })
         }).pipe(
           switchMap((payload) => {

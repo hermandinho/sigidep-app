@@ -19,6 +19,8 @@ import { DataModel } from '@models/data.model';
 import { ApisService } from '@services/apis.service';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 import { TableColumnsBordereau } from './consts';
+import { GetBonsEngagements } from '../../../store/actions/bons-engagements.actions';
+import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
 @Component({
   selector: 'app-operations-validation-paiement',
   templateUrl: './operations-validation-paiement.component.html',
@@ -67,7 +69,7 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
+      GetBonsEngagements({/* etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE] */})
     );
     this._store.dispatch(
       GetExercises({})
@@ -88,15 +90,15 @@ implements OnInit, AfterContentChecked {
   searchSelect(event: any) {
     this.dossiersBordereaux = this.dossiersBordereaux_tmp;
     this.dossiersBordereaux = this.dossiersBordereaux_tmp.filter( (item) =>
-        (item.bon_engagement?.numero ? item.bon_engagement?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-        (item.bon_engagement?.numActeJuridique.numero ? item.bon_engagement?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-        (item.bon_engagement?.numActeJuridique.imputation ? item.bon_engagement?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-        (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-        (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
-        (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
-        (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
-       (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-        (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
+        (item?.numero ? item?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item?.numActeJuridique.numero ? item?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item?.numActeJuridique.imputation ? item?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item?.etat ? item?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item?.objet ? item?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
+        (item?.numActeJuridique.montantAE ? item?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
+        (item?.montantCPChiffres ? item?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
+       (item?.dateEngagement ? item?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+        (item?.nomGestionnaire ? item?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
     );
   }
 
@@ -212,11 +214,11 @@ implements OnInit, AfterContentChecked {
   handleFilter = (event: any) => {
       if(event?.value){
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
+          GetBonsEngagements({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
         );
       }else{
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
+          GetBonsEngagements({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
         );
       }
   };
@@ -231,7 +233,7 @@ implements OnInit, AfterContentChecked {
 
   private _initListeners() {
     this._store
-    .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
+    .pipe(this.takeUntilDestroy, select(getDataSelector))
     .subscribe((data) => {
       this.dossiersBordereaux = [...data];
       this.dossiersBordereaux_tmp = [...data];
@@ -240,7 +242,7 @@ implements OnInit, AfterContentChecked {
     });
 
     this.loading1$ = this._store.pipe(
-      select(getLoadingSelectorDetail),
+      select(getLoadingSelector),
       map((status) => status)
     );
 

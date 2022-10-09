@@ -67,31 +67,31 @@
             <tr>
               <td *ngFor="let column of tableColumnsBordereau let i=index" class="nowrap">
                 <span *ngIf="column.field === 'numeroBon'">
-                  {{ item["bon_engagement"]?.numero }}
+                  {{ item["numero"] }}
                 </span>
                 <span *ngIf="column.field === 'numeroEng'">
-                  {{ item["bon_engagement"]?.numActeJuridique?.numero }}
+                  {{ item["numActeJuridique"]?.numero }}
                 </span>
                 <span *ngIf="column.field === 'matriculeGestionnaire'">
-                  {{ item["bon_engagement"]?.nomGestionnaire }}
+                  {{ item["nomGestionnaire"] }}
                 </span>
                 <span *ngIf="column.field === 'imputation'">
-                  {{ item["bon_engagement"]?.numActeJuridique?.imputation }}
+                  {{ item["numActeJuridique"]?.imputation }}
                 </span>
                 <span *ngIf="column.field === 'montantAE'">
-                  {{ item['bon_engagement']?.numActeJuridique?.montantAE }}
+                  {{ item['numActeJuridique']?.montantAE }}
                 </span>
                 <span *ngIf="column.field === 'montantCP'">
-                  {{ item['bon_engagement']?.montantCPChiffres }}
+                  {{ item['montantCPChiffres'] }}
                 </span>
                 <span *ngIf="column.field === 'dateEng'">
-                  {{ item['bon_engagement']?.dateEngagement }}
+                  {{ item['dateEngagement'] }}
                 </span>
                 <span *ngIf="column.field === 'etat'">
-                  {{ item['bon_engagement']?.etat | translate }}
+                  {{ item['etat']| translate }}
                 </span>
                 <span *ngIf="column.field === 'objet'">
-                  {{ item['bon_engagement']?.objet }}
+                  {{ item['objet'] }}
                 </span>
               </td>
               <td class="actions_button">

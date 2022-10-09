@@ -70,7 +70,7 @@ implements OnInit {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.PAIEMENT]})
+      GetTransmissionsReceptionsDetails({objets:[EtatBonEnum.TRANSMISSIONACT],etats: [EtatBonEnum.PAIEMENT]})
     );
     this._store.dispatch(
       GetExercises({})
@@ -132,11 +132,11 @@ implements OnInit {
   handleFilter = (event: any) => {
       if(event?.value){
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], etats: [EtatBonEnum.PAIEMENT]})
+          GetTransmissionsReceptionsDetails({exercices:[event?.value[0]?.toLowerCase()], objets:[EtatBonEnum.TRANSMISSIONACT],etats: [EtatBonEnum.PAIEMENT]})
         );
       }else{
         this._store.dispatch(
-          GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.PAIEMENT]})
+          GetTransmissionsReceptionsDetails({objets:[EtatBonEnum.TRANSMISSIONACT],etats: [EtatBonEnum.PAIEMENT]})
         );
       }
   };

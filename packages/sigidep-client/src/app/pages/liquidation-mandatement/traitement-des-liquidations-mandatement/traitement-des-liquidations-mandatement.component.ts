@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, AfterContentChecked } from 
 import { MessageService, MenuItem } from 'primeng/api';
 import { BaseComponent } from '../../../components/base.component';
 import { Observable, of } from 'rxjs';
-import { TransmissionsReceptionModel } from '../../../models/transmission-reception.model';
 import { DataModel } from '../../../models/data.model';
 import { DialogsService } from '../../../services/dialogs.service';
 import { Store, select } from '@ngrx/store';
@@ -11,17 +10,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from '../../../services/app.service';
 import { ApisService } from '../../../services/apis.service';
 import { TableColumnsTransmission, TableColumnsBordereau } from './consts';
-import { GetTransmissionsReceptions } from '../../../store/actions/transmissions-receptions.actions';
 import { EtatBonEnum } from '../../../utils/etat-bon-engagement.enum';
 import { GetExercises } from '../../../store/actions/exercises.actions';
 import { SetAppBreadcrumb } from '../../../store/actions/app.actions';
 import { map } from 'rxjs/operators';
-import { GetTransmissionsReceptionsDetails } from '../../../store/actions/detail-transmissions-receptions.actions';
-import { getDataSelector as getDataSelectorTrans, getLoadingSelector as getLoadingSelectorTrans } from '@reducers/transmissions-receptions.reducer';
-import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoadingSelectorDetail } from '@reducers/detail-transmissions-receptions.reducer';
+//import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoadingSelectorDetail } from '@reducers/detail-transmissions-receptions.reducer';
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 import { Router, NavigationExtras } from '@angular/router';
-import { TraitementBonEngagementModel } from '../../../models/traitement-bon-engagement.model';
+import { GetBonsEngagements } from '../../../store/actions/bons-engagements.actions';
+import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
+
 
 @Component({
   selector: 'app-traitement-des-liquidations-mandatement',
@@ -75,7 +73,7 @@ constructor(
 
 ngOnInit(): void {
   this._store.dispatch(
-    GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RESERVE, EtatBonEnum.RECEPTIONLIQUIDATION,EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION,EtatBonEnum.MANDATDEPAIEMENT,EtatBonEnum.RAPPORTDELIQUIDATION,EtatBonEnum.ORDONNANCEMENT]})
+    GetBonsEngagements({etats: [EtatBonEnum.RESERVE, EtatBonEnum.RECEPTIONLIQUIDATION,EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION,EtatBonEnum.MANDATDEPAIEMENT,EtatBonEnum.RAPPORTDELIQUIDATION,EtatBonEnum.ORDONNANCEMENT]})
   );
   this._store.dispatch(
     GetExercises({})
@@ -96,15 +94,15 @@ ngOnInit(): void {
 searchSelect(event: any) {
   this.dossiersBordereaux = this.dossiersBordereaux_tmp;
   this.dossiersBordereaux = this.dossiersBordereaux_tmp.filter( (item) =>
-      (item.bon_engagement?.numero ? item.bon_engagement?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.numActeJuridique.numero ? item.bon_engagement?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.numActeJuridique.imputation ? item.bon_engagement?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
-      (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
-     (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
+      (item.numero ? item.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.numActeJuridique.numero ? item.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.numActeJuridique.imputation ? item.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.etat ? item.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.objet ? item.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
+      (item.numActeJuridique.montantAE ? item.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
+      (item.montantCPChiffres ? item.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
+     (item.dateEngagement ? item.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item.nomGestionnaire ? item.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
   );
 }
 
@@ -118,7 +116,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleEnregistrer(this.currentItem);
           },
-          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.RECEPTIONLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RESERVE): true
+          disabled: this.currentItem ? !(this.currentItem?.etat === EtatBonEnum.RECEPTIONLIQUIDATION || this.currentItem?.etat === EtatBonEnum.RESERVE): true
         },
         {
           label: this.translate.instant('labels.Modifier'),
@@ -126,7 +124,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleModifier(this.currentItem);
           },
-          disabled:this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE) : true
+          disabled:this.currentItem ? !(this.currentItem?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE) : true
         },
         {
           label: this.translate.instant('labels.Valider'),
@@ -134,7 +132,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleValider(this.currentItem);
           },
-          disabled:this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE) : true
+          disabled:this.currentItem ? !(this.currentItem?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE) : true
         },
         {
           label: this.translate.instant('labels.EditerRapport'),
@@ -142,7 +140,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleEditerRapport (this.currentItem);
           },
-          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.VALIDATIONLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
+          disabled: this.currentItem ? !(this.currentItem?.etat === EtatBonEnum.VALIDATIONLIQUIDATION || this.currentItem?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
         },
         {
           label: this.translate.instant('labels.Mandater'),
@@ -150,7 +148,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleMandater(this.currentItem);
           },
-          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.VALIDATIONLIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
+          disabled: this.currentItem ? !(this.currentItem?.etat === EtatBonEnum.VALIDATIONLIQUIDATION || this.currentItem?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
         },
         {
           label: this.translate.instant('labels.EditerMandatPaiement'),
@@ -158,7 +156,7 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleEditerMandatPaiement(this.currentItem);
           },
-          disabled: this.currentItem?.bon_engagement ? !(this.currentItem?.bon_engagement?.etat === EtatBonEnum.ORDONNANCEMENT || this.currentItem?.bon_engagement?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.bon_engagement?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
+          disabled: this.currentItem ? !(this.currentItem?.etat === EtatBonEnum.ORDONNANCEMENT || this.currentItem?.etat === EtatBonEnum.RAPPORTDELIQUIDATION || this.currentItem?.etat === EtatBonEnum.MANDATDEPAIEMENT) : true
         },
       ],
     },
@@ -207,30 +205,30 @@ handleEditerRapport(item: any) {
     message: 'dialogs.messages.EditerRapportMandatement',
     accept: () => {
       let editedEngagement = {
-        id: item?.bon_engagement?.traitements[0]?.id,
-        bon: item?.bon_engagement,
-        observation: item?.bon_engagement?.traitements[0]?.observation,
-        qteUnitePhysiqueReal: item?.bon_engagement?.traitements[0]?.qteUnitePhysiqueReal,
-        montantTotalUnitPhysReal: item?.bon_engagement?.traitements[0]?.montantTotalUnitPhysReal,
-        etat: item?.bon_engagement?.traitements[0]?.etat,
-        dateLiquidation: item?.bon_engagement?.traitements[0]?.dateLiquidation,
-        numOrdreLiquidation: item?.bon_engagement?.traitements[0]?.numOrdreLiquidation,
-        rubriqueLiquidation: item?.bon_engagement?.traitements[0]?.rubriqueLiquidation,
-        montantLiquidation: item?.bon_engagement?.traitements[0]?.montantLiquidation,
-        liquidation: item?.bon_engagement?.traitements[0]?.liquidation,
-        dateOrdonnancement: item?.bon_engagement?.traitements[0]?.dateOrdonnancement,
-        ordonnancement: item?.bon_engagement?.traitements[0]?.ordonnancement,
-        numOrdreOrdonnancement: item?.bon_engagement?.traitements[0]?.numOrdreOrdonnancement,
-        rubriqueOrdonnancement: item?.bon_engagement?.traitements[0]?.rubriqueOrdonnancement,
-        montantOrdonnancement: item?.bon_engagement?.traitements[0]?.montantOrdonnancement,
-        motif: item?.bon_engagement?.traitements[0]?.motif,
-        piecesJointe: item?.bon_engagement?.traitements[0]?.piecesJointe,
+        id: item?.traitements[0]?.id,
+        bon: item,
+        observation: item?.traitements[0]?.observation,
+        qteUnitePhysiqueReal: item?.traitements[0]?.qteUnitePhysiqueReal,
+        montantTotalUnitPhysReal: item?.traitements[0]?.montantTotalUnitPhysReal,
+        etat: item?.traitements[0]?.etat,
+        dateLiquidation: item?.traitements[0]?.dateLiquidation,
+        numOrdreLiquidation: item?.traitements[0]?.numOrdreLiquidation,
+        rubriqueLiquidation: item?.traitements[0]?.rubriqueLiquidation,
+        montantLiquidation: item?.traitements[0]?.montantLiquidation,
+        liquidation: item?.traitements[0]?.liquidation,
+        dateOrdonnancement: item?.traitements[0]?.dateOrdonnancement,
+        ordonnancement: item?.traitements[0]?.ordonnancement,
+        numOrdreOrdonnancement: item?.traitements[0]?.numOrdreOrdonnancement,
+        rubriqueOrdonnancement: item?.traitements[0]?.rubriqueOrdonnancement,
+        montantOrdonnancement: item?.traitements[0]?.montantOrdonnancement,
+        motif: item?.traitements[0]?.motif,
+        piecesJointe: item?.traitements[0]?.piecesJointe,
         action: 'editer_rapport'
-      } as TraitementBonEngagementModel;
-     // item?.bon_engagement?.traitements[0];
+      } as any;
+     // item?.traitements[0];
     //editedEngagement.action = 'editer_rapport';
     console.log(editedEngagement)
-    const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
+    const method: Observable<any> = this._apisService.put<any>(
       '/traitement-bon-engagements',
       editedEngagement
     );
@@ -289,30 +287,30 @@ handleEditerMandatPaiement(item: any) {
 
     accept: () => {
       let editedEngagement = {
-        id: item?.bon_engagement?.traitements[0]?.id,
-        bon: item?.bon_engagement,
-        observation: item?.bon_engagement?.traitements[0]?.observation,
-        qteUnitePhysiqueReal: item?.bon_engagement?.traitements[0]?.qteUnitePhysiqueReal,
-        montantTotalUnitPhysReal: item?.bon_engagement?.traitements[0]?.montantTotalUnitPhysReal,
-        etat: item?.bon_engagement?.traitements[0]?.etat,
-        dateLiquidation: item?.bon_engagement?.traitements[0]?.dateLiquidation,
-        numOrdreLiquidation: item?.bon_engagement?.traitements[0]?.numOrdreLiquidation,
-        rubriqueLiquidation: item?.bon_engagement?.traitements[0]?.rubriqueLiquidation,
-        montantLiquidation: item?.bon_engagement?.traitements[0]?.montantLiquidation,
-        liquidation: item?.bon_engagement?.traitements[0]?.liquidation,
-        dateOrdonnancement: item?.bon_engagement?.traitements[0]?.dateOrdonnancement,
-        ordonnancement: item?.bon_engagement?.traitements[0]?.ordonnancement,
-        numOrdreOrdonnancement: item?.bon_engagement?.traitements[0]?.numOrdreOrdonnancement,
-        rubriqueOrdonnancement: item?.bon_engagement?.traitements[0]?.rubriqueOrdonnancement,
-        montantOrdonnancement: item?.bon_engagement?.traitements[0]?.montantOrdonnancement,
-        motif: item?.bon_engagement?.traitements[0]?.motif,
-        piecesJointe: item?.bon_engagement?.traitements[0]?.piecesJointe,
+        id: item?.traitements[0]?.id,
+        bon: item,
+        observation: item?.traitements[0]?.observation,
+        qteUnitePhysiqueReal: item?.traitements[0]?.qteUnitePhysiqueReal,
+        montantTotalUnitPhysReal: item?.traitements[0]?.montantTotalUnitPhysReal,
+        etat: item?.traitements[0]?.etat,
+        dateLiquidation: item?.traitements[0]?.dateLiquidation,
+        numOrdreLiquidation: item?.traitements[0]?.numOrdreLiquidation,
+        rubriqueLiquidation: item?.traitements[0]?.rubriqueLiquidation,
+        montantLiquidation: item?.traitements[0]?.montantLiquidation,
+        liquidation: item?.traitements[0]?.liquidation,
+        dateOrdonnancement: item?.traitements[0]?.dateOrdonnancement,
+        ordonnancement: item?.traitements[0]?.ordonnancement,
+        numOrdreOrdonnancement: item?.traitements[0]?.numOrdreOrdonnancement,
+        rubriqueOrdonnancement: item?.traitements[0]?.rubriqueOrdonnancement,
+        montantOrdonnancement: item?.traitements[0]?.montantOrdonnancement,
+        motif: item?.traitements[0]?.motif,
+        piecesJointe: item?.traitements[0]?.piecesJointe,
         action: 'editer_mandat_paiement'
-      } as TraitementBonEngagementModel;
-     // item?.bon_engagement?.traitements[0];
+      } as any;
+     // item?.traitements[0];
     //editedEngagement.action = 'editer_rapport';
     console.log(editedEngagement)
-    const method: Observable<any> = this._apisService.put<TraitementBonEngagementModel>(
+    const method: Observable<any> = this._apisService.put<any>(
       '/traitement-bon-engagements',
       editedEngagement
     );
@@ -365,11 +363,11 @@ handleEditerMandatPaiement(item: any) {
 handleFilter = (event: any) => {
   if (event?.value) {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({ exercices: [event?.value[0]?.toLowerCase()],etats:[EtatBonEnum.RECEPTIONLIQUIDATION] })
+      GetBonsEngagements({ etats: [EtatBonEnum.RESERVE, EtatBonEnum.RECEPTIONLIQUIDATION,EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION,EtatBonEnum.MANDATDEPAIEMENT,EtatBonEnum.RAPPORTDELIQUIDATION,EtatBonEnum.ORDONNANCEMENT]})
     );
   } else {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats:[EtatBonEnum.RECEPTIONLIQUIDATION]})
+      GetBonsEngagements({etats: [EtatBonEnum.RESERVE, EtatBonEnum.RECEPTIONLIQUIDATION,EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION,EtatBonEnum.MANDATDEPAIEMENT,EtatBonEnum.RAPPORTDELIQUIDATION,EtatBonEnum.ORDONNANCEMENT]})
     );
   }
 
@@ -385,7 +383,7 @@ get currentLangCurrencyFormat() {
 
 private _initListeners() {
   this._store
-  .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
+  .pipe(this.takeUntilDestroy, select(getDataSelector))
   .subscribe((data) => {
     this.dossiersBordereaux = [...data];
     this.dossiersBordereaux_tmp = [...data];
@@ -394,7 +392,7 @@ private _initListeners() {
   });
 
 this.loading1$ = this._store.pipe(
-  select(getLoadingSelectorDetail),
+  select(getLoadingSelector),
   map((status) => status)
 );
 

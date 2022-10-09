@@ -139,7 +139,7 @@ export class TransmissionReceptionService {
       etated = EtatBonEnum.RECEPTIONCONTROLECONFORMITE;
       this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
-        objet: EtatBonEnum.RECEPTIONCONTROLECONFORMITE,
+        //objet: EtatBonEnum.RECEPTIONCONTROLECONFORMITE,
       });
       for (let i = 0; i < payload?.data?.length; i++) {
         const property = await this.repositorybon.findOne(payload?.data[i]?.bon_engagement?.id);
@@ -157,7 +157,7 @@ export class TransmissionReceptionService {
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
-        objet: etated,
+       // objet: etated,
       });
       this.repositorybon.save({
         ...(property as any), // existing fields
@@ -181,7 +181,7 @@ export class TransmissionReceptionService {
       console.log('apres ',apres)
       this.repository.save({
         ...payload.data[0]?.transmission_reception,
-        objet: etated,
+       // objet: etated,
 
       });
     } else if (payload?.action === 'edition') {
@@ -191,7 +191,7 @@ export class TransmissionReceptionService {
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
-        objet: etated,
+        //objet: etated,
       });
       this.repositorybon.save({
         ...(property as any), // existing fields
@@ -206,7 +206,7 @@ export class TransmissionReceptionService {
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
-        objet: etated,
+        //objet: etated,
       });
       this.repositorybon.save({
         ...(property as any), // existing fields
@@ -219,7 +219,7 @@ export class TransmissionReceptionService {
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
-        objet: etated,
+        //objet: etated,
       });
       this.repositorybon.save({
         ...(property as any), // existing fields
@@ -232,7 +232,7 @@ export class TransmissionReceptionService {
       const property = await this.repositorybon.findOne(payload?.data[0]?.bon_engagement?.id);
       this.repository.save({
         ...payload.data[0]?.transmission_reception, // existing fields
-        objet: etated,
+       // objet: etated,
       });
       this.repositorybon.save({
         ...(property as any), // existing fields

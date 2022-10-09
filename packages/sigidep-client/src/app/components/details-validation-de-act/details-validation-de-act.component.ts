@@ -41,19 +41,19 @@ export class DetailsValidationDeACTComponent extends BaseComponent implements On
   ngOnInit() {
     console.log(this.config.data)
     this.form = this._fb.group({
-      bon: [this.bon?.data ? this.bon?.data.bon_engagement : null],
-      action: [this.bon?.data ? this.bon?.data.bon_engagement?.traitements[0].action : null],
-      motif: [this.bon?.data ? this.bon?.data.bon_engagement?.motif : null],
-      dateValidACT: [this.bon?.data ? this.bon?.data.bon_engagement?.paiements[0]?.dateValidACT : null],
-      validACT: [this.bon?.data ? this.bon?.data.bon_engagement?.paiements[0]?.validACT : null],
-      matriculeGestionnaire: [this.bon?.data ? this.bon?.data.bon_engagement?.traitements[0].matriculeGestionnaire : null],
-      nomGestionnaire: [this.bon?.data ? this.bon?.data.bon_engagement?.traitements[0].nomGestionnaire : null],
-      numeroMandat: [this.bon?.data ? this.bon?.data.bon_engagement?.traitements[0].numeroMandat : null],
+      bon: [this.bon?.data ? this.bon?.data : null],
+      action: [this.bon?.data ? this.bon?.data?.traitements[0].action : null],
+      motif: [this.bon?.data ? this.bon?.data?.motif : null],
+      dateValidACT: [this.bon?.data ? this.bon?.data?.paiements[0]?.dateValidACT : null],
+      validACT: [this.bon?.data ? this.bon?.data?.paiements[0]?.validACT : null],
+      matriculeGestionnaire: [this.bon?.data ? this.bon?.data?.traitements[0].matriculeGestionnaire : null],
+      nomGestionnaire: [this.bon?.data ? this.bon?.data?.traitements[0].nomGestionnaire : null],
+      numeroMandat: [this.bon?.data ? this.bon?.data?.traitements[0].numeroMandat : null],
     });
     this.form.controls['dateValidACT'].disable()
-    this.data = this.bon?.bon_engagement;
-    this.rubriques = JSON.parse(this.bon?.data.bon_engagement?.traitements[0]?.rubriqueLiquidation);
-    this.montants = JSON.parse(this.bon?.data.bon_engagement?.traitements[0]?.montantLiquidation);
+    this.data = this.bon;
+    this.rubriques = JSON.parse(this.bon?.data?.traitements[0]?.rubriqueLiquidation);
+    this.montants = JSON.parse(this.bon?.data?.traitements[0]?.montantLiquidation);
 
     for (let i = 0; i < this.montants.length; i++) {
       this.totalLiquidation += parseInt(this.montants[i]);
@@ -61,7 +61,7 @@ export class DetailsValidationDeACTComponent extends BaseComponent implements On
       this.montant_en_lettre = converter.toWords(this.totalLiquidation)
     }
 
-    if(this.bon?.data?.bon_engagement?.paiements[0]?.validACT){
+    if(this.bon?.data?.paiements[0]?.validACT){
       this.observation = true
     }
 

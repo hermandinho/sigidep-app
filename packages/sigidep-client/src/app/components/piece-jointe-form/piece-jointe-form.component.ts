@@ -9,9 +9,6 @@ import { map } from 'rxjs/operators';
 import { PieceJointeModel } from '../../models/piece-jointe.model';
 import { Observable, of } from 'rxjs';
 import {
-  DeletePieceJointe,
-  DeletePieceJointeFailure,
-  DeletePieceJointeSuccess,
   GetPiecesJointes,
 } from '@actions/piece-jointe.actions';
 import {

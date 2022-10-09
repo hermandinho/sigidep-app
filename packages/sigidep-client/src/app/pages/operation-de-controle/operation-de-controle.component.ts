@@ -69,7 +69,7 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
+      GetTransmissionsReceptionsDetails({objets:[EtatBonEnum.RECEPTIONCONTROLECONFORMITE], etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
     );
     this._store.dispatch(
       GetExercises({})
@@ -199,7 +199,7 @@ implements OnInit, AfterContentChecked {
             console.log(res)
             this.busy = false;
             this._store.dispatch(
-              GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE]})
+              GetTransmissionsReceptionsDetails({objets:[EtatBonEnum.RECEPTIONCONTROLECONFORMITE], etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
             );
             this._appService.showToast({
               summary: 'messages.success',

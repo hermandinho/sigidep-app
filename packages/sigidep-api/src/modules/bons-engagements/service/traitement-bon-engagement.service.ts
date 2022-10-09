@@ -68,7 +68,7 @@ export class TraitementBonEngagementService {
     payload: CreateTraitementBonEngagementDTO,
     user: UserEntity,
   ): Promise<CreateTraitementBonEngagementDTO> {
-    
+    console.log(payload)
     if(payload?.data?.action === 'rejet-controle-regulariter'){
       const check = await this.repository.findOne({
         id: payload?.data?.id,
@@ -77,11 +77,13 @@ export class TraitementBonEngagementService {
         throw new NotFoundException();
       }
     } else {
-      const check = await this.repository.findOne({
-        id: payload?.id,
-      });
-      if (!check) {
-        throw new NotFoundException();
+      if (payload?.id){
+        const check = await this.repository.findOne({
+          id: payload?.id,
+        });
+        if (!check) {
+          throw new NotFoundException();
+        }
       }
     }
    
@@ -161,6 +163,7 @@ export class TraitementBonEngagementService {
         updateBy: user,
       });
     }else if(payload?.action === 'controle-regulariter'){
+      console.log(payload)
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
@@ -169,6 +172,23 @@ export class TraitementBonEngagementService {
         ...property,
         etat: EtatBonEnum.CONTROLEREGULARITE,
       })
+
+      if (payload?.id === null){
+        const traintement = {
+          bon:payload?.bon,
+          nomGestionnaire:payload?.nomGestionnaire,
+          matriculeGestionnaire:payload?.matriculeGestionnaire,
+          numeroMandat:payload?.numeroMandat,
+          observation:payload?.observation,
+          DecisionControleRegularite:payload?.DecisionControleRegularite,
+          typeTraitement: EtatBonEnum.ORDONNANCEMENT,
+        }
+
+        return this.repository.save({
+          ...(traintement as any),
+          updateBy: user,
+        });
+      }
 
       return this.repository.save({
         ...(payload as any),
@@ -190,6 +210,23 @@ export class TraitementBonEngagementService {
         dateRejet: date,
         motif: payload.motifRejetRegulariter
       })
+
+      if (payload?.id === null){
+        const traintement = {
+          bon:payload?.bon,
+          nomGestionnaire:payload?.nomGestionnaire,
+          matriculeGestionnaire:payload?.matriculeGestionnaire,
+          numeroMandat:payload?.numeroMandat,
+          observation:payload?.observation,
+          DecisionControleRegularite:payload?.DecisionControleRegularite,
+          typeTraitement: EtatBonEnum.REJETCONTROLEREGULARITE,
+        }
+
+        return this.repository.save({
+          ...(traintement as any),
+          updateBy: user,
+        });
+      }
 
       return this.repository.save({
         ...(payload?.data as any),

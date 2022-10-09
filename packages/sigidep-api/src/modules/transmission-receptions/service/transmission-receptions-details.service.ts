@@ -35,6 +35,9 @@ export class TransmissionReceptionDetailService {
     .andWhere(filter?.exercices ? 'eng.numero like :exercices' : 'true', {
       exercices: filter?.exercices,
     })
+    .andWhere(filter?.objets ? 'transmission_reception.objet like :objets' : 'true', {
+      objets: filter?.objets,
+    })
     .getMany();
     res.then(res=>console.log(res))
     return res;

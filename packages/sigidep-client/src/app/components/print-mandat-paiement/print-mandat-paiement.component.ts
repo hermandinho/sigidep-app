@@ -28,20 +28,20 @@ export class PrintMandatPaiementComponent  extends BaseComponent implements OnIn
 
   ngOnInit(): void {
       this.data = this.config.data?.item;
-      this.rubriques = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation);
-      this.montants = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.montantLiquidation);
-      this.dataPieceJointes = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe);
-      console.log('rubriqueLiquidation', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation))
-      console.log('pieceJointe', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe))
+      this.rubriques = JSON.parse(this.config.data?.item?.traitements[0]?.rubriqueLiquidation);
+      this.montants = JSON.parse(this.config.data?.item?.traitements[0]?.montantLiquidation);
+      this.dataPieceJointes = JSON.parse(this.config.data?.item?.traitements[0]?.piecesJointe);
+      console.log('rubriqueLiquidation', JSON.parse(this.config.data?.item?.traitements[0]?.rubriqueLiquidation))
+      console.log('pieceJointe', JSON.parse(this.config.data?.item?.traitements[0]?.piecesJointe))
       console.log('data', this.config.data?.item)
 
-      for(let i = 0; i< this.montants.length; i++){
-        this.totalLiquidation +=  parseInt(this.montants[i]);
+      for(const element of this.montants){
+        this.totalLiquidation +=  parseInt(element);
         console.log(this.totalLiquidation)
         this.montant_en_lettre = converter.toWords(this.totalLiquidation)
       }
 
-      this.date = 1966 + parseInt(this.data?.bon_engagement?.numActeJuridique?.exercise)
+      this.date = 1966 + parseInt(this.data?.numActeJuridique?.exercise)
   }
 
 }

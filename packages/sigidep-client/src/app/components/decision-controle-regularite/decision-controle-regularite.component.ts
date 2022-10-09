@@ -42,33 +42,34 @@ export class DecisionControleRegulariteComponent extends BaseComponent implement
   }
 
   ngOnInit() {
+    console.log(this.config.data.item)
     this.form = this._fb.group({
-      id: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].id : null],
-      dateLiquidation: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].dateLiquidation : null],
-      numOrdreLiquidation: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].numOrdreLiquidation : null],
-      rubriqueLiquidation: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].rubriqueLiquidation : null],
-      montantLiquidation: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].montantLiquidation : null],
-      liquidation: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].liquidation : null],
-      dateOrdonnancement: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].dateOrdonnancement : null],
-      ordonnancement: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].ordonnancement : null],
-      numOrdreOrdonnancement: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].numOrdreOrdonnancement : null],
-      rubriqueOrdonnancement: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].rubriqueOrdonnancement : null],
-      montantOrdonnancement: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].montantOrdonnancement : null],
-      bon: [this.config.data.item ? this.config.data.item.bon_engagement : null],
-      piecesJointe: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].piecesJointe : null],
-      action: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].action : null],
-      matriculeGestionnaire: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].matriculeGestionnaire : null],
-      nomGestionnaire: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].nomGestionnaire : null],
-      numeroMandat: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].numeroMandat : null],
-      DecisionControleRegularite: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].DecisionControleRegularite : null],
-      motifRejetRegulariter: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].motifRejetRegulariter : null],
-      observation: [this.config.data.item ? this.config.data.item.bon_engagement?.traitements[0].observation : null]
+      id: [this.config.data.item.traitements.length > 0 ? this.config.data.item?.traitements[0].id : null],
+      dateLiquidation: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].dateLiquidation : null],
+      numOrdreLiquidation: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].numOrdreLiquidation : null],
+      rubriqueLiquidation: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].rubriqueLiquidation : null],
+      montantLiquidation: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].montantLiquidation : null],
+      liquidation: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].liquidation : null],
+      dateOrdonnancement: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].dateOrdonnancement : null],
+      ordonnancement: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].ordonnancement : null],
+      numOrdreOrdonnancement: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].numOrdreOrdonnancement : null],
+      rubriqueOrdonnancement: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].rubriqueOrdonnancement : null],
+      montantOrdonnancement: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].montantOrdonnancement : null],
+      bon: [this.config.data.item ? this.config.data.item : null],
+      piecesJointe: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].piecesJointe : null],
+      action: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].action : null],
+      matriculeGestionnaire: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].matriculeGestionnaire : null],
+      nomGestionnaire: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].nomGestionnaire : null],
+      numeroMandat: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].numeroMandat : null],
+      DecisionControleRegularite: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].DecisionControleRegularite : null],
+      motifRejetRegulariter: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].motifRejetRegulariter : null],
+      observation: [this.config.data.item?.traitements.length > 0 ? this.config.data.item?.traitements[0].observation : null]
     });
 
-    this.data = this.config.data?.item?.bon_engagement;
-    this.rubriques = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation);
-    this.montants = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.montantLiquidation);
-    console.log('rubriqueLiquidation', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation))
+    this.data = this.config.data?.item;
+    this.rubriques = JSON.parse(this.config.data.item?.traitements.length > 0 ? this.config.data?.item?.traitements[0]?.rubriqueLiquidation : '');
+    this.montants = JSON.parse(this.config.data.item?.traitements.length > 0 ? this.config.data?.item?.traitements[0]?.montantLiquidation : '');
+    console.log('rubriqueLiquidation', JSON.parse(this.config.data.item?.traitements.length > 0 ? this.config.data?.item?.traitements[0]?.rubriqueLiquidation : ''))
 
     for (let i = 0; i < this.montants.length; i++) {
       this.totalLiquidation += parseInt(this.montants[i]);

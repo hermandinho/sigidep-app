@@ -65,13 +65,13 @@ export class PaiementService {
     payload: CreatePaiementDTO,
     user: UserEntity,
   ): Promise<CreatePaiementDTO> {
-    console.log(payload.action)
-    const check = await this.repositoryBon.findOne({
+    console.log(payload)
+  /*   const check = await this.repositoryBon.findOne({
       id: payload?.id,
     });
     if (!check) {
       throw new NotFoundException();
-    }
+    } */
     if (payload?.data?.action === 'rejeter-mandat') {
       console.log('rejeter-mandat', payload)
       const date = new Date();

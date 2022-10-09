@@ -82,10 +82,10 @@ export class CreatePayerMandatComponent extends BaseComponent implements OnInit 
         numeroCNI,
         dateDelivrance,
         lieuDelivrance
-      } = this.config.data?.item?.data?.bon_engagement?.paiements[0] as
+      } = this.config.data?.item?.data?.paiements[0] as
         | PaiementModel
         | any;
-      this.paiement = this.config.data?.item?.data?.bon_engagement?.paiements[0]
+      this.paiement = this.config.data?.item?.data?.paiements[0]
       this.form.patchValue({
         paiementForm: {
           id,

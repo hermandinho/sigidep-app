@@ -41,7 +41,7 @@ public paiementForm!: FormGroup;
     const currentDate = pipe.transform(date, 'yyyy-MM-dd');
     this.paiementForm.patchValue({
       datePaiement: currentDate,
-      bon: this.bon.data.bon_engagement
+      bon: this.bon.data
     })
   }
 

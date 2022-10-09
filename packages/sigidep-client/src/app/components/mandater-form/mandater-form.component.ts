@@ -64,14 +64,14 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
     console.log('traitementLiquidationForm',this.traitementLiquidationForm)
     this.subformInitialized.emit(this.traitementLiquidationForm);
     console.log('item ',this.data.item)
-    if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure === '1121'){
+    if(this.data?.item?.numActeJuridique?.codeProcedure === '1121'){
       this._store.dispatch(
         GetEngagementJuridiquesByCategory({
           category: 'mission'
         })
       );
     }
-    if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1122'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1123'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1124'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1125'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1126'){
+    if(this.data?.item?.numActeJuridique?.codeProcedure==='1122'||this.data?.item?.numActeJuridique?.codeProcedure==='1123'||this.data?.item?.numActeJuridique?.codeProcedure==='1124'||this.data?.item?.numActeJuridique?.codeProcedure==='1125'||this.data?.item?.numActeJuridique?.codeProcedure==='1126'){
       this._store.dispatch(
         GetEngagementJuridiquesByCategory({
           category: 'decision'
@@ -79,7 +79,7 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
       );
     }
 
-    if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1110'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1111'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1115'){
+    if(this.data?.item?.numActeJuridique?.codeProcedure==='1110'||this.data?.item?.numActeJuridique?.codeProcedure==='1111'||this.data?.item?.numActeJuridique?.codeProcedure==='1115'){
       this._store.dispatch(
         GetEngagementJuridiquesByCategory({
           category: 'commande'
@@ -107,17 +107,17 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
     .subscribe((data) => {
       this.engagements = [...data];
       console.log(this.engagements)
-        if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure === '1121'){
+        if(this.data?.item?.numActeJuridique?.codeProcedure === '1121'){
           this.dataRubrique = this.engagements.find(
-            (item:any) => item.id === this.data?.item?.bon_engagement?.numActeJuridique?.id
+            (item:any) => item.id === this.data?.item?.numActeJuridique?.id
           );
           this.rubrique.push('Net à payer');
           this.montant.push(this.dataRubrique?.moment)
           console.log('mission ',this.dataRubrique)
         }
-        if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1122'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1123'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1124'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1125'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1126'){
+        if(this.data?.item?.numActeJuridique?.codeProcedure==='1122'||this.data?.item?.numActeJuridique?.codeProcedure==='1123'||this.data?.item?.numActeJuridique?.codeProcedure==='1124'||this.data?.item?.numActeJuridique?.codeProcedure==='1125'||this.data?.item?.numActeJuridique?.codeProcedure==='1126'){
           this.dataRubrique = this.engagements.find(
-            (item:any) => item.id === this.data?.item?.bon_engagement?.numActeJuridique?.id
+            (item:any) => item.id === this.data?.item?.numActeJuridique?.id
           );
           console.log(this.dataRubrique)
           if(this.dataRubrique?.netAPercevoir !== null){
@@ -150,9 +150,9 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
           }
           console.log('decision ',this.dataRubrique)
         }
-        if(this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1110'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1111'||this.data?.item?.bon_engagement?.numActeJuridique?.codeProcedure==='1115'){
+        if(this.data?.item?.numActeJuridique?.codeProcedure==='1110'||this.data?.item?.numActeJuridique?.codeProcedure==='1111'||this.data?.item?.numActeJuridique?.codeProcedure==='1115'){
           this.dataRubrique = this.engagements.find(
-            (item:any) => item.id === this.data?.item?.bon_engagement?.numActeJuridique?.id
+            (item:any) => item.id === this.data?.item?.numActeJuridique?.id
           );
           if(this.dataRubrique?.tauxIR !== null) {
             //Net à payer
@@ -204,7 +204,7 @@ export class MandaterFormComponent extends BaseComponent implements OnInit {
       rubriqueOrdonnancement: JSON.stringify(this.rubrique),
       montantOrdonnancement: JSON.stringify(this.montant),
       ordonnancement: true,
-      bon: this.data?.item?.bon_engagement
+      bon: this.data?.item
 
     });
     console.log(this.traitementLiquidationForm)

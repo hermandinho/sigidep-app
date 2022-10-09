@@ -22,12 +22,12 @@
           </div>
         </div>
         <div class="title">
-          <h3>MANDAT DE PAIEMENT N° {{ config.data?.item?.bon_engagement?.traitements[0]?.numeroMandat }}</h3>
+          <h3>MANDAT DE PAIEMENT N° {{ config.data?.item?.traitements[0]?.numeroMandat }}</h3>
         </div>
 
         <div>
           <p>
-            &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire}}, en ma
+            &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.traitements[0]?.nomGestionnaire}}, en ma
             qualité de Gestionnaire accrédité certifie l'effectivité de
             la présente créance et donne ordre à l'Agent Comptable Assignataire de la payer conformément aux détail
             suivants:
@@ -41,25 +41,25 @@
               <th>Montant CP</th>
             </tr>
             <tr>
-              <td>{{ config.data?.item?.bon_engagement?.numActeJuridique?.numero }}</td>
-              <td>{{ config.data?.item?.bon_engagement?.numActeJuridique?.montantAE }}</td>
-              <td>{{ config.data?.item?.bon_engagement?.numero }}</td>
-              <td>{{ config.data?.item?.bon_engagement?.montantCPChiffres }}</td>
+              <td>{{ config.data?.item?.numActeJuridique?.numero }}</td>
+              <td>{{ config.data?.item?.numActeJuridique?.montantAE }}</td>
+              <td>{{ config.data?.item?.numero }}</td>
+              <td>{{ config.data?.item?.montantCPChiffres }}</td>
             </tr>
           </table>
           <table class="sans-ligne2">
             <tr>
               <td><b>Liquidation de Réference N°</b></td>
-              <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.numOrdreLiquidation }}</td>
+              <td>{{ config.data?.item?.traitements[0]?.numOrdreLiquidation }}</td>
             </tr>
             <tr>
               <td><b>Unité Administrative d'origine:</b></td>
-              <td>{{ config.data?.item?.bon_engagement?.numActeJuridique?.adminUnit }}</td>
+              <td>{{ config.data?.item?.numActeJuridique?.adminUnit }}</td>
             </tr>
             <tr>
               <td><b>Ordonateur:</b></td>
-              <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
-                config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
+              <td>{{ config.data?.item?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
+                config.data?.item?.traitements[0]?.nomGestionnaire }}</td>
             </tr>
           </table>
         </div>
@@ -71,8 +71,8 @@
             <th>Coordonnées bancaires</th>
           </tr>
           <tr>
-            <td>{{ config.data?.item?.bon_engagement?.matriculeGestionnaire }}</td>
-            <td>{{ config.data?.item?.bon_engagement?.nomGestionnaire }} </td>
+            <td>{{ config.data?.item?.matriculeGestionnaire }}</td>
+            <td>{{ config.data?.item?.nomGestionnaire }} </td>
             <td>
               <table>
                 <tr>
@@ -94,24 +94,24 @@
         <table class="sans-ligne2">
           <tr>
             <td>Exercice: </td>
-            <td>{{ data?.bon_engagement?.numActeJuridique?.exercise}}-Budget {{ date }}</td>
+            <td>{{ data?.numActeJuridique?.exercise}}-Budget {{ date }}</td>
           </tr>
           <tr>
             <td>Ordonateur: </td>
-            <td>{{ config.data?.item?.bon_engagement?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
-              config.data?.item?.bon_engagement?.traitements[0]?.nomGestionnaire }}</td>
+            <td>{{ config.data?.item?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
+              config.data?.item?.traitements[0]?.nomGestionnaire }}</td>
           </tr>
           <tr>
             <td>Objet de la dépense: </td>
-            <td>{{ data?.bon_engagement?.objet}}</td>
+            <td>{{ data?.objet}}</td>
           </tr>
           <tr>
             <td>Imputation: </td>
-            <td>{{ data?.bon_engagement?.numActeJuridique?.imputation}}</td>
+            <td>{{ data?.numActeJuridique?.imputation}}</td>
           </tr>
           <tr>
             <td>Montant Brut (en FCFA): </td>
-            <td>{{ config.data?.item?.bon_engagement?.montantCPChiffres }}</td>
+            <td>{{ config.data?.item?.montantCPChiffres }}</td>
           </tr>
         </table>
         <h4>Détails des rubrique du mandat</h4>
@@ -123,7 +123,7 @@
             <th>Montant (FCFA)</th>
           </tr>
           <tr *ngIf="rubriques[0] && montants[0]">
-            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-01</span></td>
+            <td><span>{{ data?.numActeJuridique?.numero }}-01</span></td>
             <td><span>{{ rubriques[0] }}</span></td>
             <td>
               <span>{{ montants[0] }}</span>
@@ -131,7 +131,7 @@
           </tr>
 
           <tr *ngIf="rubriques[1] && montants[1]">
-            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-02</span></td>
+            <td><span>{{ data?.numActeJuridique?.numero }}-02</span></td>
             <td><span>{{ rubriques[1] }}</span></td>
             <td>
               <span>{{ montants[1] }}</span>
@@ -139,7 +139,7 @@
           </tr>
 
           <tr *ngIf="rubriques[2] && montants[2]">
-            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-03</span></td>
+            <td><span>{{ data?.numActeJuridique?.numero }}-03</span></td>
             <td><span>{{ rubriques[2] }}</span></td>
             <td>
               <span>{{ montants[2] }}</span>
@@ -147,7 +147,7 @@
           </tr>
 
           <tr *ngIf="rubriques[3] && montants[3]">
-            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-04</span></td>
+            <td><span>{{ data?.numActeJuridique?.numero }}-04</span></td>
             <td><span>{{ rubriques[3] }}</span></td>
             <td>
               <span>{{ montants[3] }}</span>
@@ -155,7 +155,7 @@
           </tr>
 
           <tr *ngIf="rubriques[4] && montants[4]">
-            <td><span>{{ data?.bon_engagement?.numActeJuridique?.numero }}-05</span></td>
+            <td><span>{{ data?.numActeJuridique?.numero }}-05</span></td>
             <td><span>{{ rubriques[4] }}</span></td>
             <td>
               <span>{{ montants[4] }}</span>

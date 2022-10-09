@@ -19,6 +19,8 @@ import { getDataSelector as getDataSelectorDetail, getLoadingSelector as getLoad
 import { getDataSelector as getDataSelectorEx, getLoadingSelector as getLoadingSelectorEx } from '@reducers/exercise.reducer';
 import { Router, NavigationExtras } from '@angular/router';
 import { TraitementBonEngagementModel } from '../../../models/traitement-bon-engagement.model';
+import { GetBonsEngagements } from '../../../store/actions/bons-engagements.actions';
+import { getDataSelector, getLoadingSelector } from '@reducers/bons-engagements.reducer';
 
 @Component({
   selector: 'app-controle-regularite',
@@ -72,7 +74,7 @@ constructor(
 
 ngOnInit(): void {
   this._store.dispatch(
-    GetTransmissionsReceptionsDetails({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
+    GetBonsEngagements({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
   );
   this._store.dispatch(
     GetExercises({})
@@ -93,15 +95,15 @@ ngOnInit(): void {
 searchSelect(event: any) {
   this.dossiersBordereaux = this.dossiersBordereaux_tmp;
   this.dossiersBordereaux = this.dossiersBordereaux_tmp.filter( (item) =>
-      (item.bon_engagement?.numero ? item.bon_engagement?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.numActeJuridique.numero ? item.bon_engagement?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.numActeJuridique.imputation ? item.bon_engagement?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.etat ? item.bon_engagement?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.objet ? item.bon_engagement?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
-      (item.bon_engagement?.numActeJuridique.montantAE ? item.bon_engagement?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.montantCPChiffres ? item.bon_engagement?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
-     (item.bon_engagement?.dateEngagement ? item.bon_engagement?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
-      (item.bon_engagement?.nomGestionnaire ? item.bon_engagement?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
+      (item?.numero ? item?.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item?.numActeJuridique.numero ? item?.numActeJuridique.numero.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item?.numActeJuridique.imputation ? item?.numActeJuridique.imputation.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item?.etat ? item?.etat.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item?.objet ? item?.objet.toLowerCase().includes(event.target.value.toLowerCase()) : '')||
+      (item?.numActeJuridique.montantAE ? item?.numActeJuridique.montantAE.toString().includes(event.target.value.toLowerCase()) : '') ||
+      (item?.montantCPChiffres ? item?.montantCPChiffres.toString().includes(event.target.value.toLowerCase()): '') ||
+     (item?.dateEngagement ? item?.dateEngagement.toLowerCase().includes(event.target.value.toLowerCase()) : '') ||
+      (item?.nomGestionnaire ? item?.nomGestionnaire.toLowerCase().includes(event.target.value.toLowerCase()):'')
   );
 }
 
@@ -157,14 +159,13 @@ handleRejeter(item: any) {
 handleFilter = (event: any) => {
   if (event?.value) {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({
-        exercices: [event?.value[0]?.toLowerCase()],
+      GetBonsEngagements({
         etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]
       })
     );
   } else {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
+      GetBonsEngagements({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
     );
   }
 
@@ -180,7 +181,7 @@ get currentLangCurrencyFormat() {
 
 private _initListeners() {
   this._store
-  .pipe(this.takeUntilDestroy, select(getDataSelectorDetail))
+  .pipe(this.takeUntilDestroy, select(getDataSelector))
   .subscribe((data) => {
     this.dossiersBordereaux = [...data];
     this.dossiersBordereaux_tmp = [...data];
@@ -189,7 +190,7 @@ private _initListeners() {
   });
 
 this.loading1$ = this._store.pipe(
-  select(getLoadingSelectorDetail),
+  select(getLoadingSelector),
   map((status) => status)
 );
 

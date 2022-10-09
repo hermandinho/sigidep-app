@@ -25,12 +25,12 @@ export class EditerRapportTraitementLiquidationMandatementComponent extends Base
    }
 
   ngOnInit(): void {
-      this.data = this.config.data?.item?.bon_engagement;
-      this.rubriques = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation);
-      this.montants = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.montantLiquidation);
-      this.dataPieceJointes = JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe);
-      console.log('rubriqueLiquidation', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.rubriqueLiquidation))
-      console.log('pieceJointe', JSON.parse(this.config.data?.item?.bon_engagement?.traitements[0]?.piecesJointe))
+      this.data = this.config.data?.item;
+      this.rubriques = JSON.parse(this.config.data?.item?.traitements[0]?.rubriqueLiquidation);
+      this.montants = JSON.parse(this.config.data?.item?.traitements[0]?.montantLiquidation);
+      this.dataPieceJointes = JSON.parse(this.config.data?.item?.traitements[0]?.piecesJointe);
+      console.log('rubriqueLiquidation', JSON.parse(this.config.data?.item?.traitements[0]?.rubriqueLiquidation))
+      console.log('pieceJointe', JSON.parse(this.config.data?.item?.traitements[0]?.piecesJointe))
 
       for(let i = 0; i< this.montants.length; i++){
         this.totalLiquidation +=  parseInt(this.montants[i]);
