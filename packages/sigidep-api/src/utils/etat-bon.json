@@ -35,5 +35,6 @@
   { "codeEtape": 31, "label": "Validation Comptable" },
   { "codeEtape": 32, "label": "Paiement" },
   { "codeEtape": 33, "label": "Mandat de paiement" },
-  { "codeEtape": 34, "label": "Rapport de liquidation" }
+  { "codeEtape": 34, "label": "Rapport de liquidation" },
+  { "codeEtape": 35, "label": "Certificat" }
 ]

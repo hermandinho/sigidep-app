@@ -75,8 +75,16 @@ export class BonEngagementController {
   @Put('/cancel/:id')
   public async cancelReservation(
     @Param('id') id: number,
-    @Body(ValidationPipe) payload: CreateBonEngagementDTO,
+    @Body(ValidationPipe) payload: any,
   ) {
-    return this.services.cancelReservation(id);
+    return this.services.cancelReservation(id, payload);
+  }
+
+  @Put('/certificat/:id')
+  public async certification(
+    @Param('id') id: number,
+    @Body(ValidationPipe) payload: any,
+  ) {
+    return this.services.certification(id, payload);
   }
 }

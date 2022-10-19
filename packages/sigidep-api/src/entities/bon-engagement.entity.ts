@@ -64,6 +64,12 @@ export class BonEngagementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'motif' })
   public motif: boolean;
 
+  @Column({ default: 0, type: 'float', name: 'montantCPReserver' })
+  public montantCPReserver: number;
+
+  @Column({ default: 0, type: 'float', name: 'montantCPMandater' })
+  public montantCPMandater: number;
+
   @Column({ default: false, name: 'encours' })
   public encours: boolean;
   @Column({

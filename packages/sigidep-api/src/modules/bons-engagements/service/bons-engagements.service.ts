@@ -17,6 +17,7 @@ import { response } from 'express';
 
 @Injectable()
 export class BonEngagementService {
+
   constructor(
     @InjectRepository(BonEngagementEntity)
     private readonly repository: Repository<BonEngagementEntity>,
@@ -56,7 +57,7 @@ export class BonEngagementService {
   public async filter(
     filter?: EngagementFilter,
   ): Promise<BonEngagementEntity[]> {
-    console.log(filter)
+    
     return this.repository
       .createQueryBuilder('bon')
       .leftJoinAndSelect('bon.numActeJuridique', 'eng')
@@ -81,7 +82,22 @@ export class BonEngagementService {
       )
       .getMany();
   }
+  public async filterBon(
+    filter?: any,
+  ): Promise<BonEngagementEntity[]> {
+    console.log(filter)
+    const bons = this.repository
+    .createQueryBuilder('bon')
+    .leftJoinAndSelect('bon.numActeJuridique', 'eng')
+    .leftJoinAndSelect('bon.traitements', 'traitements')
+    .leftJoinAndSelect('bon.paiements', 'paiements')
+    .leftJoinAndSelect('bon.facture', 'facture')
+    .leftJoinAndSelect('facture.articles', 'articles')
+    .getMany();
+    console.log(bons)
 
+    return ;
+  }
   public async deleteOne(id: number): Promise<any> {
     return this.repository.delete({ id });
   }
@@ -130,15 +146,6 @@ export class BonEngagementService {
 
     const bon = await this.repository.save(bonPaylaod);
 
-    /* const traitementPayload: CreateTraitementBonEngagementDTO = {
-      bon: bon.id,
-      typeTraitement: EtatBonEnum.ENREGISTRE,
-      observation: '',
-      qteUnitePhysiqueReal: null,
-      montantTotalUnitPhysReal: null,
-    }; */
-   // this.ajouterTraitement(traitementPayload, user);
-   // this.ajouterPaiement(traitementPayload, user);
     return bon;
   }
 
@@ -159,6 +166,7 @@ export class BonEngagementService {
       ...(payload as any),
       updateBy: user,
       etat: reserve ? EtatBonEnum.RESERVE : EtatBonEnum.MODIFIE,
+      montantCPReserver: reserve ? payload.montantCPChiffres : 0
     };
     if (payload.facture) {
       const oldArticles = await this.getArticles(payload.facture.id);
@@ -196,21 +204,35 @@ export class BonEngagementService {
         },
         updateBy: user,
         etat: reserve ? EtatBonEnum.RESERVE : EtatBonEnum.MODIFIE,
+        montantCPReserver: reserve ? payload.montantCPChiffres : 0
       };
     }
+    console.log(bonPaylaod)
     const bon = await this.repository.save(bonPaylaod);
     return bon;
   }
 
-  public async cancelReservation(id: number): Promise<BonEngagementEntity> {
+  public async cancelReservation(id: number,payload: any): Promise<BonEngagementEntity> {
     const property = await this.repository.findOne({
       id: id,
     });
-
-    return this.repository.save({
+    this.repository.save({
       ...property, // existing fields
       etat: EtatBonEnum.ANNULELORSRESERVATION, // annulation du bon
+      montantCPReserver: 0
     });
+    return payload;
+  }
+
+  public async certification(id: number,payload: any): Promise<BonEngagementEntity> {
+    const property = await this.repository.findOne({
+      id: id,
+    });
+    this.repository.save({
+      ...property, // existing fields
+      etat: EtatBonEnum.CERTIFICAT, // annulation du bon
+    });
+    return payload;
   }
 
   /**

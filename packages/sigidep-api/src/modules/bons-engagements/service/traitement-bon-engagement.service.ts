@@ -122,9 +122,10 @@ export class TraitementBonEngagementService {
         id: payload?.bon.id,
       });
   
-      const bon = this.repositoryBon.save({
+      this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.ORDONNANCEMENT,
+        montantCPMandater: property.montantCPReserver
       })
 
       return this.repository.save({

@@ -25,4 +25,13 @@ export class CreateBonEngagementDTO {
   @IsOptional()
   @Type(() => CreateFactureDTO)
   facture?: CreateFactureDTO;
+
+  @ApiProperty({ nullable: true, required: false })
+  montantCPReserver!: number;
+
+  @ApiProperty({ nullable: true, required: false })
+  montantCPMandater!: number;
+
+  @ApiProperty({ nullable: true, required: false })
+  montantCPChiffres!: number;
 }
