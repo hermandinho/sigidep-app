@@ -69,7 +69,8 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetBonsEngagements({/* etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE] */})
+      GetBonsEngagements({etats: [EtatBonEnum.RECEPTIONACT,EtatBonEnum.VALIDATIONCOMPTABLE]})
+     //GetBonsEngagements({etatsCodes: [{etat:EtatBonEnum.RECEPTIONACT,code:'1121'},{etat:EtatBonEnum.RECEPTIONACT,code:'1122'}]})
     );
     this._store.dispatch(
       GetExercises({})

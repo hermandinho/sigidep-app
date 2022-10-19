@@ -468,7 +468,8 @@
     "compteACrediter": "Compte A Crediter",
     "villePaiement": "Ville Paiement",
     "datePaiement": "Date Paiement",
-    "numeroMandat":"Numéro Mandat"
+    "numeroMandat":"Numéro Mandat",
+    "certificat": "Certifier"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -941,7 +942,9 @@
       "dateEng": "Date Eng",
       "dateMandatement": "Date Paiement",
       "montantMandate": "Montant Mandaté",
-      "numeroMandat": "Numéro Mandat"
+      "numeroMandat": "Numéro Mandat",
+      "montantCPReserver": "montantCP Reserver",
+      "montantCPMandater": "montantCP Mandater"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -1056,7 +1059,8 @@
       "editionTCC": "Edition TCC",
       "alertPayerMandat":"Etes-vous sûr(e) de vouloir Editer le paiement du Bon ?",
       "alertValiderMandat":"Etes-vous sûr(e) de vouloir Valider le Bon ?",
-      "alertRejeterMandat":"Etes-vous sûr(e) de vouloir rejeter le Bon ?"
+      "alertRejeterMandat":"Etes-vous sûr(e) de vouloir rejeter le Bon ?",
+      "CertificatEngagement": "Etes-vous sûr de vouloir Certifier ce Bon? Cette opération est irréversible !!!"
     }
   },
   "exerciseStatuses": {

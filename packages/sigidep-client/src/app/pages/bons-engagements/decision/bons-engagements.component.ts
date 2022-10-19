@@ -33,6 +33,8 @@ import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TableColumns } from './consts';
+import { CertificationBons } from '../../../store/actions/bons-engagements.actions';
+import { ApisService } from '../../../services/apis.service';
 
 @Component({
   selector: 'app-bons-engagements',
@@ -80,7 +82,8 @@ export class BonsEngagementsComponent
     private readonly dispatcher: Actions,
     public translate: TranslateService,
     private primengConfig: PrimeNGConfig,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private _apisService: ApisService,
   ) {
     super();
     this.filters = Object.entries(EtatBonEnum).map(([key, value]) => ({
@@ -153,16 +156,16 @@ export class BonsEngagementsComponent
             command: () => {
               this.handleCancel(this.currentItem);
             },
-            disabled: this.currentItem?.etat !== EtatBonEnum.RESERVE,
+            disabled: this.currentItem?.etat !== EtatBonEnum.RESERVE && this.currentItem?.etat !== EtatBonEnum.ANNULETRANSMISSIONCONTROLECONFORMITE,
           },
-          /*{
-            label: this.translate.instant('labels.delete'),
-            icon: 'pi pi-times',
+          {
+            label: this.translate.instant('labels.certificat'),
+            icon: 'pi pi-check-circle',
             command: () => {
-              this.delete(this.currentItem);
+              this.handleCertificat(this.currentItem);
             },
-            disabled: this.currentItem?.etat === EtatBonEnum.MANDATRESERVE
-          }, */
+            disabled: this.currentItem?.etat !== EtatBonEnum.RESERVE
+          },
           {
             label: this.translate.instant('labels.print'),
             icon: 'pi pi-print',
@@ -224,9 +227,82 @@ export class BonsEngagementsComponent
     this._appService.showConfirmation({
       message: 'dialogs.messages.cancelMandatEngagement',
       accept: () => {
-        this._store.dispatch(
-          CancelBonsEngagementsReservation({ payload: item })
+        const method: Observable<any> = this._apisService.put<any>(
+          `/bons-engagements/cancel/${item.id}`,
+          item
         );
+        method.subscribe(
+          (res) => {
+            this.busy = false;
+            this.getData(res?.numActeJuridique?.codeProcedure);
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'dialogs.messages.cancel',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.cancel.notfound';
+            } else {
+              err = 'errors.unknown';
+            }
+            this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+
+      },
+    });
+  }
+
+  handleCertificat(item: BonEngagementModel) {
+    this._appService.showConfirmation({
+      message: 'dialogs.messages.CertificatEngagement',
+      accept: () => {
+        const method: Observable<any> = this._apisService.put<any>(
+          `/bons-engagements/certificat/${item.id}`,
+          item
+        );
+        method.subscribe(
+          (res) => {
+            this.busy = false;
+            this.getData(res?.numActeJuridique?.codeProcedure);
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'dialogs.messages.certificat',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.certificat.notfound';
+            } else {
+              err = 'errors.unknown';
+            }
+            this.busy = false;
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+
       },
     });
   }
@@ -264,6 +340,7 @@ export class BonsEngagementsComponent
       .pipe(this.takeUntilDestroy, select(getDataSelectorm))
       .subscribe((data) => {
         this.data = [...data];
+        console.log(data)
         if (this.data[0]?.numActeJuridique?.codeProcedure === '1122') {
           this.primes = [...data];
           this.primesData = [...data];
@@ -292,64 +369,5 @@ export class BonsEngagementsComponent
       select(getLoadingSelectorm),
       map((status) => status)
     );
-
-    this.dispatcher
-      .pipe(
-        this.takeUntilDestroy,
-        ofType(DeleteBonsEngagementsSuccess, DeleteBonsEngagementsFailure)
-      )
-      .subscribe((action) => {
-        if (action.type === DeleteBonsEngagementsFailure.type) {
-          if (action.error?.statusCode === 403) {
-            this._appService.showUnauthorizedActionToast();
-          } else {
-            this._appService.showToast({
-              severity: 'error',
-              summary: 'errors.error',
-              detail: 'errors.error',
-              closable: true,
-            });
-          }
-        } else if (action.type === DeleteBonsEngagementsSuccess.type) {
-          this._appService.showToast({
-            severity: 'success',
-            detail: 'messages.engagements.deleteSuccess',
-            summary: 'errors.success',
-            closable: true,
-          });
-        }
-      });
-
-    this.dispatcher
-      .pipe(
-        this.takeUntilDestroy,
-        ofType(
-          CancelBonsEngagementsReservationSuccess,
-          CancelBonsEngagementsReservationFailure
-        )
-      )
-      .subscribe((action) => {
-        if (action.type === CancelBonsEngagementsReservationFailure.type) {
-          if (action.error?.statusCode === 403) {
-            this._appService.showUnauthorizedActionToast();
-          } else {
-            this._appService.showToast({
-              severity: 'error',
-              summary: 'errors.error',
-              detail: 'errors.error',
-              closable: true,
-            });
-          }
-        } else if (
-          action.type === CancelBonsEngagementsReservationSuccess.type
-        ) {
-          this._appService.showToast({
-            severity: 'success',
-            detail: 'messages.engagements.cancelSuccess',
-            summary: 'errors.success',
-            closable: true,
-          });
-        }
-      });
   }
 }

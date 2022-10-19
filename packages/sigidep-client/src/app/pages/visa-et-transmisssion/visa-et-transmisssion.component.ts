@@ -8,7 +8,7 @@ import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 })
 export class VisaEtTransmisssionComponent implements OnInit {
   public transmissionConformite = EtatBonEnum.TRANSMISCONTROLECONFORMITE;
-  public etat = EtatBonEnum.RESERVE;
+  public etat = EtatBonEnum.CERTIFICAT;
   constructor(){}
 
   ngOnInit(): void {}

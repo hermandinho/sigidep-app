@@ -90,10 +90,10 @@ export class CreateBonEngagementMissionFormComponent
         nomGestionnaire: [undefined],
         objet: [undefined],
         dateEngagement: [undefined, [Validators.required, this.dateValidator]],
-        montantCPChiffres: [undefined, [this.montantAEValidator]],
+        montantCPChiffres: [undefined,],
         montantCPLettres: [undefined],
         signataire: [undefined],
-        typeMission: [undefined, [this.montantAEValidator]],
+        typeMission: [undefined,],
         dateAffectation: [undefined],
       }),
 
@@ -289,7 +289,7 @@ export class CreateBonEngagementMissionFormComponent
 
     if (!this.isBook && this.isUpdateForm) {
       const method: Observable<any> = this._apisService.put<BonEngagementModel>(
-        '/mandats',
+        '/bons-engagements',
         editedEngagement
       );
       method.subscribe(
@@ -297,7 +297,7 @@ export class CreateBonEngagementMissionFormComponent
           this.busy = false;
           this.ref.close(res);
           localStorage.removeItem('imputation');
-          this._store.dispatch(GetBonsEngagements({}));
+          this._store.dispatch(GetBonsEngagements({procedures:['1121']}));
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'messages.engagements.createSuccess',
@@ -330,7 +330,7 @@ export class CreateBonEngagementMissionFormComponent
         accept: () => {
           const method: Observable<any> =
             this._apisService.post<BonEngagementModel>(
-              '/mandats',
+              '/bons-engagements',
               editedEngagement
             );
           method.subscribe(
@@ -338,7 +338,7 @@ export class CreateBonEngagementMissionFormComponent
               this.busy = false;
 
               localStorage.removeItem('imputation');
-              this._store.dispatch(GetBonsEngagements({}));
+              this._store.dispatch(GetBonsEngagements({procedures:['1121']}));
 
               this._appService.showToast({
                 summary: 'messages.success',

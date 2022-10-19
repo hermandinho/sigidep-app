@@ -74,7 +74,13 @@ constructor(
 
 ngOnInit(): void {
   this._store.dispatch(
-    GetBonsEngagements({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
+    GetBonsEngagements({etats:[
+      EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
+      EtatBonEnum.REJETCONTROLEREGULARITE,
+      EtatBonEnum.EDITIONTITRECREANCE,
+      EtatBonEnum.AUTORISATIONREDITIONTTC,
+      EtatBonEnum.REEDITIONTITRECREANCE
+    ]})
   );
   this._store.dispatch(
     GetExercises({})
@@ -117,7 +123,13 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleControlerRegularite(this.currentItem);
           },
-         // disabled: this.currentItem?.bon_engagement[0]?.etat === EtatBonEnum.RECEPTIONLIQUIDATION
+         disabled: this.currentItem ? !(
+          this.currentItem?.etat === EtatBonEnum.RECEPTIONCONTROLEREGULARITE ||
+          this.currentItem?.etat === EtatBonEnum.REJETCONTROLEREGULARITE ||
+          this.currentItem?.etat === EtatBonEnum.EDITIONTITRECREANCE ||
+          this.currentItem?.etat === EtatBonEnum.AUTORISATIONREDITIONTTC ||
+          this.currentItem?.etat === EtatBonEnum.REEDITIONTITRECREANCE) : true
+
         },
         {
           label: this.translate.instant('labels.rejeter'),
@@ -125,7 +137,11 @@ ngAfterContentChecked(): void {
           command: () => {
             this.handleRejeter(this.currentItem);
           },
-          //disabled: this.currentItem?.etat === EtatBonEnum.ENREGISTREMENTLIQUIDATION || this.currentItem?.etat === EtatBonEnum.LIQUIDATIONMODIFIEE
+          disabled: this.currentItem ? !(
+            this.currentItem?.etat === EtatBonEnum.RECEPTIONCONTROLEREGULARITE ||
+            this.currentItem?.etat === EtatBonEnum.EDITIONTITRECREANCE ||
+            this.currentItem?.etat === EtatBonEnum.AUTORISATIONREDITIONTTC ||
+            this.currentItem?.etat === EtatBonEnum.REEDITIONTITRECREANCE) : true
         },
       ],
     },
@@ -160,12 +176,22 @@ handleFilter = (event: any) => {
   if (event?.value) {
     this._store.dispatch(
       GetBonsEngagements({
-        etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]
+        etats:[
+          EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
+          EtatBonEnum.REJETCONTROLEREGULARITE,
+          EtatBonEnum.EDITIONTITRECREANCE,
+          EtatBonEnum.AUTORISATIONREDITIONTTC,
+          EtatBonEnum.REEDITIONTITRECREANCE]
       })
     );
   } else {
     this._store.dispatch(
-      GetBonsEngagements({etats:[EtatBonEnum.RECEPTIONCONTROLEREGULARITE,EtatBonEnum.REJETCONTROLEREGULARITE,EtatBonEnum.EDITIONTITRECREANCE,EtatBonEnum.AUTORISATIONREDITIONTTC,EtatBonEnum.REEDITIONTITRECREANCE]})
+      GetBonsEngagements({etats:[
+        EtatBonEnum.RECEPTIONCONTROLEREGULARITE,
+        EtatBonEnum.REJETCONTROLEREGULARITE,
+        EtatBonEnum.EDITIONTITRECREANCE,
+        EtatBonEnum.AUTORISATIONREDITIONTTC,
+        EtatBonEnum.REEDITIONTITRECREANCE]})
     );
   }
 
@@ -183,9 +209,32 @@ private _initListeners() {
   this._store
   .pipe(this.takeUntilDestroy, select(getDataSelector))
   .subscribe((data) => {
-    this.dossiersBordereaux = [...data];
-    this.dossiersBordereaux_tmp = [...data];
-    console.log('dossiersBordereaux ', this.dossiersBordereaux)
+    const tabs = [...data];
+        console.log(tabs)
+        tabs.forEach(elt => {
+       if ((
+        elt?.numActeJuridique?.codeProcedure == '1121' ||
+        elt?.numActeJuridique?.codeProcedure == '1122' ||
+        elt?.numActeJuridique?.codeProcedure == '1123' ||
+        elt?.numActeJuridique?.codeProcedure == '1124' ||
+        elt?.numActeJuridique?.codeProcedure == '1125' ||
+        elt?.numActeJuridique?.codeProcedure == '1126') &&
+        (elt?.etat == EtatBonEnum.AUTORISATIONREDITIONTTC ||
+          elt?.etat == EtatBonEnum.REEDITIONTITRECREANCE ||
+          elt?.etat == EtatBonEnum.EDITIONTITRECREANCE
+          )) {
+            this.dossiersBordereaux.push(elt)
+            this.dossiersBordereaux_tmp.push(elt)
+            console.log("dossiersBordereaux2 ", this.dossiersBordereaux)
+          } else if (
+            elt?.etat !== EtatBonEnum.AUTORISATIONREDITIONTTC &&
+            elt?.etat !== EtatBonEnum.REEDITIONTITRECREANCE &&
+            elt?.etat == EtatBonEnum.EDITIONTITRECREANCE) {
+            this.dossiersBordereaux.push(elt)
+            this.dossiersBordereaux_tmp.push(elt)
+            console.log("dossiersBordereaux2 ", this.dossiersBordereaux)
+          }
+        })
 
   });
 

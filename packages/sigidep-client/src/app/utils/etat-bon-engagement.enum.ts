@@ -31,5 +31,6 @@ export enum EtatBonEnum {
   VALIDATIONCOMPTABLE = 'labels.validationComptable',
   PAIEMENT = 'labels.paiement',
   MANDATDEPAIEMENT = 'labels.mandatdepaiement',
-  RAPPORTDELIQUIDATION = 'labels.rapportdeliquidation'
+  RAPPORTDELIQUIDATION = 'labels.rapportdeliquidation',
+  CERTIFICAT= 'labels.certificat'
 }

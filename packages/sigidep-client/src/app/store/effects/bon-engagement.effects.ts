@@ -27,9 +27,11 @@ import {
   UpdateBonsEngagementsSuccess,
 } from '@actions/bons-engagements.actions';
 import { FactureArticleModel } from '@models/facture-article.model';
+import { CertificationBons, CertificationBonsSuccess, CertificationBonsFailure } from '../actions/bons-engagements.actions';
 
 @Injectable()
 export class BonsEngagementsEffects {
+  action!:BonEngagementModel;
   fetch$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GetBonsEngagements),
@@ -143,8 +145,8 @@ export class BonsEngagementsEffects {
           )
           .pipe(
             switchMap((payload) => {
-              console.log(action);
-
+              console.log(action.payload);
+              //this.action = action.payload;
               return [CancelBonsEngagementsReservationSuccess({ payload })];
             }),
             catchError((err: HttpErrorResponse) =>
@@ -154,6 +156,29 @@ export class BonsEngagementsEffects {
       )
     )
   );
+
+  certification$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(CertificationBons),
+    mergeMap((action) =>
+      this.apisService
+        .put<BonEngagementModel>(
+          `/bons-engagements/certificat/${action.payload.id}`,
+          action.payload
+        )
+        .pipe(
+          switchMap((payload) => {
+            console.log(action);
+
+            return [CertificationBonsSuccess({ payload })];
+          }),
+          catchError((err: HttpErrorResponse) =>
+            of(CertificationBonsFailure(err))
+          )
+        )
+    )
+  )
+);
 
   constructor(private actions$: Actions, private apisService: ApisService) { }
 }

@@ -1,6 +1,7 @@
 import { BonEngagementModel } from '@models/bon-engagement.model';
 import { FactureArticleModel } from '@models/facture-article.model';
 import { createAction, props } from '@ngrx/store';
+import { EtatCodeModel } from '../../models/etatCode.model';
 export const GetBonsEngagements = createAction(
   '[Bons] Filter',
   props<{
@@ -8,6 +9,7 @@ export const GetBonsEngagements = createAction(
     etats?: string[];
     numeros?: string[];
     imputation?: string[];
+    etatsCodes?: EtatCodeModel[];
   }>()
 );
 
@@ -84,5 +86,20 @@ export const CancelBonsEngagementsReservationSuccess = createAction(
 );
 export const CancelBonsEngagementsReservationFailure = createAction(
   '[Bons] Cancel failure',
+  props<{ error?: any }>() // TODO defile errors global model here
+);
+
+export const CertificationBons = createAction(
+  '[Bons] Certificat',
+  props<{
+    payload: any;
+  }>()
+);
+export const CertificationBonsSuccess = createAction(
+  '[Bons] Certificat success',
+  props<{ payload: BonEngagementModel }>()
+);
+export const CertificationBonsFailure = createAction(
+  '[Bons] Certificat failure',
   props<{ error?: any }>() // TODO defile errors global model here
 );

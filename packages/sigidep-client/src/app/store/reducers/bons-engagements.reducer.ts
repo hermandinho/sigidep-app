@@ -16,6 +16,7 @@ import {
   UpdateBonsEngagementsSuccess,
 } from '@actions/bons-engagements.actions';
 import { BonEngagementModel } from '@models/bon-engagement.model';
+import { CertificationBons, CertificationBonsSuccess, CertificationBonsFailure } from '../actions/bons-engagements.actions';
 import {
   Action,
   createFeatureSelector,
@@ -71,10 +72,14 @@ const bonsEngagementsReducer = createReducer(
   on(CancelBonsEngagementsReservation, (state) => {
     return { ...state, loading: true };
   }),
+  on(CertificationBons, (state) => {
+    return { ...state, loading: true };
+  }),
   on(
     CreateBonsEngagementsSuccess,
     UpdateBonsEngagementsSuccess,
     CancelBonsEngagementsReservationSuccess,
+    CertificationBonsSuccess,
     (state, { payload }) => {
       return { ...state, loading: false, data: [payload] };
     }
@@ -83,6 +88,7 @@ const bonsEngagementsReducer = createReducer(
     CreateBonsEngagementsFailure,
     UpdateBonsEngagementsFailure,
     CancelBonsEngagementsReservationFailure,
+    CertificationBonsFailure,
     (state, { error }) => {
       return { ...state, loading: false, error: error };
     }

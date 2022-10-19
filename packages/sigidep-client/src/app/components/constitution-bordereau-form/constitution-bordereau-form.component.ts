@@ -73,9 +73,20 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
 
     this.constitutionForm = this.startingForm;
     this.subformInitialized.emit(this.constitutionForm);
+    if(this.etat == EtatBonEnum.CERTIFICAT){
+      this._store.dispatch(
+        GetTransmissionsReceptionsBons({etats: [EtatBonEnum.CERTIFICAT,EtatBonEnum.ANNULETRANSMISSIONCONTROLECONFORMITE,EtatBonEnum.ORDONNANCEMENT]})
+      );
+    }else if(this.etat == EtatBonEnum.EDITIONTITRECREANCE){
+      this._store.dispatch(
+        GetTransmissionsReceptionsBons({etats: [EtatBonEnum.EDITIONTITRECREANCE]})
+      );
+    }else{
       this._store.dispatch(
         GetTransmissionsReceptionsBons({etats: [this.etat]})
       );
+
+    }
 
     this._store.dispatch(
       GetExercises({})
@@ -139,8 +150,20 @@ export class ConstitutionBordereauFormComponent extends BaseComponent implements
         this._store
         .pipe(this.takeUntilDestroy, select(getDataSelector))
         .subscribe((data) => {
-          this.bons = [...data];
-          this.bons_tmp = [...data];
+          const tabs = [...data];
+          console.log(tabs)
+          tabs.forEach(elt=>{
+            if((elt?.numActeJuridique?.codeProcedure == '1110' || elt?.numActeJuridique?.codeProcedure == '1111' || elt?.numActeJuridique?.codeProcedure == '1115') && (elt?.etat == EtatBonEnum.CERTIFICAT || elt?.etat == EtatBonEnum.ANNULETRANSMISSIONCONTROLECONFORMITE || elt?.etat == EtatBonEnum.EDITIONTITRECREANCE) ){
+              this.bons.push(elt)
+              this.bons_tmp.push(elt)
+              console.log("bons1 ", this.bons)
+            }else if((elt?.numActeJuridique?.codeProcedure == '1121' || elt?.numActeJuridique?.codeProcedure == '1122' || elt?.numActeJuridique?.codeProcedure == '1123' || elt?.numActeJuridique?.codeProcedure == '1124' || elt?.numActeJuridique?.codeProcedure == '1125' || elt?.numActeJuridique?.codeProcedure == '1126') && (elt?.etat == EtatBonEnum.ORDONNANCEMENT)){
+              this.bons.push(elt)
+              this.bons_tmp.push(elt)
+              console.log("bons2 ", this.bons)
+            }
+          })
+
           console.log("bons ", this.bons)
         });
 

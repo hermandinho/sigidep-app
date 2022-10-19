@@ -35,6 +35,16 @@ export const TableColumns = [
     sortable: true,
   },
   {
+    field: 'montantCPReserver',
+    title: 'tables.headers.montantCPReserver',
+    sortable: true,
+  },
+  {
+    field: 'montantCPMandater',
+    title: 'tables.headers.montantCPMandater',
+    sortable: true,
+  },
+  {
     field: 'numActeJuridique',
     title: 'tables.headers.numeroJuridique',
     sortable: true,
