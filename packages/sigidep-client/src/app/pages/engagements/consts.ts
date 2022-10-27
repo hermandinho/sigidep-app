@@ -29,6 +29,11 @@ export const TableColumns = [
     title: 'tables.headers.montantAE',
     sortable: false,
   },
+/*   {
+    field: 'montantAE_Reserve',
+    title: 'tables.headers.montantAE_Reserve',
+    sortable: false,
+  }, */
   {
     field: 'etat',
     title: 'tables.headers.etat',

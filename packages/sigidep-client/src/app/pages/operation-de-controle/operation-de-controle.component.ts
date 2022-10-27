@@ -69,7 +69,7 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
+      GetTransmissionsReceptionsDetails({/* etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE] */})
     );
     this._store.dispatch(
       GetExercises({})
@@ -198,6 +198,9 @@ implements OnInit, AfterContentChecked {
           (res) => {
             console.log(res)
             this.busy = false;
+            this._dialogService.launchPrintEditionCreanceDialog(
+              data1,
+            );
             this._store.dispatch(
               GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
             );

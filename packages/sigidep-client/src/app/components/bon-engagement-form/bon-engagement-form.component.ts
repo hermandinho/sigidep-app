@@ -18,6 +18,10 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as converter from 'number-to-words';
 import { AppService } from '@services/app.service';
+import { GetGestionnaires } from '../../store/actions/gestionnaires.actions';
+import { getDataSelector as getDataSelectorGes, getLoadingSelector as getLoadingSelectorGes } from '@reducers/gestionnaires.reducer';
+import { GestionnaireModel } from '../../models/gestionnaire.model';
+
 
 export class Type {
   name!: string;
@@ -46,6 +50,8 @@ export class BonEngagementFormComponent
   typeMissions: Type[] = [];
   typeMarches: Type[] = [];
   carnet: any;
+  public gestionnaires: GestionnaireModel[] = [];
+
   // procedure: string = '';
   public typesMarche: any[] = [];
   constructor(
@@ -62,6 +68,9 @@ export class BonEngagementFormComponent
   }
 
   ngOnInit(): void {
+    this._store.dispatch(
+      GetGestionnaires()
+    );
     if (!this.procedure) {
       this.procedure = this._appService.currentProcedure;
       console.log(this.procedure);
@@ -71,7 +80,7 @@ export class BonEngagementFormComponent
     this.subformInitialized.emit(this.bonEngagementForm);
     if (this.readOnly) this.bonEngagementForm.disable();
     this._store.dispatch(GetCarnetMandats());
-    this.bonEngagementForm.controls['matriculeGestionnaire'].disable();
+/*     this.bonEngagementForm.controls['matriculeGestionnaire'].disable();*/
     this.bonEngagementForm.controls['nomGestionnaire'].disable();
     //this.bonEngagementForm.controls['montantCPChiffres'].disable();
     this.setTypeMissions();
@@ -153,6 +162,17 @@ export class BonEngagementFormComponent
       select(getLoadingSelector),
       map((status) => status)
     );
+
+    this._store
+    .pipe(this.takeUntilDestroy, select(getDataSelectorGes))
+    .subscribe((data) => {
+      this.gestionnaires = [...data];
+    });
+
+    this.loading$ = this._store.pipe(
+      select(getLoadingSelectorGes),
+      map((status) => status)
+    );
   }
 
   onBlur = () => {
@@ -176,4 +196,17 @@ export class BonEngagementFormComponent
       });
     }
   };
+
+  onGestionnaireChange(event:any){
+    const act: GestionnaireModel | undefined = this.gestionnaires.find(
+      (item:GestionnaireModel) => item.matricule === event.value
+    );
+    console.log(act)
+    if (act) {
+      this.bonEngagementForm.patchValue({
+        nomGestionnaire: act?.nom + '' + act?.prenom,
+        matriculeGestionnaire: act?.matricule
+      })
+    }
+  }
 }

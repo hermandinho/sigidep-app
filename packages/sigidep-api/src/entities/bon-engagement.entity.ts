@@ -31,6 +31,11 @@ export class BonEngagementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'nomGestionnaire' })
   public nomGestionnaire: string;
 
+  @Column('varchar', { nullable: true, name: 'matriculeBeneficaire' })
+  public matriculeBeneficaire: string;
+
+  @Column('varchar', { nullable: true, name: 'nomBeneficaire' })
+  public nomBeneficaire: string;
   @Column({ nullable: true, type: 'text', name: 'objet' })
   public objet: string;
 
@@ -55,7 +60,7 @@ export class BonEngagementEntity extends BaseEntity {
   @Column({ type: 'date', default: '2000-01-01', name: 'dateEditionTCC' })
   public dateEditionTCC: Date;
 
-  @Column({ type: 'date', default: '2000-01-01', name: 'dateRejet' })
+  @Column({ type: 'date', default: '2000-01-01', name: 'dateRejet' }) 
   public dateRejet: Date;
 
   @Column({ name: 'rejet', default: false })

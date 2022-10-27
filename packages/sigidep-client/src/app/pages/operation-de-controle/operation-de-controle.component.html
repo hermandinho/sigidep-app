@@ -1,4 +1,4 @@
-<div id="print-section">
+<div>
   <p-card>
     <p-toolbar styleClass="p-mb-2">
       <ng-template pTemplate="left">
@@ -73,7 +73,7 @@
                   {{ item["bon_engagement"]?.numActeJuridique?.numero }}
                 </span>
                 <span *ngIf="column.field === 'matriculeGestionnaire'">
-                  {{ item["bon_engagement"]?.nomGestionnaire }}
+                  {{ item['bon_engagement']?.matriculeBeneficaire }} &nbsp; {{ item["bon_engagement"]?.nomBeneficaire }}
                 </span>
                 <span *ngIf="column.field === 'imputation'">
                   {{ item["bon_engagement"]?.numActeJuridique?.imputation }}

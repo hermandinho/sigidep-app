@@ -51,6 +51,7 @@ export class ReservationEngagementComponent
   public aeDisponible!: number;
   public dernierCommande!: EngagementCommandeModel;
   public cumulJoursMissions!: number;
+  public nombreJoursRestantPourLeRespectMorcellement!: number;
   public type!: Step;
   loading$: Observable<boolean> = of(true);
 
@@ -68,18 +69,14 @@ export class ReservationEngagementComponent
 
   ngOnInit(): void {
     this.engagement = this.config.data?.item;
+    console.log('engagement ',this.engagement)
     this.type = this.config.data?.type;
+    console.log('type ',this.type)
     this.form = this._fb.group({
       id: [undefined],
       disponibiliteCredits: [undefined, check()],
-      respectNonMorcellement: [
-        undefined,
-        this.type === 'command' ? check() : null,
-      ],
-      priseEnCompteTaxes: [
-        undefined,
-        this.type === 'decision' ? check() : null,
-      ],
+      respectNonMorcellement: [undefined, this.type === 'command' ? check() : null,],
+      priseEnCompteTaxes: [ undefined, this.type === 'decision' ? check() : null,],
       respectQuotas: [undefined, this.type === 'mission' ? check() : null],
     });
     this._initListeners();
@@ -112,6 +109,11 @@ export class ReservationEngagementComponent
     console.log('morcellement ',Math.abs(
       moment(this.dernierCommande.dateSignature).diff(moment(), 'days')
     ))
+    this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
+      moment(this.dernierCommande.dateSignature).diff(moment(), 'days'))
+    ) + 1;
+    console.log('morcellement ',
+      moment(this.dernierCommande.dateSignature))
     this.form.patchValue({
       id: this.engagement.id,
       disponibiliteCredits:

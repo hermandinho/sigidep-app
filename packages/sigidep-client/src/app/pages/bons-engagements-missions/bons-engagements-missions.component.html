@@ -79,10 +79,14 @@
               column.field !== 'objet' &&
               column.field !== 'imputation' &&
               column.field !== 'etat' &&
+              column.field !== 'matriculeGestionnaire' &&
               column.field !== 'numActeJuridique'
             "
           >
             {{ item[column.field] }}
+          </span>
+          <span *ngIf="column.field === 'matriculeGestionnaire'">
+            {{ item['matriculeBeneficaire'] }} &nbsp; {{ item["nomBeneficaire"] }}
           </span>
           <span *ngIf="column.field === 'numActeJuridique'">
             {{ item["numActeJuridique"]?.numero }}

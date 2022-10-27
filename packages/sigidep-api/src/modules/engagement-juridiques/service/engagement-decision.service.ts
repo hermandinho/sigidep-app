@@ -71,8 +71,9 @@ export class EngagementDecisionService {
       throw new NotFoundException();
     }
     payload = {
-      ...payload,
+      ...(payload as any),
       etat: reserve ? EtatEngagementEnum.RESERVED : EtatEngagementEnum.MODIFY,
+      montantAE_Reserve: reserve ? payload.montantAE : 0
     };
     return this.repository.save({
       ...(payload as any),

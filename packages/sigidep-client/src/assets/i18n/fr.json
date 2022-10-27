@@ -944,7 +944,8 @@
       "montantMandate": "Montant Mandaté",
       "numeroMandat": "Numéro Mandat",
       "montantCPReserver": "montantCP Reserver",
-      "montantCPMandater": "montantCP Mandater"
+      "montantCPMandater": "montantCP Mandater",
+      "montantAE_Reserve": "MontantAE Reserver"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",

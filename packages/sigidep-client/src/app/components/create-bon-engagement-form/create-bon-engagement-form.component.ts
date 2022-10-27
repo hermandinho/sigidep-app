@@ -424,30 +424,39 @@ export class CreateBonEngagementFormComponent
       this.ref.close();
       return;
     }
+    console.log('this.form.getRawValue()?.engagementForm ',this.form.getRawValue()?.engagementForm)
     const formValues = this.form.getRawValue();
     if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1122' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1123' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1124') {
       this.form.patchValue({
-        bonEngagementForm: {
-          matriculeGestionnaire: this.form.getRawValue()?.engagementForm.matriculeBeneficaire,
-          nomGestionnaire: this.form.getRawValue()?.engagementForm.nomBeneficaire
+        engagementForm: {
+          matriculeBeneficaire: this.form.getRawValue()?.engagementForm.matriculeBeneficaire,
+          nomBeneficaire: this.form.getRawValue()?.engagementForm.nomBeneficaire
         },
       });
     } else if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1125') {
       this.form.patchValue({
-        bonEngagementForm: {
-          matriculeGestionnaire: this.form.getRawValue()?.engagementForm.codeUnitAdminBenef,
-          nomGestionnaire: this.form.getRawValue()?.engagementForm.nomUnitAdminBenef
+        engagementForm: {
+          matriculeBeneficaire: this.form.getRawValue()?.engagementForm.codeUnitAdminBenef,
+          nomBeneficaire: this.form.getRawValue()?.engagementForm.nomUnitAdminBenef
         },
       });
     } else if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1126') {
       this.form.patchValue({
-        bonEngagementForm: {
-          matriculeGestionnaire: this.form.getRawValue()?.engagementForm.numContribuable,
+        engagementForm: {
+          matriculeBeneficaire: this.form.getRawValue()?.engagementForm.numContribuable,
+          nomBeneficaire: this.form.getRawValue()?.engagementForm.raisonSociale
         },
       });
+      console.log('this.form.getRawValue()?.bonEngagementForm ',this.form.getRawValue())
     }
 
     if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1110' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1111' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1115') {
+      this.form.patchValue({
+        engagementForm: {
+          matriculeBeneficaire: this.form.getRawValue()?.engagementForm.numContribuable,
+          nomBeneficaire: this.form.getRawValue()?.engagementForm.raisonSociale
+        },
+      });
       this.editedEngagement = {
         ...this.form.getRawValue()?.engagementForm,
         ...this.form.getRawValue().bonEngagementForm,
@@ -463,10 +472,10 @@ export class CreateBonEngagementFormComponent
       } as BonEngagementModel;
     }
 
-    // console.log(this.editedEngagement)
-    /* console.log('..............FORMM.....', {
+    console.log(this.editedEngagement)
+    console.log('..............FORMM.....', {
       ...this.form.getRawValue().factureForm,
-    }); */
+    });
     if (this.isBook) {
       this.bookProcess(this.editedEngagement);
       localStorage.removeItem('imputation');
@@ -513,53 +522,54 @@ export class CreateBonEngagementFormComponent
       );
     } else if (!this.isBook) {
       this.ref.close();
-      this._appService.saveConfirmation({
+      const method: Observable<any> =
+      this._apisService.post<BonEngagementModel>(
+        '/bons-engagements',
+        this.editedEngagement
+      );
+    method.subscribe(
+      (res) => {
+        this.busy = false;
+
+        localStorage.removeItem('imputation');
+        this._store.dispatch(
+          GetBonsEngagements({ procedures: [res?.codeProcedure] })
+        );
+
+        this._appService.showToast({
+          summary: 'messages.success',
+          detail:
+            'messages.engagements.createSuccess' +
+            ': numéro: ' +
+            res.numero,
+          severity: 'success',
+          life: 3000,
+          closable: true,
+        });
+      },
+      ({ error }) => {
+        let err = '';
+        if (error?.statusCode === 409) {
+          err = 'errors.engagements.conflict';
+        } else {
+          err = 'errors.unknown';
+        }
+        this.busy = false;
+        this._appService.showToast({
+          detail: err,
+          summary: 'errors.error',
+          severity: 'error',
+          life: 5000,
+          closable: true,
+        });
+      }
+    );
+     /*  this._appService.saveConfirmation({
         message: 'dialogs.messages.saveBon',
         accept: () => {
-          const method: Observable<any> =
-            this._apisService.post<BonEngagementModel>(
-              '/bons-engagements',
-              this.editedEngagement
-            );
-          method.subscribe(
-            (res) => {
-              this.busy = false;
 
-              localStorage.removeItem('imputation');
-              this._store.dispatch(
-                GetBonsEngagements({ procedures: [res?.codeProcedure] })
-              );
-
-              this._appService.showToast({
-                summary: 'messages.success',
-                detail:
-                  'messages.engagements.createSuccess' +
-                  ': numéro: ' +
-                  res.numero,
-                severity: 'success',
-                life: 3000,
-                closable: true,
-              });
-            },
-            ({ error }) => {
-              let err = '';
-              if (error?.statusCode === 409) {
-                err = 'errors.engagements.conflict';
-              } else {
-                err = 'errors.unknown';
-              }
-              this.busy = false;
-              this._appService.showToast({
-                detail: err,
-                summary: 'errors.error',
-                severity: 'error',
-                life: 5000,
-                closable: true,
-              });
-            }
-          );
         },
-      });
+      }); */
     }
   }
 

@@ -190,6 +190,13 @@ export class EngagementDecisionComponent
       this.decisionForm.controls['netAPercevoir'].disable();
     }
 
+    if (
+      this.procedure === '1122'
+    ) {
+      this.decisionForm.controls['netAPercevoir'].disable();
+    }
+
+
     this.subformInitialized.emit(this.decisionForm);
     this.decisionForm.controls['tauxTVA'].disable();
     this.decisionForm.controls['tauxIR'].disable();
@@ -271,4 +278,5 @@ export class EngagementDecisionComponent
       });
     }
   };
+
 }

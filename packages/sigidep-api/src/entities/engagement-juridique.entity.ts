@@ -55,6 +55,8 @@ export class EngagementJuridiqueEntity extends BaseEntity {
 
   @Column({ type: 'float', nullable: false, name: 'montant_AE' })
   public montantAE: number;
+  @Column({ type: 'float', nullable: true, name: 'montantAE_Reserve' })
+  public montantAE_Reserve: number;
 
   @Column({
     name: 'etat',

@@ -86,7 +86,7 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        if(this.data){
+        if(this.data.length>0){
           this.onEncourChange(this.data[0]);
         }
       });

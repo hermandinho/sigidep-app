@@ -94,7 +94,7 @@
                 {{ item["numActeJuridique"]?.imputation }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['matriculeBeneficaire'] }} &nbsp; {{ item["nomBeneficaire"] }}
               </span>
               <span *ngIf="column.field === 'etat'">
                 {{ item[column.field] | translate }}
@@ -195,7 +195,7 @@
                 {{ item["numActeJuridique"]?.numero }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['matriculeBeneficaire'] }} &nbsp; {{ item["nomBeneficaire"] }}
               </span>
               <span *ngIf="column.field === 'imputation'">
                 {{ item["numActeJuridique"]?.imputation }}
@@ -297,7 +297,7 @@
                 {{ item[column.field] }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['matriculeBeneficaire'] }} &nbsp; {{ item["nomBeneficaire"] }}
               </span>
               <span *ngIf="column.field === 'numActeJuridique'">
                 {{ item["numActeJuridique"]?.numero }}
@@ -402,7 +402,7 @@
                 {{ item[column.field] }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }} &nbsp; {{ item["nomGestionnaire"] }}
+                {{ item['matriculeBeneficaire'] }} &nbsp; {{ item["nomBeneficaire"] }}
               </span>
               <span *ngIf="column.field === 'numActeJuridique'">
                 {{ item["numActeJuridique"]?.numero }}
@@ -507,7 +507,7 @@
                 {{ item[column.field] }}
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
-                {{ item['matriculeGestionnaire'] }}
+                {{ item['matriculeBeneficaire'] }} &nbsp; {{ item["nomBeneficaire"] }}
               </span>
               <span *ngIf="column.field === 'numActeJuridique'">
                 {{ item["numActeJuridique"]?.numero }}

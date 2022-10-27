@@ -17,6 +17,7 @@ export class TransmissionReceptionDetailService {
 
 
   public async getDossierBor(filter?:EngagementFilter):Promise<DetailTransmissionReceptionEntity[]>{
+    console.log('filter ',filter)
     const res = this.repositorydetail
     .createQueryBuilder('detail')
     .leftJoinAndSelect('detail.bon_engagement', 'bon_engagement')
@@ -26,7 +27,7 @@ export class TransmissionReceptionDetailService {
     .leftJoinAndSelect('bon_engagement.paiements', 'paiements')
     .leftJoinAndSelect('bon_engagement.facture', 'facture')
     .leftJoinAndSelect('facture.articles', 'articles')
-    .where(filter?.ids ? 'transmission_reception.id IN(:...codes)' : 'true', {
+    .where(filter?.ids ? 'detail.id IN(:...codes)' : 'true', {
       codes: filter?.ids,
     })
     .andWhere(filter?.etats ? 'bon_engagement.etat IN(:...etats)' : 'true', {

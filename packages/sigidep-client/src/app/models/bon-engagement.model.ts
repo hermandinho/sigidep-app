@@ -25,6 +25,8 @@ export class BonEngagementModel extends BaseModel {
   numero!: string;
   matriculeGestionnaire!: string;
   nomGestionnaire!: string;
+  matriculeBeneficaire!:string;
+  nomBeneficaire!:string;
   objet!: string;
   dateEngagement!: Date;
   montantCPChiffres!: number;

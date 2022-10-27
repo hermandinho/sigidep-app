@@ -24,7 +24,7 @@ import { GetEngagementCommandes } from '@actions/engagement-commande.actions';
 import { GetTypesProcedures } from '@actions/types-procedures.actions';
 import { GetEncours } from '@actions/encours.actions';
 import * as moment from 'moment';
-import { MAX_AMOUNT_PROCEDURE_1110, MAX_AMOUNT_PROCEDURE_1111 } from './consts';
+import { MAX_AMOUNT_PROCEDURE_1110, MAX_AMOUNT_PROCEDURE_1111, MIN_AMOUNT_PROCEDURE_1111, MIN_AMOUNT_PROCEDURE_1115, PARAGRAPH_612020_PROCEDURE_1121, PARAGRAPH_612022_PROCEDURE_1121, PARAGRAPH_612021_PROCEDURE_1121 } from './consts';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
 import { GetEngagementMissions } from '@actions/engagement-mission.actions';
 import { EngagementDecisionModel } from '@models/engagement-decision.model';
@@ -104,7 +104,7 @@ export class EngagementContainerComponent
         dateSignature: [undefined, [this.dateValidator]],
         signataire: [undefined],
         objet: [undefined],
-        paragraph: [undefined],
+        paragraph: [undefined,[this.paragrapheValidator]],
         etat: [undefined],
         operationId: [undefined],
         aeDisponible: [undefined],
@@ -130,7 +130,7 @@ export class EngagementContainerComponent
         codeUnitAdminBenef: [undefined],
         nomUnitAdminBenef: [undefined],
         montantBrut: [undefined],
-        montantIRNC: [undefined],
+        montantIRNC: [undefined,[this.handleNetAPercevoir]],
         raisonSociale: [undefined],
         codeBanqueContribuable: [undefined],
         codeAgenceContribuable: [undefined],
@@ -295,24 +295,64 @@ export class EngagementContainerComponent
       const error = { invalidAmount: 'errors.invalidAmount' };
       if (
         this.currentProcedure === '1110' &&
-        amount > MAX_AMOUNT_PROCEDURE_1110
+        amount >= MAX_AMOUNT_PROCEDURE_1110
       ) {
         return error;
       } else if (
         this.currentProcedure === '1111' &&
-        (amount <= MAX_AMOUNT_PROCEDURE_1110 ||
-          amount > MAX_AMOUNT_PROCEDURE_1111)
+        (amount <= MIN_AMOUNT_PROCEDURE_1111 ||
+          amount >= MAX_AMOUNT_PROCEDURE_1111)
       ) {
         return error;
       } else if (
         this.currentProcedure === '1115' &&
-        amount <= MAX_AMOUNT_PROCEDURE_1111
+        amount <= MIN_AMOUNT_PROCEDURE_1115
       ) {
         return error;
       }
     }
     return null;
   };
+
+  paragrapheValidator = (control: FormControl): { [s: string]: any } | null => {
+    if (control.value) {
+      const paragraph1 = control.value;
+      const paragraph = paragraph1.substring(0, 6)
+      console.log("paragraph", paragraph.toString())
+      const error = { invalidAmount: 'errors.invalidParagraph' };
+      if (
+        this.currentProcedure === '1121' &&
+        (paragraph.toString() == PARAGRAPH_612020_PROCEDURE_1121 || paragraph.toString() == PARAGRAPH_612021_PROCEDURE_1121 || paragraph.toString() == PARAGRAPH_612022_PROCEDURE_1121)
+      ) {
+        return null;
+      }else if(this.currentProcedure === '1121'){
+        return error;
+      }
+    }
+    return null;
+  };
+
+  handleNetAPercevoir = (control: FormControl) => {
+    if(control.value){
+      const montant = parseInt(this.form.getRawValue()?.commonForm.montantAE) - parseInt(control.value);
+      if(this.currentProcedure === '1122'){
+        if (montant>0) {
+          this.form.patchValue({
+            decisionForm: {
+          netAPercevoir: montant,
+            }
+        });
+      }else{
+        this.form.patchValue({
+          decisionForm: {
+        netAPercevoir: 0,
+          }
+      });
+      }
+      }
+
+    }
+  }
 
   get commonFormGroup(): FormGroup {
     return this.form?.get('commonForm') as FormGroup;
@@ -379,6 +419,11 @@ export class EngagementContainerComponent
     this.busy = true;
     let editedEngagement;
     if (this.isMission) {
+      this.form.patchValue({
+        commonForm: {
+          montantAE: this.form.getRawValue()?.missionForm.montant,
+        },
+      });
       editedEngagement = {
         ...this.form.getRawValue()?.commonForm,
         ...this.form.getRawValue().missionForm,

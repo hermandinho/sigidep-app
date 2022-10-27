@@ -85,7 +85,8 @@ export class EngagementJuridiqueService {
 
     return this.repository.save({
       ...property, // existing fields
-      etat: EtatEngagementEnum.CANCEL, // updated fields
+      etat: EtatEngagementEnum.CANCEL,
+      montantAE_Reserve: 0 // updated fields
     });
   }
 
