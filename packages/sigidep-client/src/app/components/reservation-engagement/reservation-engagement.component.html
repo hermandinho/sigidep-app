@@ -26,7 +26,7 @@
     [binary]="true"
     label="{{
       'labels.respectNonMorcellement' | translate
-    }}: Dernière Commande: {{ dernierCommande?.dateSignature +'. Il vous reste '+nombreJoursRestantPourLeRespectMorcellement + ' Jours' ?? 'RAS' }}"
+    }}: Dernière Commande: {{ (dernierCommande ? dernierCommande.dateSignature : 'RAS') +'. Il vous reste '+(nombreJoursRestantPourLeRespectMorcellement > 0 ? nombreJoursRestantPourLeRespectMorcellement : 0) + ' Jours.' }}"
   >
   </p-checkbox>
 
@@ -73,6 +73,16 @@
     label="{{
       'labels.respectQuotas' | translate
     }}: Cumul des Jours de Missions = {{ cumulJoursMissions }}"
+  >
+  </p-checkbox>
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="type === 'mission'"
+    formControlName="respectNonChevauchement"
+    [binary]="true"
+    label="{{
+      'labels.respectNonChevauchement' | translate
+    }}: Interval de date = {{ statutChevauchement }}"
   >
   </p-checkbox>
   <div class="footer">

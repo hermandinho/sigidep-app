@@ -69,7 +69,7 @@ implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this._store.dispatch(
-      GetTransmissionsReceptionsDetails({/* etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE] */})
+      GetTransmissionsReceptionsDetails({etats: [EtatBonEnum.RECEPTIONCONTROLECONFORMITE, EtatBonEnum.CONTROLECONFORMITE]})
     );
     this._store.dispatch(
       GetExercises({})

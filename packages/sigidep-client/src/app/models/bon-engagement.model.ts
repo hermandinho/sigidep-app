@@ -49,6 +49,7 @@ export class BonEngagementModel extends BaseModel {
   facture?: FactureModel;
   signataire!: string;
   traitements?: TraitementBonEngagementModel[];
+  montantCPReserver!: number;
 
   constructor(params?: Partial<BonEngagementModel>) {
     super();

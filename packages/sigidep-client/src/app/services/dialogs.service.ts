@@ -983,7 +983,7 @@ export class DialogsService {
         'dialogs.headers.reserverEngagement',
         { numero: item?.numero }
       ),
-      width: '40vw',
+      width: '50vw',
       height: 'auto',
       modal: true,
       data: {

@@ -13,7 +13,7 @@ import {
   StepBonEngagement,
 } from '@models/bon-engagement.model';
 import { EngagementMissionModel } from '@models/engagement-mission.model';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '@reducers/index';
 import { ApisService } from '@services/apis.service';
 import { AppService } from '@services/app.service';
@@ -25,6 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CategorieProcedure } from 'app/utils/types';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 import { GetTransmissionsReceptionsDetails } from '@actions/detail-transmissions-receptions.actions';
+import { getDataSelector } from '@reducers/bons-engagements.reducer';
 
 @Component({
   selector: 'app-create-bon-engagement-form',
@@ -51,6 +52,8 @@ export class CreateBonEngagementFormComponent
   //bookProcess:any;
   public editedEngagement!: BonEngagementModel;
   public validation: boolean = false;
+  public bonEngagement!: BonEngagementModel[]
+  public sommeMontantCP = 0;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -63,6 +66,7 @@ export class CreateBonEngagementFormComponent
     private translate: TranslateService
   ) {
     super();
+    this._initListeners();
   }
 
   ngOnInit(): void {
@@ -115,7 +119,7 @@ export class CreateBonEngagementFormComponent
         nomGestionnaire: [undefined],
         objet: [undefined],
         dateEngagement: [undefined, [Validators.required, this.dateValidator]],
-        montantCPChiffres: [undefined],
+        montantCPChiffres: [undefined, [this.montantCPValidator]],
         montantCPLettres: [undefined],
         signataire: [undefined],
         typeMission: [undefined],
@@ -582,27 +586,24 @@ export class CreateBonEngagementFormComponent
       if (date < currentDate) {
         return { invalidDate: 'errors.futureDate' };
       }
+      if( this.form.getRawValue()?.engagementForm.codeProcedure === '1121'){
+
+      }
     }
     return null;
   };
 
-  montantAEValidator = (control: FormControl): { [s: string]: any } | null => {
+  montantCPValidator = (control: FormControl): { [s: string]: any } | null => {
     if (control.value) {
       const error = { invalidAmount: 'errors.invalidAmount' };
+      console.log('numeroj',this.form.getRawValue()?.engagementForm.numeroj)
+     const t = this.calculSommeMontantCP(this.bonEngagement, this.form.getRawValue()?.engagementForm.numeroj);
       if (
-        this.form.getRawValue()?.bonEngagementForm.typeMission ===
-        this.translate.instant(EtatBonEngagementEnum.ORDINAIRE)
+        this.form.getRawValue()?.engagementForm.montantAE > this.sommeMontantCP
       ) {
-        const amount =
-          (75 / 100) * this.form.getRawValue()?.engagementForm.montantAE;
-        this.form.patchValue({
-          bonEngagementForm: {
-            montantCPChiffres: amount,
-          },
-        });
         return null;
       }
-      if (
+    /*   if (
         this.form.getRawValue()?.bonEngagementForm.typeMission ===
         this.translate.instant(EtatBonEngagementEnum.CONTROLE)
       ) {
@@ -626,12 +627,36 @@ export class CreateBonEngagementFormComponent
           },
         });
         return null;
-      }
+      } */
       return error;
     }
     return null;
   };
 
+  calculSommeMontantCP = (
+    engagements: BonEngagementModel[],
+    numeroEngJuridique: string
+  ) => {
+    console.log(engagements)
+    this.sommeMontantCP = 0
+  engagements.forEach(
+        (item) =>{
+          if(item.numActeJuridique.numero.toString() == numeroEngJuridique.toString()){
+            console.log(item)
+             this.sommeMontantCP += item.montantCPReserver
+             console.log('sommeMontantCP', this.sommeMontantCP)
+          }
+        })
+  }
+
+  private _initListeners() {
+    this._store
+      .pipe(this.takeUntilDestroy, select(getDataSelector))
+      .subscribe((data) => {
+        this.bonEngagement = [...data];
+        console.log('bonEngagement ',data)
+      });
+  }
   controler(data: any) {
     const method: Observable<any> = this._apisService.put<any>(
       '/transmissions-receptions',

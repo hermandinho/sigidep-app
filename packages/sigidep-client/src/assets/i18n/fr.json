@@ -469,7 +469,8 @@
     "villePaiement": "Ville Paiement",
     "datePaiement": "Date Paiement",
     "numeroMandat":"Numéro Mandat",
-    "certificat": "Certifier"
+    "certificat": "Certifier",
+    "respectNonChevauchement": "Respect Non Chevauchement"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",

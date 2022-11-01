@@ -29,6 +29,7 @@ import { NombreJours } from './consts';
 import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 import { DialogsService } from '@services/dialogs.service';
 import { check } from './config';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reservation-engagement',
@@ -51,9 +52,10 @@ export class ReservationEngagementComponent
   public aeDisponible!: number;
   public dernierCommande!: EngagementCommandeModel;
   public cumulJoursMissions!: number;
-  public nombreJoursRestantPourLeRespectMorcellement!: number;
+  public nombreJoursRestantPourLeRespectMorcellement: number = 0;
   public type!: Step;
   loading$: Observable<boolean> = of(true);
+  statutChevauchement = 'Mauvais';
 
   constructor(
     public ref: DynamicDialogRef,
@@ -70,6 +72,7 @@ export class ReservationEngagementComponent
   ngOnInit(): void {
     this.engagement = this.config.data?.item;
     console.log('engagement ',this.engagement)
+    console.log('dernierCommande',this.dernierCommande)
     this.type = this.config.data?.type;
     console.log('type ',this.type)
     this.form = this._fb.group({
@@ -78,6 +81,7 @@ export class ReservationEngagementComponent
       respectNonMorcellement: [undefined, this.type === 'command' ? check() : null,],
       priseEnCompteTaxes: [ undefined, this.type === 'decision' ? check() : null,],
       respectQuotas: [undefined, this.type === 'mission' ? check() : null],
+      respectNonChevauchement:[undefined, this.type === 'mission' ? check() : null]
     });
     this._initListeners();
   }
@@ -86,8 +90,24 @@ export class ReservationEngagementComponent
       .pipe(this.takeUntilDestroy, select(getEngagementCommandeDataSelector))
       .subscribe((payload) => {
         if (payload && payload.length > 1) {
-          //les commandes sont récuprées par ordre décroissant
-          this.dernierCommande = payload[0];
+          console.log('payload',payload)
+
+          const elt: EngagementCommandeModel[] = this.findEngagementByImputationAndNiu(payload);
+          console.log('elt',elt)
+          if (elt && elt.length > 0) {
+            this.dernierCommande = elt[0];
+            console.log('dernierCommande',this.dernierCommande)
+
+            console.log('morcellement ',Math.abs(
+              moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature))
+            ))
+            this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
+              moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))
+            ) + 1;
+            console.log('morcellement ',
+              moment(this.dernierCommande?.dateSignature))
+          }
+
         }
       });
 
@@ -95,6 +115,7 @@ export class ReservationEngagementComponent
       this._store
         .pipe(this.takeUntilDestroy, select(getEngagementMissionDataSelector))
         .subscribe((payload) => {
+          this.findEngagementByMatriculeBenefiviare(payload)
           this.cumulJoursMissions = payload
             .filter(
               (item) =>
@@ -106,22 +127,14 @@ export class ReservationEngagementComponent
             .reduce((acc, curr) => acc + curr, 0);
         });
     }
-    console.log('morcellement ',Math.abs(
-      moment(this.dernierCommande.dateSignature).diff(moment(), 'days')
-    ))
-    this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
-      moment(this.dernierCommande.dateSignature).diff(moment(), 'days'))
-    ) + 1;
-    console.log('morcellement ',
-      moment(this.dernierCommande.dateSignature))
     this.form.patchValue({
       id: this.engagement.id,
       disponibiliteCredits:
         this.engagement.montantAE <= this.engagement.aeDisponible,
       respectNonMorcellement: this.dernierCommande
         ? Math.abs(
-            moment(this.dernierCommande.dateSignature).diff(moment(), 'days')
-          ) > NombreJours
+            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature))
+          ) >= NombreJours
         : true,
       priseEnCompteTaxes:
         (this.engagement as EngagementDecisionModel).netAPercevoir ===
@@ -199,4 +212,44 @@ export class ReservationEngagementComponent
       }
     );
   };
+
+  findEngagementByImputationAndNiu = (engagements: EngagementCommandeModel[]) => {
+   const deniereEngagement: EngagementCommandeModel[] =  engagements.filter((item: EngagementCommandeModel) =>
+    (item?.imputation.toLowerCase() ===  this.engagement?.imputation.toLowerCase()) &&
+    (item?.niuContribuable?.toLowerCase() ===  this.engagement?.niuContribuable?.toLowerCase()) &&
+    (item?.etat.toLowerCase() ===  EtatEngagementEnum.RESERVED)
+    )
+    return deniereEngagement;
+  }
+
+  findEngagementByMatriculeBenefiviare = (engagements: EngagementMissionModel[]) => {
+    const deniereEngagement: EngagementMissionModel[] =  engagements.filter((item: EngagementMissionModel) =>
+     (item?.matriculeBeneficiaire?.toLowerCase() ===  this.engagement?.matriculeBeneficiaire?.toLowerCase()) &&
+     (item?.exercise?.toString() ===  this.engagement?.exercise?.toString()) &&
+     (item?.etat ===  EtatEngagementEnum.RESERVED)
+     )
+    console.log(deniereEngagement)
+    if(deniereEngagement.length > 0){
+     deniereEngagement.forEach(item => {
+        if ((this.engagement.dateDebut > item.dateDebut && item.dateDebut < this.engagement.dateFin) &&
+        (this.engagement.dateDebut > item.dateFin && item.dateFin < this.engagement.dateFin) ||
+        (this.engagement.dateDebut < item.dateDebut && item.dateDebut > this.engagement.dateFin) &&
+        (this.engagement.dateDebut < item.dateFin && item.dateFin > this.engagement.dateFin) ||
+        (this.engagement.dateDebut > item.dateDebut && item.dateDebut < this.engagement.dateFin) &&
+        (this.engagement.dateDebut > item.dateFin && item.dateFin < this.engagement.dateFin)
+        ) {
+          this.statutChevauchement = 'Bon';
+          this.form.patchValue({
+            respectNonChevauchement: true,
+          });
+        }
+     })
+    } else {
+      this.statutChevauchement = 'Bon';
+          this.form.patchValue({
+            respectNonChevauchement: true,
+          });
+    }
+     return deniereEngagement;
+   }
 }
