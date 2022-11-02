@@ -25,11 +25,12 @@ import { getDataSelector as getEngagementCommandeDataSelector } from '@reducers/
 import { getDataSelector as getEngagementMissionDataSelector } from '@reducers/engagement-mission.reducer';
 import { Observable, of } from 'rxjs';
 import * as moment from 'moment';
-import { NombreJours } from './consts';
+import { NombreJours, UnJourEnMilliSeconde } from './consts';
 import { GetEngagementDecisions } from '@actions/engagement-decision.actions';
 import { DialogsService } from '@services/dialogs.service';
 import { check } from './config';
 import { filter } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reservation-engagement',
@@ -39,8 +40,7 @@ import { filter } from 'rxjs/operators';
 })
 export class ReservationEngagementComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   public form!: FormGroup;
 
   public engagement!:
@@ -56,6 +56,7 @@ export class ReservationEngagementComponent
   public type!: Step;
   loading$: Observable<boolean> = of(true);
   statutChevauchement = 'Mauvais';
+  prochaineDate:any;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -71,17 +72,17 @@ export class ReservationEngagementComponent
 
   ngOnInit(): void {
     this.engagement = this.config.data?.item;
-    console.log('engagement ',this.engagement)
-    console.log('dernierCommande',this.dernierCommande)
+    console.log('engagement ', this.engagement)
+    console.log('dernierCommande', this.dernierCommande)
     this.type = this.config.data?.type;
-    console.log('type ',this.type)
+    console.log('type ', this.type)
     this.form = this._fb.group({
       id: [undefined],
       disponibiliteCredits: [undefined, check()],
       respectNonMorcellement: [undefined, this.type === 'command' ? check() : null,],
-      priseEnCompteTaxes: [ undefined, this.type === 'decision' ? check() : null,],
+      priseEnCompteTaxes: [undefined, this.type === 'decision' ? check() : null,],
       respectQuotas: [undefined, this.type === 'mission' ? check() : null],
-      respectNonChevauchement:[undefined, this.type === 'mission' ? check() : null]
+      respectNonChevauchement: [undefined, this.type === 'mission' ? check() : null]
     });
     this._initListeners();
   }
@@ -90,24 +91,8 @@ export class ReservationEngagementComponent
       .pipe(this.takeUntilDestroy, select(getEngagementCommandeDataSelector))
       .subscribe((payload) => {
         if (payload && payload.length > 1) {
-          console.log('payload',payload)
-
-          const elt: EngagementCommandeModel[] = this.findEngagementByImputationAndNiu(payload);
-          console.log('elt',elt)
-          if (elt && elt.length > 0) {
-            this.dernierCommande = elt[0];
-            console.log('dernierCommande',this.dernierCommande)
-
-            console.log('morcellement ',Math.abs(
-              moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature))
-            ))
-            this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
-              moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))
-            ) + 1;
-            console.log('morcellement ',
-              moment(this.dernierCommande?.dateSignature))
-          }
-
+          console.log('payload', payload)
+          this.findEngagementByImputationAndNiu(payload);
         }
       });
 
@@ -131,15 +116,14 @@ export class ReservationEngagementComponent
       id: this.engagement.id,
       disponibiliteCredits:
         this.engagement.montantAE <= this.engagement.aeDisponible,
-      respectNonMorcellement: this.dernierCommande
-        ? Math.abs(
-            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature))
-          ) >= NombreJours
-        : true,
+      /*   respectNonMorcellement: this.dernierCommande
+          ? Math.abs(
+            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature))) >= NombreJours
+          : true, */
       priseEnCompteTaxes:
         (this.engagement as EngagementDecisionModel).netAPercevoir ===
         (this.engagement as EngagementDecisionModel).montantBrut -
-          (this.engagement as EngagementDecisionModel).montantIRNC,
+        (this.engagement as EngagementDecisionModel).montantIRNC,
       respectQuotas: this.cumulJoursMissions <= 100,
     });
   }
@@ -161,15 +145,15 @@ export class ReservationEngagementComponent
     const method: Observable<any> =
       this.type === 'mission'
         ? this._apisService.put<EngagementMissionModel>(
-            '/engagements/missions/reservation',
-            editedEngagement
-          )
+          '/engagements/missions/reservation',
+          editedEngagement
+        )
         : this.type === 'command'
-        ? this._apisService.put<EngagementMissionModel>(
+          ? this._apisService.put<EngagementMissionModel>(
             '/engagements/commandes/reservation',
             editedEngagement
           )
-        : this._apisService.put<EngagementMissionModel>(
+          : this._apisService.put<EngagementMissionModel>(
             '/engagements/decisions/reservation',
             editedEngagement
           );
@@ -180,8 +164,8 @@ export class ReservationEngagementComponent
         this.type === 'mission'
           ? this._store.dispatch(GetEngagementMissions({}))
           : this.type === 'command'
-          ? this._store.dispatch(GetEngagementCommandes({}))
-          : this._store.dispatch(GetEngagementDecisions({}));
+            ? this._store.dispatch(GetEngagementCommandes({}))
+            : this._store.dispatch(GetEngagementDecisions({}));
         this._dialogService.launchPrintEngagementDialog(res);
         this._appService.showToast({
           summary: 'messages.success',
@@ -214,42 +198,96 @@ export class ReservationEngagementComponent
   };
 
   findEngagementByImputationAndNiu = (engagements: EngagementCommandeModel[]) => {
-   const deniereEngagement: EngagementCommandeModel[] =  engagements.filter((item: EngagementCommandeModel) =>
-    (item?.imputation.toLowerCase() ===  this.engagement?.imputation.toLowerCase()) &&
-    (item?.niuContribuable?.toLowerCase() ===  this.engagement?.niuContribuable?.toLowerCase()) &&
-    (item?.etat.toLowerCase() ===  EtatEngagementEnum.RESERVED)
+    const deniereEngagement: EngagementCommandeModel[] = engagements.filter((item: EngagementCommandeModel) =>
+      (item?.imputation.toLowerCase() === this.engagement?.imputation.toLowerCase()) &&
+      (item?.niuContribuable?.toLowerCase() === this.engagement?.niuContribuable?.toLowerCase()) &&
+      (item?.etat.toLowerCase() === EtatEngagementEnum.RESERVED)
     )
+    console.log('deniereEngagementex', deniereEngagement)
+    if (deniereEngagement && deniereEngagement.length > 0) {
+      //deniereEngagement.forEach(item => {
+        this.dernierCommande = deniereEngagement[0];
+        console.log('dernierCommande', this.dernierCommande)
+        console.log('DatedernierCommande', moment(this.dernierCommande?.dateSignature))
+        console.log('DateCommande', moment(this.engagement.dateSignature))
+
+        console.log('morcellement ', Math.abs(
+          moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde)
+        if (Math.abs(
+          moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde >= NombreJours) {
+
+          this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
+            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde
+          ) + 1;
+          this.form.patchValue({
+            respectNonMorcellement: true,
+          });
+
+          const pipe = new DatePipe('en-US');
+          let dernierCommande = new Date(this.dernierCommande?.dateSignature);
+          let dat = new Date(this.dernierCommande?.dateSignature);
+          dat.setDate(dernierCommande.getDate()+ this.nombreJoursRestantPourLeRespectMorcellement);
+          this.prochaineDate = pipe.transform(dat, 'yyyy-MM-dd');
+
+          console.log(this.prochaineDate)
+
+        } else {
+          this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
+            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde
+          ) + 1;
+          console.log(this.nombreJoursRestantPourLeRespectMorcellement)
+          const pipe = new DatePipe('en-US');
+          let dernierCommande = new Date(this.dernierCommande?.dateSignature);
+          let dat = new Date(this.dernierCommande?.dateSignature);
+          dat.setDate(dernierCommande.getDate()+ this.nombreJoursRestantPourLeRespectMorcellement);
+          this.prochaineDate = pipe.transform(dat, 'yyyy-MM-dd');
+
+          console.log(this.prochaineDate)
+          this.form.patchValue({
+            respectNonMorcellement: false,
+          });
+
+          return;
+        }
+
+     // })
+    } else {
+      this.form.patchValue({
+        respectNonMorcellement: true,
+      });
+    }
+
     return deniereEngagement;
   }
 
   findEngagementByMatriculeBenefiviare = (engagements: EngagementMissionModel[]) => {
-    const deniereEngagement: EngagementMissionModel[] =  engagements.filter((item: EngagementMissionModel) =>
-     (item?.matriculeBeneficiaire?.toLowerCase() ===  this.engagement?.matriculeBeneficiaire?.toLowerCase()) &&
-     (item?.exercise?.toString() ===  this.engagement?.exercise?.toString()) &&
-     (item?.etat ===  EtatEngagementEnum.RESERVED)
-     )
-    console.log(deniereEngagement)
-    if(deniereEngagement.length > 0){
-     deniereEngagement.forEach(item => {
+    const deniereEngagementMission: EngagementMissionModel[] = engagements.filter((item: EngagementMissionModel) =>
+      (item?.matriculeBeneficiaire?.toLowerCase() === this.engagement?.matriculeBeneficiaire?.toLowerCase()) &&
+      (item?.exercise?.toString() === this.engagement?.exercise?.toString()) &&
+      (item?.etat === EtatEngagementEnum.RESERVED)
+    )
+    console.log(deniereEngagementMission)
+    if (deniereEngagementMission.length > 0) {
+      deniereEngagementMission.forEach(item => {
         if ((this.engagement.dateDebut > item.dateDebut && item.dateDebut < this.engagement.dateFin) &&
-        (this.engagement.dateDebut > item.dateFin && item.dateFin < this.engagement.dateFin) ||
-        (this.engagement.dateDebut < item.dateDebut && item.dateDebut > this.engagement.dateFin) &&
-        (this.engagement.dateDebut < item.dateFin && item.dateFin > this.engagement.dateFin) ||
-        (this.engagement.dateDebut > item.dateDebut && item.dateDebut < this.engagement.dateFin) &&
-        (this.engagement.dateDebut > item.dateFin && item.dateFin < this.engagement.dateFin)
+          (this.engagement.dateDebut > item.dateFin && item.dateFin < this.engagement.dateFin) ||
+          (this.engagement.dateDebut < item.dateDebut && item.dateDebut > this.engagement.dateFin) &&
+          (this.engagement.dateDebut < item.dateFin && item.dateFin > this.engagement.dateFin) ||
+          (this.engagement.dateDebut > item.dateDebut && item.dateDebut < this.engagement.dateFin) &&
+          (this.engagement.dateDebut > item.dateFin && item.dateFin < this.engagement.dateFin)
         ) {
           this.statutChevauchement = 'Bon';
           this.form.patchValue({
             respectNonChevauchement: true,
           });
         }
-     })
+      })
     } else {
       this.statutChevauchement = 'Bon';
-          this.form.patchValue({
-            respectNonChevauchement: true,
-          });
+      this.form.patchValue({
+        respectNonChevauchement: true,
+      });
     }
-     return deniereEngagement;
-   }
+    return deniereEngagementMission;
+  }
 }
