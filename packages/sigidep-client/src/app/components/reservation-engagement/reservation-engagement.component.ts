@@ -56,7 +56,7 @@ export class ReservationEngagementComponent
   public type!: Step;
   loading$: Observable<boolean> = of(true);
   statutChevauchement = 'Mauvais';
-  prochaineDate:any;
+  prochaineDate: any;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -206,51 +206,49 @@ export class ReservationEngagementComponent
     console.log('deniereEngagementex', deniereEngagement)
     if (deniereEngagement && deniereEngagement.length > 0) {
       //deniereEngagement.forEach(item => {
-        this.dernierCommande = deniereEngagement[0];
-        console.log('dernierCommande', this.dernierCommande)
-        console.log('DatedernierCommande', moment(this.dernierCommande?.dateSignature))
-        console.log('DateCommande', moment(this.engagement.dateSignature))
+      this.dernierCommande = deniereEngagement[0];
+      console.log('dernierCommande', this.dernierCommande)
+      console.log('DatedernierCommande', moment(this.dernierCommande?.dateSignature))
+      console.log('DateCommande', moment(this.engagement.dateSignature))
+      let date = new Date()
+      console.log('morcellement ', Math.abs(
+        moment(this.dernierCommande?.dateSignature).diff(moment(date))) / UnJourEnMilliSeconde)
+      if (Math.abs(
+        moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature))) / UnJourEnMilliSeconde >= NombreJours) {
+        this.form.patchValue({
+          respectNonMorcellement: true,
+        });
+        const pipe = new DatePipe('en-US');
+        this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - (Math.abs(
+          moment(this.dernierCommande?.dateSignature).diff(moment(date))) / UnJourEnMilliSeconde)
+        ) + 1;
+        console.log(this.nombreJoursRestantPourLeRespectMorcellement)
+        let dernierCommande = new Date(this.dernierCommande?.dateSignature);
+        let dat = new Date(this.dernierCommande?.dateSignature);
+        dat.setDate(dernierCommande.getDate() + NombreJours);
+        this.prochaineDate = pipe.transform(dat, 'yyyy-MM-dd');
 
-        console.log('morcellement ', Math.abs(
-          moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde)
-        if (Math.abs(
-          moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde >= NombreJours) {
+        console.log(this.prochaineDate)
 
-          this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
-            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde
-          ) + 1;
-          this.form.patchValue({
-            respectNonMorcellement: true,
-          });
+      } else {
+        const pipe = new DatePipe('en-US');
+        this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - (Math.abs(
+          moment(this.dernierCommande?.dateSignature).diff(moment(date))) / UnJourEnMilliSeconde)
+        ) + 1;
+        console.log(this.nombreJoursRestantPourLeRespectMorcellement)
+        let dernierCommande = new Date(this.dernierCommande?.dateSignature);
+        let dat = new Date(this.dernierCommande?.dateSignature);
+        dat.setDate(dernierCommande.getDate() + NombreJours);
+        this.prochaineDate = pipe.transform(dat, 'yyyy-MM-dd');
 
-          const pipe = new DatePipe('en-US');
-          let dernierCommande = new Date(this.dernierCommande?.dateSignature);
-          let dat = new Date(this.dernierCommande?.dateSignature);
-          dat.setDate(dernierCommande.getDate()+ this.nombreJoursRestantPourLeRespectMorcellement);
-          this.prochaineDate = pipe.transform(dat, 'yyyy-MM-dd');
+        console.log(this.prochaineDate)
+        this.form.patchValue({
+          respectNonMorcellement: false,
+        });
 
-          console.log(this.prochaineDate)
+      }
 
-        } else {
-          this.nombreJoursRestantPourLeRespectMorcellement = (NombreJours - Math.abs(
-            moment(this.dernierCommande?.dateSignature).diff(moment(this.engagement.dateSignature)))/UnJourEnMilliSeconde
-          ) + 1;
-          console.log(this.nombreJoursRestantPourLeRespectMorcellement)
-          const pipe = new DatePipe('en-US');
-          let dernierCommande = new Date(this.dernierCommande?.dateSignature);
-          let dat = new Date(this.dernierCommande?.dateSignature);
-          dat.setDate(dernierCommande.getDate()+ this.nombreJoursRestantPourLeRespectMorcellement);
-          this.prochaineDate = pipe.transform(dat, 'yyyy-MM-dd');
-
-          console.log(this.prochaineDate)
-          this.form.patchValue({
-            respectNonMorcellement: false,
-          });
-
-          return;
-        }
-
-     // })
+      // })
     } else {
       this.form.patchValue({
         respectNonMorcellement: true,
