@@ -66,7 +66,7 @@
               </span>
               <span *ngIf="column.field === 'matriculeGestionnaire'">
                 <span>
-                  {{ item['niuContribuable'] }}
+                  {{ item['niuContribuable'] }} &nbsp;  {{ item['raisonSociale'] }}
                 </span>
               </span>
               <span *ngIf="column.field === 'subProgram'" data-title="{{ item[column.field] }}">

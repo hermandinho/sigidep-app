@@ -60,7 +60,7 @@ export class TraitementBonEngagementService {
       ...property,
       etat: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
     })
-
+    console.log(bon)
     return  traitement;
   }
 
@@ -87,7 +87,22 @@ export class TraitementBonEngagementService {
       }
     }
    
-    if(payload?.action === 'modifier'){
+    if(payload?.action === 'enregistrer'){
+      const property = await this.repositoryBon.findOne({
+        id: payload?.bon.id,
+      });
+  
+      const bon = this.repositoryBon.save({
+        ...property,
+        etat: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
+      })
+
+      return this.repository.save({
+        ...(payload as any),
+        typeTraitement: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
+        updateBy: user,
+      });
+    }else if(payload?.action === 'modifier'){
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });

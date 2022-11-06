@@ -125,6 +125,7 @@ export class DialogsService {
   private payerMandatComponent: any;
   private createValiderRejeterMandatComponent:any;
   private fichePaiement:any;
+  private reservationBonEngagementComponent:any;
 
 
 
@@ -1575,6 +1576,32 @@ export class DialogsService {
     });
   }
 
+  public async launchReservationBonEngagementDialog(
+    item:
+      | BonEngagementModel,
+    type: Step
+  ): Promise<any> {
+    if (!this.reservationBonEngagementComponent) {
+      const { ReservationBonEngagementComponent } = await import(
+        '@components/reservation-bon-engagement/reservation-bon-engagement.component'
+      );
+      this.reservationBonEngagementComponent = ReservationBonEngagementComponent;
+    }
+
+    return this._dialogService.open(this.reservationBonEngagementComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.reserverBonEngagement',
+        { numero: item?.numero }
+      ),
+      width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+        type,
+      },
+    });
+  }
 }
 
 

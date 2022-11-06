@@ -16,6 +16,7 @@ import {
   getLoadingSelector,
 } from '@reducers/engagements.reducer';
 import { DatePipe } from '@angular/common';
+import { BonEngagementModel } from '../../models/bon-engagement.model';
 
 @Component({
   selector: 'app-rubrique-liquider-form',
@@ -42,6 +43,12 @@ export class RubriqueLiquiderFormComponent extends BaseComponent implements OnIn
   montant: number[] = [];
   dataRubrique: any;
   loading$: Observable<boolean> = of(true);
+  netAPercevoir!:number;
+  montantHT:number = 0;
+  montantTVA:number = 0;
+  montantIR:number = 0;
+  montantIRNC:number = 0;
+  somme = 0;
   constructor(
     private _store: Store<AppState>,
     public ref: DynamicDialogRef,
@@ -102,7 +109,10 @@ export class RubriqueLiquiderFormComponent extends BaseComponent implements OnIn
           );
           this.rubrique.push('Net à payer');
           this.montant.push(this.dataRubrique?.moment)
+          this.netAPercevoir = this.dataRubrique?.moment
           console.log('mission ',this.dataRubrique)
+          this.somme = (this.netAPercevoir ? this.netAPercevoir : 0) +(this.montantTVA ? this.montantTVA : 0)+(this.montantIR ? this.montantIR : 0)+(this.montantIRNC ? this.montantIRNC : 0);
+          console.log('somme ',this.somme)
         }
         if(this.data?.item?.numActeJuridique?.codeProcedure==='1122'||this.data?.item?.numActeJuridique?.codeProcedure==='1123'||this.data?.item?.numActeJuridique?.codeProcedure==='1124'||this.data?.item?.numActeJuridique?.codeProcedure==='1125'||this.data?.item?.numActeJuridique?.codeProcedure==='1126'){
           this.dataRubrique = this.engagements.find(
@@ -112,34 +122,39 @@ export class RubriqueLiquiderFormComponent extends BaseComponent implements OnIn
           if(this.dataRubrique?.netAPercevoir !== null){
             this.rubrique.push('Net à payer');
             this.montant.push(this.dataRubrique?.netAPercevoir)
+            this.netAPercevoir = this.dataRubrique?.netAPercevoir
           }
-          if(this.dataRubrique?.montantIRNC !== null){
+          if(this.data?.item?.numActeJuridique?.codeProcedure==='1122'){
             this.rubrique.push('Montant IRNC');
             this.montant.push(this.dataRubrique?.montantIRNC);
+            this.montantIRNC = this.dataRubrique?.montantIRNC
           }
 
-          if(this.dataRubrique?.codeProcedure === 1126){
+          if(this.dataRubrique?.codeProcedure === '1126'){
               //Montant HT
-              if(this.dataRubrique?.montantHT !== null){
+              if(this.dataRubrique?.montantBrut !== null){
                 this.rubrique.push('Montant HT');
-                this.montant.push(0);
+                this.montant.push(this.dataRubrique?.montantBrut);
+                this.montantHT = this.dataRubrique?.montantBrut
               }
               if(this.dataRubrique?.tauxTVA !== null){
                  //Montant Taxes (TVA)
                   this.rubrique.push('Montant Taxes (TVA)');
-                  this.montant.push(this.dataRubrique?.tauxTVA);
+                  this.montant.push(this.dataRubrique?.montantTVA);
+                  this.montantTVA = this.dataRubrique?.montantTVA
               }
               if(this.dataRubrique?.tauxIR !== null){
                 //Montant Acomptes sur IR (AIR)
                 this.rubrique.push('Montant Acomptes sur IR (AIR)');
-                this.montant.push(this.dataRubrique?.tauxIR);
+                this.montant.push(this.dataRubrique?.montantIRNC);
+                this.montantIR = this.dataRubrique?.montantIRNC
               }
-
-
           }
+          this.somme = (this.netAPercevoir ? this.netAPercevoir : 0) +(this.montantTVA ? this.montantTVA : 0)+(this.montantIR ? this.montantIR : 0)+(this.montantIRNC ? this.montantIRNC : 0);
+          console.log('somme ',this.somme)
           console.log('decision ',this.dataRubrique)
         }
-        if(this.data?.item?.numActeJuridique?.codeProcedure==='1110'||this.data?.item?.numActeJuridique?.codeProcedure==='1111'||this.data?.item?.numActeJuridique?.codeProcedure==='1115'){
+        if(this.data?.item?.numActeJuridique?.codeProcedure==='1110' || this.data?.item?.numActeJuridique?.codeProcedure==='1111' || this.data?.item?.numActeJuridique?.codeProcedure==='1115'){
           this.dataRubrique = this.engagements.find(
             (item:any) => item.id === this.data?.item?.numActeJuridique?.id
           );
@@ -147,23 +162,29 @@ export class RubriqueLiquiderFormComponent extends BaseComponent implements OnIn
             //Net à payer
           this.rubrique.push('Net à payer');
           this.montant.push(this.dataRubrique?.netAPercevoir)
+          this.netAPercevoir = this.dataRubrique?.netAPercevoir
           }
           if(this.dataRubrique?.tauxIR !== null) {
               //Montant HT
           this.rubrique.push('Montant HT');
-          this.montant.push(0);
+          this.montant.push(this.dataRubrique?.montantHT);
+          this.montantHT = this.dataRubrique?.montantHT
           }
           if(this.dataRubrique?.tauxIR !== null) {
               //Montant Taxes (TVA)
           this.rubrique.push('Montant Taxes (TVA)');
-          this.montant.push(this.dataRubrique?.tauxTVA);
+          this.montant.push(this.dataRubrique?.montantTVA);
+          this.montantTVA = this.dataRubrique?.montantTVA
           }
           if(this.dataRubrique?.tauxIR !== null) {
             //Montant Acomptes sur IR (AIR)
           this.rubrique.push('Montant Acomptes sur IR (AIR)');
-          this.montant.push(this.dataRubrique?.tauxIR);
+          this.montant.push(this.dataRubrique?.montantIRNC);
+          this.montantIR = this.dataRubrique?.montantIRNC
           }
           console.log('commande ',this.dataRubrique)
+          this.somme = (this.netAPercevoir ? this.netAPercevoir : 0) +(this.montantTVA ? this.montantTVA : 0)+(this.montantIR ? this.montantIR : 0)+(this.montantIRNC ? this.montantIRNC : 0);
+          console.log('somme ',this.somme)
         }
     });
 

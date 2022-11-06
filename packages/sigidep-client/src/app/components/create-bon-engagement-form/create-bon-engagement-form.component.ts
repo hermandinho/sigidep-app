@@ -70,6 +70,7 @@ export class CreateBonEngagementFormComponent
   }
 
   ngOnInit(): void {
+    console.log('bon',this.config.data?.item)
     this.form = this._fb.group({
       engagementForm: this._fb.group({
         id: [undefined],
@@ -158,14 +159,14 @@ export class CreateBonEngagementFormComponent
       this.situationAction = this.config.data?.action;
       if (this.situationAction === 'dialogs.headers.etatBonEngagement') {
         if (this.config.data?.item?.data !== undefined) {
-          console.log(this.config.data?.item)
+          //console.log(this.config.data?.item)
           this.validation = true;
           this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
           if (this.config.data?.item?.action === 'controler') {
             this.engagements = this.config.data?.item?.data[0]?.bon_engagement;
           }
         } else {
-          console.log('1')
+          //console.log('1')
           this.engagements = this.config.data?.item;
         }
         this.isCheck = true;
@@ -179,7 +180,7 @@ export class CreateBonEngagementFormComponent
       this.config?.data?.item?.numActeJuridique?.codeProcedure;
     this._appService.setCurrentProcedure(this.currentProcedure);
 
-    console.log(this.currentProcedure)
+    //console.log(this.currentProcedure)
 
 
     if (this.config.data?.item) {
@@ -378,57 +379,20 @@ export class CreateBonEngagementFormComponent
     }
   }
   bookProcess = (engagement: BonEngagementModel) => {
-    const method: Observable<any> = this._apisService.put<BonEngagementModel>(
-      '/bons-engagements/reservation',
-      engagement
-    );
-
-    method.subscribe(
-      (res) => {
-        //this.busy = false;
-        this.ref.close(res);
-        this._store.dispatch(
-          GetBonsEngagements({ procedures: [res?.codeProcedure] })
-        );
-        this._dialogService.launchPrintBonEngagementPrimeDialog(res);
-        this._appService.showToast({
-          summary: 'messages.success',
-          detail:
-            'messages.engagementsreservationSuccess' +
-            ': numéro: ' +
-            res.numero,
-          severity: 'success',
-          life: 3000,
-          closable: true,
-        });
-      },
-      ({ error }) => {
-        let err = '';
-        if (error?.statusCode === 409) {
-          err = 'errors.engagements.conflict';
-        } else {
-          err = 'errors.unknown';
-        }
-        //this.busy = false;
-        this._appService.showToast({
-          detail: err,
-          summary: 'errors.error',
-          severity: 'error',
-          life: 5000,
-          closable: true,
-        });
-      }
+    this._dialogService.launchReservationBonEngagementDialog(
+      engagement,
+      this.config.data?.category
     );
   };
 
   submitForm() {
     if (this.validation === true) {
-      console.log(this.config.data?.item)
+     // console.log(this.config.data?.item)
       this.controler(this.config.data?.item);
       this.ref.close();
       return;
     }
-    console.log('this.form.getRawValue()?.engagementForm ',this.form.getRawValue()?.engagementForm)
+   // console.log('this.form.getRawValue()?.engagementForm ',this.form.getRawValue()?.engagementForm)
     const formValues = this.form.getRawValue();
     if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1122' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1123' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1124') {
       this.form.patchValue({
@@ -451,7 +415,7 @@ export class CreateBonEngagementFormComponent
           nomBeneficaire: this.form.getRawValue()?.engagementForm.raisonSociale
         },
       });
-      console.log('this.form.getRawValue()?.bonEngagementForm ',this.form.getRawValue())
+     // console.log('this.form.getRawValue()?.bonEngagementForm ',this.form.getRawValue())
     }
 
     if (this.form.getRawValue()?.engagementForm?.codeProcedure == '1110' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1111' || this.form.getRawValue()?.engagementForm?.codeProcedure == '1115') {
@@ -568,12 +532,6 @@ export class CreateBonEngagementFormComponent
         });
       }
     );
-     /*  this._appService.saveConfirmation({
-        message: 'dialogs.messages.saveBon',
-        accept: () => {
-
-        },
-      }); */
     }
   }
 
@@ -603,31 +561,7 @@ export class CreateBonEngagementFormComponent
       ) {
         return null;
       }
-    /*   if (
-        this.form.getRawValue()?.bonEngagementForm.typeMission ===
-        this.translate.instant(EtatBonEngagementEnum.CONTROLE)
-      ) {
-        const amount =
-          (80 / 100) * this.form.getRawValue()?.engagementForm.montantAE;
-        this.form.patchValue({
-          bonEngagementForm: {
-            montantCPChiffres: amount,
-          },
-        });
-        return null;
-      }
-      if (
-        this.form.getRawValue()?.bonEngagementForm.typeMission ===
-        this.translate.instant(EtatBonEngagementEnum.EFFECTUER)
-      ) {
-        const amount = this.form.getRawValue()?.engagementForm.montantAE;
-        this.form.patchValue({
-          bonEngagementForm: {
-            montantCPChiffres: amount,
-          },
-        });
-        return null;
-      } */
+
       return error;
     }
     return null;
@@ -637,16 +571,18 @@ export class CreateBonEngagementFormComponent
     engagements: BonEngagementModel[],
     numeroEngJuridique: string
   ) => {
-    console.log(engagements)
-    this.sommeMontantCP = 0
-  engagements.forEach(
-        (item) =>{
-          if(item.numActeJuridique.numero.toString() == numeroEngJuridique.toString()){
-            console.log(item)
-             this.sommeMontantCP += item.montantCPReserver
-             console.log('sommeMontantCP', this.sommeMontantCP)
-          }
-        })
+    //console.log(engagements)
+    if(!this.isBook){
+      this.sommeMontantCP = 0
+      engagements.forEach(
+            (item) =>{
+              if(item?.numActeJuridique?.numero?.toString() == numeroEngJuridique?.toString()){
+                //console.log(item)
+                 this.sommeMontantCP += item.montantCPReserver
+                 //console.log('sommeMontantCP', this.sommeMontantCP)
+              }
+            })
+    }
   }
 
   private _initListeners() {
@@ -654,7 +590,7 @@ export class CreateBonEngagementFormComponent
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.bonEngagement = [...data];
-        console.log('bonEngagement ',data)
+        //console.log('bonEngagement ',data)
       });
   }
   controler(data: any) {

@@ -80,6 +80,10 @@ export class EngagementContainerComponent
         cleCompteContribuable: '',
         tauxTVA: '',
         tauxIR: '',
+        montantBrut: [undefined,[this.handleMontantTVAIRNCNetCommande]],
+        montantIRNC: [undefined],
+        montantTVA: [undefined],
+        netAPercevoir: [undefined],
         taxesApplicable: this._fb.group({
           id: '',
           code: '',
@@ -129,8 +133,9 @@ export class EngagementContainerComponent
         nomContribBudget: [undefined],
         codeUnitAdminBenef: [undefined],
         nomUnitAdminBenef: [undefined],
-        montantBrut: [undefined],
+        montantBrut: [undefined,[this.handleMontantTVAIRNCNet]],
         montantIRNC: [undefined,[this.handleNetAPercevoir]],
+        montantTVA: [undefined],
         raisonSociale: [undefined],
         codeBanqueContribuable: [undefined],
         codeAgenceContribuable: [undefined],
@@ -200,6 +205,7 @@ export class EngagementContainerComponent
         nomUnitAdminBenef,
         montantBrut,
         montantIRNC,
+        montantTVA,
         netAPercevoir,
         aeDisponible,
         numContribuable,
@@ -241,6 +247,10 @@ export class EngagementContainerComponent
           tauxTVA,
           tauxIR,
           taxesApplicable,
+          montantBrut,
+          montantIRNC,
+          montantTVA,
+          netAPercevoir,
         },
         missionForm: {
           type,
@@ -264,6 +274,7 @@ export class EngagementContainerComponent
           nomUnitAdminBenef,
           montantBrut,
           montantIRNC,
+          montantTVA,
           raisonSociale,
           codeBanqueContribuable,
           codeAgenceContribuable,
@@ -342,14 +353,42 @@ export class EngagementContainerComponent
           netAPercevoir: montant,
             }
         });
-      }else{
-        this.form.patchValue({
-          decisionForm: {
-        netAPercevoir: 0,
-          }
-      });
       }
       }
+
+    }
+  }
+
+  handleMontantTVAIRNCNet = (control: FormControl) => {
+    if(control.value){
+      const montantTVA = parseInt(control.value) * parseInt(this.form.getRawValue()?.decisionForm.tauxTVA);
+      const montantIRNC = parseInt(control.value) * parseInt(this.form.getRawValue()?.decisionForm.tauxIR);
+      const netAPercevoir = parseInt(this.form.getRawValue()?.commonForm.montantAE) - montantTVA - montantIRNC;
+      if(this.currentProcedure === '1126'){
+          this.form.patchValue({
+            decisionForm: {
+              montantTVA: montantTVA,
+              montantIRNC: montantIRNC,
+              netAPercevoir: netAPercevoir,
+            }
+        });
+      }
+
+    }
+  }
+
+  handleMontantTVAIRNCNetCommande = (control: FormControl) => {
+    if(control.value){
+      const montantTVA = parseInt(control.value) * parseInt(this.form.getRawValue()?.commandForm.tauxTVA);
+      const montantIRNC = parseInt(control.value) * parseInt(this.form.getRawValue()?.commandForm.tauxIR);
+      const netAPercevoir = parseInt(this.form.getRawValue()?.commonForm.montantAE) - montantTVA - montantIRNC;
+          this.form.patchValue({
+            commandForm: {
+              montantTVA: montantTVA,
+              montantIRNC: montantIRNC,
+              netAPercevoir: netAPercevoir,
+            }
+        });
 
     }
   }

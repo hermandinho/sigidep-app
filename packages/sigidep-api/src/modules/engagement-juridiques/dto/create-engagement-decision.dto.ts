@@ -31,6 +31,9 @@ export class EngagementDecisionDTO extends CreateEngagementJuridiqueDTO {
   @ApiProperty({ example: '2000', required: false })
   public montantIRNC: number;
 
+  @ApiProperty({ example: '2000', required: false })
+  public montantTVA: number;
+
   @ApiProperty({ example: 'CCA', required: false })
   public raisonSociale: string;
 

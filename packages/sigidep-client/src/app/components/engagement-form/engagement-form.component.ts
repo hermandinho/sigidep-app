@@ -67,7 +67,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     console.log('engagements',this.engagements)
     this.engagementForm = this.startingForm;
-    console.log('engagementForm',this.engagementForm)
+   // console.log('engagementForm',this.engagementForm)
     this.subformInitialized.emit(this.engagementForm);
     if (this.readOnly) this.engagementForm.disable();
 
@@ -149,11 +149,18 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         taxesApplicable: (act as any)?.taxesApplicable,
         tauxTVA: (act as any)?.tauxTVA,
         tauxIR: (act as any)?.tauxIR,
+        itineraire: (act as any)?.itineraire,
+        dateDebut: (act as any)?.dateDebut,
+        dateFin: (act as any)?.dateFin,
+        nombreJours: (act as any)?.nombreJours,
+        montantMission: (act as any)?.montant,
+        baremeJour: (act as any)?.baremeJour?.montant,
         RIB:
           (act as any)?.codeBanqueContribuable +
           (act as any)?.codeAgenceContribuable +
           (act as any)?.numeroCompteContribuable +
           (act as any)?.cleCompteContribuable,
+
       });
 
       this.subformInitialized.emit(this.engagementForm);
@@ -198,7 +205,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
 
   scanneElt = (event: any) => {
     if(this.dataEngagement){
-      console.log("existe")
+      //console.log("existe")
       if(this.dataEngagement?.numActeJuridique){
          const test =this.dataEngagement?.numActeJuridique;
         if(test.codeProcedure==='1121'){
@@ -241,15 +248,15 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         this.act = this.dataEngagement;
       }
     }else{
-      console.log("n'existe pas")
+      //console.log("n'existe pas")
       this.act = this.engagements.find(
         (item:any) => item.id === event.numActeJuridique.id
       );
-      console.log("n'existe pas ",this.act)
+      //console.log("n'existe pas ",this.act)
     }
     localStorage.setItem('imputation', JSON.stringify(this.act?.imputation));
     this.procedure = this.act?.codeProcedure;
-    console.log('Data. Taxe..', (this.act as any)?.taxesApplicable);
+    //console.log('Data. Taxe..', (this.act as any)?.taxesApplicable);
 
     if (this.act) {
       this.engagementForm.patchValue({

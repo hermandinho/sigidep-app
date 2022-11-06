@@ -72,8 +72,18 @@ export class TraitementDesLiquidationsMandatementComponent extends BaseComponent
   }
 
   ngOnInit(): void {
+    console.log('theo')
     this._store.dispatch(
-      GetBonsEngagements({ etats: [EtatBonEnum.CERTIFICAT, EtatBonEnum.RECEPTIONLIQUIDATION, EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION, EtatBonEnum.MANDATDEPAIEMENT, EtatBonEnum.RAPPORTDELIQUIDATION, EtatBonEnum.ORDONNANCEMENT, EtatBonEnum.REJETCONTROLEREGULARITE] })
+      GetBonsEngagements({ etats: [
+        EtatBonEnum.ENREGISTREMENTLIQUIDATION,
+        EtatBonEnum.CERTIFICAT,
+        EtatBonEnum.RECEPTIONLIQUIDATION,
+        EtatBonEnum.LIQUIDATIONMODIFIEE,
+        EtatBonEnum.VALIDATIONLIQUIDATION,
+        EtatBonEnum.MANDATDEPAIEMENT,
+        EtatBonEnum.RAPPORTDELIQUIDATION,
+        EtatBonEnum.ORDONNANCEMENT,
+        EtatBonEnum.REJETCONTROLEREGULARITE] })
     );
     this._store.dispatch(
       GetExercises({})
@@ -396,13 +406,12 @@ export class TraitementDesLiquidationsMandatementComponent extends BaseComponent
             this.dossiersBordereaux.push(elt)
             this.dossiersBordereaux_tmp.push(elt)
             console.log("dossiersBordereaux2 ", this.dossiersBordereaux)
-          } else if (elt?.etat !== EtatBonEnum.CERTIFICAT && elt?.etat !== EtatBonEnum.RECEPTIONLIQUIDATION && elt?.etat == EtatBonEnum.ORDONNANCEMENT) {
+          } else if (elt?.etat == EtatBonEnum.ENREGISTREMENTLIQUIDATION || elt?.etat == EtatBonEnum.VALIDATIONLIQUIDATION || elt?.etat == EtatBonEnum.LIQUIDATIONMODIFIEE || elt?.etat == EtatBonEnum.MANDATDEPAIEMENT || elt?.etat == EtatBonEnum.RAPPORTDELIQUIDATION || elt?.etat == EtatBonEnum.REJETCONTROLEREGULARITE) {
             this.dossiersBordereaux.push(elt)
             this.dossiersBordereaux_tmp.push(elt)
             console.log("dossiersBordereaux2 ", this.dossiersBordereaux)
           }
         })
-
       });
 
     this.loading1$ = this._store.pipe(

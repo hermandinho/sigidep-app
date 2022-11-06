@@ -13,7 +13,7 @@
       </div>
       <div class="p-fluid p-grid">
         <div class="p-field p-col-12 p-md-6">
-          <ng-container formGroupName="matriculeGestionnaire">
+          <ng-container>
             <label class="required"
             >{{ "labels.matriculeGestionnaire" | translate }}
           </label>
@@ -26,7 +26,7 @@
               [placeholder]="''"
               optionLabel="matricule"
               optionValue="matricule"
-              formControlName="matricule"
+              formControlName="matriculeGestionnaire"
               (onChange)="onGestionnaireChange($event)"
             >
             </p-dropdown>
@@ -54,6 +54,7 @@
   ></button>
 
   <button
+  [disabled]="!traitementLiquidationForm?.valid"
   (click)="submit()"
   [label]="'buttons.submit' | translate"
   pButton

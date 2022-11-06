@@ -86,7 +86,8 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getDataSelector))
       .subscribe((data) => {
         this.data = [...data];
-        if(this.data.length>0){
+        console.log(data)
+        if(this.data && this.data.length>0){
           this.onEncourChange(this.data[0]);
         }
       });
@@ -97,7 +98,6 @@ export class PerformFormComponent extends BaseComponent implements OnInit {
   }
 
   onEncourChange = (data: any) => {
-    if (data)
       this.performForm.patchValue({
         livrables: data?.livrables,
         sourceVerif: data?.sourceVerif,

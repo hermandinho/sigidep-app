@@ -71,6 +71,7 @@ import { DetailsValidationDeACTComponent } from '../components/details-validatio
 import { ModeEtCoordonneesDePaiementComponent } from '../components/mode-et-coordonnees-de-paiement/mode-et-coordonnees-de-paiement.component';
 import { FichePaiementComponent } from '../components/fiche-paiement/fiche-paiement.component';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ReservationBonEngagementComponent } from '../components/reservation-bon-engagement/reservation-bon-engagement.component';
 
 const declarations = [
   BaseComponent,
@@ -96,7 +97,6 @@ const declarations = [
   VirementFormComponent,
   DetailsVirementFormComponent,
   VirementBodyFormComponent,
-
   ShowVirementMessageComponent,
   VirementValidationFormComponent,
   CreateTraitementLiquidationMandatementComponent,
@@ -109,7 +109,8 @@ const declarations = [
   CreatePayerMandatComponent,
   DetailsValidationDeACTComponent,
   ModeEtCoordonneesDePaiementComponent,
-  FichePaiementComponent
+  FichePaiementComponent,
+  ReservationBonEngagementComponent
 ];
 
 const shared = [

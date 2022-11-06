@@ -235,10 +235,10 @@ export class FactureComponent extends BaseComponent implements OnInit {
       id: [articleF?.id],
       serie: [articleF?.article.serie],
       prix: [articleF?.article.prix],
-      prixTotalHT: [total],
+      prixTotalHT: [total>0 ? total : articleF?.article.prix],
       designation: [articleF?.article.designation],
       conditionnement: [articleF?.article.conditionnement],
-      quantite: [articleF?.quantite],
+      quantite: [articleF?.quantite ? articleF?.quantite : 0],
       etat: [],
       sousRubrique: this._fb.group({
         id: [],
@@ -255,19 +255,22 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
   onSerieChange = (event: any, articleForm: FormGroup, index: number) => {
     const article = this.articles.find((item) => item.serie === event.value);
-    if (
+ /*    if (
       ((this.factureForm.get('articles') as FormArray).value as any[]).filter(
         (it) => it.serie === event.value
       )?.length == 1
-    ) {
+    ) { */
       articleForm.patchValue({
         designation: article?.designation,
         id: article?.id,
         prix: article?.prix,
+        quantite: 1,
+        prixTotalHT: article?.prix
       });
-    } else {
+   /*  } else {
+      console.log('remove index',index)
       this.remove(index, articleForm);
-    }
+    } */
   };
 
   onQteChange = (event: any, articleForm: FormGroup) => {
@@ -283,8 +286,10 @@ export class FactureComponent extends BaseComponent implements OnInit {
   };
 
   submit = () => {
+    const date = new Date();
     this.factureForm.patchValue({
       articles: this.factureForm.value.articles,
+      date: date
     });
     this.submitForm.emit();
   };

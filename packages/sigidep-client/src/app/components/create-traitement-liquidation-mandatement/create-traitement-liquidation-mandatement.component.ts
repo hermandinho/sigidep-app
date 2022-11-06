@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StepLiquidation, TraitementBonEngagementModel } from '../../models/traitement-bon-engagement.model';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../../services/app.service';
 import { ApisService } from '../../services/apis.service';
 import { AppState } from '../../store/reducers/index';
@@ -13,6 +13,8 @@ import { BaseComponent } from '../base.component';
 import { GetTransmissionsReceptionsDetails } from '../../store/actions/detail-transmissions-receptions.actions';
 import { EtatBonEnum } from '../../utils/etat-bon-engagement.enum';
 import { PieceJointeModel } from '@models/piece-jointe.model';
+import { GetBonsEngagements } from '../../store/actions/bons-engagements.actions';
+import { BonEngagementModel } from '../../models/bon-engagement.model';
 
 @Component({
   selector: 'app-create-traitement-liquidation-mandatement',
@@ -29,6 +31,7 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
   public busy!: boolean;
   public test: string = '';
   piecesJointe!: PieceJointeModel[]
+  public bon!: BonEngagementModel
 
   constructor(
     public ref: DynamicDialogRef,
@@ -45,6 +48,7 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
 
   ngOnInit(): void {
     this.data = this.config.data;
+    this.bon = this.config.data?.item
       console.log('item ', this.config.data?.item)
       console.log('action ', this.config.data?.action)
       if (this.config.data?.action !== 'enregistrer') {
@@ -66,7 +70,7 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
         bon: [undefined],
         piecesJointe: [undefined],
         action: [undefined],
-        matriculeGestionnaire: [undefined],
+        matriculeGestionnaire: [undefined,[this.validationGestionnaire]],
         nomGestionnaire: [undefined],
         numeroMandat: [undefined],
 
@@ -177,7 +181,8 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
           this.busy = false;
           this.ref.close(res);
           this._store.dispatch(
-            GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONLIQUIDATION] })
+            GetBonsEngagements({ etats: [EtatBonEnum.CERTIFICAT, EtatBonEnum.RECEPTIONLIQUIDATION, EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION, EtatBonEnum.MANDATDEPAIEMENT, EtatBonEnum.RAPPORTDELIQUIDATION, EtatBonEnum.ORDONNANCEMENT, EtatBonEnum.REJETCONTROLEREGULARITE] })
+
           );
           this._appService.showToast({
             summary: 'messages.success',
@@ -216,8 +221,8 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
           this.busy = false;
           this.ref.close(res);
           this._store.dispatch(
-            GetTransmissionsReceptionsDetails({ etats: [EtatBonEnum.RECEPTIONLIQUIDATION] })
-          );
+            GetBonsEngagements({ etats: [EtatBonEnum.CERTIFICAT, EtatBonEnum.RECEPTIONLIQUIDATION, EtatBonEnum.ENREGISTREMENTLIQUIDATION, EtatBonEnum.LIQUIDATIONMODIFIEE, EtatBonEnum.VALIDATIONLIQUIDATION, EtatBonEnum.MANDATDEPAIEMENT, EtatBonEnum.RAPPORTDELIQUIDATION, EtatBonEnum.ORDONNANCEMENT, EtatBonEnum.REJETCONTROLEREGULARITE] })
+            );
           this._appService.showToast({
             summary: 'messages.success',
             detail: 'messages.engagements.createSuccess',
@@ -245,5 +250,19 @@ export class CreateTraitementLiquidationMandatementComponent extends BaseCompone
       );
     }
   }
-
+  validationGestionnaire = (control: FormControl): { [s: string]: any } | null => {
+    if (control.value) {
+      const ges = control.value;
+      console.log('ges ', ges)
+      const error = { invalidAmount: 'errors.invalidParagraph' };
+      if (
+        this.bon?.matriculeGestionnaire === ges
+      ) {
+        return null;
+      }else {
+        return error;
+      }
+    }
+    return null;
+  };
 }

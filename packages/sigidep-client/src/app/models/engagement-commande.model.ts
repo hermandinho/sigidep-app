@@ -10,6 +10,10 @@ export class EngagementCommandeModel extends EngagementJuridiqueModel {
   cleCompteContribuable!: string;
   tauxTVA!: number;
   tauxIR!: number;
+  montantBrut!: number;
+  netAPercevoir!: number;
+  montantIRNC!: number;
+  montantTVA!: number;
   taxesApplicable!: ExecTaxesModel;
   constructor(params?: Partial<EngagementCommandeModel>) {
     super();

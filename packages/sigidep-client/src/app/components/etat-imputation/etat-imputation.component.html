@@ -99,7 +99,7 @@
             <th>Date engag.</th>
             <th>Montant AE</th>
             <th>Etat</th>
-            <th>Mandat</th>
+            <th>Bon</th>
             <th>Date engag.</th>
             <th>Montant CP</th>
             <th>Situation traitement</th>
@@ -113,11 +113,11 @@
             <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.dateSignature}}</span></td>
             <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.montantAE}}</span></td>
             <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.etat | translate}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.numero}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.dateEngagement}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.etat | translate }}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.situationActuelle}}</span></td>
-            <td><span *ngIf="mand?.etat==='labels.mandatReserve'">{{mand?.createdAt|date}}</span></td>
+            <td><span>{{mand?.numero}}</span></td>
+            <td><span>{{mand?.dateEngagement}}</span></td>
+            <td><span>{{mand?.montantCPChiffres | translate }}</span></td>
+            <td><span>{{mand?.etat | translate }}</span></td>
+            <td><span>{{mand?.createdAt|date}}</span></td>
           </tr>
         </table>
       </p-card>

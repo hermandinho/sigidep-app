@@ -168,7 +168,8 @@ export class BonEngagementMissionsComponent
     this._appService.showConfirmation({
       message: 'dialogs.messages.reserveMandatEngagement',
       accept: () => {
-        this._dialogService.launchBonEngagementMissionCreateDialog(
+        this._dialogService.launchBonEngagementCreateDialog(
+          'mission',
           item,
           'book'
         );
@@ -281,11 +282,11 @@ export class BonEngagementMissionsComponent
     return this.currentLang === 'fr' ? 'fr-FR' : 'en-EN';
   }
   async openForm() {
-    this._dialogService.launchBonEngagementMissionCreateDialog();
+    this._dialogService.launchBonEngagementCreateDialog('mission');
   }
 
   edit(item: BonEngagementModel) {
-    this._dialogService.launchBonEngagementMissionCreateDialog(item);
+    this._dialogService.launchBonEngagementCreateDialog('mission', item);
   }
 
   delete(item: BonEngagementModel) {

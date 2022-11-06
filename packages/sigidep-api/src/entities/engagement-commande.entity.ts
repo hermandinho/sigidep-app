@@ -30,6 +30,18 @@ export class EngagementCommandeEntity extends EngagementJuridiqueEntity {
   @Column({ type: 'float', nullable: true, name: 'taux_IR' })
   public tauxIR: number;
 
+  @Column({ nullable: true, type: 'float', name: 'montant_Brut' })
+  public montantBrut: number;
+
+  @Column({ nullable: true, type: 'float', name: 'montant_IRNC' })
+  public montantIRNC: number;
+
+  @Column({ nullable: true, type: 'float', name: 'montant_TVA' })
+  public montantTVA: number;
+
+  @Column({ nullable: true, type: 'float', name: 'net_a_percevoir' })
+  public netAPercevoir: number;
+
   @ManyToOne(() => ExecTaxesEntity, (object) => object.id, {
     eager: true,
     nullable: true,
