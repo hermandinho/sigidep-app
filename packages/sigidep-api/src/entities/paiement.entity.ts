@@ -18,7 +18,7 @@ export class PaiementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'numeroPaiement' })
   public numeroPaiement!: string;
 
-  @Column('varchar',{nullable:true, name: 'dateValidACT' })
+  @Column('varchar', { nullable: true, name: 'dateValidACT' })
   public dateValidACT: string;
   @Column('varchar', { nullable: true, name: 'modePaiement' })
   public modePaiement!: string;
@@ -29,7 +29,7 @@ export class PaiementEntity extends BaseEntity {
   @Column('varchar', { nullable: true, name: 'compteACrediter' })
   public compteACrediter!: string;
 
-  @Column('varchar',{nullable:true, name: 'datePaiement' })
+  @Column('varchar', { nullable: true, name: 'datePaiement' })
   public datePaiement: string;
 
   @Column('varchar', { nullable: true, name: 'villePaiement' })

@@ -49,12 +49,11 @@ export class TraitementBonEngagementController {
     return this.services.update(payload, user);
   }
 
-/*   @Put('/reservation')
+  /*   @Put('/reservation')
   public async reserve(
     @Body(ValidationPipe) payload: CreateTraitementBonEngagementDTO,
     @GetCurrentUser() user: UserEntity,
   ) {
     return this.services.update(payload, user, true);
   } */
-
 }

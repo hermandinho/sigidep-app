@@ -16,8 +16,16 @@ import { PaiementController } from './controller/paiement.controller';
 import { PaiementService } from './service/paiement.service';
 
 @Module({
-  controllers: [BonEngagementController,TraitementBonEngagementController,PaiementController],
-  providers: [BonEngagementService, TraitementBonEngagementService,PaiementService],
+  controllers: [
+    BonEngagementController,
+    TraitementBonEngagementController,
+    PaiementController,
+  ],
+  providers: [
+    BonEngagementService,
+    TraitementBonEngagementService,
+    PaiementService,
+  ],
   imports: [
     AuthModule,
     TypeOrmModule.forFeature([
@@ -34,7 +42,7 @@ import { PaiementService } from './service/paiement.service';
     TypeOrmModule,
     BonEngagementService,
     TraitementBonEngagementService,
-    PaiementService
+    PaiementService,
   ],
 })
 export class BonsEngagementsModule {}

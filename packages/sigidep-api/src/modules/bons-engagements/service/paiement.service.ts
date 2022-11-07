@@ -17,8 +17,7 @@ export class PaiementService {
 
     @InjectRepository(BonEngagementEntity)
     private readonly repositoryBon: Repository<BonEngagementEntity>,
-
-  ) { }
+  ) {}
 
   public getRepository(): Repository<PaiementEntity> {
     return this.repository;
@@ -56,7 +55,7 @@ export class PaiementService {
     const bon = this.repositoryBon.save({
       ...property,
       etat: EtatBonEnum.VALIDATIONCOMPTABLE,
-    })
+    });
 
     return traitement;
   }
@@ -65,17 +64,17 @@ export class PaiementService {
     payload: CreatePaiementDTO,
     user: UserEntity,
   ): Promise<CreatePaiementDTO> {
-    console.log(payload)
-  /*   const check = await this.repositoryBon.findOne({
+    console.log(payload);
+    /*   const check = await this.repositoryBon.findOne({
       id: payload?.id,
     });
     if (!check) {
       throw new NotFoundException();
     } */
     if (payload?.data?.action === 'rejeter-mandat') {
-      console.log('rejeter-mandat', payload)
+      console.log('rejeter-mandat', payload);
       const date = new Date();
-      const etated = EtatBonEnum.REJETVALIDATIONACT
+      const etated = EtatBonEnum.REJETVALIDATIONACT;
       const property = await this.repositoryBon.findOne(payload?.data?.bon?.id);
       const bon = this.repositoryBon.save({
         ...(property as any), // existing fields
@@ -83,12 +82,12 @@ export class PaiementService {
         updateBy: user,
         rejet: true,
         dateRejet: date,
-        motif: payload?.motif
+        motif: payload?.motif,
       });
       return bon;
     } else if (payload?.action === 'payer-mandat') {
-      console.log('payer-mandat', payload)
-      const etated = EtatBonEnum.PAIEMENT
+      console.log('payer-mandat', payload);
+      const etated = EtatBonEnum.PAIEMENT;
       const property = await this.repositoryBon.findOne(payload?.bon?.id);
       const bon = this.repositoryBon.save({
         ...(property as any), // existing fields
@@ -118,6 +117,5 @@ export class PaiementService {
          updateBy: user,
        });
      } */
-
   }
 }

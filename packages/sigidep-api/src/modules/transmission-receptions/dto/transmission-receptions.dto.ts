@@ -18,7 +18,7 @@ export class TransmissionReceptionDTO {
   bon_engagement?: CreateBonEngagementDTO[];
 
   @ApiProperty({ example: '', required: false })
-  transmission?:string;
+  transmission?: string;
 
   @ApiProperty({ example: '', required: false })
   data!: any[];
@@ -28,6 +28,4 @@ export class TransmissionReceptionDTO {
 
   @ApiProperty({ example: '', required: false })
   motif!: string;
-
-
 }

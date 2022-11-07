@@ -17,7 +17,6 @@ import { response } from 'express';
 
 @Injectable()
 export class BonEngagementService {
-
   constructor(
     @InjectRepository(BonEngagementEntity)
     private readonly repository: Repository<BonEngagementEntity>,
@@ -40,24 +39,23 @@ export class BonEngagementService {
   }
 
   public async getArticles(factureId: number): Promise<FactureArticleEntity[]> {
-    const response =  this.articleRepo
-    .createQueryBuilder('art')
-   .leftJoinAndSelect('art.facture', 'facture')
-   .leftJoinAndSelect('art.article', 'article')
-   /*  .where(factureId != null ? 'facture.id IN(:...codes)' : 'true', {
+    const response = this.articleRepo
+      .createQueryBuilder('art')
+      .leftJoinAndSelect('art.facture', 'facture')
+      .leftJoinAndSelect('art.article', 'article')
+      /*  .where(factureId != null ? 'facture.id IN(:...codes)' : 'true', {
       codes: [factureId],
     }) */
-    .where('facture.id = :code', {
-      code: factureId
-    })
-    .getMany();
+      .where('facture.id = :code', {
+        code: factureId,
+      })
+      .getMany();
     return response;
   }
 
   public async filter(
     filter?: EngagementFilter,
   ): Promise<BonEngagementEntity[]> {
-    
     return this.repository
       .createQueryBuilder('bon')
       .leftJoinAndSelect('bon.numActeJuridique', 'eng')
@@ -82,21 +80,19 @@ export class BonEngagementService {
       )
       .getMany();
   }
-  public async filterBon(
-    filter?: any,
-  ): Promise<BonEngagementEntity[]> {
-    console.log(filter)
+  public async filterBon(filter?: any): Promise<BonEngagementEntity[]> {
+    console.log(filter);
     const bons = this.repository
-    .createQueryBuilder('bon')
-    .leftJoinAndSelect('bon.numActeJuridique', 'eng')
-    .leftJoinAndSelect('bon.traitements', 'traitements')
-    .leftJoinAndSelect('bon.paiements', 'paiements')
-    .leftJoinAndSelect('bon.facture', 'facture')
-    .leftJoinAndSelect('facture.articles', 'articles')
-    .getMany();
-    console.log(bons)
+      .createQueryBuilder('bon')
+      .leftJoinAndSelect('bon.numActeJuridique', 'eng')
+      .leftJoinAndSelect('bon.traitements', 'traitements')
+      .leftJoinAndSelect('bon.paiements', 'paiements')
+      .leftJoinAndSelect('bon.facture', 'facture')
+      .leftJoinAndSelect('facture.articles', 'articles')
+      .getMany();
+    console.log(bons);
 
-    return ;
+    return;
   }
   public async deleteOne(id: number): Promise<any> {
     return this.repository.delete({ id });
@@ -152,7 +148,7 @@ export class BonEngagementService {
   public async update(
     payload: CreateBonEngagementDTO,
     user: UserEntity,
-    reserve: boolean = false,
+    reserve = false,
   ): Promise<BonEngagementEntity> {
     const check = await this.repository.findOne({
       id: payload.id,
@@ -166,12 +162,12 @@ export class BonEngagementService {
       ...(payload as any),
       updateBy: user,
       etat: reserve ? EtatBonEnum.RESERVE : EtatBonEnum.MODIFIE,
-      montantCPReserver: reserve ? payload.montantCPChiffres : 0
+      montantCPReserver: reserve ? payload.montantCPChiffres : 0,
     };
     if (payload.facture) {
       const oldArticles = await this.getArticles(payload.facture.id);
       //removed articles should be removed
-      let ids: number[] = [];
+      const ids: number[] = [];
       if (
         oldArticles &&
         oldArticles.length !== payload.facture.articles.length
@@ -204,27 +200,33 @@ export class BonEngagementService {
         },
         updateBy: user,
         etat: reserve ? EtatBonEnum.RESERVE : EtatBonEnum.MODIFIE,
-        montantCPReserver: reserve ? payload.montantCPChiffres : 0
+        montantCPReserver: reserve ? payload.montantCPChiffres : 0,
       };
     }
-    console.log(bonPaylaod)
+    console.log(bonPaylaod);
     const bon = await this.repository.save(bonPaylaod);
     return bon;
   }
 
-  public async cancelReservation(id: number,payload: any): Promise<BonEngagementEntity> {
+  public async cancelReservation(
+    id: number,
+    payload: any,
+  ): Promise<BonEngagementEntity> {
     const property = await this.repository.findOne({
       id: id,
     });
     this.repository.save({
       ...property, // existing fields
       etat: EtatBonEnum.ANNULELORSRESERVATION, // annulation du bon
-      montantCPReserver: 0
+      montantCPReserver: 0,
     });
     return payload;
   }
 
-  public async certification(id: number,payload: any): Promise<BonEngagementEntity> {
+  public async certification(
+    id: number,
+    payload: any,
+  ): Promise<BonEngagementEntity> {
     const property = await this.repository.findOne({
       id: id,
     });

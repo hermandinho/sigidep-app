@@ -21,12 +21,22 @@ import {
 import { EtatEngagementEnum } from '@models/engagement-juridique.model';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 
+export  class DtoBonEng {
+
+  constructor(
+    public eng:any,
+  public bon:any,
+  ) {
+  }
+}
+
 @Component({
   selector: 'app-etat-imputation',
   templateUrl: './etat-imputation.component.html',
   styleUrls: ['./etat-imputation.component.scss'],
 })
 export class EtatImputationComponent extends BaseComponent implements OnInit {
+  public engBon: DtoBonEng[]=[];
   public imputation!: EncoursModel;
   public engagements: any[] = [];
   loading$: Observable<boolean> = of(true);
@@ -70,7 +80,7 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
         this.engagements = [...data];
         console.log('engagements ', this.engagements);
         console.log('imputation ', this.engagements[0]?.imputation);
-        this.getDataMandat(this.engagements[0]?.imputation);
+        this.getDataMandat(this.engagements);
       });
     this.loading$ = this._store.pipe(
       select(getLoadingEngSelector),
@@ -78,11 +88,11 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
     );
   }
 
-  getDataMandat(imputation: any) {
-    if (imputation) {
+  getDataMandat(engs: any[]) {
+    if (engs.length > 0) {
       this._store.dispatch(
         GetBonsEngagements({
-          imputation: [imputation],
+          //imputation: [imputation],
           //etats:[EtatBonEnum.RESERVE]
         })
       );
@@ -91,6 +101,17 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
         .pipe(this.takeUntilDestroy, select(getDataSelectorMandat))
         .subscribe((data) => {
           this.mandats = [...data];
+          engs.forEach((item:any) => {
+            if(item.etat == EtatEngagementEnum.RESERVED) {
+              let engBon1;
+              engBon1 = new DtoBonEng(
+                item,
+                this.mandats ? this.mandats.filter((bon:any) => bon.numActeJuridique.numero == item.numero) : []
+            );
+            this.engBon.push(engBon1)
+            }
+          })
+          console.log(this.engBon)
         });
       this.loading$ = this._store.pipe(
         select(getLoadingSelectorMandat),

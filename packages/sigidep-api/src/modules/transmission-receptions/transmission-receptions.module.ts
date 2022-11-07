@@ -10,15 +10,17 @@ import { TransmissionReceptionDetailService } from './service/transmission-recep
 import { TransmissionReceptionDetailController } from './controller/transmission-reception-details.controller';
 
 @Module({
-  controllers: [TransmissionReceptionController,TransmissionReceptionDetailController],
-  providers: [TransmissionReceptionService,TransmissionReceptionDetailService],
+  controllers: [
+    TransmissionReceptionController,
+    TransmissionReceptionDetailController,
+  ],
+  providers: [TransmissionReceptionService, TransmissionReceptionDetailService],
   imports: [
     AuthModule,
     TypeOrmModule.forFeature([
       TransmissionReceptionEntity,
       DetailTransmissionReceptionEntity,
-      BonEngagementEntity
- 
+      BonEngagementEntity,
     ]),
   ],
   exports: [

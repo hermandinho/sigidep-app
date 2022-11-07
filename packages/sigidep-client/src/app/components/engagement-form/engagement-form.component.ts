@@ -143,6 +143,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         codeUnitAdminBenef: (act as any)?.codeUnitAdminBenef,
         montantBrut: (act as any)?.montantBrut,
         montantIRNC: (act as any)?.montantIRNC,
+        montantTVA: (act as any)?.montantTVA,
         numContribuable:
           (act as any)?.numContribuable || (act as any)?.niuContribuable,
         raisonSociale: (act as any)?.raisonSociale,
@@ -281,6 +282,7 @@ export class EngagementFormComponent extends BaseComponent implements OnInit {
         codeUnitAdminBenef: (this.act as any)?.codeUnitAdminBenef,
         montantBrut: (this.act as any)?.montantBrut,
         montantIRNC: (this.act as any)?.montantIRNC,
+        montantTVA: (this.act as any)?.montantTVA,
         numContribuable:
           (this.act as any)?.numContribuable || (this.act as any)?.niuContribuable,
         raisonSociale: (this.act as any)?.raisonSociale,

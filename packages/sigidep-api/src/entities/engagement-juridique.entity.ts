@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne, TableInheritance } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  TableInheritance,
+} from 'typeorm';
 import { BaseEntity } from '.';
 import { EncoursEntity } from './encours.entity';
 

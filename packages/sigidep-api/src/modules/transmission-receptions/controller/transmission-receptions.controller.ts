@@ -26,7 +26,7 @@ export class TransmissionReceptionController {
 
   @Get('/')
   public async filter(
-  @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+    @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
   ) {
     return this.services.filter(filter);
   }
@@ -56,12 +56,15 @@ export class TransmissionReceptionController {
   }
 
   @Get('/detail')
-  public async getDossierBor(@Query(new ValidationPipe({ transform: true })) filter: number,
+  public async getDossierBor(
+    @Query(new ValidationPipe({ transform: true })) filter: number,
   ) {
     return this.services.getDossierBor(filter);
   }
   @Get('/bon')
-  public async getBonEnAttente( @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,) {
+  public async getBonEnAttente(
+    @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+  ) {
     return this.services.getBonEnAttente(filter);
   }
 }

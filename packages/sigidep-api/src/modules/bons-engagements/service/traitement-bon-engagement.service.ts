@@ -17,14 +17,15 @@ export class TraitementBonEngagementService {
 
     @InjectRepository(BonEngagementEntity)
     private readonly repositoryBon: Repository<BonEngagementEntity>,
-
   ) {}
 
   public getRepository(): Repository<TraitementBonEngagementEntity> {
     return this.repository;
   }
 
-  public async filter(filter?: EngagementFilter): Promise<TraitementBonEngagementEntity[]> {
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<TraitementBonEngagementEntity[]> {
     return this.repository
       .createQueryBuilder('traitement')
       .where('traitement.bon.id = :id', { id: filter?.ids })
@@ -48,8 +49,8 @@ export class TraitementBonEngagementService {
       ...(payload as any),
       typeTraitement: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
       createdBy: user,
-      dateOrdonnancement:'2000-01-01',
-      ordonnancement:false
+      dateOrdonnancement: '2000-01-01',
+      ordonnancement: false,
     });
 
     const property = await this.repositoryBon.findOne({
@@ -59,17 +60,17 @@ export class TraitementBonEngagementService {
     const bon = this.repositoryBon.save({
       ...property,
       etat: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
-    })
-    console.log(bon)
-    return  traitement;
+    });
+    console.log(bon);
+    return traitement;
   }
 
   public async update(
     payload: CreateTraitementBonEngagementDTO,
     user: UserEntity,
   ): Promise<CreateTraitementBonEngagementDTO> {
-    console.log(payload)
-    if(payload?.data?.action === 'rejet-controle-regulariter'){
+    console.log(payload);
+    if (payload?.data?.action === 'rejet-controle-regulariter') {
       const check = await this.repository.findOne({
         id: payload?.data?.id,
       });
@@ -77,7 +78,7 @@ export class TraitementBonEngagementService {
         throw new NotFoundException();
       }
     } else {
-      if (payload?.id){
+      if (payload?.id) {
         const check = await this.repository.findOne({
           id: payload?.id,
         });
@@ -86,119 +87,119 @@ export class TraitementBonEngagementService {
         }
       }
     }
-   
-    if(payload?.action === 'enregistrer'){
+
+    if (payload?.action === 'enregistrer') {
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
-      })
+      });
 
       return this.repository.save({
         ...(payload as any),
         typeTraitement: EtatBonEnum.ENREGISTREMENTLIQUIDATION,
         updateBy: user,
       });
-    }else if(payload?.action === 'modifier'){
+    } else if (payload?.action === 'modifier') {
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.LIQUIDATIONMODIFIEE,
-      })
+      });
 
       return this.repository.save({
         ...(payload as any),
         typeTraitement: EtatBonEnum.LIQUIDATIONMODIFIEE,
         updateBy: user,
       });
-    }else if(payload?.action === 'valider'){
+    } else if (payload?.action === 'valider') {
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.VALIDATIONLIQUIDATION,
-      })
+      });
 
       return this.repository.save({
         ...(payload as any),
         typeTraitement: EtatBonEnum.VALIDATIONLIQUIDATION,
         updateBy: user,
       });
-    }else if(payload?.action === 'mandater'){
+    } else if (payload?.action === 'mandater') {
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.ORDONNANCEMENT,
-        montantCPMandater: property.montantCPReserver
-      })
+        montantCPMandater: property.montantCPReserver,
+      });
 
       return this.repository.save({
         ...(payload as any),
         typeTraitement: EtatBonEnum.ORDONNANCEMENT,
         updateBy: user,
       });
-    }else if(payload?.action === 'editer_mandat_paiement'){
+    } else if (payload?.action === 'editer_mandat_paiement') {
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.MANDATDEPAIEMENT,
-      })
+      });
 
       return this.repository.save({
         ...(payload as any),
         typeTraitement: EtatBonEnum.MANDATDEPAIEMENT,
         updateBy: user,
       });
-    }else if(payload?.action === 'editer_rapport'){
+    } else if (payload?.action === 'editer_rapport') {
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.RAPPORTDELIQUIDATION,
-      })
+      });
 
       return this.repository.save({
         ...(payload as any),
         typeTraitement: EtatBonEnum.RAPPORTDELIQUIDATION,
         updateBy: user,
       });
-    }else if(payload?.action === 'controle-regulariter'){
-      console.log(payload)
+    } else if (payload?.action === 'controle-regulariter') {
+      console.log(payload);
       const property = await this.repositoryBon.findOne({
         id: payload?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...property,
         etat: EtatBonEnum.CONTROLEREGULARITE,
-      })
+      });
 
-      if (payload?.id === null){
+      if (payload?.id === null) {
         const traintement = {
-          bon:payload?.bon,
-          nomGestionnaire:payload?.nomGestionnaire,
-          matriculeGestionnaire:payload?.matriculeGestionnaire,
-          numeroMandat:payload?.numeroMandat,
-          observation:payload?.observation,
-          DecisionControleRegularite:payload?.DecisionControleRegularite,
+          bon: payload?.bon,
+          nomGestionnaire: payload?.nomGestionnaire,
+          matriculeGestionnaire: payload?.matriculeGestionnaire,
+          numeroMandat: payload?.numeroMandat,
+          observation: payload?.observation,
+          DecisionControleRegularite: payload?.DecisionControleRegularite,
           typeTraitement: EtatBonEnum.ORDONNANCEMENT,
-        }
+        };
 
         return this.repository.save({
           ...(traintement as any),
@@ -211,32 +212,31 @@ export class TraitementBonEngagementService {
         typeTraitement: EtatBonEnum.CONTROLEREGULARITE,
         updateBy: user,
       });
-    }
-    else if(payload?.data.action === 'rejet-controle-regulariter'){
+    } else if (payload?.data.action === 'rejet-controle-regulariter') {
       const date = new Date();
-      console.log(payload)
+      console.log(payload);
       const property = await this.repositoryBon.findOne({
         id: payload?.data?.bon.id,
       });
-  
+
       const bon = this.repositoryBon.save({
         ...(property as any),
         etat: EtatBonEnum.REJETCONTROLEREGULARITE,
         rejet: true,
         dateRejet: date,
-        motif: payload.motifRejetRegulariter
-      })
+        motif: payload.motifRejetRegulariter,
+      });
 
-      if (payload?.id === null){
+      if (payload?.id === null) {
         const traintement = {
-          bon:payload?.bon,
-          nomGestionnaire:payload?.nomGestionnaire,
-          matriculeGestionnaire:payload?.matriculeGestionnaire,
-          numeroMandat:payload?.numeroMandat,
-          observation:payload?.observation,
-          DecisionControleRegularite:payload?.DecisionControleRegularite,
+          bon: payload?.bon,
+          nomGestionnaire: payload?.nomGestionnaire,
+          matriculeGestionnaire: payload?.matriculeGestionnaire,
+          numeroMandat: payload?.numeroMandat,
+          observation: payload?.observation,
+          DecisionControleRegularite: payload?.DecisionControleRegularite,
           typeTraitement: EtatBonEnum.REJETCONTROLEREGULARITE,
-        }
+        };
 
         return this.repository.save({
           ...(traintement as any),
@@ -248,7 +248,7 @@ export class TraitementBonEngagementService {
         ...(payload?.data as any),
         typeTraitement: EtatBonEnum.REJETCONTROLEREGULARITE,
         updateBy: user,
-        motifRejetRegulariter: payload.motifRejetRegulariter
+        motifRejetRegulariter: payload.motifRejetRegulariter,
       });
     }
   }

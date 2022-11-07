@@ -103,21 +103,28 @@
             <th>Date engag.</th>
             <th>Montant CP</th>
             <th>Situation traitement</th>
-            <th>Date</th>
-          </tr>
-          <tr *ngFor="let i=index, let mand of mandats">
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{i+1}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.numero}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.signataire}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.codeProcedure}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.dateSignature}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.montantAE}}</span></td>
-            <td><span *ngIf="mand?.numActeJuridique?.etat==='labels.book'">{{mand?.numActeJuridique?.etat | translate}}</span></td>
-            <td><span>{{mand?.numero}}</span></td>
-            <td><span>{{mand?.dateEngagement}}</span></td>
-            <td><span>{{mand?.montantCPChiffres | translate }}</span></td>
-            <td><span>{{mand?.etat | translate }}</span></td>
-            <td><span>{{mand?.createdAt|date}}</span></td>
+<!--             <th>Date</th>
+ -->          </tr>
+          <tr *ngFor="let i=index, let item of engBon">
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{i+1}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.numero}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.signataire}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.codeProcedure}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.dateSignature}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.montantAE}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.etat | translate}}</span></td>
+            <td colspan="5">
+              <table>
+                <tr *ngFor="let bn of item?.bon">
+                  <td> <span>{{bn?.numero}}</span></td>
+                  <td><span>{{bn?.dateEngagement}}</span></td>
+                  <td><span>{{bn?.montantCPChiffres | translate }}</span></td>
+                  <td><span>{{bn?.etat | translate }}</span></td>
+<!--                   <td><span>{{bn?.createdAt|date}}</span></td>
+ -->                </tr>
+              </table>
+            </td>
+
           </tr>
         </table>
       </p-card>

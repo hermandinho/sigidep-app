@@ -46,13 +46,4 @@ export class PaiementController {
   ) {
     return this.services.update(payload, user);
   }
-
-/*   @Put('/reservation')
-  public async reserve(
-    @Body(ValidationPipe) payload: CreatePaiementDTO,
-    @GetCurrentUser() user: UserEntity,
-  ) {
-    return this.services.update(payload, user, true);
-  } */
-
 }

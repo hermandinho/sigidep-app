@@ -21,7 +21,7 @@ export class CreateTraitementBonEngagementDTO {
 
   @ApiProperty({ example: '450000.0', required: false })
   montantTotalUnitPhysReal?: number;
-  
+
   @ApiProperty({ required: false })
   dateLiquidation?: Date;
 
@@ -73,5 +73,4 @@ export class CreateTraitementBonEngagementDTO {
   numeroMandat!: string;
   @ApiProperty({ required: false })
   DecisionControleRegularite!: string;
-  
 }

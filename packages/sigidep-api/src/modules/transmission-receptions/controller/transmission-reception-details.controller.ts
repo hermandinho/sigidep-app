@@ -17,9 +17,9 @@ export class TransmissionReceptionDetailController {
   constructor(private readonly services: TransmissionReceptionDetailService) {}
 
   @Get('/')
-  public async getDossierBor(@Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
+  public async getDossierBor(
+    @Query(new ValidationPipe({ transform: true })) filter: EngagementFilter,
   ) {
     return this.services.getDossierBor(filter);
   }
-
 }

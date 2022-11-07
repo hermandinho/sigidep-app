@@ -7,7 +7,6 @@ import { TransmissionReceptionEntity } from './transmission-reception.entity';
   name: 'detail_transmission_reception',
 })
 export class DetailTransmissionReceptionEntity extends BaseEntity {
-
   @ManyToOne(() => BonEngagementEntity, (object) => object.id, {
     nullable: true,
   })
