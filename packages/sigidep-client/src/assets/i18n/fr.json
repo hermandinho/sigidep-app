@@ -73,7 +73,8 @@
     "receptionBordereauxPaiement": "Réception Bordereaux",
     "OperationsValidationPaiement": "Opérations Validation /Paiement",
     "EditiondeslistingsdePaiement": "Edition des listings de Paiement",
-    "paiementDesDepenses": "Paiement des Dépenses"
+    "paiementDesDepenses": "Paiement des Dépenses",
+    "users": "Users"
   },
   "buttons": {
     "save": "Enregistrer",
@@ -142,6 +143,7 @@
     "labelFr": "Libellé (FR)",
     "labelEn": "Libellé (EN)",
     "code": "Code",
+    "description": "Description",
     "abbreviationFr": "Abréviation (FR)",
     "abbreviationEn": "Abréviation (EN)",
     "financialSourcesAcceptsDeliverables": "Nécessite des unités physiques?",
@@ -698,7 +700,8 @@
   },
   "menus": {
     "profile": "Mon profile",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "changePassword": "Modifier le mot de passe"
   },
   "breadcrumb": {
     "exercises": "Exercices",
@@ -946,7 +949,10 @@
       "numeroMandat": "Numéro Mandat",
       "montantCPReserver": "montantCP Reserver",
       "montantCPMandater": "montantCP Mandater",
-      "montantAE_Reserve": "MontantAE Reserver"
+      "montantAE_Reserve": "MontantAE Reserver",
+      "names": "Nom complet",
+      "userName": "Pseudo",
+      "status": "Statut"
     },
     "stats": {
       "pager": "Affichage de {first} à {last} de {totalRecords} résultats.",
@@ -1062,7 +1068,9 @@
       "alertPayerMandat":"Etes-vous sûr(e) de vouloir Editer le paiement du Bon ?",
       "alertValiderMandat":"Etes-vous sûr(e) de vouloir Valider le Bon ?",
       "alertRejeterMandat":"Etes-vous sûr(e) de vouloir rejeter le Bon ?",
-      "CertificatEngagement": "Etes-vous sûr de vouloir Certifier ce Bon? Cette opération est irréversible !!!"
+      "CertificatEngagement": "Etes-vous sûr de vouloir Certifier ce Bon? Cette opération est irréversible !!!",
+      "desactiver": "Etes-vous sûr de vouloir desactiver cet utilisateur??? ",
+      "activer": "Etes-vous sûr de vouloir activer cet utilisateur??? "
     }
   },
   "exerciseStatuses": {

@@ -123,9 +123,12 @@ export class DialogsService {
   private decisionControleRegulariteComponent: any;
   private printFileRejetControleRegularite: any;
   private payerMandatComponent: any;
-  private createValiderRejeterMandatComponent:any;
-  private fichePaiement:any;
-  private reservationBonEngagementComponent:any;
+  private createValiderRejeterMandatComponent: any;
+  private fichePaiement: any;
+  private reservationBonEngagementComponent: any;
+  private userCreateComponent: any;
+  private printInfoUserComponent: any;
+  private changePasswordComponent: any;
 
 
 
@@ -168,7 +171,7 @@ export class DialogsService {
         'dialogs.headers.' + (item ? 'editRole' : 'createRole')
       ),
       width: '50vw',
-      height: '30vh',
+      height: 'auto',
       modal: true,
       data: {
         item,
@@ -1345,6 +1348,38 @@ export class DialogsService {
     );
   }
 
+  public async launchUserCreateDialog(
+    item?: any,
+    action?: string
+  ): Promise<any> {
+    if (!this.userCreateComponent) {
+      const { CreateUserFormComponent } = await import(
+        '@components/create-user-form/create-user-form.component'
+      );
+      this.userCreateComponent =
+        CreateUserFormComponent;
+    }
+
+    return this._dialogService.open(
+      this.userCreateComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editUser'
+            : 'createUser')
+        ),
+        width: '70vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item,
+          action
+        },
+      }
+    );
+  }
+
   public async launchEditerRapportTraitementLiquidationMandatementCreateDialog(
     item?: any,
     action?: string
@@ -1409,6 +1444,68 @@ export class DialogsService {
     );
   }
 
+  public async launchPrintInfoUserDialog(
+    item: any,
+  ): Promise<any> {
+    if (!this.printInfoUserComponent) {
+      const { PrintInfoUserComponent } = await import(
+        '@components/print-info-user/print-info-user.component'
+      );
+      this.printInfoUserComponent =
+        PrintInfoUserComponent;
+    }
+
+    return this._dialogService.open(
+      this.printInfoUserComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editPrintMandatPaiementComponent'
+            : 'createPrintMandatPaiementComponent')
+        ),
+        width: '40vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item
+        },
+      }
+    );
+  }
+
+  public async launchChangePasswordDialog(
+    item?: any,
+  ): Promise<any> {
+    if (!this.changePasswordComponent) {
+      const { ChangePasswordComponent } = await import(
+        '@components/change-password/change-password.component'
+      );
+      this.changePasswordComponent =
+        ChangePasswordComponent;
+    }
+
+    return this._dialogService.open(
+      this.changePasswordComponent,
+      {
+        header: this._translateService.instant(
+          'dialogs.headers.' +
+          (item
+            ? 'editChangePasswordComponent'
+            : 'createChangePasswordComponent')
+        ),
+        width: '40vw',
+        height: 'auto',
+        modal: true,
+        data: {
+          item
+        },
+      }
+    );
+  }
+
+
+
   public async launchPrintVirement(data: VirementModele): Promise<any> {
     if (!this.printEditionCreanceComponent) {
       const { PrintVirementComponent } = await import(
@@ -1436,7 +1533,7 @@ export class DialogsService {
         '@components/decision-controle-regularite/decision-controle-regularite.component'
       );
       this.decisionControleRegulariteComponent =
-      DecisionControleRegulariteComponent;
+        DecisionControleRegulariteComponent;
     }
 
     return this._dialogService.open(
@@ -1495,7 +1592,7 @@ export class DialogsService {
         '@components/create-valider-rejeter-mandat/create-valider-rejeter-mandat.component'
       );
       this.createValiderRejeterMandatComponent =
-      CreateValiderRejeterMandatComponent;
+        CreateValiderRejeterMandatComponent;
     }
 
     return this._dialogService.open(
@@ -1527,7 +1624,7 @@ export class DialogsService {
         '@components/create-payer-mandat/create-payer-mandat.component'
       );
       this.payerMandatComponent =
-      CreatePayerMandatComponent;
+        CreatePayerMandatComponent;
     }
 
     return this._dialogService.open(

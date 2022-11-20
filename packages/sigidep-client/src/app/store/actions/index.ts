@@ -43,3 +43,4 @@ export * from '@actions/detail-transmissions-receptions.actions';
 export * from '@actions/model-virement.actions';
 export * from '@actions/virement.actions';
 export * from '@actions/transmission-reception-bons.actions';
+export * from '@actions/users.actions';

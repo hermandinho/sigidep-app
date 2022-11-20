@@ -1,9 +1,12 @@
 import { RoleModel } from '@models/role.model';
 export class UserModel {
+  id!: number;
   firstName: string | undefined;
   lastName: string | undefined;
-  email!: string;
+  username!: string;
+  status!: string;
   password!: string;
+  email!: string;
   profilePicture: string | undefined;
   role!: RoleModel;
 

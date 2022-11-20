@@ -70,6 +70,9 @@ import { ReceptionBordereauxModule as ReceptionBordereauxRegulariteModule } from
 import { ControleRegulariteModule } from './pages/controle_de_regularites/controle-regularite/controle-regularite.module';
 import { TransmissionBordereauxModule as TransmissionBordereauxRegulariteModule } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.module';
 import { ReservationBonEngagementComponent } from './components/reservation-bon-engagement/reservation-bon-engagement.component';
+import { UserModule } from './pages/user/user.module';
+import { PrintInfoUserComponent } from './components/print-info-user/print-info-user.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 registerLocaleData(localeFr);
 
@@ -159,7 +162,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransmissionBordereauxModule,
     ReceptionBordereauxRegulariteModule,
     ControleRegulariteModule,
-    TransmissionBordereauxRegulariteModule
+    TransmissionBordereauxRegulariteModule,
+    UserModule
 
   ],
   providers: [

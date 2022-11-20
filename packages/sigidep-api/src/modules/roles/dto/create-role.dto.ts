@@ -8,4 +8,11 @@ export class CreateRoleDto {
   })
   @IsNotEmpty()
   public label: string;
+
+  @ApiProperty({
+    example: 'Secrétaire',
+    required: false,
+  })
+  @IsNotEmpty()
+  public description: string;
 }

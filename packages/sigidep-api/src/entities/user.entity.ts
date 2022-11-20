@@ -27,16 +27,11 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'last_name', nullable: false })
   public lastName: string;
 
-  // @Column({
-  //   name: 'civility',
-  //   nullable: true,
-  //   type: 'enum',
-  //   enum: CivilityEnum,
-  // })
-  // public civility: CivilityEnum;
-
   @Column({ name: 'user_name', nullable: false })
   public username: string;
+
+  @Column({ name: 'email', nullable: true })
+  public email: string;
 
   @Column({ name: 'profile_picture', nullable: true })
   public profilePicture?: string;

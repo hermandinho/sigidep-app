@@ -1,0 +1,62 @@
+<div class="page">
+  <div>
+    <div id="print-section" class="">
+      <p-card>
+        <div class="grid-container-header">
+          <div class="grid-fr">
+            <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+            <i>Paix-Travail-Patrie</i> <br />
+            ********* <br />
+            <strong>CHAMBRE D'AGRICULTURE, DES PECHES, DE <br />
+              L'ELEVAGE ET DES FORETS DU CAMEROUN</strong>
+          </div>
+          <div class="grid-img">
+            <img src="assets/img/logopdf.png" alt="logo pdf" />
+          </div>
+          <div class="grid-en">
+            <strong>REPUBLIC OF CAMEROON</strong> <br />
+            <em>Peace-Work-Fatherland</em> <br />
+            ********* <br />
+            <strong>CHAMBER OF AGRICULTURE, FISHERIES, <br />
+              LIVESTOCK AND FOREST OF CAMEROON</strong>
+          </div>
+        </div>
+        <div class="title">
+          <h3>INFORMATION DE CONNEXION</h3>
+        </div>
+
+        <table>
+          <tr>
+            <td>Nom</td>
+            <td>{{ data?.firstName }}</td>
+          </tr>
+          <tr>
+            <td>Prenom</td>
+            <td>{{ data?.lastName }}</td>
+          </tr>
+          <tr>
+            <td>Username</td>
+            <td>{{ data?.username }}</td>
+          </tr>
+          <tr>
+            <td>Mot de passe</td>
+            <td>sigidep</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{ data?.status }}</td>
+          </tr>
+        </table>
+
+      </p-card>
+
+    </div>
+    <div>
+      <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+        {{ "buttons.print" | translate }}
+      </button>
+    </div>
+  </div>
+
+
+</div>

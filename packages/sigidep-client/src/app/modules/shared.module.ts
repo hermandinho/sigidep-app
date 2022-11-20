@@ -72,6 +72,10 @@ import { ModeEtCoordonneesDePaiementComponent } from '../components/mode-et-coor
 import { FichePaiementComponent } from '../components/fiche-paiement/fiche-paiement.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ReservationBonEngagementComponent } from '../components/reservation-bon-engagement/reservation-bon-engagement.component';
+import { CreateUserFormComponent } from '../components/create-user-form/create-user-form.component';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import { PrintInfoUserComponent } from '@components/print-info-user/print-info-user.component';
+import { ChangePasswordComponent } from '../components/change-password/change-password.component';
 
 const declarations = [
   BaseComponent,
@@ -110,7 +114,10 @@ const declarations = [
   DetailsValidationDeACTComponent,
   ModeEtCoordonneesDePaiementComponent,
   FichePaiementComponent,
-  ReservationBonEngagementComponent
+  ReservationBonEngagementComponent,
+  CreateUserFormComponent,
+  PrintInfoUserComponent,
+  ChangePasswordComponent
 ];
 
 const shared = [
@@ -140,7 +147,8 @@ const shared = [
   FieldsetModule,
   NgxPrintModule,
   FormsModule,
-  InputMaskModule
+  InputMaskModule,
+  ToggleButtonModule
 ];
 @NgModule({
   declarations: [...declarations],

@@ -1,0 +1,11 @@
+.container {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 50px;
+
+  .footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+}

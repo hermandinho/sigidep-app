@@ -56,6 +56,7 @@ import { TransmissionAACTComponent } from '../pages/controle_de_regularites/tran
 import { ReceptionPourControleDeRegulariteComponent } from '../pages/paiement/reception-pour-controle-de-regularite/reception-pour-controle-de-regularite.component';
 import { OperationsValidationPaiementComponent } from '../pages/paiement/operations-validation-paiement/operations-validation-paiement.component';
 import { EditionDesListingsDePaiementComponent } from '@pages/paiement/edition-des-listings-de-paiement/edition-des-listings-de-paiement.component';
+import { UserComponent } from '../pages/user/user.component';
 const routes: Routes = [
   {
     path: '',
@@ -80,6 +81,14 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.exercises_menu],
+        },
+      },
+      {
+        path: 'users',
+        component: UserComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.users],
         },
       },
       {

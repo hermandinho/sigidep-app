@@ -1,6 +1,8 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
+  MethodNotAllowedException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +11,11 @@ import { Repository } from 'typeorm';
 import { LoginDto } from '@modules/auth/dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserAccountStatusEnum } from '@utils/constants';
+import { ForgotPassWordDto } from './dto/forgot-password.dto';
+import { ConfigService } from '@nestjs/config';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import * as bcrypt from 'bcrypt';
+import { ConflictException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +23,8 @@ export class AuthService {
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+   // private readonly mailService: MailService,
   ) {}
 
   public async findUserById(id: number): Promise<UserEntity> {
@@ -61,4 +70,64 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload);
     return { accessToken };
   }
+
+  public async forgotPassword(payload: ForgotPassWordDto): Promise<UserEntity> {
+    const email = payload.email
+    const user = await this.usersRepository
+      .createQueryBuilder('u')
+      .where('u.email = :email', { email })
+      .getOne();
+
+    if (!user) {
+      throw new BadRequestException('Invalid email');
+    }
+    if (user.status !== UserAccountStatusEnum.ACTIVE) {
+      throw new MethodNotAllowedException();
+    }
+
+   /*  await this.mailService.send({
+      from: this.configService.get<string>('JS_CODE_MAIL'),
+      to: user.email,
+      subject: 'Forgot Password',
+      html: `
+          <h3>Hello ${user.firstName}!</h3>
+          <p>Please use this <a href="${forgotLink}">link</a> to reset your password.</p>
+      `,
+  }); */
+    return ;
+  }
+
+  async changePassword(currentUser: UserEntity, changePasswordDto: ChangePasswordDto): Promise<any> {
+   /*  const username = changePasswordDto.user.username
+    const user = await this.usersRepository
+    .createQueryBuilder('u')
+    .where('u.username = :username', { username })
+    .getOne(); */
+    const checkCredentials = await currentUser.validatePassword(
+      changePasswordDto.password,
+      currentUser.salt,
+      currentUser.password,
+    );
+    if (!checkCredentials) {
+      throw new NotFoundException();
+    }
+
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(changePasswordDto.newPassword, salt);
+
+    try {
+      console.log('currentUser', currentUser)
+      console.log('changePasswordDto', changePasswordDto)
+      const user = await this.usersRepository.save({
+        ...currentUser,
+        password: password,
+        salt: salt,
+      });
+      console.log('user', user)
+      return user;
+    } catch (e) {
+      throw new ConflictException(`Le username doit être unique`);
+    }
+}
+
 }

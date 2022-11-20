@@ -54,6 +54,7 @@ export const MenuPermissions = {
   liquidationMandatement: [...simpleCrudPermissions('liquidationMandatement')],
   controleRegularite: [...simpleCrudPermissions('controleRegularite')],
   paiementDesDepenses: [...simpleCrudPermissions('paiementDesDepenses')],
+  users: [...simpleCrudPermissions('users')],
 
 };
 
@@ -580,6 +581,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
         },
       ],
+    },
+    {
+      routerLink: 'users',
+      icon: 'pi pi-lock',
+      label: translate.instant('sidebar.users'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [...MenuPermissions.users],
+      },
     },
     {
       routerLink: 'roles',

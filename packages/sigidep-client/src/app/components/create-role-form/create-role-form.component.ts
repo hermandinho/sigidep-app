@@ -35,6 +35,7 @@ export class CreateRoleFormComponent extends BaseComponent implements OnInit {
     super();
     this.form = this._fb.group({
       label: [undefined, [Validators.required]],
+      description: [undefined],
       id: [undefined, []],
     });
   }
@@ -45,10 +46,11 @@ export class CreateRoleFormComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.config.data?.item) {
-      const { id, label } = this.config.data?.item as RoleModel;
+      const { id, label,description } = this.config.data?.item as RoleModel;
       this.form.patchValue({
         id,
         label,
+        description
       });
     }
   }
@@ -64,8 +66,9 @@ export class CreateRoleFormComponent extends BaseComponent implements OnInit {
       this.busy = false; // TODO
       return;
     }
+    console.log(this.form.value)
     this._apisService
-      .post<ExerciseModel>('/roles', {
+      .post<RoleModel>('/roles', {
         ...this.form.value,
       })
       .subscribe(

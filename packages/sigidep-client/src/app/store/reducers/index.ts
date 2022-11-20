@@ -47,6 +47,7 @@ import * as formTransmissionsReceptionsDetails from '@reducers/detail-transmissi
 import * as fromModeleVirement from '@reducers/modele-virement.reducer';
 import * as fromVirement from '@reducers/virement.reducer';
 import * as fromTransBons from '@reducers/transmission-reception-bons.reducer';
+import * as fromUsers from '@reducers/user.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -93,6 +94,7 @@ export interface AppState {
   modeleVirement: fromModeleVirement.State;
   virement: fromVirement.State;
   transBons: fromTransBons.State;
+  users: fromUsers.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -140,7 +142,8 @@ export const reducers: ActionReducerMap<AppState> = {
 
   modeleVirement: fromModeleVirement.reducer,
   virement: fromVirement.reducer,
-  transBons: fromTransBons.reducer
+  transBons: fromTransBons.reducer,
+  users: fromUsers.reducer
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
