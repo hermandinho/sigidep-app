@@ -30,12 +30,26 @@ export class UsersController {
     public async deleteOne(@Param('id') id: number) {
       return this.services.deleteOne(id);
     }
-
     @Put('/')
+    public async update(
+      @Body(ValidationPipe) payload: UserDTO,
+      @GetCurrentUser() user: UserEntity,
+    ) {
+      return this.services.update(payload, user);
+    }
+    @Put('/inactive')
     public async desactiver(
       @Body(ValidationPipe) payload: UserDTO,
       @GetCurrentUser() user: UserEntity,
     ) {
       return this.services.desactiver(payload, user);
+    }
+
+    @Put('/reset')
+    public async resetPassword(
+      @Body(ValidationPipe) payload: UserDTO,
+      @GetCurrentUser() user: UserEntity,
+    ) {
+      return this.services.resetPassword(payload, user);
     }
 }

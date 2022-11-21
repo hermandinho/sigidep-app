@@ -1070,7 +1070,8 @@
       "alertRejeterMandat":"Etes-vous sûr(e) de vouloir rejeter le Bon ?",
       "CertificatEngagement": "Etes-vous sûr de vouloir Certifier ce Bon? Cette opération est irréversible !!!",
       "desactiver": "Etes-vous sûr de vouloir desactiver cet utilisateur??? ",
-      "activer": "Etes-vous sûr de vouloir activer cet utilisateur??? "
+      "activer": "Etes-vous sûr de vouloir activer cet utilisateur??? ",
+      "resetPassword": "Etes-vous sûr de vouloir reinitialiser le mot de passe de cette utilisateur ? Cette opération est irréversible !!!"
     }
   },
   "exerciseStatuses": {

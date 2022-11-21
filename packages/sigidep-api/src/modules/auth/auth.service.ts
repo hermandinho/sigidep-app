@@ -24,8 +24,8 @@ export class AuthService {
     private readonly usersRepository: Repository<UserEntity>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-   // private readonly mailService: MailService,
-  ) {}
+    // private readonly mailService: MailService,
+  ) { }
 
   public async findUserById(id: number): Promise<UserEntity> {
     return this.usersRepository
@@ -85,24 +85,10 @@ export class AuthService {
       throw new MethodNotAllowedException();
     }
 
-   /*  await this.mailService.send({
-      from: this.configService.get<string>('JS_CODE_MAIL'),
-      to: user.email,
-      subject: 'Forgot Password',
-      html: `
-          <h3>Hello ${user.firstName}!</h3>
-          <p>Please use this <a href="${forgotLink}">link</a> to reset your password.</p>
-      `,
-  }); */
-    return ;
+    return;
   }
 
   async changePassword(currentUser: UserEntity, changePasswordDto: ChangePasswordDto): Promise<any> {
-   /*  const username = changePasswordDto.user.username
-    const user = await this.usersRepository
-    .createQueryBuilder('u')
-    .where('u.username = :username', { username })
-    .getOne(); */
     const checkCredentials = await currentUser.validatePassword(
       changePasswordDto.password,
       currentUser.salt,
@@ -128,6 +114,6 @@ export class AuthService {
     } catch (e) {
       throw new ConflictException(`Le username doit être unique`);
     }
-}
+  }
 
 }

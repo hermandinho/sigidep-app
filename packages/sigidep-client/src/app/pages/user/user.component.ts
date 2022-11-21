@@ -99,7 +99,7 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   user(item: UserModel) {
     this._apisService
-    .put<UserModel>('/users', item)
+    .put<UserModel>('/users/inactive', item)
     .subscribe(
       (res) => {
         this._store.dispatch(GetUsers());
@@ -127,6 +127,43 @@ export class UserComponent extends BaseComponent implements OnInit {
         });
       }
     );
+  }
+
+  reset(item: UserModel) {
+    this._appService.showConfirmation({
+      message: 'dialogs.messages.resetPassword',
+      accept: () => {
+        this._apisService
+        .put<UserModel>('/users/reset', item)
+        .subscribe(
+          (res) => {
+            this._store.dispatch(GetUsers());
+            this._appService.showToast({
+              summary: 'messages.success',
+              detail: 'messages.users.createSuccess',
+              severity: 'success',
+              life: 3000,
+              closable: true,
+            });
+          },
+          ({ error }) => {
+            let err = '';
+            if (error?.statusCode === 409) {
+              err = 'errors.users.notfound';
+            } else {
+              err = 'errors.unknown';
+            }
+            this._appService.showToast({
+              detail: err,
+              summary: 'errors.error',
+              severity: 'error',
+              life: 5000,
+              closable: true,
+            });
+          }
+        );
+      },
+    });
   }
 
   private _initListeners() {

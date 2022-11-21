@@ -53,6 +53,7 @@ get isUpdateForm(): boolean {
 ngOnInit(): void {
   this._store.dispatch(GetRoles());
   if (this.config.data?.item) {
+    this.form.controls['username'].disable()
     const { id, firstName, lastName, username, email, role } = this.config.data?.item as UserModel;
     this.form.patchValue({
       id,
@@ -77,7 +78,7 @@ submit() {
 
   if (this.isUpdateForm) {
     this._apisService
-      .put<UserModel>('/types-procedures', editedUser)
+      .put<UserModel>('/users', editedUser)
       .subscribe(
         (res) => {
           this.busy = false;
@@ -85,7 +86,7 @@ submit() {
           this._store.dispatch(GetUsers());
           this._appService.showToast({
             summary: 'messages.success',
-            detail: 'messages.typesProcedures.createSuccess',
+            detail: 'messages.users.createSuccess',
             severity: 'success',
             life: 3000,
             closable: true,
@@ -94,7 +95,7 @@ submit() {
         ({ error }) => {
           let err = '';
           if (error?.statusCode === 409) {
-            err = 'errors.typesProcedures.notfound';
+            err = 'errors.users.notfound';
           } else {
             err = 'errors.unknown';
           }

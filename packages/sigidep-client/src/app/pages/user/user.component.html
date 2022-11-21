@@ -85,12 +85,19 @@
           ></button>
           <button
             (click)="info(item)"
-s            [disabled]="!(item.status === 'active')"
-            class="p-button-rounded p-button-warning"
-            icon="pi pi-trash"
+            [disabled]="!(item.status === 'active')"
+            class="p-button-rounded p-button-warning p-mr-2"
+            icon="pi pi-print"
             pButton
             pRipple
           ></button>
+          <button
+          (click)="reset(item)"
+          class="p-button-rounded p-button-plain"
+          icon="pi pi-refresh"
+          pButton
+          pRipple
+        ></button>
         </td>
       </tr>
     </ng-template>

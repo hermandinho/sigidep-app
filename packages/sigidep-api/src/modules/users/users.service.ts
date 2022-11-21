@@ -20,9 +20,9 @@ export class UsersService {
 
   public async filter(): Promise<UserEntity[]> {
     return this.repository
-    .createQueryBuilder('u')
-    .leftJoinAndSelect('u.role', 'role')
-    .getMany();
+      .createQueryBuilder('u')
+      .leftJoinAndSelect('u.role', 'role')
+      .getMany();
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -49,6 +49,22 @@ export class UsersService {
     }
   }
 
+  public async update(
+    payload: UserDTO,
+    user: UserEntity,
+  ): Promise<UserEntity> {
+
+    try {
+      return await this.repository.save({
+        ...payload,
+        status: payload.status == UserAccountStatusEnum.ACTIVE ? UserAccountStatusEnum.INACTIVE : UserAccountStatusEnum.ACTIVE,
+        updateBy: user,
+      });
+    } catch (e) {
+      throw new ConflictException(`Le username doit être unique`);
+    }
+  }
+
   public async desactiver(
     payload: UserDTO,
     user: UserEntity,
@@ -64,10 +80,28 @@ export class UsersService {
       return await this.repository.save({
         ...payload,
         status: payload.status == UserAccountStatusEnum.ACTIVE ? UserAccountStatusEnum.INACTIVE : UserAccountStatusEnum.ACTIVE,
-        createdBy: user,
+        updateBy: user,
       });
     } catch (e) {
       throw new ConflictException('Failed');
+    }
+  }
+
+  public async resetPassword(payload: UserDTO,
+    user: UserEntity): Promise<UserEntity> {
+
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash('sigidep', salt);
+    try {
+      return await this.repository.save({
+        ...payload,
+        password: password,
+        salt: salt,
+        status: payload.status == UserAccountStatusEnum.ACTIVE ? UserAccountStatusEnum.ACTIVE : UserAccountStatusEnum.INACTIVE,
+        updateBy: user,
+      });
+    } catch (e) {
+      throw new ConflictException(`Le username doit être unique`);
     }
   }
 }
