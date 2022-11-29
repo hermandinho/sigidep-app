@@ -14,6 +14,7 @@ import { getAbbreviation } from '@utils/functions';
 import { EngagementJuridiqueService } from '@modules/engagement-juridiques/service/engagement-juridique.service';
 import { EngagementJuridiqueEntity } from '@entities/engagement-juridique.entity';
 import { response } from 'express';
+import { FactureEntity } from '../../../entities/facture.entity';
 
 @Injectable()
 export class BonEngagementService {
@@ -30,9 +31,12 @@ export class BonEngagementService {
     @InjectRepository(FactureArticleEntity)
     private readonly articleRepo: Repository<FactureArticleEntity>,
 
+    @InjectRepository(FactureEntity)
+    private readonly factureRepo: Repository<FactureEntity>,
+
     @InjectRepository(EngagementJuridiqueEntity)
     private readonly engagementRepo: Repository<EngagementJuridiqueEntity>,
-  ) {}
+  ) { }
 
   public getRepository(): Repository<BonEngagementEntity> {
     return this.repository;
@@ -56,6 +60,15 @@ export class BonEngagementService {
   public async filter(
     filter?: EngagementFilter,
   ): Promise<BonEngagementEntity[]> {
+    /*     const facture = this.articleRepo
+        .createQueryBuilder('art')
+        .leftJoinAndSelect('art.facture', 'facture')
+        .leftJoinAndSelect('art.article', 'article')
+        .where('facture.id = :code', {
+          code: 46,
+        })
+        .getMany();
+        facture.then(result=>console.log('resultat art',result)) */
     return this.repository
       .createQueryBuilder('bon')
       .leftJoinAndSelect('bon.numActeJuridique', 'eng')
@@ -81,7 +94,6 @@ export class BonEngagementService {
       .getMany();
   }
   public async filterBon(filter?: any): Promise<BonEngagementEntity[]> {
-    console.log(filter);
     const bons = this.repository
       .createQueryBuilder('bon')
       .leftJoinAndSelect('bon.numActeJuridique', 'eng')
@@ -90,7 +102,6 @@ export class BonEngagementService {
       .leftJoinAndSelect('bon.facture', 'facture')
       .leftJoinAndSelect('facture.articles', 'articles')
       .getMany();
-    console.log(bons);
 
     return;
   }
@@ -124,11 +135,14 @@ export class BonEngagementService {
     if (payload.facture) {
       const articles = payload.facture.articles.map((item) => {
         return {
-          article: { ...item },
+          id: undefined,
+          article: {
+            ...item,
+            id: item.id,
+          },
           quantite: item.quantite,
         };
       });
-
       bonPaylaod = {
         ...(payload as any),
         facture: {
@@ -138,10 +152,57 @@ export class BonEngagementService {
         createdBy: user,
         etat: EtatBonEnum.ENREGISTRE,
       };
+      const bon: CreateBonEngagementDTO = await this.repository.save(bonPaylaod);
+
+      return this.saveBon(bon, user);
     }
-
     const bon = await this.repository.save(bonPaylaod);
+    return bon;
+  }
 
+  public async saveBon(
+    payload: CreateBonEngagementDTO,
+    user: UserEntity,): Promise<BonEngagementEntity> {
+    const check = await this.repository.findOne({
+      id: payload.id,
+    });
+
+    if (!check) {
+      throw new NotFoundException();
+    }
+    let bonPaylaod = {
+      ...(payload as any),
+      createdBy: user,
+      etat: EtatBonEnum.ENREGISTRE,
+    };
+    if (payload.facture) {
+      const oldArticles = await this.getArticles(payload.facture.id);
+      //removed articles should be removed
+      const ids: number[] = [];
+      if (
+        oldArticles &&
+        oldArticles.length !== payload.facture.articles.length
+      ) {
+        oldArticles.forEach((item) => {
+          if (!payload.facture.articles.find((it) => it.id === item.id)) {
+            ids.push(item.id);
+          }
+        });
+
+        if (ids.length > 0) await this.deleteFactureArticle(0, ids);
+      }
+      const articles = payload.facture.articles.map((item) => {
+        return item;
+      });
+      bonPaylaod = {
+        ...(payload as any),
+        facture: {
+          ...payload.facture,
+          articles: articles,
+        },
+      };
+    }
+    const bon = await this.repository.save(bonPaylaod);
     return bon;
   }
 
@@ -191,7 +252,6 @@ export class BonEngagementService {
           quantite: item.quantite,
         };
       });
-
       bonPaylaod = {
         ...(payload as any),
         facture: {
@@ -203,7 +263,6 @@ export class BonEngagementService {
         montantCPReserver: reserve ? payload.montantCPChiffres : 0,
       };
     }
-    console.log(bonPaylaod);
     const bon = await this.repository.save(bonPaylaod);
     return bon;
   }

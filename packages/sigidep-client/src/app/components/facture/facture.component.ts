@@ -38,6 +38,7 @@ import { ArticleCrudModel } from '@models/article-crud.model';
 import { ApisService } from '@services/apis.service';
 import { FactureArticleModel } from '@models/facture-article.model';
 import { AppService } from '@services/app.service';
+import { DatePipe } from '@angular/common';
 
 export class Type {
   name!: string;
@@ -56,6 +57,7 @@ export class FactureComponent extends BaseComponent implements OnInit {
   @Input() engagementForm!: FormGroup;
   @Input() dataEngagement!: any;
   @Input() isCheck!: boolean;
+  @Input() dataArticle!: FactureArticleModel[]
   @Output() subformInitialized: EventEmitter<FormGroup> =
     new EventEmitter<FormGroup>();
   @Output() changeStep: EventEmitter<'back' | 'forward'> = new EventEmitter<
@@ -77,6 +79,8 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
   // procedure: string = '';
   public typesMarche: any[] = [];
+  prochaineDate!: string | null;
+  //dataArticle: FactureArticleModel[]=[];
   constructor(
     private _store: Store<AppState>,
     private translate: TranslateService,
@@ -95,9 +99,11 @@ export class FactureComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this._store.dispatch(GetArticles());
     this.factureForm = this.startingForm;
-    console.log('this.factureForm ',this.factureForm)
+    console.log('this.factureForm ', this.factureForm)
     this.factureId = this.factureForm.value.id;
-    if(this.factureId){
+    //this.factureId = 35;
+    if (this.factureId) {
+      console.log('this.factureId', this.factureId)
       this.getArticles();
     }
     if (!this.procedure) {
@@ -109,7 +115,6 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
     this.tauxIR = this.engagementForm.getRawValue()?.tauxIR;
     this.tauxTVA = this.engagementForm.getRawValue()?.tauxTVA;
-
     (this.factureForm.get('articles') as FormArray).valueChanges.subscribe(
       (newVal) => {
         let totalHT = 0;
@@ -230,12 +235,12 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
   addArticleFormGroup(articleF?: FactureArticleModel): FormGroup {
     const total = (articleF?.quantite || 0) * (articleF?.article.prix || 0);
-    console.log(total)
+    console.log(articleF)
     return this._fb.group({
-      id: [articleF?.id],
+      id: [articleF?.article.id],
       serie: [articleF?.article.serie],
       prix: [articleF?.article.prix],
-      prixTotalHT: [total>0 ? total : articleF?.article.prix],
+      prixTotalHT: [total > 0 ? total : articleF?.article.prix],
       designation: [articleF?.article.designation],
       conditionnement: [articleF?.article.conditionnement],
       quantite: [articleF?.quantite ? articleF?.quantite : 0],
@@ -255,22 +260,22 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
   onSerieChange = (event: any, articleForm: FormGroup, index: number) => {
     const article = this.articles.find((item) => item.serie === event.value);
- /*    if (
-      ((this.factureForm.get('articles') as FormArray).value as any[]).filter(
-        (it) => it.serie === event.value
-      )?.length == 1
-    ) { */
-      articleForm.patchValue({
-        designation: article?.designation,
-        id: article?.id,
-        prix: article?.prix,
-        quantite: 1,
-        prixTotalHT: article?.prix
-      });
-   /*  } else {
-      console.log('remove index',index)
-      this.remove(index, articleForm);
-    } */
+    /*    if (
+         ((this.factureForm.get('articles') as FormArray).value as any[]).filter(
+           (it) => it.serie === event.value
+         )?.length == 1
+       ) { */
+    articleForm.patchValue({
+      designation: article?.designation,
+      id: article?.id,
+      prix: article?.prix,
+      quantite: 1,
+      prixTotalHT: article?.prix
+    });
+    /*  } else {
+       console.log('remove index',index)
+       this.remove(index, articleForm);
+     } */
   };
 
   onQteChange = (event: any, articleForm: FormGroup) => {
@@ -287,9 +292,12 @@ export class FactureComponent extends BaseComponent implements OnInit {
 
   submit = () => {
     const date = new Date();
+    const pipe = new DatePipe('en-US');
+    this.prochaineDate = pipe.transform(date, 'yyyy-MM-dd');
+
     this.factureForm.patchValue({
       articles: this.factureForm.value.articles,
-      date: date
+      date: this.prochaineDate
     });
     this.submitForm.emit();
   };
@@ -299,20 +307,22 @@ export class FactureComponent extends BaseComponent implements OnInit {
   }
 
   getArticles() {
-    this._apiService
-      .get<FactureArticleModel[]>(
-        `/bons-engagements/factures/${this.factureId}/articles`
-      )
-      .subscribe(
-        (res) => {
-          res?.forEach((item: FactureArticleModel) => {
-
-            (<FormArray>this.factureForm.get('articles')).push(
-              this.addArticleFormGroup(item)
-            );
-          });
-        },
-        ({ error }) => {}
+    // this.addArticleFormGroup()
+    // this._apiService
+    //  .get<FactureArticleModel[]>(
+    //   `/bons-engagements/factures/${this.factureId}/articles`
+    // )
+    // .subscribe(
+    //  (res) => {
+    //    this.dataArticle = res
+    //  console.log('res',res)
+    this.dataArticle?.forEach((item: FactureArticleModel) => {
+      (<FormArray>this.factureForm.get('articles')).push(
+        this.addArticleFormGroup(item)
       );
+    });
+    //},
+    // ({ error }) => {}
+    // );
   }
 }

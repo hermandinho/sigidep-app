@@ -48,6 +48,7 @@
     [procedure]="currentProcedure"
     (subformInitialized)="subformInitialized('factureForm', $event)"
     (changeStep)="changeStep('facture', $event)"
+    [dataArticle]="dataArticle"
     (submitForm)="submitForm()"
   ></app-facture-form>
 </ng-container>

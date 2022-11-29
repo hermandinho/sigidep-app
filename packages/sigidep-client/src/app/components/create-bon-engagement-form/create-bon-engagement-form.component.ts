@@ -26,6 +26,7 @@ import { CategorieProcedure } from 'app/utils/types';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
 import { GetTransmissionsReceptionsDetails } from '@actions/detail-transmissions-receptions.actions';
 import { getDataSelector } from '@reducers/bons-engagements.reducer';
+import { FactureArticleModel } from '../../models/facture-article.model';
 
 @Component({
   selector: 'app-create-bon-engagement-form',
@@ -54,6 +55,7 @@ export class CreateBonEngagementFormComponent
   public validation: boolean = false;
   public bonEngagement!: BonEngagementModel[]
   public sommeMontantCP = 0;
+  dataArticle: any;
 
   constructor(
     public ref: DynamicDialogRef,
@@ -63,7 +65,8 @@ export class CreateBonEngagementFormComponent
     private _apisService: ApisService,
     private _store: Store<AppState>,
     private readonly _dialogService: DialogsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private _apiService: ApisService,
   ) {
     super();
     this._initListeners();
@@ -234,6 +237,8 @@ export class CreateBonEngagementFormComponent
         | EngagementMissionModel
         | BonEngagementModel
         | any;
+     console.log('facture',facture)
+     if(facture){this.getArticles(facture.id)}
 
       this.form.patchValue({
         engagementForm: {
@@ -305,6 +310,20 @@ export class CreateBonEngagementFormComponent
     }
   }
 
+  getArticles(factureId:number) {
+    // this.addArticleFormGroup()
+     this._apiService
+       .get<FactureArticleModel[]>(
+         `/bons-engagements/factures/${factureId}/articles`
+       )
+       .subscribe(
+         (res) => {
+           this.dataArticle = res
+           console.log('res',res)
+         },
+         ({ error }) => {}
+       );
+   }
   get situationFormGroup(): FormGroup {
     return this.form?.get('situationForm') as FormGroup;
   }
@@ -458,6 +477,7 @@ export class CreateBonEngagementFormComponent
       );
       method.subscribe(
         (res) => {
+          console.log('response ', res);
           this.busy = false;
           this.ref.close(res);
           localStorage.removeItem('imputation');
@@ -498,8 +518,8 @@ export class CreateBonEngagementFormComponent
       );
     method.subscribe(
       (res) => {
+        console.log('response ', res);
         this.busy = false;
-
         localStorage.removeItem('imputation');
         this._store.dispatch(
           GetBonsEngagements({ procedures: [res?.codeProcedure] })

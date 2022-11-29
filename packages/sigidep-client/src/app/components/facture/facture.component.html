@@ -32,7 +32,7 @@
         >
         </textarea>
       </div>
-      <div class="p-field p-col-12 p-md-12">
+      <div  class="p-field p-col-12 p-md-12">
         <p-table
           #dt
           [paginator]="false"
@@ -79,7 +79,8 @@
             let-article
             let-rowIndex="rowIndex"
           >
-            <tr [formGroupName]="rowIndex">
+
+            <tr [formGroupName]="rowIndex" >
               <td>
                 {{ rowIndex + 1 }}
               </td>
@@ -279,7 +280,7 @@
       class="p-button"
       icon="pi pi-save"
       (click)="submit()"
-      [disabled]="!factureForm?.valid"
+      [disabled]="factureForm?.valid"
       [label]="'labels.book' | translate"
       pButton
     ></button>
