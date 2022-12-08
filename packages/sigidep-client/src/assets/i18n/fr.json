@@ -472,7 +472,13 @@
     "datePaiement": "Date Paiement",
     "numeroMandat":"Numéro Mandat",
     "certificat": "Certifier",
-    "respectNonChevauchement": "Respect Non Chevauchement"
+    "respectNonChevauchement": "Respect Non Chevauchement",
+    "descriptionFr": "Description (FR)",
+    "descriptionEn": "Description (EN)",
+    "address": "Adresse",
+    "missionsFr": "Mission (FR)",
+    "missionsEn": "Mission (EN)",
+    "estPrincipal": "Definir comme la structure principale"
   },
   "hints": {
     "structureCode": "Ce code doit être composé de 2 caractères.",
@@ -779,6 +785,7 @@
       "bon_controler": "Listing des Bons à Contrôler "
     },
     "headers": {
+      "estPrincipal": "Principale",
       "exerciseCode": "Code",
       "etatVirement": "Etat Virement",
       "code": "Code",

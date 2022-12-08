@@ -20,6 +20,8 @@ import {
 } from '@reducers/bons-engagements.reducer';
 import { EtatEngagementEnum } from '@models/engagement-juridique.model';
 import { EtatBonEnum } from 'app/utils/etat-bon-engagement.enum';
+import { StructuresService } from '../../services/structures.service';
+import { StructureModel } from '../../models/structure.model';
 
 export  class DtoBonEng {
 
@@ -43,16 +45,19 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
   public aeabattement: any = 0;
   public cpabattement: any = 0;
   public mandats: any;
+  structure!: StructureModel;
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private _store: Store<AppState>
+    private _store: Store<AppState>,
+    private structuresService: StructuresService
   ) {
     super();
     this._initListeners();
   }
 
   ngOnInit(): void {
+    this.getStructure()
     if (this.config.data?.item) {
       this.imputation = this.config.data?.item as EncoursModel;
       //console.log(this.imputation);
@@ -73,6 +78,12 @@ export class EtatImputationComponent extends BaseComponent implements OnInit {
     this.ref.close();
   }
 
+  getStructure(){
+    this.structuresService.getStructureDefault().then(result =>{
+      this.structure = result;
+      console.log(result)
+    })
+  }
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataEngSelector))

@@ -143,7 +143,7 @@ export const reducers: ActionReducerMap<AppState> = {
   modeleVirement: fromModeleVirement.reducer,
   virement: fromVirement.reducer,
   transBons: fromTransBons.reducer,
-  users: fromUsers.reducer
+  users: fromUsers.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production

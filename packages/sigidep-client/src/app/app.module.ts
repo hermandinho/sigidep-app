@@ -69,10 +69,7 @@ import { TransmissionBordereauxModule } from './pages/liquidation-mandatement/tr
 import { ReceptionBordereauxModule as ReceptionBordereauxRegulariteModule } from '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.module';
 import { ControleRegulariteModule } from './pages/controle_de_regularites/controle-regularite/controle-regularite.module';
 import { TransmissionBordereauxModule as TransmissionBordereauxRegulariteModule } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.module';
-import { ReservationBonEngagementComponent } from './components/reservation-bon-engagement/reservation-bon-engagement.component';
 import { UserModule } from './pages/user/user.module';
-import { PrintInfoUserComponent } from './components/print-info-user/print-info-user.component';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 registerLocaleData(localeFr);
 

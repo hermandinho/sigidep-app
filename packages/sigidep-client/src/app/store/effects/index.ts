@@ -88,5 +88,5 @@ export const Effects = [
   ModeleVirementEffects,
   VirementEffects,
   TransmissionReceptionBonsEffects,
-  UserEffects
+  UserEffects,
 ];

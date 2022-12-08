@@ -13,6 +13,9 @@ export class StructureEntity extends BaseEntity {
   @Column({ name: 'code', nullable: true })
   public code: string;
 
+  @Column({ name: 'est_principal', default:false })
+  public estPrincipal: boolean;
+
   @Column({ name: 'label_fr', nullable: false })
   public labelFr: string;
 

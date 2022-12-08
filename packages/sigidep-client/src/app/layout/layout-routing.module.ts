@@ -57,6 +57,7 @@ import { ReceptionPourControleDeRegulariteComponent } from '../pages/paiement/re
 import { OperationsValidationPaiementComponent } from '../pages/paiement/operations-validation-paiement/operations-validation-paiement.component';
 import { EditionDesListingsDePaiementComponent } from '@pages/paiement/edition-des-listings-de-paiement/edition-des-listings-de-paiement.component';
 import { UserComponent } from '../pages/user/user.component';
+import { StructureComponent } from '../pages/structure/structure.component';
 const routes: Routes = [
   {
     path: '',
@@ -156,6 +157,18 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/sub-programs/sub-programs.module').then(
             (m) => m.SubProgramsModule
+          ),
+      },
+      {
+        path: 'structure',
+        canActivate: [AuthGuard],
+        component: StructureComponent,
+        data: {
+          permissions: [...MenuPermissions.structure],
+        },
+        loadChildren: () =>
+          import('../pages/structure/structure.module').then(
+            (m) => m.StructureModule
           ),
       },
       {

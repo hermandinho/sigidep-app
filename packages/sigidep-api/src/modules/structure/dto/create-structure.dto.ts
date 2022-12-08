@@ -2,6 +2,7 @@ import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateStructureDto {
+  public id?: number;
   @ApiProperty({ example: '22', required: true })
   @IsNotEmpty()
   @MinLength(2)
@@ -11,6 +12,10 @@ export class CreateStructureDto {
   @ApiProperty({ example: 'Super structure', required: true })
   @IsNotEmpty()
   public labelFr: string;
+
+  @ApiProperty({ example: false, required: true })
+  @IsNotEmpty()
+  public estPrincipal: boolean;
 
   @ApiProperty({ example: 'Super structure En', required: true })
   @IsNotEmpty()

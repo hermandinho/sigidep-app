@@ -48,6 +48,7 @@ import { CategorieProcedure } from 'app/utils/types';
 import { TransmissionsReceptionModel } from '@models/transmission-reception.model';
 import { VirementMessage } from '@models/virement-message';
 import { ModeVirementEnum } from '@pages/virements/tools/virement-tools';
+import { StructureModel } from '../models/structure.model';
 
 @Injectable({
   providedIn: 'root',
@@ -129,6 +130,7 @@ export class DialogsService {
   private userCreateComponent: any;
   private printInfoUserComponent: any;
   private changePasswordComponent: any;
+  private createStructureComponent: any;
 
 
 
@@ -171,6 +173,27 @@ export class DialogsService {
         'dialogs.headers.' + (item ? 'editRole' : 'createRole')
       ),
       width: '50vw',
+      height: 'auto',
+      modal: true,
+      data: {
+        item,
+      },
+    });
+  }
+
+  public async launchStructureCreateDialog(item?: StructureModel): Promise<any> {
+    if (!this.createStructureComponent) {
+      const { CreateStructureComponent } = await import(
+        '@components/create-structure/create-structure.component'
+      );
+      this.createStructureComponent = CreateStructureComponent;
+    }
+
+    return this._dialogService.open(this.createStructureComponent, {
+      header: this._translateService.instant(
+        'dialogs.headers.' + (item ? 'editStructure' : 'createStructure')
+      ),
+      width: '60vw',
       height: 'auto',
       modal: true,
       data: {

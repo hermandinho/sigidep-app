@@ -55,6 +55,7 @@ export const MenuPermissions = {
   controleRegularite: [...simpleCrudPermissions('controleRegularite')],
   paiementDesDepenses: [...simpleCrudPermissions('paiementDesDepenses')],
   users: [...simpleCrudPermissions('users')],
+  structure: [...simpleCrudPermissions('structure')],
 
 };
 
@@ -98,6 +99,12 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLink: 'offices',
           icon: 'pi pi-cog',
           label: translate.instant('sidebar.settings'),
+          routerLinkActiveOptions: { exact: true },
+        },
+        {
+          routerLink: 'structure',
+          icon: 'pi pi-cog',
+          label: translate.instant('sidebar.structure'),
           routerLinkActiveOptions: { exact: true },
         },
         {
