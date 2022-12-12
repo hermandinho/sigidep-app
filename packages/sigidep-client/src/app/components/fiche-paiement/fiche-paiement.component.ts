@@ -7,6 +7,7 @@ import { getDataSelector } from '@reducers/bons-engagements.reducer';
 import { BaseComponent } from '../base.component';
 import { PieceJointeModel } from '../../models/piece-jointe.model';
 import * as converter from 'number-to-words';
+import { StructuresService } from '../../services/structures.service';
 
 @Component({
   selector: 'app-fiche-paiement',
@@ -23,12 +24,16 @@ export class FichePaiementComponent  extends BaseComponent implements OnInit {
   totalLiquidation = 0;
   montant_en_lettre: string = '';
   date: number = 0;
+  structure: any;
   constructor(private _store: Store<AppState>,
     public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig) { super(); this._initListeners() }
+    public config: DynamicDialogConfig,
+    private structuresService: StructuresService
+    ) { super(); this._initListeners() }
 
 
   ngOnInit(): void {
+    this.getStructure()
     console.log(this.config.data.item.numero)
       this._store.dispatch(
         GetBonsEngagements({
@@ -37,6 +42,12 @@ export class FichePaiementComponent  extends BaseComponent implements OnInit {
       );
   }
 
+  getStructure(){
+    this.structuresService.getStructureDefault().then(result =>{
+      this.structure = result;
+      console.log(result)
+    })
+  }
   private _initListeners() {
     this._store
       .pipe(this.takeUntilDestroy, select(getDataSelector))

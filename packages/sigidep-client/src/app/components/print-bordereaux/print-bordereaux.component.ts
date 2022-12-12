@@ -10,6 +10,7 @@ import { getDataSelector, getLoadingSelector } from '@reducers/detail-transmissi
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { StructuresService } from '../../services/structures.service';
 
 @Component({
   selector: 'app-print-bordereaux',
@@ -21,6 +22,7 @@ export class PrintBordereauxComponent extends BaseComponent implements OnInit {
   bons: any[] = [];
   loading$: Observable<boolean> = of(true);
   ids!:number;
+  structure: any;
 
 
 
@@ -30,6 +32,7 @@ export class PrintBordereauxComponent extends BaseComponent implements OnInit {
     private _store: Store<AppState>,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
+    private structuresService: StructuresService
 
   ) {
     super();
@@ -37,6 +40,7 @@ export class PrintBordereauxComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getStructure()
     if (this.config.data?.item) {
       this.data = this.config.data?.item;
       //console.log(this.imputation);
@@ -57,6 +61,12 @@ export class PrintBordereauxComponent extends BaseComponent implements OnInit {
 
   }
 
+  getStructure(){
+    this.structuresService.getStructureDefault().then(result =>{
+      this.structure = result;
+      console.log(result)
+    })
+  }
   handleFilter = (event: any) => {
  /*    this.primes = this.primesData;
     if (event?.value[0]?.toLowerCase())

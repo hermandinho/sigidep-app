@@ -68,7 +68,8 @@ export class StructureComponent extends BaseComponent implements OnInit {
   }
 
   async openForm() {
-    this._dialogService.launchStructureCreateDialog();
+    const elt = this._dialogService.launchStructureCreateDialog();
+    console.log(elt)
   }
 
   edit(item: StructureModel) {
@@ -79,16 +80,16 @@ export class StructureComponent extends BaseComponent implements OnInit {
     this._appService.showConfirmation({
       message: 'dialogs.messages.deleteStructure',
       accept: () => {
-        this.structuresService.delete(item.id)
+        this.structuresService.delete(item.id).subscribe(res=>{this._initListeners();})
       },
     });
   }
 
   private _initListeners() {
-    this.structuresService.get().then((res:StructureModel[])=>{
+    this.structuresService.get().subscribe((res:StructureModel[])=>{
       this.data = res;
       console.log(res)
-    }).catch((e)=>console.log(e))
+    })
   }
 
 }

@@ -10,7 +10,6 @@ export class StructureModel {
   missionsFr!: string;
   missionsEn!: string;
   address!: string;
-
   constructor(params?: Partial<StructureModel>) {
     if (params) {
       Object.assign(this, params);

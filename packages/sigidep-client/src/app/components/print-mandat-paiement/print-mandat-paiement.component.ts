@@ -4,6 +4,7 @@ import { PieceJointeModel } from '../../models/piece-jointe.model';
 import { BaseComponent } from '../base.component';
 import * as converter from 'number-to-words';
 import { TraitementBonEngagementModel } from '../../models/traitement-bon-engagement.model';
+import { StructuresService } from '../../services/structures.service';
 
 @Component({
   selector: 'app-print-mandat-paiement',
@@ -18,15 +19,18 @@ export class PrintMandatPaiementComponent  extends BaseComponent implements OnIn
   totalLiquidation = 0;
   montant_en_lettre: string = '';
   date: number = 0;
+  structure: any;
 
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
+    private structuresService: StructuresService
   ) {
     super()
    }
 
   ngOnInit(): void {
+    this.getStructure()
       this.data = this.config.data?.item;
       this.rubriques = JSON.parse(this.config.data?.item?.traitements[0]?.rubriqueLiquidation);
       this.montants = JSON.parse(this.config.data?.item?.traitements[0]?.montantLiquidation);
@@ -42,6 +46,12 @@ export class PrintMandatPaiementComponent  extends BaseComponent implements OnIn
       }
 
       this.date = 1966 + parseInt(this.data?.numActeJuridique?.exercise)
+  }
+  getStructure(){
+    this.structuresService.getStructureDefault().then(result =>{
+      this.structure = result;
+      console.log(result)
+    })
   }
 
 }

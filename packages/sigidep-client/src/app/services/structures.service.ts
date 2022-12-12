@@ -27,16 +27,16 @@ export class StructuresService {
     );
   }
 
-  public get(): Promise<StructureModel[]> {
+  public get(): Observable<StructureModel[]> {
     return this.client
       .get<StructureModel[]>(environment.API_URL + '/structure/get/all')
-      .toPromise();
+      //.toPromise();
   }
 
   public delete(id:number){
     return this.client
-      .get<any>(environment.API_URL + '/structure/'+id)
-      .toPromise();
+      .delete<any>(environment.API_URL + '/structure/delete/structure/'+id)
+      //.toPromise();
   }
 
   public getStructureDefault(){

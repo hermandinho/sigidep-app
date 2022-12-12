@@ -57,7 +57,7 @@ export class StructureController {
     return this.service.update(payload, user);
   }
 
-  @Delete('/:id')
+  @Delete('/delete/structure/:id')
   public async deleteOne(@Param('id') id: number) {
     return this.service.deleteOne(id);
   }

@@ -35,13 +35,17 @@
         <label>{{ "labels.missionsEn" | translate }}</label>
         <input type="text" class="form-control" pInputText formControlName="missionsEn" [placeholder]="''" />
       </div>
+      <!-- <div class="p-field p-col-12 p-md-12">
+        <label for="file">{{ 'labels.logo' }}</label>
+        <input formControlName="file" id="csv" type="file" pInputText class="form-control"
+          (change)="onFileChange($event)" multiple>
+      </div> -->
       <div class="p-field p-col-12 p-md-6">
         <p-checkbox formControlName="estPrincipal" [binary]="true" label="{{ 'labels.estPrincipal' | translate }}: {{
         form.value.estPrincipal
       }}">
         </p-checkbox>
       </div>
-
     </div>
   </div>
   <div class="footer">

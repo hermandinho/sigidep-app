@@ -188,7 +188,6 @@ export class DialogsService {
       );
       this.createStructureComponent = CreateStructureComponent;
     }
-
     return this._dialogService.open(this.createStructureComponent, {
       header: this._translateService.instant(
         'dialogs.headers.' + (item ? 'editStructure' : 'createStructure')
