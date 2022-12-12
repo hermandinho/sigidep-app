@@ -4,9 +4,11 @@ import { StructureEntity } from '../../entities/structure.entity';
 import { Repository } from 'typeorm';
 import { CreateStructureDto } from './dto/create-structure.dto';
 import { UserEntity } from '../../entities/user.entity';
+import { url } from 'inspector';
 
 @Injectable()
 export class StructureService {
+  structureSave: Promise<StructureEntity>;
   constructor(
     @InjectRepository(StructureEntity)
     private readonly structureRepository: Repository<StructureEntity>,
@@ -37,8 +39,9 @@ export class StructureService {
    /*  if (check) {
       throw new ConflictException();
     } */
-
-    return this.structureRepository.save(new StructureEntity(params));
+    console.log('params',params)
+    this.structureSave = this.structureRepository.save(new StructureEntity(params));
+    return this.structureSave;
   }
 
   public async filter() {
@@ -90,5 +93,29 @@ export class StructureService {
       .getOne();
     return response;
   }
+
+  async saveFile(file: any): Promise<StructureEntity> {
+   // console.log("file",file)
+    const csv = require('csvtojson')
+    //console.log("csv",csv)
+    const csvFilePath = url()+'/'+process.cwd() + '/' + file.path;
+    console.log("csvFilePath",csvFilePath)
+    const structureArray = await csv().fromFile(csvFilePath);
+   // console.log("structureArray",structureArray)
+    var structure;
+
+    try {
+        structure = await this.structureRepository.save(
+          {
+            ...this.structureSave,
+            logo: csvFilePath
+          }
+        );
+    } catch (error) {
+        structure = null;  
+    }
+    console.log(structure)
+    return structure; 
+}
 
 }

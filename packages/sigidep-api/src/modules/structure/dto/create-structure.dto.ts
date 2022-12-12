@@ -56,4 +56,7 @@ export class CreateStructureDto {
   @ApiProperty({ example: 'Yaounde', required: true })
   @IsNotEmpty()
   public address: string;
+
+  csv: any;
+
 }

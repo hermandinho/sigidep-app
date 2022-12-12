@@ -45,6 +45,9 @@ export class StructureEntity extends BaseEntity {
   @Column({ name: 'address', nullable: false })
   public address: string;
 
+  @Column({ name: 'logo', nullable: true })
+  public logo: string;
+
   // RELATIONS
   @OneToMany(() => SubProgramEntity, (object) => object.exercise)
   subPrograms: SubProgramEntity[];
