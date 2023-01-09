@@ -76,6 +76,7 @@ export class RolesService {
     }
     return this.roleRepository.save({
       label: payload.label,
+      description: payload.description,
       createdBy: user,
     });
   }

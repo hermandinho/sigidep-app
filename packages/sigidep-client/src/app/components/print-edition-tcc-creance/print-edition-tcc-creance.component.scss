@@ -1,0 +1,21 @@
+
+/* .page{
+  display: flex;
+} */
+
+/*   .page {
+    display: flex;
+    flex-direction: row;
+    min-width: 1280px;
+    orientation: landscape
+  }
+ */
+  .page{
+    display: flex;
+  }
+
+  @media (orientation: landscape) {
+    .page {
+      flex-direction: row;
+    }
+  }

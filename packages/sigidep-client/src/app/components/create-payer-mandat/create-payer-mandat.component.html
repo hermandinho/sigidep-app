@@ -1,0 +1,18 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+  <app-details-validation-de-act
+  *ngSwitchCase="'validation'"
+  (changeStep)="changeStep('validation', 'forward')"
+  [bon]="data"
+
+  >
+  </app-details-validation-de-act>
+  <app-mode-et-coordonnees-de-paiement
+  [startingForm]="paiementFormGroup"
+  *ngSwitchCase="'paiement'"
+  (changeStep)="changeStep('paiement', 'back')"
+  (subformInitialized)="subformInitialized('paiementForm', $event)"
+  [bon]="data"
+  (submitForm)="submitForm()"
+  >
+  </app-mode-et-coordonnees-de-paiement>
+</ng-container>

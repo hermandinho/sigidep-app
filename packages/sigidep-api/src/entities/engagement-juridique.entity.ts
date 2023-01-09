@@ -1,5 +1,12 @@
-import { Column, Entity, TableInheritance } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  TableInheritance,
+} from 'typeorm';
 import { BaseEntity } from '.';
+import { EncoursEntity } from './encours.entity';
 
 export enum EtatEngagementEnum {
   SAVE = 'labels.save',
@@ -54,6 +61,8 @@ export class EngagementJuridiqueEntity extends BaseEntity {
 
   @Column({ type: 'float', nullable: false, name: 'montant_AE' })
   public montantAE: number;
+  @Column({ type: 'float', nullable: true, name: 'montantAE_Reserve' })
+  public montantAE_Reserve: number;
 
   @Column({
     name: 'etat',

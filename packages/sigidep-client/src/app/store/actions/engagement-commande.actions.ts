@@ -1,7 +1,8 @@
 import { EngagementCommandeModel } from '@models/engagement-commande.model';
 import { createAction, props } from '@ngrx/store';
 export const GetEngagementCommandes = createAction(
-  '[EngagementCommandes] Filter'
+  '[EngagementCommandes] Filter',
+  props<{ procedures?: string[]; etats?: string[]; numeros?: string[] }>()
 );
 export const GetEngagementCommandesSuccess = createAction(
   '[EngagementCommandes] Filter success',

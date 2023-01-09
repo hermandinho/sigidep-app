@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="form" [formGroup]="traitementLiquidationForm">
+        <div class="p-field p-col-12 p-md-12">
+          <label>{{ "labels.numeroMandat" | translate }}</label>
+          <input
+            minlength="7"
+            maxlength="7"
+            class="form-control"
+            formControlName="numeroMandat"
+            [placeholder]="''"
+            pInputText
+          />
+      </div>
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <ng-container>
+            <label class="required"
+            >{{ "labels.matriculeGestionnaire" | translate }}
+          </label>
+            <p-dropdown
+              [showClear]="true"
+              [filter]="true"
+              [filterBy]="'matricule'"
+              [autoDisplayFirst]="false"
+              [options]="gestionnaires"
+              [placeholder]="''"
+              optionLabel="matricule"
+              optionValue="matricule"
+              formControlName="matriculeGestionnaire"
+              (onChange)="onGestionnaireChange($event)"
+            >
+            </p-dropdown>
+          </ng-container>
+      </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label>{{ "labels.nomGestionnaire" | translate }}</label>
+          <input
+            class="form-control"
+            formControlName="nomGestionnaire"
+            [placeholder]="''"
+            pInputText
+          />
+        </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="footer">
+  <button
+    (click)="doChangeStep('back')"
+    [label]="'buttons.back' | translate"
+    pButton
+  ></button>
+
+  <button
+  [disabled]="!traitementLiquidationForm?.valid"
+  (click)="submit()"
+  [label]="'buttons.submit' | translate"
+  pButton
+></button>
+
+</div>

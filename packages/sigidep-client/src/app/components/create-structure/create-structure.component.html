@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="form" [formGroup]="form">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.labelFr" | translate }}</label>
+        <input type="text" class="form-control" pInputText formControlName="labelFr" [placeholder]="''" />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.labelEn" | translate }}</label>
+        <input type="text" class="form-control" pInputText formControlName="labelEn" [placeholder]="''" />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.descriptionFr" | translate }}</label>
+        <textarea rows="3" cols="35" pInputTextarea class="form-control" formControlName="descriptionFr"
+          [placeholder]="''"></textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.descriptionEn" | translate }}</label>
+        <textarea rows="3" cols="35" pInputTextarea class="form-control" formControlName="descriptionEn"
+          [placeholder]="''"></textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.code" | translate }}</label>
+        <input maxlength="2" type="text" class="form-control" pInputText formControlName="code" [placeholder]="''" />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label class="required">{{ "labels.address" | translate }}</label>
+        <input type="text" class="form-control" pInputText formControlName="address" [placeholder]="''" />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.missionsFr" | translate }}</label>
+        <input type="text" class="form-control" pInputText formControlName="missionsFr" [placeholder]="''" />
+      </div>
+      <div class="p-field p-col-12 p-md-6">
+        <label>{{ "labels.missionsEn" | translate }}</label>
+        <input type="text" class="form-control" pInputText formControlName="missionsEn" [placeholder]="''" />
+      </div>
+      <!-- <div class="p-field p-col-12 p-md-12">
+        <label for="file">{{ 'labels.logo' }}</label>
+        <input formControlName="file" id="csv" type="file" pInputText class="form-control"
+          (change)="onFileChange($event)" multiple>
+      </div> -->
+      <div class="p-field p-col-12 p-md-6">
+        <p-checkbox formControlName="estPrincipal" [binary]="true" label="{{ 'labels.estPrincipal' | translate }}: {{
+        form.value.estPrincipal
+      }}">
+        </p-checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+      {{ "buttons.cancel" | translate }}
+    </button>
+    <button (click)="submit()" [disabled]="!form?.valid || busy" [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+          | translate
+      " pButton></button>
+  </div>
+</div>

@@ -116,9 +116,9 @@ export class EngagementsComponent
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this._store.dispatch(GetEngagementCommandes());
-    this._store.dispatch(GetEngagementMissions());
-    this._store.dispatch(GetEngagementDecisions());
+    this._store.dispatch(GetEngagementCommandes({}));
+    this._store.dispatch(GetEngagementMissions({}));
+    this._store.dispatch(GetEngagementDecisions({}));
     this._store.dispatch(
       SetAppBreadcrumb({
         breadcrumb: [
@@ -256,6 +256,7 @@ export class EngagementsComponent
       .pipe(this.takeUntilDestroy, select(getCommandeDataSelector))
       .subscribe((data) => {
         this.commandes = [...data];
+        console.log(this.commandes)
         this.originalCommandes = [...data];
       });
 
@@ -280,6 +281,7 @@ export class EngagementsComponent
       .pipe(this.takeUntilDestroy, select(getDecisionDataSelector))
       .subscribe((data) => {
         this.decisions = [...data];
+        console.log(this.decisions)
         this.originalDecisions = [...data];
       });
 

@@ -1,0 +1,138 @@
+<div class="page">
+  <div>
+    <div id="print-section" class="">
+      <p-card>
+        <div class="grid-container-header">
+          <div class="grid-fr">
+            <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+            <i>Paix-Travail-Patrie</i> <br />
+            ********* <br />
+            <strong
+              >{{structure?.labelFr}}</strong
+            >
+          </div>
+          <div class="grid-img">
+            <img src="assets/img/logopdf.png" alt="logo pdf" />
+          </div>
+          <div class="grid-en">
+            <strong>REPUBLIC OF CAMEROON</strong> <br />
+            <em>Peace-Work-Fatherland</em> <br />
+            ********* <br />
+            <strong
+              >{{structure?.labelEn}}</strong
+            >
+          </div>
+        </div>
+        <div class="title">
+          <h3>RAPPORT DE LIQUIDATION <br> N° {{ config.data?.item?.traitements[0]?.numOrdreLiquidation }}</h3>
+        </div>
+        <div class="info-trans">
+          <label><b>Certificat d'Engagement N°: </b>{{ data?.numActeJuridique?.numero}}</label><br><br>
+          <label><b>Bon N°: </b>{{ data?.numero}}</label><br><br>
+          <label><b>Bénéficiaire: </b>{{ data?.matriculeGestionnaire}} &nbsp; {{ data?.nomGestionnaire}}</label><br><br>
+          <label><b>Objet de la dépense: </b>{{ data?.objet}}</label><br><br>
+          <label><b>Imputation: </b>{{ data?.numActeJuridique?.imputation}}</label><br>
+        </div>
+        <h1>Détails liquidation</h1>
+        <p-card>
+          <table>
+            <tr>
+              <th>N°</th>
+              <th>Rubriques</th>
+              <th>Montant (FCFA)</th>
+            </tr>
+            <tr *ngIf="rubriques[0] && montants[0]">
+              <td><span >1</span></td>
+              <td><span >{{ rubriques[0] }}</span></td>
+              <td>
+                <span >{{ montants[0] }}</span>
+              </td>
+            </tr>
+
+            <tr *ngIf="rubriques[1] && montants[1]">
+              <td><span >2</span></td>
+              <td><span >{{ rubriques[1] }}</span></td>
+              <td>
+                <span >{{ montants[1] }}</span>
+              </td>
+            </tr>
+
+            <tr *ngIf="rubriques[2] && montants[2]">
+              <td><span >3</span></td>
+              <td><span >{{ rubriques[2] }}</span></td>
+              <td>
+                <span >{{ montants[2] }}</span>
+              </td>
+            </tr>
+
+            <tr *ngIf="rubriques[3] && montants[3]">
+              <td><span >4</span></td>
+              <td><span >{{ rubriques[3] }}</span></td>
+              <td>
+                <span >{{ montants[3] }}</span>
+              </td>
+            </tr>
+
+            <tr *ngIf="rubriques[4] && montants[4]">
+              <td><span >5</span></td>
+              <td><span >{{ rubriques[4] }}</span></td>
+              <td>
+                <span >{{ montants[4] }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">TOTAL A LIAUIDER</td>
+              <td>{{ totalLiquidation }}</td>
+            </tr>
+          </table>
+        </p-card>
+          <div class="p-fluid p-grid">
+            <div class="p-field p-col-12 p-md-8">
+              <h1>Pièces jointes à la liquidation</h1>
+              <p-card>
+                <table>
+                  <tr>
+                    <th>N°</th>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                  </tr>
+                  <tr *ngFor="let item of dataPieceJointes; let i = index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ item?.code }}</td>
+                    <td>{{ item?.label }}</td>
+                  </tr>
+
+                </table>
+              </p-card>
+            </div>
+            <div class="p-field p-col-12 p-md-4">
+
+            </div>
+          </div>
+          Arrêtée la présente liquidation à la somme de: {{ montant_en_lettre }}
+      </p-card>
+
+      <div class="date">
+        <span>Fait à &nbsp;&nbsp;&nbsp;&nbsp; , le&nbsp;&nbsp;&nbsp;  </span>
+      </div>
+      <div class="visa">
+
+        Vu bon à mandater<br>
+
+      </div>
+    </div>
+    <div>
+      <button
+        pButton
+        class="p-mr-3 p-button-warning"
+        printSectionId="print-section"
+        [useExistingCss]="true"
+        ngxPrint
+      >
+        {{ "buttons.print" | translate }}
+      </button>
+    </div>
+  </div>
+
+
+</div>

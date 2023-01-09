@@ -24,7 +24,7 @@ export class GestionnairesEntity extends BaseEntity {
   @Column({ name: 'prenom', nullable: false })
   public prenom: string;
 
-  @Column({ name: 'fonction', nullable: false })
+  @Column({ name: 'fonction', nullable: true })
   public fonction: string;
 
   // RELATIONS

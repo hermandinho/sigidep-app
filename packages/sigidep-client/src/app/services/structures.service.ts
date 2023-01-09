@@ -26,4 +26,21 @@ export class StructuresService {
       payload
     );
   }
+
+  public get(): Observable<StructureModel[]> {
+    return this.client
+      .get<StructureModel[]>(environment.API_URL + '/structure/get/all')
+      //.toPromise();
+  }
+
+  public delete(id:number){
+    return this.client
+      .delete<any>(environment.API_URL + '/structure/delete/structure/'+id)
+      //.toPromise();
+  }
+
+  public getStructureDefault(){
+    return this.client.get<StructureModel>(
+      environment.API_URL + '/structure/get/Structure/Default').toPromise();;
+  }
 }

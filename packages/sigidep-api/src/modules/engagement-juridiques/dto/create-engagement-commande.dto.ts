@@ -25,6 +25,18 @@ export class EngagementCommandeDTO extends CreateEngagementJuridiqueDTO {
   @ApiProperty({ example: '19.86', required: false })
   public tauxTVA: number;
 
+  @ApiProperty({ example: '2000', required: false })
+  public montantBrut: number;
+
+  @ApiProperty({ example: '2000', required: false })
+  public montantIRNC: number;
+
+  @ApiProperty({ example: '2000', required: false })
+  public montantTVA: number;
+
+  @ApiProperty({ example: '2000000', required: false })
+  public netAPercevoir: number;
+
   @ApiProperty({
     type: () => CreateExecTaxesDTO,
     nullable: true,

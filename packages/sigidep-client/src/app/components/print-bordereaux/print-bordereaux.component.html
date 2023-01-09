@@ -1,0 +1,111 @@
+<div class="page">
+  <div>
+    <div id="print-section" class="">
+
+      <div class="grid-container-header">
+        <div class="grid-fr">
+          <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+          <i>Paix-Travail-Patrie</i> <br />
+          ********* <br />
+          <strong
+            >{{structure?.labelFr}}</strong
+          >
+        </div>
+        <div class="grid-img">
+          <img src="assets/img/logopdf.png" alt="logo pdf" />
+        </div>
+        <div class="grid-en">
+          <strong>REPUBLIC OF CAMEROON</strong> <br />
+          <em>Peace-Work-Fatherland</em> <br />
+          ********* <br />
+          <strong
+            >{{structure?.labelEn}}</strong
+          >
+        </div>
+      </div>
+        <div class="title">
+          <h3>BORDEREAU DE TRANSMISSION DES DOSSIERS N° {{ data?.numero }}</h3>
+        </div>
+        <div class="info-trans">
+          <label><b>Service Emetteur: </b>{{ data?.serviceSource}}</label><br><br>
+          <label><b>Service Destinataire:{{ data?.serviceDestination}} </b></label><br><br>
+          <label><b>Objet:{{ data?.objet | translate}} </b></label><br>
+        </div>
+        <table>
+          <tr>
+            <th>N°</th>
+            <th>Numéro Bon Engagement</th>
+            <th>Numéro Engagement Juridique</th>
+            <th>Bénéficiaire</th>
+            <th>Objet de la dépense</th>
+            <th>Imputation</th>
+            <th>Montant AE</th>
+            <th>Montant CP</th>
+            <th>Date engagement</th>
+            <th>Etat</th>
+          </tr>
+          <tr *ngFor="let i=index, let bon of bons">
+            <td><span>{{i+1}}</span></td>
+            <td><span>{{bon?.bon_engagement?.numero}}</span></td>
+            <td><span>{{bon?.bon_engagement?.numActeJuridique?.numero}}</span></td>
+            <td>
+              <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1110 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1111 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1115">
+              {{bon?.bon_engagement?.numActeJuridique?.adminUnit}}
+            </span>
+            <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1121 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1122 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1123 || bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1124">
+              {{bon?.bon_engagement?.numActeJuridique?.matriculeBeneficiaire}} &nbsp; {{bon?.bon_engagement?.numActeJuridique?.nomBeneficiaire}}
+            </span>
+            <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1125">
+              {{bon?.bon_engagement?.numActeJuridique?.codeUnitAdminBenef}} &nbsp; {{bon?.bon_engagement?.numActeJuridique?.nomUnitAdminBenef}}
+            </span>
+            <span *ngIf="bon?.bon_engagement?.numActeJuridique?.codeProcedure === 1126">
+              {{bon?.bon_engagement?.numActeJuridique?.numContribuable}}
+            </span>
+          </td>
+            <td><span>{{bon?.bon_engagement?.objet}}</span></td>
+            <td><span>{{bon?.bon_engagement?.numActeJuridique?.imputation}}</span></td>
+            <td><span>{{bon?.bon_engagement?.numActeJuridique?.montantAE }}</span></td>
+            <td><span>{{bon?.bon_engagement?.montantCPChiffres}}</span></td>
+            <td><span>{{bon?.bon_engagement?.dateEngagement}}</span></td>
+            <td><span>{{bon?.bon_engagement?.etat | translate}}</span></td>
+          </tr>
+        </table>
+
+        <div class="date">
+          <span>Fait à {{ data?.lieu}}, le {{ data?.createdAt|date}} </span>
+        </div>
+        <div class="visa">
+
+          Visa du Responsable<br>(Service Emetteur)
+
+        </div>
+        <div class="reception">
+          <table>
+            <tr class="color">
+              <td colspan="3">Réception Contrôle Financier</td>
+            </tr>
+            <tr>
+              <th>Date</th>
+              <th>Heure</th>
+              <th>Nom & Signature</th>
+            </tr>
+            <tr class="tr">
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+
+       <!--  <div class="edit">
+          <h3>SIGIDEP</h3>
+          <label>Edité par:</label>
+        </div>
+ -->
+    </div>
+      <div>
+        <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+          {{ "buttons.print" | translate }}
+        </button>
+      </div>
+  </div>

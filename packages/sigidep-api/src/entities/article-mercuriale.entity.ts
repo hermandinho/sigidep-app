@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { BaseEntity } from '.';
 import { SousRubriqueMercurialeEntity } from './sous-rubriques-mercuriales.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { FactureEntity } from './facture.entity';
 
 @Entity({
   name: 'articles_mercuriales',

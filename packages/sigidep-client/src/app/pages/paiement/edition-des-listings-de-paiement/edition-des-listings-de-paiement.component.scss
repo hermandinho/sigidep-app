@@ -1,0 +1,49 @@
+.page{
+  display: flex;
+}
+
+@media (orientation: landscape) {
+  .page {
+    flex-direction: row;
+  }
+}
+
+
+.grid-container-header {
+  display: grid;
+  grid-template-rows: 100% 50%;
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-gap: 2%;
+  //margin-bottom: 1%;
+}
+
+.grid-fr {
+  border: white 1px solid;
+  height: auto;
+  text-justify: auto;
+  padding: 5%;
+  font-size: 1em;
+  text-align: center;
+  //grid-area: area1;
+}
+
+.grid-en {
+  text-align: center;
+  border: white 1px solid;
+  height: auto;
+  padding: 5%;
+  font-size: 1em;
+  text-justify: auto;
+}
+
+.grid-img {
+  text-align: center;
+  border: white 1px solid;
+  height: auto;
+  padding: 5%;
+  // grid-area: area2;
+}
+
+h1 {
+  text-align: center;
+}

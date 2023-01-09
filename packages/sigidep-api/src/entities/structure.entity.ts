@@ -13,6 +13,9 @@ export class StructureEntity extends BaseEntity {
   @Column({ name: 'code', nullable: true })
   public code: string;
 
+  @Column({ name: 'est_principal', default:false })
+  public estPrincipal: boolean;
+
   @Column({ name: 'label_fr', nullable: false })
   public labelFr: string;
 
@@ -41,6 +44,9 @@ export class StructureEntity extends BaseEntity {
 
   @Column({ name: 'address', nullable: false })
   public address: string;
+
+  @Column({ name: 'logo', nullable: true })
+  public logo: string;
 
   // RELATIONS
   @OneToMany(() => SubProgramEntity, (object) => object.exercise)

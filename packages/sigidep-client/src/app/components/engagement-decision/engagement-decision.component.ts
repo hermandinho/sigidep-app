@@ -61,8 +61,7 @@ import { GetContribuablesBugetaires } from '@actions/contribuables-budgetaires.a
 })
 export class EngagementDecisionComponent
   extends BaseComponent
-  implements OnInit
-{
+  implements OnInit {
   @Input() startingForm!: FormGroup;
   @Input() procedure!: string;
   @Input() montantAE!: number;
@@ -164,9 +163,9 @@ export class EngagementDecisionComponent
     if (this.readOnly) {
       this.decisionForm.disable();
     }
-    this.decisionForm.patchValue({
+ /*    this.decisionForm.patchValue({
       montantBrut: this.montantAE,
-    });
+    }); */
 
     if (this.decisionForm.getRawValue().numContribuable) {
       this.decisionForm.patchValue({
@@ -181,21 +180,36 @@ export class EngagementDecisionComponent
     if (
       this.procedure === '1123' ||
       this.procedure === '1124' ||
-      this.procedure === '1125' ||
-      this.procedure === '1126'
+      this.procedure === '1125'
     ) {
       this.decisionForm.patchValue({
         netAPercevoir: this.montantAE,
       });
       this.decisionForm.controls['netAPercevoir'].disable();
     }
+    if (
+      this.procedure === '1126'
+    ) {
+      this.decisionForm.controls['netAPercevoir'].disable();
+      this.decisionForm.controls['montantTVA'].disable();
+      this.decisionForm.controls['montantIRNC'].disable();
+    }
+    if (
+      this.procedure === '1122'
+    ) {
+      this.decisionForm.controls['netAPercevoir'].disable();
+    }
+
 
     this.subformInitialized.emit(this.decisionForm);
     this.decisionForm.controls['tauxTVA'].disable();
     this.decisionForm.controls['tauxIR'].disable();
     this.decisionForm.controls['raisonSociale'].disable();
     this.decisionForm.controls['nomBeneficiaire'].disable();
-    this.decisionForm.controls['montantBrut'].disable();
+    if (this.procedure !== '1126'){
+      this.decisionForm.controls['montantBrut'].disable();
+    }
+
     this.decisionForm.controls['codeAgenceContribuable'].disable();
     this.decisionForm.controls['codeBanqueContribuable'].disable();
     this.decisionForm.controls['numeroCompteContribuable'].disable();
@@ -271,4 +285,5 @@ export class EngagementDecisionComponent
       });
     }
   };
+
 }

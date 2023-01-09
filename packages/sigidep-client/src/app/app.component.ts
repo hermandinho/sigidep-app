@@ -8,6 +8,7 @@ import { LocalStorageService } from './services/local-storage.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  title= 'SIGIDEP'
   constructor(
     private translateService: TranslateService,
     private localStorageService: LocalStorageService

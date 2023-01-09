@@ -1,0 +1,212 @@
+<div class="page">
+  <div>
+    <div id="print-section" class="">
+      <p-card>
+        <div class="grid-container-header">
+          <div class="grid-fr">
+            <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+            <i>Paix-Travail-Patrie</i> <br />
+            ********* <br />
+            <strong
+              >{{structure?.labelFr}}</strong
+            >
+          </div>
+          <div class="grid-img">
+            <img src="assets/img/logopdf.png" alt="logo pdf" />
+          </div>
+          <div class="grid-en">
+            <strong>REPUBLIC OF CAMEROON</strong> <br />
+            <em>Peace-Work-Fatherland</em> <br />
+            ********* <br />
+            <strong
+              >{{structure?.labelEn}}</strong
+            >
+          </div>
+        </div>
+        <div class="title">
+          <h3>MANDAT DE PAIEMENT N° {{ config.data?.item?.traitements[0]?.numeroMandat }}</h3>
+        </div>
+
+        <div>
+          <p>
+            &nbsp;&nbsp; Je soussigné, {{ config.data?.item?.traitements[0]?.nomGestionnaire}}, en ma
+            qualité de Gestionnaire accrédité certifie l'effectivité de
+            la présente créance et donne ordre à l'Agent Comptable Assignataire de la payer conformément aux détail
+            suivants:
+          </p>
+
+          <table class="sans-ligne">
+            <tr>
+              <th>Certificat d'engagement N°</th>
+              <th>Montant AE</th>
+              <th>Bon N°</th>
+              <th>Montant CP</th>
+            </tr>
+            <tr>
+              <td>{{ config.data?.item?.numActeJuridique?.numero }}</td>
+              <td>{{ config.data?.item?.numActeJuridique?.montantAE }}</td>
+              <td>{{ config.data?.item?.numero }}</td>
+              <td>{{ config.data?.item?.montantCPChiffres }}</td>
+            </tr>
+          </table>
+          <table class="sans-ligne2">
+            <tr>
+              <td><b>Liquidation de Réference N°</b></td>
+              <td>{{ config.data?.item?.traitements[0]?.numOrdreLiquidation }}</td>
+            </tr>
+            <tr>
+              <td><b>Unité Administrative d'origine:</b></td>
+              <td>{{ config.data?.item?.numActeJuridique?.adminUnit }}</td>
+            </tr>
+            <tr>
+              <td><b>Ordonateur:</b></td>
+              <td>{{ config.data?.item?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
+                config.data?.item?.traitements[0]?.nomGestionnaire }}</td>
+            </tr>
+          </table>
+        </div>
+        <h3>Identification du Créancier</h3>
+        <table>
+          <tr>
+            <th>NIU ou Matricule (selon le cas)</th>
+            <th>Raison Sociale ou Noms & Prenoms</th>
+            <th>Coordonnées bancaires</th>
+          </tr>
+          <tr>
+            <td>{{ config.data?.item?.matriculeGestionnaire }}</td>
+            <td>{{ config.data?.item?.nomGestionnaire }} </td>
+            <td>
+              <table>
+                <tr>
+                  <td>RIB</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Banque</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Agence</td>
+                  <td></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <table class="sans-ligne2">
+          <tr>
+            <td>Exercice: </td>
+            <td>{{ data?.numActeJuridique?.exercise}}-Budget {{ date }}</td>
+          </tr>
+          <tr>
+            <td>Ordonateur: </td>
+            <td>{{ config.data?.item?.traitements[0]?.matriculeGestionnaire}} &nbsp; {{
+              config.data?.item?.traitements[0]?.nomGestionnaire }}</td>
+          </tr>
+          <tr>
+            <td>Objet de la dépense: </td>
+            <td>{{ data?.objet}}</td>
+          </tr>
+          <tr>
+            <td>Imputation: </td>
+            <td>{{ data?.numActeJuridique?.imputation}}</td>
+          </tr>
+          <tr>
+            <td>Montant Brut (en FCFA): </td>
+            <td>{{ config.data?.item?.montantCPChiffres }}</td>
+          </tr>
+        </table>
+        <h4>Détails des rubrique du mandat</h4>
+
+        <table>
+          <tr>
+            <th>N°</th>
+            <th>Rubriques</th>
+            <th>Montant (FCFA)</th>
+          </tr>
+          <tr *ngIf="rubriques[0] && montants[0]">
+            <td><span>{{ data?.numActeJuridique?.numero }}-01</span></td>
+            <td><span>{{ rubriques[0] }}</span></td>
+            <td>
+              <span>{{ montants[0] }}</span>
+            </td>
+          </tr>
+
+          <tr *ngIf="rubriques[1] && montants[1]">
+            <td><span>{{ data?.numActeJuridique?.numero }}-02</span></td>
+            <td><span>{{ rubriques[1] }}</span></td>
+            <td>
+              <span>{{ montants[1] }}</span>
+            </td>
+          </tr>
+
+          <tr *ngIf="rubriques[2] && montants[2]">
+            <td><span>{{ data?.numActeJuridique?.numero }}-03</span></td>
+            <td><span>{{ rubriques[2] }}</span></td>
+            <td>
+              <span>{{ montants[2] }}</span>
+            </td>
+          </tr>
+
+          <tr *ngIf="rubriques[3] && montants[3]">
+            <td><span>{{ data?.numActeJuridique?.numero }}-04</span></td>
+            <td><span>{{ rubriques[3] }}</span></td>
+            <td>
+              <span>{{ montants[3] }}</span>
+            </td>
+          </tr>
+
+          <tr *ngIf="rubriques[4] && montants[4]">
+            <td><span>{{ data?.numActeJuridique?.numero }}-05</span></td>
+            <td><span>{{ rubriques[4] }}</span></td>
+            <td>
+              <span>{{ montants[4] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">TOTAL A LIQUIDER</td>
+            <td>{{ totalLiquidation }}</td>
+          </tr>
+        </table>
+        <table style="margin-top: 2%;">
+          <tr>
+            <th>Visa du controleur financier</th>
+            <th rowspan="4">signature de l'ordinnateur <br> Arreté le présent mandat à la somme de: <br> {{
+              montant_en_lettre }}</th>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+
+        </table>
+
+        <div class="p-fluid p-grid" style="margin-top: 1%;">
+          <div class="p-field p-col-12 p-md-5 semi-card">
+            <span>A
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              , le </span>
+          </div>
+          <div class="p-field p-col-12 p-md-5 semi-card">
+            <span>A
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              , le&nbsp;&nbsp;&nbsp; </span>
+          </div>
+        </div>
+      </p-card>
+
+    </div>
+    <div>
+      <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+        {{ "buttons.print" | translate }}
+      </button>
+    </div>
+  </div>
+
+
+</div>

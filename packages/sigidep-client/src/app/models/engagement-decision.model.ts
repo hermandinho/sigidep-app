@@ -14,6 +14,7 @@ export class EngagementDecisionModel extends EngagementJuridiqueModel {
   montantBrut!: number;
 
   montantIRNC!: number;
+  montantTVA!: number;
   raisonSociale!: string;
   codeBanqueContribuable!: string;
   codeAgenceContribuable!: string;

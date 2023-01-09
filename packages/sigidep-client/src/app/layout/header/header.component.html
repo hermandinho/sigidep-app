@@ -48,6 +48,9 @@
           <div class="dropdown-item" routerLink="settings/profile">
             {{ "menus.profile" | translate }}
           </div>
+          <div class="dropdown-item" (click)="changePassword()">
+            {{ "menus.changePassword" | translate }}
+          </div>
           <div class="dropdown-item" (click)="logout()">
             {{ "menus.logout" | translate }}
           </div>

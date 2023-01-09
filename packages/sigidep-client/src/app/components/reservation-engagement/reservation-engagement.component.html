@@ -4,9 +4,9 @@
     *ngIf="engagement.montantAE <= engagement?.aeDisponible"
     formControlName="disponibiliteCredits"
     [binary]="true"
-    label="{{ 'labels.disponibiliteCredits' | translate }}: Montant AE ({{
+    label="{{ 'labels.disponibiliteCredits' | translate }}: Le montant AE  ({{
       engagement.montantAE
-    }}) inférieur au montant  AE Disponible ({{ engagement?.aeDisponible }})"
+    }}) que vous voulez reserver est inférieur au montant  AE Disponible ({{ engagement?.aeDisponible }})"
   >
   </p-checkbox>
   <p-checkbox
@@ -14,9 +14,9 @@
     *ngIf="engagement.montantAE > engagement?.aeDisponible"
     formControlName="disponibiliteCredits"
     [binary]="true"
-    label="{{ 'labels.disponibiliteCredits' | translate }}: Montant AE ({{
+    label="{{ 'labels.disponibiliteCredits' | translate }}: Le montant AE  ({{
       engagement.montantAE
-    }}) supérieur au montant  AE Disponible ({{ engagement?.aeDisponible }})"
+    }}) que vous voulez reserver est  supérieur au montant  AE Disponible ({{ engagement?.aeDisponible }})"
   >
   </p-checkbox>
   <p-checkbox
@@ -26,7 +26,7 @@
     [binary]="true"
     label="{{
       'labels.respectNonMorcellement' | translate
-    }}: Dernière Commande: {{ dernierCommande?.dateSignature ?? 'RAS' }}"
+    }}: Dernière Commande: {{ (dernierCommande ? dernierCommande.dateSignature : 'RAS') +'. Prochaine date possible  '+(prochaineDate ? prochaineDate : 'RAS') + ' ( Il vous reste donc '+ nombreJoursRestantPourLeRespectMorcellement +' Jour(s)'+')'+ '.' }}"
   >
   </p-checkbox>
 
@@ -75,12 +75,23 @@
     }}: Cumul des Jours de Missions = {{ cumulJoursMissions }}"
   >
   </p-checkbox>
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="type === 'mission'"
+    formControlName="respectNonChevauchement"
+    [binary]="true"
+    label="{{
+      'labels.respectNonChevauchement' | translate
+    }}: Interval de date = {{ statutChevauchement }}"
+  >
+  </p-checkbox>
   <div class="footer">
     <button
       type="button"
       pButton
       pRipple
       class="p-mr-3 p-button-danger"
+      (click)="ref.close()"
       [label]="'buttons.close' | translate"
       pButton
     ></button>

@@ -33,6 +33,15 @@ import { EngagementsJuridiquesEffects } from '@effects/engagement-juridique.effe
 import { EngagementsMissionsEffects } from '@effects/engagement-mission.effects';
 import { TaxesEffects } from '@effects/exec-taxes.effects';
 import { ProceduresEffects } from '@effects/exec-procedure.effects';
+import { ConsultationsEffects } from './consultations.effects';
+import { BonsEngagementsEffects } from './bon-engagement.effects';
+import { EngagementsEffects } from './engagements.effects';
+import { TransmissionsReceptionsEffects } from './transmissions-receptions.effects';
+import { TransmissionsReceptionsDetailsEffects } from './detail-transmissions-receptions.effects';
+import { ModeleVirementEffects } from './modele-virement.effects';
+import { VirementEffects } from './virement.effects';
+import { TransmissionReceptionBonsEffects } from './transmission-reception-bons.effects';
+import { UserEffects } from './users.effects';
 
 export const Effects = [
   AuthEffects,
@@ -71,4 +80,13 @@ export const Effects = [
   ProceduresEffects,
   TaxesEffects,
   EngagementsJuridiquesEffects,
+  ConsultationsEffects,
+  BonsEngagementsEffects,
+  EngagementsEffects,
+  TransmissionsReceptionsEffects,
+  TransmissionsReceptionsDetailsEffects,
+  ModeleVirementEffects,
+  VirementEffects,
+  TransmissionReceptionBonsEffects,
+  UserEffects,
 ];

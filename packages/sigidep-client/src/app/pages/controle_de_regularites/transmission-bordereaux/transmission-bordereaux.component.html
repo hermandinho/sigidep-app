@@ -1,0 +1,179 @@
+<div id="print-section">
+  <p-card >
+    <p-toolbar styleClass="p-mb-2">
+      <ng-template pTemplate="left">
+        <div class="quick_filter">
+          <div class="p-field">
+            <label>{{ "labels.filterCodeEx" | translate }}:</label>
+            <p-dropdown
+            [showClear]="true"
+            [filter]="true"
+            [filterBy]="'numero'"
+            [autoDisplayFirst]="false"
+            [options]="exercices"
+            [placeholder]="''"
+            optionLabel="code"
+            optionValue="code"
+            (onChange)="handleFilter($event)"
+          >
+          </p-dropdown>
+          </div>
+        </div>
+      </ng-template>
+    </p-toolbar>
+        <p-table
+          #dt1
+          [globalFilterFields]="globalColumnsTransmission"
+          [loading]="(loading$ | async) || false"
+          [paginator]="true"
+          [rowHover]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [sortMode]="'single'"
+          [value]="bordereauxTransmissions"
+          [currentPageReportTemplate]="'tables.stats.pager' | translate"
+          dataKey="id"
+          responsiveLayout="scroll"
+        >
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <h5 class="p-m-0">
+                {{ "tables.titles.transmission" | translate }}
+              </h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt1.filterGlobal(getTableGlobalSearchValue($event), 'contains')
+                  "
+                  [placeholder]="'labels.search' | translate"
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+
+              <ng-container *ngFor="let column of tableColumnsTransmission">
+                <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                  {{ column.title | translate }}
+                  <p-sortIcon field="numero"></p-sortIcon>
+                </th>
+              </ng-container>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td *ngFor="let column of tableColumnsTransmission; let i=index" class="nowrap">
+                <span *ngIf="column.field==='objet'">
+                  {{ item[column.field] | translate }}
+                </span>
+                <span *ngIf="column.field==='dateTransmission'">
+                  {{ item['createdAt'] | date}}
+                </span>
+                <span *ngIf="
+                column.field !== 'num' &&
+                column.field !== 'objet' &&
+                column.field !== 'dateTransmission'">
+                  {{ item[column.field] }}
+                </span>
+              </td>
+              <td class="actions_button">
+                <button (click)="add(item)" class=" p-button-success" pButton
+              pRipple>{{ 'buttons.new'|translate }}</button>
+              <button (click)="delete()" class=" p-button-warning" pButton
+              pRipple>{{ 'buttons.cancel'|translate }}</button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+            </div>
+          </ng-template>
+        </p-table>
+    <p-menu appendTo="body" #menu [popup]="true" [model]="menus"></p-menu>
+  </p-card>
+
+  <p-card>
+    <p-table
+          #dt
+          [globalFilterFields]="globalColumnsBordereaux"
+          [loading]="(loading1$ | async) || false"
+          [paginator]="true"
+          [rowHover]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [sortMode]="'single'"
+          [value]="dossiersBordereaux"
+          [currentPageReportTemplate]="'tables.stats.pager' | translate"
+          dataKey="id"
+          responsiveLayout="scroll"
+        >
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <h5 class="p-m-0">
+                {{ "tables.titles.dossiers" | translate }}
+              </h5>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <ng-container *ngFor="let column of tableColumnsBordereau">
+                <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+                  {{ column.title | translate }}
+                  <p-sortIcon field="numeroEng"></p-sortIcon>
+                </th>
+              </ng-container>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td *ngFor="let column of tableColumnsBordereau let i=index" class="nowrap">
+                <span *ngIf="column.field === 'numeroBon'">
+                  {{ item["bon_engagement"]?.numero }}
+                </span>
+                <span *ngIf="column.field === 'numeroEng'">
+                  {{ item["bon_engagement"]?.numActeJuridique?.numero }}
+                </span>
+                <span *ngIf="column.field === 'matriculeGestionnaire'">
+                  {{ item["bon_engagement"]?.nomGestionnaire }}
+                </span>
+                <span *ngIf="column.field === 'imputation'">
+                  {{ item["bon_engagement"]?.numActeJuridique?.imputation }}
+                </span>
+                <span *ngIf="column.field === 'montantAE'">
+                  {{ item['bon_engagement']?.numActeJuridique?.montantAE }}
+                </span>
+                <span *ngIf="column.field === 'montantCP'">
+                  {{ item['bon_engagement']?.montantCPChiffres }}
+                </span>
+                <span *ngIf="column.field === 'dateEng'">
+                  {{ item['bon_engagement']?.dateEngagement }}
+                </span>
+                <span *ngIf="column.field === 'etat'">
+                  {{ item['bon_engagement']?.etat | translate }}
+                </span>
+                <span *ngIf="column.field === 'objet'">
+                  {{ item['bon_engagement']?.objet }}
+                </span>
+              </td>
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+            </div>
+          </ng-template>
+        </p-table>
+  </p-card>
+</div>
+
+<div>
+  <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+    {{ "buttons.print" | translate }}
+  </button>
+</div>

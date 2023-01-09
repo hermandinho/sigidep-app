@@ -31,7 +31,33 @@ import { EngagementsComponent } from '@pages/engagements/engagements.component';
 import { ProceduresComponent } from '@pages/procedures/procedures.component';
 import { TaxesComponent } from '@pages/taxes/taxes.component';
 import { RegionsComponent } from '@pages/regions/regions.component';
-
+import { ConsultationsComponent } from '@pages/consultations/consultations.component';
+import { BonsEngagementsComponent } from '@pages/bons-engagements/decision/bons-engagements.component';
+import { BonsEngagementsCommandesComponent } from '@pages/bons-engagements-commandes/bons-engagements-commandes.component';
+import { BonEngagementMissionsComponent } from '@pages/bons-engagements-missions/bons-engagements-missions.component';
+import { TransmissionsReceptionsComponent } from '@pages/listing-des-bordereaux/transmissions-receptions.component';
+import { VisaEtTransmisssionComponent } from '@pages/visa-et-transmisssion/visa-et-transmisssion.component';
+import { EditionDesTCCComponent } from '@pages/edition-des-tcc/edition-des-tcc.component';
+import { OperationDeControleComponent } from '@pages/operation-de-controle/operation-de-controle.component';
+import { ReceptionBordereauxComponent } from '@pages/reception-bordereaux/reception-bordereaux.component';
+import { VirementsComponent } from '@pages/virements/virements.component';
+import { ModeleVirementComponent } from '@pages/modele-virement/modele-virement.component';
+import { ControleConformiteComponent } from '@pages/controle-conformite/controle-conformite.component';
+import { TransmissionLiquidationComponent } from '@pages/transmission-liquidation/transmission-liquidation.component';
+import { ListingTransmissionLiquidationComponent } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.component';
+import { TraitementDesLiquidationsMandatementComponent } from '../pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.component';
+import { TransmissionBordereauxComponent } from '../pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.component';
+import { ReceptionBordereauxMandatementComponent } from '../pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.component';
+import { CreateTransmissionReceptionFormComponent } from '../components/create-transmission-reception-form/create-transmission-reception-form.component';
+import { ReceptionBordereauxComponent as ReceptionBordereauxRegulariteComponent} from '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.component';
+import { ControleRegulariteComponent } from '../pages/controle_de_regularites/controle-regularite/controle-regularite.component';
+import { TransmissionBordereauxComponent as TransmissionBordereauxRegulariteComponent } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.component';
+import { TransmissionAACTComponent } from '../pages/controle_de_regularites/transmission-a-act/transmission-a-act.component';
+import { ReceptionPourControleDeRegulariteComponent } from '../pages/paiement/reception-pour-controle-de-regularite/reception-pour-controle-de-regularite.component';
+import { OperationsValidationPaiementComponent } from '../pages/paiement/operations-validation-paiement/operations-validation-paiement.component';
+import { EditionDesListingsDePaiementComponent } from '@pages/paiement/edition-des-listings-de-paiement/edition-des-listings-de-paiement.component';
+import { UserComponent } from '../pages/user/user.component';
+import { StructureComponent } from '../pages/structure/structure.component';
 const routes: Routes = [
   {
     path: '',
@@ -56,6 +82,14 @@ const routes: Routes = [
         canActivate: [PermissionsGuard],
         data: {
           permissions: [...MenuPermissions.exercises_menu],
+        },
+      },
+      {
+        path: 'users',
+        component: UserComponent,
+        canActivate: [PermissionsGuard],
+        data: {
+          permissions: [...MenuPermissions.users],
         },
       },
       {
@@ -123,6 +157,18 @@ const routes: Routes = [
         loadChildren: () =>
           import('../pages/sub-programs/sub-programs.module').then(
             (m) => m.SubProgramsModule
+          ),
+      },
+      {
+        path: 'structure',
+        canActivate: [AuthGuard],
+        component: StructureComponent,
+        data: {
+          permissions: [...MenuPermissions.structure],
+        },
+        loadChildren: () =>
+          import('../pages/structure/structure.module').then(
+            (m) => m.StructureModule
           ),
       },
       {
@@ -291,6 +337,102 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'transmissionsReceptions',
+        canActivate: [AuthGuard],
+        component: TransmissionsReceptionsComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionsReceptions],
+        },
+        loadChildren: () =>
+          import('../pages/listing-des-bordereaux/transmissions-receptions.module').then(
+            (m) => m.TransmissionsReceptionsModule
+          ),
+      },
+      {
+        path: 'visaetmiseenroute',
+        canActivate: [AuthGuard],
+        component: VisaEtTransmisssionComponent,
+        data: {
+          permissions: [...MenuPermissions.visaetmiseenroute],
+        },
+        loadChildren: () =>
+          import('../pages/visa-et-transmisssion/visa-et-transmisssion.module').then(
+            (m) => m.VisaEtTransmisssionModule
+          ),
+      },
+      {
+        path: 'reception-bordereaux',
+        canActivate: [AuthGuard],
+        component: ReceptionBordereauxComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/reception-bordereaux/reception-bordereaux.module').then(
+            (m) => m.ReceptionBordereauxModule
+          ),
+      },
+      {
+        path: 'controler-la-conformite',
+        canActivate: [AuthGuard],
+        component: OperationDeControleComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/operation-de-controle/operation-de-controle.module').then(
+            (m) => m.OperationDeControleModule
+          ),
+      },
+      {
+        path: 'rejeter-lors-du-Controle',
+        canActivate: [AuthGuard],
+        component: ControleConformiteComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/controle-conformite/controle-conformite.module').then(
+            (m) => m.ControleConformiteModule
+          ),
+      },
+      {
+        path: 'edition-des-tcc',
+        canActivate: [AuthGuard],
+        component: EditionDesTCCComponent,
+        data: {
+          permissions: [...MenuPermissions.controledeconformite],
+        },
+        loadChildren: () =>
+          import('../pages/edition-des-tcc/edition-des-tcc.module').then(
+            (m) => m.EditionDesTCCModule
+          ),
+      },
+      {
+        path: 'listing-transmission-liquidation',
+        canActivate: [AuthGuard],
+        component: ListingTransmissionLiquidationComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionLiquidation],
+        },
+        loadChildren: () =>
+          import('../pages/listing-transmission-liquidation/listing-transmission-liquidation.module').then(
+            (m) => m.ListingTransmissionLiquidationModule
+          ),
+      },
+      {
+        path: 'transmission-liquidation',
+        canActivate: [AuthGuard],
+        component: TransmissionLiquidationComponent,
+        data: {
+          permissions: [...MenuPermissions.transmissionLiquidation],
+        },
+        loadChildren: () =>
+          import('../pages/transmission-liquidation/transmission-liquidation.module').then(
+            (m) => m.TransmissionLiquidationModule
+          ),
+      },
+      {
         path: 'regions',
         canActivate: [AuthGuard],
         data: {
@@ -332,6 +474,188 @@ const routes: Routes = [
             (m) => m.EngagementsModule
           ),
       },
+      {
+        path: 'consultations',
+        component: ConsultationsComponent,
+        canActivate: [AuthGuard],
+        data: {
+          permissions: [...MenuPermissions.consultations],
+        },
+      },
+      {
+        path: 'bons-decisions',
+        canActivate: [AuthGuard],
+        component: BonsEngagementsComponent,
+        data: {
+          permissions: [...MenuPermissions.bonsEngagements],
+        },
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements/decision/bons-engagements.module'
+          ).then((m) => m.BonsEngagementsModule),
+      },
+      {
+        path: 'bons-commandes',
+        canActivate: [AuthGuard],
+        component: BonsEngagementsCommandesComponent,
+        data: {
+          permissions: [...MenuPermissions.bonsEngagements],
+        },
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-commandes/bons-engagements-commandes.module'
+          ).then((m) => m.BonsEngagementsCommandesModule),
+      },
+      {
+        path: 'bons-missions',
+        canActivate: [AuthGuard],
+        component: BonEngagementMissionsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-missions/bons-engagements-missions.module'
+          ).then((m) => m.BonsEngagementsMissionsModule),
+      },
+      {
+        path: 'modele-virement',
+        canActivate: [AuthGuard],
+        component: ModeleVirementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-commandes/bons-engagements-commandes.module'
+          ).then((m) => m.BonsEngagementsCommandesModule),
+      },
+      {
+        path: 'bons-missions',
+        canActivate: [AuthGuard],
+        component: BonEngagementMissionsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/bons-engagements-missions/bons-engagements-missions.module'
+          ).then((m) => m.BonsEngagementsMissionsModule),
+      },
+      {
+        path: 'modele-virement',
+        canActivate: [AuthGuard],
+        component: ModeleVirementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/modele-virement/modele-virement.module'
+          ).then((m) => m.ModeleVirementModule),
+      },
+      {
+        path: 'virement',
+        canActivate: [AuthGuard],
+        component: VirementsComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/virements/virements.module'
+          ).then((m) => m.VirementsModule),
+      },
+      {
+        path: 'reception-bordereaux-mandatement',
+        canActivate: [AuthGuard],
+        component: ReceptionBordereauxMandatementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.module'
+          ).then((m) => m.ReceptionBordereauxMandatementModule),
+      },
+      {
+        path: 'traitement-liquidation-mandatement',
+        canActivate: [AuthGuard],
+        component: TraitementDesLiquidationsMandatementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.module'
+          ).then((m) => m.TraitementDesLiquidationsMandatementModule),
+      },
+      {
+        path: 'transmission-bordereaux-mandatement',
+        canActivate: [AuthGuard],
+        component: TransmissionBordereauxComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.module'
+          ).then((m) => m.TransmissionBordereauxModule),
+      },
+      {
+        path: 'traitement-controle',
+        component: CreateTransmissionReceptionFormComponent,
+      },
+      {
+        path: 'transmission-bordereaux-regularite',
+        canActivate: [AuthGuard],
+        component: TransmissionBordereauxRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.module'
+          ).then((m) => m.TransmissionBordereauxModule),
+      },
+      {
+        path: 'controle-regularite',
+        canActivate: [AuthGuard],
+        component: ControleRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '../pages/controle_de_regularites/controle-regularite/controle-regularite.module'
+          ).then((m) => m.ControleRegulariteModule),
+      },
+      {
+        path: 'reception-bordereaux-regularite',
+        canActivate: [AuthGuard],
+        component: ReceptionBordereauxRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.module'
+          ).then((m) => m.ReceptionBordereauxModule),
+      },
+      {
+        path: 'transmission-ACT',
+        canActivate: [AuthGuard],
+        component: TransmissionAACTComponent,
+        data: {},
+      },
+      {
+        path: 'edition-des-listings-de-paiement',
+        canActivate: [AuthGuard],
+        component: EditionDesListingsDePaiementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/paiement/edition-des-listings-de-paiement/edition-des-listings-de-paiement.module'
+          ).then((m) => m.EditionDesListingsDePaiementModule),
+      },
+      {
+        path: 'operations-validation-paiement',
+        canActivate: [AuthGuard],
+        component: OperationsValidationPaiementComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/paiement/operations-validation-paiement/operations-validation-paiement.module'
+          ).then((m) => m.OperationsValidationPaiementModule),
+      },
+      {
+        path: 'reception-bordereaux-paiement',
+        canActivate: [AuthGuard],
+        component: ReceptionPourControleDeRegulariteComponent,
+        data: {},
+        loadChildren: () =>
+          import(
+            '@pages/paiement/reception-pour-controle-de-regularite/reception-pour-controle-de-regularite.module'
+          ).then((m) => m.ReceptionPourControleDeRegulariteModule),
+      },
       /*{
         path: '**',
         component: NotFoundComponent,
@@ -345,4 +669,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

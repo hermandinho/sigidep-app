@@ -1,0 +1,68 @@
+<div>
+  <div id="print-section" class="">
+
+    <div class="grid-container-header">
+      <div class="grid-fr">
+        <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+        <i>Paix-Travail-Patrie</i> <br />
+        ********* <br />
+        <strong
+          >{{structure?.labelFr}}</strong
+        >
+      </div>
+      <div class="grid-img">
+        <img src="assets/img/logopdf.png" alt="logo pdf" />
+      </div>
+      <div class="grid-en">
+        <strong>REPUBLIC OF CAMEROON</strong> <br />
+        <em>Peace-Work-Fatherland</em> <br />
+        ********* <br />
+        <strong
+          >{{structure?.labelEn}}</strong
+        >
+      </div>
+    </div>
+    <div class="title">
+      <h3>FICHE DE REJET DU Mandat N° {{ data[0]?.traitements[0].numeroMandat }}</h3>
+    </div>
+    <div class="info-trans">
+      <br>
+      <p><b>Etat de traintement: </b> {{ data[0]?.etat | translate}}</p>
+      <p><b>Motif du rejet: </b>{{ data[0]?.motif}}</p><br>
+    </div>
+
+    <div class="date">
+      <span>Fait à
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,
+        le </span>
+    </div>
+    <div class="visa">
+
+      Visa du Responsable<br>(Service Emetteur)
+
+    </div>
+    <div class="reception">
+      <table>
+        <tr class="color">
+          <td colspan="3">Réception</td>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>Heure</th>
+          <th>Nom & Signature</th>
+        </tr>
+        <tr class="tr">
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div>
+    <button pButton class="p-mr-3 p-button-warning" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+      {{ "buttons.print" | translate }}
+    </button>
+  </div>
+</div>

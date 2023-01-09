@@ -31,7 +31,7 @@ import { ParagraphsModule } from '@pages/paragraphs/paragraphs.module';
 import { SubProgramsModule } from '@pages/sub-programs/sub-programs.module';
 import { ReferencePhysicalUnitsModule } from '@pages/reference-physical-units/reference-physical-units.module';
 import localeFr from '@angular/common/locales/fr';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CommonModule } from '@angular/common';
 import { ContribuablesModule } from '@pages/contribuables/contribuables.module';
 import { AgentsModule } from '@pages/agents/agents.module';
 import { ArticlesModule } from '@pages/mercuriales/articles/articles.module';
@@ -47,10 +47,29 @@ import { EncoursModule } from '@pages/encours/encours.module';
 import { TaxesModule } from '@pages/taxes/taxes.module';
 import { EngagementsModule } from '@pages/engagements/engagements.module';
 import { ProceduresModule } from '@pages/procedures/procedures.module';
-import { EngagementDecisionComponent } from './components/engagement-decision/engagement-decision.component';
 import { RegionsModule } from './pages/regions/regions.module';
-import { EngagementMissionComponent } from './components/engagement-mission/engagement-mission.component';
-import { ReservationEngagementComponent } from './components/reservation-engagement/reservation-engagement.component';
+import { ConsultationsModule } from '@pages/consultations/consultations.module';
+import { BonsEngagementsModule } from '@pages/bons-engagements/decision/bons-engagements.module';
+import { BonsEngagementsCommandesModule } from '@pages/bons-engagements-commandes/bons-engagements-commandes.module';
+import { TransmissionsReceptionsModule } from '@pages/listing-des-bordereaux/transmissions-receptions.module';
+import { VisaEtTransmisssionModule } from '@pages/visa-et-transmisssion/visa-et-transmisssion.module';
+import { EditionDesTCCComponent } from './pages/edition-des-tcc/edition-des-tcc.component';
+import { ReceptionBordereauxModule } from '@pages/reception-bordereaux/reception-bordereaux.module';
+import { OperationDeControleModule } from '@pages/operation-de-controle/operation-de-controle.module';
+import { EditionDesTCCModule } from '@pages/edition-des-tcc/edition-des-tcc.module';
+import { VirementsModule } from '@pages/virements/virements.module';
+import { ModeleVirementModule } from '@pages/modele-virement/modele-virement.module';
+import { ControleConformiteModule } from '@pages/controle-conformite/controle-conformite.module';
+import { ListingTransmissionLiquidationModule } from '@pages/listing-transmission-liquidation/listing-transmission-liquidation.module';
+import { TransmissionLiquidationModule } from '@pages/transmission-liquidation/transmission-liquidation.module';
+import { PrintVirementComponent } from './components/print-virement/print-virement.component';
+import { ReceptionBordereauxMandatementModule } from './pages/liquidation-mandatement/reception-bordereaux-mandatement/reception-bordereaux-mandatement.module';
+import { TraitementDesLiquidationsMandatementModule } from './pages/liquidation-mandatement/traitement-des-liquidations-mandatement/traitement-des-liquidations-mandatement.module';
+import { TransmissionBordereauxModule } from './pages/liquidation-mandatement/transmission-bordereaux/transmission-bordereaux.module';
+import { ReceptionBordereauxModule as ReceptionBordereauxRegulariteModule } from '@pages/controle_de_regularites/reception-bordereaux/reception-bordereaux.module';
+import { ControleRegulariteModule } from './pages/controle_de_regularites/controle-regularite/controle-regularite.module';
+import { TransmissionBordereauxModule as TransmissionBordereauxRegulariteModule } from '@pages/controle_de_regularites/transmission-bordereaux/transmission-bordereaux.module';
+import { UserModule } from './pages/user/user.module';
 
 registerLocaleData(localeFr);
 
@@ -59,7 +78,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PrintVirementComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -88,6 +107,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     HomeModule,
     InstallModule,
+    CommonModule,
     AuthModule,
     ExercisesModule,
     RolesModule,
@@ -120,6 +140,28 @@ export function HttpLoaderFactory(http: HttpClient) {
     TaxesModule,
     ProceduresModule,
     EngagementsModule,
+    ConsultationsModule,
+    BonsEngagementsModule,
+    BonsEngagementsCommandesModule,
+    TransmissionsReceptionsModule,
+    VisaEtTransmisssionModule,
+    ReceptionBordereauxModule,
+    OperationDeControleModule,
+    EditionDesTCCModule,
+    VirementsModule,
+    ModeleVirementModule,
+    TransmissionsReceptionsModule,
+    ControleConformiteModule,
+    ListingTransmissionLiquidationModule,
+    TransmissionLiquidationModule,
+    ReceptionBordereauxMandatementModule,
+    TraitementDesLiquidationsMandatementModule,
+    TransmissionBordereauxModule,
+    ReceptionBordereauxRegulariteModule,
+    ControleRegulariteModule,
+    TransmissionBordereauxRegulariteModule,
+    UserModule
+
   ],
   providers: [
     AppInstallCheckGuard,
@@ -130,4 +172,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }

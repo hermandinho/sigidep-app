@@ -1,0 +1,82 @@
+.content-show {
+    padding: 1%;
+}
+
+.content-print {
+    font-size: 9px;
+    margin: 10px;
+}
+
+.header-print {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.header {
+    display: inline-block;
+    width: 35%;
+    text-align: center;
+    font-size: 8px;
+}
+
+.header-left {
+    float: left;
+}
+
+.header-rigth {
+    float: right;
+}
+
+.header>p {
+    align-self: center;
+}
+
+.header-img {
+    text-align: center;
+    align-content: center;
+    width: 30%;
+}
+
+.body-print {
+    margin-inline: 10px;
+    display: inline-block;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.print-table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.print-table>table {
+    width: 100%;
+    // text-align: center;
+}
+
+table,
+th,
+td {
+    border-collapse: collapse;
+    border: 1px solid black;
+    border-style: ridge;
+}
+
+.print-width-imput {
+    font-size: 7;
+}
+
+.print-width {
+    width: 40px;
+    margin-left: 5px;
+}
+
+.print-footer {
+    margin-top: 15px;
+}
+
+.print-part {
+    font-size: 8;
+}

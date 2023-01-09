@@ -15,7 +15,11 @@
     "departements": "Departements",
     "system": "System",
     "elaboration": "Elaboration",
-    "banksAgences": "Banks & Agences"
+    "banksAgences": "Banks & Agences",
+    "virements": "Transfer",
+    "modelVirement": "Transfer model",
+    "detailsVirement": "Transfer details",
+    "virement": "Transfers"
   },
   "breadcrumb": {
     "exercises": "Exercises",

@@ -22,6 +22,9 @@ export class EditArticleMercurialeDTO {
   @ApiProperty({ example: '50000.50', required: false })
   public prix: number;
 
+  @ApiProperty({ example: '510', required: false })
+  public quantite?: number;
+
   @ApiProperty({ type: () => EditSousRubriqueDTO, required: true })
   @IsDefined()
   @Type(() => EditSousRubriqueDTO)

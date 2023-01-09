@@ -1,0 +1,41 @@
+<p-card>
+  <p-table
+    [id]="'list_imputation'"
+    [value]="data.accreditations"
+    dataKey="code"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <ng-container *ngFor="let column of tableColumns">
+          <th *ngIf="column.sortable" [pSortableColumn]="column.field">
+            {{ column.title | translate }}
+            <p-sortIcon field="code"></p-sortIcon>
+          </th>
+          <th *ngIf="!column.sortable">{{ column.title | translate }}</th>
+        </ng-container>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-gestionnaire>
+      <tr>
+        <td></td>
+        <td>{{ gestionnaire.startDate }}</td>
+        <td>{{ gestionnaire.endDate }}</td>
+        <td>{{ gestionnaire.imputation }}</td>
+        <td>{{ gestionnaire.tache }}</td>
+        <td>{{ gestionnaire.operation }}</td>
+        <td>
+          <button
+            (click)="delete(gestionnaire)"
+            class="p-button-rounded p-button-warning"
+            icon="pi pi-trash"
+            pButton
+            pRipple
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

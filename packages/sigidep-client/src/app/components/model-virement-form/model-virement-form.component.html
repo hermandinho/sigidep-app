@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="form" [formGroup]="form">
+        <div class="p-fluid p-grid">
+            <div class="p-field p-col-12 p-md-12">
+                <label>{{ "labels.nomModel" | translate }}</label>
+                <input type="text" class="form-control" pInputText formControlName="nomModel" [placeholder]="" />
+            </div>
+
+            <div class="p-field p-col-12 p-md-12">
+                <label>{{ "labels.enteteModel" | translate }}</label>
+                <!-- <textarea class="form-control" pInputText formControlName="enteteModel" rows="7"></textarea> -->
+                <p-editor formControlName="enteteModel" [style]="{'height':'220px'}"></p-editor>
+            </div>
+
+            <div class="p-field p-col-12 p-md-12">
+                <label>{{ "labels.chapeauModel" | translate }}</label>
+                <p-editor formControlName="chapeauModel" [style]="{'height':'220px'}"></p-editor>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button pButton class="p-mr-3 p-button-warning" (click)="close()">
+            {{ "buttons.cancel" | translate }}
+        </button>
+        <button (click)="submit()" [disabled]="!form?.valid || busy" [label]="
+        'buttons.' + (busy ? 'busy' : isUpdateForm ? 'update' : 'save')
+            | translate" pButton></button>
+    </div>
+</div>

@@ -77,7 +77,7 @@ export class RolesComponent extends BaseComponent implements OnInit {
     );
     this.tableColumns = [
       { field: 'label' },
-      // { field: 'description' }
+       { field: 'description' }
     ];
     this._store.dispatch(GetRoles());
   }
@@ -195,6 +195,7 @@ export class RolesComponent extends BaseComponent implements OnInit {
       .pipe(this.takeUntilDestroy, select(getPermissionsSelector))
       .subscribe((data) => {
         this.permissions = data;
+        console.log('permissions',data)
         this._generateForm();
       });
 

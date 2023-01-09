@@ -1,0 +1,16 @@
+<div class="col-12">
+    <div class="product-list-item">
+        <div class="product-list-detail">
+            <div class="product-description">{{ message.title }}</div>
+            <div class="product-name">{{ message.numero }}</div>
+            <div *ngIf="message.subtitle" class="product-subtitle">{{ message.subtitle ?? '' }}</div>
+        </div>
+    </div>
+    <div class="footer">
+        <button type="button" pButton pRipple class="p-button" style="float: right; padding: 4px;" (click)="closeOk()"
+            pButton icon="pi pi-check"></button>
+        <button type="button" *ngIf="message.isConfirmation && message.subtitle" pButton pRipple
+            class="p-button p-button-danger" style="float: right; margin-inline: 2px; padding: 4px;"
+            (click)="closeCancel()" pButton icon="pi pi-times"></button>
+    </div>
+</div>

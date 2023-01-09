@@ -1,0 +1,60 @@
+<p-card>
+  <table>
+    <tr>
+      <th>N°</th>
+      <th>Rubriques</th>
+      <th>Montant</th>
+    </tr>
+    <tr>
+      <td><span >1</span></td>
+      <td><span >Net à payer</span></td>
+      <td><span>{{ netAPercevoir}}</span></td>
+    </tr>
+    <tr>
+      <td><span >2</span></td>
+      <td><span >Montant HT</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1110 || dataRubrique?.codeProcedure === 1111 || dataRubrique?.codeProcedure === 1115 || dataRubrique?.codeProcedure !== 1126">{{ montantHT }}</span></td>
+    </tr>
+    <tr>
+      <td><span >3</span></td>
+      <td><span >Montant Taxes (TVA)</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1110 || dataRubrique?.codeProcedure === 1111 || dataRubrique?.codeProcedure === 1115 || dataRubrique?.codeProcedure !== 1126" >{{ montantTVA}}</span></td>
+    </tr>
+    <tr>
+      <td><span >4</span></td>
+      <td><span >Montant Acomptes sur IR (AIR)</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1110 || dataRubrique?.codeProcedure === 1111 || dataRubrique?.codeProcedure === 1115 || dataRubrique?.codeProcedure !== 1126">{{ montantIR}}</span></td>
+    </tr>
+    <tr>
+      <td><span >5</span></td>
+      <td><span >Montant IRNC</span></td>
+      <td><span *ngIf="dataRubrique?.codeProcedure === 1122">{{ montantIRNC }}</span></td>
+    </tr>
+  </table>
+  <p *ngIf="(data.action === 'mandater')" style="color:red">La somme ({{ somme }}) des differentes rubrique n'est pas equivanlent au montant CP ({{ data?.item?.montantCPChiffres }})</p>
+</p-card>
+<div class="footer">
+  <button
+    type="button"
+    pButton
+    pRipple
+    class="p-button"
+    icon="pi pi-angle-right"
+    *ngIf="!(data.action === 'mandater')"
+    (click)="doChangeStep('forward')"
+    [label]="'buttons.next' | translate"
+    pButton
+  ></button>
+  <button
+  type="button"
+  pButton
+  pRipple
+  class="p-button"
+  icon="pi pi-angle-right"
+  *ngIf="(data.action === 'mandater')"
+  [disabled]="!(data.action === 'mandater' && somme == data.item.montantCPChiffres)"
+  (click)="doChangeStep('forward')"
+  [label]="'buttons.next' | translate"
+  pButton
+></button>
+</div>

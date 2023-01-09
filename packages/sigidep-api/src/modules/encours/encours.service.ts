@@ -79,6 +79,16 @@ export class EncoursService {
     return this.encoursRepository.delete({ id });
   }
 
+  public async findByImputation(imputation: any): Promise<any[]> {
+    return this.encoursRepository
+      .createQueryBuilder('encours')
+      .leftJoinAndSelect('encours.operation', 'operation')
+      .where('encours.imputation like :name', {
+        name: `%${imputation.imputation}%`,
+      })
+      .getMany();
+  }
+
   public async create(
     payload: CreateEncoursDTO,
     user: UserEntity,
@@ -102,6 +112,7 @@ export class EncoursService {
     } else {
       throw new NotFoundException(); //Exercise not found
     }
+
     /*
     const subPrograms = await this.subProgramRepository
       .createQueryBuilder('subprogram')

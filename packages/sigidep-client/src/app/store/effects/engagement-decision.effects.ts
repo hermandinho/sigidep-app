@@ -23,7 +23,6 @@ import {
   UpdateEngagementDecisionFailure,
   UpdateEngagementDecisionSuccess,
 } from '@actions/engagement-decision.actions';
-
 @Injectable()
 export class EngagementsDecisionsEffects {
   fetch$ = createEffect(() =>
@@ -31,7 +30,17 @@ export class EngagementsDecisionsEffects {
       ofType(GetEngagementDecisions),
       mergeMap((action) =>
         this.apisService
-          .get<EngagementDecisionModel[]>('/engagements/decisions')
+          .get<EngagementDecisionModel[]>('/engagements/decisions', {
+            ...(action.procedures && {
+              procedures: action.procedures.join(','),
+            }),
+            ...(action.etats && {
+              etats: action.etats.join(','),
+            }),
+            ...(action.numeros && {
+              numeros: action.numeros.join(','),
+            }),
+          })
           .pipe(
             switchMap((payload) => {
               return [GetEngagementDecisionsSuccess({ payload })];
@@ -96,7 +105,7 @@ export class EngagementsDecisionsEffects {
             switchMap((payload) => {
               return [
                 DeleteEngagementCommandeSuccess(),
-                GetEngagementDecisions(),
+                GetEngagementDecisions({}),
               ];
             }),
             catchError((err: HttpErrorResponse) =>

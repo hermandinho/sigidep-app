@@ -7,6 +7,7 @@ import {
   EtatEngagementEnum,
 } from '@entities/engagement-juridique.entity';
 import { CreateEngagementJuridiqueDTO } from '../dto/create-engagement-juridique.dto';
+import { EngagementFilter } from '@utils/engagement-filter';
 
 @Injectable()
 export class EngagementJuridiqueService {
@@ -19,8 +20,28 @@ export class EngagementJuridiqueService {
     return this.repository;
   }
 
-  public async filter(): Promise<EngagementJuridiqueEntity[]> {
-    return this.repository.createQueryBuilder('eng').getMany();
+  public async filter(
+    filter?: EngagementFilter,
+  ): Promise<EngagementJuridiqueEntity[]> {
+    return this.repository
+      .createQueryBuilder('eng')
+      .where(filter?.procedures ? 'eng.codeProcedure IN(:...codes)' : 'true', {
+        codes: filter?.procedures,
+      })
+      .andWhere(filter?.etats ? 'eng.etat IN(:...etats)' : 'true', {
+        etats: filter?.etats,
+      })
+      .andWhere(filter?.numeros ? 'eng.numero IN(:...numero)' : 'true', {
+        numero: filter?.numeros,
+      })
+      .andWhere(filter?.imputation ? 'eng.imputation IN(:...code)' : 'true', {
+        code: filter?.imputation,
+      })
+      .getMany();
+  }
+
+  public async getOne(id: number): Promise<EngagementJuridiqueEntity> {
+    return this.repository.findOne(id);
   }
 
   public async deleteOne(id: number): Promise<any> {
@@ -64,7 +85,15 @@ export class EngagementJuridiqueService {
 
     return this.repository.save({
       ...property, // existing fields
-      etat: EtatEngagementEnum.CANCEL, // updated fields
+      etat: EtatEngagementEnum.CANCEL,
+      montantAE_Reserve: 0 // updated fields
     });
+  }
+
+  public async findByImputation(imputation: any): Promise<any[]> {
+    return this.repository
+      .createQueryBuilder('eng')
+      .where('eng.imputation = :codes', { codes: imputation?.imputation })
+      .getMany();
   }
 }

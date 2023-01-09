@@ -1,0 +1,30 @@
+<div class="container">
+    <form class="form" [formGroup]="validationForm">
+        <div class="p-fluid p-grid">
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.signataire" | translate }}</label>
+                    <input type="text" class="form-control" pInputText formControlName="signataireVirement" required>
+                </div>
+            </div>
+            <div class="p-field p-col-6 p-md-6">
+                <div class="p-field">
+                    <label class="required">{{ "labels.dateSignature" | translate }}</label>
+                    <input type="date" class="form-control" pInputText formControlName="dateSignatureVirement" required>
+                </div>
+            </div>
+            <div class="p-field p-col-12 p-md-12">
+                <div class="p-field">
+                    <label class="required">{{ "labels.reference" | translate }}</label>
+                    <input type="text" class="form-control" pInputText formControlName="reference">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <button (click)="doChangeStep('back')" [label]="'buttons.back' | translate" pButton></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button [disabled]="!validationForm?.valid" (click)="submit()" icon="pi pi-check"
+                [label]="'buttons.validate' | translate" pButton></button>
+        </div>
+    </form>
+</div>

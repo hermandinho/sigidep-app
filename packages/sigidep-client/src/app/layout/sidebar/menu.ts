@@ -36,6 +36,27 @@ export const MenuPermissions = {
   taxes: [...simpleCrudPermissions('taxes')],
   engagements: [...simpleCrudPermissions('engagements')],
   regions: [...simpleCrudPermissions('regions')],
+  consultations: [...simpleCrudPermissions('consultations')],
+  bonsEngagements: [...simpleCrudPermissions('bonsEngagements')],
+  bonsEngagementsMissions: [
+    ...simpleCrudPermissions('bonsEngagementsMissions'),
+  ],
+  fraisreleve: [...simpleCrudPermissions('fraisreleve')],
+  misedispositionagent: [...simpleCrudPermissions('misedispositionagent')],
+  misedispositionstructure: [
+    ...simpleCrudPermissions('misedispositionstructure'),
+  ],
+  transmissionsReceptions: [...simpleCrudPermissions('transmissionsReceptions')],
+  visaetmiseenroute: [...simpleCrudPermissions('visaetmiseenroute')],
+  controledeconformite: [...simpleCrudPermissions('controledeconformite')],
+  transmissionLiquidation: [...simpleCrudPermissions('transmissionLiquidation')],
+  virements: [...simpleCrudPermissions('virements')],
+  liquidationMandatement: [...simpleCrudPermissions('liquidationMandatement')],
+  controleRegularite: [...simpleCrudPermissions('controleRegularite')],
+  paiementDesDepenses: [...simpleCrudPermissions('paiementDesDepenses')],
+  users: [...simpleCrudPermissions('users')],
+  structure: [...simpleCrudPermissions('structure')],
+
 };
 
 export const I18NMenus = (translate: TranslateService): MenuItem[] => {
@@ -78,6 +99,12 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLink: 'offices',
           icon: 'pi pi-cog',
           label: translate.instant('sidebar.settings'),
+          routerLinkActiveOptions: { exact: true },
+        },
+        {
+          routerLink: 'structure',
+          icon: 'pi pi-cog',
+          label: translate.instant('sidebar.structure'),
           routerLinkActiveOptions: { exact: true },
         },
         {
@@ -145,6 +172,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
           state: {
             permissions: [...MenuPermissions.contribuables],
+          },
+        },
+        {
+          routerLink: 'consultations',
+          icon: 'pi pi-eye',
+          label: translate.instant('sidebar.consultation'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.consultations],
           },
         },
         {
@@ -257,6 +293,28 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           },
         },
         {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.virements'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.virements],
+          },
+          items: [
+            {
+              routerLink: 'modele-virement',
+              icon: 'pi pi-file-pdf',
+              label: translate.instant('sidebar.modelVirement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'virement',
+              icon: 'pi pi-money-bill',
+              label: translate.instant('sidebar.virement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ],
+        },
+        {
           routerLink: 'engagements',
           icon: 'pi pi-table',
           label: translate.instant('sidebar.engagementsjuridiques'),
@@ -267,32 +325,203 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
         },
         {
           icon: 'pi pi-money-bill',
-          label: translate.instant('sidebar.engagementsmandats'),
+          label: translate.instant('sidebar.bonsengagements'),
           routerLinkActiveOptions: { exact: true },
           state: {
-            permissions: [],
+            permissions: [...MenuPermissions.bonsEngagements],
           },
           items: [
             {
-              routerLink: '#',
+              routerLink: 'bons-commandes',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.commandepublique'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: '#',
-              icon: 'pi pi-table',
+              routerLink: 'bons-missions',
+              icon: 'pi pi-shield',
               label: translate.instant('sidebar.missions'),
               routerLinkActiveOptions: { exact: true },
             },
             {
-              routerLink: '#',
+              routerLink: 'bons-decisions',
               icon: 'pi pi-table',
               label: translate.instant('sidebar.decisions'),
               routerLinkActiveOptions: { exact: true },
             },
           ],
         },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.visaetmiseenroute'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.visaetmiseenroute],
+          },
+          items: [
+            {
+              routerLink: 'visaetmiseenroute',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.visaetmiseenroute'),
+              routerLinkActiveOptions: { exact: true },
+              state: {
+                permissions: [...MenuPermissions.visaetmiseenroute],
+              },
+            },
+            {
+              routerLink: 'transmissionsReceptions',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionsReceptions'),
+              routerLinkActiveOptions: { exact: true },
+              state: {
+                permissions: [...MenuPermissions.transmissionsReceptions],
+              },
+            },
+          ]
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.controledeconformite'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.controledeconformite],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionbordereaux'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              icon: 'pi pi-shield',
+              routerLink: 'controler-la-conformite',
+              label: translate.instant('sidebar.operationdecontrole'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'listing-transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.listingTransmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+
+          ],
+        },
+       /*  {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.transmissionLiquidation'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.transmissionLiquidation],
+          },
+          items: [
+            {
+              routerLink: 'listing-transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.listingTransmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-liquidation',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionLiquidation'),
+              routerLinkActiveOptions: { exact: true },
+            },
+          ]
+        }, */
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.liquidationMandatement'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.liquidationMandatement],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux-mandatement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionBordereauxMandatement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'traitement-liquidation-mandatement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.traitementLiquidationMandatement'),
+              routerLinkActiveOptions: { exact: true },
+            }
+          ]
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.controleRegularite'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.controleRegularite],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux-regularite',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionBordereauxRegularite'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'controle-regularite',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.controleRegularite'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'transmission-ACT',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmission-ACT'),
+              routerLinkActiveOptions: { exact: true },
+            },
+        /*     {
+              routerLink: 'transmission-bordereaux-regularite',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.transmissionBordereauxRegularite'),
+              routerLinkActiveOptions: { exact: true },
+            }, */
+
+          ]
+        },
+        {
+          icon: 'pi pi-money-bill',
+          label: translate.instant('sidebar.paiementDesDepenses'),
+          routerLinkActiveOptions: { exact: true },
+          state: {
+            permissions: [...MenuPermissions.paiementDesDepenses],
+          },
+          items: [
+            {
+              routerLink: 'reception-bordereaux-paiement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.receptionBordereauxPaiement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'operations-validation-paiement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.OperationsValidationPaiement'),
+              routerLinkActiveOptions: { exact: true },
+            },
+            {
+              routerLink: 'edition-des-listings-de-paiement',
+              icon: 'pi pi-table',
+              label: translate.instant('sidebar.EditiondeslistingsdePaiement'),
+              routerLinkActiveOptions: { exact: true },
+            }
+
+          ]
+        }
       ],
     },
     {
@@ -359,6 +588,15 @@ export const I18NMenus = (translate: TranslateService): MenuItem[] => {
           routerLinkActiveOptions: { exact: true },
         },
       ],
+    },
+    {
+      routerLink: 'users',
+      icon: 'pi pi-lock',
+      label: translate.instant('sidebar.users'),
+      routerLinkActiveOptions: { exact: true },
+      state: {
+        permissions: [...MenuPermissions.users],
+      },
     },
     {
       routerLink: 'roles',

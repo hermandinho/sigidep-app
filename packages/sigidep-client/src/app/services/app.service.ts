@@ -12,6 +12,8 @@ export class AppService {
   public sideBarMinimized = new BehaviorSubject<boolean>(false);
   public appBreadcrumb = new BehaviorSubject<MenuItem[]>([]);
   private breadcrumb: MenuItem[] = [];
+  public currentProcedureChange = new BehaviorSubject<string>('');
+  public currentProcedure: string = '';
 
   constructor(
     private translateService: TranslateService,
@@ -54,11 +56,31 @@ export class AppService {
     this.appBreadcrumb.next(this.breadcrumb);
   }
 
+  public setCurrentProcedure(procedure: string) {
+    this.currentProcedure = procedure;
+    this.currentProcedureChange.next(this.currentProcedure);
+  }
+
+  public getCurrentProcedure(): string {
+    return this.currentProcedure;
+  }
+
   public getAppBreadcrumb(): MenuItem[] {
     return this.breadcrumb;
   }
 
   public showConfirmation(input: Confirmation) {
+    this._confirmationService.confirm({
+      header: this.translateService.instant('dialogs.headers.confirm'),
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectLabel: this.translateService.instant('buttons.cancel'),
+      acceptLabel: this.translateService.instant('buttons.confirm'),
+      ...input,
+      message: input.message && this.translateService.instant(input.message),
+    });
+  }
+
+  public saveConfirmation(input: Confirmation) {
     this._confirmationService.confirm({
       header: this.translateService.instant('dialogs.headers.confirm'),
       acceptButtonStyleClass: 'p-button-danger',

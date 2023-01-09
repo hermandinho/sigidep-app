@@ -1,0 +1,71 @@
+<div class="p-fluid p-grid">
+  <div class="p-field p-col-12 p-md-6">
+    <p-card>
+      <label for="">Pieces jointe disponible</label>
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Code</th>
+          <th>Libellé</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of dataPieceJointes; let i=index">
+          <td>{{ i+1 }}</td>
+          <td>{{ item?.code }}</td>
+          <td>{{ item?.label }}</td>
+          <td>
+            <button
+            [disabled]="data?.action === 'valider'"
+            (click)="add(item)"
+            pButton
+            class="p-button-rounded p-button-success p-mr-2"
+          >Ajouter</button>
+          </td>
+        </tr>
+
+      </table>
+    </p-card>
+  </div>
+  <div class="p-field p-col-12 p-md-6">
+    <p-card>
+      <label for=""> Piece jointes selectionner</label>
+      <table>
+        <tr>
+          <th>N°</th>
+          <th>Code</th>
+          <th>Libellé</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of dataPieceJointesSelect; let i=index">
+          <td>{{ i+1 }}</td>
+          <td>{{ item?.code }}</td>
+          <td>{{ item?.label }}</td>
+          <td>
+            <button
+            [disabled]="data?.action === 'valider'"
+            (click)="remove(item)"
+            pButton
+            class="p-button-rounded p-button-warning"
+          >Retirer</button>
+        </td>
+        </tr>
+
+      </table>
+    </p-card>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    (click)="doChangeStep('back')"
+    [label]="'buttons.back' | translate"
+    pButton
+  ></button>
+
+  <button
+  (click)="submit()"
+  [label]="'buttons.submit' | translate"
+  pButton
+></button>
+
+</div>

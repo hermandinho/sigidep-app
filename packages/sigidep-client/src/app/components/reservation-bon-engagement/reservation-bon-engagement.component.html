@@ -1,0 +1,46 @@
+<div class="form" [formGroup]="form">
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="engagement.montantCPChiffres <= engagement?.montantAE"
+    formControlName="disponibiliteCredits"
+    [binary]="true"
+    label="{{ 'labels.disponibiliteCredits' | translate }}: Le montant CP  ({{
+      engagement.montantCPChiffres
+    }}) que vous voulez reserver est inférieur au montant  AE Reserver ({{ engagement?.montantAE }})"
+  >
+  </p-checkbox>
+  <p-checkbox
+    [readonly]="true"
+    *ngIf="engagement.montantCPChiffres > engagement?.montantAE"
+    formControlName="disponibiliteCredits"
+    [binary]="true"
+    label="{{ 'labels.disponibiliteCredits' | translate }}: Le montant CP  ({{
+      engagement.montantCPChiffres
+    }}) que vous voulez reserver est  supérieur au montant  AE Reserver ({{ engagement?.montantAE }})"
+  >
+  </p-checkbox>
+
+  <div class="footer">
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-mr-3 p-button-danger"
+      (click)="ref.close()"
+      [label]="'buttons.close' | translate"
+      pButton
+    ></button>
+
+    <button
+      type="button"
+      pButton
+      pRipple
+      class="p-button"
+      icon="pi pi-check-square"
+      [disabled]="!isValid"
+      (click)="handleSubmit()"
+      [label]="'labels.book' | translate"
+      pButton
+    ></button>
+  </div>
+</div>

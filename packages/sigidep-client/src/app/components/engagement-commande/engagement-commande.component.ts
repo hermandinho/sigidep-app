@@ -83,6 +83,9 @@ export class EngagementCommandeComponent
     this.commandForm.controls['codeBanqueContribuable'].disable();
     this.commandForm.controls['numeroCompteContribuable'].disable();
     this.commandForm.controls['cleCompteContribuable'].disable();
+    this.commandForm.controls['netAPercevoir'].disable();
+    this.commandForm.controls['montantTVA'].disable();
+    this.commandForm.controls['montantIRNC'].disable();
   }
   doChangeStep = (direction: 'back') => {
     this.changeStep.emit(direction);

@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="form" [formGroup]="bordereauForm">
+    <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.objet" | translate }}</label>
+        <textarea
+          rows="3"
+          cols="35"
+          pInputTextarea
+          class="form-control"
+          formControlName="valueobjet"
+          [placeholder]="''"
+        >
+        </textarea>
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.serviceSource" | translate }} </label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="serviceSource"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.serviceDestination" | translate }} </label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="serviceDestination"
+          [placeholder]="''"
+        />
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <label>{{ "labels.lieu" | translate }} </label>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          formControlName="lieu"
+          [placeholder]="''"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button
+      (click)="doChangeStep('back')"
+      [label]="'buttons.back' | translate"
+      pButton
+    ></button>
+
+    <button
+    *ngIf="!readOnly"
+    (click)="submit()"
+    [label]="'buttons.submit' | translate"
+    pButton
+  ></button>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+<div class="page">
+  <div>
+    <div id="print-section" class="">
+      <p-card>
+        <div class="grid-container-header">
+          <div class="grid-fr">
+            <strong>REPUBLIQUE DU CAMEROUN</strong> <br />
+            <i>Paix-Travail-Patrie</i> <br />
+            ********* <br />
+            <strong
+              >{{structure?.labelFr}}</strong
+            >
+          </div>
+          <div class="grid-img">
+            <img src="assets/img/logopdf.png" alt="logo pdf" />
+          </div>
+          <div class="grid-en">
+            <strong>REPUBLIC OF CAMEROON</strong> <br />
+            <em>Peace-Work-Fatherland</em> <br />
+            ********* <br />
+            <strong
+              >{{structure?.labelEn}}</strong
+            >
+          </div>
+        </div>
+        <h1>SITUATION DES CREDITS SUR IMPUTATION</h1>
+        <div class="grid-container">
+          <fieldset class="grid-item1">
+            <legend><i>Identification de l’imputation</i></legend>
+            <p>
+              N° imputation : <strong>{{ imputation.imputation }}</strong
+              ><br />
+              <i
+                >{{imputation?.paragraph}}</i
+              >
+              <br />
+              <br />
+              Opération: {{imputation?.operation?.labelFr}}
+            </p>
+          </fieldset>
+          <fieldset class="grid-item2">
+            <legend><i>Statistiques de consommation (en F CFA)</i></legend>
+            <table>
+              <tr>
+                <th></th>
+                <th>AE</th>
+                <th>CP</th>
+              </tr>
+              <tr>
+                <td><strong>Dotation Initiale :</strong></td>
+                <td>{{ imputation.aeInitial }}</td>
+                <td>{{ imputation.cpInitial }}</td>
+              </tr>
+              <tr>
+                <td><strong>Abattement :</strong></td>
+                <td> {{aeabattement}} </td>
+                <td>{{cpabattement}}</td>
+              </tr>
+              <tr>
+                <td><strong>Dotation Init. Révisée :</strong></td>
+                <td>{{ imputation.aeInitRevisee }}</td>
+                <td>{{ imputation.cpInitRevisee }}</td>
+              </tr>
+              <tr>
+                <td><strong>Virement débiteur :</strong></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><strong>Virement créditeur :</strong></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Crédits consommés :</strong>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Taux consommation :</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </fieldset>
+        </div>
+      </p-card>
+      <p-card>
+        <table>
+          <tr>
+            <th>N°</th>
+            <th>Certificat d’Engagement</th>
+            <th>Bénéficiaire</th>
+            <th>Procédure</th>
+            <th>Date engag.</th>
+            <th>Montant AE</th>
+            <th>Etat</th>
+            <th>Bon</th>
+            <th>Date engag.</th>
+            <th>Montant CP</th>
+            <th>Situation traitement</th>
+<!--             <th>Date</th>
+ -->          </tr>
+          <tr *ngFor="let i=index, let item of engBon">
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{i+1}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.numero}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.signataire}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.codeProcedure}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.dateSignature}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.montantAE}}</span></td>
+            <td><span *ngIf="item?.eng?.etat==='labels.book'">{{item?.eng?.etat | translate}}</span></td>
+            <td colspan="5">
+              <table>
+                <tr *ngFor="let bn of item?.bon">
+                  <td> <span>{{bn?.numero}}</span></td>
+                  <td><span>{{bn?.dateEngagement}}</span></td>
+                  <td><span>{{bn?.montantCPChiffres | translate }}</span></td>
+                  <td><span>{{bn?.etat | translate }}</span></td>
+<!--                   <td><span>{{bn?.createdAt|date}}</span></td>
+ -->                </tr>
+              </table>
+            </td>
+
+          </tr>
+        </table>
+      </p-card>
+    </div>
+    <div>
+      <button
+        pButton
+        class="p-mr-3 p-button-warning"
+        printSectionId="print-section"
+        [useExistingCss]="true"
+        ngxPrint
+      >
+        {{ "buttons.print" | translate }}
+      </button>
+    </div>
+  </div>
+
+
+</div>

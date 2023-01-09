@@ -37,8 +37,17 @@ import * as fromCommandes from '@reducers/engagement-commande.reducer';
 import * as fromDecisions from '@reducers/engagement-decision.reducer';
 import * as fromMissions from '@reducers/engagement-mission.reducer';
 import * as fromEngagements from '@reducers/engagement-juridique.reducer';
+import * as fromMandatsPrimes from '@reducers/bons-engagements.reducer';
 import * as fromProcedures from '@reducers/exec-procedure.reducer';
 import * as fromTaxes from '@reducers/exec-taxes.reducer';
+import * as fromConsultations from '@reducers/consultations.reducer';
+import * as fromEngagementsByCategory from '@reducers/engagements.reducer';
+import * as formTransmissionsReceptions from '@reducers/transmissions-receptions.reducer';
+import * as formTransmissionsReceptionsDetails from '@reducers/detail-transmissions-receptions.reducer';
+import * as fromModeleVirement from '@reducers/modele-virement.reducer';
+import * as fromVirement from '@reducers/virement.reducer';
+import * as fromTransBons from '@reducers/transmission-reception-bons.reducer';
+import * as fromUsers from '@reducers/user.reducer';
 
 export interface AppState {
   router: RouterReducerState<fromRouter.RouterStateUrl>;
@@ -66,6 +75,7 @@ export interface AppState {
   carnetsMandats: fromCarnetsMandats.State;
   gestionnaires: fromGestionnaires.State;
   baremes: fromBaremes.State;
+  consultations: fromConsultations.State;
   typesProcedures: fromTypesProcedures.State;
   piecesJointes: fromPiecesJointes.State;
   encours: fromEncours.State;
@@ -74,8 +84,17 @@ export interface AppState {
   decisions: fromDecisions.State;
   missions: fromMissions.State;
   engagements: fromEngagements.State;
+  mandatsPrimes: fromMandatsPrimes.State;
   procedures: fromProcedures.State;
   taxes: fromTaxes.State;
+  engagementsByCategory: fromEngagementsByCategory.State;
+  transmissionsReceptions: formTransmissionsReceptions.State;
+  transmissionsReceptionsDetails: formTransmissionsReceptionsDetails.State;
+
+  modeleVirement: fromModeleVirement.State;
+  virement: fromVirement.State;
+  transBons: fromTransBons.State;
+  users: fromUsers.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -115,6 +134,16 @@ export const reducers: ActionReducerMap<AppState> = {
   engagements: fromEngagements.reducer,
   procedures: fromProcedures.reducer,
   taxes: fromTaxes.reducer,
+  consultations: fromConsultations.reducer,
+  mandatsPrimes: fromMandatsPrimes.reducer,
+  engagementsByCategory: fromEngagementsByCategory.reducer,
+  transmissionsReceptions: formTransmissionsReceptions.reducer,
+  transmissionsReceptionsDetails: formTransmissionsReceptionsDetails.reducer,
+
+  modeleVirement: fromModeleVirement.reducer,
+  virement: fromVirement.reducer,
+  transBons: fromTransBons.reducer,
+  users: fromUsers.reducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
