@@ -66,7 +66,7 @@ export class SubProgramActivityTaskOperationEntity extends BaseEntity {
   @Column({
     name: 'chronogram',
     nullable: false,
-    type: 'json',
+    type: 'jsonb',
     array: false,
     default: () => "'[]'",
   })
