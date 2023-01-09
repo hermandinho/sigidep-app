@@ -48,7 +48,7 @@ export class UserEntity extends BaseEntity {
   @Exclude()
   public passwordResetToken?: string;
 
-  @Column({ name: 'last_logged_in_at', nullable: true, type: 'timestamp' })
+  @Column({ name: 'last_logged_in_at', nullable: true, type: 'timestamptz' })
   public lastConnectedAt?: string;
 
   @Column({
