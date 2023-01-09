@@ -65,7 +65,7 @@ export class SubProgramEntity extends BaseEntity {
   @Column({
     name: 'objectives',
     nullable: false,
-    type: 'json',
+    type: 'jsonb',
     array: false,
     default: () => "'[]'",
   })
@@ -74,7 +74,7 @@ export class SubProgramEntity extends BaseEntity {
   @Column({
     name: 'strategies',
     nullable: false,
-    type: 'json',
+    type: 'jsonb',
     array: false,
     default: () => "'[]'",
   })
